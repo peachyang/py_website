@@ -18,12 +18,20 @@
         "tedivm/jshrink": "~1.1.0",
         "tubalmartin/cssmin": "2.4.8-p4",
         "swiftmailer/swiftmailer": "~5.3",
+        "symfony/css-selector": "~3.0.0",
         "symfony/event-dispatcher": "~3.0.0",
         "symfony/finder": "~3.0.0",
-        "zendframework/zend-db": "~2.7"
+        "zendframework/zend-db": "~2.7",
+        "zendframework/zend-i18n": "~2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }

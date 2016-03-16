@@ -1,0 +1,19 @@
+{
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5",
+        "doctrine/cache": "~1.6.0",
+        "monolog/monolog": "~1.18",
+        "nikic/fast-route": "~0.6",
+        "pimple/pimple": "~3.0",
+        "swiftmailer/swiftmailer": "~5.3",
+        "symfony/event-dispatcher": "~3.0.0",
+        "symfony/finder": "~3.0.0",
+        "zendframework/zend-db": "~2.7"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "~4.0"
+    }
+}

@@ -2,7 +2,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5.9",
+        "ext-mbstring": "*",
+        "ext-intl": "*",
+        "aura/session": "^2.0",
         "container-interop/container-interop": "~1.1",
         "doctrine/cache": "~1.6.0",
         "ezyang/htmlpurifier": "4.7.0",
@@ -22,8 +25,9 @@
         "symfony/css-selector": "~3.0.0",
         "symfony/event-dispatcher": "~3.0.0",
         "symfony/finder": "~3.0.0",
-        "zendframework/zend-db": "~2.7||^3.0",
-        "zendframework/zend-i18n": "~2.6||^3.0"
+        "symfony/translation": "~3.0.0",
+        "symfony/yaml": "~3.0.0",
+        "zendframework/zend-db": "~2.7||^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

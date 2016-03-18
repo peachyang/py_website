@@ -5,7 +5,6 @@
         "php": ">=5.5.9",
         "ext-mbstring": "*",
         "ext-intl": "*",
-        "aura/session": "^2.0",
         "container-interop/container-interop": "~1.1",
         "doctrine/cache": "~1.6.0",
         "ezyang/htmlpurifier": "4.7.0",
@@ -17,6 +16,7 @@
         "pelago/emogrifier": "~1.0.0",
         "phpseclib/phpseclib": "~2.0.1",
         "pimple/pimple": "~3.0",
+        "predis/predis": "~1.0.3",
         "psr/cache": "~1.0",
         "psr/http-message": "~1.0",
         "tedivm/jshrink": "~1.1.0",
@@ -25,17 +25,20 @@
         "symfony/css-selector": "~3.0.0",
         "symfony/event-dispatcher": "~3.0.0",
         "symfony/finder": "~3.0.0",
-        "symfony/translation": "~3.0.0",
         "symfony/yaml": "~3.0.0",
-        "zendframework/zend-db": "~2.7||^3.0"
+        "zendframework/zend-db": "~2.7||~3.0.0",
+        "zendframework/zend-permissions-rbac": "~2.5||~3.0.0"
     },
     "require-dev": {
+        "aura/session": "^2.0",
+        "symfony/translation": "~3.0.0",
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
         "psr-4": {
-            "Seahinet\\": "app/code"
+            "Seahinet\\": "app/code",
+            "Seahinet\\Lib\\": "app/lib"
         }
     },
     "repositories": {

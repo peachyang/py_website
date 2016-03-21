@@ -6,6 +6,7 @@ interface Singleton
 {
 
     /**
+     * @static
      * @return Singleton
      */
     public static function instance();

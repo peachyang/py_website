@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib;
 
+use ArrayAccess;
 use Doctrine\Common\Cache as DoctrineCache;
 use Doctrine\Common\Cache\CacheProvider;
 use Memcache;
@@ -9,16 +10,28 @@ use Memcached;
 use MongoClient;
 use MongoCollection;
 use Predis\Client as Predis;
+use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Redis;
 use Seahinet\Lib\Stdlib\Singleton;
+use Serializable;
 use SQLite3;
-use Zend\Stdlib\ArrayObject;
 
-final class Cache extends ArrayObject implements CacheItemPoolInterface, Singleton
+/**
+ * @method bool contains(string $id)
+ * @method bool delete(string $id)
+ * @method bool fetch(string $id)
+ * @method array|null getStats()
+ * @method bool flushAll()
+ * @method bool deleteAll()
+ * @method array fetchMultiple(array $keys)
+ * @method bool saveMultiple(array $keysAndValues, int $lifetime)
+ */
+final class Cache implements CacheItemPoolInterface, ArrayAccess, Serializable, Singleton
 {
 
     /**
+     * @static
      * @var Cache
      */
     private static $instance = null;
@@ -32,6 +45,16 @@ final class Cache extends ArrayObject implements CacheItemPoolInterface, Singlet
      * @var array
      */
     private $defer = [];
+
+    /**
+     * @var array
+     */
+    protected $storage = [];
+
+    /**
+     * @static
+     * @var array Describe the minimal version of php extension 
+     */
     public static $EXTENSION = [
         'apc' => ['version' => '3.0.0', 'name' => 'apc'],
         'apcu' => ['version' => '4.0.7', 'name' => 'apc'],
@@ -61,6 +84,20 @@ final class Cache extends ArrayObject implements CacheItemPoolInterface, Singlet
             }
         } else {
             $this->prepareFilesystem($config);
+        }
+    }
+
+    /**
+     * Call pool method
+     * @param string $name
+     * @param array $arguments
+     */
+    public function __call($name, $arguments)
+    {
+        if (is_callable(array($this->pool, $name))) {
+            call_user_func_array(array($this->pool, $name), $arguments);
+        } else {
+            throw new \BadMethodCallException('Call to undefined method: ' . $name);
         }
     }
 
@@ -194,7 +231,7 @@ final class Cache extends ArrayObject implements CacheItemPoolInterface, Singlet
         $client = new SQLite3(isset($config['filename']) ? $config['filename'] : BP . 'var/cache/sqlite3.dat');
         $this->pool = new DoctrineCache\SQLite3Cache($client, 'cache');
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -219,6 +256,7 @@ final class Cache extends ArrayObject implements CacheItemPoolInterface, Singlet
     public function deleteItem($key)
     {
         unset($this->storage[$key]);
+        unset($this->defer[$key]);
         return $this->pool->delete($key);
     }
 
@@ -263,22 +301,65 @@ final class Cache extends ArrayObject implements CacheItemPoolInterface, Singlet
         return isset($this->storage[$key]) || $this->pool->contains($key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save($key, $data)
+    public function setItem($offset, $value, $lifetime = 0)
     {
-        return $this->pool->save($key, $data);
+        $this->storage[$offset] = $value;
+        return $this->pool->save($offset, $value, $lifetime);
+    }
+
+    public function setItems(array $keysandvalues = array(), $lifetime = 0)
+    {
+        $this->storage = array_merge($this->storage, $keysandvalues);
+        return $this->pool->saveMultiple($keysandvalues, $lifetime);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function saveDeferred($key, $data)
+    public function save(CacheItemInterface $item)
     {
-        $this->storage[$key] = $data;
-        $this->defer[$key] = $data;
+        $this->storage[$item->getKey()] = $item->get();
+        return $this->pool->save($item->getKey(), $item->get(), $item->expiresAfter());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function saveDeferred(CacheItemInterface $item)
+    {
+        $this->storage[$item->getKey()] = $item->get();
+        $this->defer[$item->getKey()] = $item->get();
         return true;
+    }
+
+    public function offsetExists($offset)
+    {
+        return $this->hasItem($offset);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->getItem($offset);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        return $this->setItem($offset, $value);
+    }
+
+    public function offsetUnset($offset)
+    {
+        return $this->deleteItem($offset);
+    }
+
+    public function serialize()
+    {
+        return serialize($this->storage);
+    }
+
+    public function unserialize($serialized)
+    {
+        unserialize($serialized);
     }
 
 }

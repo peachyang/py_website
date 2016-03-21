@@ -1,6 +1,9 @@
 /nbproject/
 /vendor/
 /composer.lock
+/var/cache/
+/var/log/
+/var/session/
 *.log
 *.jar
 *.war

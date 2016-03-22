@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use ArrayAccess;
+use BadMethodCallException;
 use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Stdlib\Singleton;
 
@@ -42,9 +43,9 @@ final class Cache implements ArrayAccess, Singleton
     public function __call($name, $arguments)
     {
         if (is_callable(array($this->pool, $name))) {
-            call_user_func_array(array($this->pool, $name), $arguments);
+            return call_user_func_array(array($this->pool, $name), $arguments);
         } else {
-            throw new \BadMethodCallException('Call to undefined method: ' . $name);
+            throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
     }
 

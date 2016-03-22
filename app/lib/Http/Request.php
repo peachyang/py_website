@@ -43,22 +43,21 @@ class Request extends Message implements RequestInterface
      */
     protected $post = null;
 
-    public static function createFromEnvironment(array $server)
+    public function __construct($server = array())
     {
+        if(empty($server)){
+            $server = $_SERVER;
+        }
         $method = $server['REQUEST_METHOD'];
         $uri = Uri::createFromEnvironment($server);
         $headers = Headers::createFromEnvironment($server);
         $body = new RequestBody();
         $uploadedFiles = UploadedFile::createFromEnvironment();
-
-        $request = new static;
-        $request->withMethod($method)
+        $this->withMethod($method)
                 ->withHeaders($headers)
                 ->withUri($uri)
                 ->withBody($body)
                 ->withUploadedFile($uploadedFiles);
-
-        return $request;
     }
 
     public function getQueryParams()

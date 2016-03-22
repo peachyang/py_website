@@ -4,7 +4,6 @@
     "require": {
         "php": ">=5.5.9",
         "ext-intl": ">=1.0.0",
-        "aura/session": "^2.0",
         "container-interop/container-interop": "~1.1",
         "doctrine/cache": "~1.6.0",
         "ezyang/htmlpurifier": "4.7.0",

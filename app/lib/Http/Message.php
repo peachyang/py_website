@@ -12,15 +12,11 @@ abstract class Message implements MessageInterface
     protected $version = '1.1';
 
     /**
-     * Headers
-     *
      * @var Headers
      */
     protected $headers;
 
     /**
-     * Body object
-     *
      * @var StreamInterface
      */
     protected $body;

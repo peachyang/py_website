@@ -1,4 +1,5 @@
 <?php
+
 namespace Seahinet\Lib\Http;
 
 use RuntimeException;
@@ -6,44 +7,54 @@ use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
+/**
+ * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/UploadedFile.php
+ */
 class UploadedFile implements UploadedFileInterface
 {
+
     /**
      * The client-provided file name.
      *
      * @var string
      */
     protected $name;
+
     /**
      * The client-provided media type of the file.
      *
      * @var string
      */
     protected $type;
+
     /**
      * The size of the file in bytes.
      *
      * @var int
      */
     protected $size;
+
     /**
      * A valid PHP UPLOAD_ERR_xxx code for the file upload.
      *
      * @var int
      */
     protected $error = UPLOAD_ERR_OK;
+
     /**
      * Indicates if the upload is from a SAPI environment.
      *
      * @var bool
      */
     protected $sapi = false;
+
     /**
      * An optional StreamInterface wrapping the file resource.
      *
      * @var StreamInterface
      */
     protected $stream;
+
     /**
      * Indicates if the uploaded file has already been moved.
      *
@@ -87,22 +98,12 @@ class UploadedFile implements UploadedFileInterface
             $parsed[$field] = [];
             if (!is_array($uploadedFile['error'])) {
                 $parsed[$field] = new static(
-                    $uploadedFile['tmp_name'],
-                    isset($uploadedFile['name']) ? $uploadedFile['name'] : null,
-                    isset($uploadedFile['type']) ? $uploadedFile['type'] : null,
-                    isset($uploadedFile['size']) ? $uploadedFile['size'] : null,
-                    $uploadedFile['error'],
-                    true
+                        $uploadedFile['tmp_name'], isset($uploadedFile['name']) ? $uploadedFile['name'] : null, isset($uploadedFile['type']) ? $uploadedFile['type'] : null, isset($uploadedFile['size']) ? $uploadedFile['size'] : null, $uploadedFile['error'], true
                 );
             } else {
                 foreach ($uploadedFile['error'] as $fileIdx => $error) {
                     $parsed[$field][] = new static(
-                        $uploadedFile['tmp_name'][$fileIdx],
-                        isset($uploadedFile['name']) ? $uploadedFile['name'][$fileIdx] : null,
-                        isset($uploadedFile['type']) ? $uploadedFile['type'][$fileIdx] : null,
-                        isset($uploadedFile['size']) ? $uploadedFile['size'][$fileIdx] : null,
-                        $uploadedFile['error'][$fileIdx],
-                        true
+                            $uploadedFile['tmp_name'][$fileIdx], isset($uploadedFile['name']) ? $uploadedFile['name'][$fileIdx] : null, isset($uploadedFile['type']) ? $uploadedFile['type'][$fileIdx] : null, isset($uploadedFile['size']) ? $uploadedFile['size'][$fileIdx] : null, $uploadedFile['error'][$fileIdx], true
                     );
                 }
             }
@@ -297,4 +298,5 @@ class UploadedFile implements UploadedFileInterface
     {
         return $this->size;
     }
+
 }

@@ -4,6 +4,9 @@ namespace Seahinet\Lib\Http;
 
 use ArrayAccess;
 
+/**
+ * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/Headers.php
+ */
 class Headers implements ArrayAccess
 {
 
@@ -29,14 +32,13 @@ class Headers implements ArrayAccess
             $key = strtoupper($key);
             if (isset(static::$special[$key]) || strpos($key, 'HTTP_') === 0) {
                 if ($key !== 'HTTP_CONTENT_LENGTH') {
-                    $data[$key] =  $value;
+                    $data[$key] = $value;
                 }
             }
         }
 
         return new static($data);
     }
-
 
     public function offsetExists($offset)
     {

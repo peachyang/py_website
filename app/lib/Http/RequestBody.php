@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Http;
 
+/**
+ * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/RequestBody.php
+ */
 class RequestBody extends Body
 {
 
@@ -13,4 +16,5 @@ class RequestBody extends Body
 
         parent::__construct($stream);
     }
+
 }

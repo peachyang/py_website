@@ -35,8 +35,8 @@ class Log
     {
         if (is_null(static::$logger)) {
             static::$logger = new Logger('default');
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0750));
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0750));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0644));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0644));
         }
         return static::$logger;
     }
@@ -45,8 +45,8 @@ class Log
     {
         $name = isset($config['name']) ? $config['name'] : 'default';
         $handlers = isset($config['handlers']) ? $config['handlers'] : array(
-            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0750),
-            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0750)
+            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0644),
+            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0644)
         );
         $processors = isset($config['processors']) ? $config['processors'] : array();
         static::$logger = new Logger($name, $handlers, $processors);

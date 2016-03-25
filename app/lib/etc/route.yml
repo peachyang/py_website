@@ -1,0 +1,5 @@
+---
+default:
+    method: "GET"
+    regex: "/"
+    controller: ""

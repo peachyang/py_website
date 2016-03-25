@@ -7,3 +7,4 @@ try {
     exit(1);
 }
 
+\Seahinet\Lib\Bootstrap::run($_SERVER);

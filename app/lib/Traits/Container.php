@@ -5,7 +5,7 @@ namespace Seahinet\Lib\Traits;
 use Interop\Container\ContainerInterface;
 use Seahinet\Lib\Bootstrap;
 
-trait Conteiner
+trait Container
 {
 
     /**

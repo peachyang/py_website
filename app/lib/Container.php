@@ -10,7 +10,13 @@ class Container extends PimpleContainer implements ContainerInterface
 
     public function get($id)
     {
-        return $this->offsetGet($id);
+        $result = $this->offsetGet($id);
+        if (is_string($result) && class_exists($result)) {
+            $result = new $result($this);
+            $this->protected[$id] = $result;
+            $this->value[$id] = $result;
+        }
+        return $result;
     }
 
     public function has($id)

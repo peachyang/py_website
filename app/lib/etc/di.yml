@@ -1,5 +1,6 @@
 ---
-cache: "Seahinet\\Lib\\Cache"
-config: "Seahinet\\Lib\\Config"
-eventDispatcher: "Symfony\\Component\\EventDispatcher\\EventDispatcher"
-mailer: ""
+cache: Seahinet\Lib\Cache
+config: Seahinet\Lib\Config
+dbAdapter: Seahinet\Lib\DbAdapter
+eventDispatcher: Symfony\Component\EventDispatcher\EventDispatcher
+mailer: Seahinet\Lib\Mailer

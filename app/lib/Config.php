@@ -15,7 +15,7 @@ final class Config extends ArrayObject implements Singleton
     public function __construct($config = [])
     {
         if (empty($config)) {
-            $this->loadFromYaml();
+            $config = $this->loadFromYaml();
         }
         parent::__construct($config);
     }
@@ -35,11 +35,12 @@ final class Config extends ArrayObject implements Singleton
         $parser = new Parser;
         foreach ($finder as $file) {
             $key = str_replace('.' . $file->getExtension(), '', $file->getFilename());
-            if(!isset($this->storage[$key])){
-                $this->storage[$key] = [];
+            if(!isset($config[$key])){
+                $config[$key] = [];
             }
-            $this->storage[$key] = array_merge_recursive($this->storage[$key], $parser->parse($file->getContents()));
+            $config[$key] = array_merge_recursive($config[$key], $parser->parse($file->getContents()));
         }
+        return $config;
     }
     
 }

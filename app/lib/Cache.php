@@ -6,6 +6,7 @@ use ArrayAccess;
 use BadMethodCallException;
 use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Stdlib\Singleton;
+use Seahinet\Lib\Traits\Container;
 
 /**
  * @method array|null getStats()
@@ -14,6 +15,8 @@ use Seahinet\Lib\Stdlib\Singleton;
  */
 final class Cache implements ArrayAccess, Singleton
 {
+
+    use Container;
 
     /**
      * @static
@@ -27,11 +30,14 @@ final class Cache implements ArrayAccess, Singleton
     private $pool = null;
 
     /**
-     * @param array|\ArrayAccess $config
+     * @param array $config
      * @throws \UnexpectedValueException
      */
-    private function __construct($config)
+    private function __construct(array $config = [])
     {
+        if (empty($config)) {
+            $config = $this->getContainer()->get('config')['adapter']['cache'];
+        }
         $this->pool = Cache\Factory::getCachePool($config);
     }
 

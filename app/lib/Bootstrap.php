@@ -23,7 +23,7 @@ final class Bootstrap
     public static function init($server)
     {
         $config = Config::instance();
-        $this->handleConfig($config);
+        static::handleConfig($config);
     }
 
     public static function run($server)
@@ -31,17 +31,13 @@ final class Bootstrap
         if (is_null(static::$container)) {
             static::init($server);
         }
-        static::$container['eventDispatcher']->dispatch('run');
+        static::$container->get('eventDispatcher')->dispatch('run');
     }
 
     private static function getCallable($name)
     {
-        if (is_string($name) && class_exists($name)) {
-            if (is_callable($name . '::instance')) {
-                return $name::instance();
-            } else {
-                return new $name;
-            }
+        if (is_string($name) && is_subclass_of($name, '\Seahinet\Lib\Stdlib\Singleton')) {
+            return $name::instance();
         } else {
             return $name;
         }
@@ -52,14 +48,14 @@ final class Bootstrap
         if (isset($config['di'])) {
             $values = [];
             foreach ($config['di'] as $key => $value) {
-                $values[$key] = static::getCallable($value);
+                $values[$key] = $value;
             }
             static::$container = new Container($values);
         }
         if (isset($config['event'])) {
             $dispatcher = static::$container->get('eventDispatcher');
-            foreach ($config['event'] as $event) {
-                $dispatcher->addListener($event['name'], static::getCallable($event['listener']), isset($event['priority']) ? $event['priority'] : 0);
+            foreach ($config['event'] as $name => $event) {
+                $dispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
             }
         }
     }

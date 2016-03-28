@@ -87,7 +87,7 @@ class Category implements ArrayAccess, JsonSerializable, Serializable
     public function merge(...$arrays)
     {
         foreach ($arrays as $array) {
-            if (is_object($array) && is_callable(array($array, 'getArrayCopy'))) {
+            if (is_object($array) && is_callable([$array, 'getArrayCopy'])) {
                 $array = $array->getArrayCopy();
             }
             $this->storage += $array;

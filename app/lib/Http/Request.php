@@ -43,9 +43,12 @@ class Request extends Message implements RequestInterface
      */
     protected $post = null;
 
+    /**
+     * @param array $server
+     */
     public function __construct($server = array())
     {
-        if(empty($server)){
+        if (empty($server)) {
             $server = $_SERVER;
         }
         $method = $server['REQUEST_METHOD'];
@@ -60,6 +63,9 @@ class Request extends Message implements RequestInterface
                 ->withUploadedFile($uploadedFiles);
     }
 
+    /**
+     * @return array
+     */
     public function getQueryParams()
     {
         if ($this->queryParams) {
@@ -75,6 +81,10 @@ class Request extends Message implements RequestInterface
         return $this->queryParams;
     }
 
+    /**
+     * @return array
+     * @throws RuntimeException
+     */
     public function getPost()
     {
         if ($this->post) {
@@ -98,11 +108,17 @@ class Request extends Message implements RequestInterface
         return $this->post;
     }
 
+    /**
+     * @return string
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
+    /**
+     * @return string
+     */
     public function getRequestTarget()
     {
         if ($this->requestTarget) {
@@ -126,14 +142,22 @@ class Request extends Message implements RequestInterface
         return $this->requestTarget;
     }
 
+    /**
+     * @return Uri
+     */
     public function getUri()
     {
         if ($this->uri === null || is_string($this->uri)) {
-            $this->uri = new Uri($this->uri);
+            $this->uri = Uri::createFromString($this->uri);
         }
         return $this->uri;
     }
 
+    /**
+     * @param string $method
+     * @return Request
+     * @throws \InvalidArgumentException
+     */
     public function withMethod($method)
     {
         $method = strtoupper($method);
@@ -144,6 +168,11 @@ class Request extends Message implements RequestInterface
         return $this;
     }
 
+    /**
+     * @param string $requestTarget
+     * @return Request
+     * @throws InvalidArgumentException
+     */
     public function withRequestTarget($requestTarget)
     {
         if (preg_match('#\s#', $requestTarget)) {
@@ -156,6 +185,11 @@ class Request extends Message implements RequestInterface
         return $this;
     }
 
+    /**
+     * @param UriInterface $uri
+     * @param boolean $preserveHost
+     * @return Request
+     */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
         $this->uri = $uri;
@@ -171,6 +205,10 @@ class Request extends Message implements RequestInterface
         return $this;
     }
 
+    /**
+     * @param UploadedFile $uploadedFile
+     * @return Request
+     */
     public function withUploadedFile($uploadedFile)
     {
         $this->uploadedFile = $uploadedFile;

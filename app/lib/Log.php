@@ -15,7 +15,7 @@ class Log
      */
     protected static $logger = null;
 
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         if (!empty($config)) {
             $this->setLogger($config);
@@ -24,8 +24,8 @@ class Log
 
     public function __call($name, $arguments)
     {
-        if (is_callable(array(static::$logger, $name))) {
-            return call_user_func_array(array(static::$logger, $name), $arguments);
+        if (is_callable([static::$logger, $name])) {
+            return call_user_func_array([static::$logger, $name], $arguments);
         } else {
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
@@ -41,14 +41,14 @@ class Log
         return static::$logger;
     }
 
-    public function setLogger(array $config = array())
+    public function setLogger(array $config = [])
     {
         $name = isset($config['name']) ? $config['name'] : 'default';
-        $handlers = isset($config['handlers']) ? $config['handlers'] : array(
+        $handlers = isset($config['handlers']) ? $config['handlers'] : [
             new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0644),
             new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0644)
-        );
-        $processors = isset($config['processors']) ? $config['processors'] : array();
+        ];
+        $processors = isset($config['processors']) ? $config['processors'] : [];
         static::$logger = new Logger($name, $handlers, $processors);
     }
 

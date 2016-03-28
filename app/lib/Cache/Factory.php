@@ -11,7 +11,12 @@ use Predis\Client as Predis;
 use Redis;
 use SQLite3;
 
-class Factory
+/**
+ * Generate cache pool based on config array
+ * 
+ * @abstract
+ */
+abstract class Factory
 {
 
     /**

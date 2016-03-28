@@ -8,6 +8,9 @@ use FastRoute\cachedDispatcher;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 
+/**
+ * Listen route_dispatch event
+ */
 class Route implements ListenerInterface
 {
 
@@ -18,23 +21,19 @@ class Route implements ListenerInterface
         $routers = $this->getContainer()->get('config')['route'];
         $dispatcher = cachedDispatcher(function(RouteCollector $collector) use ($routers) {
             foreach ($routers as $router) {
-                if (isset($router['regex'])) {
-                    $collector->addRoute((isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['regex'], isset($router['controller']) ? $router['controller'] : $routers['default']['controller']);
+                if (isset($router['route'])) {
+                    $collector->addRoute((isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['route'], isset($router['controller']) ? $router['controller'] : $routers['default']['controller'], isset($router['priority']) ? $router['priority'] : 0);
                 }
             }
-        }, ['cacheFile' => BP . 'var/cache/route/']);
+        }, ['cacheFile' => BP . 'var/cache/route/', 'routeCollector' => 'Seahinet\\Lib\\Route\\Collector', 'dataGenerator' => 'Seahinet\\Lib\\Route\\Generator', 'dispatcher' => 'Seahinet\\Lib\Route\\Dispatcher']);
         $request = new Request();
-        $uri = $request->getUri()->__toString();
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
+        $routeMatch = $dispatcher->dispatch($request);
+        if ($routeMatch) {
+            
         }
-        $routeInfo = $dispatcher->dispatch($request->getMethod(), rawurldecode($uri));
         $className = $routers['default']['controller'];
-        if ($routeInfo[0] == Dispatcher::FOUND && class_exists($routeInfo[1])) {
-            $className = $routeInfo[1];
-        }
         $controller = new $className();
-        return $controller->dispatch($routeInfo, $request);
+        return $controller->dispatch($request);
     }
 
 }

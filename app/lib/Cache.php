@@ -8,6 +8,8 @@ use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Stdlib\Singleton;
 
 /**
+ * Handle cache operation by using Doctrine/Cache pool
+ * 
  * @method array|null getStats()
  * @method bool flushAll()
  * @method bool deleteAll()
@@ -47,8 +49,8 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function __call($name, $arguments)
     {
-        if (is_callable(array($this->pool, $name))) {
-            return call_user_func_array(array($this->pool, $name), $arguments);
+        if (is_callable([$this->pool, $name])) {
+            return call_user_func_array([$this->pool, $name], $arguments);
         } else {
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
@@ -58,7 +60,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param array $config
      * @return Cache
      */
-    public static function instance($config = array())
+    public static function instance($config = [])
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($config);

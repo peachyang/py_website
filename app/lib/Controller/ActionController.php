@@ -1,10 +1,11 @@
 <?php
 
-namespace ActionController;
+namespace Seahinet\Lib\Controller;
 
 use FastRoute\Dispatcher;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Http\Response;
+use Seahinet\Lib\Route\RouteMatch;
 
 class ActionController
 {
@@ -20,24 +21,18 @@ class ActionController
     protected $response = null;
 
     /**
-     * @param array $routeMatch
      * @param Request $request
+     * @param RouteMatch $routeMatch
      * @return Response|null|string
      */
-    public function dispatch($routeMatch, $request = null)
+    public function dispatch($request = null, $routeMatch = null)
     {
-        if ($routeMatch[0] == Dispatcher::NOT_FOUND) {
+        if (!$routeMatch) {
             $method = 'notFoundAction';
-        } else if ($routeMatch[0] == Dispatcher::METHOD_NOT_ALLOWED) {
-            $method = 'notAllowedAction';
         }
         $this->request = $request;
-        if (isset($routeMatch[2]['action'])) {
-            $method = $routeMatch[2]['action'] . 'Action';
-        } else {
-            $method = 'indexAction';
-        }
-        if (!is_callable($this, $method)) {
+        $method = $routeMatch->getMethod();
+        if (!is_callable([$this, $method])) {
             $method = 'notFoundAction';
         }
         return $this->$method();
@@ -66,11 +61,6 @@ class ActionController
     }
 
     public function notFoundAction()
-    {
-        
-    }
-
-    public function notAllowedAction()
     {
         
     }

@@ -7,7 +7,6 @@
         "doctrine/cache": "~1.6.0",
         "ezyang/htmlpurifier": "4.7.0",
         "leafo/scssphp": "~0.6.3",
-        "mongodb/mongodb": "~1.0",
         "monolog/monolog": "~1.17",
         "nikic/fast-route": "~0.6",
         "oyejorge/less.php": "~1.7.0.3",
@@ -28,7 +27,6 @@
         "zendframework/zend-permissions-rbac": "~2.5||~3.0.0"
     },
     "require-dev": {
-        "symfony/translation": "~3.0.0",
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0"
     },

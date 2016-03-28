@@ -23,13 +23,13 @@ class Session implements Singleton
      */
     protected $cookie_params = [];
 
-    private function __construct(array $config = array())
+    private function __construct(array $config = [])
     {
         $this->setOptions($config);
         $this->cookie_params = session_get_cookie_params();
     }
 
-    public static function instance(array $config = array())
+    public static function instance(array $config = [])
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($config);
@@ -37,11 +37,11 @@ class Session implements Singleton
         return static::$instance;
     }
 
-    public function setOptions(array $config = array())
+    public function setOptions(array $config = [])
     {
         foreach ($config as $key => $value) {
             $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
-            if (is_callable(array($this, $method))) {
+            if (is_callable([$this, $method])) {
                 $this->$method($value);
             }
         }

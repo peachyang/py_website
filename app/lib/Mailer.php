@@ -2,13 +2,12 @@
 
 namespace Seahinet\Lib;
 
-use Seahinet\Lib\Traits\Container;
 use Swift_Mailer;
 
 class Mailer extends Swift_Mailer
 {
 
-    use Container;
+    use Traits\Container;
 
     public static $ALLOWED_TRANSPORTATION = [
         'Swift_SmtpTransport' => 'SMTP',

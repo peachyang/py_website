@@ -6,7 +6,6 @@ use ArrayAccess;
 use BadMethodCallException;
 use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Stdlib\Singleton;
-use Seahinet\Lib\Traits\Container;
 
 /**
  * @method array|null getStats()
@@ -16,7 +15,7 @@ use Seahinet\Lib\Traits\Container;
 final class Cache implements ArrayAccess, Singleton
 {
 
-    use Container;
+    use Traits\Container;
 
     /**
      * @static

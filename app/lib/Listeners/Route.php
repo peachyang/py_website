@@ -3,7 +3,7 @@
 namespace Seahinet\Lib\Listeners;
 
 use Seahinet\Lib\Http\Request;
-use Seahinet\Lib\Traits\Container;
+use Seahinet\Lib\Traits;
 use FastRoute\cachedDispatcher;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
@@ -11,7 +11,7 @@ use FastRoute\RouteCollector;
 class Route implements ListenerInterface
 {
 
-    use Container;
+    use Traits\Container;
 
     public function dispatch()
     {

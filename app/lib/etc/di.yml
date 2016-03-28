@@ -4,3 +4,4 @@ config: Seahinet\Lib\Config
 dbAdapter: Seahinet\Lib\DbAdapter
 eventDispatcher: Symfony\Component\EventDispatcher\EventDispatcher
 mailer: Seahinet\Lib\Mailer
+translator: Seahinet\Lib\Translator

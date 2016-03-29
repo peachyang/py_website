@@ -23,7 +23,7 @@ abstract class Factory
      * @static
      * @var array Describe the minimal version of php extension 
      */
-    public static $EXTENSION = [
+    public static $EXTENSION_VERSION = [
         'apc' => ['version' => '3.0.0', 'name' => 'apc'],
         'apcu' => ['version' => '4.0.7', 'name' => 'apc'],
         'memcache' => ['version' => '2.0.0', 'name' => 'memcache'],

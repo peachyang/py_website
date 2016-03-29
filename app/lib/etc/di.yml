@@ -1,7 +1,10 @@
 ---
-cache: Seahinet\Lib\Cache
-config: Seahinet\Lib\Config
-dbAdapter: Seahinet\Lib\DbAdapter
-eventDispatcher: Symfony\Component\EventDispatcher\EventDispatcher
-mailer: Seahinet\Lib\Mailer
-translator: Seahinet\Lib\Translator
+singleton:
+    config: Seahinet\Lib\Config
+    cache: Seahinet\Lib\Cache
+    eventDispatcher: Seahinet\Lib\EventDispatcher
+    translator: Seahinet\Lib\Translator
+factory:
+    dbAdapter: Seahinet\Lib\DbAdapter
+service:
+    mailer: Seahinet\Lib\Mailer

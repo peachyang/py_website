@@ -85,6 +85,12 @@ class Response extends Message implements ResponseInterface
      */
     protected $reasonPhrase = '';
 
+    public function __construct()
+    {
+        $this->headers = new Headers();
+        $this->body = new Body(fopen('php://temp', 'r+'));
+    }
+
     public function getReasonPhrase()
     {
         if (!$this->reasonPhrase && isset($this->recommendedReasonPhrases[$this->statusCode])) {
@@ -105,6 +111,7 @@ class Response extends Message implements ResponseInterface
         }
         $this->statusCode = (int) $code;
         $this->reasonPhrase = $reasonPhrase;
+        return $this;
     }
 
     /**
@@ -113,7 +120,7 @@ class Response extends Message implements ResponseInterface
     public function renderStatusLine()
     {
         $status = sprintf(
-                'HTTP/%s %d %s', $this->getVersion(), $this->getStatusCode(), $this->getReasonPhrase()
+                'HTTP/%s %d %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()
         );
         return trim($status);
     }

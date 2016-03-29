@@ -14,6 +14,10 @@ final class Config extends ArrayObject implements Singleton
 
     public function __construct($config = [])
     {
+        if ($config instanceof Container) {
+            $this->setContainer($config);
+            $config = [];
+        }
         if (empty($config)) {
             $config = $this->loadFromYaml();
         }
@@ -33,14 +37,15 @@ final class Config extends ArrayObject implements Singleton
         $finder = new Finder;
         $finder->files()->in('app')->name('*.yml');
         $parser = new Parser;
+        $config = [];
         foreach ($finder as $file) {
-            $key = str_replace('.' . $file->getExtension(), '', $file->getFilename());
-            if(!isset($config[$key])){
+            $key = str_replace('.yml', '', $file->getFilename());
+            if (!isset($config[$key])) {
                 $config[$key] = [];
             }
             $config[$key] = array_merge_recursive($config[$key], $parser->parse($file->getContents()));
         }
         return $config;
     }
-    
+
 }

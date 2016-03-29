@@ -2,9 +2,10 @@
 
 namespace Seahinet\Lib\Route;
 
+use ArrayAccess;
 use Seahinet\Lib\Http\Request;
 
-class RouteMatch
+class RouteMatch implements ArrayAccess
 {
 
     /**
@@ -49,6 +50,26 @@ class RouteMatch
     public function getMethod()
     {
         return isset($this->options['action']) && $this->options['action'] ? $this->options['action'] . 'Action' : 'indexAction';
+    }
+
+    public function offsetExists($offset)
+    {
+        return isset($this->options[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return isset($this->options[$offset]) ? $this->options[$offset] : null;
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->options[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->options[$offset]);
     }
 
 }

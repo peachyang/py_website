@@ -4,6 +4,7 @@
 /var/cache/
 /var/log/
 /var/session/
+/app/config/adapter.yml
 *.log
 *.jar
 *.war

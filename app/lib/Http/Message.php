@@ -33,7 +33,7 @@ abstract class Message implements MessageInterface
 
     public function getHeaderLine($name)
     {
-        return $this->headers->__toString();
+        return $this->headers->offsetExists($name) ? ($name . ': ' . $this->headers->offsetGet($name) . '\r\n') : '';
     }
 
     public function getHeaders()

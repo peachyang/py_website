@@ -23,6 +23,10 @@ class Translator implements Singleton
 
     private function __construct($locale = null)
     {
+        if ($locale instanceof Container) {
+            $this->setContainer($locale);
+            $locale = null;
+        }
         $this->setLocale($locale ? : $this->getContainer()->get('config')['locale']);
     }
 
@@ -67,14 +71,14 @@ class Translator implements Singleton
                     return $this->storage[$locale];
                 }
             }
-            $this->storage[$locale] = ['default' => new Category()];
+            $this->storage[$locale] = [static::DEFAULT_DOMAIN => new Category()];
             $finder = new Finder();
             $finder->files()->in(BP . 'app/i18n/' . $locale)->name('*.csv');
             foreach ($finder as $file) {
                 if (is_readable($file->getRealPath())) {
                     $domain = str_replace('.csv', '', $file->getFilename());
                     $this->storage[$locale][$domain] = $this->readFile($file->getRealPath());
-                    $this->storage[$locale]['default']->merge($this->storage[$locale][$domain]);
+                    $this->storage[$locale][static::DEFAULT_DOMAIN]->merge($this->storage[$locale][$domain]);
                 }
             }
             if ($cache) {
@@ -118,7 +122,7 @@ class Translator implements Singleton
             return '';
         } else if (!is_null($domain) && $messages[$domain]->offsetExists($message)) {
             return vsprintf($messages[$domain]->offsetGet($message), $parameters);
-        } else if (isset($messages[static::DEFAULT_DOMAIN]->offsetExists($message))) {
+        } else if ($messages[static::DEFAULT_DOMAIN]->offsetExists($message)) {
             return vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);
         } else {
             return vsprintf($message, $parameters);

@@ -16,6 +16,9 @@ abstract class AbstractModel extends ArrayObject
     protected $isNew = true;
     protected $isLoaded = false;
     protected $cacheKey = '';
+    protected $eventDispatcher = null;
+    protected $languageInfo = null;
+    protected $tableName = '';
 
     public function __construct($input = array(), $flags = self::ARRAY_AS_PROPS, $iteratorClass = 'ArrayIterator')
     {
@@ -27,10 +30,16 @@ abstract class AbstractModel extends ArrayObject
 
     protected function init($table, $primaryKey = 'id', $columns = [])
     {
+        $this->tableName = $table;
         $this->getTableGateway($table);
         $this->cacheKey = $table . '\\';
         $this->columns = $columns;
         $this->$primaryKey = $primaryKey;
+    }
+
+    protected function withLanguage($table, $column)
+    {
+        $this->languageInfo = [$table, $column];
     }
 
     public function getId()
@@ -69,10 +78,24 @@ abstract class AbstractModel extends ArrayObject
                 $cache = $this->getContainer()->get('cache');
                 $result = $cache->fetch($this->cacheKey . $key . '\\' . $id);
                 if (!$result) {
-                    $result = $this->select([$key => $id])->toArray();
-                    $cache->save($this->cacheKey . $key . '\\' . $id, $result);
+                    $this->beforeLoad();
+                    $select = $this->tableGateway->getSql()->select();
+                    $select->where([$this->tableName . '.' . $key => $id]);
+                    if (!is_null($this->languageInfo)) {
+                        $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], '*', 'left');
+                        $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], '*', 'left');
+                    }
+                    $result = $this->tableGateway->selectWith($select)->toArray();
+                    $this->storage = array_merge($this->storage, $result[0]);
+                    if (!is_null($this->languageInfo)) {
+                        $this->storage['language'] = [];
+                        foreach ($result as $record){
+                            $this->storage['language'][] = $record;
+                        }
+                    }
+                    $this->afterLoad();
+                    $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage);
                 }
-                $this->storage = array_merge($this->storage, $result);
                 $this->isNew = false;
                 $this->isLoaded = true;
                 $this->updatedColumns = [];
@@ -88,14 +111,19 @@ abstract class AbstractModel extends ArrayObject
         $columns = $this->prepareColumns();
         try {
             if ($this->isNew) {
+                $this->beforeSave();
                 $this->insert($columns);
+                $this->setId($this->tableGateway->getLastInsertValue());
+                $this->afterSave();
             } else if (!empty($constraint) && $this->getId()) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
+                $this->beforeSave();
                 $this->update($columns, $constraint);
+                $this->afterSave();
                 $cache = $this->getContainer()->get('cache');
-                $cache->delete($constraint);
+                $cache->delete($this->cacheKey . implode('\\', $constraint));
             } else {
                 
             }
@@ -124,6 +152,34 @@ abstract class AbstractModel extends ArrayObject
             }
         }
         return $columns;
+    }
+
+    protected function getEventDispatcher()
+    {
+        if (is_null($this->eventDispatcher)) {
+            $this->eventDispatcher = $this->getContainer()->get('eventDispatcher');
+        }
+        return $this->eventDispatcher;
+    }
+
+    protected function beforeSave()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.before', ['model' => $this]);
+    }
+
+    protected function afterSave()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
+    }
+
+    protected function beforeLoad()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.before', ['model' => $this]);
+    }
+
+    protected function afterLoad()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
     }
 
 }

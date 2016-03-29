@@ -34,8 +34,12 @@ final class Cache implements ArrayAccess, Singleton
      * @param array $config
      * @throws \UnexpectedValueException
      */
-    private function __construct(array $config = [])
+    private function __construct($config = [])
     {
+        if ($config instanceof Container) {
+            $this->setContainer($config);
+            $config = [];
+        }
         if (empty($config)) {
             $config = $this->getContainer()->get('config')['adapter']['cache'];
         }

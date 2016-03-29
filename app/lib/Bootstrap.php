@@ -12,10 +12,16 @@ final class Bootstrap
      */
     private static $container = null;
 
-    public static function getContainer()
+    /**
+     * @var EventDispatcher
+     */
+    private static $eventDispatcher = null;
+
+    public static function getContainer($config = [])
     {
         if (is_null(static::$container)) {
-            static::$container = new Container;
+            static::$container = new Container($config);
+            static::$container->register(new ServiceProvider);
         }
         return static::$container;
     }
@@ -24,6 +30,7 @@ final class Bootstrap
     {
         $config = Config::instance();
         static::handleConfig($config);
+        static::$eventDispatcher->trigger('route', ['routers' => $config['route']]);
     }
 
     public static function run($server)
@@ -31,7 +38,7 @@ final class Bootstrap
         if (is_null(static::$container)) {
             static::init($server);
         }
-        static::$container->get('eventDispatcher')->dispatch('run');
+        static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
     }
 
     private static function getCallable($name)
@@ -46,16 +53,12 @@ final class Bootstrap
     private static function handleConfig($config)
     {
         if (isset($config['di'])) {
-            $values = [];
-            foreach ($config['di'] as $key => $value) {
-                $values[$key] = $value;
-            }
-            static::$container = new Container($values);
+            static::getContainer($config['di']);
         }
         if (isset($config['event'])) {
-            $dispatcher = static::$container->get('eventDispatcher');
+            static::$eventDispatcher = static::$container->get('eventDispatcher');
             foreach ($config['event'] as $name => $event) {
-                $dispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
+                static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
             }
         }
     }

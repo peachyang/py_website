@@ -2,10 +2,20 @@
 
 namespace Seahinet\Lib\Route;
 
+use FastRoute\RouteParser;
+use FastRoute\DataGenerator;
 use FastRoute\RouteCollector;
 
 class Collector extends RouteCollector
 {
+
+    private $dataGenerator;
+
+    public function __construct(RouteParser $routeParser, DataGenerator $dataGenerator)
+    {
+        $this->dataGenerator = $dataGenerator;
+        parent::__construct($routeParser, $dataGenerator);
+    }
 
     /**
      * @param array|string $httpMethod

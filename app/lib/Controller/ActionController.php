@@ -2,7 +2,6 @@
 
 namespace Seahinet\Lib\Controller;
 
-use FastRoute\Dispatcher;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Http\Response;
 use Seahinet\Lib\Route\RouteMatch;
@@ -10,6 +9,8 @@ use Seahinet\Lib\Route\RouteMatch;
 class ActionController
 {
 
+    use \Seahinet\Lib\Traits\Container;
+    
     /**
      * @var Request 
      */
@@ -21,19 +22,26 @@ class ActionController
     protected $response = null;
 
     /**
+     * @var array
+     */
+    protected $options = [];
+
+    /**
      * @param Request $request
      * @param RouteMatch $routeMatch
      * @return Response|null|string
      */
     public function dispatch($request = null, $routeMatch = null)
     {
-        if (!$routeMatch) {
-            $method = 'notFoundAction';
-        }
         $this->request = $request;
-        $method = $routeMatch->getMethod();
-        if (!is_callable([$this, $method])) {
+        if (!$routeMatch instanceof RouteMatch) {
             $method = 'notFoundAction';
+        } else {
+            $method = $routeMatch->getMethod();
+            $this->options = $routeMatch->getOptions();
+            if (!is_callable([$this, $method])) {
+                $method = 'notFoundAction';
+            }
         }
         return $this->$method();
     }
@@ -44,7 +52,7 @@ class ActionController
     protected function getRequest()
     {
         if (is_null($this->request)) {
-            $this->request = new Request;
+            $this->request = $this->getContainer()->get('request');
         }
         return $this->request;
     }
@@ -55,14 +63,19 @@ class ActionController
     protected function getResponse()
     {
         if (is_null($this->response)) {
-            $this->response = new Response;
+            $this->response = $this->getContainer()->get('response');
         }
         return $this->response;
     }
 
     public function notFoundAction()
     {
-        
+        return $this->getResponse()->withStatus(404);
+    }
+
+    public function getOption($name)
+    {
+        return isset($this->options[$name]) ? $this->options[$name] : null;
     }
 
 }

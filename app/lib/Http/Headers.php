@@ -20,7 +20,7 @@ class Headers implements ArrayAccess
         'AUTH_TYPE' => 1,
     ];
 
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $this->headers = $data;
     }
@@ -47,7 +47,7 @@ class Headers implements ArrayAccess
 
     public function offsetGet($offset)
     {
-        return $this->headers[$offset];
+        return isset($this->headers[$offset]) ? $this->headers[$offset] : '';
     }
 
     public function offsetSet($offset, $value)

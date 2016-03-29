@@ -1,6 +1,16 @@
 ---
-route_dispatcher:
+route:
     -
-        Seahinet\Lib\Listener\Route
+        Seahinet\Lib\Listeners\Route
     -
         dispatch
+render:
+    -
+        Seahinet\Lib\Listeners\Render
+    -
+        render
+respond:
+    -
+        Seahinet\Lib\Listeners\Respond
+    -
+        respond

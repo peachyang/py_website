@@ -29,8 +29,11 @@ class Mailer extends Swift_Mailer
         'extra' => '-f%s'
     ];
 
-    public function __construct()
+    public function __construct($container = null)
     {
+        if($container instanceof Container){
+            $this->setContainer($container);
+        }
         $config = $this->getContainer()->get('config');
         $transport = call_user_func_array($config['mail']['transport'] . '::newInstance', ${static::$ALLOWED_TRANSPORTATION[$config['mail']['transport']] . 'Params'} + $config['mail']['params']);
         if (static::$ALLOWED_TRANSPORTATION[$config['mail']['transport']] === 'SMTP') {

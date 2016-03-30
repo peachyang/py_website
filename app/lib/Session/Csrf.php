@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Session;
 
+/**
+ * @todo Generate/Validate csrf key
+ */
 class Csrf
 {
 
@@ -16,11 +19,18 @@ class Csrf
         }
     }
 
+    /**
+     * @param string $value
+     * @return bool
+     */
     public function isValid($value)
     {
         return $value === $this->getValue();
     }
 
+    /**
+     * @return string
+     */
     public function getValue()
     {
         return $this->segment->get('csrf');

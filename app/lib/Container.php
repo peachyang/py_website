@@ -8,6 +8,9 @@ use Pimple\Container as PimpleContainer;
 class Container extends PimpleContainer implements ContainerInterface
 {
 
+    /**
+     * @param array $values
+     */
     public function __construct(array $values = [])
     {
         parent::__construct();

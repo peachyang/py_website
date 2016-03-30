@@ -4,6 +4,9 @@ namespace Seahinet\Lib\Session\SaveHandler;
 
 use SessionHandlerInterface;
 
+/**
+ * {@inheritdoc}
+ */
 class Database implements SessionHandlerInterface
 {
 

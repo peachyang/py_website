@@ -15,8 +15,14 @@ class Log
      */
     protected static $logger = null;
 
-    public function __construct(array $config = [])
+    /**
+     * @param array|Container $config
+     */
+    public function __construct($config = [])
     {
+        if ($config instanceof Container) {
+            $config = $config->get('config')['config']['log'];
+        }
         if (!empty($config)) {
             $this->setLogger($config);
         }
@@ -31,6 +37,9 @@ class Log
         }
     }
 
+    /**
+     * @return Logger
+     */
     protected function getLogger()
     {
         if (is_null(static::$logger)) {
@@ -41,6 +50,9 @@ class Log
         return static::$logger;
     }
 
+    /**
+     * @param array $config
+     */
     public function setLogger(array $config = [])
     {
         $name = isset($config['name']) ? $config['name'] : 'default';
@@ -52,11 +64,20 @@ class Log
         static::$logger = new Logger($name, $handlers, $processors);
     }
 
+    /**
+     * @uses Logger::error
+     * @param Exception $e
+     */
     public function logException(Exception $e)
     {
         $this->getLogger()->error($e->getMessage(), $e->getTrace());
     }
 
+    /**
+     * @uses Logger::addRecord
+     * @param string $message
+     * @param int $level
+     */
     public function log($message = '', $level = Logger::DEBUG)
     {
         if (is_string($level) && defined(Logger::$level)) {

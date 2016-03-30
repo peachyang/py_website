@@ -9,29 +9,52 @@ class Mailer extends Swift_Mailer
 
     use Traits\Container;
 
+    /**
+     * Allowed transportation class
+     * 
+     * @var array
+     */
     public static $ALLOWED_TRANSPORTATION = [
         'Swift_SmtpTransport' => 'SMTP',
         'Swift_SendmailTransport' => 'Sendmail',
         'Swift_MailTransport' => 'Mail'
     ];
-    
+
+    /**
+     * SMTP configuration
+     * 
+     * @var array 
+     */
     protected $SMTPParams = [
         'host' => 'localhost',
         'port' => 25,
         'security' => null
     ];
-    
+
+    /**
+     * Sendmail configuration
+     * 
+     * @var array 
+     */
     protected $SendmailParams = [
         'command' => '/usr/sbin/sendmail -bs'
     ];
-    
+
+    /**
+     * Mail configuration
+     * 
+     * @var array 
+     */
     protected $MailParams = [
         'extra' => '-f%s'
     ];
 
+    /**
+     * @param array|Container $container
+     */
     public function __construct($container = null)
     {
-        if($container instanceof Container){
+        if ($container instanceof Container) {
             $this->setContainer($container);
         }
         $config = $this->getContainer()->get('config');

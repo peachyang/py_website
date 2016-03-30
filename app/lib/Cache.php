@@ -20,7 +20,6 @@ final class Cache implements ArrayAccess, Singleton
     use Traits\Container;
 
     /**
-     * @static
      * @var Cache
      */
     private static $instance = null;
@@ -31,7 +30,7 @@ final class Cache implements ArrayAccess, Singleton
     private $pool = null;
 
     /**
-     * @param array $config
+     * @param array|Container $config
      * @throws \UnexpectedValueException
      */
     private function __construct($config = [])
@@ -73,6 +72,7 @@ final class Cache implements ArrayAccess, Singleton
     }
 
     /**
+     * @uses CacheProvider::contains
      * @param string $id
      * @return bool
      */
@@ -82,6 +82,7 @@ final class Cache implements ArrayAccess, Singleton
     }
 
     /**
+     * @uses CacheProvider::delete
      * @param string $id
      * @return bool
      */
@@ -91,15 +92,17 @@ final class Cache implements ArrayAccess, Singleton
     }
 
     /**
+     * @uses CacheProvider::fetch
      * @param string $id
      * @return mixed
      */
     public function fetch($id)
     {
-        return unserialize(@gzinflate($this->pool->fetch($id)));
+        return unserialize(@gzdecode($this->pool->fetch($id)));
     }
 
     /**
+     * @uses CacheProvider::save
      * @param string $id
      * @param mixed $data
      * @param int $lifeTime
@@ -107,10 +110,11 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function save($id, $data, $lifeTime = 0)
     {
-        return $this->pool->save($id, gzdeflate(serialize($data)), $lifeTime);
+        return $this->pool->save($id, gzencode(serialize($data)), $lifeTime);
     }
 
     /**
+     * @uses CacheProvider::fetchMultiple
      * @param array $keys
      * @return array
      */
@@ -119,12 +123,13 @@ final class Cache implements ArrayAccess, Singleton
         $result = [];
         $values = $this->pool->fetchMultiple($keys);
         foreach ($values as $value) {
-            $result[] = unserialize(@gzinflate($value));
+            $result[] = unserialize(@gzdecode($value));
         }
         return array_combine($keys, $result);
     }
 
     /**
+     * @uses CacheProvider::saveMultiple
      * @param array $keys
      * @param int $lifetime
      * @return bool
@@ -133,7 +138,7 @@ final class Cache implements ArrayAccess, Singleton
     {
         $pairs = [];
         foreach ($keysAndValues as $key => $value) {
-            $pairs[$key] = gzdeflate(serialize($value));
+            $pairs[$key] = gzencode(serialize($value));
         }
         return $this->pool->saveMultiple($pairs, $lifetime);
     }

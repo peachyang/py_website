@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Route;
 
+/**
+ * @todo Customize router
+ */
 abstract class Route implements RouteInterface
 {
 

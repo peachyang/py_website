@@ -12,6 +12,9 @@ final class Config extends ArrayObject implements Singleton
 
     private static $instance = null;
 
+    /**
+     * @param array|Container $config
+     */
     public function __construct($config = [])
     {
         if ($config instanceof Container) {
@@ -24,6 +27,10 @@ final class Config extends ArrayObject implements Singleton
         parent::__construct($config);
     }
 
+    /**
+     * @param array $config
+     * @return Config
+     */
     public static function instance($config = [])
     {
         if (is_null(static::$instance)) {
@@ -32,6 +39,9 @@ final class Config extends ArrayObject implements Singleton
         return static::$instance;
     }
 
+    /**
+     * @return array
+     */
     private function loadFromYaml()
     {
         $finder = new Finder;

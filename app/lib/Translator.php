@@ -16,11 +16,29 @@ class Translator implements Singleton
     const DEFAULT_DOMAIN = 'default';
     const CACHE_KEY = 'SEAHINET_TRANSLATOR_PAIRS_';
 
+    /**
+     * @var Translator
+     */
     private static $instance = null;
+
+    /**
+     * @var array
+     */
     protected $storage = [];
+
+    /**
+     * @var string
+     */
     protected $locale = null;
+
+    /**
+     * @var string
+     */
     protected static $defaultLocale = null;
 
+    /**
+     * @param string|Container $locale
+     */
     private function __construct($locale = null)
     {
         if ($locale instanceof Container) {
@@ -39,27 +57,46 @@ class Translator implements Singleton
         return static::$instance;
     }
 
+    /**
+     * @param string $locale
+     */
     public static function setDefaultLocale($locale)
     {
         static::$defaultLocale = $locale;
     }
 
+    /**
+     * @return string
+     */
     public static function getDefaultLocale()
     {
         return static::$defaultLocale;
     }
 
+    /**
+     * @param string $locale
+     * @return Translator
+     */
     public function setLocale($locale)
     {
         $this->locale = $locale;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale? : static::getDefaultLocale();
     }
 
+    /**
+     * Load translate pairs from csv files
+     * 
+     * @param string $locale
+     * @return array of Category
+     */
     protected function loadMessages($locale)
     {
         if (!isset($this->storage[$locale])) {
@@ -88,6 +125,10 @@ class Translator implements Singleton
         return $this->storage[$locale];
     }
 
+    /**
+     * @param string $path
+     * @return Category
+     */
     protected function readFile($path)
     {
         $messages = new Category();
@@ -104,11 +145,23 @@ class Translator implements Singleton
         return $messages;
     }
 
+    /**
+     * @uses Translator::translate
+     */
     public function __invoke($message, array $parameters = [], $domain = null, $locale = null)
     {
         return $this->translate($message, $parameters, $domain, $locale);
     }
 
+    /**
+     * Translate messages
+     * 
+     * @param string $message
+     * @param array $parameters
+     * @param string $domain
+     * @param string $locale
+     * @return string
+     */
     public function translate($message, array $parameters = [], $domain = null, $locale = null)
     {
         if (is_null($locale)) {

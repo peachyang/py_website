@@ -8,7 +8,6 @@ class Session implements Singleton
 {
 
     /**
-     * @static
      * @var Session
      */
     private static $instance = null;

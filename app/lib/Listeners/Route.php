@@ -9,7 +9,7 @@ use Seahinet\Lib\Route\Generator;
 use FastRoute\RouteParser\Std;
 
 /**
- * Listen route_dispatch event
+ * Listen route event
  */
 class Route implements ListenerInterface
 {

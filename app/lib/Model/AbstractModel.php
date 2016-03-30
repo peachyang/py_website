@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
+use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
 
 abstract class AbstractModel extends ArrayObject
@@ -98,6 +99,7 @@ abstract class AbstractModel extends ArrayObject
                         $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage);
                     }
                 } else {
+                    $this->storage = array_merge($this->storage, $result);
                     $this->afterLoad();
                 }
             } catch (Exception $e) {
@@ -128,8 +130,10 @@ abstract class AbstractModel extends ArrayObject
             } else {
                 
             }
+        } catch (InvalidQueryException $e) {
+            $this->getContainer()->get('log')->logException($e);
         } catch (Exception $e) {
-            
+            $this->getContainer()->get('log')->logException($e);
         }
     }
 

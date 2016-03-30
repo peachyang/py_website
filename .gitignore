@@ -1,9 +1,7 @@
 /nbproject/
 /vendor/
 /composer.lock
-/var/cache/
-/var/log/
-/var/session/
+/var/
 /app/config/adapter.yml
 *.log
 *.jar

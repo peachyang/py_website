@@ -2,15 +2,17 @@
 
 namespace Seahinet\Lib\Listeners;
 
+/**
+ * Listen respond event
+ */
 class Respond implements ListenerInterface
 {
-    
+
     public function respond($event)
     {
         $response = $event['response'];
         if (!headers_sent()) {
             header($response->renderStatusLine());
-
             foreach ($response->getHeaders() as $name => $values) {
                 foreach ($values as $value) {
                     header(sprintf('%s: %s', $name, $value), false);

@@ -17,6 +17,12 @@ final class Bootstrap
      */
     private static $eventDispatcher = null;
 
+    /**
+     * Prepare or get container singleton
+     * 
+     * @param array $config DI config
+     * @return ContainerInterface
+     */
     public static function getContainer($config = [])
     {
         if (is_null(static::$container)) {
@@ -26,6 +32,11 @@ final class Bootstrap
         return static::$container;
     }
 
+    /**
+     * Initialize system veriables
+     * 
+     * @param array $server
+     */
     public static function init($server)
     {
         $config = Config::instance();
@@ -33,6 +44,11 @@ final class Bootstrap
         static::$eventDispatcher->trigger('route', ['routers' => $config['route']]);
     }
 
+    /**
+     * Run system
+     * 
+     * @param array $server
+     */
     public static function run($server)
     {
         if (is_null(static::$container)) {
@@ -41,15 +57,11 @@ final class Bootstrap
         static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
     }
 
-    private static function getCallable($name)
-    {
-        if (is_string($name) && is_subclass_of($name, '\Seahinet\Lib\Stdlib\Singleton')) {
-            return $name::instance();
-        } else {
-            return $name;
-        }
-    }
-
+    /**
+     * Handle the main system configuration
+     * 
+     * @param Config $config
+     */
     private static function handleConfig($config)
     {
         if (isset($config['di'])) {

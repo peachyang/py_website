@@ -15,9 +15,9 @@ class Page extends Route
         $path = trim($request->getUri()->getPath(), '/');
         if ($path === '') {
             $home = new PageModel();
-            $home->load('home', 'url_key');
+            $home->load('home', 'uri_key');
             if ($home->getId()) {
-                return new RouteMatch(['page' => $home, 'controller' => '\\Seahinet\\CMS\\Controller\\PageController'], $request);
+                return new RouteMatch(['page' => $home, 'namespace' => 'Seahinet\\CMS\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
             } else {
                 return false;
             }
@@ -33,7 +33,7 @@ class Page extends Route
         $stack = [];
         while ($part = array_pop($parts)) {
             $model = new PageModel();
-            $model->load($part, 'url_key');
+            $model->load($part, 'uri_key');
             if ($model->getId()) {
                 $stack[] = $model;
             }
@@ -47,7 +47,7 @@ class Page extends Route
                 return false;
             }
         }
-        return new RouteMatch(['page' => $stack[0], 'controller' => '\\Seahinet\\CMS\\Controller\\PageController'], $request);
+        return new RouteMatch(['page' => $stack[0], 'namespace' => 'Seahinet\\CMS\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
     }
 
 }

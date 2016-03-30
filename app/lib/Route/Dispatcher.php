@@ -5,6 +5,9 @@ namespace Seahinet\Lib\Route;
 use Seahinet\Lib\Http\Request;
 use FastRoute\Dispatcher\GroupCountBased;
 
+/**
+ * @todo Adjust other route methods
+ */
 class Dispatcher extends GroupCountBased
 {
 

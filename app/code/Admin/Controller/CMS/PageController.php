@@ -28,10 +28,14 @@ class PageController extends AuthActionController
             try {
                 $model->save();
             } catch (Exception $e) {
-                
+                $this->getContainer()->get('log')->logException($e);
             }
         }
-        $this->redirectReferer();
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            
+        } else {
+            return $this->redirectReferer();
+        }
     }
 
 }

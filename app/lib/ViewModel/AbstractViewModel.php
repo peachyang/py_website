@@ -30,6 +30,8 @@ abstract class AbstractViewModel
     }
 
     /**
+     * Render specified template file
+     * 
      * @return string|mixed
      */
     public function render()

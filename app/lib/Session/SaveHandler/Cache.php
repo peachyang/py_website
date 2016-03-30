@@ -5,6 +5,9 @@ namespace Seahinet\Lib\Session\SaveHandler;
 use Seahinet\Lib\Cache as CacheHandler;
 use SessionHandlerInterface;
 
+/**
+ * {@inheritdoc}
+ */
 class Cache implements SessionHandlerInterface
 {
 

@@ -15,13 +15,16 @@ class Page extends AbstractModel
 
     protected function beforeSave()
     {
-        $this->storage['content'] = gzdeflate($this->storage['content']);
+        $this->storage['content'] = gzencode($this->storage['content']);
         parent::beforeSave();
     }
 
     protected function afterLoad()
     {
-        $this->storage['content'] = @gzinflate($this->storage['content']);
+        $data = @gzdecode($this->storage['content']);
+        if ($data !== false) {
+            $this->storage['content'] = $data;
+        }
         parent::afterLoad();
     }
 

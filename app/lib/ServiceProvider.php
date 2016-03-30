@@ -10,6 +10,9 @@ use Seahinet\Lib\Http\Response;
 class ServiceProvider implements ServiceProviderInterface
 {
 
+    /**
+     * @param PimpleContainer $container
+     */
     public function register(PimpleContainer $container)
     {
         if (!isset($container['request'])) {

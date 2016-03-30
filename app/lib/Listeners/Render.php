@@ -4,6 +4,9 @@ namespace Seahinet\Lib\Listeners;
 
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
+/**
+ * Listen render event
+ */
 class Render implements ListenerInterface
 {
 
@@ -13,12 +16,13 @@ class Render implements ListenerInterface
     {
         $response = $event['response'];
         if (!is_object($response)) {
+            $data = $response;
             if (is_string($response)) {
                 $response = $this->getContainer()->get('response');
-                $response->getBody()->write($response);
+                $response->getBody()->write($data);
             } else if (is_array($response)) {
                 $response = $this->getContainer()->get('response');
-                $response->withHeader('Content-Type','application/json; charset=UTF-8')->getBody()->write(json_encode($response));
+                $response->withHeader('Content-Type','application/json; charset=UTF-8')->getBody()->write(json_encode($data));
             }
         } else if ($response instanceof AbstractViewModel) {
             $response = $this->getContainer()->get('response');

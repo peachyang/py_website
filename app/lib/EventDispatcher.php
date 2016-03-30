@@ -24,12 +24,17 @@ class EventDispatcher extends SymfonyEventDispatcher implements Singleton
         return $this->dispatch($eventName, $event);
     }
 
+    /**
+     * @param string $eventName
+     * @param array|Listeners\ListenerInterface $listener
+     * @param int $priority
+     */
     public function addListener($eventName, $listener, $priority = 0)
     {
         if (is_array($listener) && is_subclass_of($listener[0], '\\Seahinet\\Lib\\Listeners\\ListenerInterface')) {
             $listener[0] = new $listener[0];
         }
-        return parent::addListener($eventName, $listener, $priority);
+        parent::addListener($eventName, $listener, $priority);
     }
 
     public static function instance()

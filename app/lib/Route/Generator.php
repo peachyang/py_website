@@ -4,6 +4,9 @@ namespace Seahinet\Lib\Route;
 
 use FastRoute\DataGenerator\GroupCountBased;
 
+/**
+ * @todo Adjust other route methods
+ */
 class Generator extends GroupCountBased
 {
 

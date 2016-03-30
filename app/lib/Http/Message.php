@@ -105,7 +105,7 @@ abstract class Message implements MessageInterface
     public function __toString()
     {
         $str = $this->renderStatusLine() . "\r\n";
-        $str .= $this->getHeaders()->toString();
+        $str .= $this->getHeaders()->__toString();
         $str .= "\r\n";
         $str .= $this->getBody();
         return $str;

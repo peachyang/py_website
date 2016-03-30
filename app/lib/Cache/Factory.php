@@ -20,7 +20,6 @@ abstract class Factory
 {
 
     /**
-     * @static
      * @var array Describe the minimal version of php extension 
      */
     public static $EXTENSION_VERSION = [
@@ -34,6 +33,11 @@ abstract class Factory
         'wincache' => ['version' => '1.3.5.0', 'name' => 'wincache']
     ];
 
+    /**
+     * @param array $config
+     * @return mixed
+     * @throws \UnexpectedValueException
+     */
     public static function getCachePool($config)
     {
         if (isset($config['adapter']) && static::checkExtension($config['adapter'])) {

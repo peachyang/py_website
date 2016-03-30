@@ -10,8 +10,7 @@ interface Singleton
 {
 
     /**
-     * @static
-     * @return self
+     * @return Singleton
      */
     public static function instance();
 }

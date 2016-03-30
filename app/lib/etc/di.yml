@@ -8,3 +8,4 @@ factory:
     dbAdapter: Seahinet\Lib\DbAdapter
 service:
     mailer: Seahinet\Lib\Mailer
+    renderer: Seahinet\Lib\ViewModel\Renderer\PHPInclude

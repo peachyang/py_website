@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `core_language`(
 
 CREATE TABLE IF NOT EXISTS `cms_page`(
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Page ID',
-    `parent_id` INTEGER COMMENT 'Parent page ID',
+    `parent_id` INTEGER DEFAULT NULL COMMENT 'Parent page ID',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `uri_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URI Key',
     `title` VARCHAR(255) DEFAULT '' COMMENT 'Page title',

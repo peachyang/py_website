@@ -34,7 +34,7 @@ abstract class AbstractModel extends ArrayObject
         $this->getTableGateway($table);
         $this->cacheKey = $table . '\\';
         $this->columns = $columns;
-        $this->$primaryKey = $primaryKey;
+        $this->primaryKey = $primaryKey;
     }
 
     protected function withLanguage($table, $column)
@@ -82,23 +82,24 @@ abstract class AbstractModel extends ArrayObject
                     $select = $this->tableGateway->getSql()->select();
                     $select->where([$this->tableName . '.' . $key => $id]);
                     if (!is_null($this->languageInfo)) {
-                        $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], '*', 'left');
-                        $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], '*', 'left');
+                        $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], [], 'left');
+                        $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
                     }
                     $result = $this->tableGateway->selectWith($select)->toArray();
-                    $this->storage = array_merge($this->storage, $result[0]);
-                    if (!is_null($this->languageInfo)) {
-                        $this->storage['language'] = [];
-                        foreach ($result as $record){
-                            $this->storage['language'][] = $record;
+                    if (count($result)) {
+                        $this->storage = array_merge($this->storage, $result[0]);
+                        if (!is_null($this->languageInfo)) {
+                            $this->storage['language'] = [];
+                            foreach ($result as $record) {
+                                $this->storage['language'][$record['language_id']] = $record['language'];
+                            }
                         }
+                        $this->afterLoad();
+                        $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage);
                     }
+                } else {
                     $this->afterLoad();
-                    $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage);
                 }
-                $this->isNew = false;
-                $this->isLoaded = true;
-                $this->updatedColumns = [];
             } catch (Exception $e) {
                 
             }
@@ -179,6 +180,9 @@ abstract class AbstractModel extends ArrayObject
 
     protected function afterLoad()
     {
+        $this->isNew = false;
+        $this->isLoaded = true;
+        $this->updatedColumns = [];
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
     }
 

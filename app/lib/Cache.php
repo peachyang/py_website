@@ -78,7 +78,7 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function contains($id)
     {
-        return $this->pool->contains(md5($id));
+        return $this->pool->contains($id);
     }
 
     /**
@@ -87,7 +87,7 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function delete($id)
     {
-        return $this->pool->delete(md5($id));
+        return $this->pool->delete($id);
     }
 
     /**
@@ -96,7 +96,7 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetch($id)
     {
-        return @gzinflate($this->pool->fetch(md5($id)));
+        return unserialize(@gzinflate($this->pool->fetch($id)));
     }
 
     /**
@@ -107,7 +107,7 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function save($id, $data, $lifeTime = 0)
     {
-        return $this->pool->save(md5($id), @gzdeflate($data), $lifeTime);
+        return $this->pool->save($id, gzdeflate(serialize($data)), $lifeTime);
     }
 
     /**
@@ -116,14 +116,10 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetchMultiple(array $keys)
     {
-        $md5keys = [];
         $result = [];
-        foreach ($keys as $key) {
-            $md5keys[] = md5($key);
-        }
-        $values = $this->pool->fetchMultiple($md5keys);
+        $values = $this->pool->fetchMultiple($keys);
         foreach ($values as $value) {
-            $result[] = @gzinflate($value);
+            $result[] = unserialize(@gzinflate($value));
         }
         return array_combine($keys, $result);
     }
@@ -137,7 +133,7 @@ final class Cache implements ArrayAccess, Singleton
     {
         $pairs = [];
         foreach ($keysAndValues as $key => $value) {
-            $pairs[md5($key)] = @gzdeflate($value);
+            $pairs[$key] = gzdeflate(serialize($value));
         }
         return $this->pool->saveMultiple($pairs, $lifetime);
     }

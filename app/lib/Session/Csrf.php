@@ -11,7 +11,7 @@ class Csrf
             $segment = new Segment('core');
         }
         $this->segment = $segment;
-        if (!$this->segment->get('value')) {
+        if (!$this->segment->get('csrf')) {
             $this->regenerateValue();
         }
     }
@@ -23,13 +23,13 @@ class Csrf
 
     public function getValue()
     {
-        return $this->segment->get('value');
+        return $this->segment->get('csrf');
     }
 
     public function regenerateValue()
     {
         $hash = hash('sha512', random_bytes(32));
-        $this->segment->set('value', $hash);
+        $this->segment->set('csrf', $hash);
     }
 
 }

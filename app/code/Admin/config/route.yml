@@ -1,0 +1,4 @@
+---
+admin:
+    route: Seahinet\Admin\Route\Router
+    priority: 100

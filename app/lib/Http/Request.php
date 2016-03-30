@@ -85,10 +85,10 @@ class Request extends Message implements RequestInterface
      * @return array
      * @throws RuntimeException
      */
-    public function getPost()
+    public function getPost($key = null)
     {
         if ($this->post) {
-            return $this->post;
+            return is_null($key) ? $this->post : $this->post[$key];
         }
 
         if (!$this->body) {
@@ -105,7 +105,7 @@ class Request extends Message implements RequestInterface
         }
         $this->post = $parsed;
 
-        return $this->post;
+        return is_null($key) ? $this->post : $this->post[$key];
     }
 
     /**

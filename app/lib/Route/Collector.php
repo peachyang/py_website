@@ -22,13 +22,11 @@ class Collector extends RouteCollector
      * @param string $route
      * @param string $handler
      */
-    public function addRoute($httpMethod, $route, $handler)
+    public function addRoute($httpMethod, $route, $handler, $priority = 0)
     {
         if (class_exists($route)) {
             $route = new $route;
-            foreach ((array) $httpMethod as $method) {
-                $this->dataGenerator->addRoute($method, $route, $handler);
-            }
+            $this->dataGenerator->addRoute('get', $route, $handler, $priority);
         } else {
             parent::addRoute($httpMethod, $route, $handler);
         }

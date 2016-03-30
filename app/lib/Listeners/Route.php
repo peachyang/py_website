@@ -3,7 +3,10 @@
 namespace Seahinet\Lib\Listeners;
 
 use Seahinet\Lib\Http\Request;
-use FastRoute\RouteCollector;
+use Seahinet\Lib\Route\Dispatcher;
+use Seahinet\Lib\Route\Collector;
+use Seahinet\Lib\Route\Generator;
+use FastRoute\RouteParser\Std;
 
 /**
  * Listen route_dispatch event
@@ -11,26 +14,40 @@ use FastRoute\RouteCollector;
 class Route implements ListenerInterface
 {
 
-    public function dispatch($event, $event_name, $eventDispatcher)
+    use \Seahinet\Lib\Traits\Container;
+
+    protected function getDispatcher($routers)
     {
-        $routers = $event['routers'];
-        $cache = BP . 'var/cache/';
-        if (!is_dir($cache)) {
-            mkdir($cache, 0744, true);
-        }
-        $dispatcher = \FastRoute\cachedDispatcher(function(RouteCollector $collector) use ($routers) {
+        $cache = $this->getContainer()->get('cache');
+        $data = $cache->fetch('ROUTE_CACHE');
+        if (!$data) {
+            $collector = new Collector(new Std, new Generator);
             foreach ($routers as $router) {
                 if (isset($router['route'])) {
                     $collector->addRoute((isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['route'], isset($router['controller']) ? $router['controller'] : $routers['default']['controller'], isset($router['priority']) ? $router['priority'] : 0);
                 }
             }
-        }, ['cacheFile' => $cache . 'route', 'routeCollector' => 'Seahinet\\Lib\\Route\\Collector', 'dataGenerator' => 'Seahinet\\Lib\\Route\\Generator', 'dispatcher' => 'Seahinet\\Lib\Route\\Dispatcher']);
+            $data = $collector->getData();
+            $cache->save('ROUTE_CACHE', $data);
+        }
+        return new Dispatcher($data);
+    }
+
+    public function dispatch($event, $event_name, $eventDispatcher)
+    {
+        $routers = $event['routers'];
+        $dispatcher = $this->getDispatcher($routers);
         $request = new Request();
         $routeMatch = $dispatcher->dispatch($request);
         if (!$routeMatch) {
             $routeMatch = $routers['default'];
         }
-        $controller = new $routeMatch['controller']();
+        if (isset($routeMatch['namespace'])) {
+            $className = $routeMatch['namespace'] . '\\' . (isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController');
+        } else {
+            $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
+        }
+        $controller = new $className();
         $eventDispatcher->trigger('render', ['response' => $controller->dispatch($request, $routeMatch)]);
     }
 

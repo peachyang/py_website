@@ -4,6 +4,7 @@ namespace Seahinet\Lib;
 
 use Seahinet\Lib\EventDispatcher\Event;
 use Seahinet\Lib\Stdlib\Singleton;
+use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 
 class EventDispatcher extends SymfonyEventDispatcher implements Singleton
@@ -24,17 +25,19 @@ class EventDispatcher extends SymfonyEventDispatcher implements Singleton
         return $this->dispatch($eventName, $event);
     }
 
-    /**
-     * @param string $eventName
-     * @param array|Listeners\ListenerInterface $listener
-     * @param int $priority
-     */
-    public function addListener($eventName, $listener, $priority = 0)
+    protected function doDispatch($listeners, $eventName, SymfonyEvent $event)
     {
-        if (is_array($listener) && is_subclass_of($listener[0], '\\Seahinet\\Lib\\Listeners\\ListenerInterface')) {
-            $listener[0] = new $listener[0];
+        foreach ($listeners as $listener) {
+            if (is_array($listener) && is_subclass_of($listener[0], '\\Seahinet\\Lib\\Listeners\\ListenerInterface')) {
+                $listener[0] = new $listener[0];
+            }
+            if (is_callable($listener)) {
+                call_user_func($listener, $event, $eventName, $this);
+            }
+            if ($event->isPropagationStopped()) {
+                break;
+            }
         }
-        parent::addListener($eventName, $listener, $priority);
     }
 
     public static function instance()

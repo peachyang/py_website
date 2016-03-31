@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use Interop\Container\ContainerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 final class Bootstrap
 {
@@ -20,7 +21,7 @@ final class Bootstrap
     /**
      * Prepare or get container singleton
      * 
-     * @param array $config DI config
+     * @param array $config         DI config
      * @return ContainerInterface
      */
     public static function getContainer($config = [])
@@ -36,12 +37,17 @@ final class Bootstrap
      * Initialize system veriables
      * 
      * @param array $server
+     * @throws Exception\MissingFileException
      */
     public static function init($server)
     {
-        $config = Config::instance();
+        if (!file_exists(BP . 'app/config/adapter.yml')) {
+            throw new Exception\MissingFileException(BP . 'app/config/adapter.yml');
+        }
+        $config = static::prepareConfig();
         static::handleConfig($config);
-        static::$eventDispatcher->trigger('route', ['routers' => $config['route']]);
+        $event = static::$eventDispatcher->trigger('route', ['routers' => $config['route']]);
+        static::$eventDispatcher->trigger('render', ['response' => $event['response']]);
     }
 
     /**
@@ -55,6 +61,23 @@ final class Bootstrap
             static::init($server);
         }
         static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
+    }
+
+    /**
+     * Prepare config from cache
+     * 
+     * @return Config
+     */
+    private static function prepareConfig()
+    {
+        $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
+        $cache = Cache::instance($adapter['cache']);
+        $config = $cache->fetch('SYSTEM_CONFIG');
+        if (!$config) {
+            $config = Config::instance();
+            $cache->save('SYSTEM_CONFIG', $config);
+        }
+        return $config;
     }
 
     /**

@@ -16,6 +16,12 @@ class Route implements ListenerInterface
 
     use \Seahinet\Lib\Traits\Container;
 
+    /**
+     * Add routers to dispatcher
+     * 
+     * @param array $routers
+     * @return Dispatcher
+     */
     protected function getDispatcher($routers)
     {
         $cache = $this->getContainer()->get('cache');
@@ -33,7 +39,7 @@ class Route implements ListenerInterface
         return new Dispatcher($data);
     }
 
-    public function dispatch($event, $event_name, $eventDispatcher)
+    public function dispatch($event)
     {
         $routers = $event['routers'];
         $dispatcher = $this->getDispatcher($routers);
@@ -48,7 +54,7 @@ class Route implements ListenerInterface
             $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
         }
         $controller = new $className();
-        $eventDispatcher->trigger('render', ['response' => $controller->dispatch($request, $routeMatch)]);
+        $event['response'] = $controller->dispatch($request, $routeMatch);
     }
 
 }

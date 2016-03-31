@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
 
@@ -27,8 +28,18 @@ abstract class AbstractModel extends ArrayObject
         $this->_construct();
     }
 
+    /**
+     * Overwrite normal method instead of magic method
+     */
     abstract protected function _construct();
 
+    /**
+     * Data operator initialization
+     * 
+     * @param string $table         Table name
+     * @param string $primaryKey    Primary key name
+     * @param array $columns        Table columns
+     */
     protected function init($table, $primaryKey = 'id', $columns = [])
     {
         $this->tableName = $table;
@@ -38,16 +49,33 @@ abstract class AbstractModel extends ArrayObject
         $this->primaryKey = $primaryKey;
     }
 
+    /**
+     * Join language table
+     * 
+     * @param string $table
+     * @param string $column
+     */
     protected function withLanguage($table, $column)
     {
         $this->languageInfo = [$table, $column];
     }
 
+    /**
+     * Get primary key value
+     * 
+     * @return int|string
+     */
     public function getId()
     {
         return isset($this->storage[$this->primaryKey]) ? $this->storage[$this->primaryKey] : null;
     }
 
+    /**
+     * Set primary key value
+     * 
+     * @param int|string $id
+     * @return AbstractModel
+     */
     public function setId($id)
     {
         if (is_null($id)) {
@@ -69,6 +97,13 @@ abstract class AbstractModel extends ArrayObject
         parent::offsetUnset($key);
     }
 
+    /**
+     * Load data
+     * 
+     * @param int|string $id    Primary key value by default
+     * @param string $key
+     * @return AbstractModel
+     */
     public function load($id, $key = null)
     {
         if (!$this->isLoaded) {
@@ -77,7 +112,7 @@ abstract class AbstractModel extends ArrayObject
                     $key = $this->primaryKey;
                 }
                 $cache = $this->getContainer()->get('cache');
-                $result = $cache->fetch($this->cacheKey . $key . '\\' . $id);
+                $result = $cache->fetch('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id);
                 if (!$result) {
                     $this->beforeLoad();
                     $select = $this->tableGateway->getSql()->select();
@@ -96,19 +131,27 @@ abstract class AbstractModel extends ArrayObject
                             }
                         }
                         $this->afterLoad();
-                        $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage);
+                        $cache->save('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id, $this->storage);
                     }
                 } else {
                     $this->storage = array_merge($this->storage, $result);
                     $this->afterLoad();
                 }
+            } catch (InvalidQueryException $e) {
+                $this->getContainer()->get('log')->logException($e);
             } catch (Exception $e) {
-                
+                $this->getContainer()->get('log')->logException($e);
             }
         }
         return $this;
     }
 
+    /**
+     * Insert/Update data
+     * 
+     * @param array $constraint     Update query constraint
+     * @return AbstractModel
+     */
     public function save($constraint = [])
     {
         $columns = $this->prepareColumns();
@@ -127,16 +170,20 @@ abstract class AbstractModel extends ArrayObject
                 $this->afterSave();
                 $cache = $this->getContainer()->get('cache');
                 $cache->delete($this->cacheKey . implode('\\', $constraint));
-            } else {
-                
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
         }
+        return $this;
     }
 
+    /**
+     * Get inserting/updating values
+     * 
+     * @return array
+     */
     protected function prepareColumns()
     {
         if (empty($this->columns)) {
@@ -174,6 +221,13 @@ abstract class AbstractModel extends ArrayObject
 
     protected function afterSave()
     {
+        if (!is_null($this->languageInfo) && $this->getId() && count($this->storage['language_id'])) {
+            $tableGateway = new TableGateway($this->languageInfo[0], $this->tableGateway->getAdapter());
+            $tableGateway->delete([$this->languageInfo[0] => $this->getId()]);
+            foreach ($this->storage['language_id'] as $language) {
+                $tableGateway->insert([$this->languageInfo[0] => $this->getId(), 'language_id' => $language]);
+            }
+        }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
     }
 

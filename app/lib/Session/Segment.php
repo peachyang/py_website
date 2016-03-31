@@ -48,7 +48,7 @@ class Segment implements IteratorAggregate, ArrayAccess
 
     public function get($key)
     {
-        return $this->iterator[$key];
+        return isset($this->iterator[$key]) ? $this->iterator[$key] : '';
     }
 
     public function set($key, $value)
@@ -85,6 +85,23 @@ class Segment implements IteratorAggregate, ArrayAccess
     {
         unset($this->iterator[$key]);
         unset($_SESSION[$this->name][$key]);
+    }
+
+    public function addMessage(array $message)
+    {
+        if (!isset($this->iterator['message'])) {
+            $messages = [];
+        } else {
+            $messages = $this->iterator['message'] + $message;
+        }
+        $this->set('message', $messages);
+    }
+
+    public function getMessage()
+    {
+        $result = $this->get('message');
+        $this->offsetUnset('message');
+        return $result;
     }
 
     public function clear()

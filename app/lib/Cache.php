@@ -30,6 +30,11 @@ final class Cache implements ArrayAccess, Singleton
     private $pool = null;
 
     /**
+     * @var array
+     */
+    private $unhitPrefix = [];
+
+    /**
      * @param array|Container $config
      * @throws \UnexpectedValueException
      */
@@ -98,7 +103,22 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetch($id)
     {
+        if (count($this->unhitPrefix) && preg_match('/^(' . implode('|', $this->unhitPrefix) . ')/', $id)) {
+            return null;
+        }
         return unserialize(@gzdecode($this->pool->fetch($id)));
+    }
+
+    /**
+     * Set prefix of unhit cache key
+     * 
+     * @param string $prefix
+     * @return Cache
+     */
+    public function unhit($prefix)
+    {
+        $this->unhitPrefix[] = $prefix;
+        return $this;
     }
 
     /**
@@ -121,11 +141,21 @@ final class Cache implements ArrayAccess, Singleton
     public function fetchMultiple(array $keys)
     {
         $result = [];
-        $values = $this->pool->fetchMultiple($keys);
+        $fetchKey = $keys;
+        if (count($this->unhitPrefix)) {
+            $fetchKey = [];
+            $regex = '/^(' . implode('|', $this->unhitPrefix) . ')/';
+            foreach ($keys as $key) {
+                if (!preg_match($regex, $key)) {
+                    $fetchKey[] = $key;
+                }
+            }
+        }
+        $values = $this->pool->fetchMultiple($fetchKey);
         foreach ($values as $value) {
             $result[] = unserialize(@gzdecode($value));
         }
-        return array_combine($keys, $result);
+        return array_combine($fetchKey, $result);
     }
 
     /**

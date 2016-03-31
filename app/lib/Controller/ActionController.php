@@ -6,6 +6,7 @@ use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Http\Response;
 use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Csrf;
+use Seahinet\Lib\Session\Segment;
 
 abstract class ActionController
 {
@@ -155,6 +156,37 @@ abstract class ActionController
         } catch (\Exception $e) {
             return $message;
         }
+    }
+
+    /**
+     * Add message to session
+     * 
+     * @param string|array $message
+     * @param Segment|string $segment
+     */
+    protected function addMessage($message, $level = 'info', $segment = 'core')
+    {
+        if (!$message) {
+            return;
+        }
+        if (is_string($segment)) {
+            $segment = new Segment($segment);
+        }
+        $segment->addMessage(is_string($message) ? [['message' => $message, 'level' => $level]] : $message);
+    }
+
+    /**
+     * Get message from session
+     * 
+     * @param Segment|string $segment
+     * @return array
+     */
+    protected function getMessage($segment = 'core')
+    {
+        if (is_string($segment)) {
+            $segment = new Segment($segment);
+        }
+        return (array) $segment->getMessage();
     }
 
 }

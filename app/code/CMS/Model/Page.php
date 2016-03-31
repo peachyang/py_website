@@ -18,7 +18,7 @@ class Page extends AbstractModel
         $this->storage['content'] = gzencode($this->storage['content']);
         parent::beforeSave();
     }
-
+    
     protected function afterLoad()
     {
         $data = @gzdecode($this->storage['content']);

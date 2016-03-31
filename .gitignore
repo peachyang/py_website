@@ -3,6 +3,7 @@
 /composer.lock
 /var/
 /app/config/adapter.yml
+!.htaccess
 *.log
 *.jar
 *.war

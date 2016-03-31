@@ -25,6 +25,9 @@ class EventDispatcher extends SymfonyEventDispatcher implements Singleton
         return $this->dispatch($eventName, $event);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doDispatch($listeners, $eventName, SymfonyEvent $event)
     {
         foreach ($listeners as $listener) {

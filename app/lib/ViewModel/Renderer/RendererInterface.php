@@ -2,6 +2,8 @@
 
 namespace Seahinet\Lib\ViewModel\Renderer;
 
+use Seahinet\Lib\ViewModel\AbstractViewModel;
+
 interface RendererInterface
 {
 
@@ -9,8 +11,8 @@ interface RendererInterface
      * Render the specified file with params
      * 
      * @param string $file
-     * @param array $params
+     * @param AbstractViewModel $viewModel
      * @return string
      */
-    public function render($file, $params = []);
+    public function render($file, $viewModel);
 }

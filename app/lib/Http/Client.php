@@ -3,6 +3,8 @@
 namespace Seahinet\Lib\Http;
 
 use ArrayIterator;
+use InvalidArgumentException;
+use RuntimeException;
 use Traversable;
 use Zend\Stdlib;
 use Zend\Stdlib\ArrayUtils;
@@ -134,7 +136,7 @@ class Client implements Stdlib\DispatchableInterface
      *
      * @param  array|Traversable $options
      * @return Client
-     * @throws Client\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setOptions($options = [])
     {
@@ -142,7 +144,7 @@ class Client implements Stdlib\DispatchableInterface
             $options = ArrayUtils::iteratorToArray($options);
         }
         if (!is_array($options)) {
-            throw new Client\Exception\InvalidArgumentException('Config parameter is not valid');
+            throw new InvalidArgumentException('Config parameter is not valid');
         }
 
         /** Config Key Normalization */
@@ -166,19 +168,19 @@ class Client implements Stdlib\DispatchableInterface
      *
      * @param  Client\Adapter\AdapterInterface|string $adapter
      * @return Client
-     * @throws Client\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setAdapter($adapter)
     {
         if (is_string($adapter)) {
             if (!class_exists($adapter)) {
-                throw new Client\Exception\InvalidArgumentException('Unable to locate adapter class "' . $adapter . '"');
+                throw new InvalidArgumentException('Unable to locate adapter class "' . $adapter . '"');
             }
             $adapter = new $adapter;
         }
 
         if (!$adapter instanceof Client\Adapter\AdapterInterface) {
-            throw new Client\Exception\InvalidArgumentException('Passed adapter is not a HTTP connection adapter');
+            throw new InvalidArgumentException('Passed adapter is not a HTTP connection adapter');
         }
 
         $this->adapter = $adapter;
@@ -529,7 +531,7 @@ class Client implements Stdlib\DispatchableInterface
      * @param  bool $httponly
      * @param string  $maxAge
      * @param string  $version
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return Client
      */
     public function addCookie($cookie, $value = null, $expire = null, $path = null, $domain = null, $secure = false, $httponly = true, $maxAge = null, $version = null)
@@ -539,7 +541,7 @@ class Client implements Stdlib\DispatchableInterface
                 if ($setCookie instanceof Header\SetCookie) {
                     $this->cookies[$this->getCookieId($setCookie)] = $setCookie;
                 } else {
-                    throw new Exception\InvalidArgumentException('The cookie parameter is not a valid Set-Cookie type');
+                    throw new InvalidArgumentException('The cookie parameter is not a valid Set-Cookie type');
                 }
             }
         } elseif (is_string($cookie) && $value !== null) {
@@ -548,7 +550,7 @@ class Client implements Stdlib\DispatchableInterface
         } elseif ($cookie instanceof Header\SetCookie) {
             $this->cookies[$this->getCookieId($cookie)] = $cookie;
         } else {
-            throw new Exception\InvalidArgumentException('Invalid parameter type passed as Cookie');
+            throw new InvalidArgumentException('Invalid parameter type passed as Cookie');
         }
         return $this;
     }
@@ -557,7 +559,7 @@ class Client implements Stdlib\DispatchableInterface
      * Set an array of cookies
      *
      * @param  array $cookies
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return Client
      */
     public function setCookies($cookies)
@@ -568,7 +570,7 @@ class Client implements Stdlib\DispatchableInterface
                 $this->addCookie($name, $value);
             }
         } else {
-            throw new Exception\InvalidArgumentException('Invalid cookies passed as parameter, it must be an array');
+            throw new InvalidArgumentException('Invalid cookies passed as parameter, it must be an array');
         }
         return $this;
     }
@@ -585,7 +587,7 @@ class Client implements Stdlib\DispatchableInterface
      * Set the headers (for the request)
      *
      * @param  Headers|array $headers
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return Client
      */
     public function setHeaders($headers)
@@ -597,7 +599,7 @@ class Client implements Stdlib\DispatchableInterface
         } elseif ($headers instanceof Headers) {
             $this->getRequest()->setHeaders($headers);
         } else {
-            throw new Exception\InvalidArgumentException('Invalid parameter headers passed');
+            throw new InvalidArgumentException('Invalid parameter headers passed');
         }
         return $this;
     }
@@ -665,7 +667,7 @@ class Client implements Stdlib\DispatchableInterface
     /**
      * Create temporary stream
      *
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      * @return resource
      */
     protected function openTempStream()
@@ -686,7 +688,7 @@ class Client implements Stdlib\DispatchableInterface
             if ($this->adapter instanceof Client\Adapter\AdapterInterface) {
                 $this->adapter->close();
             }
-            throw new Exception\RuntimeException("Could not open temp file {$this->streamName}", 0, $error);
+            throw new RuntimeException("Could not open temp file {$this->streamName}", 0, $error);
         }
 
         return $fp;
@@ -699,17 +701,17 @@ class Client implements Stdlib\DispatchableInterface
      * @param string $user
      * @param string $password
      * @param string $type
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return Client
      */
     public function setAuth($user, $password, $type = self::AUTH_BASIC)
     {
         if (!defined('static::AUTH_' . strtoupper($type))) {
-            throw new Exception\InvalidArgumentException("Invalid or not supported authentication type: '$type'");
+            throw new InvalidArgumentException("Invalid or not supported authentication type: '$type'");
         }
 
         if (empty($user)) {
-            throw new Exception\InvalidArgumentException("The username cannot be empty");
+            throw new InvalidArgumentException("The username cannot be empty");
         }
 
         $this->auth = [
@@ -738,30 +740,30 @@ class Client implements Stdlib\DispatchableInterface
      * @param string $type
      * @param array $digest
      * @param null|string $entityBody
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return string|bool
      */
     protected function calcAuthDigest($user, $password, $type = self::AUTH_BASIC, $digest = [], $entityBody = null)
     {
         if (!defined('self::AUTH_' . strtoupper($type))) {
-            throw new Exception\InvalidArgumentException("Invalid or not supported authentication type: '$type'");
+            throw new InvalidArgumentException("Invalid or not supported authentication type: '$type'");
         }
         $response = false;
         switch (strtolower($type)) {
             case self::AUTH_BASIC :
                 // In basic authentication, the user name cannot contain ":"
                 if (strpos($user, ':') !== false) {
-                    throw new Exception\InvalidArgumentException("The user name cannot contain ':' in Basic HTTP authentication");
+                    throw new InvalidArgumentException("The user name cannot contain ':' in Basic HTTP authentication");
                 }
                 $response = base64_encode($user . ':' . $password);
                 break;
             case self::AUTH_DIGEST :
                 if (empty($digest)) {
-                    throw new Exception\InvalidArgumentException("The digest cannot be empty");
+                    throw new InvalidArgumentException("The digest cannot be empty");
                 }
                 foreach ($digest as $key => $value) {
                     if (!defined('self::DIGEST_' . strtoupper($key))) {
-                        throw new Exception\InvalidArgumentException("Invalid or not supported digest authentication parameter: '$key'");
+                        throw new InvalidArgumentException("Invalid or not supported digest authentication parameter: '$key'");
                     }
                 }
                 $ha1 = md5($user . ':' . $digest['realm'] . ':' . $password);
@@ -769,7 +771,7 @@ class Client implements Stdlib\DispatchableInterface
                     $ha2 = md5($this->getMethod() . ':' . $this->getUri()->getPath());
                 } elseif (strtolower($digest['qop']) == 'auth-int') {
                     if (empty($entityBody)) {
-                        throw new Exception\InvalidArgumentException("I cannot use the auth-int digest authentication without the entity body");
+                        throw new InvalidArgumentException("I cannot use the auth-int digest authentication without the entity body");
                     }
                     $ha2 = md5($this->getMethod() . ':' . $this->getUri()->getPath() . ':' . md5($entityBody));
                 }
@@ -802,8 +804,7 @@ class Client implements Stdlib\DispatchableInterface
      *
      * @param  Request $request
      * @return Response
-     * @throws Exception\RuntimeException
-     * @throws Client\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function send(Request $request = null)
     {
@@ -870,7 +871,7 @@ class Client implements Stdlib\DispatchableInterface
 
             // check that adapter supports streaming before using it
             if (is_resource($body) && !($adapter instanceof Client\Adapter\StreamInterface)) {
-                throw new Client\Exception\RuntimeException('Adapter does not support streaming');
+                throw new RuntimeException('Adapter does not support streaming');
             }
 
             // calling protected method to allow extending classes
@@ -878,7 +879,7 @@ class Client implements Stdlib\DispatchableInterface
             $response = $this->doRequest($uri, $method, $secure, $headers, $body);
 
             if (!$response) {
-                throw new Exception\RuntimeException('Unable to read response, or response is empty');
+                throw new RuntimeException('Unable to read response, or response is empty');
             }
 
             if ($this->config['storeresponse']) {
@@ -997,7 +998,7 @@ class Client implements Stdlib\DispatchableInterface
      * @param  string $ctype Content type to use (if $data is set and $ctype is
      *                null, will be application/octet-stream)
      * @return Client
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function setFileUpload($filename, $formname, $data = null, $ctype = null)
     {
@@ -1006,7 +1007,7 @@ class Client implements Stdlib\DispatchableInterface
             $data = file_get_contents($filename);
             $error = ErrorHandler::stop();
             if ($data === false) {
-                throw new Exception\RuntimeException("Unable to read file '{$filename}' for upload", 0, $error);
+                throw new RuntimeException("Unable to read file '{$filename}' for upload", 0, $error);
             }
             if (!$ctype) {
                 $ctype = $this->detectFileMimeType($filename);
@@ -1076,7 +1077,7 @@ class Client implements Stdlib\DispatchableInterface
      *
      * @param resource|string $body
      * @param Http $uri
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      * @return array
      */
     protected function prepareHeaders($body, $uri)
@@ -1129,7 +1130,7 @@ class Client implements Stdlib\DispatchableInterface
                     break;
                 case self::AUTH_DIGEST :
                     if (!$this->adapter instanceof Client\Adapter\Curl) {
-                        throw new Exception\RuntimeException("The digest authentication is only available for curl adapters (Zend\\Http\\Client\\Adapter\\Curl)");
+                        throw new RuntimeException("The digest authentication is only available for curl adapters (Zend\\Http\\Client\\Adapter\\Curl)");
                     }
 
                     $this->adapter->setCurlOption(CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
@@ -1165,7 +1166,7 @@ class Client implements Stdlib\DispatchableInterface
      * Prepare the request body (for PATCH, POST and PUT requests)
      *
      * @return string
-     * @throws \Zend\Http\Client\Exception\RuntimeException
+     * @throws RuntimeException
      */
     protected function prepareBody()
     {
@@ -1214,7 +1215,7 @@ class Client implements Stdlib\DispatchableInterface
                 // Encode body as application/x-www-form-urlencoded
                 $body = http_build_query($this->getRequest()->getPost()->toArray());
             } else {
-                throw new Client\Exception\RuntimeException("Cannot handle content type '{$this->encType}' automatically");
+                throw new RuntimeException("Cannot handle content type '{$this->encType}' automatically");
             }
         }
 
@@ -1345,7 +1346,7 @@ class Client implements Stdlib\DispatchableInterface
      * @param array $headers
      * @param string $body
      * @return string the raw response
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      */
     protected function doRequest(Http $uri, $method, $secure = false, $headers = [], $body = '')
     {
@@ -1357,7 +1358,7 @@ class Client implements Stdlib\DispatchableInterface
                 $stream = $this->openTempStream();
                 $this->adapter->setOutputStream($stream);
             } else {
-                throw new Exception\RuntimeException('Adapter does not support streaming');
+                throw new RuntimeException('Adapter does not support streaming');
             }
         }
         // HTTP connection
@@ -1377,7 +1378,7 @@ class Client implements Stdlib\DispatchableInterface
      * @param string $password
      * @param string $type
      * @return string
-     * @throws Client\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function encodeAuthHeader($user, $password, $type = self::AUTH_BASIC)
     {
@@ -1385,7 +1386,7 @@ class Client implements Stdlib\DispatchableInterface
             case self::AUTH_BASIC:
                 // In basic authentication, the user name cannot contain ":"
                 if (strpos($user, ':') !== false) {
-                    throw new Client\Exception\InvalidArgumentException("The user name cannot contain ':' in 'Basic' HTTP authentication");
+                    throw new InvalidArgumentException("The user name cannot contain ':' in 'Basic' HTTP authentication");
                 }
 
                 return 'Basic ' . base64_encode($user . ':' . $password);
@@ -1397,7 +1398,7 @@ class Client implements Stdlib\DispatchableInterface
             //    break;
 
             default:
-                throw new Client\Exception\InvalidArgumentException("Not a supported HTTP authentication type: '$type'");
+                throw new InvalidArgumentException("Not a supported HTTP authentication type: '$type'");
         }
 
         return;

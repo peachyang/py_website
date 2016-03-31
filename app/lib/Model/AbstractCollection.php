@@ -72,7 +72,7 @@ abstract class AbstractCollection extends ArrayObject
                     if (count($result)) {
                         $this->storage = $result;
                         $this->afterLoad();
-                        $cache->save($cacheKey, $result);
+                        $cache->save($cacheKey, $result, 86400);
                     }
                 } else {
                     $this->storage = $result;

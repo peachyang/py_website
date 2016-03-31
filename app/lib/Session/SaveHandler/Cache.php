@@ -31,7 +31,7 @@ class Cache implements SessionHandlerInterface
 
     public function destroy($session_id)
     {
-        return $this->getCache()->deleteItem('SESS_' . $session_id);
+        return $this->getCache()->delete('SESS_' . $session_id);
     }
 
     public function gc($maxlifetime)
@@ -51,7 +51,7 @@ class Cache implements SessionHandlerInterface
 
     public function write($session_id, $session_data)
     {
-        $this->getCache()->setItem('SESS_' . $session_id, $session_data);
+        $this->getCache()->save('SESS_' . $session_id, $session_data);
     }
 
 }

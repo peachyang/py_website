@@ -9,4 +9,3 @@ factory:
 service:
     log: Seahinet\Lib\Log
     mailer: Seahinet\Lib\Mailer
-    renderer: Seahinet\Lib\ViewModel\Renderer\PHPInclude

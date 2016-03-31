@@ -24,7 +24,7 @@ abstract class Factory
      */
     public static $EXTENSION_VERSION = [
         'apc' => ['version' => '3.0.0', 'name' => 'apc'],
-        'apcu' => ['version' => '4.0.7', 'name' => 'apc'],
+        'apcu' => ['version' => '4.0.7', 'name' => 'apcu'],
         'memcache' => ['version' => '2.0.0', 'name' => 'memcache'],
         'memcached' => ['version' => '2.0.0', 'name' => 'memcached'],
         'mongodb' => ['version' => '1.3.0', 'name' => 'mongo'],
@@ -40,19 +40,20 @@ abstract class Factory
      */
     public static function getCachePool($config)
     {
-        if (isset($config['adapter']) && static::checkExtension($config['adapter'])) {
-            $method = 'prepare' . $config['adapter'];
-            $class = 'DoctrineCache\\' . $config['adapter'] . 'Cache';
-            if (is_callable('\\Seahinet\\Lib\\Cache\\Factory::' . $method)) {
-                return static::$method($config);
-            } else if (class_exists($class)) {
-                return new $class;
-            } else {
-                throw new \UnexpectedValueException('Bad adapter: ' . $config['adapter']);
+        try {
+            if (isset($config['adapter']) && static::checkExtension($config['adapter'])) {
+                $method = 'prepare' . $config['adapter'];
+                $class = 'Doctrine\\Common\\Cache\\' . $config['adapter'] . 'Cache';
+                if (is_callable('\\Seahinet\\Lib\\Cache\\Factory::' . $method)) {
+                    return static::$method($config);
+                } else if (class_exists($class)) {
+                    return new $class;
+                }
             }
-        } else {
-            return static::prepareFilesystem($config);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
+        return static::prepareFilesystem($config);
     }
 
     /**
@@ -61,8 +62,9 @@ abstract class Factory
      */
     private static function checkExtension($name)
     {
-        if (isset(static::$EXTENSION_VERSION[strtolower($name)])) {
-            return extension_loaded(static::$EXTENSION_VERSION[strtolower($name)]['name']) && version_compare(phpversion(static::$EXTENSION_VERSION[strtolower($name)]['name']), static::$EXTENSION_VERSION[strtolower('version')], '>=');
+        $name = strtolower($name);
+        if (isset(static::$EXTENSION_VERSION[$name])) {
+            return extension_loaded(static::$EXTENSION_VERSION[$name]['name']) && version_compare(phpversion(static::$EXTENSION_VERSION[$name]['name']), static::$EXTENSION_VERSION[$name]['version'], '>=');
         }
         return true;
     }

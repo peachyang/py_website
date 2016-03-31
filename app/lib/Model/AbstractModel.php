@@ -131,7 +131,7 @@ abstract class AbstractModel extends ArrayObject
                             }
                         }
                         $this->afterLoad();
-                        $cache->save('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id, $this->storage);
+                        $cache->save('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id, $this->storage, 86400);
                     }
                 } else {
                     $this->storage = array_merge($this->storage, $result);

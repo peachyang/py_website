@@ -24,9 +24,19 @@ abstract class AbstractViewModel
      */
     protected $template = null;
 
+    /**
+     * @var array Variables and children view model
+     */
+    protected $variables = [];
+
     public function __construct($template = null)
     {
         $this->template = $template;
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
 
     /**
@@ -36,10 +46,14 @@ abstract class AbstractViewModel
      */
     public function render()
     {
-        if (is_null($this->getTemplate())) {
+        if (is_null($this->getTemplate()) || !file_exists(BP . 'app/tpl/' . $this->getTemplate())) {
             return '';
         }
-        $rendered = $this->getContainer()->get('renderer')->render(BP . 'app/tpl/' . $this->getTemplate());
+        if ($this->getContainer()->has('renderer')) {
+            $rendered = $this->getContainer()->get('renderer')->render($this->getTemplate(), $this);
+        } else {
+            $rendered = include BP . 'app/tpl/' . $this->getTemplate();
+        }
         return $rendered;
     }
 
@@ -78,6 +92,38 @@ abstract class AbstractViewModel
             $this->csrf = new Csrf;
         }
         return $this->csrf->getValue();
+    }
+
+    public function __get($name)
+    {
+        return $this->getVariable($name);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->setVariable($name, $value);
+    }
+
+    public function getVariable($key)
+    {
+        return isset($this->variables[$key]) ? $this->variables[$key] : '';
+    }
+
+    public function setVariable($key, $value)
+    {
+        $this->variables[$key] = $value;
+        return $this;
+    }
+
+    public function getVariables()
+    {
+        return $this->variables;
+    }
+
+    public function setVariables($variables)
+    {
+        $this->variables = $variables;
+        return $this;
     }
 
 }

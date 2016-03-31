@@ -3,19 +3,21 @@
 namespace Seahinet\Lib;
 
 use Seahinet\Lib\Stdlib\Singleton;
+use Seahinet\Lib\Stdlib\ArrayObject;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
-use Zend\Stdlib\ArrayObject;
 
 final class Config extends ArrayObject implements Singleton
 {
+
+    use Traits\Container;
 
     private static $instance = null;
 
     /**
      * @param array|Container $config
      */
-    public function __construct($config = [])
+    private function __construct($config = [])
     {
         if ($config instanceof Container) {
             $this->setContainer($config);
@@ -24,7 +26,7 @@ final class Config extends ArrayObject implements Singleton
         if (empty($config)) {
             $config = $this->loadFromYaml();
         }
-        parent::__construct($config);
+        $this->storage = $config;
     }
 
     /**

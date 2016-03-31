@@ -5,6 +5,9 @@ namespace Seahinet\Lib;
 use Interop\Container\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @todo Bootstrap main system
+ */
 final class Bootstrap
 {
 

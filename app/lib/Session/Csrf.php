@@ -3,7 +3,7 @@
 namespace Seahinet\Lib\Session;
 
 /**
- * @todo Generate/Validate csrf key
+ * Generate/Validate csrf key
  */
 class Csrf
 {

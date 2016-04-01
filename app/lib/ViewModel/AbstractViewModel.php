@@ -4,6 +4,9 @@ namespace Seahinet\Lib\ViewModel;
 
 use Seahinet\Lib\Session\Csrf;
 
+/**
+ * View model for renderer
+ */
 abstract class AbstractViewModel
 {
 
@@ -40,7 +43,8 @@ abstract class AbstractViewModel
     }
 
     /**
-     * Render specified template file
+     * Render specified template file with specified renderer
+     * Use include by default
      * 
      * @return string|mixed
      */

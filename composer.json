@@ -7,6 +7,7 @@
         "doctrine/cache": "~1.6.0",
         "ezyang/htmlpurifier": "4.7.0",
         "leafo/scssphp": "~0.6.3",
+        "mongodb/mongodb": "~1.0",
         "monolog/monolog": "~1.17",
         "nikic/fast-route": "~0.6",
         "oyejorge/less.php": "~1.7.0.3",

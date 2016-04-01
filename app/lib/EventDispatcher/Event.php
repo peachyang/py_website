@@ -7,7 +7,7 @@ use Serializable;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 
 /**
- * @todo Add parameters to event object
+ * Add parameters to symfony event object
  */
 class Event extends SymfonyEvent implements ArrayAccess, Serializable
 {

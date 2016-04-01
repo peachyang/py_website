@@ -7,6 +7,9 @@ use Exception;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * Logging service
+ */
 class Log
 {
 

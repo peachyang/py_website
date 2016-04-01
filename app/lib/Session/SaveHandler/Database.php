@@ -6,7 +6,7 @@ use SessionHandlerInterface;
 use Zend\Db\TableGateway\TableGateway;
 
 /**
- * {@inheritdoc}
+ * Handle session storage with database
  */
 class Database implements SessionHandlerInterface
 {

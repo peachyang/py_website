@@ -4,6 +4,9 @@ namespace Seahinet\Lib;
 
 use Zend\Db\Adapter\Adapter;
 
+/**
+ * Database adapter factory
+ */
 class DBAdapter
 {
 

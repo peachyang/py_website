@@ -4,6 +4,9 @@ namespace Seahinet\Lib;
 
 use Swift_Mailer;
 
+/**
+ * Swift mailer factory
+ */
 class Mailer extends Swift_Mailer
 {
 

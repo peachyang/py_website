@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Controller;
 
+/**
+ * Controller with authorization for backend pages
+ */
 class AuthActionController extends ActionController
 {
 

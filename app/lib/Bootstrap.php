@@ -6,7 +6,7 @@ use Interop\Container\ContainerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * @todo Bootstrap main system
+ * Bootstrap main system
  */
 final class Bootstrap
 {

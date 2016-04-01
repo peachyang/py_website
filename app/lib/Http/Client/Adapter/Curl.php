@@ -2,9 +2,11 @@
 
 namespace Seahinet\Lib\Http\Client\Adapter;
 
-use Traversable;
+use InvalidArgumentException;
+use RuntimeException;
 use Seahinet\Lib\Http\Client\Adapter\AdapterInterface as HttpAdapter;
 use Seahinet\Lib\Exception as AdapterException;
+use Traversable;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -91,7 +93,7 @@ class Curl implements HttpAdapter, StreamInterface
      *
      * @param  array|Traversable $options
      * @return Curl
-     * @throws AdapterException\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setOptions($options = [])
     {
@@ -99,7 +101,7 @@ class Curl implements HttpAdapter, StreamInterface
             $options = ArrayUtils::iteratorToArray($options);
         }
         if (!is_array($options)) {
-            throw new AdapterException\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Array or Traversable object expected, got ' . gettype($options)
             );
         }
@@ -174,7 +176,7 @@ class Curl implements HttpAdapter, StreamInterface
      * @param  int     $port
      * @param  bool $secure
      * @return void
-     * @throws AdapterException\RuntimeException if unable to connect
+     * @throws RuntimeException if unable to connect
      */
     public function connect($host, $port = 80, $secure = false)
     {
@@ -211,7 +213,7 @@ class Curl implements HttpAdapter, StreamInterface
         if (!$this->curl) {
             $this->close();
 
-            throw new AdapterException\RuntimeException('Unable to Connect to ' . $host . ':' . $port);
+            throw new RuntimeException('Unable to Connect to ' . $host . ':' . $port);
         }
 
         if ($secure !== false) {
@@ -237,20 +239,20 @@ class Curl implements HttpAdapter, StreamInterface
      * @param  array         $headers
      * @param  string        $body
      * @return string        $request
-     * @throws AdapterException\RuntimeException If connection fails, connected
+     * @throws RuntimeException If connection fails, connected
      *     to wrong host, no PUT file defined, unsupported method, or unsupported
      *     cURL option.
-     * @throws AdapterException\InvalidArgumentException if $method is currently not supported
+     * @throws InvalidArgumentException if $method is currently not supported
      */
     public function write($method, $uri, $httpVersion = 1.1, $headers = [], $body = '')
     {
         // Make sure we're properly connected
         if (!$this->curl) {
-            throw new AdapterException\RuntimeException("Trying to write but we are not connected");
+            throw new RuntimeException("Trying to write but we are not connected");
         }
 
         if ($this->connectedTo[0] != $uri->getHost() || $this->connectedTo[1] != $uri->getPort()) {
-            throw new AdapterException\RuntimeException("Trying to write but we are connected to the wrong host");
+            throw new RuntimeException("Trying to write but we are connected to the wrong host");
         }
 
         // set URL
@@ -279,7 +281,7 @@ class Curl implements HttpAdapter, StreamInterface
                     if (!isset($headers['Content-Length'])
                         && !isset($this->config['curloptions'][CURLOPT_INFILESIZE])
                     ) {
-                        throw new AdapterException\RuntimeException(
+                        throw new RuntimeException(
                             'Cannot set a file-handle for cURL option CURLOPT_INFILE'
                             . ' without also setting its size in CURLOPT_INFILESIZE.'
                         );
@@ -328,11 +330,11 @@ class Curl implements HttpAdapter, StreamInterface
 
             default:
                 // For now, through an exception for unsupported request methods
-                throw new AdapterException\InvalidArgumentException("Method '$method' currently not supported");
+                throw new InvalidArgumentException("Method '$method' currently not supported");
         }
 
         if (is_resource($body) && $curlMethod != CURLOPT_UPLOAD) {
-            throw new AdapterException\RuntimeException("Streaming requests are allowed only with PUT");
+            throw new RuntimeException("Streaming requests are allowed only with PUT");
         }
 
         // get http version to use
@@ -398,7 +400,7 @@ class Curl implements HttpAdapter, StreamInterface
             foreach ((array) $this->config['curloptions'] as $k => $v) {
                 if (!in_array($k, $this->invalidOverwritableCurlOptions)) {
                     if (curl_setopt($this->curl, $k, $v) == false) {
-                        throw new AdapterException\RuntimeException(sprintf(
+                        throw new RuntimeException(sprintf(
                             'Unknown or erroreous cURL option "%s" set',
                             $k
                         ));
@@ -419,7 +421,7 @@ class Curl implements HttpAdapter, StreamInterface
         $request .= $body;
 
         if (empty($this->response)) {
-            throw new AdapterException\RuntimeException("Error in cURL request: " . curl_error($this->curl));
+            throw new RuntimeException("Error in cURL request: " . curl_error($this->curl));
         }
 
         // separating header from body because it is dangerous to accidentially replace strings in the body

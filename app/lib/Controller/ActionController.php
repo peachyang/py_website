@@ -8,6 +8,9 @@ use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Session\Segment;
 
+/**
+ * Controller for normal pages
+ */
 abstract class ActionController
 {
 

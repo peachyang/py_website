@@ -6,7 +6,7 @@ use ArrayAccess;
 use Seahinet\Lib\Http\Request;
 
 /**
- * @todo Signed a success route path
+ * Signed a success route path
  */
 class RouteMatch implements ArrayAccess
 {

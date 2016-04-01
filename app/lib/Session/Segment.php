@@ -7,7 +7,7 @@ use IteratorAggregate;
 use Seahinet\Lib\Session;
 
 /**
- * @todo Get/Set values in different domains
+ * Get/Set values in different domains
  */
 class Segment implements IteratorAggregate, ArrayAccess
 {

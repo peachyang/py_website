@@ -7,6 +7,9 @@ use Seahinet\Lib\Stdlib\ArrayObject;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * Main configuration of system
+ */
 final class Config extends ArrayObject implements Singleton
 {
 

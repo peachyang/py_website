@@ -6,6 +6,9 @@ use Exception;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
 
+/**
+ * Data operator for collection model
+ */
 abstract class AbstractCollection extends ArrayObject
 {
 

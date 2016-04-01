@@ -6,6 +6,8 @@ use Seahinet\Lib\Http\Request;
 use FastRoute\Dispatcher\GroupCountBased;
 
 /**
+ * Dispatch routers
+ * 
  * @todo Adjust other route methods
  */
 class Dispatcher extends GroupCountBased

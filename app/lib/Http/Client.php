@@ -10,6 +10,11 @@ use Zend\Stdlib;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\ErrorHandler;
 
+/**
+ * Http client
+ * 
+ * @see https://github.com/zendframework/zend-http/blob/master/src/Client.php
+ */
 class Client implements Stdlib\DispatchableInterface
 {
 

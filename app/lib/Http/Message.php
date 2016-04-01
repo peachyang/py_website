@@ -6,6 +6,10 @@ use InvalidArgumentException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Abstract message (base class for Request and Response)
+ * Defined in the PSR-7 MessageInterface.
+ */
 abstract class Message implements MessageInterface
 {
 

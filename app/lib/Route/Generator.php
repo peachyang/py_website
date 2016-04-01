@@ -5,6 +5,8 @@ namespace Seahinet\Lib\Route;
 use FastRoute\DataGenerator\GroupCountBased;
 
 /**
+ * Generate routers' data for cache
+ * 
  * @todo Adjust other route methods
  */
 class Generator extends GroupCountBased

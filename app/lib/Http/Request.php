@@ -5,6 +5,10 @@ namespace Seahinet\Lib\Http;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * HTTP request. It manages the request method, URI, headers, cookies, and body
+ * according to the PSR-7 standard.
+ */
 class Request extends Message implements RequestInterface
 {
 

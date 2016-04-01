@@ -8,7 +8,7 @@ use JsonSerializable;
 use Serializable;
 
 /**
- * @todo Save splid translatation pairs
+ * Save splid translatation pairs
  */
 class Category implements ArrayAccess, JsonSerializable, Serializable
 {

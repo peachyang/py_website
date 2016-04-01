@@ -7,6 +7,9 @@ use Pimple\ServiceProviderInterface;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Http\Response;
 
+/**
+ * Pimple service provider interface.
+ */
 class ServiceProvider implements ServiceProviderInterface
 {
 

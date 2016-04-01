@@ -7,6 +7,8 @@ use FastRoute\DataGenerator;
 use FastRoute\RouteCollector;
 
 /**
+ * Collect routers
+ * 
  * @todo Adjust other route methods
  */
 class Collector extends RouteCollector

@@ -4,6 +4,9 @@ namespace Seahinet\Lib\Exception;
 
 use Exception;
 
+/**
+ * Missing file exception
+ */
 class MissingFileException extends Exception
 {
 

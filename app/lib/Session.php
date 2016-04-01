@@ -4,6 +4,9 @@ namespace Seahinet\Lib;
 
 use Seahinet\Lib\Stdlib\Singleton;
 
+/**
+ * Session manager
+ */
 class Session implements Singleton
 {
 

@@ -22,10 +22,9 @@ class Render implements ListenerInterface
                 $response->getBody()->write($data);
             } else if (is_array($response)) {
                 $response = $this->getContainer()->get('response');
-                $response->withHeader('Content-Type','application/json; charset=UTF-8')->getBody()->write(json_encode($data));
+                $response->withHeader('Content-Type', 'application/json; charset=UTF-8')->getBody()->write(json_encode($data));
             }
         } else if ($response instanceof AbstractViewModel) {
-            $response = $this->getContainer()->get('response');
             if ($response->getCacheKey()) {
                 $cache = $this->getContainer()->get('cache');
                 $rendered = $cache->fetch('VIEWMODEL_RENDERED_' . $response->getCacheKey());
@@ -36,6 +35,7 @@ class Render implements ListenerInterface
             } else {
                 $rendered = $response->render();
             }
+            $response = $this->getContainer()->get('response');
             $response->getBody()->write($rendered);
         }
     }

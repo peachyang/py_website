@@ -8,6 +8,9 @@ use Seahinet\Lib\Translator\Category;
 use SplFileObject;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Translate service
+ */
 class Translator implements Singleton
 {
 

@@ -8,6 +8,9 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
+ * Represents Uploaded Files.
+ * It manages and normalizes uploaded files according to the PSR-7 standard.
+ * 
  * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/UploadedFile.php
  */
 class UploadedFile implements UploadedFileInterface

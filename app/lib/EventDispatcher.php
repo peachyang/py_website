@@ -7,6 +7,9 @@ use Seahinet\Lib\Stdlib\Singleton;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 
+/**
+ * Event Dispatcher
+ */
 class EventDispatcher extends SymfonyEventDispatcher implements Singleton
 {
 

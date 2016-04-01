@@ -4,6 +4,10 @@ namespace Seahinet\Lib\Http;
 
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * HTTP response. It manages the response status, headers, and body
+ * according to the PSR-7 standard.
+ */
 class Response extends Message implements ResponseInterface
 {
 

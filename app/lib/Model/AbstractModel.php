@@ -7,6 +7,9 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
 
+/**
+ * Data operator for single model
+ */
 abstract class AbstractModel extends ArrayObject
 {
 

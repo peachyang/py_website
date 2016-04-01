@@ -6,6 +6,8 @@ use InvalidArgumentException;
 use Psr\Http\Message\UriInterface;
 
 /**
+ * Value object representing a URI.
+ * 
  * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/Uri.php
  */
 class Uri implements UriInterface

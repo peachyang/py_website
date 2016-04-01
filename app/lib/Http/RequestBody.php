@@ -3,6 +3,8 @@
 namespace Seahinet\Lib\Http;
 
 /**
+ * Provides a PSR-7 implementation of a reusable raw request body
+ *
  * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/RequestBody.php
  */
 class RequestBody extends Body

@@ -2,8 +2,8 @@
 
 namespace Seahinet\Lib\Http\Client\Adapter;
 
+use RuntimeException;
 use Seahinet\Lib\Http\Client;
-use Seahinet\Lib\Exception as AdapterException;
 use Seahinet\Lib\Http\Response;
 use Zend\Stdlib\ErrorHandler;
 
@@ -74,7 +74,7 @@ class Proxy extends Socket
      * @param string  $host
      * @param int     $port
      * @param  bool $secure
-     * @throws AdapterException\RuntimeException
+     * @throws RuntimeException
      */
     public function connect($host, $port = 80, $secure = false)
     {
@@ -105,7 +105,7 @@ class Proxy extends Socket
      * @param string        $httpVer
      * @param array         $headers
      * @param string        $body
-     * @throws AdapterException\RuntimeException
+     * @throws RuntimeException
      * @return string Request as string
      */
     public function write($method, $uri, $httpVer = '1.1', $headers = [], $body = '')
@@ -117,14 +117,14 @@ class Proxy extends Socket
 
         // Make sure we're properly connected
         if (! $this->socket) {
-            throw new AdapterException\RuntimeException("Trying to write but we are not connected");
+            throw new RuntimeException("Trying to write but we are not connected");
         }
 
         $host = $this->config['proxy_host'];
         $port = $this->config['proxy_port'];
 
         if ($this->connectedTo[0] != "tcp://$host" || $this->connectedTo[1] != $port) {
-            throw new AdapterException\RuntimeException("Trying to write but we are connected to the wrong proxy server");
+            throw new RuntimeException("Trying to write but we are connected to the wrong proxy server");
         }
 
         // Add Proxy-Authorization header
@@ -174,12 +174,12 @@ class Proxy extends Socket
         $test  = fwrite($this->socket, $request);
         $error = ErrorHandler::stop();
         if (!$test) {
-            throw new AdapterException\RuntimeException("Error writing request to proxy server", 0, $error);
+            throw new RuntimeException("Error writing request to proxy server", 0, $error);
         }
 
         if (is_resource($body)) {
             if (stream_copy_to_stream($body, $this->socket) == 0) {
-                throw new AdapterException\RuntimeException('Error writing request to server');
+                throw new RuntimeException('Error writing request to server');
             }
         }
 
@@ -193,7 +193,7 @@ class Proxy extends Socket
      * @param int $port
      * @param string  $httpVer
      * @param array   $headers
-     * @throws AdapterException\RuntimeException
+     * @throws RuntimeException
      */
     protected function connectHandshake($host, $port = 443, $httpVer = '1.1', array &$headers = [])
     {
@@ -219,7 +219,7 @@ class Proxy extends Socket
         $test  = fwrite($this->socket, $request);
         $error = ErrorHandler::stop();
         if (!$test) {
-            throw new AdapterException\RuntimeException("Error writing request to proxy server", 0, $error);
+            throw new RuntimeException("Error writing request to proxy server", 0, $error);
         }
 
         // Read response headers only
@@ -239,7 +239,7 @@ class Proxy extends Socket
 
         // Check that the response from the proxy is 200
         if (Response::fromString($response)->getStatusCode() != 200) {
-            throw new AdapterException\RuntimeException("Unable to connect to HTTPS proxy. Server response: " . $response);
+            throw new RuntimeException("Unable to connect to HTTPS proxy. Server response: " . $response);
         }
 
         // If all is good, switch socket to secure mode. We have to fall back
@@ -260,7 +260,7 @@ class Proxy extends Socket
         }
 
         if (! $success) {
-            throw new AdapterException\RuntimeException("Unable to connect to" .
+            throw new RuntimeException("Unable to connect to" .
                     " HTTPS server through proxy: could not negotiate secure connection.");
         }
     }

@@ -6,7 +6,8 @@ use ArrayAccess;
 use Serializable;
 
 /**
- * @todo Simplify PHP ArrayObject
+ * Simplify PHP ArrayObject
+ * It is not Traversable
  */
 class ArrayObject implements ArrayAccess, Serializable
 {

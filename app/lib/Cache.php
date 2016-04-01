@@ -8,7 +8,7 @@ use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Stdlib\Singleton;
 
 /**
- * Handle cache operation by using Doctrine/Cache pool
+ * Handle cache operation by using Doctrine\Cache pool
  * 
  * @method array|null getStats()
  * @method bool flushAll()

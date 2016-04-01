@@ -6,7 +6,7 @@ use Seahinet\Lib\Cache as CacheHandler;
 use SessionHandlerInterface;
 
 /**
- * {@inheritdoc}
+ * Handle session storage with cache
  */
 class Cache implements SessionHandlerInterface
 {

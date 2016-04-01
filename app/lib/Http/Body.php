@@ -7,6 +7,8 @@ use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
 /**
+ * Represents a data stream as defined in PSR-7.
+ * 
  * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/Stream.php
  */
 class Body implements StreamInterface

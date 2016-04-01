@@ -7,14 +7,14 @@ use Memcache;
 use Memcached;
 use MongoClient;
 use MongoCollection;
+use MongoDB\Driver\Manager as MongoDBManager;
+use MongoDB\Collection as MongoDBCollection;
 use Predis\Client as Predis;
 use Redis;
 use SQLite3;
 
 /**
  * Generate cache pool based on config array
- * 
- * @abstract
  */
 abstract class Factory
 {
@@ -23,11 +23,12 @@ abstract class Factory
      * @var array Describe the minimal version of php extension 
      */
     public static $EXTENSION_VERSION = [
-        'apc' => ['version' => '3.0.0', 'name' => 'apc'],
+        'apc' => ['version' => '3.0.0', 'name' => 'apc'], // deprecated
         'apcu' => ['version' => '4.0.7', 'name' => 'apcu'],
         'memcache' => ['version' => '2.0.0', 'name' => 'memcache'],
         'memcached' => ['version' => '2.0.0', 'name' => 'memcached'],
-        'mongodb' => ['version' => '1.3.0', 'name' => 'mongo'],
+        'mongo' => ['version' => '1.3.0', 'name' => 'mongo'], // deprecated
+        'mongodb' => ['version' => '1.1.0', 'name' => 'mongodb'],
         'predis' => ['version' => '2.2.7', 'name' => 'redis'],
         'redis' => ['version' => '2.2.7', 'name' => 'redis'],
         'wincache' => ['version' => '1.3.5.0', 'name' => 'wincache']
@@ -156,13 +157,13 @@ abstract class Factory
     /**
      * @param array|\ArrayAccess $config
      */
-    private static function prepareMongoDB($config)
+    private static function prepareMongo($config)
     {
         $server = 'mongodb://localhost:27017';
         if (isset($config['server'])) {
             $server = $config['server'];
-            unset($collection['server']);
-        } else if (isset($collection['host'])) {
+            unset($config['server']);
+        } else if (isset($config['host'])) {
             $server = 'mongodb://' . $config['host'] . (isset($config['port']) ? $config['port'] : 27017);
             unset($config['host']);
             unset($config['port']);
@@ -172,6 +173,45 @@ abstract class Factory
         $client = new MongoClient($server, $config);
         $collection = new MongoCollection($client->selectDB($db), 'cache');
         $pool = new DoctrineCache\MongoDBCache($collection);
+        return $pool;
+    }
+
+    /**
+     * @param array|\ArrayAccess $config
+     */
+    private static function prepareMongoDB($config)
+    {
+        $server = 'mongodb://localhost:27017';
+        if (isset($config['server'])) {
+            $server = $config['server'];
+            unset($config['server']);
+        } else {
+            if (isset($config['username'])) {
+                $auth = $config['username'] . (isset($config['password']) ? ':' . $config['password'] : '') . '@';
+                unset($config['username']);
+                unset($config['password']);
+            } else if (isset($config['user'])) {
+                $auth = $config['user'] . (isset($config['pass']) ? ':' . $config['pass'] : '') . '@';
+                unset($config['user']);
+                unset($config['pass']);
+            } else {
+                $auth = '';
+            }
+            if (isset($config['host'])) {
+                $server = 'mongodb://' . $auth . $config['host'] . (isset($config['port']) ? $config['port'] : 27017);
+                unset($config['host']);
+                unset($config['port']);
+            } else if (isset($config['socket'])) {
+                $server = 'mongodb://' . $auth . $config['socket'];
+                unset($config['socket']);
+            }
+        }
+
+        $db = isset($config['db']) ? $config['db'] : 'seahinet';
+        unset($config['db']);
+        $manager = new MongoDBManager($server, $config);
+        $collection = new MongoDBCollection($manager, $db, 'cache');
+        $pool = new MongoDBCache($collection);
         return $pool;
     }
 

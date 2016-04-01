@@ -1,0 +1,7 @@
+---
+cms_page:
+    update: default
+    root:
+        children:
+            content:
+                type: Seahinet\CMS\ViewModel\Page

@@ -10,7 +10,9 @@ class PageController extends ActionController
     public function indexAction()
     {
         $page = $this->getOption('page');
-        return $page['content'];
+        $layout = $this->getLayout('cms_page', true);
+        $layout->getChild('content')->setPageModel($page);
+        return $layout;
     }
 
 }

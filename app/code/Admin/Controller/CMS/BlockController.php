@@ -1,0 +1,41 @@
+<?php
+
+namespace Seahinet\Admin\Controller\CMS;
+
+use Exception;
+use Seahinet\CMS\Model\Block as Model;
+use Seahinet\Lib\Controller\AuthActionController;
+
+class BlockController extends AuthActionController
+{
+
+    public function editAction()
+    {
+        
+    }
+
+    public function saveAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if (!isset($data['form_key']) || !$this->validateFormKey($data['form_key'])) {
+                
+            }
+            $model = new Model($data);
+            if (!isset($data['id'])) {
+                $model->setId(null);
+            }
+            try {
+                $model->save();
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+            }
+        }
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            
+        } else {
+            return $this->redirectReferer();
+        }
+    }
+
+}

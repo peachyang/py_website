@@ -14,7 +14,8 @@ use Seahinet\Lib\Session\Segment;
 abstract class ActionController
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\Translate;
 
     /**
      * @var Request 
@@ -145,23 +146,6 @@ abstract class ActionController
     }
 
     /**
-     * Translate messages
-     * 
-     * @param string $message
-     * @param array $parameters
-     * @param string $domain
-     * @return string
-     */
-    protected function translate($message, $parameters = [], $domain = null)
-    {
-        try {
-            return $this->getContainer()->get('translator')->translate($message, $parameters, $domain);
-        } catch (\Exception $e) {
-            return $message;
-        }
-    }
-
-    /**
      * Add message to session
      * 
      * @param string|array $message
@@ -190,6 +174,11 @@ abstract class ActionController
             $segment = new Segment($segment);
         }
         return (array) $segment->getMessage();
+    }
+
+    protected function getLayout($handler = '', $render = false)
+    {
+        return $this->getContainer()->get('layout')->getLayout($handler, $render);
     }
 
 }

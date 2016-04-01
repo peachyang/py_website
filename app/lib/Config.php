@@ -13,7 +13,8 @@ use Symfony\Component\Yaml\Parser;
 final class Config extends ArrayObject implements Singleton
 {
 
-    use Traits\Container;
+    use Traits\Container,
+        Traits\ArrayMerge;
 
     private static $instance = null;
 
@@ -58,7 +59,7 @@ final class Config extends ArrayObject implements Singleton
             if (!isset($config[$key])) {
                 $config[$key] = [];
             }
-            $config[$key] = array_merge_recursive($config[$key], $parser->parse($file->getContents()));
+            $config[$key] = $this->arrayMerge($config[$key], $parser->parse($file->getContents()));
         }
         return $config;
     }

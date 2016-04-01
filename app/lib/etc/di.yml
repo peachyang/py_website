@@ -3,6 +3,7 @@ singleton:
     config: Seahinet\Lib\Config
     cache: Seahinet\Lib\Cache
     eventDispatcher: Seahinet\Lib\EventDispatcher
+    layout: Seahinet\Lib\Layout
     translator: Seahinet\Lib\Translator
 factory:
     dbAdapter: Seahinet\Lib\DbAdapter

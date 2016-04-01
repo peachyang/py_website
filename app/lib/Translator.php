@@ -149,14 +149,6 @@ class Translator implements Singleton
     }
 
     /**
-     * @uses Translator::translate
-     */
-    public function __invoke($message, array $parameters = [], $domain = null, $locale = null)
-    {
-        return $this->translate($message, $parameters, $domain, $locale);
-    }
-
-    /**
      * Translate messages
      * 
      * @param string $message

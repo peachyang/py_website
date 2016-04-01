@@ -22,7 +22,12 @@ class Twig implements RendererInterface
 
     public function render($file, $viewModel)
     {
-        return $this->getTwig()->loadTemplate($file)->render($viewModel->getVariables());
+        return $this->getTwig()->loadTemplate($file . $this->getExtension())->render($viewModel->getVariables());
+    }
+
+    public function getExtension()
+    {
+        return '.html.twig';
     }
 
 }

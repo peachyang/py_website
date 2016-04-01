@@ -20,7 +20,12 @@ class Latte implements RendererInterface
 
     public function render($file, $viewModel)
     {
-        return $this->getLatte()->render($file, $viewModel->getVariables());
+        return $this->getLatte()->render($file . $this->getExtension(), $viewModel->getVariables());
+    }
+
+    public function getExtension()
+    {
+        return '.latte';
     }
 
 }

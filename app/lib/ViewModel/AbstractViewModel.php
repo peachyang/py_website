@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\ViewModel;
 
+use JsonSerializable;
 use Seahinet\Lib\Session\Csrf;
 
 /**
@@ -10,7 +11,8 @@ use Seahinet\Lib\Session\Csrf;
 abstract class AbstractViewModel
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\Translate;
 
     /**
      * @var string|false to disable the cache for this view model
@@ -28,18 +30,23 @@ abstract class AbstractViewModel
     protected $template = null;
 
     /**
-     * @var array Variables and children view model
+     * @var array Variables
      */
     protected $variables = [];
 
-    public function __construct($template = null)
-    {
-        $this->template = $template;
-    }
+    /**
+     * @var array Children view model
+     */
+    protected $children = [];
 
     public function __toString()
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\Exception $e) {
+            $this->getContainer()->get('log')->logException($e);
+            return '';
+        }
     }
 
     /**
@@ -50,21 +57,35 @@ abstract class AbstractViewModel
      */
     public function render()
     {
-        if (is_null($this->getTemplate()) || !file_exists(BP . 'app/tpl/' . $this->getTemplate())) {
-            return '';
+        if (is_null($this->getTemplate())) {
+            return $this instanceof JsonSerializable ? $this->jsonSerialize() : '';
         }
         if ($this->getContainer()->has('renderer')) {
             $rendered = $this->getContainer()->get('renderer')->render($this->getTemplate(), $this);
+        } else if (file_exists(BP . 'app/tpl/' . $this->getTemplate() . '.phtml')) {
+            $rendered = $this->getRendered();
         } else {
-            $rendered = include BP . 'app/tpl/' . $this->getTemplate();
+            $rendered = '';
         }
         return $rendered;
     }
 
     /**
+     * Render template by default
+     * 
      * @return string
      */
-    function getTemplate()
+    protected function getRendered()
+    {
+        ob_start();
+        include BP . 'app/tpl/' . $this->getTemplate() . '.phtml';
+        return ob_get_clean();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
     {
         return $this->template;
     }
@@ -73,7 +94,7 @@ abstract class AbstractViewModel
      * @param string $template
      * @return AbstractViewModel
      */
-    function setTemplate($template)
+    public function setTemplate($template)
     {
         $this->template = $template;
         return $this;
@@ -100,12 +121,7 @@ abstract class AbstractViewModel
 
     public function __get($name)
     {
-        return $this->getVariable($name);
-    }
-
-    public function __set($name, $value)
-    {
-        $this->setVariable($name, $value);
+        return $this->getVariable($name)? : $this->getChild($name);
     }
 
     public function getVariable($key)
@@ -121,12 +137,51 @@ abstract class AbstractViewModel
 
     public function getVariables()
     {
-        return $this->variables;
+        return $this->children + $this->variables;
     }
 
-    public function setVariables($variables)
+    public function setVariables(array $variables)
     {
-        $this->variables = $variables;
+        foreach ($variables as $key => $value) {
+            $this->setVariable($key, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * Get child view model
+     * 
+     * @param string $name
+     * @param bool $recursive
+     * @return AbstractViewModel
+     */
+    public function getChild($name = null, $recursive = false)
+    {
+        if (is_null($name)) {
+            return $this->children;
+        } else if (isset($this->children[$name])) {
+            return $this->children[$name];
+        } else if ($recursive) {
+            foreach ($this->children as $value) {
+                $child = $value->getChild($name, $recursive);
+                if (!is_null($child)) {
+                    return $child;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Add child view model
+     * 
+     * @param string $name
+     * @param AbstractViewModel $child
+     * @return AbstractViewModel
+     */
+    public function addChild($name, AbstractViewModel $child)
+    {
+        $this->children[$name] = $child;
         return $this;
     }
 

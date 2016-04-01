@@ -25,7 +25,12 @@ class Smarty implements RendererInterface
         foreach ($viewModel->getVariables() as $key => $value) {
             $this->getSmarty()->assign($key, $value);
         }
-        return $this->getSmarty()->display($file);
+        return $this->getSmarty()->display($file . $this->getExtension());
+    }
+
+    public function getExtension()
+    {
+        return '.tpl';
     }
 
 }

@@ -2,9 +2,12 @@
 
 namespace Seahinet\Admin\Controller;
 
+use Exception;
 use Seahinet\Admin\Model\User;
 use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Lib\Model\Email\Template;
 use Seahinet\Lib\Session\Segment;
+use Swift_SwiftException;
 use Gregwar\Captcha\CaptchaBuilder;
 
 class IndexController extends ActionController
@@ -57,10 +60,10 @@ class IndexController extends ActionController
         $builder->build();
         $segment = new Segment('admin');
         $segment->set('captcha', $builder->getPhrase());
-        header('Content-type: image/jpeg');
-        header('Cache-Control: no-store');
-        $builder->output();
-        exit;
+        $this->getResponse()
+                ->withHeader('Content-type', 'image/jpeg')
+                ->withHeader('Cache-Control', 'no-store');
+        return $builder->get();
     }
 
     public function forgotAction()
@@ -95,15 +98,23 @@ class IndexController extends ActionController
             $user = new User;
             $user->load($data['username'], 'username');
             if ($user->getId()) {
-                $token = random_bytes(32);
+                $token = md5(random_bytes(32));
                 $user->setData([
                     'rp_token' => $token,
                     'rp_token_created_at' => time() + 86400
                 ])->save();
-//                $mailer = $this->getContainer()->get('mailer');
-//                $mailer->send();
-                $this->addMessage($this->translate('You will receive an email with a link to reset your password.'), 'success', 'admin');
-                return $this->redirect(':ADMIN');
+                try {
+                    $mailer = $this->getContainer()->get('mailer');
+                    $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => 'index/reset/?token=' . $token])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                    $this->addMessage($this->translate('You will receive an email with a link to reset your password.'), 'success', 'admin');
+                    return $this->redirect(':ADMIN');
+                } catch (Swift_SwiftException $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $this->addMessage($this->translate('An error detected while email transporting.'), 'danger', 'admin');
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $this->addMessage($this->translate('An error detected. Please try again later.'), 'danger', 'admin');
+                }
             } else {
                 $this->addMessage($this->translate('The username does not exist.'), 'danger', 'admin');
             }

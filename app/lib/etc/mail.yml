@@ -1,0 +1,9 @@
+---
+transport: Swift_SmtpTransport
+params:
+    host: smtp.mxhichina.com
+    port: 465
+    security: ssl
+    username: idriszhang@seahinet.com
+    password: zyd@1234
+    

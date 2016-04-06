@@ -18,6 +18,7 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(PimpleContainer $container)
     {
+
         if (!isset($container['request'])) {
             $container['request'] = function ($container) {
                 return new Request;

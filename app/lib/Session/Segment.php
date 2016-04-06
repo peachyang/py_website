@@ -107,7 +107,7 @@ class Segment implements IteratorAggregate, ArrayAccess
         if (!isset($this->iterator['message'])) {
             $messages = [];
         } else {
-            $messages = $this->iterator['message'] + $message;
+            $messages = unserialize($this->iterator['message']) + $message;
         }
         $this->set('message', $messages);
     }

@@ -61,7 +61,7 @@ class Mailer extends Swift_Mailer
             $this->setContainer($container);
         }
         $config = $this->getContainer()->get('config');
-        $transport = call_user_func_array($config['mail']['transport'] . '::newInstance', ${static::$ALLOWED_TRANSPORTATION[$config['mail']['transport']] . 'Params'} + $config['mail']['params']);
+        $transport = call_user_func_array($config['mail']['transport'] . '::newInstance', $config['mail']['params'] + $this->{static::$ALLOWED_TRANSPORTATION[$config['mail']['transport']] . 'Params'});
         if (static::$ALLOWED_TRANSPORTATION[$config['mail']['transport']] === 'SMTP') {
             $transport->setUsername($config['mail']['params']['username']);
             $transport->setPassword($config['mail']['params']['password']);

@@ -7,6 +7,9 @@ default:
                 type: Seahinet\Lib\ViewModel\Head
             content:
                 type: Seahinet\Lib\ViewModel\Wrapper
+                children:
+                    messages:
+                        type: Seahinet\Lib\ViewModel\Message
             extra:
                 type: Seahinet\Lib\ViewModel\Wrapper
             header:

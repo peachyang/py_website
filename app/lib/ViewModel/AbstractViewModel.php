@@ -185,4 +185,9 @@ abstract class AbstractViewModel
         return $this;
     }
 
+    public function getQuery($key = null, $default = '')
+    {
+        return $this->getContainer()->get('request')->getQuery($key, $default);
+    }
+
 }

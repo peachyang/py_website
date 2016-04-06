@@ -1,0 +1,15 @@
+<form action="index/forgotpost/" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->getFormKey() ?>" />
+    <div class="input-box">
+        <label for="login:username"><?php echo $this->translate('Username') ?>: </label>
+        <input type="text" name="username" id="login:username" />
+    </div>
+    <div class="input-box">
+        <label for="login:captcha"><?php echo $this->translate('Captcha') ?>: </label>
+        <input type="text" name="captcha" id="login:captcha" />
+        <img src="index/captcha/" alt="" />
+    </div>
+    <div class="buttons-set">
+        <button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>
+    </div>
+</form>

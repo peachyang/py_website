@@ -3,13 +3,15 @@
 namespace Seahinet\Lib\Http;
 
 use ArrayAccess;
+use ArrayIterator;
+use IteratorAggregate;
 
 /**
  * Collection of HTTP headers used in both the HTTP request and response objects.
  * 
  * @see https://github.com/slimphp/Slim/blob/3.x/Slim/Http/Headers.php
  */
-class Headers implements ArrayAccess
+class Headers implements ArrayAccess, IteratorAggregate
 {
 
     protected $headers = [];
@@ -69,6 +71,11 @@ class Headers implements ArrayAccess
             $str.=($str === '' ? '' : '\r\n') . $key . ': ' . $value;
         }
         return $str;
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->headers);
     }
 
 }

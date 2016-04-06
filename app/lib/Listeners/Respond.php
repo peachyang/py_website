@@ -2,6 +2,8 @@
 
 namespace Seahinet\Lib\Listeners;
 
+use Traversable;
+
 /**
  * Listen respond event
  */
@@ -14,8 +16,12 @@ class Respond implements ListenerInterface
         if (!headers_sent()) {
             header($response->renderStatusLine());
             foreach ($response->getHeaders() as $name => $values) {
-                foreach ($values as $value) {
-                    header(sprintf('%s: %s', $name, $value), false);
+                if (is_array($values) || $values instanceof Traversable) {
+                    foreach ($values as $value) {
+                        header(sprintf('%s: %s', $name, $value), false);
+                    }
+                } else {
+                    header(sprintf('%s: %s', $name, $values), false);
                 }
             }
         }

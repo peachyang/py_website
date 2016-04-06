@@ -29,19 +29,4 @@ class AuthActionController extends ActionController
         return $this->$method();
     }
 
-    protected function redirectReferer($location = '/', $code = 302)
-    {
-        return parent::redirectReferer(str_replace(':ADMIN', 'admin', $location), $code);
-    }
-
-    protected function redirect($location = '/', $code = 302)
-    {
-        return parent::redirect(str_replace(':ADMIN', 'admin', $location), $code);
-    }
-
-    protected function forward($path = '/')
-    {
-        return parent::forward(str_replace(':ADMIN', 'admin', $location));
-    }
-
 }

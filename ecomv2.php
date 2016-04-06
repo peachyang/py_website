@@ -115,4 +115,14 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
     CONSTRAINT FK_ADMIN_USER_ROLE_ID_ADMIN_ROLE_ID FOREIGN KEY (`role_id`) REFERENCES `admin_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `core_config` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Config ID',
+    `scope` BOOLEAN DEFAULT NULL COMMENT 'Scope merchant(NULL)/store(0)/language(1)',
+    `scope_id` INTEGER NOT NULL COMMENT 'Scope ID',
+    `path` VARCHAR(255) NOT NULL COMMENT 'Config path',
+    `value` VARCHAR(255) COMMENT 'Config value',
+    PRIMARY KEY (`id`),
+    CONSTRAINT UNQ_CORE_CONFIG_SCOPE_SCOPE_ID_PATH UNIQUE (`scope`,`scope_id`,`path`)
+);
+
 SET FOREIGN_KEY_CHECKS = 1;

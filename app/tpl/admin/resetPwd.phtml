@@ -1,0 +1,24 @@
+<form action="index/resetpost/" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->getFormKey() ?>" />
+    <input type="hidden" name="token" value="<?php echo $this->getRequest()->getQuery('token') ?>" />
+    <div class="input-box">
+        <label for="login:username"><?php echo $this->translate('Username') ?>: </label>
+        <input type="text" name="username" id="login:username" />
+    </div>
+    <div class="input-box">
+        <label for="login:password"><?php echo $this->translate('Password') ?>: </label>
+        <input type="password" name="password" id="login:password" />
+    </div>
+    <div class="input-box">
+        <label for="login:cpassword"><?php echo $this->translate('Confirm Password') ?>: </label>
+        <input type="password" name="cpassword" id="login:cpassword" />
+    </div>
+    <div class="input-box">
+        <label for="login:captcha"><?php echo $this->translate('Captcha') ?>: </label>
+        <input type="text" name="captcha" id="login:captcha" />
+        <img src="index/captcha/" alt="" />
+    </div>
+    <div class="buttons-set">
+        <button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>
+    </div>
+</form>

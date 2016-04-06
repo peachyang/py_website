@@ -70,46 +70,37 @@ class Request extends Message implements RequestInterface
     /**
      * @return array
      */
-    public function getQueryParams()
+    public function getQuery($key = null, $default = '')
     {
-        if ($this->queryParams) {
-            return $this->queryParams;
+        if (!$this->queryParams) {
+            if ($this->uri === null) {
+                return [];
+            }
+            parse_str($this->uri->getQuery(), $this->queryParams);
         }
-
-        if ($this->uri === null) {
-            return [];
-        }
-
-        parse_str($this->uri->getQuery(), $this->queryParams); // <-- URL decodes data
-
-        return $this->queryParams;
+        return is_null($key) ? $this->queryParams : isset($this->queryParams[$key]) ? $this->queryParams[$key] : $default;
     }
 
     /**
      * @return array
      * @throws RuntimeException
      */
-    public function getPost($key = null)
+    public function getPost($key = null, $default = '')
     {
-        if ($this->post) {
-            return is_null($key) ? $this->post : $this->post[$key];
+        if (!$this->post) {
+            if (!$this->body) {
+                return null;
+            }
+            $body = (string) $this->getBody();
+            parse_str($body, $parsed);
+            if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
+                throw new RuntimeException(
+                'Request body media type parser return value must be an array, an object, or null'
+                );
+            }
+            $this->post = $parsed;
         }
-
-        if (!$this->body) {
-            return null;
-        }
-
-        $body = (string) $this->getBody();
-        parse_str($body, $parsed);
-
-        if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
-            throw new RuntimeException(
-            'Request body media type parser return value must be an array, an object, or null'
-            );
-        }
-        $this->post = $parsed;
-
-        return is_null($key) ? $this->post : $this->post[$key];
+        return is_null($key) ? $this->post : isset($this->post[$key]) ? $this->post[$key] : $default;
     }
 
     /**

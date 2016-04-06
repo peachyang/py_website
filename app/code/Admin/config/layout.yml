@@ -9,3 +9,23 @@ admin_login:
                     login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/login
+admin_forgot_password:
+    update: default
+    root:
+        template: page/empty
+        children:
+            content:
+                children:
+                    login:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/forgotPwd
+admin_reset_password:
+    update: default
+    root:
+        template: page/empty
+        children:
+            content:
+                children:
+                    login:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/resetPwd

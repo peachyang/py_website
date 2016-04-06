@@ -7,7 +7,7 @@ singleton:
     session: Seahinet\Lib\Session
     translator: Seahinet\Lib\Translator
 factory:
-    dbAdapter: Seahinet\Lib\DbAdapter
+    dbAdapter: Seahinet\Lib\DBAdapter
 service:
     log: Seahinet\Lib\Log
     mailer: Seahinet\Lib\Mailer

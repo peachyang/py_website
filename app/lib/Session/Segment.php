@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Session;
 
 use ArrayAccess;
+use ArrayIterator;
 use IteratorAggregate;
 use Seahinet\Lib\Session;
 
@@ -67,7 +68,7 @@ class Segment implements IteratorAggregate, ArrayAccess
         foreach ($this->iterator as $key => $value){
             $iterator[$key] = unserialize($value);
         }
-        return $iterator;
+        return new ArrayIterator($iterator);
     }
 
     public function __get($name)

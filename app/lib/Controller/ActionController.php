@@ -94,7 +94,7 @@ abstract class ActionController
     protected function redirectReferer($location = '/', $code = 302)
     {
         $referer = $this->getRequest()->getHeader('Referer');
-        return $this->redirect($referer? : $location, $code);
+        return $this->redirect($referer? : str_replace(':ADMIN', 'admin', $location), $code);
     }
 
     /**
@@ -106,7 +106,7 @@ abstract class ActionController
      */
     protected function redirect($location = '/', $code = 302)
     {
-        return $this->getResponse()->withHeader('Location', $location)->withStatus($code);
+        return $this->getResponse()->withHeader('Location', str_replace(':ADMIN', 'admin', $location))->withStatus($code);
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class ActionController
      */
     protected function forward($path = '/')
     {
-        $this->getRequest()->getUri()->withPath($path);
+        $this->getRequest()->getUri()->withPath(str_replace(':ADMIN', 'admin', $path));
         $this->getContainer()->get('eventDispatcher')->trigger('route', ['routers' => $this->getContainer()->get('config')['route']]);
         return null;
     }
@@ -143,6 +143,19 @@ abstract class ActionController
             $this->csrf = new Csrf;
         }
         return $this->csrf->isValid($value);
+    }
+
+    /**
+     * Validate captcha value for forms
+     * 
+     * @param string $value
+     * @param Segment $segment
+     * @return boolean
+     */
+    protected function validateCaptcha($value, $segment = 'core')
+    {
+        $segment = new Segment($segment);
+        return $segment->get('captcha') == $value;
     }
 
     /**

@@ -25,13 +25,16 @@ class Session implements Singleton
      */
     protected $cookie_params = [];
 
-    private function __construct(array $config = [])
+    private function __construct($config = [])
     {
+        if ($config instanceof Container) {
+            $config = (array)$config->get('config')['session'];
+        }
         $this->setOptions($config);
         $this->cookie_params = session_get_cookie_params();
     }
 
-    public static function instance(array $config = [])
+    public static function instance($config = [])
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($config);

@@ -94,7 +94,7 @@ abstract class ActionController
     protected function redirectReferer($location = '/', $code = 302)
     {
         $referer = $this->getRequest()->getHeader('Referer');
-        return $this->getResponse()->withHeader('Location', $referer? : $location)->withStatus($code);
+        return $this->redirect($referer? : $location, $code);
     }
 
     /**
@@ -176,7 +176,7 @@ abstract class ActionController
         return (array) $segment->getMessage();
     }
 
-    protected function getLayout($handler = '', $render = false)
+    protected function getLayout($handler, $render = true)
     {
         return $this->getContainer()->get('layout')->getLayout($handler, $render);
     }

@@ -100,6 +100,18 @@ abstract class AbstractModel extends ArrayObject
         parent::offsetUnset($key);
     }
 
+    public function setData($key, $value = null)
+    {
+        if (is_array($key)) {
+            foreach ($key as $k => $v) {
+                $this->offsetSet($k, $v);
+            }
+        } else {
+            $this->offsetSet($key, $value);
+        }
+        return $this;
+    }
+
     /**
      * Load data
      * 
@@ -172,7 +184,7 @@ abstract class AbstractModel extends ArrayObject
                 $this->update($columns, $constraint);
                 $this->afterSave();
                 $cache = $this->getContainer()->get('cache');
-                $cache->delete($this->cacheKey . implode('\\', $constraint));
+                $cache->delete('MODEL_DATA_' . $this->cacheKey . implode('\\', $constraint));
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
@@ -180,6 +192,28 @@ abstract class AbstractModel extends ArrayObject
             $this->getContainer()->get('log')->logException($e);
         }
         return $this;
+    }
+
+    public function remove()
+    {
+        if ($this->isLoaded) {
+            try {
+                $this->beforeRemove();
+                $key = 'MODEL_DATA_' . $this->cacheKey . $this->primaryKey . '\\' . $this->getId();
+                $this->delete([$this->primaryKey => $this->getId()]);
+                $cache = $this->getContainer()->get('cache');
+                $cache->delete($key);
+                $this->storage = [];
+                $this->isLoaded = false;
+                $this->isNew = true;
+                $this->updatedColumns = [];
+                $this->afterRemove();
+            } catch (InvalidQueryException $e) {
+                $this->getContainer()->get('log')->logException($e);
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+            }
+        }
     }
 
     /**
@@ -245,6 +279,16 @@ abstract class AbstractModel extends ArrayObject
         $this->isLoaded = true;
         $this->updatedColumns = [];
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
+    }
+
+    protected function beforeRemove()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.before', ['model' => $this]);
+    }
+
+    protected function afterRemove()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.after', ['model' => $this]);
     }
 
 }

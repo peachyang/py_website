@@ -36,9 +36,14 @@ class Csrf
         return $this->segment->get('csrf');
     }
 
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+    
     public function regenerateValue()
     {
-        $hash = hash('sha512', random_bytes(32));
+        $hash = hash('sha1', random_bytes(40));
         $this->segment->set('csrf', $hash);
     }
 

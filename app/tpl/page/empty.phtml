@@ -13,6 +13,10 @@
         <?php echo $this->head ?>
     </head>
     <body class="<?php echo $this->getBodyClass() ?>">
-        <?php echo $this->content ?>
+        <?php echo $this->globalNotice ?>
+        <div class="main-container">
+            <?php echo $this->content ?>
+        </div>
+        <?php echo $this->extra ?>
     </body>
 </html>

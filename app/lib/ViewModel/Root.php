@@ -15,7 +15,7 @@ final class Root extends AbstractViewModel implements Singleton
 
     private function __construct()
     {
-        $this->setTemplate('page/empty');
+        $this->setTemplate('page/root');
     }
 
     public static function instance()

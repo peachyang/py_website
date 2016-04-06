@@ -4,6 +4,7 @@ singleton:
     cache: Seahinet\Lib\Cache
     eventDispatcher: Seahinet\Lib\EventDispatcher
     layout: Seahinet\Lib\Layout
+    session: Seahinet\Lib\Session
     translator: Seahinet\Lib\Translator
 factory:
     dbAdapter: Seahinet\Lib\DbAdapter

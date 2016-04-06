@@ -23,7 +23,7 @@ class Page extends AbstractViewModel
         $this->pageModel = $pageModel;
         return $this;
     }
-
+    
     public function render()
     {
         return is_null($this->pageModel) ? '' : $this->pageModel['content'];

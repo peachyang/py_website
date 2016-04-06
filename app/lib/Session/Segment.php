@@ -48,7 +48,7 @@ class Segment implements IteratorAggregate, ArrayAccess
 
     public function get($key)
     {
-        return isset($this->iterator[$key]) ? $this->iterator[$key] : '';
+        return isset($this->iterator[$key]) ? unserialize($this->iterator[$key]) : '';
     }
 
     public function set($key, $value)
@@ -56,14 +56,28 @@ class Segment implements IteratorAggregate, ArrayAccess
         if ($value instanceof \Closure) {
             $value = $value();
         }
-        $this->iterator[$key] = $value;
-        $_SESSION[$this->name][$key] = serialize($value);
+        $this->iterator[$key] = serialize($value);
+        $_SESSION[$this->name][$key] = $this->iterator[$key];
         return $this;
     }
 
     public function getIterator()
     {
-        return $this->iterator;
+        $iterator = [];
+        foreach ($this->iterator as $key => $value){
+            $iterator[$key] = unserialize($value);
+        }
+        return $iterator;
+    }
+
+    public function __get($name)
+    {
+        return $this->get($name);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->set($name, $value);
     }
 
     public function offsetExists($key)

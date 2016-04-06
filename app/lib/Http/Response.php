@@ -129,4 +129,12 @@ class Response extends Message implements ResponseInterface
         return trim($status);
     }
 
+    public function withBody(\Psr\Http\Message\StreamInterface $body)
+    {
+        if(is_resource($this->body)){
+            fclose($this->body);
+        }
+        return parent::withBody($body);
+    }
+    
 }

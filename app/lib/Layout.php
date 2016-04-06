@@ -63,6 +63,7 @@ class Layout extends ArrayObject implements Singleton
     /**
      * 
      * @param array $layout
+     * @param string $name
      * @param ViewModel\AbstractViewModel $parent
      * @return ViewModel\AbstractViewModel
      */
@@ -87,11 +88,11 @@ class Layout extends ArrayObject implements Singleton
                     }
                     break;
                 case 'children':
-                    foreach ($value as $name => $children) {
-                        if (isset($layout['unset']) && in_array($name, $layout['unset'])) {
+                    foreach ($value as $childName => $children) {
+                        if (isset($layout['unset']) && in_array($childName, $layout['unset'])) {
                             continue;
                         }
-                        $this->renderLayout($children, $name, $viewModel);
+                        $this->renderLayout($children, $childName, $viewModel);
                     }
                     break;
             }

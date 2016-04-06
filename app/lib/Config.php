@@ -51,7 +51,7 @@ final class Config extends ArrayObject implements Singleton
     private function loadFromYaml()
     {
         $finder = new Finder;
-        $finder->files()->in('app')->name('*.yml');
+        $finder->files()->in(BP . 'app')->name('*.yml');
         $parser = new Parser;
         $config = [];
         foreach ($finder as $file) {

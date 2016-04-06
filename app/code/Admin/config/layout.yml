@@ -1,0 +1,11 @@
+---
+admin_login:
+    update: default
+    root:
+        template: page/empty
+        children:
+            content:
+                children:
+                    login:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/login

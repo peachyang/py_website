@@ -49,8 +49,6 @@ final class Bootstrap
         }
         $config = static::prepareConfig();
         static::handleConfig($config);
-        $event = static::$eventDispatcher->trigger('route', ['routers' => $config['route']]);
-        static::$eventDispatcher->trigger('render', ['response' => $event['response']]);
     }
 
     /**
@@ -63,6 +61,8 @@ final class Bootstrap
         if (is_null(static::$container)) {
             static::init($server);
         }
+        $event = static::$eventDispatcher->trigger('route', ['routers' => static::$container->get('config')['route']]);
+        static::$eventDispatcher->trigger('render', ['response' => $event['response']]);
         static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
     }
 

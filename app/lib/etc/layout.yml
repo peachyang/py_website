@@ -5,18 +5,13 @@ default:
         children:
             head:
                 type: Seahinet\Lib\ViewModel\Head
-                action:
-                    -
-                        method: addScript
-                        params: http://ajax.useso.com/ajax/libs/jquery/2.2.2/jquery.min.js
-                    -
-                        method: addScript
-                        params: pub/modernizr.js
-                    -
-                        method: addLink
-                        params: http://fonts.useso.com/css?family=Open+Sans:300,400,600&subset=latin,latin-ext
-                    -
-                        method: addLink
-                        params: pub/styles.css
             content:
                 type: Seahinet\Lib\ViewModel\Wrapper
+            extra:
+                type: Seahinet\Lib\ViewModel\Wrapper
+            header:
+                type: Seahinet\Lib\ViewModel\Wrapper
+            footer:
+                type: Seahinet\Lib\ViewModel\Wrapper
+            globalNotice:
+                type: Seahinet\Lib\ViewModel\GlobalNotice

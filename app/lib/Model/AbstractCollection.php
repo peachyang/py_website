@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Model;
 
+use BadMethodCallException;
 use Exception;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
@@ -62,13 +63,15 @@ abstract class AbstractCollection extends ArrayObject
      * 
      * @return AbstractCollection
      */
-    protected function load()
+    public function load()
     {
         if (!$this->isLoaded) {
             try {
+                $this->beforeLoadCache();
                 $cache = $this->getContainer()->get('cache');
                 $cacheKey = 'COLLECTION_DATA_' . $this->cacheKey . md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
                 $result = $cache->fetch($cacheKey);
+                $this->afterLoadCache();
                 if (!$result) {
                     $this->beforeLoad();
                     $result = $this->tableGateway->selectWith($this->select)->toArray();
@@ -89,13 +92,23 @@ abstract class AbstractCollection extends ArrayObject
         }
         return $this;
     }
-
+    
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {
             $this->eventDispatcher = $this->getContainer()->get('eventDispatcher');
         }
         return $this->eventDispatcher;
+    }
+
+    protected function beforeLoadCache()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.before', ['collection' => $this]);
+    }
+
+    protected function afterLoadCache()
+    {
+        $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.after', ['collection' => $this]);
     }
 
     protected function beforeLoad()

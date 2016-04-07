@@ -29,3 +29,10 @@ admin_reset_password:
                     login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/resetPwd
+admin:
+    update: default
+    action:
+        method: addBodyClass
+        params: admin
+admin_dashboard:
+    update: admin

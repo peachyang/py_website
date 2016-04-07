@@ -42,10 +42,10 @@ class IndexController extends ActionController
             if ($user->login($data['username'], $data['password'])) {
                 $this->addMessage($this->translate('Welcome %s. Last Login: %s', $data['username'], $data['logdate']), 'success', 'admin');
                 $user->setData([
-                    'logdate' => time(),
+                    'logdate' => gmdate('Y-m-d h:i:s'),
                     'lognum' => $user->offsetGet('lognum') + 1
                 ])->save();
-                return $this->redirect();
+                return $this->redirect(':ADMIN/dashboard/');
             } else {
                 $this->addMessage($this->translate('Login failed. Invalid username or password.'), 'danger', 'admin');
             }

@@ -5,10 +5,26 @@ namespace Seahinet\Lib\Model;
 use BadMethodCallException;
 use Exception;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
+use Zend\Db\Sql;
+use Zend\Db\Sql\Select;
 use Zend\Stdlib\ArrayObject;
 
 /**
  * Data operator for collection model
+ * 
+ * @uses Select
+ * @method Select columns(array $columns, bool  $prefixColumnsWithTable)
+ * @method Select join(string|array $name, string $on, string|array $columns, string $type)
+ * @method Select where(Sql\Where|\Closure|string|array|Sql\Predicate\PredicateInterface $predicate, string $combination)
+ * @method Select group(array|string $group)
+ * @method Select having(Sql\Where|\Closure|string|array $predicate, , string $combination)
+ * @method Select order(string|array $order)
+ * @method Select limit(int $limit)
+ * @method Select offset(int $offset)
+ * @method Select combine(Select $select, string $type, string $modifier)
+ * @method Select reset(string $part)
+ * @method string getRawState(null|string $key)
+ * @method string getSqlString(\Zend\Db\Adapter\Platform\PlatformInterface $adapterPlatform)
  */
 abstract class AbstractCollection extends ArrayObject
 {
@@ -16,7 +32,7 @@ abstract class AbstractCollection extends ArrayObject
     use \Seahinet\Lib\Traits\DB;
 
     /**
-     * @var \Zend\Db\Sql\Select 
+     * @var Select 
      */
     protected $select = null;
     protected $cacheKey = '';
@@ -69,8 +85,8 @@ abstract class AbstractCollection extends ArrayObject
             try {
                 $this->beforeLoadCache();
                 $cache = $this->getContainer()->get('cache');
-                $cacheKey = 'COLLECTION_DATA_' . $this->cacheKey . md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
-                $result = $cache->fetch($cacheKey);
+                $cacheKey = $this->cacheKey . md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
+                $result = $cache->fetch($cacheKey, 'COLLECTION_DATA_');
                 $this->afterLoadCache();
                 if (!$result) {
                     $this->beforeLoad();
@@ -78,7 +94,7 @@ abstract class AbstractCollection extends ArrayObject
                     if (count($result)) {
                         $this->storage = $result;
                         $this->afterLoad();
-                        $cache->save($cacheKey, $result, 86400);
+                        $cache->save($cacheKey, $result, 'COLLECTION_DATA_', 86400);
                     }
                 } else {
                     $this->storage = $result;
@@ -92,7 +108,7 @@ abstract class AbstractCollection extends ArrayObject
         }
         return $this;
     }
-    
+
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {

@@ -9,6 +9,17 @@ use Monolog\Handler\StreamHandler;
 
 /**
  * Logging service
+ * 
+ * @uses Logger
+ * @see Psr\Log\LoggerInterface
+ * @method emergency(string $message, array $context)
+ * @method alert(string $message, array $context)
+ * @method critical(string $message, array $context)
+ * @method error(string $message, array $context)
+ * @method warning(string $message, array $context)
+ * @method notice(string $message, array $context)
+ * @method info(string $message, array $context)
+ * @method debug(string $message, array $context)
  */
 class Log
 {
@@ -47,8 +58,8 @@ class Log
     {
         if (is_null(static::$logger)) {
             static::$logger = new Logger('default');
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0644));
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0644));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0640));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0640));
         }
         return static::$logger;
     }
@@ -60,15 +71,14 @@ class Log
     {
         $name = isset($config['name']) ? $config['name'] : 'default';
         $handlers = isset($config['handlers']) ? $config['handlers'] : [
-            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0644),
-            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0644)
+            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0640),
+            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0640)
         ];
         $processors = isset($config['processors']) ? $config['processors'] : [];
         static::$logger = new Logger($name, $handlers, $processors);
     }
 
     /**
-     * @uses Logger::error
      * @param Exception $e
      */
     public function logException(Exception $e)
@@ -77,18 +87,13 @@ class Log
     }
 
     /**
-     * @uses Logger::addRecord
+     * @param mixed $level
      * @param string $message
-     * @param int $level
+     * @param array $context
      */
-    public function log($message = '', $level = Logger::DEBUG)
+    public function log($level = Logger::DEBUG, $message = '', array $context = [])
     {
-        if (is_string($level) && defined(Logger::$level)) {
-            $level = Logger::$level;
-        } else {
-            $level = Logger::DEBUG;
-        }
-        $this->getLogger()->addRecord($level, $message);
+        $this->getLogger()->log($level, $message, $context);
     }
 
 }

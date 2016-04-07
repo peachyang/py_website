@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Session\SaveHandler;
 
+use Exception;
 use SessionHandlerInterface;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -33,7 +34,12 @@ class Database implements SessionHandlerInterface
 
     public function destroy($session_id)
     {
-        $this->getTableGateway()->delete(['id' => $session_id]);
+        try {
+            $this->getTableGateway()->delete(['id' => $session_id]);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function gc($maxlifetime)
@@ -43,19 +49,26 @@ class Database implements SessionHandlerInterface
 
     public function open($save_path, $name)
     {
-        return is_null($this->getTableGateway());
+        return !is_null($this->getTableGateway());
     }
 
     public function read($session_id)
     {
-        $result = $this->getTableGateway()->select(['id' => $session_id]);
+        $result = $this->getTableGateway()->select(['id' => $session_id])->toArray();
         return count($result) ? $result[0]['data'] : null;
     }
 
     public function write($session_id, $session_data)
     {
-        if (!$this->getTableGateway()->update(['data' => $session_data], ['id' => $session_id])) {
-            $this->getTableGateway()->insert(['data' => $session_data, 'id' => $session_id]);
+        try {
+            if ($this->read($session_id)) {
+                $this->getTableGateway()->update(['data' => $session_data], ['id' => $session_id]);
+            } else {
+                $this->getTableGateway()->insert(['data' => $session_data, 'id' => $session_id]);
+            }
+            return true;
+        } catch (Exception $e) {
+            return false;
         }
     }
 

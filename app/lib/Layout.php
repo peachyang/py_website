@@ -41,12 +41,19 @@ class Layout extends ArrayObject implements Singleton
      * 
      * @param string $handler
      * @param bool $render
-     * @return array|null|ViewModel\Root
+     * @return array|ViewModel\Root
      */
     public function getLayout($handler = '', $render = false)
     {
         if (empty($this->storage[$handler])) {
-            return null;
+            return [];
+        }
+        if ($render) {
+            $cache = $this->getContainer()->get('cache');
+            $result = $cache->fetch('LAYOUT_RENDERED_' . $handler);
+            if ($result) {
+                return $result;
+            }
         }
         $layout = $this->storage[$handler];
         if (isset($this->storage[$handler]['update'])) {
@@ -55,6 +62,7 @@ class Layout extends ArrayObject implements Singleton
         if ($render) {
             $root = $this->renderLayout($layout['root'], 'root');
             $root->addBodyClass(trim(preg_replace('/[^a-z]/', '-', strtolower($handler)), '- '));
+            $cache->save('LAYOUT_RENDERED_' . $handler, $root);
             return $root;
         }
         return $layout;
@@ -80,7 +88,7 @@ class Layout extends ArrayObject implements Singleton
                     $viewModel->setTemplate($value);
                     break;
                 case 'action':
-                    if(isset($value['method'])){
+                    if (isset($value['method'])) {
                         $value = [$value];
                     }
                     foreach ($value as $action) {

@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Parser;
 final class Config extends ArrayObject implements Singleton
 {
 
-    use Traits\Container,
+    use Traits\DB,
         Traits\ArrayMerge;
 
     private static $instance = null;
@@ -59,9 +59,50 @@ final class Config extends ArrayObject implements Singleton
             if (!isset($config[$key])) {
                 $config[$key] = [];
             }
-            $config[$key] = $this->arrayMerge($config[$key], $parser->parse($file->getContents()));
+            $array = $parser->parse($file->getContents());
+            if ($array) {
+                $config[$key] = $this->arrayMerge($config[$key], $array);
+            }
         }
         return $config;
+    }
+
+    /**
+     * @return array
+     */
+    public function loadFromDB()
+    {
+        $tableGateway = $this->getTableGateway('core_config');
+        $result = $tableGateway->select()->toArray();
+        $config = [];
+        foreach ($result as $item) {
+            if (!is_null($item['language_id'])) {
+                $value['l' . $item['language_id']] = $item['value'];
+            } else if (!is_null($item['store_id'])) {
+                $value['s' . $item['store_id']] = $item['value'];
+            } else {
+                $value['m' . $item['merchant_id']] = $item['value'];
+            }
+            $config = $this->arrayMerge($config, $this->generateConfig(explode('/', $item['path']), $value));
+        }
+        $this->storage = $this->arrayMerge($this->storage, $config);
+        return $config;
+    }
+
+    /**
+     * Generate path array
+     * 
+     * @param string|array $path
+     * @return array
+     */
+    private function generateConfig($path, $value)
+    {
+        if (count($path) > 1) {
+            $key = array_shift($path);
+            return [$key => $this->generateConfig($path, $value)];
+        } else {
+            return [$path[0] => $value];
+        }
     }
 
 }

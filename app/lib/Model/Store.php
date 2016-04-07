@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib\Model;
 
-use Seahinet\Lib\Model\Collection\Language;
+use Seahinet\Lib\Model\Collection\Language as LanguageCollection;
 
 class Store extends AbstractModel
 {
@@ -14,14 +14,24 @@ class Store extends AbstractModel
 
     public function getLanguage($code = null)
     {
-        $lang = new Language;
+        $lang = new LanguageCollection;
         if (!is_null($code)) {
-            $lang->where(['code' => $code, 'status' => 1]);
+            $lang->where(['store_id' => $this->getId(), 'code' => $code, 'status' => 1]);
         } else {
-            $lang->where(['is_default' => 1, 'status' => 1]);
+            $lang->where(['store_id' => $this->getId(), 'is_default' => 1, 'status' => 1]);
         }
         $lang->load();
-        return $lang[0];
+        return new Language($lang[0]);
+    }
+
+    public function getMerchant()
+    {
+        if ($this->isLoaded) {
+            $merchant = new Merchant;
+            $merchant->load($this->offsetGet('merchant_id'));
+            return $merchant;
+        }
+        return null;
     }
 
 }

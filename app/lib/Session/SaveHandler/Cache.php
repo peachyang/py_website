@@ -41,7 +41,7 @@ class Cache implements SessionHandlerInterface
 
     public function open($save_path, $name)
     {
-        return is_null($this->getCache());
+        return !is_null($this->getCache());
     }
 
     public function read($session_id)
@@ -52,6 +52,7 @@ class Cache implements SessionHandlerInterface
     public function write($session_id, $session_data)
     {
         $this->getCache()->save('SESS_' . $session_id, $session_data);
+        return true;
     }
 
 }

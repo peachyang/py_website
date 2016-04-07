@@ -4,11 +4,12 @@ namespace Seahinet\Lib\ViewModel;
 
 use JsonSerializable;
 use Seahinet\Lib\Session\Csrf;
+use Serializable;
 
 /**
  * View model for renderer
  */
-abstract class AbstractViewModel
+abstract class AbstractViewModel implements Serializable
 {
 
     use \Seahinet\Lib\Traits\Container,
@@ -188,6 +189,25 @@ abstract class AbstractViewModel
     public function getQuery($key = null, $default = '')
     {
         return $this->getContainer()->get('request')->getQuery($key, $default);
+    }
+
+    public function serialize()
+    {
+        $data = get_object_vars($this);
+        foreach ($data as $key => $value) {
+            if (is_object($value)) {
+                unset($data[$key]);
+            }
+        }
+        return serialize($data);
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
 }

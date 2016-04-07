@@ -28,7 +28,7 @@ class Session implements Singleton
     private function __construct($config = [])
     {
         if ($config instanceof Container) {
-            $config = (array)$config->get('config')['session'];
+            $config = (array) $config->get('config')['adapter']['session'];
         }
         $this->setOptions($config);
         $this->cookie_params = session_get_cookie_params();
@@ -62,7 +62,7 @@ class Session implements Singleton
 
     public function setSavePath($path)
     {
-        return session_save_path($path);
+        return session_save_path(BP . $path);
     }
 
     public function getSavePath()
@@ -94,6 +94,12 @@ class Session implements Singleton
     public function getId()
     {
         return session_id();
+    }
+
+    public function setId($id = null)
+    {
+        session_id($id);
+        return $this;
     }
 
     public function start()
@@ -140,7 +146,7 @@ class Session implements Singleton
 
     public function destroy()
     {
-        if (!$this->isStarted()) {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
             $this->start();
         }
 

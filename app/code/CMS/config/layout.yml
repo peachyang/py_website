@@ -4,4 +4,6 @@ cms_page:
     root:
         children:
             content:
-                type: Seahinet\CMS\ViewModel\Page
+                children:
+                    page:
+                        type: Seahinet\CMS\ViewModel\Page

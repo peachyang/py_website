@@ -134,4 +134,12 @@ class ArrayObject implements ArrayAccess, Serializable
         $this->storage = unserialize($serialized);
     }
 
+    /**
+     * @return array
+     */
+    public function __toArray()
+    {
+        return $this->storage;
+    }
+
 }

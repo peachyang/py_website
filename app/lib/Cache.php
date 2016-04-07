@@ -89,24 +89,36 @@ final class Cache implements ArrayAccess, Singleton
     /**
      * @uses CacheProvider::delete
      * @param string $id
+     * @param string $prefix
      * @return bool
      */
-    public function delete($id)
+    public function delete($id, $prefix = '')
     {
-        return $this->pool->delete($id);
+        if ($prefix) {
+            $list = $this->pool->fetch('CACHE_LIST_' . $prefix);
+            if ($list) {
+                $list = unserialize(gzdecode($list));
+                unset($list[$id]);
+            } else {
+                $list = [];
+            }
+            $this->pool->save('CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+        }
+        return $this->pool->delete($prefix . $id);
     }
 
     /**
      * @uses CacheProvider::fetch
      * @param string $id
+     * @param string $prefix
      * @return mixed
      */
-    public function fetch($id)
+    public function fetch($id, $prefix = '')
     {
-        if (count($this->unhitPrefix) && preg_match('/^(' . implode('|', $this->unhitPrefix) . ')/', $id)) {
+        if (count($this->unhitPrefix) && in_array($prefix, $this->unhitPrefix)) {
             return null;
         }
-        return unserialize(@gzdecode($this->pool->fetch($id)));
+        return unserialize(@gzdecode($this->pool->fetch($prefix . $id)));
     }
 
     /**
@@ -125,12 +137,23 @@ final class Cache implements ArrayAccess, Singleton
      * @uses CacheProvider::save
      * @param string $id
      * @param mixed $data
+     * @param string $prefix
      * @param int $lifeTime
      * @return bool
      */
-    public function save($id, $data, $lifeTime = 0)
+    public function save($id, $data, $prefix = '', $lifeTime = 0)
     {
-        return $this->pool->save($id, gzencode(serialize($data)), $lifeTime);
+        if ($prefix) {
+            $list = $this->pool->fetch('CACHE_LIST_' . $prefix);
+            if ($list) {
+                $list = unserialize(gzdecode($list));
+            } else {
+                $list = [];
+            }
+            $list[$id] = 1;
+            $this->pool->save('CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+        }
+        return $this->pool->save($prefix . $id, gzencode(serialize($data)), $lifeTime);
     }
 
     /**
@@ -138,7 +161,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param array $keys
      * @return array
      */
-    public function fetchMultiple(array $keys)
+    public function fetchMultiple(array $keys, $prefix = '')
     {
         $result = [];
         $fetchKey = $keys;

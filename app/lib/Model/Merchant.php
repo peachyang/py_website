@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib\Model;
 
-use Seahinet\Lib\Model\Collection\Store;
+use Seahinet\Lib\Model\Collection\Store as StoreCollection;
 
 class Merchant extends AbstractModel
 {
@@ -14,14 +14,14 @@ class Merchant extends AbstractModel
 
     public function getStore($code = null)
     {
-        $store = new Store;
+        $store = new StoreCollection;
         if (!is_null($code)) {
-            $store->where(['code' => $code, 'status' => 1]);
+            $store->where(['merchant_id' => $this->getId(), 'code' => $code, 'status' => 1]);
         } else {
-            $store->where(['is_default' => 1, 'status' => 1]);
+            $store->where(['merchant_id' => $this->getId(), 'is_default' => 1, 'status' => 1]);
         }
         $store->load();
-        return $store[0];
+        return new Store($store[0]);
     }
 
 }

@@ -127,7 +127,7 @@ abstract class AbstractModel extends ArrayObject
                     $key = $this->primaryKey;
                 }
                 $cache = $this->getContainer()->get('cache');
-                $result = $cache->fetch('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id);
+                $result = $cache->fetch($this->cacheKey . $key . '\\' . $id, 'MODEL_DATA_');
                 if (!$result) {
                     $this->beforeLoad();
                     $select = $this->tableGateway->getSql()->select();
@@ -146,7 +146,7 @@ abstract class AbstractModel extends ArrayObject
                             }
                         }
                         $this->afterLoad();
-                        $cache->save('MODEL_DATA_' . $this->cacheKey . $key . '\\' . $id, $this->storage, 86400);
+                        $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage, 'MODEL_DATA_', 86400);
                     }
                 } else {
                     $this->storage = array_merge($this->storage, $result);
@@ -184,7 +184,7 @@ abstract class AbstractModel extends ArrayObject
                 $this->update($columns, $constraint);
                 $this->afterSave();
                 $cache = $this->getContainer()->get('cache');
-                $cache->delete('MODEL_DATA_' . $this->cacheKey . implode('\\', $constraint));
+                $cache->delete($this->cacheKey . implode('\\', $constraint), 'MODEL_DATA_');
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
@@ -199,10 +199,10 @@ abstract class AbstractModel extends ArrayObject
         if ($this->isLoaded) {
             try {
                 $this->beforeRemove();
-                $key = 'MODEL_DATA_' . $this->cacheKey . $this->primaryKey . '\\' . $this->getId();
+                $key = $this->cacheKey . $this->primaryKey . '\\' . $this->getId();
                 $this->delete([$this->primaryKey => $this->getId()]);
                 $cache = $this->getContainer()->get('cache');
-                $cache->delete($key);
+                $cache->delete($key, 'MODEL_DATA_');
                 $this->storage = [];
                 $this->isLoaded = false;
                 $this->isNew = true;

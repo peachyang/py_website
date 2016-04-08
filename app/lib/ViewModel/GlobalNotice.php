@@ -10,7 +10,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 final class GlobalNotice extends AbstractViewModel implements Singleton
 {
 
-    private static $viewModel = null;
+    private static $instance = null;
 
     private function __construct()
     {
@@ -20,10 +20,10 @@ final class GlobalNotice extends AbstractViewModel implements Singleton
 
     public static function instance()
     {
-        if (is_null(static::$viewModel)) {
-            static::$viewModel = new static;
+        if (is_null(static::$instance)) {
+            static::$instance = new static;
         }
-        return static::$viewModel;
+        return static::$instance;
     }
 
     public function getNotice()

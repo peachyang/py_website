@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Controller;
 
+use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Segment;
 
 /**

@@ -47,9 +47,9 @@ class Segment implements IteratorAggregate, ArrayAccess
         }
     }
 
-    public function get($key)
+    public function get($key, $default = '')
     {
-        return isset($this->iterator[$key]) ? unserialize($this->iterator[$key]) : '';
+        return isset($this->iterator[$key]) ? unserialize($this->iterator[$key]) : $default;
     }
 
     public function set($key, $value)
@@ -65,7 +65,7 @@ class Segment implements IteratorAggregate, ArrayAccess
     public function getIterator()
     {
         $iterator = [];
-        foreach ($this->iterator as $key => $value){
+        foreach ($this->iterator as $key => $value) {
             $iterator[$key] = unserialize($value);
         }
         return new ArrayIterator($iterator);

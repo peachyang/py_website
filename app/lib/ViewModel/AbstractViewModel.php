@@ -13,7 +13,8 @@ abstract class AbstractViewModel implements Serializable
 {
 
     use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Lib\Traits\Translate;
+        \Seahinet\Lib\Traits\Translate,
+        \Seahinet\Lib\Traits\Url;
 
     /**
      * @var string|false to disable the cache for this view model
@@ -112,7 +113,7 @@ abstract class AbstractViewModel implements Serializable
     /**
      * @return string
      */
-    public function getFormKey()
+    public function getCsrfKey()
     {
         if (is_null($this->csrf)) {
             $this->csrf = new Csrf;

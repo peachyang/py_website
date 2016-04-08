@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use BadMethodCallException;
+use Error;
 use Exception;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -82,6 +83,14 @@ class Log
      * @param Exception $e
      */
     public function logException(Exception $e)
+    {
+        $this->getLogger()->error($e->getMessage(), $e->getTrace());
+    }
+
+    /**
+     * @param Error $e
+     */
+    public function logError(Error $e)
     {
         $this->getLogger()->error($e->getMessage(), $e->getTrace());
     }

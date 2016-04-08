@@ -132,12 +132,15 @@ class ArrayObject implements ArrayAccess, Serializable
     public function unserialize($serialized)
     {
         $this->storage = unserialize($serialized);
+        if ($this instanceof Singleton) {
+            static::$instance = $this;
+        }
     }
 
     /**
      * @return array
      */
-    public function __toArray()
+    public function toArray()
     {
         return $this->storage;
     }

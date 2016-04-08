@@ -22,7 +22,7 @@ final class Cache implements ArrayAccess, Singleton
     /**
      * @var Cache
      */
-    private static $instance = null;
+    protected static $instance = null;
 
     /**
      * @var CacheProvider

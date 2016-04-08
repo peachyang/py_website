@@ -13,7 +13,7 @@ class Session implements Singleton
     /**
      * @var Session
      */
-    private static $instance = null;
+    protected static $instance = null;
 
     /**
      * @var string

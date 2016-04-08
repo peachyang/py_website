@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
+use Seahinet\Lib\Bootstrap;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
@@ -135,6 +136,9 @@ abstract class AbstractModel extends ArrayObject
                     if (!is_null($this->languageInfo)) {
                         $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], [], 'left');
                         $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
+                        if ($key !== $this->primaryKey) {
+                            $select->where(['core_language.id' => Bootstrap::getLanguage()->getId()]);
+                        }
                     }
                     $result = $this->tableGateway->selectWith($select)->toArray();
                     if (count($result)) {
@@ -176,7 +180,7 @@ abstract class AbstractModel extends ArrayObject
                 $this->insert($columns);
                 $this->setId($this->tableGateway->getLastInsertValue());
                 $this->afterSave();
-            } else if (!empty($constraint) && $this->getId()) {
+            } else if (!empty($constraint) || $this->getId()) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
@@ -289,6 +293,25 @@ abstract class AbstractModel extends ArrayObject
     protected function afterRemove()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.after', ['model' => $this]);
+    }
+
+    public function serialize()
+    {
+        $data = get_object_vars($this);
+        foreach ($data as $key => $value) {
+            if (is_object($value)) {
+                unset($data[$key]);
+            }
+        }
+        return serialize($data);
+    }
+
+    public function unserialize($data)
+    {
+        $data = unserialize($data);
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
 }

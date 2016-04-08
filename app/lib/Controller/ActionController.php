@@ -15,7 +15,8 @@ abstract class ActionController
 {
 
     use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Lib\Traits\Translate;
+        \Seahinet\Lib\Traits\Translate,
+        \Seahinet\Lib\Traits\Url;
 
     /**
      * @var Request 
@@ -93,8 +94,11 @@ abstract class ActionController
      */
     protected function redirectReferer($location = '/', $code = 302)
     {
-        $referer = $this->getRequest()->getHeader('Referer');
-        return $this->redirect($referer? : str_replace(':ADMIN', 'admin', $location), $code);
+        $referer = $this->getRequest()->getHeader('HTTP_REFERER');
+        if (!$referer && strpos($location, '://') === false) {
+            $location = strpos($location, ':ADMIN') === false ? $this->getBaseUrl($location) : $this->getAdminUrl($location);
+        }
+        return $this->redirect($referer? : $location, $code);
     }
 
     /**
@@ -106,7 +110,10 @@ abstract class ActionController
      */
     protected function redirect($location = '/', $code = 302)
     {
-        return $this->getResponse()->withHeader('Location', str_replace(':ADMIN', 'admin', $location))->withStatus($code);
+        if (strpos($location, '://') === false) {
+            $location = strpos($location, ':ADMIN') === false ? $this->getBaseUrl($location) : $this->getAdminUrl($location);
+        }
+        return $this->getResponse()->withHeader('Location', $location)->withStatus($code);
     }
 
     /**
@@ -117,7 +124,7 @@ abstract class ActionController
      */
     protected function forward($path = '/')
     {
-        $this->getRequest()->getUri()->withPath(str_replace(':ADMIN', 'admin', $path));
+        $this->getRequest()->getUri()->withPath($path);
         $this->getContainer()->get('eventDispatcher')->trigger('route', ['routers' => $this->getContainer()->get('config')['route']]);
         return null;
     }
@@ -137,7 +144,7 @@ abstract class ActionController
      * @param string $value
      * @return string
      */
-    protected function validateFormKey($value)
+    protected function validateCsrfKey($value)
     {
         if (is_null($this->csrf)) {
             $this->csrf = new Csrf;
@@ -155,7 +162,7 @@ abstract class ActionController
     protected function validateCaptcha($value, $segment = 'core')
     {
         $segment = new Segment($segment);
-        return $segment->get('captcha') == $value;
+        return $segment->get('captcha') == strtoupper($value);
     }
 
     /**

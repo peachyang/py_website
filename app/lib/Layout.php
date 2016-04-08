@@ -50,19 +50,20 @@ class Layout extends ArrayObject implements Singleton
         }
         if ($render) {
             $cache = $this->getContainer()->get('cache');
-            $result = $cache->fetch('LAYOUT_RENDERED_' . $handler);
+            $result = $cache->fetch($handler, 'LAYOUT_RENDERED_');
             if ($result) {
                 return $result;
             }
         }
         $layout = $this->storage[$handler];
         if (isset($this->storage[$handler]['update'])) {
+            unset($layout['update']);
             $layout = $this->arrayMerge($this->getLayout($this->storage[$handler]['update']), $layout);
         }
         if ($render) {
             $root = $this->renderLayout($layout['root'], 'root');
             $root->addBodyClass(trim(preg_replace('/[^a-z]/', '-', strtolower($handler)), '- '));
-            $cache->save('LAYOUT_RENDERED_' . $handler, $root);
+            $cache->save($handler, $root, 'LAYOUT_RENDERED_');
             return $root;
         }
         return $layout;

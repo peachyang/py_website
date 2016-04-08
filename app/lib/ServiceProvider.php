@@ -32,11 +32,11 @@ class ServiceProvider implements ServiceProviderInterface
         if (!$container->has('layout')) {
             $container['layout'] = Layout::instance($config['layout']);
         }
-        if (!$container->has('request')) {
+        if (!$container->has('request') && isset($_SERVER['REQUEST_METHOD'])) {
             $request = new Request;
             $container['request'] = $request;
         }
-        if (!$container->has('response')) {
+        if (!$container->has('response') && isset($_SERVER['REQUEST_METHOD'])) {
             $response = new Response;
             $response->withStatus(200)
                     ->withHeader('Content-Type', 'text/html; charset=UTF-8');

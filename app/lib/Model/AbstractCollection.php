@@ -54,8 +54,7 @@ abstract class AbstractCollection extends ArrayObject
     public function __call($name, $arguments)
     {
         if (is_callable([$this->select, $name])) {
-            call_user_func_array([$this->select, $name], $arguments);
-            return $this;
+            return call_user_func_array([$this->select, $name], $arguments);
         } else {
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
@@ -136,6 +135,54 @@ abstract class AbstractCollection extends ArrayObject
     {
         $this->isLoaded = true;
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
+    }
+
+    public function getArrayCopy()
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::getArrayCopy();
+    }
+
+    public function &__get($key)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::__get($key);
+    }
+
+    public function &offsetGet($key)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::offsetGet($key);
+    }
+
+    public function getIterator()
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::getIterator();
+    }
+
+    public function offsetUnset($key)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::offsetUnset($key);
+    }
+
+    public function __unset($key)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::__unset($key);
     }
 
 }

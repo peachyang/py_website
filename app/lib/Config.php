@@ -16,7 +16,7 @@ final class Config extends ArrayObject implements Singleton
     use Traits\DB,
         Traits\ArrayMerge;
 
-    private static $instance = null;
+    protected static $instance = null;
 
     /**
      * @param array|Container $config
@@ -102,6 +102,37 @@ final class Config extends ArrayObject implements Singleton
             return [$key => $this->generateConfig($path, $value)];
         } else {
             return [$path[0] => $value];
+        }
+    }
+
+    private function getConfigByPath($path, $config = null)
+    {
+        if (count($path) > 1) {
+            $key = array_shift($path);
+            $config = is_null($config) ? $this->offsetGet($key) :
+                    (isset($config[$key]) ? $config[$key] : null);
+            if (!is_null($config)) {
+                return $this->getConfigByPath($path, $config);
+            }
+        } else if (isset($config[$path[0]])) {
+            $result = $config[$path[0]];
+            return isset($result['l' . Bootstrap::getLanguage()->getId()]) ?
+                    $result['l' . Bootstrap::getLanguage()->getId()] :
+                    (isset($result['s' . Bootstrap::getStore()->getId()]) ?
+                            $result['s' . Bootstrap::getStore()->getId()] :
+                            (isset($result['m' . Bootstrap::getMerchant()->getId()]) ?
+                                    $result['m' . Bootstrap::getMerchant()->getId()] :
+                                    $result));
+        }
+        return null;
+    }
+
+    public function offsetGet($key)
+    {
+        if (strpos($key, '/')) {
+            return $this->getConfigByPath(explode('/', trim($key, '/')));
+        } else {
+            return parent::offsetGet($key);
         }
     }
 

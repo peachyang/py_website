@@ -39,7 +39,7 @@ class Message extends AbstractViewModel implements Singleton
         $messages = [];
         foreach ($this->segments as $name) {
             $segment = new Segment($name);
-            $messages += $segment->get('message');
+            $messages += $segment->get('message', []);
             $segment->set('message', []);
         }
         return $messages;

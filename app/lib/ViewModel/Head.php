@@ -10,7 +10,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 final class Head extends AbstractViewModel implements Singleton
 {
 
-    private static $viewModel = null;
+    private static $instance = null;
     private $title = '';
     private $script = ['condition' => [], 'normal' => []];
     private $link = ['condition' => [], 'normal' => []];
@@ -23,10 +23,10 @@ final class Head extends AbstractViewModel implements Singleton
 
     public static function instance()
     {
-        if (is_null(static::$viewModel)) {
-            static::$viewModel = new static;
+        if (is_null(static::$instance)) {
+            static::$instance = new static;
         }
-        return static::$viewModel;
+        return static::$instance;
     }
 
     public function getTitle()

@@ -22,7 +22,7 @@ class Translator implements Singleton
     /**
      * @var Translator
      */
-    private static $instance = null;
+    protected static $instance = null;
 
     /**
      * @var array

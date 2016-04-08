@@ -9,6 +9,10 @@ admin_login:
                     login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/login
+                    messages:
+                        action:
+                            method: addHandledSegment
+                            params: admin
 admin_forgot_password:
     update: default
     root:
@@ -19,6 +23,10 @@ admin_forgot_password:
                     login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/forgotPwd
+                    messages:
+                        action:
+                            method: addHandledSegment
+                            params: admin
 admin_reset_password:
     update: default
     root:
@@ -29,10 +37,22 @@ admin_reset_password:
                     login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/resetPwd
+                    messages:
+                        action:
+                            method: addHandledSegment
+                            params: admin
 admin:
     update: default
-    action:
-        method: addBodyClass
-        params: admin
+    root:
+        action:
+            method: addBodyClass
+            params: admin
+        children:
+            content:
+                children:
+                    messages:
+                        action:
+                            method: addHandledSegment
+                            params: admin
 admin_dashboard:
     update: admin

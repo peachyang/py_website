@@ -7,3 +7,11 @@ cms_page:
                 children:
                     page:
                         type: Seahinet\CMS\ViewModel\Page
+admin_cms_page_list:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    grid:
+                        type: Seahinet\Admin\ViewModel\CMS\Page

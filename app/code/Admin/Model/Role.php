@@ -16,7 +16,7 @@ class Role extends AbstractModel
         $this->init('admin_role', 'id', ['id', 'parent_id', 'name', 'status']);
     }
 
-    protected function hasPermission($name)
+    public function hasPermission($name)
     {
         return !is_null($this->role) && $this->role->hasPermission('ALL') || $this->role->hasPermission($name);
     }
@@ -24,7 +24,7 @@ class Role extends AbstractModel
     protected function afterLoad()
     {
         $cache = $this->getContainer()->get('cache');
-        $this->role = $cache->fetch('RBAC_ROLE_' . $this->offsetGet('name'));
+        $this->role = $cache->fetch($this->offsetGet('name'), 'RBAC_ROLE_');
         if (!$this->role) {
             $this->role = new RbacRole($this->offsetGet('name'));
             $roles = new Collection;
@@ -43,7 +43,7 @@ class Role extends AbstractModel
                 }
             }
             $this->addChildren($children, $this->role, $this->getId());
-            $cache->save('RBAC_ROLE_' . $this->offsetGet('name'), $this->role);
+            $cache->save($this->offsetGet('name'), $this->role, 'RBAC_ROLE_');
         }
         parent::afterLoad();
     }

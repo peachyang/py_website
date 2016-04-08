@@ -3,15 +3,29 @@
 namespace Seahinet\Admin\Controller;
 
 use Exception;
+use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Admin\Model\User;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Model\Email\Template;
 use Seahinet\Lib\Session\Segment;
 use Swift_SwiftException;
-use Gregwar\Captcha\CaptchaBuilder;
+use Zend\Crypt\Password\Bcrypt;
 
 class IndexController extends ActionController
 {
+
+    public function dispatch($request = null, $routeMatch = null)
+    {
+        $segment = new Segment('admin');
+        if ($segment->get('isLoggedin')) {
+            if ($segment->get('user')->getRole()->hasPermission('Seahinet\\Admin\\Controller\\DashboardController::indexAction')) {
+                return $this->redirect(':ADMIN/dashboard/');
+            } else {
+                return $this->redirect(':ADMIN/user/');
+            }
+        }
+        return parent::dispatch($request, $routeMatch);
+    }
 
     public function indexAction()
     {
@@ -22,7 +36,7 @@ class IndexController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['form_key']) || !$this->validateFormKey($data['form_key'])) {
+            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
                 return $this->redirectReferer();
             }
@@ -40,7 +54,7 @@ class IndexController extends ActionController
             }
             $user = new User;
             if ($user->login($data['username'], $data['password'])) {
-                $this->addMessage($this->translate('Welcome %s. Last Login: %s', $data['username'], $data['logdate']), 'success', 'admin');
+                $this->addMessage($this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'success', 'admin');
                 $user->setData([
                     'logdate' => gmdate('Y-m-d h:i:s'),
                     'lognum' => $user->offsetGet('lognum') + 1
@@ -59,7 +73,7 @@ class IndexController extends ActionController
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
         $builder->build();
         $segment = new Segment('admin');
-        $segment->set('captcha', $builder->getPhrase());
+        $segment->set('captcha', strtoupper($builder->getPhrase()));
         $this->getResponse()
                 ->withHeader('Content-type', 'image/jpeg')
                 ->withHeader('Cache-Control', 'no-store');
@@ -83,7 +97,7 @@ class IndexController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['form_key']) || !$this->validateFormKey($data['form_key'])) {
+            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
                 return $this->redirectReferer();
             }
@@ -105,7 +119,7 @@ class IndexController extends ActionController
                 ])->save();
                 try {
                     $mailer = $this->getContainer()->get('mailer');
-                    $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => 'index/reset/?token=' . $token])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                    $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
                     $this->addMessage($this->translate('You will receive an email with a link to reset your password.'), 'success', 'admin');
                     return $this->redirect(':ADMIN');
                 } catch (Swift_SwiftException $e) {
@@ -126,7 +140,7 @@ class IndexController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['form_key']) || !$this->validateFormKey($data['form_key'])) {
+            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
                 return $this->redirectReferer();
             }
@@ -148,7 +162,7 @@ class IndexController extends ActionController
             $user = new User;
             $user->load($data['username'], 'username');
             if ($user->getId() && $data['token'] == $user->offsetGet('rp_token') && time() <= $user->offsetGet('rp_token_created_at')) {
-                $user->setData(['password' => $data['password'], 'rp_token' => null, 'rp_token_created_at' => null])->save();
+                $user->setData(['password' => (new Bcrypt)->create($data['password']), 'rp_token' => null, 'rp_token_created_at' => null])->save();
                 $this->addMessage($this->translate('The password has been reset successfully.'), 'success', 'admin');
                 return $this->redirect(':ADMIN');
             } else {

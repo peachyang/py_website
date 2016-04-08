@@ -9,19 +9,27 @@ use Seahinet\Lib\Route\RouteMatch;
 class Router extends Route
 {
 
+    use \Seahinet\Lib\Traits\Container;
+
     public function match(Request $request)
     {
         $path = trim($request->getUri()->getPath(), '/');
         $parts = explode('/', $path);
-        if ($parts[0] === 'admin') {
+        if ($parts[0] === $this->getContainer()->get('config')['global/admin_path']) {
             $options = ['namespace' => 'Seahinet\\Admin\\Controller'];
             if (isset($parts[1])) {
-                $options['controller'] = str_replace('_', '\\', $parts[1]) . 'Controller';
+                $options['controller'] = ucfirst(str_replace('_', '\\', $parts[1])) . 'Controller';
+            } else {
+                $options['controller'] = 'IndexController';
             }
             if (isset($parts[2])) {
                 $options['action'] = $parts[2];
+            } else {
+                $options['action'] = 'index';
             }
-            return new RouteMatch($options, $request);
+            if (class_exists($options['namespace'] . '\\' . $options['controller']) && is_callable([$options['namespace'] . '\\' . $options['controller'], $options['action'] . 'Action'])) {
+                return new RouteMatch($options, $request);
+            }
         }
         return false;
     }

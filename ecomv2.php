@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `core_merchant`(
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Merchant ID',
     `code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Merchant code',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
+    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_CORE_MERCHANT_CODE UNIQUE (`code`)
 );
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `cms_page`(
     `content` BLOB COMMENT 'Page content',
     PRIMARY KEY (`id`),
     INDEX IDX_CMS_PAGE_PARENT_ID (`parent_id`),
-    CONSTRAINT UNQ_CMS_PAGE_URI_KEY UNIQUE (`uri_key`),
+    INDEX IDX_CMS_PAGE_URI_KEY (`uri_key`),
     CONSTRAINT FK_CMS_PAGE_PARENT_ID_CMS_PAGE_ID FOREIGN KEY (`parent_id`) REFERENCES `cms_page`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `cms_block`(
     `code` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Identify code',
     `content` BLOB COMMENT 'Page content',
     PRIMARY KEY (`id`),
-    CONSTRAINT UNQ_CMS_BLOCK_CODE UNIQUE (`code`)
+    INDEX IDX_CMS_BLOCK_CODE UNIQUE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `cms_block_language`(
@@ -127,10 +128,17 @@ CREATE TABLE IF NOT EXISTS `core_config` (
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_CONFIG_LANGUAGE_ID_PATH (`language_id`,`path`),
     INDEX IDX_CORE_CONFIG_STORE_ID_LANGUAGE_ID_PATH (`store_id`,`language_id`,`path`),
-    CONSTRAINT UNQ_CORE_CONFIG_MERCHANT_ID_STORE_ID_LANGUAGE_ID_PATH UNIQUE (`merchant_id`,`scope_id`,`language_id`,`path`),
+    CONSTRAINT UNQ_CORE_CONFIG_MERCHANT_ID_STORE_ID_LANGUAGE_ID_PATH UNIQUE (`merchant_id`,`store_id`,`language_id`,`path`),
     CONSTRAINT FK_CORE_CONFIG_MERCHANT_ID_CORE_MARCHANT_ID FOREIGN KEY (`merchant_id`) REFERENCES `core_merchant`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CORE_CONFIG_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CORE_CONFIG_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `core_session` (
+    `id` CHAR(32) NOT NULL COMMENT 'Session ID',
+    `data` TEXT COMMENT 'Session data',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Session created',
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `email_template` (
@@ -139,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `email_template` (
     `subject` VARCHAR(255) DEFAULT '' COMMENT 'Subject',
     `content` BLOB COMMENT 'Content',
     PRIMARY KEY (`id`),
-    CONSTRAINT UNQ_EMAIL_TEMPLATE_CODE UNIQUE (`code`)
+    INDEX IDX_EMAIL_TEMPLATE_CODE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `email_template_language`(

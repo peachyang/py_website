@@ -1,0 +1,22 @@
+<?php ?>
+<table class="table">
+    <caption><h2><?php echo $this->getVariable('title') ?></h2></caption>
+    <thead>
+        <tr>
+            <?php foreach ($this->getVariable('attributes') as $name): ?>
+                <th>
+                    <a href=""><?php echo $name ?></a>
+                </th>
+            <?php endforeach ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->getVariable('collection') as $item) : ?>
+            <tr>
+                <?php foreach ($this->getVariable('attributes') as $attr => $name): ?>
+                    <td><?php echo $item[$attr] ?></td>
+                <?php endforeach ?>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>

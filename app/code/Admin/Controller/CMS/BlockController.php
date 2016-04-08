@@ -18,7 +18,7 @@ class BlockController extends AuthActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (!isset($data['form_key']) || !$this->validateFormKey($data['form_key'])) {
+            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 
             }
             $model = new Model($data);

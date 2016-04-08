@@ -1,5 +1,5 @@
-<form action="index/resetpost/" method="post">
-    <input type="hidden" name="csrf" value="<?php echo $this->getFormKey() ?>" />
+<form action="<?php echo $this->getAdminUrl('index/resetpost/') ?>" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <input type="hidden" name="token" value="<?php echo $this->getRequest()->getQuery('token') ?>" />
     <div class="input-box">
         <label for="login:username"><?php echo $this->translate('Username') ?>: </label>
@@ -16,7 +16,7 @@
     <div class="input-box">
         <label for="login:captcha"><?php echo $this->translate('Captcha') ?>: </label>
         <input type="text" name="captcha" id="login:captcha" />
-        <img src="index/captcha/" alt="" />
+        <img src="<?php echo $this->getAdminUrl('index/captcha/') ?>" alt="" />
     </div>
     <div class="buttons-set">
         <button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>

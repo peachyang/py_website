@@ -1,1 +1,46 @@
 <?php
+$elements = $this->getVariable('elements');
+?>
+<h2><?php echo $this->getVariable('title') ?></h2>
+<form action="<?php echo $this->getSaveUrl() ?>" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+    <?php foreach ($elements as $key => $item): ?>
+        <div class="input-box">
+            <?php if (isset($item['label'])): ?>
+                <label for="<?php echo $key ?>"><?php echo $item['label'] ?></label>
+            <?php endif ?>
+            <?php if ($item['type'] === 'select'): ?>
+                <select name="<?php echo $key ?>" id="<?php echo $key ?>" <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>>
+                    <?php if (!isset($item['required']) || !$item['required']): ?>
+                        <option><?php echo $this->translate('Please Select') ?></option>
+                    <?php endif ?>
+                    <?php
+                    foreach ($item['options'] as $value => $label):
+                        if(is_array($label)):
+                        ?>
+                        <optgroup label="<?php echo $value ?>">
+                            <?php foreach($label as $v => $l): ?>
+                                <option value="<?php echo $v ?>"<?php if ($v == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                        <?php else: ?>
+                        <option value="<?php echo $value ?>"<?php if ($value == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </select>
+            <?php elseif ($item['type'] === 'radio' || $item['type'] === 'checkbox'): ?>
+                <?php foreach ($item['options'] as $value => $label): ?>
+                    <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key, '-', $value ?>" value="<?php echo $value ?>"<?php if ($value == $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>/>
+                    <label for="<?php echo $key, '-', $value ?>"><?php echo $label ?></label>
+                <?php endforeach ?>
+            <?php elseif ($item['type'] === 'textarea'): ?>
+                <textarea name="<?php echo $key ?>" id="<?php echo $key ?>" <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>><?php echo $item['value'] ?></textarea>
+            <?php else: ?>
+                <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>" value="<?php echo $item['value'] ?>" <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>/>
+            <?php endif ?>
+        </div>
+    <?php endforeach ?>
+    <div class="buttons-set">
+        <button type="submit"><span><?php echo $this->translate('Save') ?></span></button>
+    </div>
+</form>

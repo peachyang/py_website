@@ -1,21 +1,38 @@
-<?php ?>
+<?php
+$attributes = $this->getVariable('attributes');
+?>
 <table class="table">
-    <caption><h2><?php echo $this->getVariable('title') ?></h2></caption>
+    <caption>
+        <h2><?php echo $this->getVariable('title') ?></h2>
+    </caption>
     <thead>
         <tr>
-            <?php foreach ($this->getVariable('attributes') as $name): ?>
+            <th colspan="<?php echo count($attributes) + 2 ?>">
+                <a href="<?php echo $this->getDeleteUrl() ?>"><?php echo $this->translate('Delete') ?></a>
+                <a href="<?php echo $this->getEditUrl() ?>"><span><?php echo $this->translate('New') ?></span></a>
+            </th>
+        </tr>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <?php foreach ($attributes as $name): ?>
                 <th>
-                    <a href=""><?php echo $name ?></a>
+                    <a href=""><?php echo $this->translate($name) ?></a>
                 </th>
             <?php endforeach ?>
+            <th><?php echo $this->translate('Action') ?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($this->getVariable('collection') as $item) : ?>
             <tr>
-                <?php foreach ($this->getVariable('attributes') as $attr => $name): ?>
-                    <td><?php echo $item[$attr] ?></td>
+                <td><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
+                <?php foreach ($attributes as $attr => $name): ?>
+                    <td><?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $item[$attr] ?></td>
                 <?php endforeach ?>
+                <td>
+                    <a href="<?php echo $this->getEditUrl($item['id']) ?>"><?php echo $this->translate('Edit') ?></a>
+                    <a href="<?php echo $this->getDeleteUrl() ?>"><?php echo $this->translate('Delete') ?></a>
+                </td>
             </tr>
         <?php endforeach ?>
     </tbody>

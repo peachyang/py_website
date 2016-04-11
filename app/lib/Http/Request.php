@@ -320,7 +320,7 @@ class Request extends Message implements RequestInterface
     public function isXmlHttpRequest()
     {
         $header = $this->getHeader('X_REQUESTED_WITH');
-        return false !== $header && $header->getFieldValue() == 'XMLHttpRequest';
+        return $header == 'XMLHttpRequest';
     }
 
     /**
@@ -331,7 +331,7 @@ class Request extends Message implements RequestInterface
     public function isFlashRequest()
     {
         $header = $this->getHeader('USER_AGENT');
-        return false !== $header && stristr($header->getFieldValue(), ' flash');
+        return stristr($header, ' flash');
     }
 
     /**

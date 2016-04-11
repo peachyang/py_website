@@ -18,7 +18,13 @@ class PageController extends AuthActionController
 
     public function editAction()
     {
-        
+        $root = $this->getLayout('admin_cms_page_edit');
+        $model = new Model;
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $model->load($id);
+        }
+        $root->getChild('edit', true)->setVariable('model', $model);
+        return $root;
     }
 
     public function deleteAction()
@@ -32,10 +38,13 @@ class PageController extends AuthActionController
             } else {
                 try {
                     $model = new Model;
-                    $model->setId($data['id'])->remove();
-                    $result['message'][] = ['message' => $this->translate('An item has been deleted successfully.'), 'level' => 'success'];
+                    $count = 0;
+                    foreach ((array) $data['id'] as $id) {
+                        $model->setId($id)->remove();
+                        $count++;
+                    }
+                    $result['message'][] = ['message' => $this->translate('%d item(s) has been deleted successfully.',[$count]), 'level' => 'success'];
                 } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
@@ -59,14 +68,16 @@ class PageController extends AuthActionController
                 $result['error'] = 1;
             } else {
                 $model = new Model($data);
-                if (!isset($data['id'])) {
+                if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
+                }
+                if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
+                    $model->setData('parent_id', null);
                 }
                 try {
                     $model->save();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }

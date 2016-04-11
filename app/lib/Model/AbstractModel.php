@@ -192,8 +192,10 @@ abstract class AbstractModel extends ArrayObject
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
+            throw $e;
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
+            throw $e;
         }
         return $this;
     }
@@ -221,30 +223,41 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
+     * Get table columns
+     * 
+     * @return array
+     */
+    public function getColumns()
+    {
+        if (empty($this->columns)) {
+            $cache = $this->getContainer()->get('cache');
+            $columns = $cache->fetch($this->tableGateway->getTable(), 'TABLE_DESCRIPTION_');
+            if (!$columns) {
+                $columns = $this->tableGateway->getAdapter()->query('DESCRIBE ' . $this->tableGateway->getTable(), 'execute');
+                $cache->save($this->tableGateway->getTable(), $columns, 'TABLE_DESCRIPTION_');
+            }
+            foreach ($columns as $column) {
+                $this->columns[] = $column['Field'];
+            }
+        }
+        return $this->columns;
+    }
+
+    /**
      * Get inserting/updating values
      * 
      * @return array
      */
     protected function prepareColumns()
     {
-        if (empty($this->columns)) {
-            $cache = $this->getContainer()->get('cache');
-            $columns = $cache->fetch('TABLE_DESCRIPTION_' . $this->tableGateway->getTable());
-            if (!$columns) {
-                $columns = $this->tableGateway->getAdapter()->query('DESCRIBE ' . $this->tableGateway->getTable(), 'execute');
-                $cache->save('TABLE_DESCRIPTION_' . $this->tableGateway->getTable(), $columns);
-            }
-            foreach ($columns as $column) {
-                $this->columns[] = $column['Field'];
-            }
-        }
-        $columns = [];
+        $columns = $this->getColumns();
+        $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $this->columns) && $this->isNew || in_array($key, $this->updatedColumns)) {
-                $columns[$key] = $value;
+            if (in_array($key, $columns) && $this->isNew || in_array($key, $this->updatedColumns)) {
+                $pairs[$key] = $value;
             }
         }
-        return $columns;
+        return $pairs;
     }
 
     protected function getEventDispatcher()
@@ -312,6 +325,16 @@ abstract class AbstractModel extends ArrayObject
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
+    }
+
+    /**
+     * Is the model loaded
+     * 
+     * @return bool
+     */
+    public function isLoaded()
+    {
+        return $this->isLoaded;
     }
 
 }

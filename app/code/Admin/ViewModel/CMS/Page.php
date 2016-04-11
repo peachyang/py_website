@@ -2,8 +2,9 @@
 
 namespace Seahinet\Admin\ViewModel\CMS;
 
+use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\CMS\Model\Collection\Page as Collection;
-use Seahinet\Lib\ViewModel\Grid;
+use Seahinet\Lib\Model\AbstractCollection;
 
 class Page extends Grid
 {
@@ -11,6 +12,17 @@ class Page extends Grid
     public function __construct()
     {
         $this->setVariable('title', 'Page Management');
+        parent::__construct();
+    }
+
+    public function getEditUrl($id = null)
+    {
+        return $this->getAdminUrl(':ADMIN/cms_page/edit/' . (is_null($id) ? '' : '?id=' . $id));
+    }
+
+    public function getDeleteUrl()
+    {
+        return $this->getAdminUrl(':ADMIN/cms_page/delete/');
     }
 
     protected function prepareColumns()
@@ -25,7 +37,7 @@ class Page extends Grid
         ];
     }
 
-    protected function prepareCollection(\Seahinet\Lib\Model\AbstractCollection $collection = null)
+    protected function prepareCollection(AbstractCollection $collection = null)
     {
         return parent::prepareCollection(new Collection);
     }

@@ -101,8 +101,10 @@ abstract class AbstractCollection extends ArrayObject
                 }
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
+                throw $e;
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
+                throw $e;
             }
         }
         return $this;

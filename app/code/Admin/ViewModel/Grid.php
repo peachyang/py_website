@@ -1,8 +1,9 @@
 <?php
 
-namespace Seahinet\Lib\ViewModel;
+namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Grid extends AbstractViewModel
 {
@@ -12,7 +13,20 @@ class Grid extends AbstractViewModel
         $this->setTemplate('admin/grid');
     }
 
-    protected function prepareColumns(){}
+    public function getEditUrl($id = null)
+    {
+        return $this->getAdminUrl($this->getVariable('edit_url') . (is_null($id) ? '' : '?id=' . $id));
+    }
+
+    public function getDeleteUrl()
+    {
+        return $this->getAdminUrl($this->getVariable('delete_url'));
+    }
+
+    protected function prepareColumns()
+    {
+        return [];
+    }
 
     protected function prepareCollection(AbstractCollection $collection = null)
     {

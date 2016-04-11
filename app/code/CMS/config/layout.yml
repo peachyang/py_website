@@ -15,3 +15,11 @@ admin_cms_page_list:
                 children:
                     grid:
                         type: Seahinet\Admin\ViewModel\CMS\Page
+admin_cms_page_edit:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        type: Seahinet\Admin\ViewModel\CMS\PageEdit

@@ -12,6 +12,11 @@ class Edit extends AbstractViewModel
         $this->setTemplate('admin/edit');
     }
 
+    public function getTitle()
+    {
+        return $this->getQuery('id') ? 'Edit' : 'Add';
+    }
+
     public function getSaveUrl()
     {
         return $this->getAdminUrl($this->getVariable('save_url'));
@@ -19,7 +24,10 @@ class Edit extends AbstractViewModel
 
     protected function getRendered()
     {
-        $this->setVariable('elements', $this->prepareElements());
+        $this->setVariables([
+            'elements' => $this->prepareElements(),
+            'title' => $this->getTitle()
+        ]);
         return parent::getRendered();
     }
 

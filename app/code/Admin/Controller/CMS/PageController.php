@@ -4,7 +4,6 @@ namespace Seahinet\Admin\Controller\CMS;
 
 use Exception;
 use Seahinet\CMS\Model\Page as Model;
-use Seahinet\CMS\Model\Collection\Page as Collection;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class PageController extends AuthActionController

@@ -3,20 +3,19 @@
 namespace Seahinet\Admin\ViewModel\CMS;
 
 use Seahinet\Admin\ViewModel\Edit;
-use Seahinet\CMS\Source\Page;
 use Seahinet\Lib\Source\Language;
 
-class PageEdit extends Edit
+class BlockEdit extends Edit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('cms_page/save/');
+        return $this->getAdminUrl('cms_block/save/');
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Page' : 'Add Page';
+        return $this->getQuery('id') ? 'Edit Block' : 'Add Block';
     }
 
     protected function prepareElements($columns = [])
@@ -25,14 +24,9 @@ class PageEdit extends Edit
             'id' => [
                 'type' => 'hidden',
             ],
-            'parent_id' => [
-                'type' => 'select',
-                'options' => (new Page)->getSourceArray($this->getVariable('model')->getId()),
-                'label' => 'Parent ID'
-            ],
-            'title' => [
+            'code' => [
                 'type' => 'text',
-                'label' => 'Title',
+                'label' => 'Code',
                 'required' => 'required'
             ],
             'language_id' => [
@@ -44,11 +38,6 @@ class PageEdit extends Edit
                     'multiple' => 'multiple'
                 ]
             ],
-            'uri_key' => [
-                'type' => 'text',
-                'label' => 'Url Key',
-                'required' => 'required'
-            ],
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',
@@ -57,14 +46,6 @@ class PageEdit extends Edit
                     0 => 'Disabled'
                 ],
                 'required' => 'required'
-            ],
-            'keywords' => [
-                'type' => 'text',
-                'label' => 'Meta Keywords'
-            ],
-            'description' => [
-                'type' => 'text',
-                'label' => 'Meta Description'
             ],
             'content' => [
                 'type' => 'textarea',

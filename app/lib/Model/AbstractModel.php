@@ -150,7 +150,7 @@ abstract class AbstractModel extends ArrayObject
                             }
                         }
                         $this->afterLoad();
-                        $cache->save($this->cacheKey . $key . '\\' . $id, $this->storage, 'MODEL_DATA_', 86400);
+                        $cache->save($this->cacheKey . $key . '=' . $id, $this->storage, 'MODEL_DATA_', 86400);
                     }
                 } else {
                     $this->storage = array_merge($this->storage, $result);
@@ -175,12 +175,7 @@ abstract class AbstractModel extends ArrayObject
     {
         $columns = $this->prepareColumns();
         try {
-            if ($this->isNew) {
-                $this->beforeSave();
-                $this->insert($columns);
-                $this->setId($this->tableGateway->getLastInsertValue());
-                $this->afterSave();
-            } else if (!empty($constraint) || $this->getId()) {
+            if (!empty($constraint) || $this->getId()) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
@@ -188,7 +183,12 @@ abstract class AbstractModel extends ArrayObject
                 $this->update($columns, $constraint);
                 $this->afterSave();
                 $cache = $this->getContainer()->get('cache');
-                $cache->delete($this->cacheKey . implode('\\', $constraint), 'MODEL_DATA_');
+                $cache->delete($this->cacheKey . http_build_query($constraint), 'MODEL_DATA_');
+            } else if ($this->isNew) {
+                $this->beforeSave();
+                $this->insert($columns);
+                $this->setId($this->tableGateway->getLastInsertValue());
+                $this->afterSave();
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
@@ -277,9 +277,9 @@ abstract class AbstractModel extends ArrayObject
     {
         if (!is_null($this->languageInfo) && $this->getId() && count($this->storage['language_id'])) {
             $tableGateway = new TableGateway($this->languageInfo[0], $this->tableGateway->getAdapter());
-            $tableGateway->delete([$this->languageInfo[0] => $this->getId()]);
-            foreach ($this->storage['language_id'] as $language) {
-                $tableGateway->insert([$this->languageInfo[0] => $this->getId(), 'language_id' => $language]);
+            $tableGateway->delete([$this->languageInfo[1] => $this->getId()]);
+            foreach ((array) $this->storage['language_id'] as $language) {
+                $tableGateway->insert([$this->languageInfo[1] => $this->getId(), 'language_id' => $language]);
             }
         }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);

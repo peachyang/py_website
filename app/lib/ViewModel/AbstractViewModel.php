@@ -41,6 +41,11 @@ abstract class AbstractViewModel implements Serializable
      */
     protected $children = [];
 
+    /**
+     * @var \Seahinet\Lib\Http\Request 
+     */
+    protected $request = null;
+
     public function __toString()
     {
         try {
@@ -187,11 +192,6 @@ abstract class AbstractViewModel implements Serializable
         return $this;
     }
 
-    public function getQuery($key = null, $default = '')
-    {
-        return $this->getContainer()->get('request')->getQuery($key, $default);
-    }
-
     public function serialize()
     {
         $data = get_object_vars($this);
@@ -209,6 +209,19 @@ abstract class AbstractViewModel implements Serializable
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
+    }
+
+    protected function getRequest()
+    {
+        if (is_null($this->request)) {
+            $this->request = $this->getContainer()->get('request');
+        }
+        return $this->request;
+    }
+
+    public function getQuery($key = null, $default = '')
+    {
+        return $this->getRequest()->getQuery($key, $default);
     }
 
 }

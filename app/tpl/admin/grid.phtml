@@ -1,5 +1,7 @@
 <?php
 $attributes = $this->getVariable('attributes');
+$count = count($attributes) / 2;
+$query = $this->getQuery();
 ?>
 <table class="table">
     <caption>
@@ -7,16 +9,32 @@ $attributes = $this->getVariable('attributes');
     </caption>
     <thead>
         <tr>
-            <th colspan="<?php echo count($attributes) + 2 ?>">
-                <a href="<?php echo $this->getDeleteUrl() ?>"><?php echo $this->translate('Delete') ?></a>
-                <a href="<?php echo $this->getEditUrl() ?>"><span><?php echo $this->translate('New') ?></span></a>
+            <th colspan="<?php echo $count + 1 ?>">
+                <?php echo $this->translate('Show') ?>
+                <input type="number" name="limit" value="<?php echo isset($query['asc']) ? $query['asc'] : 20 ?>" onchange="location.href = '<?php echo $this->getLimitUrl() ?>limit=' + this.value" min="1" />
+                <?php echo $this->translate('Per Page') ?>
+            </th>
+            <th colspan="<?php echo $count + 1 ?>">
+                <a href="<?php echo $this->getDeleteUrl() ?>">
+                    <span><?php echo $this->translate('Delete') ?></span>
+                </a>
+                <a href="<?php echo $this->getEditUrl() ?>">
+                    <span><?php echo $this->translate('New') ?></span>
+                </a>
             </th>
         </tr>
         <tr>
             <th><input type="checkbox" /></th>
-            <?php foreach ($attributes as $name): ?>
+            <?php foreach ($attributes as $attr => $name): ?>
                 <th>
-                    <a href=""><?php echo $this->translate($name) ?></a>
+                    <a href="<?php echo $this->getOrderByUrl($attr) ?>"
+                       <?php if (isset($query['asc']) && $query['asc'] === $attr): ?>
+                       class="asc"
+                       <?php elseif (isset($query['desc']) && $query['desc'] === $attr): ?>
+                       class="desc"
+                       <?php endif ?>>
+                       <?php echo $this->translate($name) ?>
+                    </a>
                 </th>
             <?php endforeach ?>
             <th><?php echo $this->translate('Action') ?></th>

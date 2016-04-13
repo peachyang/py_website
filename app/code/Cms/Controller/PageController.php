@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\CMS\Controller;
+namespace Seahinet\Cms\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 

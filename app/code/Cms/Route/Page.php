@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\CMS\Route;
+namespace Seahinet\Cms\Route;
 
-use Seahinet\CMS\Model\Page as PageModel;
+use Seahinet\Cms\Model\Page as PageModel;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Route\Route;
 use Seahinet\Lib\Route\RouteMatch;
@@ -17,7 +17,7 @@ class Page extends Route
             $home = new PageModel();
             $home->load('home', 'uri_key');
             if ($home->getId()) {
-                return new RouteMatch(['page' => $home, 'namespace' => 'Seahinet\\CMS\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
+                return new RouteMatch(['page' => $home, 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
             } else {
                 return false;
             }
@@ -47,7 +47,7 @@ class Page extends Route
                 return false;
             }
         }
-        return new RouteMatch(['page' => $stack[0], 'namespace' => 'Seahinet\\CMS\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
+        return new RouteMatch(['page' => $stack[0], 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
     }
 
 }

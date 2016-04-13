@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\CMS\Model\Collection;
+namespace Seahinet\Cms\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
 

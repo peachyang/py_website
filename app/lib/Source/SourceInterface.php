@@ -10,5 +10,5 @@ interface SourceInterface
     /**
      * @return array
      */
-    abstract public function getSourceArray();
+    public function getSourceArray();
 }

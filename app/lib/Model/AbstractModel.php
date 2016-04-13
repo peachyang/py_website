@@ -171,11 +171,11 @@ abstract class AbstractModel extends ArrayObject
      * @param array $constraint     Update query constraint
      * @return AbstractModel
      */
-    public function save($constraint = [])
+    public function save($constraint = [], $insertForce = false)
     {
         $columns = $this->prepareColumns();
         try {
-            if (!empty($constraint) || $this->getId()) {
+            if (!$insertForce && (!empty($constraint) || $this->getId())) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }

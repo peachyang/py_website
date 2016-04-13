@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\CMS\ViewModel;
+namespace Seahinet\Cms\ViewModel;
 
-use Seahinet\CMS\Model\Block as BlockModel;
+use Seahinet\Cms\Model\Block as BlockModel;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Block extends AbstractViewModel

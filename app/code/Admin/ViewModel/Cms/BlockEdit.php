@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\CMS;
+namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
 use Seahinet\Lib\Source\Language;
@@ -29,7 +29,7 @@ class BlockEdit extends Edit
                 'label' => 'Code',
                 'required' => 'required'
             ],
-            'language_id' => [
+            'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',
                 'required' => 'required',

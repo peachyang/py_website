@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\CMS\Model;
+namespace Seahinet\Cms\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
 

@@ -8,6 +8,7 @@ use Exception;
 use ReflectionClass;
 use Seahinet\Admin\Model\Operation;
 use Symfony\Component\Finder\Finder;
+use Zend\Db\Adapter\Exception\InvalidQueryException;
 
 class Rbac extends AbstractCli
 {
@@ -20,17 +21,18 @@ class Rbac extends AbstractCli
             $count = 1;
             try {
                 $model = new Operation;
-                $model->delete(['is_system' => 1]);
                 $model->setData([
                     'id' => -1,
                     'name' => 'ALL',
                     'is_system' => 1
-                ])->save();
+                ])->save([], true);
+            } catch (InvalidQueryException $e) {
+                $count = 0;
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
             foreach ($finder as $file) {
-                $className = 'Seahinet\\' . $file->getRelativePath() . '\\' . str_replace('.php', '', $file->getFilename());
+                $className = 'Seahinet\\' . str_replace(DS, '\\', trim($file->getRelativePath(), DS)) . '\\' . str_replace('.php', '', $file->getFilename());
                 $reflection = new ReflectionClass($className);
                 if ($reflection->isSubclassOf('Seahinet\\Lib\\Controller\\AuthActionController')) {
                     foreach ($reflection->getMethods() as $method) {
@@ -42,6 +44,8 @@ class Rbac extends AbstractCli
                                     'is_system' => 1
                                 ])->save();
                                 $count++;
+                            } catch (InvalidQueryException $e) {
+                                
                             } catch (Exception $e) {
                                 echo $e->getMessage();
                             }
@@ -49,7 +53,7 @@ class Rbac extends AbstractCli
                     }
                 }
             }
-            echo $count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.';
+            echo ($count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.') . chr(10);
         } else {
             echo $this->usageHelp();
         }

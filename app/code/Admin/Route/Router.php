@@ -18,7 +18,7 @@ class Router extends Route
         if ($parts[0] === $this->getContainer()->get('config')['global/admin_path']) {
             $options = ['namespace' => 'Seahinet\\Admin\\Controller'];
             if (isset($parts[1])) {
-                $options['controller'] = ucfirst(str_replace('_', '\\', $parts[1])) . 'Controller';
+                $options['controller'] = str_replace(' ', '\\', ucwords(str_replace('_', ' ', $parts[1]))) . 'Controller';
             } else {
                 $options['controller'] = 'IndexController';
             }

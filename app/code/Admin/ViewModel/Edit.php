@@ -49,6 +49,9 @@ class Edit extends AbstractViewModel
             foreach ($columns as $key => $column) {
                 $columns[$key]['value'] = isset($values[$key]) ? $values[$key] : '';
             }
+            if (!empty($values['language']) && isset($columns['language_id[]'])) {
+                $columns['language_id[]']['value'] = array_keys($values['language']);
+            }
         }
         return $columns;
     }

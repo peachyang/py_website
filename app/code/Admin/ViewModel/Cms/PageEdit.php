@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\CMS;
+namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
-use Seahinet\CMS\Source\Page;
+use Seahinet\Cms\Source\Page;
 use Seahinet\Lib\Source\Language;
 
 class PageEdit extends Edit
@@ -28,14 +28,15 @@ class PageEdit extends Edit
             'parent_id' => [
                 'type' => 'select',
                 'options' => (new Page)->getSourceArray($this->getVariable('model')->getId()),
-                'label' => 'Parent ID'
+                'label' => 'Parent ID',
+                'empty_string' => '(NULL)'
             ],
             'title' => [
                 'type' => 'text',
                 'label' => 'Title',
                 'required' => 'required'
             ],
-            'language_id' => [
+            'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',
                 'required' => 'required',

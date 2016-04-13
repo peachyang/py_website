@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\CMS;
+namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Grid;
-use Seahinet\CMS\Model\Collection\Page as Collection;
+use Seahinet\Cms\Model\Collection\Page as Collection;
 use Seahinet\Lib\Model\AbstractCollection;
 
 class Page extends Grid

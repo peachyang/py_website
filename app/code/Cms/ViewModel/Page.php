@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\CMS\ViewModel;
+namespace Seahinet\Cms\ViewModel;
 
-use Seahinet\CMS\Model\Page as PageModel;
+use Seahinet\Cms\Model\Page as PageModel;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Page extends AbstractViewModel

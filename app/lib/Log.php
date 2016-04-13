@@ -59,8 +59,8 @@ class Log
     {
         if (is_null(static::$logger)) {
             static::$logger = new Logger('default');
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0640));
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0640));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0755));
+            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0755));
         }
         return static::$logger;
     }

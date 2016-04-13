@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\CMS\Source;
+namespace Seahinet\Cms\Source;
 
-use Seahinet\CMS\Model\Collection\Page as Collection;
+use Seahinet\Cms\Model\Collection\Page as Collection;
 use Seahinet\Lib\Source\SourceInterface;
 use Zend\Db\Sql\Predicate\NotIn;
 

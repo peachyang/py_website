@@ -7,24 +7,26 @@ $elements = $this->getVariable('elements');
     <?php foreach ($elements as $key => $item): ?>
         <div class="input-box">
             <?php if (isset($item['label'])): ?>
-                <label for="<?php echo $key ?>"><?php echo $item['label'] ?></label>
+                <label for="<?php echo $key ?>">
+                    <?php echo $this->translate($item['label']) ?>
+                </label>
             <?php endif ?>
             <?php if ($item['type'] === 'select'): ?>
                 <select name="<?php echo $key ?>" id="<?php echo $key ?>" <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>>
                     <?php if (!isset($item['required']) || !$item['required']): ?>
-                        <option><?php echo $this->translate('Please Select') ?></option>
+                        <option><?php echo $this->translate(isset($item['empty_string']) ? $item['empty_string'] : 'Please Select') ?></option>
                     <?php endif ?>
                     <?php
                     foreach ($item['options'] as $value => $label):
-                        if(is_array($label)):
-                        ?>
-                        <optgroup label="<?php echo $value ?>">
-                            <?php foreach($label as $v => $l): ?>
-                                <option value="<?php echo $v ?>"<?php if ($v == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
-                            <?php endforeach; ?>
-                        </optgroup>
+                        if (is_array($label)):
+                            ?>
+                            <optgroup label="<?php echo $value ?>">
+                                <?php foreach ($label as $v => $l): ?>
+                                    <option value="<?php echo $v ?>"<?php if ($v == $item['value'] || in_array($v, $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
                         <?php else: ?>
-                        <option value="<?php echo $value ?>"<?php if ($value == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
+                            <option value="<?php echo $value ?>"<?php if ($value == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
                         <?php endif ?>
                     <?php endforeach ?>
                 </select>

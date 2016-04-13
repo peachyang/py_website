@@ -1,5 +1,0 @@
----
-cms_page:
-    route: Seahinet\CMS\Route\Page
-    priority: 50
-

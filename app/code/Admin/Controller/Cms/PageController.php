@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\Controller\CMS;
+namespace Seahinet\Admin\Controller\Cms;
 
 use Exception;
-use Seahinet\CMS\Model\Page as Model;
+use Seahinet\Cms\Model\Page as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class PageController extends AuthActionController
@@ -86,7 +86,7 @@ class PageController extends AuthActionController
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirectReferer();
+            return $this->redirect(':ADMIN/cms_page/');
         }
     }
 

@@ -141,7 +141,7 @@ abstract class Factory
      */
     private static function prepareFilesystem($config)
     {
-        $pool = new DoctrineCache\FilesystemCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.dat', 0077);
+        $pool = new DoctrineCache\FilesystemCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.dat', 0);
         return $pool;
     }
 
@@ -150,7 +150,7 @@ abstract class Factory
      */
     private static function preparePHPFile($config)
     {
-        $pool = new DoctrineCache\PHPFileCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.php', 0077);
+        $pool = new DoctrineCache\PHPFileCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.php', 0);
         return $pool;
     }
 

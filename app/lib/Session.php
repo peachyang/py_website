@@ -63,7 +63,7 @@ class Session implements Singleton
     public function setSavePath($path)
     {
         if (!is_dir(BP . $path)) {
-            mkdir(BP . $path, 0700, true);
+            mkdir(BP . $path, 0755, true);
         }
         return session_save_path(BP . $path);
     }

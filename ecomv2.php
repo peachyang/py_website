@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `cms_block`(
     `code` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Identify code',
     `content` BLOB COMMENT 'Page content',
     PRIMARY KEY (`id`),
-    INDEX IDX_CMS_BLOCK_CODE UNIQUE (`code`)
+    CONSTRAINT IDX_CMS_BLOCK_CODE UNIQUE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `cms_block_language`(

@@ -94,7 +94,7 @@ final class Bootstrap
     private static function prepareConfig()
     {
         $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
-        $cache = Cache::instance($adapter['cache']);
+        $cache = Cache::instance(isset($adapter['cache']) ? $adapter['cache'] : []);
         $config = $cache->fetch('SYSTEM_CONFIG');
         if (!$config) {
             $config = Config::instance();

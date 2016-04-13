@@ -23,6 +23,43 @@ class Grid extends AbstractViewModel
         return $this->getAdminUrl($this->getVariable('delete_url'));
     }
 
+    public function getOrderByUrl($attr)
+    {
+        $uri = $this->getRequest()->getUri();
+        $query = $this->getQuery();
+        if (isset($query['asc'])) {
+            if ($query['asc'] == $attr) {
+                unset($query['asc']);
+                $query['desc'] = $attr;
+            } else {
+                $query['asc'] = $attr;
+            }
+        } else if (isset($query['desc'])) {
+            if ($query['desc'] == $attr) {
+                unset($query['desc']);
+                $query['asc'] = $attr;
+            } else {
+                $query['desc'] = $attr;
+            }
+        } else {
+            $query['asc'] = $attr;
+        }
+        return $uri->withQuery(http_build_query($query))->__toString();
+    }
+
+    public function getLimitUrl()
+    {
+        $uri = $this->getRequest()->getUri();
+        $query = $this->getQuery();
+        unset($query['limit']);
+        if (empty($query)) {
+            $url = $uri->withFragment('')->__toString() . '?';
+        } else {
+            $url = $uri->withFragment('')->withQuery(http_build_query($query))->__toString() . '&';
+        }
+        return $url;
+    }
+
     protected function prepareColumns()
     {
         return [];
@@ -45,7 +82,7 @@ class Grid extends AbstractViewModel
             $collection->order($condition['asc'] . ' ASC');
             unset($condition['asc']);
         } else if (isset($condition['desc'])) {
-            $collection->order($condition['desc'] . ' ASC');
+            $collection->order($condition['desc'] . ' DESC');
             unset($condition['desc']);
         }
         if (!empty($condition)) {

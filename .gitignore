@@ -4,6 +4,8 @@
 /var/
 /app/config/adapter.yml
 !.htaccess
+!.nginx.conf
+.user.ini
 *.log
 *.jar
 *.war

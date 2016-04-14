@@ -8,6 +8,25 @@ use Seahinet\Lib\ViewModel\AbstractViewModel;
 class Grid extends AbstractViewModel
 {
 
+    protected $uri = null;
+    protected $query = null;
+
+    protected function getUri()
+    {
+        if (is_null($this->uri)) {
+            $this->uri = $this->getRequest()->getUri();
+        }
+        return $this->uri;
+    }
+
+    public function getQuery($key = null, $default = '')
+    {
+        if (is_null($this->query)) {
+            $this->query = parent::getQuery();
+        }
+        return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
+    }
+
     public function __construct()
     {
         $this->setTemplate('admin/grid');
@@ -25,7 +44,6 @@ class Grid extends AbstractViewModel
 
     public function getOrderByUrl($attr)
     {
-        $uri = $this->getRequest()->getUri();
         $query = $this->getQuery();
         if (isset($query['asc'])) {
             if ($query['asc'] == $attr) {
@@ -44,20 +62,41 @@ class Grid extends AbstractViewModel
         } else {
             $query['asc'] = $attr;
         }
-        return $uri->withQuery(http_build_query($query))->__toString();
+        return $this->getUri()->withQuery(http_build_query($query))->__toString();
     }
 
     public function getLimitUrl()
     {
-        $uri = $this->getRequest()->getUri();
         $query = $this->getQuery();
         unset($query['limit']);
         if (empty($query)) {
-            $url = $uri->withFragment('')->__toString() . '?';
+            $url = $this->getUri()->withFragment('')->__toString() . '?';
         } else {
-            $url = $uri->withFragment('')->withQuery(http_build_query($query))->__toString() . '&';
+            $url = $this->getUri()->withFragment('')->withQuery(http_build_query($query))->__toString() . '&';
         }
         return $url;
+    }
+
+    public function getPagerUrl($pager = 1)
+    {
+        $query = $this->getQuery();
+        $query['page'] = $pager;
+        return $this->getUri()->withQuery(http_build_query($query))->__toString();
+    }
+
+    public function getAllPages()
+    {
+        $limit = $this->getQuery('limit', 20);
+        $collection = clone $this->getVariable('collection');
+        $collection->reset('limit');
+        $collection->reset('offset');
+        $collection->columns(['id']);
+        return ceil(count($collection) / $limit);
+    }
+
+    public function getCurrentPage()
+    {
+        return (int) $this->getQuery('page', 1);
     }
 
     protected function prepareColumns()

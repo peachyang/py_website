@@ -14,7 +14,8 @@ use Zend\Stdlib\ArrayObject;
 abstract class AbstractModel extends ArrayObject
 {
 
-    use \Seahinet\Lib\Traits\DB;
+    use \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\DataCache;
 
     protected $columns = [];
     protected $updatedColumns = [];
@@ -62,6 +63,16 @@ abstract class AbstractModel extends ArrayObject
     protected function withLanguage($table, $column)
     {
         $this->languageInfo = [$table, $column];
+    }
+
+    /**
+     * Get cache key
+     * 
+     * @return string
+     */
+    public function getCacheKey()
+    {
+        return $this->cacheKey;
     }
 
     /**
@@ -124,11 +135,12 @@ abstract class AbstractModel extends ArrayObject
     {
         if (!$this->isLoaded) {
             try {
-                if (is_null($key)) {
+                if (is_null($key) || $key === $this->primaryKey) {
                     $key = $this->primaryKey;
+                    $result = $this->fetchRow($id, null, $this->getCacheKey());
+                } else {
+                    $result = $this->fetchRow($id, $key, $this->getCacheKey());
                 }
-                $cache = $this->getContainer()->get('cache');
-                $result = $cache->fetch($this->cacheKey . $key . '\\' . $id, 'MODEL_DATA_');
                 if (!$result) {
                     $this->beforeLoad();
                     $select = $this->tableGateway->getSql()->select();
@@ -150,7 +162,10 @@ abstract class AbstractModel extends ArrayObject
                             }
                         }
                         $this->afterLoad();
-                        $cache->save($this->cacheKey . $key . '=' . $id, $this->storage, 'MODEL_DATA_', 86400);
+                        $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
+                        if ($key !== $this->primaryKey) {
+                            $this->addCacheAlias($key, $this->storage[$this->primaryKey], $this->getCacheKey());
+                        }
                     }
                 } else {
                     $this->storage = array_merge($this->storage, $result);
@@ -158,8 +173,10 @@ abstract class AbstractModel extends ArrayObject
                 }
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
+                throw $e;
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
+                throw $e;
             }
         }
         return $this;
@@ -182,13 +199,17 @@ abstract class AbstractModel extends ArrayObject
                 $this->beforeSave();
                 $this->update($columns, $constraint);
                 $this->afterSave();
-                $cache = $this->getContainer()->get('cache');
-                $cache->delete($this->cacheKey . http_build_query($constraint), 'MODEL_DATA_');
+                $id = array_values($constraint)[0];
+                $key = array_keys($constraint)[0];
+                $this->flushRow($id, null, $this->getCacheKey(), $key === $this->primaryKey ? null : $key);
+                $this->load($id, $key);
+                $this->flushList($this->getCacheKey());
             } else if ($this->isNew) {
                 $this->beforeSave();
                 $this->insert($columns);
-                $this->setId($this->tableGateway->getLastInsertValue());
+                $this->load($this->tableGateway->getLastInsertValue());
                 $this->afterSave();
+                $this->flushList($this->getCacheKey());
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);

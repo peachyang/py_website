@@ -29,7 +29,8 @@ use Zend\Stdlib\ArrayObject;
 abstract class AbstractCollection extends ArrayObject
 {
 
-    use \Seahinet\Lib\Traits\DB;
+    use \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\DataCache;
 
     /**
      * @var Select 
@@ -39,6 +40,7 @@ abstract class AbstractCollection extends ArrayObject
     protected $isLoaded = false;
     protected $eventDispatcher = null;
     protected $tableName = '';
+    protected $primaryKey = '';
 
     public function __construct($input = array(), $flags = self::ARRAY_AS_PROPS, $iteratorClass = 'ArrayIterator')
     {
@@ -60,17 +62,33 @@ abstract class AbstractCollection extends ArrayObject
         }
     }
 
+    public function __clone()
+    {
+        $this->select = clone $this->select;
+    }
+
     /**
      * Data operator initialization
      * 
      * @param string $table
      */
-    protected function init($table)
+    protected function init($table, $primaryKey = 'id')
     {
         $this->tableName = $table;
         $this->getTableGateway($table);
         $this->select = $this->tableGateway->getSql()->select();
         $this->cacheKey = $table . '\\';
+        $this->primaryKey = $primaryKey;
+    }
+
+    /**
+     * Get cache key
+     * 
+     * @return string
+     */
+    public function getCacheKey()
+    {
+        return $this->cacheKey;
     }
 
     /**
@@ -78,14 +96,17 @@ abstract class AbstractCollection extends ArrayObject
      * 
      * @return AbstractCollection
      */
-    public function load()
+    public function load($useCache = true)
     {
         if (!$this->isLoaded) {
             try {
                 $this->beforeLoadCache();
-                $cache = $this->getContainer()->get('cache');
-                $cacheKey = $this->cacheKey . md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
-                $result = $cache->fetch($cacheKey, 'COLLECTION_DATA_');
+                if ($useCache) {
+                    $cacheKey = md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
+                    $result = $this->fetchList($cacheKey, $this->getCacheKey());
+                } else {
+                    $result = false;
+                }
                 $this->afterLoadCache();
                 if (!$result) {
                     $this->beforeLoad();
@@ -93,7 +114,9 @@ abstract class AbstractCollection extends ArrayObject
                     if (count($result)) {
                         $this->storage = $result;
                         $this->afterLoad();
-                        $cache->save($cacheKey, $result, 'COLLECTION_DATA_', 86400);
+                        if ($useCache) {
+                            $this->addCacheList($cacheKey, $result, $this->getCacheKey());
+                        }
                     }
                 } else {
                     $this->storage = $result;
@@ -185,6 +208,14 @@ abstract class AbstractCollection extends ArrayObject
             $this->load();
         }
         return parent::__unset($key);
+    }
+
+    public function count()
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::count();
     }
 
 }

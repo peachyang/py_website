@@ -7,6 +7,8 @@ use Seahinet\Lib\Model\AbstractCollection;
 class Role extends AbstractCollection
 {
 
+    public $i = 0;
+
     protected function _construct()
     {
         $this->init('admin_role');

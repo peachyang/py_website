@@ -11,5 +11,5 @@ class DashboardController extends AuthActionController
     {
         exit;
     }
-
+    
 }

@@ -16,6 +16,15 @@ class IndexController extends ActionController
 
     public function dispatch($request = null, $routeMatch = null)
     {
+        $result = $this->redirectLoggedin();
+        if ($result !== false) {
+            return $result;
+        }
+        return parent::dispatch($request, $routeMatch);
+    }
+
+    protected function redirectLoggedin()
+    {
         $segment = new Segment('admin');
         if ($segment->get('isLoggedin')) {
             if ($segment->get('user')->getRole()->hasPermission('Seahinet\\Admin\\Controller\\DashboardController::indexAction')) {
@@ -24,7 +33,7 @@ class IndexController extends ActionController
                 return $this->redirect(':ADMIN/user/');
             }
         }
-        return parent::dispatch($request, $routeMatch);
+        return false;
     }
 
     public function indexAction()
@@ -59,12 +68,20 @@ class IndexController extends ActionController
                     'logdate' => gmdate('Y-m-d h:i:s'),
                     'lognum' => $user->offsetGet('lognum') + 1
                 ])->save();
-                return $this->redirect(':ADMIN/dashboard/');
+                return $this->redirectLoggedin();
             } else {
                 $this->addMessage($this->translate('Login failed. Invalid username or password.'), 'danger', 'admin');
             }
         }
         return $this->redirectReferer();
+    }
+
+    public function logoutAction()
+    {
+        $segment = new Segment('admin');
+        $segment->set('isLoggedin', false);
+        $segment->offsetUnset('user');
+        return $this->redirect(':ADMIN');
     }
 
     public function captchaAction()

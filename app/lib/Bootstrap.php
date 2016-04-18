@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use Interop\Container\ContainerInterface;
+use Locale;
 use Symfony\Component\Yaml\Yaml;
 use Seahinet\Lib\Model\Merchant;
 use Seahinet\Lib\Model\Store;
@@ -68,7 +69,9 @@ final class Bootstrap
         $config = static::prepareConfig();
         static::handleConfig($config);
         $segment = new Session\Segment('core');
-        static::$container['language'] = static::getLanguage($server, $segment);
+        $language = static::getLanguage($server, $segment);
+        static::$container['language'] = $language;
+        static::$container['translator']->setLocale($language['code']);
     }
 
     /**
@@ -131,7 +134,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : null));
+            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : Locale::getDefault()));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');

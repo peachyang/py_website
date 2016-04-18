@@ -10,8 +10,8 @@ use Seahinet\Lib\Stdlib\Singleton;
 final class Root extends AbstractViewModel implements Singleton
 {
 
-    private static $instance = null;
-    private $bodyClass = [];
+    protected static $instance = null;
+    protected $bodyClass = [];
 
     private function __construct()
     {
@@ -41,6 +41,11 @@ final class Root extends AbstractViewModel implements Singleton
     {
         $this->bodyClass[] = $bodyClass;
         return $this;
+    }
+
+    public function getLang()
+    {
+        return $this->getContainer()->get('language')['code'];
     }
 
 }

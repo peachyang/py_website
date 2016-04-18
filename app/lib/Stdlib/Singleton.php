@@ -4,7 +4,7 @@ namespace Seahinet\Lib\Stdlib;
 
 /**
  * Singleton mode.
- * It should provide a private construct method
+ * It should provide a private/protected construct method
  */
 interface Singleton
 {

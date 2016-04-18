@@ -5,6 +5,10 @@ default:
         children:
             head:
                 type: Seahinet\Lib\ViewModel\Head
+                action:
+                    -
+                        method: addMeta
+                        params: ["viewport","width=device-width, initial-scale=1.0, user-scalable=no"]
             content:
                 type: Seahinet\Lib\ViewModel\Wrapper
                 children:

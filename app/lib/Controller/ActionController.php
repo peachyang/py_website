@@ -139,6 +139,17 @@ abstract class ActionController
     }
 
     /**
+     * @param string $name
+     * @param mixed $value
+     * @return ActionController
+     */
+    public function setOption($name, $value)
+    {
+        $this->options[$name] = $value;
+        return $this;
+    }
+
+    /**
      * Validate csrf key for forms
      * 
      * @param string $value

@@ -10,11 +10,11 @@ use Seahinet\Lib\Stdlib\Singleton;
 final class Head extends AbstractViewModel implements Singleton
 {
 
-    private static $instance = null;
-    private $title = '';
-    private $script = ['condition' => [], 'normal' => []];
-    private $link = ['condition' => [], 'normal' => []];
-    private $meta = [];
+    protected static $instance = null;
+    protected $title = '';
+    protected $script = ['condition' => [], 'normal' => []];
+    protected $link = ['condition' => [], 'normal' => []];
+    protected $meta = [];
 
     private function __construct()
     {
@@ -31,7 +31,7 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function getTitle()
     {
-        return $this->title? : $this->translate('Default Title');
+        return $this->translate($this->title ? $this->title : $this->translate('Default Title'));
     }
 
     public function setTitle($title)
@@ -81,6 +81,9 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function addScript($script, $condition = null)
     {
+        if (strpos($script, '://') === false) {
+            $script = $this->getBaseUrl($script);
+        }
         if (is_null($condition)) {
             $this->script['normal'][] = $script;
         } else {
@@ -105,6 +108,9 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function addLink($link, $type = 'stylesheet', $condition = null)
     {
+        if (strpos($link, '://') === false) {
+            $link = $this->getBaseUrl($link);
+        }
         if (is_null($condition)) {
             $this->link['normal'][$link] = $type;
         } else {

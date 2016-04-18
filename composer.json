@@ -14,6 +14,7 @@
         "oyejorge/less.php": "~1.7.0.3",
         "paragonie/random_compat": "~1.2",
         "pelago/emogrifier": "~1.0.0",
+        "php-curl-class/php-curl-class": "~4.11",
         "pimple/pimple": "~3.0",
         "predis/predis": "~1.0.3",
         "psr/http-message": "~1.0",

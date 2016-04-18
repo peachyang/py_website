@@ -4,6 +4,32 @@ admin_login:
     root:
         template: page/empty
         children:
+            head:
+                action:
+                    -
+                        method: addLink
+                        params: pub/backend/css/normalize.css
+                    -
+                        method: addLink
+                        params: pub/backend/css/styles.css
+                    -
+                        method: addScript
+                        params: pub/backend/js/jquery.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/validate/jquery.validate.min.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/validate/config.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/modernizr.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/app.js
+                    -
+                        method: setTitle
+                        params: Log Into Seahinet Admin Panel
             content:
                 children:
                     login:

@@ -25,16 +25,7 @@ class Render implements ListenerInterface
                 $response->withHeader('Content-Type', 'application/json; charset=UTF-8')->getBody()->write(json_encode($data));
             }
         } else if ($response instanceof AbstractViewModel) {
-            if ($response->getCacheKey()) {
-                $cache = $this->getContainer()->get('cache');
-                $rendered = $cache->fetch('VIEWMODEL_RENDERED_' . $response->getCacheKey());
-                if (!$rendered) {
-                    $rendered = $response->render();
-                    $cache->save('VIEWMODEL_RENDERED_' . $response->getCacheKey(), $rendered);
-                }
-            } else {
-                $rendered = $response->render();
-            }
+            $rendered = $response->render();
             $response = $this->getContainer()->get('response');
             $response->getBody()->write($rendered);
         }

@@ -3,7 +3,6 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
-use Seahinet\Lib\Bootstrap;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
@@ -149,7 +148,7 @@ abstract class AbstractModel extends ArrayObject
                         $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], [], 'left');
                         $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
                         if ($key !== $this->primaryKey) {
-                            $select->where(['core_language.id' => Bootstrap::getLanguage()->getId()]);
+                            $select->where(['core_language.id' => $this->getContainer()->get('language')->getId()]);
                         }
                     }
                     $result = $this->tableGateway->selectWith($select)->toArray();

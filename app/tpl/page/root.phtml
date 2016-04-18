@@ -12,13 +12,15 @@
     </head>
     <body class="<?php echo $this->getBodyClass() ?>">
         <?php echo $this->globalNotice ?>
-        <header class="header">
+        <header class="header clearfix">
             <?php echo $this->header ?>
         </header>
+        <?php echo $this->beforeContent ?>
         <div class="main-container">
             <?php echo $this->content ?>
         </div>
-        <footer class="footer">
+        <?php echo $this->afterContent ?>
+        <footer class="footer clearfix">
             <?php echo $this->footer ?>
         </footer>
         <?php echo $this->extra ?>

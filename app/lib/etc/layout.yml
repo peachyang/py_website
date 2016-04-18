@@ -12,6 +12,8 @@ default:
             content:
                 type: Seahinet\Lib\ViewModel\Wrapper
                 children:
+                    breadcrumb:
+                        type: Seahinet\Lib\ViewModel\Breadcrumb
                     messages:
                         type: Seahinet\Lib\ViewModel\Message
             extra:
@@ -22,3 +24,7 @@ default:
                 type: Seahinet\Lib\ViewModel\Wrapper
             globalNotice:
                 type: Seahinet\Lib\ViewModel\GlobalNotice
+            beforeContent:
+                type: Seahinet\Lib\ViewModel\Wrapper
+            afterContent:
+                type: Seahinet\Lib\ViewModel\Wrapper

@@ -13,6 +13,9 @@ admin_login:
                         method: addLink
                         params: pub/backend/css/styles.css
                     -
+                        method: addLink
+                        params: [pub/backend/css/styles.css,stylesheet,lt IE 9]
+                    -
                         method: addScript
                         params: pub/backend/js/jquery.js
                     -
@@ -27,6 +30,9 @@ admin_login:
                     -
                         method: addScript
                         params: pub/backend/js/app.js
+                    -
+                        method: addScript
+                        params: [pub/backend/js/selectivizr.js,lt IE 9]
                     -
                         method: setTitle
                         params: Log Into Seahinet Admin Panel
@@ -74,6 +80,52 @@ admin:
             method: addBodyClass
             params: admin
         children:
+            head:
+                action:
+                    -
+                        method: addLink
+                        params: pub/backend/css/normalize.css
+                    -
+                        method: addLink
+                        params: pub/backend/css/font-awesome.css
+                    -
+                        method: addLink
+                        params: pub/backend/css/styles.css
+                    -
+                        method: addLink
+                        params: [pub/backend/css/styles-ie.css,stylesheet,lt IE 9]
+                    -
+                        method: addScript
+                        params: pub/backend/js/jquery.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/validate/jquery.validate.min.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/validate/config.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/modernizr.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/dropdown.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/app.js
+                    -
+                        method: addScript
+                        params: [pub/backend/js/selectivizr.js,lt IE 9]
+                    -
+                        method: setTitle
+                        params: ''
+            header:
+                type: Seahinet\Admin\ViewModel\Header
+                template: admin/header
+            beforeContent:
+                children:
+                    nav:
+                        type: Seahinet\Admin\ViewModel\Navigation
+                        template: admin/navigation
             content:
                 children:
                     messages:

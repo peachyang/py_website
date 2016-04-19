@@ -15,7 +15,6 @@ class PageController extends ActionController
         }
         $layout = $this->getLayout('cms_page', true);
         $layout->getChild('page', true)->setPageModel($page);
-        var_dump($layout);
         return $layout;
     }
 

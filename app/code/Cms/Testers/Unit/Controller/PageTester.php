@@ -15,15 +15,18 @@ class PageTester  extends \PHPUnit_Framework_TestCase{
 		$this->controller = new \Seahinet\Cms\Controller\PageController();
 		
 		$this->pageMock=$this->getMockBuilder('Seahinet\Cms\Controller\PageController')->disableOriginalConstructor()
-            ->getMock();;
+            ->getMock();
 	}
 	
-/**	
+/***
 	public function testIndexAction(){		
+		
 		$this->pageMock->expects($this->once())
 		->method('indexAction')
 		->willReturnSelf();
-		var_dump($this->controller->indexAction());
+		
+		
+		
 		$this->assertSame($this->pageMock, $this->controller->indexAction());
 	}
 **/

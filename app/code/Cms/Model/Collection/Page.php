@@ -3,6 +3,8 @@
 namespace Seahinet\Cms\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\Model\Collection\Language;
+use Zend\Db\Sql\Predicate\In;
 
 class Page extends AbstractCollection
 {
@@ -10,26 +12,31 @@ class Page extends AbstractCollection
     public function _construct()
     {
         $this->init('cms_page');
-        $this->select->join('cms_page_language', 'cms_page.id=cms_page_language.page_id', [], 'left');
-        $this->select->join('core_language', 'core_language.id=cms_page_language.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
     }
 
     protected function afterLoad()
     {
+        $ids = [];
         $data = [];
-        foreach ($this->storage as $item) {
-            if (isset($data[$item['id']])) {
-                $data[$item['id']]['language'][$item['language_id']] = $item['language'];
-            } else {
-                $data[$item['id']] = $item;
-                $data[$item['id']]['language'] = [$item['language_id'] => $item['language']];
-                $content = @gzdecode($item['content']);
-                if ($content !== false) {
-                    $data[$item['id']]['content'] = $content;
-                }
+        foreach ($this->storage as $key => $item) {
+            $ids[] = $item['id'];
+            $data[$item['id']] = $item;
+            $content = @gzdecode($item['content']);
+            if ($content !== false) {
+                $data[$item['id']]['content'] = $content;
             }
         }
-        $this->storage = $data;
+        $languages = new Language;
+        $languages->join('cms_page_language', 'core_language.id=cms_page_language.language_id', ['page_id'], 'right')
+                ->columns(['language_id' => 'id', 'language' => 'code'])
+                ->where(new In('page_id', $ids));
+        $languages->load(false);
+        foreach ($languages as $item) {
+            if (isset($data[$item['page_id']])) {
+                $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
+            }
+        }
+        $this->storage = array_values($data);
         parent::afterLoad();
     }
 

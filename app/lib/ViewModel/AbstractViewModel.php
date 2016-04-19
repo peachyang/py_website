@@ -206,13 +206,10 @@ abstract class AbstractViewModel implements Serializable
 
     public function serialize()
     {
-        $data = get_object_vars($this);
-        foreach ($data as $key => $value) {
-            if (is_object($value)) {
-                unset($data[$key]);
-            }
-        }
-        return serialize($data);
+        return serialize(array_filter(get_object_vars($this), function($value) {
+                    return !is_object($value);
+                })
+        );
     }
 
     public function unserialize($serialized)

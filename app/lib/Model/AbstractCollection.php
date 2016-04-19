@@ -42,9 +42,9 @@ abstract class AbstractCollection extends ArrayObject
     protected $tableName = '';
     protected $primaryKey = '';
 
-    public function __construct($input = array(), $flags = self::ARRAY_AS_PROPS, $iteratorClass = 'ArrayIterator')
+    public function __construct()
     {
-        parent::__construct($input, $flags, $iteratorClass);
+        parent::__construct();
         $this->_construct();
     }
 
@@ -65,6 +65,7 @@ abstract class AbstractCollection extends ArrayObject
     public function __clone()
     {
         $this->select = clone $this->select;
+        $this->isLoaded = false;
     }
 
     /**
@@ -76,9 +77,11 @@ abstract class AbstractCollection extends ArrayObject
     {
         $this->tableName = $table;
         $this->getTableGateway($table);
-        $this->select = $this->tableGateway->getSql()->select();
         $this->cacheKey = $table . '\\';
         $this->primaryKey = $primaryKey;
+        if (is_null($this->select)) {
+            $this->select = $this->tableGateway->getSql()->select();
+        }
     }
 
     /**
@@ -216,6 +219,14 @@ abstract class AbstractCollection extends ArrayObject
             $this->load();
         }
         return parent::count();
+    }
+
+    public function serialize()
+    {
+        return serialize(array_filter(get_object_vars($this), function($value) {
+                    return !is_object($value);
+                })
+        );
     }
 
 }

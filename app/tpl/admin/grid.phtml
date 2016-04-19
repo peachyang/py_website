@@ -1,98 +1,95 @@
 <?php
 $attributes = $this->getVariable('attributes');
-$count = count($attributes) / 2;
+$count = count($attributes);
 $query = $this->getQuery();
-$current = $this->getCurrentPage();
-$pages = $this->getAllPages();
 ?>
-<table class="table">
-    <caption>
-        <h2><?php echo $this->getVariable('title') ?></h2>
-    </caption>
-    <thead>
-        <tr>
-            <th colspan="<?php echo $count + 1 ?>">
-                <?php echo $this->translate('Show') ?>
-                <input type="number" name="limit" value="<?php echo isset($query['limit']) ? $query['limit'] : 20 ?>" onchange="location.href = '<?php echo $this->getLimitUrl() ?>limit=' + this.value" min="1" />
-                <?php echo $this->translate('Per Page') ?>
-            </th>
-            <th colspan="<?php echo $count + 1 ?>">
-                <a href="<?php echo $this->getDeleteUrl() ?>">
-                    <span><?php echo $this->translate('Delete') ?></span>
-                </a>
-                <a href="<?php echo $this->getEditUrl() ?>">
-                    <span><?php echo $this->translate('New') ?></span>
-                </a>
-            </th>
-        </tr>
-        <tr>
-            <th><input type="checkbox" /></th>
-            <?php foreach ($attributes as $attr => $name): ?>
-                <th>
-                    <a href="<?php echo $this->getOrderByUrl($attr) ?>"
-                    <?php if (isset($query['asc']) && $query['asc'] === $attr): ?>
-                           class="asc"
-                       <?php elseif (isset($query['desc']) && $query['desc'] === $attr): ?>
-                           class="desc"
-                       <?php endif ?>>
-                           <?php echo $this->translate($name) ?>
-                    </a>
-                </th>
+<div class="grid">
+    <div class="filters">
+        <form action="<?php echo $this->getCurrentUrl() ?>" method="get" class="form-inline">
+            <?php
+            foreach ($attributes as $attr => $name):
+                if (isset($name['use4filter']) && !$name['use4filter']) {
+                    continue;
+                }
+                if (!isset($name['type'])) {
+                    $name['type'] = 'text';
+                }
+                $key = isset($name['sortby']) ? $name['sortby'] : $attr;
+                ?>
+                <div class="input-box">
+                    <label class="control-label" for="sortby:<?php echo $attr ?>"><?php echo $this->translate($name['label']) ?></label>
+                    <?php if ($name['type'] === 'select' && isset($name['options'])): ?>
+                        <select class="form-control" id="sortby:<?php echo $attr ?>" name="<?php echo $key ?>">
+                            <option></option>
+                            <?php foreach ($name['options'] as $k => $v): ?>
+                                <option value="<?php echo $k ?>"<?php if (!empty($query[$key]) && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v) ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    <?php else: ?>
+                        <input type="<?php echo $name['type'] ?>" name="<?php echo $key ?>" id="sortby:<?php echo $attr ?>" class="form-control" value="<?php echo isset($query[$key]) ? $query[$key] : '' ?>" />
+                    <?php endif ?>
+                </div>
             <?php endforeach ?>
-            <th><?php echo $this->translate('Action') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($this->getVariable('collection') as $item) : ?>
+            <div class="input-box">
+                <label class="control-label" for="sortby:limit"><?php echo $this->translate('Item(s) per page') ?></label>
+                <input type="tel" name="limit" id="sortby:limit" class="form-control" value="<?php echo isset($query['limit']) ? $query['limit'] : 20 ?>" />
+            </div>
+            <div class="buttons-set">
+                <button type="submit" class="btn"><?php echo $this->translate('Search') ?></button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover table-striped table-no-border">
+        <thead class="sort-by">
             <tr>
-                <td><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
+                <th class="checkbox"><input type="checkbox" /></th>
                 <?php foreach ($attributes as $attr => $name): ?>
-                    <td><?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $item[$attr] ?></td>
+                    <th>
+                        <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
+                            <a href="<?php echo $this->getOrderByUrl(isset($name['sortby']) ? $name['sortby'] : $attr) ?>"
+                            <?php if (isset($query['asc']) && $query['asc'] === $attr): ?>
+                                   class="asc"
+                               <?php elseif (isset($query['desc']) && $query['desc'] === $attr): ?>
+                                   class="desc"
+                               <?php endif ?>>
+                               <?php endif ?>
+                               <?php echo $this->translate($name['label']) ?>
+                               <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
+                            </a>
+                        <?php endif ?>
+                    </th>
                 <?php endforeach ?>
-                <td>
-                    <a href="<?php echo $this->getEditUrl($item['id']) ?>"><?php echo $this->translate('Edit') ?></a>
-                    <a href="<?php echo $this->getDeleteUrl() ?>"><?php echo $this->translate('Delete') ?></a>
+                <th><?php echo $this->translate('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->getVariable('collection') as $item) : ?>
+                <tr>
+                    <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
+                    <?php foreach ($attributes as $attr => $name): ?>
+                        <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
+                            <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]]) : $item[$attr]) ?>
+                        </td>
+                    <?php endforeach ?>
+                    <td class="text-center action">
+                        <a href="<?php echo $this->getEditUrl($item['id']) ?>" title="<?php echo $this->translate('Edit') ?>">
+                            <span class="fa fa-file-text-o" aria-hidden="true"></span>
+                            <span class="sr-only"><?php echo $this->translate('Edit') ?></span>
+                        </a>
+                        <a href="<?php echo $this->getDeleteUrl() ?>" data-method="delete" data-params="id=<?php echo $item['id'] ?>&csrf=<?php echo $this->getCsrfKey() ?>" title="<?php echo $this->translate('Delete') ?>">
+                            <span class="fa fa-remove" aria-hidden="true"></span>
+                            <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="<?php echo $count + 2 ?>" class="text-right">
+                    <?php echo $this->pager->setCollection($this->getVariable('collection')) ?>
                 </td>
             </tr>
-        <?php endforeach ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="<?php echo $count * 2 + 2 ?>">
-                <ol>
-                    <?php if ($current > 1): ?>
-                        <li class="first">
-                            <a href="<?php echo $this->getPagerUrl(1) ?>"></a>
-                        </li>
-                        <li class="prev">
-                            <a href="<?php echo $this->getPagerUrl($current - 1) ?>"></a>
-                        </li>
-                    <?php endif ?>
-                    <?php for ($p = 1; $p <= $pages; $p++): ?>
-                        <li>
-                            <?php if ($current === $p): ?>
-                                <span>
-                                <?php else: ?>
-                                    <a href="<?php echo $this->getPagerUrl($p) ?>">
-                                    <?php endif ?>
-                                    <?php echo $p ?>
-                                    <?php if ($current === $p): ?>
-                                </span>
-                            <?php else: ?>
-                                </a>
-                            <?php endif ?>
-                        </li>
-                    <?php endfor ?>
-                    <?php if ($current < $pages): ?>
-                        <li class="next">
-                            <a href="<?php echo $this->getPagerUrl($current + 1) ?>"></a>
-                        </li>
-                        <li class="last">
-                            <a href="<?php echo $this->getPagerUrl($pages) ?>"></a>
-                        </li>
-                    <?php endif ?>
-                </ol>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+        </tfoot>
+    </table>
+</div>

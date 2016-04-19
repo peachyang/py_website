@@ -43,8 +43,9 @@ admin_login:
                         template: admin/login
                     messages:
                         action:
-                            method: addHandledSegment
-                            params: admin
+                            -
+                                method: addHandledSegment
+                                params: admin
 admin_forgot_password:
     update: default
     root:
@@ -57,8 +58,9 @@ admin_forgot_password:
                         template: admin/forgotPwd
                     messages:
                         action:
-                            method: addHandledSegment
-                            params: admin
+                            -
+                                method: addHandledSegment
+                                params: admin
 admin_reset_password:
     update: default
     root:
@@ -71,8 +73,9 @@ admin_reset_password:
                         template: admin/resetPwd
                     messages:
                         action:
-                            method: addHandledSegment
-                            params: admin
+                            -
+                                method: addHandledSegment
+                                params: admin
 admin:
     update: default
     root:
@@ -119,8 +122,15 @@ admin:
                         method: setTitle
                         params: ''
             header:
-                type: Seahinet\Admin\ViewModel\Header
+                type: Seahinet\Lib\ViewModel\Template
                 template: admin/header
+                children:
+                    messages:
+                        type: Seahinet\Lib\ViewModel\Message
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: admin
             beforeContent:
                 children:
                     nav:
@@ -128,9 +138,22 @@ admin:
                         template: admin/navigation
             content:
                 children:
-                    messages:
+                    breadcrumb:
                         action:
-                            method: addHandledSegment
-                            params: admin
+                            -
+                                method: showLabel
+                                params: true
+                unset: [messages]
+grid:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Grid
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 admin_dashboard:
     update: admin

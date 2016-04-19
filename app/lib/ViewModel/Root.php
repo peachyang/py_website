@@ -18,6 +18,9 @@ final class Root extends AbstractViewModel implements Singleton
         $this->setTemplate('page/root');
     }
 
+    /**
+     * @return Root
+     */
     public static function instance()
     {
         if (is_null(static::$instance)) {
@@ -26,9 +29,9 @@ final class Root extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
-    public function getBodyClass()
+    public function getBodyClass($array = false)
     {
-        return implode(' ', $this->bodyClass);
+        return $array ? $this->bodyClass : implode(' ', $this->bodyClass);
     }
 
     public function setBodyClass(array $bodyClass)

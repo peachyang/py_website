@@ -1,0 +1,15 @@
+<a href="javascript:void(0);" id="nav-toggle">
+    <span class="fa"></span>
+</a>
+<h1 class="logo">
+    <!--[if (gte IE 9)|(!IE)]><!-->
+    <img src="<?php echo $this->getBaseUrl('pub/backend/images/logo.svg') ?>" height="33" alt="" />
+    <!--<![endif] -->
+    <!--[if lt IE 9]>
+    <img src = "<?php echo $this->getBaseUrl('pub/backend/images/logo.png') ?>" height="33" alt="" />
+    <![endif] -->
+</h1>
+<div class="welcome">
+    <?php echo $this->translate('Welcome') ?>, <?php echo $this->getUsername() ?>
+    [<a href="<?php echo $this->getAdminUrl(':ADMIN/index/logout/') ?>"><?php echo $this->translate('Logout') ?></a>]
+</div>

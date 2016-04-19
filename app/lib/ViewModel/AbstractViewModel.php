@@ -4,6 +4,7 @@ namespace Seahinet\Lib\ViewModel;
 
 use JsonSerializable;
 use Seahinet\Lib\Session\Csrf;
+use Seahinet\Lib\ViewModel\Root;
 use Serializable;
 
 /**
@@ -233,6 +234,11 @@ abstract class AbstractViewModel implements Serializable
     public function getQuery($key = null, $default = '')
     {
         return $this->getRequest()->getQuery($key, $default);
+    }
+
+    public function isAdminPage()
+    {
+        return in_array('admin', Root::instance()->getBodyClass(true));
     }
 
 }

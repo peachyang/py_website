@@ -28,12 +28,34 @@ class Page extends Grid
     protected function prepareColumns()
     {
         return [
-            'id' => 'ID',
-            'parent_id' => 'Parent ID',
-            'title' => 'Title',
-            'uri_key' => 'Uri key',
-            'language' => 'Language',
-            'status' => 'Status'
+            'id' => [
+                'label' => 'ID',
+            ],
+            'parent_id' => [
+                'label' => 'Parent ID',
+            ],
+            'title' => [
+                'label' => 'Title',
+                'class' => 'text-left'
+            ],
+            'uri_key' => [
+                'label' => 'Uri key',
+                'class' => 'text-left',
+            ],
+            'language' => [
+                'label' => 'Language',
+                'use4sort' => false,
+                'use4filter' => false
+            ],
+            'status' => [
+                'label' => 'Status',
+                'sortby' => 'cms_page:status',
+                'type' => 'select',
+                'options' => [
+                    'Disabled',
+                    'Enabled'
+                ]
+            ]
         ];
     }
 

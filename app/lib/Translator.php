@@ -167,8 +167,8 @@ class Translator implements Singleton
         }
         $messages = $this->loadMessages($locale);
         if (empty($messages)) {
-            return '';
-        } else if (!is_null($domain) && $messages[$domain]->offsetExists($message)) {
+            return vsprintf($message, $parameters);
+        } else if (!is_null($domain) && isset($messages[$domain]) && $messages[$domain]->offsetExists($message)) {
             return vsprintf($messages[$domain]->offsetGet($message), $parameters);
         } else if ($messages[static::DEFAULT_DOMAIN]->offsetExists($message)) {
             return vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);

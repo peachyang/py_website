@@ -222,13 +222,13 @@ abstract class AbstractModel extends ArrayObject
 
     public function remove()
     {
-        if ($this->isLoaded) {
+        if ($this->getId()) {
             try {
                 $this->beforeRemove();
                 $key = $this->cacheKey . $this->primaryKey . '\\' . $this->getId();
                 $this->delete([$this->primaryKey => $this->getId()]);
-                $cache = $this->getContainer()->get('cache');
-                $cache->delete($key, 'MODEL_DATA_');
+                $this->flushRow($this->getId(), null, $this->getCacheKey());
+                $this->flushList($this->getCacheKey());
                 $this->storage = [];
                 $this->isLoaded = false;
                 $this->isNew = true;
@@ -330,13 +330,10 @@ abstract class AbstractModel extends ArrayObject
 
     public function serialize()
     {
-        $data = get_object_vars($this);
-        foreach ($data as $key => $value) {
-            if (is_object($value)) {
-                unset($data[$key]);
-            }
-        }
-        return serialize($data);
+        return serialize(array_filter(get_object_vars($this), function($value) {
+                    return !is_object($value);
+                })
+        );
     }
 
     public function unserialize($data)

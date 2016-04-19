@@ -8,11 +8,16 @@ cms_page:
                     page:
                         type: Seahinet\Cms\ViewModel\Page
 admin_cms_page_list:
-    update: admin
+    update: grid
     root:
         children:
             content:
                 children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_page/',label:'Page Management'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Page
 admin_cms_page_edit:
@@ -21,14 +26,27 @@ admin_cms_page_edit:
         children:
             content:
                 children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_page/',label:'Page Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Cms\PageEdit
 admin_cms_block_list:
-    update: admin
+    update: grid
     root:
         children:
             content:
                 children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_block/',label:'Block Management'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Block
 admin_cms_block_edit:
@@ -37,5 +55,13 @@ admin_cms_block_edit:
         children:
             content:
                 children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_block/',label:'Block Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Cms\BlockEdit

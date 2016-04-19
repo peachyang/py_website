@@ -76,14 +76,6 @@ class IndexController extends ActionController
         return $this->redirectReferer();
     }
 
-    public function logoutAction()
-    {
-        $segment = new Segment('admin');
-        $segment->set('isLoggedin', false);
-        $segment->offsetUnset('user');
-        return $this->redirect(':ADMIN');
-    }
-
     public function captchaAction()
     {
         $builder = new CaptchaBuilder();

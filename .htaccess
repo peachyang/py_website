@@ -62,10 +62,17 @@ Allow from all
     Order allow,deny
     Deny from all
 </FilesMatch>
+<FilesMatch \.ya?ml$>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
 ############################################
 ## APACHE 2.4
 ##
 #Require all granted
 #<FilesMatch ^\.>
+#    Require all denied
+#</FilesMatch>
+#<FilesMatch \.ya?ml$>
 #    Require all denied
 #</FilesMatch>

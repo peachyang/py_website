@@ -1,0 +1,44 @@
+<?php
+if ($this->getCollection()):
+    $current = $this->getCurrentPage();
+    $pages = $this->getAllPages();
+    $limit = $this->getLimit();
+    if ($this->showLabel()) {
+        $total = min($current * $limit, $this->getCount());
+        echo $this->translate('Display %d - %d of %d record(s).', [min($total, ($current - 1) * $limit + 1), $total, $this->getCount()], 'pager');
+    }
+    ?>
+    <ol class="pager">
+        <?php if ($current > 1): ?>
+            <li class="first">
+                <a href="<?php echo $this->getPagerUrl(1) ?>"><?php echo $this->translate('First', [], 'pager') ?></a>
+            </li>
+            <li class="prev">
+                <a href="<?php echo $this->getPagerUrl($current - 1) ?>"><?php echo $this->translate('Previous', [], 'pager') ?></a>
+            </li>
+        <?php endif ?>
+        <?php for ($p = 1; $p <= $pages; $p++): ?>
+            <li>
+                <?php if ($current === $p): ?>
+                    <span class="current">
+                    <?php else: ?>
+                        <a href="<?php echo $this->getPagerUrl($p) ?>">
+                        <?php endif ?>
+                        <?php echo $p ?>
+                        <?php if ($current === $p): ?>
+                    </span>
+                <?php else: ?>
+                    </a>
+                <?php endif ?>
+            </li>
+        <?php endfor ?>
+        <?php if ($current < $pages): ?>
+            <li class="next">
+                <a href="<?php echo $this->getPagerUrl($current + 1) ?>"><?php echo $this->translate('Next', [], 'pager') ?></a>
+            </li>
+            <li class="last">
+                <a href="<?php echo $this->getPagerUrl($pages) ?>"><?php echo $this->translate('Last', [], 'pager') ?></a>
+            </li>
+        <?php endif ?>
+    </ol>
+<?php endif; ?>

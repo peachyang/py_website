@@ -111,7 +111,7 @@ class Response extends Message implements ResponseInterface
     public function withStatus($code, $reasonPhrase = '')
     {
         if (!isset($this->recommendedReasonPhrases[$code])) {
-            throw new Exception\InvalidArgumentException('Invalid status code provided: ' . $code);
+            throw new \InvalidArgumentException('Invalid status code provided: ' . $code);
         }
         $this->statusCode = (int) $code;
         $this->reasonPhrase = $reasonPhrase;

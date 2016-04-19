@@ -12,9 +12,8 @@ class Page implements SourceInterface
     public function getSourceArray($except = [])
     {
         $collection = new Collection;
-        $except = (array) $except;
         if (!empty($except)) {
-            $collection->where(new NotIn('cms_page.id', $except));
+            $collection->where(new NotIn('cms_page.id', (array) $except));
         }
         $result = [];
         foreach ($collection as $page) {

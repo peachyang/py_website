@@ -21,5 +21,58 @@
         $('img.captcha').click(function () {
             $(this).attr('src', $(this).attr('src') + '?' + (new Date().getTime()));
         });
+        $('.grid thead th.checkbox [type=checkbox]').click(function () {
+            var flag = this.checked;
+            $(this).parents('.grid .table').find('tbody td.checkbox [type=checkbox]').each(function () {
+                this.checked = flag;
+            });
+        });
+        var addMessages = function () {
+            $('.header .top-menu .messages .badge').text($('.message-box>.alert').length);
+            $('.header .top-menu .messages').addClass('has-message');
+        };
+        var responseHandler = function (json) {
+            if (typeof json === 'string') {
+                json = eval('(' + json + ')');
+            }
+            if (json.message.length) {
+                var html = '';
+                for (var i in json.message) {
+                    html += '<div class="alert alert-' + json.message[i].level + '">' + json.message[i].message + '</div>';
+                }
+                $('.header .top-menu .messages .message-box').append(html);
+                addMessages();
+            }
+        };
+        $('a[data-method]').click(function () {
+            if ($(this).is('[data-params]')) {
+                var data = $(this).data('params');
+            } else if ($(this).is('[data-serialize]')) {
+                var data = $.serialize($($(this).data('serialize')));
+            } else {
+                var data = '';
+            }
+            $.ajax($(this).attr('href'), {
+                type: $(this).data('method'),
+                data: data,
+                success: function (xhr) {
+                    responseHandler(xhr.responseText);
+                }
+            });
+            return false;
+        });
+        $('form[data-ajax]').submit(function () {
+            $.ajax($(this).attr('href'), {
+                type: $(this).data('method'),
+                data: $.serialize(this),
+                success: function (xhr) {
+                    responseHandler(xhr.responseText);
+                }
+            });
+            return false;
+        });
+        if ($('.message-box>.alert').length) {
+            addMessages();
+        }
     });
 })(jQuery);

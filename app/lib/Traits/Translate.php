@@ -18,7 +18,7 @@ trait Translate
         try {
             return $this->getContainer()->get('translator')->translate($message, $parameters, $domain);
         } catch (\Exception $e) {
-            return $message;
+            return vsprintf($message, $parameters);
         }
     }
 

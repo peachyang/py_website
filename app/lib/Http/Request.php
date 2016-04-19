@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Http;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
+use Seahinet\Lib\Exception\InvalidRequestMethod;
 
 /**
  * HTTP request. It manages the request method, URI, headers, cookies, and body
@@ -83,7 +84,7 @@ class Request extends Message implements RequestInterface
 
     /**
      * @return array
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getPost($key = null, $default = '')
     {
@@ -94,7 +95,7 @@ class Request extends Message implements RequestInterface
             $body = (string) $this->getBody();
             parse_str($body, $parsed);
             if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
-                throw new RuntimeException(
+                throw new \RuntimeException(
                 'Request body media type parser return value must be an array, an object, or null'
                 );
             }
@@ -151,13 +152,13 @@ class Request extends Message implements RequestInterface
     /**
      * @param string $method
      * @return Request
-     * @throws \InvalidArgumentException
+     * @throws InvalidRequestMethod
      */
     public function withMethod($method)
     {
         $method = strtoupper($method);
         if (!defined('static::METHOD_' . $method)) {
-            throw new \InvalidArgumentException('Invalid HTTP method passed');
+            throw new InvalidRequestMethod('Invalid HTTP method passed');
         }
         $this->method = $method;
         return $this;
@@ -166,12 +167,12 @@ class Request extends Message implements RequestInterface
     /**
      * @param string $requestTarget
      * @return Request
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function withRequestTarget($requestTarget)
     {
         if (preg_match('#\s#', $requestTarget)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
             'Invalid request target provided; must be a string and cannot contain whitespace'
             );
         }
@@ -320,7 +321,7 @@ class Request extends Message implements RequestInterface
     public function isXmlHttpRequest()
     {
         $header = $this->getHeader('X_REQUESTED_WITH');
-        return $header == 'XMLHttpRequest';
+        return $header === 'XMLHttpRequest';
     }
 
     /**

@@ -8,15 +8,27 @@ use Seahinet\Lib\ViewModel\AbstractViewModel;
 class Grid extends AbstractViewModel
 {
 
+    /**
+     * @var \Seahinet\Lib\Http\Uri
+     */
     protected $uri = null;
     protected $query = null;
+    protected $count = null;
 
+    /**
+     * @return \Seahinet\Lib\Http\Uri
+     */
     protected function getUri()
     {
         if (is_null($this->uri)) {
             $this->uri = $this->getRequest()->getUri();
         }
         return $this->uri;
+    }
+
+    public function getCurrentUrl()
+    {
+        return $this->getUri()->withQuery('')->withFragment('')->__toString();
     }
 
     public function getQuery($key = null, $default = '')
@@ -77,28 +89,6 @@ class Grid extends AbstractViewModel
         return $url;
     }
 
-    public function getPagerUrl($pager = 1)
-    {
-        $query = $this->getQuery();
-        $query['page'] = $pager;
-        return $this->getUri()->withQuery(http_build_query($query))->__toString();
-    }
-
-    public function getAllPages()
-    {
-        $limit = $this->getQuery('limit', 20);
-        $collection = clone $this->getVariable('collection');
-        $collection->reset('limit');
-        $collection->reset('offset');
-        $collection->columns(['id']);
-        return ceil(count($collection) / $limit);
-    }
-
-    public function getCurrentPage()
-    {
-        return (int) $this->getQuery('page', 1);
-    }
-
     protected function prepareColumns()
     {
         return [];
@@ -112,7 +102,7 @@ class Grid extends AbstractViewModel
         $condition = $this->getQuery();
         $limit = isset($condition['limit']) ? $condition['limit'] : 20;
         if (isset($condition['page'])) {
-            $collection->offset(($condition['page'] - 1) * $limit + 1);
+            $collection->offset(($condition['page'] - 1) * $limit);
             unset($condition['page']);
         }
         $collection->limit((int) $limit);
@@ -125,6 +115,14 @@ class Grid extends AbstractViewModel
             unset($condition['desc']);
         }
         if (!empty($condition)) {
+            foreach ($condition as $key => $value) {
+                if (trim($value) === '') {
+                    unset($condition[$key]);
+                }else if (strpos($key, ':')) {
+                    $condition[str_replace(':', '.', $key)] = $value;
+                    unset($condition[$key]);
+                }
+            }
             $collection->where($condition);
         }
         return $collection;

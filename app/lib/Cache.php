@@ -14,8 +14,7 @@ use Seahinet\Lib\Stdlib\Singleton;
  * @method bool flushAll()
  * @method bool deleteAll()
  */
-final class Cache implements ArrayAccess, Singleton
-{
+final class Cache implements ArrayAccess, Singleton {
 
     use Traits\Container;
 
@@ -38,14 +37,14 @@ final class Cache implements ArrayAccess, Singleton
      * @param array|Container $config
      * @throws \UnexpectedValueException
      */
-    private function __construct($config = [])
-    {
+    private function __construct($config = []) {
         if ($config instanceof Container) {
             $this->setContainer($config);
             $config = [];
         }
         if (empty($config)) {
-            $config = $this->getContainer()->get('config')['adapter']['cache'];
+            $adapterObject = $this->getContainer()->get('config')['adapter'];
+            $config = isset($adapterObject['cache']) ? $adapterObject['cache'] : [];
         }
         $this->pool = Cache\Factory::getCachePool($config);
     }
@@ -55,8 +54,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $name
      * @param array $arguments
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         if (is_callable([$this->pool, $name])) {
             return call_user_func_array([$this->pool, $name], $arguments);
         } else {
@@ -68,8 +66,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param array $config
      * @return Cache
      */
-    public static function instance($config = [])
-    {
+    public static function instance($config = []) {
         if (is_null(static::$instance)) {
             static::$instance = new static($config);
         }
@@ -81,8 +78,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $id
      * @return bool
      */
-    public function contains($id)
-    {
+    public function contains($id) {
         return $this->pool->contains($id);
     }
 
@@ -92,8 +88,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $prefix
      * @return bool
      */
-    public function delete($id, $prefix = '')
-    {
+    public function delete($id, $prefix = '') {
         if ($prefix) {
             $list = $this->pool->fetch('CACHE_LIST_' . $prefix);
             if ($list) {
@@ -113,8 +108,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $prefix
      * @return mixed
      */
-    public function fetch($id, $prefix = '')
-    {
+    public function fetch($id, $prefix = '') {
         if (count($this->unhitPrefix) && in_array($prefix, $this->unhitPrefix)) {
             return null;
         }
@@ -127,8 +121,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $prefix
      * @return Cache
      */
-    public function unhit($prefix)
-    {
+    public function unhit($prefix) {
         $this->unhitPrefix[] = $prefix;
         return $this;
     }
@@ -141,8 +134,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param int $lifeTime
      * @return bool
      */
-    public function save($id, $data, $prefix = '', $lifeTime = 0)
-    {
+    public function save($id, $data, $prefix = '', $lifeTime = 0) {
         if ($prefix) {
             $list = $this->pool->fetch('CACHE_LIST_' . $prefix);
             if ($list) {
@@ -161,8 +153,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param array $keys
      * @return array
      */
-    public function fetchMultiple(array $keys, $prefix = '')
-    {
+    public function fetchMultiple(array $keys, $prefix = '') {
         $result = [];
         $fetchKey = $keys;
         if (count($this->unhitPrefix)) {
@@ -187,8 +178,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param int $lifetime
      * @return bool
      */
-    public function saveMultiple(array $keysAndValues, $lifetime = 0)
-    {
+    public function saveMultiple(array $keysAndValues, $lifetime = 0) {
         $pairs = [];
         foreach ($keysAndValues as $key => $value) {
             $pairs[$key] = gzencode(serialize($value));
@@ -196,23 +186,19 @@ final class Cache implements ArrayAccess, Singleton
         return $this->pool->saveMultiple($pairs, $lifetime);
     }
 
-    public function offsetExists($offset)
-    {
+    public function offsetExists($offset) {
         return $this->contains($offset);
     }
 
-    public function offsetGet($offset)
-    {
+    public function offsetGet($offset) {
         return $this->fetch($offset);
     }
 
-    public function offsetSet($offset, $value)
-    {
+    public function offsetSet($offset, $value) {
         return $this->save($offset, $value);
     }
 
-    public function offsetUnset($offset)
-    {
+    public function offsetUnset($offset) {
         return $this->delete($offset);
     }
 

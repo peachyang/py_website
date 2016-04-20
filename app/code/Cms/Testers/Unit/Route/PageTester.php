@@ -1,7 +1,8 @@
 <?php
 namespace Seahinet\Cms\Testers\Unit\Route\Page;
 use Curl\Curl;
-
+use Seahinet\tester\Bootstrap\Bootstrap;
+//use Seahinet\Lib\Bootstrap;
 class PageTester  extends \PHPUnit_Framework_TestCase{
 	/**
 	 * @var /Seahinet/Cms/Controller/PageController
@@ -34,9 +35,10 @@ class PageTester  extends \PHPUnit_Framework_TestCase{
     "HTTP_HOST" => "ecomv2.lh.com",
 	"QUERY_STRING" => "",
     "PHP_SELF" => "/index.php");
+//	 Bootstrap::init($_SERVER);
 	 $request=new \Seahinet\Lib\Http\Request($_SERVER);
-	 //$request->setOption($_SERVER);
-		
+	 //$request->setOption($_SERVER
+	var_dump(Bootstrap::getContainer()->get('config')['global/base_url']);
 	 $this->assertSame($this->route->match($request), $this->curl->get('http://ecomv2.lh.com/test.html'));
 	}
 	

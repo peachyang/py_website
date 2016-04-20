@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.2/phpunit.xsd"
-         bootstrap="../../app/bootstrap.php"
+         bootstrap=" ./framework/Bootstrap.php"
          verbose="true">
         <testsuite name="Seahinet">
         <directory suffix=".php">../../app/code/*/Testers/Unit</directory>

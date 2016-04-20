@@ -13,6 +13,8 @@ use Zend\Db\Adapter\Exception\InvalidQueryException;
 class Rbac extends AbstractCli
 {
 
+    use \Seahinet\Lib\Traits\DB;
+
     public function run()
     {
         if (isset($this->args['generate']) || isset($this->args['g'])) {
@@ -36,7 +38,7 @@ class Rbac extends AbstractCli
                 $reflection = new ReflectionClass($className);
                 if ($reflection->isSubclassOf('Seahinet\\Lib\\Controller\\AuthActionController')) {
                     foreach ($reflection->getMethods() as $method) {
-                        if ($method->isPublic() && substr($method->getName(), -6) === 'Action') {
+                        if ($method->isPublic() && substr($method->getName(), -6) === 'Action' && $method->getName() !== 'notFoundAction') {
                             try {
                                 $model = new Operation;
                                 $model->setData([

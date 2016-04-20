@@ -8,7 +8,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 class Message extends AbstractViewModel implements Singleton
 {
 
-    protected static $viewModel = null;
+    protected static $instance = null;
     protected $segments = [];
 
     private function __construct()
@@ -18,10 +18,10 @@ class Message extends AbstractViewModel implements Singleton
 
     public static function instance()
     {
-        if (is_null(static::$viewModel)) {
-            static::$viewModel = new static;
+        if (is_null(static::$instance)) {
+            static::$instance = new static;
         }
-        return static::$viewModel;
+        return static::$instance;
     }
 
     public function addHandledSegment($name)

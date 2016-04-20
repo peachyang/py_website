@@ -28,10 +28,27 @@ class Block extends Grid
     protected function prepareColumns()
     {
         return [
-            'id' => 'ID',
-            'code' => 'Code',
-            'language' => 'Language',
-            'status' => 'Status'
+            'id' => [
+                'label' => 'ID',
+            ],
+            'code' => [
+                'label' => 'Code',
+                'class' => 'text-left'
+            ],
+            'language' => [
+                'label' => 'Language',
+                'use4sort' => false,
+                'use4filter' => false
+            ],
+            'status' => [
+                'label' => 'Status',
+                'sortby' => 'cms_page:status',
+                'type' => 'select',
+                'options' => [
+                    'Disabled',
+                    'Enabled'
+                ]
+            ]
         ];
     }
 

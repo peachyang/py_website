@@ -6,18 +6,18 @@ admin:
         priority: 10
         children:
             -
-                link: 'cms_page/page'
+                link: 'cms_page/'
                 title: 'Page Management'
                 priority: 0
             -
-                link: 'cms_page/edit'
-                title: 'Add Page'
+                link: 'cms_page/edit/'
+                title: 'Add New Page'
                 priority: 10
             -
-                link: 'cms_block'
+                link: 'cms_block/'
                 title: 'Block Management'
                 priority: 20
             -
-                link: 'cms_block/edit'
-                title: 'Add Block'
+                link: 'cms_block/edit/'
+                title: 'Add New Block'
                 priority: 30

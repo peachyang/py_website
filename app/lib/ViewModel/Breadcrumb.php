@@ -6,6 +6,7 @@ class Breadcrumb extends AbstractViewModel
 {
 
     protected $crumbs = [];
+    protected $additional = [];
     protected $showLabel = false;
     protected $showHome = false;
 
@@ -49,6 +50,23 @@ class Breadcrumb extends AbstractViewModel
     public function addCrumb(array $crumbs)
     {
         $this->crumbs[] = $crumbs;
+        return $this;
+    }
+
+    public function getAdditional()
+    {
+        return $this->additional;
+    }
+
+    public function setAdditional(array $additional)
+    {
+        $this->additional = $additional;
+        return $this;
+    }
+
+    public function addAdditional(array $additional)
+    {
+        $this->additional[] = $additional;
         return $this;
     }
 

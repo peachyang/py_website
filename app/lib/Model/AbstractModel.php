@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
+use Seahinet\Lib\Stdlib\Singleton;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Stdlib\ArrayObject;
@@ -342,6 +343,9 @@ abstract class AbstractModel extends ArrayObject
         $data = unserialize($data);
         foreach ($data as $key => $value) {
             $this->$key = $value;
+        }
+        if($this instanceof Singleton){
+            static::$instance = $this;
         }
     }
 

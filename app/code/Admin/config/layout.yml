@@ -99,25 +99,25 @@ admin:
                         params: [pub/backend/css/styles-ie.css,stylesheet,lt IE 9]
                     -
                         method: addScript
-                        params: pub/backend/js/jquery.js
+                        params: [{src:'pub/backend/js/jquery.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: pub/backend/js/validate/jquery.validate.min.js
+                        params: [{src:'pub/backend/js/validate/jquery.validate.min.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: pub/backend/js/validate/config.js
+                        params: [{src:'pub/backend/js/validate/config.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: pub/backend/js/modernizr.js
+                        params: [{src:'pub/backend/js/modernizr.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: pub/backend/js/dropdown.js
+                        params: [{src:'pub/backend/js/dropdown.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: pub/backend/js/app.js
+                        params: [{src:'pub/backend/js/app.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: [pub/backend/js/selectivizr.js,lt IE 9]
+                        params: [{src:'pub/backend/js/selectivizr.js',defer:'defer'},lt IE 9]
                     -
                         method: setTitle
                         params: ''

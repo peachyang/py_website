@@ -148,7 +148,9 @@ final class Bootstrap
                 $code = static::$language['code'];
             }
             $segment->set('language', $code);
-            setcookie('language', $code, 0, '/');
+            if (!isset($_COOKIE['language']) || $_COOKIE['language'] !== $code) {
+                static::getContainer()->get('response')->withHeader('Set-Cookie', 'language=zh_CN; path=/ ');
+            }
         }
         return static::$language;
     }

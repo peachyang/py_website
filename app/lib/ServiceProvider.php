@@ -36,7 +36,7 @@ class ServiceProvider implements ServiceProviderInterface
             $request = new Request;
             $container['request'] = $request;
         }
-        if (!$container->has('response') && isset($_SERVER['REQUEST_METHOD'])) {
+        if (!$container->has('response')) {
             $response = new Response;
             $response->withStatus(200)
                     ->withHeader('Content-Type', 'text/html; charset=UTF-8');

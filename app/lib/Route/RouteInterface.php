@@ -15,5 +15,4 @@ interface RouteInterface extends Serializable
      * @return RouteMatch|false when dismatch the request
      */
     public function match(Request $request);
-    
 }

@@ -12,9 +12,8 @@ class Block extends AbstractCollection
     public function _construct()
     {
         $this->init('cms_block');
-            $this->select->join('cms_block_language', 'cms_block.id=cms_block_language.block_id', [], 'left');
-            $this->select->join('core_language', 'core_language.id=cms_block_language.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
-
+        $this->select->join('cms_block_language', 'cms_block.id=cms_block_language.block_id', [], 'left');
+        $this->select->join('core_language', 'core_language.id=cms_block_language.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
     }
 
     protected function afterLoad()

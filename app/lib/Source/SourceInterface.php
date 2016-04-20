@@ -7,6 +7,7 @@ namespace Seahinet\Lib\Source;
  */
 interface SourceInterface
 {
+
     /**
      * @return array
      */

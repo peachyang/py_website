@@ -51,5 +51,5 @@ class Breadcrumb extends AbstractViewModel
         $this->crumbs[] = $crumbs;
         return $this;
     }
-    
+
 }

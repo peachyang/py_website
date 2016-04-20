@@ -1,0 +1,23 @@
+---
+admin:
+    -
+        icon: television
+        title: 'CMS'
+        priority: 10
+        children:
+            -
+                link: 'cms_page/page'
+                title: 'Page Management'
+                priority: 0
+            -
+                link: 'cms_page/edit'
+                title: 'Add Page'
+                priority: 10
+            -
+                link: 'cms_block'
+                title: 'Block Management'
+                priority: 20
+            -
+                link: 'cms_block/edit'
+                title: 'Add Block'
+                priority: 30

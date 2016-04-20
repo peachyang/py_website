@@ -74,9 +74,9 @@ class MongoDBCache extends CacheProvider
         try {
             $result = $this->collection->updateOne(
                     ['_id' => $id], ['$set' => [
-                self::EXPIRATION_FIELD => ($lifeTime > 0 ? new UTCDateTime((time() + $lifeTime) * 1000) : null),
-                self::DATA_FIELD => new Binary(serialize($data), Binary::TYPE_OLD_BINARY),
-                    ]], array('upsert' => true)
+                    self::EXPIRATION_FIELD => ($lifeTime > 0 ? new UTCDateTime((time() + $lifeTime) * 1000) : null),
+                    self::DATA_FIELD => new Binary(serialize($data), Binary::TYPE_OLD_BINARY),
+                ]], array('upsert' => true)
             );
         } catch (Exception $e) {
             return false;

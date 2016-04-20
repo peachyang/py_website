@@ -1,3 +1,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <title><?php echo $this->getTitle() ?></title>
-<?php echo $this->getMeta(), $this->getLink(), $this->getScript() ?>
+<?php echo $this->getMeta(), $this->getLink(), $this->getScript(); ?>
+<script>
+    var GLOBAL={BASE_URL:'<?php echo $this->getBaseUrl() ?>'};
+</script>

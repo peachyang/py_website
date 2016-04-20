@@ -118,7 +118,7 @@ class Grid extends AbstractViewModel
             foreach ($condition as $key => $value) {
                 if (trim($value) === '') {
                     unset($condition[$key]);
-                }else if (strpos($key, ':')) {
+                } else if (strpos($key, ':')) {
                     $condition[str_replace(':', '.', $key)] = $value;
                     unset($condition[$key]);
                 }

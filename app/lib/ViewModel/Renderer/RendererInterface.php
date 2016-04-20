@@ -15,7 +15,7 @@ interface RendererInterface
      * @return string
      */
     public function render($file, $viewModel);
-    
+
     /**
      * Get template files extension
      * 

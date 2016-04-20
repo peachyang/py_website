@@ -12,7 +12,8 @@ use Seahinet\Lib\Model\Language;
 /**
  * Bootstrap main system
  */
-final class Bootstrap {
+final class Bootstrap
+{
 
     /**
      * @var ContainerInterface
@@ -45,7 +46,8 @@ final class Bootstrap {
      * @param array $config         DI config
      * @return ContainerInterface
      */
-    public static function getContainer() {
+    public static function getContainer()
+    {
         if (is_null(static::$container)) {
             static::$container = new Container();
             static::$container->register(new ServiceProvider);
@@ -59,7 +61,8 @@ final class Bootstrap {
      * @param array $server
      * @throws Exception\MissingFileException
      */
-    public static function init($server) {
+    public static function init($server)
+    {
         if (!file_exists(BP . 'app/config/adapter.yml')) {
             throw new Exception\MissingFileException(BP . 'app/config/adapter.yml');
         }
@@ -76,7 +79,8 @@ final class Bootstrap {
      * 
      * @param array $server
      */
-    public static function run($server) {
+    public static function run($server)
+    {
         if (is_null(static::$container)) {
             static::init($server);
         }
@@ -90,7 +94,8 @@ final class Bootstrap {
      * 
      * @return Config
      */
-    private static function prepareConfig() {
+    private static function prepareConfig()
+    {
         $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
         $cache = Cache::instance(isset($adapter['cache']) ? $adapter['cache'] : ['adapter' => '']);
         $config = $cache->fetch('SYSTEM_CONFIG');
@@ -111,7 +116,8 @@ final class Bootstrap {
      * 
      * @param Config $config
      */
-    private static function handleConfig($config) {
+    private static function handleConfig($config)
+    {
         if (isset($config['event'])) {
             static::$eventDispatcher = static::$container->get('eventDispatcher');
             foreach ($config['event'] as $name => $event) {
@@ -120,7 +126,8 @@ final class Bootstrap {
         }
     }
 
-    public static function getLanguage($server = null, $segment = null) {
+    public static function getLanguage($server = null, $segment = null)
+    {
         if (is_null(static::$language)) {
             if (is_null($server)) {
                 $server = $_SERVER;
@@ -146,7 +153,8 @@ final class Bootstrap {
         return static::$language;
     }
 
-    public static function getStore($server = null, $segment = null) {
+    public static function getStore($server = null, $segment = null)
+    {
         if (is_null(static::$store)) {
             if (is_null($server)) {
                 $server = $_SERVER;
@@ -176,7 +184,8 @@ final class Bootstrap {
         return static::$store;
     }
 
-    public static function getMerchant($server = null, $segment = null) {
+    public static function getMerchant($server = null, $segment = null)
+    {
         if (is_null(static::$merchant)) {
             if (is_null($server)) {
                 $server = $_SERVER;

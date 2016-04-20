@@ -22,7 +22,7 @@ $query = $this->getQuery();
                         <select class="form-control" id="sortby:<?php echo $attr ?>" name="<?php echo $key ?>">
                             <option></option>
                             <?php foreach ($name['options'] as $k => $v): ?>
-                                <option value="<?php echo $k ?>"<?php if (!empty($query[$key]) && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v) ?></option>
+                                <option value="<?php echo $k ?>"<?php if (isset($query[$key]) && $query[$key] !== '' && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v) ?></option>
                             <?php endforeach ?>
                         </select>
                     <?php else: ?>

@@ -1,0 +1,7 @@
+---
+admin:
+    -
+        icon: tachometer
+        link: 'dashboard'
+        title: 'Dashboard'
+        priority: 0

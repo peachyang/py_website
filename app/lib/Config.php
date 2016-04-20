@@ -10,7 +10,8 @@ use Symfony\Component\Yaml\Parser;
 /**
  * Main configuration of system
  */
-final class Config extends ArrayObject implements Singleton {
+final class Config extends ArrayObject implements Singleton
+{
 
     use Traits\DB,
         Traits\ArrayMerge;
@@ -20,7 +21,8 @@ final class Config extends ArrayObject implements Singleton {
     /**
      * @param array|Container $config
      */
-    private function __construct($config = []) {
+    private function __construct($config = [])
+    {
         if ($config instanceof Container) {
             $this->setContainer($config);
             $config = [];
@@ -35,7 +37,8 @@ final class Config extends ArrayObject implements Singleton {
      * @param array $config
      * @return Config
      */
-    public static function instance($config = []) {
+    public static function instance($config = [])
+    {
         if (is_null(static::$instance)) {
             if ($config instanceof Config) {
                 static::$instance = $config;
@@ -49,7 +52,8 @@ final class Config extends ArrayObject implements Singleton {
     /**
      * @return array
      */
-    private function loadFromYaml() {
+    private function loadFromYaml()
+    {
         $finder = new Finder;
         $finder->files()->in(BP . 'app')->name('*.yml');
         $parser = new Parser;
@@ -70,7 +74,8 @@ final class Config extends ArrayObject implements Singleton {
     /**
      * @return array
      */
-    public function loadFromDB() {
+    public function loadFromDB()
+    {
         $tableGateway = $this->getTableGateway('core_config');
         $result = $tableGateway->select()->toArray();
         $config = [];
@@ -94,7 +99,8 @@ final class Config extends ArrayObject implements Singleton {
      * @param string|array $path
      * @return array
      */
-    private function generateConfig($path, $value) {
+    private function generateConfig($path, $value)
+    {
         if (count($path) > 1) {
             $key = array_shift($path);
             return [$key => $this->generateConfig($path, $value)];
@@ -103,7 +109,8 @@ final class Config extends ArrayObject implements Singleton {
         }
     }
 
-    private function getConfigByPath($path, $config = null) {
+    private function getConfigByPath($path, $config = null)
+    {
         if (count($path) > 1) {
             $key = array_shift($path);
             $config = is_null($config) ? $this->offsetGet($key) :
@@ -124,7 +131,8 @@ final class Config extends ArrayObject implements Singleton {
         return null;
     }
 
-    public function offsetGet($key) {
+    public function offsetGet($key)
+    {
         if (strpos($key, '/')) {
             return $this->getConfigByPath(explode('/', trim($key, '/')));
         } else {

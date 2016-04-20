@@ -135,7 +135,7 @@ abstract class AbstractCollection extends ArrayObject
         }
         return $this;
     }
-
+    
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {

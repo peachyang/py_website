@@ -29,9 +29,9 @@ final class Root extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
-    public function getBodyClass($array = false)
+    public function getBodyClass($asArray = false)
     {
-        return $array ? $this->bodyClass : implode(' ', $this->bodyClass);
+        return $asArray ? $this->bodyClass : implode(' ', $this->bodyClass);
     }
 
     public function setBodyClass(array $bodyClass)

@@ -40,7 +40,7 @@ class Csrf
     {
         return $this->getValue();
     }
-    
+
     public function regenerateValue()
     {
         $hash = hash('sha1', random_bytes(40));

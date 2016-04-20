@@ -34,12 +34,12 @@ class Template extends AbstractModel
      * @param Swift_Mime_SimpleMessage $message
      * @return Swift_Mime_SimpleMessage
      */
-    public function injectMessage(Swift_Mime_SimpleMessage $message,array $vars = [])
+    public function injectMessage(Swift_Mime_SimpleMessage $message, array $vars = [])
     {
         if ($this->isLoaded) {
             $message->setSubject($this->offsetGet('subject'));
             $content = $this->offsetGet('content');
-            if(!empty($vars)){
+            if (!empty($vars)) {
                 $content = str_replace(array_keys($vars), array_values($vars), $content);
             }
             $message->setBody($content);

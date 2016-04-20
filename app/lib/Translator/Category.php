@@ -24,22 +24,22 @@ class Category implements ArrayAccess, JsonSerializable, Serializable
     {
         return $this->offsetGet($name);
     }
-    
+
     public function __set($name, $value)
     {
         $this->offsetSet($name, $value);
     }
-    
+
     public function __isset($name)
     {
         return $this->offsetExists($name);
     }
-    
+
     public function __unset($name)
     {
         $this->offsetUnset($name);
     }
-    
+
     public function offsetExists($offset)
     {
         return isset($this->storage[$offset]);

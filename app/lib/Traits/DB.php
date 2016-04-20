@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Traits;
 
+use Zend\Db\Adapter\Driver\ConnectionInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Where;
@@ -18,6 +19,11 @@ trait DB
     protected $tableGateway = null;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection = null;
+
+    /**
      * @param string|TableIdentifier|array $table
      * @return TableGateway
      */
@@ -27,6 +33,14 @@ trait DB
             $this->tableGateway = new TableGateway($table, $this->getContainer()->get('dbAdapter'));
         }
         return $this->tableGateway;
+    }
+
+    protected function getConnection()
+    {
+        if (is_null($this->connection) && !is_null($this->tableGateway)) {
+            $this->connection = $this->tableGateway->getAdapter()->getDriver()->getConnection();
+        }
+        return $this->connection;
     }
 
     /**
@@ -78,4 +92,20 @@ trait DB
         return 0;
     }
 
+    protected function beginTransaction()
+    {
+        $this->getConnection()->beginTransaction();
+        return $this;
+    }
+    
+    protected function commit(){
+        $this->getConnection()->commit();
+        return $this;
+    }
+
+    protected function rollback(){
+        $this->getConnection()->rollback();
+        return $this;
+    }
+    
 }

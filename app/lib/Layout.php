@@ -78,7 +78,7 @@ class Layout extends ArrayObject implements Singleton
      */
     public function renderLayout(array $layout, $name, $parent = null)
     {
-        if(!isset($layout['type'])){
+        if (!isset($layout['type'])) {
             throw new \InvalidArgumentException('Missing type argument.');
         }
         if (is_subclass_of($layout['type'], '\\Seahinet\\Lib\\Stdlib\\Singleton')) {
@@ -86,27 +86,25 @@ class Layout extends ArrayObject implements Singleton
         } else {
             $viewModel = new $layout['type'];
         }
-        foreach ($layout as $key => $value) {
-            switch ($key) {
-                case 'template':
-                    $viewModel->setTemplate($value);
-                    break;
-                case 'action':
-                    if (isset($value['method'])) {
-                        $value = [$value];
-                    }
-                    foreach ($value as $action) {
-                        call_user_func_array([$viewModel, $action['method']], isset($action['params']) ? (array) $action['params'] : []);
-                    }
-                    break;
-                case 'children':
-                    foreach ($value as $childName => $children) {
-                        if (isset($layout['unset']) && in_array($childName, $layout['unset'])) {
-                            continue;
-                        }
-                        $this->renderLayout($children, $childName, $viewModel);
-                    }
-                    break;
+        if (isset($layout['template'])) {
+            $viewModel->setTemplate($layout['template']);
+        }
+        if (isset($layout['action'])) {
+            if (isset($layout['action']['method'])) {
+                $layout['action'] = [$layout['action']];
+            }
+            foreach ($layout['action'] as $action) {
+                if (is_callable([$viewModel, $action['method']])) {
+                    call_user_func_array([$viewModel, $action['method']], isset($action['params']) ? (array) $action['params'] : []);
+                }
+            }
+        }
+        if (isset($layout['children'])) {
+            foreach ($layout['children'] as $childName => $children) {
+                if (isset($layout['unset']) && in_array($childName, $layout['unset'])) {
+                    continue;
+                }
+                $this->renderLayout($children, $childName, $viewModel);
             }
         }
         if (!is_null($parent)) {

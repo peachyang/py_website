@@ -101,9 +101,10 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav>.item>a>.title:before{content:"\f0a9";font-size:13px;margin:0 4px 0 14px;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .admin .nav-container .nav>.item.open>a>.title:before{content:"\f0aa"}
 .admin .nav-container .nav>.item.open>a,.admin .nav-container .nav>.item:hover>a,.admin .nav-container .nav>.item:focus>a{background:#333;text-decoration:none}
-.admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#3e3d3d;width:146px}
-.admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d}
-.admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 9px 0 30px}
+.admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#3e3d3d;min-width:146px}
+.admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d;white-space:nowrap}
+.admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
+.admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px;transition:margin-right linear .3s}
 .admin .nav-container .nav .dropdown-menu>.item a:focus,.admin .nav-container .nav .dropdown-menu>.item a:hover{text-decoration:none;color:#fff}
 .admin .nav-container .copyright{display:none;position:absolute;bottom:10px;left:0;width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin .nav-container .copyright strong{display:block;margin-bottom:6px}
@@ -112,9 +113,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container.active .nav>.item>a>.fa{display:none}
 .admin .nav-container.active .nav>.item>a>.title{display:block}
 .admin .nav-container.active .nav>.item.dropdown>.dropdown-menu{position:static;width:100%;background:none}
-.admin .nav-container.active .nav .dropdown-menu>.item a{border:none;line-height:24px;font-size:12px;text-indent:30px}
-.admin .nav-container.active .nav .dropdown-menu>.item a:before{display:none;}
-.admin .nav-container.active .nav>.item:hover>a,.admin .nav-container .nav>.item:focus>a{background:none}
+.admin .nav-container.active .nav .dropdown-menu>.item a{border:none;line-height:24px;font-size:12px;padding:0 30px;white-space:normal}
+.admin .nav-container.active .nav .dropdown-menu>.item a:before{display:none}
 .admin .nav-container.active .copyright{display:block}
 .admin .main-container{display:block;width:100%;float:right;height:100%;padding-top:45px;padding-left:51px;transition:padding .6s}
 .admin .nav-container.active~.main-container{padding-left:172px}

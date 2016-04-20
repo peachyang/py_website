@@ -9,5 +9,5 @@ use Exception;
  */
 class InitializationException extends Exception
 {
-
+    
 }

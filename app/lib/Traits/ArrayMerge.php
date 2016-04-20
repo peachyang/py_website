@@ -15,7 +15,7 @@ trait ArrayMerge
     protected function arrayMerge(array $a, array $b)
     {
         foreach ($b as $key => $value) {
-            if(is_numeric($key)){
+            if (is_numeric($key)) {
                 return array_merge_recursive($a, $b);
             }
             if (isset($a[$key])) {

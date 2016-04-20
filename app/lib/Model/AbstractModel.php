@@ -206,8 +206,9 @@ abstract class AbstractModel extends ArrayObject
             } else if ($this->isNew) {
                 $this->beforeSave();
                 $this->insert($columns);
-                $this->load($this->tableGateway->getLastInsertValue());
+                $this->setId($this->tableGateway->getLastInsertValue());
                 $this->afterSave();
+                $this->load($this->getId());
                 $this->flushList($this->getCacheKey());
             }
         } catch (InvalidQueryException $e) {

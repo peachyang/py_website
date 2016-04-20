@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\tester\Bootstrap;
+namespace Seahinet\tester;
 
 use Interop\Container\ContainerInterface;
 use Locale;
@@ -8,10 +8,13 @@ use Symfony\Component\Yaml\Yaml;
 use Seahinet\Lib\Model\Merchant;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Model\Language;
+use Seahinet\Lib\Cache;
+use Seahinet\Lib\Container;
+use Seahinet\Lib\ServiceProvider;
+use Seahinet\Lib\Session;
 define('DS', DIRECTORY_SEPARATOR);
 define('BP', dirname(__DIR__) . DS.'../../');
 require '../../vendor/autoload.php';
-Bootstrap::init($_SERVER);
 
 /**
  * Bootstrap main system
@@ -138,7 +141,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : Locale::getDefault()));
+            @$code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : Locale::getDefault()));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -151,7 +154,7 @@ final class Bootstrap
                 $code = static::$language['code'];
             }
             $segment->set('language', $code);
-            setcookie('language', $code);
+            @setcookie('language', $code);
         }
         return static::$language;
     }

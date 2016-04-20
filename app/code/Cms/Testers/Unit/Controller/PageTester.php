@@ -18,7 +18,7 @@ class PageTester  extends \PHPUnit_Framework_TestCase{
             ->getMock();
 	}
 	
-/***
+
 	public function testIndexAction(){		
 		
 		$this->pageMock->expects($this->once())
@@ -29,7 +29,7 @@ class PageTester  extends \PHPUnit_Framework_TestCase{
 		
 		$this->assertSame($this->pageMock, $this->controller->indexAction());
 	}
-**/
+
 }
 
 

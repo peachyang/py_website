@@ -81,8 +81,10 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function addScript($script, $condition = null)
     {
-        if (strpos($script, '://') === false) {
+        if (is_string($script) && strpos($script, '://') === false) {
             $script = $this->getBaseUrl($script);
+        } else if (strpos($script['src'], '://') === false) {
+            $script['src'] = $this->getBaseUrl($script['src']);
         }
         if (is_null($condition)) {
             $this->script['normal'][] = $script;
@@ -133,7 +135,18 @@ final class Head extends AbstractViewModel implements Singleton
 
     protected function renderScript($scripts)
     {
-        return '<script type="text/javascript" src="' . implode('"></script><script type="text/javascript" src="', $scripts) . '"></script>';
+        $result = '';
+        foreach ($scripts as $script) {
+            $result .= '<script type="text/javascript" ';
+            if (is_string($script)) {
+                $script = ['src' => $script];
+            }
+            foreach ($script as $key => $value) {
+                $result .= $key . '="' . $value . '" ';
+            }
+            $result .= '></script>';
+        }
+        return $result;
     }
 
 }

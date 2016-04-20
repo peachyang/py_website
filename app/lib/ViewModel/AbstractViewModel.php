@@ -4,6 +4,7 @@ namespace Seahinet\Lib\ViewModel;
 
 use JsonSerializable;
 use Seahinet\Lib\Session\Csrf;
+use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
 use Serializable;
 
@@ -217,6 +218,9 @@ abstract class AbstractViewModel implements Serializable
         $data = unserialize($serialized);
         foreach ($data as $key => $value) {
             $this->$key = $value;
+        }
+        if($this instanceof Singleton){
+            static::$instance = $this;
         }
     }
 

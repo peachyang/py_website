@@ -18,6 +18,9 @@ admin_cms_page_list:
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/cms_page/',label:'Page Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/cms_page/edit/',label:'Add New Page'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Page
 admin_cms_page_edit:
@@ -47,6 +50,9 @@ admin_cms_block_list:
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/cms_block/',label:'Block Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/cms_page/edit/',label:'Add New Block'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Block
 admin_cms_block_edit:

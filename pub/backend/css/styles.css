@@ -103,8 +103,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav>.item.open>a,.admin .nav-container .nav>.item:hover>a,.admin .nav-container .nav>.item:focus>a{background:#333;text-decoration:none}
 .admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#3e3d3d;min-width:146px}
 .admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d;white-space:nowrap}
-.admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
-.admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px;transition:margin-right linear .3s}
+.admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";transition:margin-right ease .5s;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
+.admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px}
 .admin .nav-container .nav .dropdown-menu>.item a:focus,.admin .nav-container .nav .dropdown-menu>.item a:hover{text-decoration:none;color:#fff}
 .admin .nav-container .copyright{display:none;position:absolute;bottom:10px;left:0;width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin .nav-container .copyright strong{display:block;margin-bottom:6px}
@@ -122,6 +122,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .breadcrumb li{font-size:12px;color:#6c6c6c;line-height:30px}
 .admin .breadcrumb li:before{color:#6c6c6c}
 .admin .breadcrumb .current{color:#02a0e9}
+.admin .breadcrumb .buttons-set{float:right;width:50%;padding-right:10px;font-size:12px;line-height:30px;text-align:right;color:#6c6c6c}
+.admin .breadcrumb .buttons-set+ol{float:left;width:50%}
 .admin .grid .filters{background:#f7f8fa;border-bottom:1px solid #cce0e9;padding:9px 0 7px}
 .admin .grid .filters .input-box{display:inline-block;padding:12px 0 12px 23px;margin:0;vertical-align:top}
 .admin .grid .filters .control-label{line-height:21px;font-size:12px;color:#6c6c6c}

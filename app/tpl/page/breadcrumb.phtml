@@ -6,7 +6,7 @@
         <div class="buttons-set">
             <?php foreach ($additional as $crumb): ?>
                 <a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl($crumb['link']) : $this->getBaseUrl($crumb['link']) ?>"><?php echo $this->translate($crumb['label']) ?></a>
-            <?php endforeach ?>
+               <?php endforeach ?>
         </div>
         <?php
     endif;

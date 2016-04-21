@@ -42,7 +42,7 @@ class BlockController extends AuthActionController
                         $model->setId($id)->remove();
                         $count++;
                     }
-                    $result['message'][] = ['message' => $this->translate('%d item(s) has been deleted successfully.', [$count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
                 } catch (Exception $e) {
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;

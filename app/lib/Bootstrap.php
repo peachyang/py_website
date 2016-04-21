@@ -135,7 +135,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : Locale::getDefault()));
+            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : preg_replace('/^([a-z]{2})[^\,\;]+([A-Z]{2})\W?.*$/i', '$1-$2', $server['HTTP_ACCEPT_LANGUAGE'])));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');

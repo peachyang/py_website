@@ -7,12 +7,22 @@
                 $(this).removeClass('active');
                 $('.nav-container').removeClass('active');
                 $('.nav-container .dropdown-toggle').attr('data-toggle', 'dropdown');
+                var flag = 0;
             } else {
                 $(this).addClass('active');
                 $('.nav-container').addClass('active');
                 $('.nav-container .dropdown-toggle').removeAttr('data-toggle');
+                var flag = 1;
+            }
+            if (localStorage) {
+                localStorage.admin_nav = flag;
             }
         });
+        if (localStorage && localStorage.admin_nav == 1) {
+            $('#nav-toggle').addClass('active');
+            $('.nav-container').addClass('active');
+            $('.nav-container .dropdown-toggle').removeAttr('data-toggle');
+        }
         $('.nav-container').delegate('.dropdown-toggle:not([data-toggle=dropdown])', 'click', function () {
             var parent = $(this).parent('.dropdown');
             $(parent).siblings('.open').removeClass('open');
@@ -21,9 +31,9 @@
         $('img.captcha').click(function () {
             $(this).attr('src', $(this).attr('src') + '?' + (new Date().getTime()));
         });
-        $('.grid thead th.checkbox [type=checkbox]').click(function () {
+        $('.grid thead th.checkbox [type=checkbox],.grid tfoot td.checkbox [type=checkbox]').click(function () {
             var flag = this.checked;
-            $(this).parents('.grid .table').find('tbody td.checkbox [type=checkbox]').each(function () {
+            $(this).parents('.grid .table').find('[type=checkbox]').not(this).each(function () {
                 this.checked = flag;
             });
         });
@@ -48,7 +58,7 @@
             if ($(this).is('[data-params]')) {
                 var data = $(this).data('params');
             } else if ($(this).is('[data-serialize]')) {
-                var data = $.serialize($($(this).data('serialize')));
+                var data = $($(this).data('serialize')).serialize();
             } else {
                 var data = '';
             }
@@ -56,7 +66,7 @@
                 type: $(this).data('method'),
                 data: data,
                 success: function (xhr) {
-                    responseHandler(xhr.responseText);
+                    responseHandler(xhr.responseText ? xhr.responseText : xhr);
                 }
             });
             return false;
@@ -66,7 +76,7 @@
                 type: $(this).data('method'),
                 data: $.serialize(this),
                 success: function (xhr) {
-                    responseHandler(xhr.responseText);
+                    responseHandler(xhr.responseText ? xhr.responseText : xhr);
                 }
             });
             return false;

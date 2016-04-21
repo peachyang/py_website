@@ -42,7 +42,9 @@ $query = $this->getQuery();
     <table class="table table-hover table-striped table-no-border">
         <thead class="sort-by">
             <tr>
-                <th class="checkbox"><input type="checkbox" /></th>
+                <?php if ($this->getMessAction()): ?>
+                    <th class="checkbox"><input type="checkbox" /></th>
+                <?php endif ?>
                 <?php foreach ($attributes as $attr => $name): ?>
                     <th>
                         <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
@@ -59,34 +61,53 @@ $query = $this->getQuery();
                         <?php endif ?>
                     </th>
                 <?php endforeach ?>
-                <th><?php echo $this->translate('Action') ?></th>
+                <?php if ($this->getAction()): ?>
+                    <th><?php echo $this->translate('Action') ?></th>
+                <?php endif ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($this->getVariable('collection') as $item) : ?>
                 <tr>
-                    <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
+                    <?php if ($this->getMessAction()): ?>
+                        <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
+                    <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
                             <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]]) : $item[$attr]) ?>
                         </td>
                     <?php endforeach ?>
-                    <td class="text-center action">
-                        <a href="<?php echo $this->getEditUrl($item['id']) ?>" title="<?php echo $this->translate('Edit') ?>">
-                            <span class="fa fa-file-text-o" aria-hidden="true"></span>
-                            <span class="sr-only"><?php echo $this->translate('Edit') ?></span>
-                        </a>
-                        <a href="<?php echo $this->getDeleteUrl() ?>" data-method="delete" data-params="id=<?php echo $item['id'] ?>&csrf=<?php echo $this->getCsrfKey() ?>" title="<?php echo $this->translate('Delete') ?>">
-                            <span class="fa fa-remove" aria-hidden="true"></span>
-                            <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
-                        </a>
-                    </td>
+                    <?php if ($this->getAction()): ?>
+                        <td class="text-center action">
+                            <?php
+                            foreach ($this->getAction() as $action) {
+                                if (is_callable([$this, $action])) {
+                                    echo $this->$action($item);
+                                }
+                            }
+                            ?>
+                        </td>
+                    <?php endif ?>
                 </tr>
             <?php endforeach ?>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="<?php echo $count + 2 ?>" class="text-right">
+                <?php if ($this->getMessAction): ?>
+                    <td class="checkbox">
+                        <input type="checkbox" />
+                    </td>
+                    <td colspan="<?php printf('%d', $count/= 2) ?>" class="text-left">
+                        <?php
+                        foreach ($this->getMessAction() as $action) {
+                            if (is_callable([$this, $action])) {
+                                echo $this->$action($item);
+                            }
+                        }
+                        ?>
+                    </td>
+                <?php endif ?>
+                <td colspan="<?php echo $count + 1 ?>" class="text-right">
                     <?php echo $this->pager->setCollection($this->getVariable('collection')) ?>
                 </td>
             </tr>

@@ -9,12 +9,6 @@ use Seahinet\Lib\Model\AbstractCollection;
 class Block extends Grid
 {
 
-    public function __construct()
-    {
-        $this->setVariable('title', 'Block Management');
-        parent::__construct();
-    }
-
     public function getEditUrl($id = null)
     {
         return $this->getAdminUrl(':ADMIN/cms_block/edit/' . (is_null($id) ? '' : '?id=' . $id));
@@ -32,7 +26,7 @@ class Block extends Grid
                 'label' => 'ID',
             ],
             'code' => [
-                'label' => 'Code',
+                'label' => 'Identifier',
                 'class' => 'text-left'
             ],
             'language' => [

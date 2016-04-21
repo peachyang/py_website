@@ -47,35 +47,29 @@ admin_login:
                                 method: addHandledSegment
                                 params: admin
 admin_forgot_password:
-    update: default
+    update: admin_login
     root:
-        template: page/empty
+        action:
+            -
+                method: addBodyClass
+                params: admin-login
         children:
             content:
                 children:
                     login:
-                        type: Seahinet\Lib\ViewModel\Template
                         template: admin/forgotPwd
-                    messages:
-                        action:
-                            -
-                                method: addHandledSegment
-                                params: admin
 admin_reset_password:
-    update: default
+    update: admin_login
     root:
-        template: page/empty
+        action:
+            -
+                method: addBodyClass
+                params: admin-login
         children:
             content:
                 children:
                     login:
-                        type: Seahinet\Lib\ViewModel\Template
                         template: admin/resetPwd
-                    messages:
-                        action:
-                            -
-                                method: addHandledSegment
-                                params: admin
 admin:
     update: default
     root:
@@ -99,19 +93,19 @@ admin:
                         params: [pub/backend/css/styles-ie.css,stylesheet,lt IE 9]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/jquery.js',defer:'defer'}]
+                        params: pub/backend/js/jquery.js
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/validate/jquery.validate.min.js',defer:'defer'}]
+                        params: pub/backend/js/validate/jquery.validate.min.js
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/validate/config.js',defer:'defer'}]
+                        params: pub/backend/js/validate/config.js
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/modernizr.js',defer:'defer'}]
+                        params: [{src:'pub/backend/js/modernizr.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/dropdown.js',defer:'defer'}]
+                        params: [{src:'pub/backend/js/dropdown.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
                         params: [{src:'pub/backend/js/app.js',defer:'defer'}]
@@ -131,6 +125,9 @@ admin:
                             -
                                 method: addHandledSegment
                                 params: admin
+            footer:
+                type: Seahinet\Lib\ViewModel\Template
+                template: admin/footer
             beforeContent:
                 children:
                     nav:
@@ -157,3 +154,22 @@ grid:
                                 type: Seahinet\Lib\ViewModel\Pager
 admin_dashboard:
     update: admin
+admin_user:
+    update: admin
+admin_cache:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cache/',label:'Cache Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/cache/flush',label:'Flush All'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Cache
+                        template: admin/cache

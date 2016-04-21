@@ -2,6 +2,44 @@
 admin:
     -
         icon: tachometer
-        link: 'dashboard'
-        title: 'Dashboard'
+        link: dashboard
+        title: Dashboard
         priority: 0
+    -
+        icon: database
+        link: cache
+        title: Cache Management
+        priority: 150
+    -
+        icon: users
+        title: Permissions
+        priority: 200
+        children:
+            -
+                link: user
+                title: My Account
+                priority: 0
+            -
+                link: user
+                title: User Management
+                priority: 10
+            -
+                link: user/edit/
+                title: Add New User
+                priority: 20
+            -
+                link: role
+                title: Role Management
+                priority: 30
+            -
+                link: role/edit/
+                title: Add New Role
+                priority: 40
+            -
+                link: operation
+                title: Operation Management
+                priority: 50
+            -
+                link: operation/edit/
+                title: Add New Operation
+                priority: 60

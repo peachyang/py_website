@@ -10,7 +10,7 @@ class UserController extends AuthActionController
 
     public function indexAction()
     {
-        exit;
+        return $this->getLayout('admin_user');
     }
 
     public function logoutAction()

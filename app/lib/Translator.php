@@ -17,7 +17,7 @@ class Translator implements Singleton
     use Traits\Container;
 
     const DEFAULT_DOMAIN = 'default';
-    const CACHE_KEY = 'SEAHINET_TRANSLATOR_PAIRS_';
+    const CACHE_KEY = 'TRANSLATOR_PAIRS_';
 
     /**
      * @var Translator
@@ -105,7 +105,7 @@ class Translator implements Singleton
         if (!isset($this->storage[$locale])) {
             $cache = $this->getContainer()->get('cache');
             if ($cache) {
-                $result = $cache->fetch(static::CACHE_KEY . $locale);
+                $result = $cache->fetch($locale, static::CACHE_KEY);
                 if ($result) {
                     $this->storage[$locale] = $result;
                     return $this->storage[$locale];
@@ -122,7 +122,7 @@ class Translator implements Singleton
                 }
             }
             if ($cache) {
-                $cache->save(static::CACHE_KEY . $locale, $this->storage[$locale]);
+                $cache->save($locale, $this->storage[$locale], static::CACHE_KEY);
             }
         }
         return $this->storage[$locale];

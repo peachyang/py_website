@@ -104,6 +104,16 @@ final class Cache implements ArrayAccess, Singleton
                 $list = [];
             }
             $this->pool->save('CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+            if (empty($list)) {
+                $list = $this->pool->fetch('CACHE_LIST');
+                if ($list) {
+                    $list = unserialize(gzdecode($list));
+                    unset($list[$prefix]);
+                } else {
+                    $list = [];
+                }
+                $this->pool->save('CACHE_LIST', gzencode(serialize($list)));
+            }
         }
         return $this->pool->delete($prefix . $id);
     }
@@ -151,8 +161,20 @@ final class Cache implements ArrayAccess, Singleton
             } else {
                 $list = [];
             }
-            $list[$id] = 1;
-            $this->pool->save('CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+            if (!isset($list[$id])) {
+                $list[$id] = 1;
+                $this->pool->save('CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+            }
+            $list = $this->pool->fetch('CACHE_LIST');
+            if ($list) {
+                $list = unserialize(gzdecode($list));
+            } else {
+                $list = [];
+            }
+            if (!isset($list[$prefix])) {
+                $list[$prefix] = 1;
+                $this->pool->save('CACHE_LIST', gzencode(serialize($list)));
+            }
         }
         return $this->pool->save($prefix . $id, gzencode(serialize($data)), $lifeTime);
     }

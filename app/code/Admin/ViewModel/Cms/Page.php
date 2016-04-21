@@ -4,25 +4,43 @@ namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Cms\Model\Collection\Page as Collection;
-use Seahinet\Lib\Model\AbstractCollection;
 
 class Page extends Grid
 {
 
-    public function __construct()
+    protected $editUrl = '';
+    protected $deleteUrl = '';
+    protected $action = ['getEditAction', 'getDeleteAction'];
+
+    public function getEditAction($item)
     {
-        $this->setVariable('title', 'Page Management');
-        parent::__construct();
+        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+                '"><span class="fa fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
+                $this->translate('Edit') . '</span></a>';
     }
 
-    public function getEditUrl($id = null)
+    public function getDeleteAction($item)
     {
-        return $this->getAdminUrl(':ADMIN/cms_page/edit/' . (is_null($id) ? '' : '?id=' . $id));
+        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+                '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
+                '"><span class="fa fa-remove" aria-hidden="true"></span><span class="sr-only">' .
+                $this->translate('Delete') . '</span></a>';
+    }
+
+    public function getEditUrl()
+    {
+        if ($this->editUrl === '') {
+            $this->editUrl = $this->getAdminUrl(':ADMIN/cms_page/edit/');
+        }
+        return $this->editUrl;
     }
 
     public function getDeleteUrl()
     {
-        return $this->getAdminUrl(':ADMIN/cms_page/delete/');
+        if ($this->deleteUrl === '') {
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/cms_page/delete/');
+        }
+        return $this->deleteUrl;
     }
 
     protected function prepareColumns()
@@ -59,7 +77,7 @@ class Page extends Grid
         ];
     }
 
-    protected function prepareCollection(AbstractCollection $collection = null)
+    protected function prepareCollection($collection = null)
     {
         return parent::prepareCollection(new Collection);
     }

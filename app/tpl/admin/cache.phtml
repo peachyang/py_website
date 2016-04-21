@@ -1,0 +1,42 @@
+<div class="grid">
+    <table class="table table-hover table-striped table-no-border">
+        <thead class="sort-by">
+            <tr>
+                <th class="checkbox"><input type="checkbox" /></th>
+                <th><?php echo $this->translate('Identifier') ?></th>
+                <th><?php echo $this->translate('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->getVariable('collection') as $item) : ?>
+                <tr>
+                    <td class="text-center checkbox"><input type="checkbox" name="code[]" value="<?php echo $item ?>" /></td>
+                    <td>
+                        <?php echo trim($item, '_') ?>
+                    </td>
+                    <?php if ($this->getAction()): ?>
+                        <td class="text-center action">
+                            <?php
+                            foreach ($this->getAction() as $action) {
+                                if (is_callable([$this, $action])) {
+                                    echo $this->$action($item);
+                                }
+                            }
+                            ?>
+                        </td>
+                    <?php endif ?>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="checkbox">
+                    <input type="checkbox" />
+                </td>
+                <td colspan="2" class="text-left">
+                    <a href="<?php echo $this->getFlushUrl() ?>" data-method="get" data-serialize=".grid tbody [name]"><?php echo $this->translate('Flush') ?></a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

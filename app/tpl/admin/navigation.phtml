@@ -2,23 +2,34 @@
     <ul class="nav" role="menu">
         <?php
         foreach ($this->getMenuItems() as $item):
+            if (isset($item['operation']) && !$this->hasPermission($item['operation'])) {
+                continue;
+            }
             $hasChildren = isset($item['children']);
+            $html = '';
+            if ($hasChildren) {
+                foreach ($item['children'] as $child) {
+                    if (!isset($child['operation']) || $this->hasPermission($child['operation'])) {
+                        $html .= '<li role="presentation" class="item"><a href="' . $this->getUrl($child['link']) . '" role="menuitem">' . $this->translate($child['title']) . '</a></li>';
+                    }
+                }
+                if($html === ''){
+                    continue;
+                }
+            }
             ?>
             <li role="presentation" class="item<?php if ($hasChildren): ?> dropdown<?php endif ?>">
                 <a href="<?php if (!empty($item['children']) || !isset($item['link'])): ?>javascript:void(0);<?php
-                else: echo $this->getUrl($item['link']);
+                else:
+                    echo $this->getUrl($item['link']);
                 endif;
-                ?>"<?php if ($hasChildren): ?> class="dropdown-toggle" data-toggle="dropdown"<?php endif ?> role="menuitem">
+                ?>"<?php if ($hasChildren): ?> class="dropdown-toggle" data-toggle="dropdown"<?php endif ?> title="<?php echo $this->translate($item['title']) ?>" role="menuitem">
                     <span class="fa fa-<?php echo $item['icon'] ?>" aria-hidden="true"></span>
                     <span class="title"><?php echo $this->translate($item['title']) ?></span>
                 </a>
                 <?php if ($hasChildren): ?>
                     <ul class="dropdown-menu" role="menu">
-                        <?php foreach ($item['children'] as $child): ?>
-                        <li role="presentation" class="item">
-                            <a href="<?php echo $this->getUrl($child['link']) ?>" role="menuitem"><?php echo $this->translate($child['title']) ?></a>
-                        </li>
-                        <?php endforeach ?>
+                        <?php echo $html ?>
                     </ul>
                 <?php endif ?>
             </li>

@@ -18,11 +18,11 @@ class PageController extends AuthActionController
     public function editAction()
     {
         $root = $this->getLayout('admin_cms_page_edit');
-        $model = new Model;
         if ($id = $this->getRequest()->getQuery('id')) {
+            $model = new Model;
             $model->load($id);
+            $root->getChild('edit', true)->setVariable('model', $model);
         }
-        $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
     }
 

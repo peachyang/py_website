@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `core_language`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Language ID',
     `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
     `code` VARCHAR(10) NOT NULL DEFAULT '' COMMENT 'ISO 639-1 language code',
+    `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Language name',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
     PRIMARY KEY (`id`),

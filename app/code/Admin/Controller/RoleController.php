@@ -4,35 +4,19 @@ namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Admin\Model\User as Model;
+use Seahinet\Admin\Model\Role as Model;
 
-class UserController extends AuthActionController
+class RoleController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_user');
-        $segment = new Segment('admin');
-        $root->getChild('edit', true)->setVariable('model', $segment->get('user'));
-        return $root;
-    }
-
-    public function logoutAction()
-    {
-        $segment = new Segment('admin');
-        $segment->set('isLoggedin', false);
-        $segment->offsetUnset('user');
-        return $this->redirect(':ADMIN');
-    }
-
-    public function listAction()
-    {
-        return $this->getLayout('admin_user_list');
+        return $this->getLayout('admin_role_list');
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_user_edit');
+        $root = $this->getLayout('admin_role_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
@@ -69,7 +53,7 @@ class UserController extends AuthActionController
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/user/list/');
+            return $this->redirect(':ADMIN/role/list/');
         }
     }
 
@@ -118,11 +102,7 @@ class UserController extends AuthActionController
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
-            $referer = $this->getRequest()->getHeader('HTTP_REFERER');
-            if (strpos($referer, 'edit')) {
-                return $this->redirect(':ADMIN/user/list/');
-            }
-            return $this->redirect(':ADMIN/user/');
+            return $this->redirect(':ADMIN/role/list/');
         }
     }
 

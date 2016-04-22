@@ -125,6 +125,8 @@ admin:
                             -
                                 method: addHandledSegment
                                 params: admin
+                    language:
+                         type: Seahinet\Lib\ViewModel\Language
             footer:
                 type: Seahinet\Lib\ViewModel\Template
                 template: admin/footer
@@ -156,6 +158,113 @@ admin_dashboard:
     update: admin
 admin_user:
     update: admin
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/user/',label:'My Account'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\User\AccountEdit
+admin_user_list:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/user/list/',label:'User Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/user/edit/',label:'Add New User'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\User\Grid
+admin_user_edit:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/user/list/',label:'User Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/user/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\User\Edit
+admin_role_list:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/role/list/',label:'Role Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/role/edit/',label:'Add New Role'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Role\Grid
+admin_role_edit:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/role/list/',label:'Role Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/role/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Role\Edit
+admin_operation_list:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/operation/list/',label:'Operation Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/operation/edit/',label:'Add New Operation'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Operation\Grid
+admin_operation_edit:
+    update: admin
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/operation/list/',label:'Operation Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/operation/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Operation\Edit
 admin_cache:
     update: grid
     root:

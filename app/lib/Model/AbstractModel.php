@@ -164,7 +164,7 @@ abstract class AbstractModel extends ArrayObject
                         $this->afterLoad();
                         $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
                         if ($key !== $this->primaryKey) {
-                            $this->addCacheAlias($key, $this->storage[$this->primaryKey], $this->getCacheKey());
+                            $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
                         }
                     }
                 } else {
@@ -344,7 +344,7 @@ abstract class AbstractModel extends ArrayObject
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
-        if($this instanceof Singleton){
+        if ($this instanceof Singleton) {
             static::$instance = $this;
         }
     }

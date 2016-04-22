@@ -15,7 +15,7 @@ final class GlobalNotice extends AbstractViewModel implements Singleton
     private function __construct()
     {
         $this->setTemplate('page/globalNotice');
-        $this->cacheKey = 'VIEW_MODEL_GLOBAL_NOTICE';
+        $this->cacheKey = 'GLOBAL_NOTICE';
     }
 
     public static function instance()

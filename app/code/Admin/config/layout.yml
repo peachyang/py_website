@@ -106,7 +106,7 @@ admin:
                     -
                         method: addScript
                         params: [{src:'pub/backend/js/dropdown.js',defer:'defer',async:'async'}]
-                    -
+                    -    
                         method: addScript
                         params: [{src:'pub/backend/js/app.js',defer:'defer'}]
                     -
@@ -170,6 +170,15 @@ edit:
                     -
                         method: addScript
                         params: [{src:'pub/backend/js/tab.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: [{src:'pub/tool/ckeditor/ckeditor.js'}]
+                    -
+                        method: addScript
+                        params: [{src:'pub/tool/ckeditor/adapters/jquery.js'}]
+                    -
+                        method: addScript
+                        params: [{src:'pub/tool/ckeditor.js',defer:'defer',async:'async'}]
 admin_dashboard:
     update: admin
 admin_user:

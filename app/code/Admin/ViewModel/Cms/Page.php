@@ -57,7 +57,7 @@ class Page extends Grid
                 'class' => 'text-left'
             ],
             'uri_key' => [
-                'label' => 'Uri key',
+                'label' => 'Uri Key',
                 'class' => 'text-left',
             ],
             'language' => [

@@ -46,7 +46,7 @@ class Block extends Grid
         ];
     }
 
-    protected function prepareCollection(AbstractCollection $collection = null)
+    protected function prepareCollection($collection = null)
     {
         return parent::prepareCollection(new Collection);
     }

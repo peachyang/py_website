@@ -14,7 +14,17 @@ if (count($languages)):
                         <?php echo $language['name'] ?>
                     </a>
                 </li>
-            <?php endforeach ?>
+                <?php
+            endforeach;
+            if ($this->showEdit()):
+                ?>
+                <li class="edit">
+                    <a href="<?php echo $this->getEditUrl() ?>">
+                        <span class="fa fa-cog fa-spin" aria-hidden="true"></span>
+                        <span><?php echo $this->translate('Edit') ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
         </ul>
     </div>
 <?php endif; ?>

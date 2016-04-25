@@ -21,13 +21,14 @@ class PageEdit extends Edit
 
     protected function prepareElements($columns = [])
     {
+        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden',
             ],
             'parent_id' => [
                 'type' => 'select',
-                'options' => (new Page)->getSourceArray($this->getVariable('model')->getId()),
+                'options' => (new Page)->getSourceArray($model ? $model->getId() : []),
                 'label' => 'Parent ID',
                 'empty_string' => '(NULL)'
             ],
@@ -47,7 +48,7 @@ class PageEdit extends Edit
             ],
             'uri_key' => [
                 'type' => 'text',
-                'label' => 'Url Key',
+                'label' => 'Uri Key',
                 'required' => 'required'
             ],
             'status' => [

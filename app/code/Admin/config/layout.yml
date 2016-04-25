@@ -126,7 +126,11 @@ admin:
                                 method: addHandledSegment
                                 params: admin
                     language:
-                         type: Seahinet\Lib\ViewModel\Language
+                        type: Seahinet\Lib\ViewModel\Language
+                        action:
+                            -
+                                method: showEdit
+                                params: true
             footer:
                 type: Seahinet\Lib\ViewModel\Template
                 template: admin/footer

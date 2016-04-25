@@ -8,6 +8,9 @@ use Seahinet\Lib\Model\Collection\Language as LanguageCollection;
 class Language extends AbstractViewModel
 {
 
+    protected $showEdit = false;
+    protected $editUrl = null;
+
     public function __construct()
     {
         $this->setTemplate('page/language');
@@ -29,6 +32,25 @@ class Language extends AbstractViewModel
     public function getCurrentLanguage()
     {
         return Bootstrap::getLanguage()['name'];
+    }
+
+    public function showEdit($flag = null)
+    {
+        if (is_bool($flag)) {
+            $this->showEdit = $flag;
+        }
+        return $this->showEdit;
+    }
+
+    public function getEditUrl()
+    {
+        return $this->isAdminPage() ? $this->getAdminUrl($this->editUrl) : $this->getBaseUrl($this->editUrl);
+    }
+
+    public function setEditUrl($editUrl)
+    {
+        $this->editUrl = $editUrl;
+        return $this;
     }
 
 }

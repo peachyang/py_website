@@ -52,7 +52,7 @@ admin_cms_block_list:
                                 params: [{link:':ADMIN/cms_block/',label:'Block Management'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/cms_page/edit/',label:'Add New Block'}]
+                                params: [{link:':ADMIN/cms_block/edit/',label:'Add New Block'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Block
 admin_cms_block_edit:

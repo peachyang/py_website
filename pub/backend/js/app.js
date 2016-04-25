@@ -45,7 +45,11 @@
             if (typeof json === 'string') {
                 json = eval('(' + json + ')');
             }
-            if (json.message.length) {
+            if (json.redirect) {
+                location.href = json.redirect;
+            } else if (json.reload) {
+                location.reload();
+            } else if (json.message.length) {
                 var html = '';
                 for (var i in json.message) {
                     html += '<div class="alert alert-' + json.message[i].level + '">' + json.message[i].message + '</div>';

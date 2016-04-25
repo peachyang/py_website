@@ -132,7 +132,6 @@ abstract class Factory
         ];
         $client = new Predis($server);
         $pool = new DoctrineCache\PredisCache($client);
-        $pool->setRedis($client);
         return $pool;
     }
 

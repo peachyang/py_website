@@ -4,35 +4,19 @@ namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Admin\Model\User as Model;
+use Seahinet\Admin\Model\Role as Model;
 
-class UserController extends AuthActionController
+class RoleController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_user');
-        $segment = new Segment('admin');
-        $root->getChild('edit', true)->setVariable('model', $segment->get('user'));
-        return $root;
-    }
-
-    public function logoutAction()
-    {
-        $segment = new Segment('admin');
-        $segment->set('isLoggedin', false);
-        $segment->offsetUnset('user');
-        return $this->redirect(':ADMIN');
-    }
-
-    public function listAction()
-    {
-        return $this->getLayout('admin_user_list');
+        return $this->getLayout('admin_role_list');
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_user_edit');
+        $root = $this->getLayout('admin_role_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
@@ -69,7 +53,7 @@ class UserController extends AuthActionController
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/user/list/');
+            return $this->redirect(':ADMIN/role/list/');
         }
     }
 
@@ -83,14 +67,8 @@ class UserController extends AuthActionController
             if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
                 $result['error'] = 1;
-            } else if (empty($data['username'])) {
-                $result['message'][] = ['message' => $this->translate('The username field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['password'])) {
-                $result['message'][] = ['message' => $this->translate('The password field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['cpassword']) || $data['cpassword'] !== $data['password']) {
-                $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
+            } else if (empty($data['name'])) {
+                $result['message'][] = ['message' => $this->translate('The name field is required and can not be empty.'), 'level' => 'danger'];
                 $result['error'] = 1;
             } else if ($user->valid($user['username'], $data['crpassword'])) {
                 $model = new Model($data);
@@ -99,10 +77,6 @@ class UserController extends AuthActionController
                 }
                 try {
                     $model->save();
-                    if (isset($data['id']) && $data['id'] == $user->getId()) {
-                        $user->setData($data);
-                        $segment->set('user', clone $user);
-                    }
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
@@ -118,11 +92,7 @@ class UserController extends AuthActionController
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
-            $referer = $this->getRequest()->getHeader('HTTP_REFERER');
-            if (strpos($referer, 'edit')) {
-                return $this->redirect(':ADMIN/user/list/');
-            }
-            return $this->redirect(':ADMIN/user/');
+            return $this->redirect(':ADMIN/role/list/');
         }
     }
 

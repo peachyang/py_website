@@ -17,12 +17,12 @@ $query = $this->getQuery();
                 $key = isset($name['sortby']) ? $name['sortby'] : $attr;
                 ?>
                 <div class="input-box">
-                    <label class="control-label" for="sortby:<?php echo $attr ?>"><?php echo $this->translate($name['label']) ?></label>
+                    <label class="control-label" for="sortby:<?php echo $attr ?>"><?php echo $this->translate($name['label'], [], $this->getTranslateDomain()) ?></label>
                     <?php if ($name['type'] === 'select' && isset($name['options'])): ?>
                         <select class="form-control" id="sortby:<?php echo $attr ?>" name="<?php echo $key ?>">
                             <option></option>
                             <?php foreach ($name['options'] as $k => $v): ?>
-                                <option value="<?php echo $k ?>"<?php if (isset($query[$key]) && $query[$key] !== '' && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v) ?></option>
+                                <option value="<?php echo $k ?>"<?php if (isset($query[$key]) && $query[$key] !== '' && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v, [], $this->getTranslateDomain()) ?></option>
                             <?php endforeach ?>
                         </select>
                     <?php else: ?>
@@ -36,6 +36,7 @@ $query = $this->getQuery();
             </div>
             <div class="buttons-set">
                 <button type="submit" class="btn"><?php echo $this->translate('Search') ?></button>
+                <a href="<?php echo $this->getCurrentUrl() ?>" class="btn"><?php echo $this->translate('Reset') ?></a>
             </div>
         </form>
     </div>
@@ -55,7 +56,7 @@ $query = $this->getQuery();
                                    class="desc"
                                <?php endif ?>>
                                <?php endif ?>
-                               <?php echo $this->translate($name['label']) ?>
+                               <?php echo $this->translate($name['label'], [], $this->getTranslateDomain()) ?>
                                <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
                             </a>
                         <?php endif ?>
@@ -74,7 +75,7 @@ $query = $this->getQuery();
                     <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
-                            <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]]) : $item[$attr]) ?>
+                            <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain()) ?>
                         </td>
                     <?php endforeach ?>
                     <?php if ($this->getAction()): ?>

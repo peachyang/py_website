@@ -28,7 +28,7 @@ class Role extends AbstractModel
         if (!$this->role) {
             $this->role = new RbacRole($this->offsetGet('name'));
             $roles = new Collection;
-            $roles->load();
+            $roles->addChildren()->addOperation()->load();
             $children = [];
             foreach ($roles as $role) {
                 if ($role['id'] == $this->getId()) {
@@ -36,10 +36,7 @@ class Role extends AbstractModel
                         $this->role->addPermission($operation);
                     }
                 } else {
-                    if (!isset($children[$role['parent_id']])) {
-                        $children[$role['parent_id']] = [];
-                    }
-                    $children[$role['parent_id']][] = $role;
+                    $children[$role['id']] = $role['children'];
                 }
             }
             $this->addChildren($children, $this->role, $this->getId());

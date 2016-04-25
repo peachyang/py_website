@@ -14,26 +14,56 @@ class Role extends AbstractCollection
         $this->init('admin_role');
     }
 
-    protected function beforeLoadCache()
+    public function addOperation()
     {
         $this->select->join('admin_permission', 'admin_permission.role_id = admin_role.id', [], 'left');
         $this->select->join('admin_operation', 'admin_permission.operation_id = admin_operation.id', ['operation' => 'name'], 'left');
         $this->select->where(['permission' => 1]);
-        parent::beforeLoad();
+        return $this;
+    }
+
+    public function addChildren()
+    {
+        $this->select->join('admin_role_recursive', 'admin_role_recursive.role_id = admin_role.id', ['child_id'], 'left');
+        return $this;
     }
 
     protected function afterLoad()
     {
-        $storage = [];
-        foreach ($this->storage as $item) {
-            if (isset($storage[$item['id']])) {
-                $storage[$item['id']]['operation'][] = $item['operation'];
-            } else {
-                $storage[$item['id']] = $item;
-                $storage[$item['id']]['operation'] = [$item['operation']];
+        if (isset($this->storage[0]['operation']) || isset($this->storage[0]['child_id'])) {
+            $storage = [];
+            foreach ($this->storage as $item) {
+                if (isset($storage[$item['id']])) {
+                    if (isset($item['operation'])) {
+                        $storage[$item['id']]['operation'][] = $item['operation'];
+                    }
+                    if (isset($item['child_id'])) {
+                        $storage[$item['id']]['children'][] = $item['child_id'];
+                    }
+                } else {
+                    $storage[$item['id']] = $item;
+                    if (isset($item['operation'])) {
+                        $storage[$item['id']]['operation'] = [$item['operation']];
+                    }
+                    if (isset($item['child_id'])) {
+                        $storage[$item['id']]['children'] = [$item['child_id']];
+                    }
+                }
             }
+            foreach ($storage as $item) {
+                $children = [];
+                if (!isset($item['children'])) {
+                    break;
+                }
+                foreach ($item['children'] as $child) {
+                    if (isset($stroage[$child])) {
+                        $children[] = &$stroage[$child];
+                    }
+                }
+                $item['children'] = $children;
+            }
+            $this->storage = array_values($storage);
         }
-        $this->storage = array_values($storage);
         parent::afterLoad();
     }
 

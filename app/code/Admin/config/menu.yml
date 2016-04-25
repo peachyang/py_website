@@ -20,7 +20,7 @@ admin:
                 title: My Account
                 priority: 0
             -
-                link: user
+                link: user/list/
                 title: User Management
                 priority: 10
             -

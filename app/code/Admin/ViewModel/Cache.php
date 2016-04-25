@@ -7,6 +7,7 @@ class Cache extends Grid
 
     protected $deleteUrl = '';
     protected $action = ['getFlushAction'];
+    protected $translateDomain = 'cache';
 
     public function getFlushAction($item)
     {
@@ -27,7 +28,9 @@ class Cache extends Grid
     protected function prepareCollection($collection = null)
     {
         $list = $this->getContainer()->get('cache')->fetch('CACHE_LIST');
-        return ['SYSTEM_CONFIG', 'ROUTE_CACHE'] + array_keys($list);
+        $result = array_merge(['SYSTEM_CONFIG', 'ROUTE_CACHE'], array_keys($list));
+        sort($result);
+        return $result;
     }
 
 }

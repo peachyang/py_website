@@ -1,1 +1,7 @@
-﻿CKEDITOR.plugins.setLang("showblocks","bn",{toolbar:"Show Blocks"});
+/*
+Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+CKEDITOR.plugins.setLang( 'showblocks', 'bn', {
+	toolbar: 'Show Blocks' // MISSING
+} );

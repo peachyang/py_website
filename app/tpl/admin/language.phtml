@@ -1,0 +1,26 @@
+<div class="grid">
+    <table class="table table-hover table-striped table-no-border">
+        <thead class="sort-by">
+            <tr>
+                <th><?php echo $this->translate('Merchant') ?></th>
+                <th><?php echo $this->translate('Store') ?></th>
+                <th><?php echo $this->translate('Language') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->getVariable('collection') as $item) : ?>
+                <tr>
+                    <td>
+                        <?php echo $this->translate($item['merchant'], [], 'language') ?>
+                    </td>
+                    <td>
+                        <?php echo $this->translate($item['store'], [], 'language') ?>
+                    </td>
+                    <td>
+                        <?php echo $this->translate($item['language'], [], 'language') ?>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

@@ -7,7 +7,7 @@ class Language extends AbstractModel
 
     protected function _construct()
     {
-        $this->init('core_language', 'id', ['id', 'store', 'code', 'status']);
+        $this->init('core_language', 'id', ['id', 'store', 'code', 'name', 'status']);
     }
 
     public function getStore()

@@ -131,6 +131,9 @@ admin:
                             -
                                 method: showEdit
                                 params: true
+                            -
+                                method: setEditUrl
+                                params: language/edit/
             footer:
                 type: Seahinet\Lib\ViewModel\Template
                 template: admin/footer
@@ -295,3 +298,26 @@ admin_cache:
                     grid:
                         type: Seahinet\Admin\ViewModel\Cache
                         template: admin/cache
+admin_language_edit:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/language/',label:'Language Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/language/merchant',label:'Add New Merchant'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/language/store',label:'Add New Store'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/language/add',label:'Add New Language'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Language
+                        template: admin/language

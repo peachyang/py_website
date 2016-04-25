@@ -69,7 +69,8 @@ class PageEdit extends Edit
             ],
             'content' => [
                 'type' => 'textarea',
-                'label' => 'Content'
+                'label' => 'Content',
+                'class'=>'htmleditor fullbar'
             ]
         ];
         return parent::prepareElements($columns);

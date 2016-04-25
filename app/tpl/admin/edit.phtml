@@ -37,7 +37,7 @@ $elements = $this->getVariable('elements');
                                         ?>
                                         <optgroup label="<?php echo $value ?>">
                                             <?php foreach ($label as $v => $l): ?>
-                                                <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, $item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
+                                                <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array)$item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
                                             <?php endforeach; ?>
                                         </optgroup>
                                     <?php else: ?>

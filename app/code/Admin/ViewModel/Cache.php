@@ -7,6 +7,7 @@ class Cache extends Grid
 
     protected $deleteUrl = '';
     protected $action = ['getFlushAction'];
+    protected $translateDomain = 'cache';
 
     public function getFlushAction($item)
     {

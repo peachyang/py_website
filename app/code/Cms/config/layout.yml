@@ -24,7 +24,7 @@ admin_cms_page_list:
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Page
 admin_cms_page_edit:
-    update: admin
+    update: edit
     root:
         children:
             content:
@@ -56,7 +56,7 @@ admin_cms_block_list:
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Block
 admin_cms_block_edit:
-    update: admin
+    update: edit
     root:
         children:
             content:

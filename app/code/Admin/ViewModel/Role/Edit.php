@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\User;
+namespace Seahinet\Admin\ViewModel\Role;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 
@@ -9,12 +9,12 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit User' : 'Add User';
+        return $this->getQuery('id') ? 'Edit Role' : 'Add Role';
     }
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('user/save/');
+        return $this->getAdminUrl('role/save/');
     }
 
     protected function prepareElements($columns = [])
@@ -23,19 +23,22 @@ class Edit extends PEdit
             'id' => [
                 'type' => 'hidden'
             ],
-            'username' => [
+            'name' => [
                 'type' => 'text',
-                'label' => 'Username',
+                'label' => 'Name',
                 'required' => 'required',
                 'attrs' => [
                     'spellcheck' => 'false'
                 ]
             ],
-            'email' => [
-                'type' => 'email',
-                'label' => 'EMail',
-                'required' => 'required',
-                'class' => 'email'
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ],
+                'required' => 'required'
             ],
             'crpassword' => [
                 'type' => 'password',
@@ -44,27 +47,6 @@ class Edit extends PEdit
                 'required' => 'required',
                 'attrs' => [
                     'minlength' => 6,
-                    'autocomplete' => 'off'
-                ]
-            ],
-            'password' => [
-                'type' => 'password',
-                'label' => 'Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'autocomplete' => 'off'
-                ]
-            ],
-            'cpassword' => [
-                'type' => 'password',
-                'label' => 'Confirm Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'data-rule-equalto' => '#password',
                     'autocomplete' => 'off'
                 ]
             ],

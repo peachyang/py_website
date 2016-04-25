@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\User;
+namespace Seahinet\Admin\ViewModel\Operation;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 
@@ -9,12 +9,12 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit User' : 'Add User';
+        return $this->getQuery('id') ? 'Edit Operation' : 'Add Operation';
     }
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('user/save/');
+        return $this->getAdminUrl('operation/save/');
     }
 
     protected function prepareElements($columns = [])
@@ -23,51 +23,22 @@ class Edit extends PEdit
             'id' => [
                 'type' => 'hidden'
             ],
-            'username' => [
+            'is_system' => [
+                'type' => 'hidden',
+                'value' => 0
+            ],
+            'name' => [
                 'type' => 'text',
-                'label' => 'Username',
+                'label' => 'Name',
                 'required' => 'required',
                 'attrs' => [
                     'spellcheck' => 'false'
                 ]
             ],
-            'email' => [
-                'type' => 'email',
-                'label' => 'EMail',
-                'required' => 'required',
-                'class' => 'email'
-            ],
-            'crpassword' => [
-                'type' => 'password',
-                'label' => 'Current Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'autocomplete' => 'off'
-                ]
-            ],
-            'password' => [
-                'type' => 'password',
-                'label' => 'Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'autocomplete' => 'off'
-                ]
-            ],
-            'cpassword' => [
-                'type' => 'password',
-                'label' => 'Confirm Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'data-rule-equalto' => '#password',
-                    'autocomplete' => 'off'
-                ]
-            ],
+            'description' => [
+                'type' => 'text',
+                'label' => 'Description'
+            ]
         ];
         return parent::prepareElements($columns);
     }

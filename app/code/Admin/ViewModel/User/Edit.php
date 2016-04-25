@@ -33,7 +33,7 @@ class Edit extends PEdit
             ],
             'email' => [
                 'type' => 'email',
-                'label' => 'EMail',
+                'label' => 'Email',
                 'required' => 'required',
                 'class' => 'email'
             ],

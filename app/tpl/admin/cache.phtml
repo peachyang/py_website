@@ -12,7 +12,7 @@
                 <tr>
                     <td class="text-center checkbox"><input type="checkbox" name="code[]" value="<?php echo $item ?>" /></td>
                     <td>
-                        <?php echo trim($item, '_') ?>
+                        <?php echo $this->translate(trim($item, '_'), [], 'cache') ?>
                     </td>
                     <?php if ($this->getAction()): ?>
                         <td class="text-center action">

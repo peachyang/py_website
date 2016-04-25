@@ -15,6 +15,7 @@ class Grid extends AbstractViewModel
     protected $count = null;
     protected $action = [];
     protected $messAction = [];
+    protected $translateDomain = null;
 
     /**
      * @return \Seahinet\Lib\Http\Uri
@@ -136,6 +137,11 @@ class Grid extends AbstractViewModel
             'attributes' => $this->prepareColumns()
         ]);
         return parent::getRendered();
+    }
+
+    public function getTranslateDomain()
+    {
+        return $this->translateDomain;
     }
 
 }

@@ -67,14 +67,8 @@ class RoleController extends AuthActionController
             if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
                 $result['error'] = 1;
-            } else if (empty($data['username'])) {
-                $result['message'][] = ['message' => $this->translate('The username field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['password'])) {
-                $result['message'][] = ['message' => $this->translate('The password field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['cpassword']) || $data['cpassword'] !== $data['password']) {
-                $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
+            } else if (empty($data['name'])) {
+                $result['message'][] = ['message' => $this->translate('The name field is required and can not be empty.'), 'level' => 'danger'];
                 $result['error'] = 1;
             } else if ($user->valid($user['username'], $data['crpassword'])) {
                 $model = new Model($data);
@@ -83,10 +77,6 @@ class RoleController extends AuthActionController
                 }
                 try {
                     $model->save();
-                    if (isset($data['id']) && $data['id'] == $user->getId()) {
-                        $user->setData($data);
-                        $segment->set('user', $user);
-                    }
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

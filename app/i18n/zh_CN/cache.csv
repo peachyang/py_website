@@ -1,0 +1,7 @@
+"DATA","数据缓存"
+"LAYOUT_RENDERED","布局缓存"
+"RBAC_ROLE","权限结构"
+"ROUTE_CACHE","路由缓存"
+"SYSTEM_CONFIG","系统配置"
+"TRANSLATOR_PAIRS","翻译对组"
+"VIEWMODEL_RENDERED","页面渲染"

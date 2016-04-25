@@ -101,7 +101,7 @@ class UserController extends AuthActionController
                     $model->save();
                     if (isset($data['id']) && $data['id'] == $user->getId()) {
                         $user->setData($data);
-                        $segment->set('user', $user);
+                        $segment->set('user', clone $user);
                     }
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {

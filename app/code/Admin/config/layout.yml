@@ -154,10 +154,19 @@ grid:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+edit:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'pub/backend/js/tab.js',defer:'defer',async:'async'}]
 admin_dashboard:
     update: admin
 admin_user:
-    update: admin
+    update: edit
     root:
         children:
             content:
@@ -186,7 +195,7 @@ admin_user_list:
                     grid:
                         type: Seahinet\Admin\ViewModel\User\Grid
 admin_user_edit:
-    update: admin
+    update: edit
     root:
         children:
             content:
@@ -218,7 +227,7 @@ admin_role_list:
                     grid:
                         type: Seahinet\Admin\ViewModel\Role\Grid
 admin_role_edit:
-    update: admin
+    update: edit
     root:
         children:
             content:
@@ -250,7 +259,7 @@ admin_operation_list:
                     grid:
                         type: Seahinet\Admin\ViewModel\Operation\Grid
 admin_operation_edit:
-    update: admin
+    update: edit
     root:
         children:
             content:

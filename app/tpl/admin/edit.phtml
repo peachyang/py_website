@@ -5,6 +5,12 @@ $elements = $this->getVariable('elements');
 <form action="<?php echo $this->getSaveUrl() ?>" method="post">
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <?php foreach ($elements as $key => $item): ?>
+        <?php if ($item['type'] === 'hidden'): ?>
+            <input type="hidden" name="<?php echo $key ?>" value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" />
+            <?php
+            continue;
+        endif;
+        ?>
         <div class="input-box">
             <?php if (isset($item['label'])): ?>
                 <label for="<?php echo $key ?>" class="control-label">
@@ -14,7 +20,7 @@ $elements = $this->getVariable('elements');
             <?php if ($item['type'] === 'select'): ?>
                 <select name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
                 if (!isset($item['attrs']['class'])):
-                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?><?php
+                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                             if (isset($item['class'])) {
                                 echo $item['class'];
                             }
@@ -40,7 +46,7 @@ $elements = $this->getVariable('elements');
                 <?php foreach ($item['options'] as $value => $label): ?>
                     <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key, '-', $value ?>"<?php
                     if (!isset($item['attrs']['class'])):
-                        ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?><?php
+                        ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                                if (isset($item['class'])) {
                                    echo $item['class'];
                                }
@@ -50,7 +56,7 @@ $elements = $this->getVariable('elements');
             <?php elseif ($item['type'] === 'textarea'): ?>
                 <textarea name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
                 if (!isset($item['attrs']['class'])):
-                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?><?php
+                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                               if (isset($item['class'])) {
                                   echo $item['class'];
                               }
@@ -58,7 +64,7 @@ $elements = $this->getVariable('elements');
                       <?php else: ?>
                 <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
                 if (!isset($item['attrs']['class'])):
-                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?><?php
+                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                            if (isset($item['class'])) {
                                echo $item['class'];
                            }
@@ -67,6 +73,7 @@ $elements = $this->getVariable('elements');
         </div>
     <?php endforeach ?>
     <div class="buttons-set">
-        <button type="submit"><span><?php echo $this->translate('Save') ?></span></button>
+        <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
+        <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
     </div>
 </form>

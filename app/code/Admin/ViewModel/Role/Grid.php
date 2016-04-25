@@ -46,15 +46,8 @@ class Grid extends PGrid
     protected function prepareColumns()
     {
         return [
-            'username' => [
-                'label' => 'Username'
-            ],
-            'role_id' => [
-                'label' => 'Role ID'
-            ],
-            'email' => [
-                'label' => 'Email',
-                'class' => 'text-left',
+            'name' => [
+                'label' => 'Name'
             ],
             'status' => [
                 'label' => 'Status',

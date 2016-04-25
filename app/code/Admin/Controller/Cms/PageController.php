@@ -28,13 +28,11 @@ class PageController extends AuthActionController
 
     public function deleteAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
                 try {
                     $model = new Model;
                     $count = 0;
@@ -50,23 +48,16 @@ class PageController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/cms_page/');
-        }
+        return $this->response($result, ':ADMIN/cms_page/');
     }
 
     public function saveAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
                 $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
@@ -84,12 +75,7 @@ class PageController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/cms_page/');
-        }
+        return $this->response($result, ':ADMIN/cms_page/');
     }
 
 }

@@ -17,7 +17,7 @@ class Language implements SourceInterface
             if (!isset($result[$item['store']])) {
                 $result[$item['store']] = [];
             }
-            $result[$item['store']][$item['id']] = $item['code'];
+            $result[$item['store']][$item['id']] = $item['name'];
         }
         return $result;
     }

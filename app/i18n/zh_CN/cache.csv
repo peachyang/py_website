@@ -1,3 +1,5 @@
+"%d cache(s) have been flushed successfully.","成功清空了%d项缓存。"
+"All caches have been flushed successfully.","成功清空了所有缓存。"
 "DATA","数据缓存"
 "LAYOUT_RENDERED","布局缓存"
 "RBAC_ROLE","权限结构"

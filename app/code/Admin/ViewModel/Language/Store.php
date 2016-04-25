@@ -1,30 +1,30 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms;
+namespace Seahinet\Admin\ViewModel\Language;
 
-use Seahinet\Admin\ViewModel\Edit;
-use Seahinet\Lib\Source\Language;
+use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Source\Merchant;
 
-class BlockEdit extends Edit
+class Store extends PEdit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('cms_block/save/');
+        return $this->getAdminUrl('language/saveStore/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('cms_block/delete/');
+            return $this->getAdminUrl('language/deleteStore/');
         }
         return false;
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Block' : 'Add Block';
+        return $this->getQuery('id') ? 'Edit Store' : 'Add Store';
     }
 
     protected function prepareElements($columns = [])
@@ -35,17 +35,14 @@ class BlockEdit extends Edit
             ],
             'code' => [
                 'type' => 'text',
-                'label' => 'Code',
+                'label' => 'Name',
                 'required' => 'required'
             ],
-            'language_id[]' => [
+            'merchant_id' => [
                 'type' => 'select',
-                'label' => 'Language',
-                'required' => 'required',
-                'options' => (new Language)->getSourceArray(),
-                'attrs' => [
-                    'multiple' => 'multiple'
-                ]
+                'label' => 'Merchant',
+                'options' => (new Merchant)->getSourceArray(),
+                'required' => 'required'
             ],
             'status' => [
                 'type' => 'select',
@@ -55,11 +52,6 @@ class BlockEdit extends Edit
                     0 => 'Disabled'
                 ],
                 'required' => 'required'
-            ],
-            'content' => [
-                'type' => 'textarea',
-                'label' => 'Content',
-                'class'=>'htmleditor fullbar'
             ]
         ];
         return parent::prepareElements($columns);

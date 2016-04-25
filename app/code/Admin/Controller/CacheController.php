@@ -38,12 +38,7 @@ class CacheController extends AuthActionController
             $cache->flushAll();
             $result['message'][] = ['message' => $this->translate('All caches have been flushed successfully.'), 'level' => 'success'];
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/cache/');
-        }
+        return $this->response($result, ':ADMIN/cache/');
     }
 
 }

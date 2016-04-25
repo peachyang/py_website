@@ -17,6 +17,15 @@ class Edit extends PEdit
         return $this->getAdminUrl('operation/save/');
     }
 
+    public function getDeleteUrl()
+    {
+        $model = $this->getVariable('model');
+        if ($model && $model->getId()) {
+            return $this->getAdminUrl('operation/delete/');
+        }
+        return false;
+    }
+
     protected function prepareElements($columns = [])
     {
         $columns = [
@@ -42,4 +51,5 @@ class Edit extends PEdit
         ];
         return parent::prepareElements($columns);
     }
+
 }

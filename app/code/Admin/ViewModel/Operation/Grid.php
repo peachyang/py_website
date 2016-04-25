@@ -7,7 +7,6 @@ use Seahinet\Admin\Model\Collection\Operation as Collection;
 
 class Grid extends PGrid
 {
-
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];

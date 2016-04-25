@@ -17,6 +17,15 @@ class Edit extends PEdit
         return $this->getAdminUrl('user/save/');
     }
 
+    public function getDeleteUrl()
+    {
+        $model = $this->getVariable('model');
+        if ($model && $model->getId()) {
+            return $this->getAdminUrl('user/delete/');
+        }
+        return false;
+    }
+
     protected function prepareElements($columns = [])
     {
         $columns = [

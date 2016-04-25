@@ -27,13 +27,11 @@ class RoleController extends AuthActionController
 
     public function deleteAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
                 try {
                     $model = new Model;
                     $count = 0;
@@ -49,28 +47,21 @@ class RoleController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/role/list/');
-        }
+        return $this->response($result, ':ADMIN/role/');
     }
 
     public function saveAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $segment = new Segment('admin');
             $user = $segment->get('user');
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
+            $result = $this->validateForm($data, ['name']);
+            if (!$user->valid($user['username'], $data['crpassword'])) {
+                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
-            } else if (empty($data['name'])) {
-                $result['message'][] = ['message' => $this->translate('The name field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if ($user->valid($user['username'], $data['crpassword'])) {
+            } else {
                 $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
@@ -83,17 +74,9 @@ class RoleController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
-            } else {
-                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
-                $result['error'] = 1;
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/role/list/');
-        }
+        return $this->response($result, ':ADMIN/role/');
     }
 
 }

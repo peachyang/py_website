@@ -7,7 +7,7 @@ class Language extends AbstractModel
 
     protected function _construct()
     {
-        $this->init('core_language', 'id', ['id', 'store', 'code', 'name', 'status']);
+        $this->init('core_language', 'id', ['id', 'store_id', 'code', 'name', 'status']);
     }
 
     public function getStore()
@@ -18,6 +18,18 @@ class Language extends AbstractModel
             return $store;
         }
         return null;
+    }
+
+    protected function afterSave()
+    {
+        $this->flushList('core_merchant\\');
+        parent::afterSave();
+    }
+
+    protected function afterRemove()
+    {
+        $this->flushList('core_merchant\\');
+        parent::afterRemove();
     }
 
 }

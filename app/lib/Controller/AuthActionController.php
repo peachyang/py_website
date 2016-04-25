@@ -30,4 +30,37 @@ class AuthActionController extends ActionController
         return $this->$method();
     }
 
+    protected function response($result, $url)
+    {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            return $result;
+        } else {
+            $this->addMessage($result['message'], 'danger', 'admin');
+            if ($result['error']) {
+                return $this->redirectReferer($url);
+            }
+            return $this->redirect($url);
+        }
+    }
+
+    protected function validateForm(array $data, array $required = [], $captcha = false)
+    {
+        $result = ['error' => 0, 'message' => []];
+        if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
+            $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
+            $result['error'] = 1;
+        }
+        foreach ($required as $item) {
+            if (empty($data[$item])) {
+                $result['message'][] = ['message' => $this->translate('The ' . $item . ' field is required and can not be empty.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            }
+        }
+        if ($captcha && (empty($data['captcha']) || !$this->validateCaptcha($data['captcha'], $captcha))) {
+            $result['message'][] = ['message' => $this->translate('The captcha value is wrong.'), 'level' => 'danger'];
+            $result['error'] = 1;
+        }
+        return $result;
+    }
+
 }

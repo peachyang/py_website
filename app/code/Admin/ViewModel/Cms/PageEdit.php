@@ -14,6 +14,15 @@ class PageEdit extends Edit
         return $this->getAdminUrl('cms_page/save/');
     }
 
+    public function getDeleteUrl()
+    {
+        $model = $this->getVariable('model');
+        if ($model && $model->getId()) {
+            return $this->getAdminUrl('cms_page/delete/');
+        }
+        return false;
+    }
+
     public function getTitle()
     {
         return $this->getQuery('id') ? 'Edit Page' : 'Add Page';
@@ -71,7 +80,7 @@ class PageEdit extends Edit
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content',
-                'class'=>'htmleditor fullbar'
+                'class' => 'htmleditor fullbar'
             ]
         ];
         return parent::prepareElements($columns);

@@ -34,4 +34,16 @@ class Store extends AbstractModel
         return null;
     }
 
+    protected function afterSave()
+    {
+        $this->flushList('core_merchant\\');
+        parent::afterSave();
+    }
+
+    protected function afterRemove()
+    {
+        $this->flushList('core_merchant\\');
+        parent::afterRemove();
+    }
+
 }

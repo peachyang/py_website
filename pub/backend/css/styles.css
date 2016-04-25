@@ -19,6 +19,9 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .text-left{text-align:left!important}
 .text-right{text-align:right!important}
 .text-nowrap{white-space:nowrap}
+.text-vtop{vertical-align:top!important}
+.text-vmiddle{vertical-align:middle!important}
+.text-vbottom{vertical-align:bottom!important}
 .dropdown{position:relative}
 .dropdown-menu{display:none;position:absolute;z-index:9}
 .dropdown.open>.dropdown-menu,.no-touchevents .dropdown:hover>[data-toggle=dropdown]+.dropdown-menu{display:block}
@@ -29,6 +32,13 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .table-no-border th,.table-no-border td{border:none!important}
 .table-striped>tbody>tr:nth-child(even){background-color:#f9f9f9}
 .table-hover>tbody>tr:hover{background-color:#f5f5f5!important}
+.nav-tabs{border-bottom:1px solid #ddd}
+.nav-tabs>li{float:left;margin-bottom:-1px}
+.nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
+.nav-tabs>li>a:hover{border-color:#eee #eee #ddd}
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #ddd;border-bottom-color:transparent}
+.nav-tabs~.tab-pane{display:none}
+.nav-tabs~.tab-pane.active{display:block}
 .breadcrumb li{display:inline}
 .breadcrumb li:not(.label)+li:before{content:">";margin:0 4px}
 .alert{padding:6px 12px;font-size:12px;line-height:1;border:1px solid transparent}
@@ -59,8 +69,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .form-control[type=checkbox],.form-control[type=radio]{width:auto;height:auto;padding:0;background:none;border:none;vertical-align:top;display:inline-block;margin-top:5px}
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
 .btn:focus{outline:none}
-.btn-submit,.btn-reset{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
-.btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus{background:#028ccc}
+.btn-submit,.btn-reset,.btn-delete{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
+.btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus{background:#028ccc}
 .admin-login{background:#9c9d9d}
 .admin-login .page-title{font-size:18px;line-height:126px;text-indent:45px;text-indent:2.8125rem;color:#000}
 .admin-login .page-title [lang|=en]{font-size:27px}
@@ -150,7 +160,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table .action a+a{margin-left:4px}
 .admin .edit .page-title{font-size:1.125rem;line-height:3.33333333;padding:0 0 0 30px;background:#fafafa}
 .admin .edit .page-title:before{content:'\f040';margin:0 10px;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-.admin .edit .page-content{padding:10px 0 0 30px;display:table}
+.admin .edit .page-content{padding:10px 0 0 30px}
+.admin .edit .page-content.active{display:table}
 .admin .edit .page-content .input-box{display:table-row}
 .admin .edit .page-content .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
 .admin .edit .page-content .cell{display:table-cell;padding:4px;width:100%}

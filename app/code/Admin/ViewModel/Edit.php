@@ -22,6 +22,11 @@ class Edit extends AbstractViewModel
         return $this->getAdminUrl($this->getVariable('save_url'));
     }
 
+    public function getDeleteUrl()
+    {
+        return false;
+    }
+
     protected function getRendered()
     {
         $this->setVariables([

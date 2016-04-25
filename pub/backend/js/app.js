@@ -57,30 +57,35 @@
                 $('.header .top-menu .messages .message-box').append(html);
                 addMessages();
             }
+            if(json.removeLine){
+                $(this).parentsUntil('tbody,ul,ol').last().remove();
+            }
         };
         $('a[data-method]').click(function () {
-            if ($(this).is('[data-params]')) {
-                var data = $(this).data('params');
-            } else if ($(this).is('[data-serialize]')) {
-                var data = $($(this).data('serialize')).serialize();
+            var o = this;
+            if ($(o).is('[data-params]')) {
+                var data = $(o).data('params');
+            } else if ($(o).is('[data-serialize]')) {
+                var data = $($(o).data('serialize')).serialize();
             } else {
                 var data = '';
             }
-            $.ajax($(this).attr('href'), {
-                type: $(this).data('method'),
+            $.ajax($(o).attr('href'), {
+                type: $(o).data('method'),
                 data: data,
                 success: function (xhr) {
-                    responseHandler(xhr.responseText ? xhr.responseText : xhr);
+                    responseHandler.call(o,xhr.responseText ? xhr.responseText : xhr);
                 }
             });
             return false;
         });
         $('form[data-ajax]').submit(function () {
-            $.ajax($(this).attr('href'), {
-                type: $(this).data('method'),
-                data: $.serialize(this),
+            var o = this;
+            $.ajax($(o).attr('href'), {
+                type: $(o).data('method'),
+                data: $(this).serialize(),
                 success: function (xhr) {
-                    responseHandler(xhr.responseText ? xhr.responseText : xhr);
+                    responseHandler.call(o,xhr.responseText ? xhr.responseText : xhr);
                 }
             });
             return false;

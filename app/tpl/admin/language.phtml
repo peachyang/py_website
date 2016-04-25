@@ -8,16 +8,46 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->getVariable('collection') as $item) : ?>
+            <?php
+            $countM = [];
+            $countS = [];
+            foreach ($this->getVariable('collection') as $item) {
+                if (!isset($countM[$item['merchant']])) {
+                    $countM[$item['merchant']] = 0;
+                }
+                if (!isset($countS[$item['store']])) {
+                    $countS[$item['store']] = 0;
+                }
+                $countM[$item['merchant']] ++;
+                $countS[$item['store']] ++;
+            }
+            foreach ($this->getVariable('collection') as $item):
+                ?>
                 <tr>
+                    <?php if ($countM[$item['merchant']]): ?>
+                        <td class="text-vmiddle" rowspan="<?php echo $countM[$item['merchant']] ?>">
+                            <a href="<?php echo $this->getAdminUrl('language/merchant/?id=' . $item['merchant_id']) ?>">
+                                <?php echo $this->translate($item['merchant'], [], 'language') ?>
+                            </a>
+                        </td>
+                        <?php
+                        $countM[$item['merchant']] = 0;
+                    endif;
+                    if ($countS[$item['store']]):
+                        ?>
+                        <td class="text-vmiddle" rowspan="<?php echo $countS[$item['store']] ?>">
+                            <a href="<?php echo $this->getAdminUrl('language/store/?id=' . $item['store_id']) ?>">
+                                <?php echo $this->translate($item['store'], [], 'language') ?>
+                            </a>
+                        </td>
+                        <?php
+                        $countS[$item['store']] = 0;
+                    endif;
+                    ?>
                     <td>
-                        <?php echo $this->translate($item['merchant'], [], 'language') ?>
-                    </td>
-                    <td>
-                        <?php echo $this->translate($item['store'], [], 'language') ?>
-                    </td>
-                    <td>
-                        <?php echo $this->translate($item['language'], [], 'language') ?>
+                        <a href="<?php echo $this->getAdminUrl('language/edit/?id=' . $item['language_id']) ?>">
+                            <?php echo $this->translate($item['language'], [], 'language') ?>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach ?>

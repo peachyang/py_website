@@ -1,43 +1,53 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Role;
+namespace Seahinet\Admin\ViewModel\Language;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Source\Store;
 
 class Edit extends PEdit
 {
 
-    public function getTitle()
-    {
-        return $this->getQuery('id') ? 'Edit Role' : 'Add Role';
-    }
-
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('role/save/');
+        return $this->getAdminUrl('language/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('role/delete/');
+            return $this->getAdminUrl('language/delete/');
         }
         return false;
     }
+
+    public function getTitle()
+    {
+        return $this->getQuery('id') ? 'Edit Language' : 'Add Language';
+    }
+
     protected function prepareElements($columns = [])
     {
         $columns = [
             'id' => [
-                'type' => 'hidden'
+                'type' => 'hidden',
+            ],
+            'code' => [
+                'type' => 'text',
+                'label' => 'Code',
+                'required' => 'required'
             ],
             'name' => [
                 'type' => 'text',
                 'label' => 'Name',
-                'required' => 'required',
-                'attrs' => [
-                    'spellcheck' => 'false'
-                ]
+                'required' => 'required'
+            ],
+            'store_id' => [
+                'type' => 'select',
+                'label' => 'Store',
+                'options' => (new Store)->getSourceArray(),
+                'required' => 'required'
             ],
             'status' => [
                 'type' => 'select',
@@ -47,18 +57,9 @@ class Edit extends PEdit
                     0 => 'Disabled'
                 ],
                 'required' => 'required'
-            ],
-            'crpassword' => [
-                'type' => 'password',
-                'label' => 'Current Password',
-                'value' => '',
-                'required' => 'required',
-                'attrs' => [
-                    'minlength' => 6,
-                    'autocomplete' => 'off'
-                ]
-            ],
+            ]
         ];
         return parent::prepareElements($columns);
     }
+
 }

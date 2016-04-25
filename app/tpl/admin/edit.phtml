@@ -2,8 +2,9 @@
 $elements = $this->getVariable('elements');
 ?>
 <div class="edit">
-    <h2 class="page-title"><?php echo $this->getVariable('title') ?></h2>
-    <div class="page-content table">
+    <h2 class="page-title"><?php echo $this->translate($this->getVariable('title')) ?></h2>
+    <?php echo $this->getChild('tabs') ?>
+    <div class="page-content table tab-pane fade active in" id="main-tab">
         <form action="<?php echo $this->getSaveUrl() ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <?php foreach ($elements as $key => $item): ?>
@@ -37,7 +38,7 @@ $elements = $this->getVariable('elements');
                                         ?>
                                         <optgroup label="<?php echo $value ?>">
                                             <?php foreach ($label as $v => $l): ?>
-                                                <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array)$item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
+                                                <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
                                             <?php endforeach; ?>
                                         </optgroup>
                                     <?php else: ?>
@@ -63,7 +64,7 @@ $elements = $this->getVariable('elements');
                                           if (isset($item['class'])) {
                                               echo $item['class'];
                                           }
-                                          ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>><?php echo isset($item['value'])?$item['value']:'' ?></textarea>
+                                          ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
                                   <?php else: ?>
                             <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
                             if (!isset($item['attrs']['class'])):
@@ -79,6 +80,11 @@ $elements = $this->getVariable('elements');
             <div class="buttons-set">
                 <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
                 <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
+                <?php if ($this->getDeleteUrl()): ?>
+                    <a href="<?php echo $this->getDeleteUrl() ?>" class="btn btn-delete" data-method="delete" data-params="id=<?php echo $this->getVariable('model')->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>">
+                        <span><?php echo $this->translate('Delete') ?></span>
+                    </a>
+                <?php endif; ?>
             </div>
         </form>
     </div>

@@ -43,13 +43,11 @@ class UserController extends AuthActionController
 
     public function deleteAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
                 try {
                     $model = new Model;
                     $count = 0;
@@ -65,34 +63,24 @@ class UserController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/user/list/');
-        }
+        return $this->response($result, ':ADMIN/user/list/');
     }
 
     public function saveAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $segment = new Segment('admin');
             $user = $segment->get('user');
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['username'])) {
-                $result['message'][] = ['message' => $this->translate('The username field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['password'])) {
-                $result['message'][] = ['message' => $this->translate('The password field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['cpassword']) || $data['cpassword'] !== $data['password']) {
+            $result = $this->validateForm($data, ['username', 'password']);
+            if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
-            } else if ($user->valid($user['username'], $data['crpassword'])) {
+            } else if (!$user->valid($user['username'], $data['crpassword'])) {
+                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            } else if ($result['error'] === 0) {
                 $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
@@ -109,21 +97,10 @@ class UserController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
-            } else {
-                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
-                $result['error'] = 1;
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            $referer = $this->getRequest()->getHeader('HTTP_REFERER');
-            if (strpos($referer, 'edit')) {
-                return $this->redirect(':ADMIN/user/list/');
-            }
-            return $this->redirect(':ADMIN/user/');
-        }
+        $referer = $this->getRequest()->getHeader('HTTP_REFERER');
+        return $this->response($result, strpos($referer, 'edit') ? ':ADMIN/user/list/' : ':ADMIN/user/');
     }
 
 }

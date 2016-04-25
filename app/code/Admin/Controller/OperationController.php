@@ -19,7 +19,7 @@ class OperationController extends AuthActionController
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
-            if($model['is_system']){
+            if ($model['is_system']) {
                 return $this->redirectReferer(':ADMIN/operation/');
             }
             $root->getChild('edit', true)->setVariable('model', $model);
@@ -29,13 +29,11 @@ class OperationController extends AuthActionController
 
     public function deleteAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
                 try {
                     $model = new Model;
                     $count = 0;
@@ -51,26 +49,16 @@ class OperationController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/operation/');
-        }
+        return $this->response($result, ':ADMIN/operation/');
     }
 
     public function saveAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = ['error' => 0, 'message' => []];
-            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else if (empty($data['name'])) {
-                $result['message'][] = ['message' => $this->translate('The name field is required and can not be empty.'), 'level' => 'danger'];
-                $result['error'] = 1;
-            } else {
+            $result = $this->validateForm($data, ['name']);
+            if ($result['error'] === 0) {
                 $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
@@ -85,12 +73,7 @@ class OperationController extends AuthActionController
                 }
             }
         }
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return $result;
-        } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
-            return $this->redirect(':ADMIN/operation/');
-        }
+        return $this->response($result, ':ADMIN/operation/');
     }
 
 }

@@ -24,7 +24,8 @@ class User extends AbstractModel
         $storage = [
             'id' => $this->storage['id'],
             'role_id' => $this->storage['role_id'],
-            'username' => $this->storage['username']
+            'username' => $this->storage['username'],
+            'email' => $this->storage['email']
         ];
         $this->storage = $storage;
         $this->isLoaded = false;

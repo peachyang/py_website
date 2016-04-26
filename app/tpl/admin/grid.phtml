@@ -44,7 +44,7 @@ $query = $this->getQuery();
         <thead class="sort-by">
             <tr>
                 <?php if ($this->getMessAction()): ?>
-                    <th class="checkbox"><input type="checkbox" /></th>
+                    <th class="checkbox"><input type="checkbox" class="selectall" /></th>
                 <?php endif ?>
                 <?php foreach ($attributes as $attr => $name): ?>
                     <th>
@@ -96,7 +96,7 @@ $query = $this->getQuery();
             <tr>
                 <?php if ($this->getMessAction): ?>
                     <td class="checkbox">
-                        <input type="checkbox" />
+                        <input type="checkbox" class="selectall" />
                     </td>
                     <td colspan="<?php printf('%d', $count/= 2) ?>" class="text-left">
                         <?php

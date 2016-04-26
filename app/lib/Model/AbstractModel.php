@@ -214,6 +214,7 @@ abstract class AbstractModel extends ArrayObject
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
+            $this->rollback();
             throw $e;
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
@@ -238,8 +239,11 @@ abstract class AbstractModel extends ArrayObject
                 $this->afterRemove();
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
+                $this->rollback();
+                throw $e;
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
+                throw $e;
             }
         }
     }
@@ -292,6 +296,7 @@ abstract class AbstractModel extends ArrayObject
 
     protected function beforeSave()
     {
+        $this->beginTransaction();
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.before', ['model' => $this]);
     }
 
@@ -305,6 +310,7 @@ abstract class AbstractModel extends ArrayObject
             }
         }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
+        $this->commit();
     }
 
     protected function beforeLoad()
@@ -322,12 +328,14 @@ abstract class AbstractModel extends ArrayObject
 
     protected function beforeRemove()
     {
+        $this->beginTransaction();
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.before', ['model' => $this]);
     }
 
     protected function afterRemove()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.after', ['model' => $this]);
+        $this->commit();
     }
 
     public function serialize()

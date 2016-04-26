@@ -133,7 +133,6 @@ class LanguageController extends AuthActionController
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['redirect'] = $this->getAdminUrl(':ADMIN/language/list/');
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
@@ -159,7 +158,6 @@ class LanguageController extends AuthActionController
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['redirect'] = $this->getAdminUrl(':ADMIN/language/list/');
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
@@ -185,7 +183,6 @@ class LanguageController extends AuthActionController
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['redirect'] = $this->getAdminUrl(':ADMIN/language/list/');
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];

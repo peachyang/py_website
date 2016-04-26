@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\ViewModel\User;
 
+use Seahinet\Admin\Source\Role;
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 
 class Edit extends PEdit
@@ -39,6 +40,12 @@ class Edit extends PEdit
                 'attrs' => [
                     'spellcheck' => 'false'
                 ]
+            ],
+            'role_id' => [
+                'type' => 'select',
+                'label' => 'Role',
+                'options' => (new Role)->getSourceArray(true),
+                'required' => 'required'
             ],
             'email' => [
                 'type' => 'email',

@@ -89,6 +89,11 @@ class Response extends Message implements ResponseInterface
      */
     protected $reasonPhrase = '';
 
+    /**
+     * @var array|string|\Seahinet\Lib\ViewModel\AbstractViewModel
+     */
+    protected $data = null;
+
     public function __construct()
     {
         $this->headers = new Headers();
@@ -135,6 +140,17 @@ class Response extends Message implements ResponseInterface
             fclose($this->body);
         }
         return parent::withBody($body);
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
     }
 
 }

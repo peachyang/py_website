@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Model;
 
 use Seahinet\Admin\Model\Collection\Role as Collection;
 use Seahinet\Lib\Model\AbstractModel;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Permissions\Rbac\Role as RbacRole;
 
 class Role extends AbstractModel
@@ -36,13 +37,39 @@ class Role extends AbstractModel
                         $this->role->addPermission($operation);
                     }
                 } else {
-                    $children[$role['id']] = $role['children'];
+                    $children[$role['id']] = $role['child_id'];
                 }
             }
             $this->addChildren($children, $this->role, $this->getId());
             $cache->save($this->offsetGet('name'), $this->role, 'RBAC_ROLE_');
         }
         parent::afterLoad();
+    }
+
+    protected function afterSave()
+    {
+        if (!empty($this->storage['child_id'])) {
+            $tableGateway = new TableGateway('admin_role_recursive', $this->getContainer()->get('dbAdapter'));
+            $tableGateway->delete(['role_id' => $this->getId()]);
+            foreach ($this->storage['child_id'] as $childId) {
+                $tableGateway->insert(['role_id' => $this->getId(), 'child_id' => $childId]);
+            }
+        }
+        if (!empty($this->storage['operation_id'])) {
+            $tableGateway = new TableGateway('admin_permission', $this->getContainer()->get('dbAdapter'));
+            $tableGateway->delete(['role_id' => $this->getId()]);
+            if(in_array(-1, $this->storage['operation_id'])){
+                $this->storage['operation_id'] = [-1];
+            }
+            foreach ($this->storage['operation_id'] as $operationId) {
+                if ($operationId) {
+                    $tableGateway->insert(['role_id' => $this->getId(), 'operation_id' => $operationId]);
+                }
+            }
+        }
+        $this->flushList('admin_operation\\');
+        $this->getCacheObject()->delete($this->storage['name'], 'RBAC_ROLE_');
+        parent::afterSave();
     }
 
     protected function addChildren($children, $parent, $pid)
@@ -57,6 +84,17 @@ class Role extends AbstractModel
             }
         }
         return $parent;
+    }
+
+    public function getChildren()
+    {
+        $roles = new Collection;
+        $roles->addChildren()->where([$this->primaryKey => $this->getId()]);
+        $result = [];
+        foreach ($roles as $role) {
+            $result[] = $role['child_id'];
+        }
+        return $result;
     }
 
 }

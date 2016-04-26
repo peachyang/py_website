@@ -181,6 +181,24 @@ edit:
                         params: [{src:'pub/tool/ckeditor.js',defer:'defer',async:'async'}]
 admin_dashboard:
     update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: pub/backend/js/highcharts/highcharts.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/highcharts/modules/exporting.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/highcharts/modules/no-data-to-display.js
+            content:
+                children:
+                    dashboard:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/dashboard/charts
 admin_user:
     update: edit
     root:
@@ -236,7 +254,7 @@ admin_role_list:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/role/list/',label:'Role Management'}]
+                                params: [{link:':ADMIN/role/',label:'Role Management'}]
                             -
                                 method: addAdditional
                                 params: [{link:':ADMIN/role/edit/',label:'Add New Role'}]
@@ -252,7 +270,7 @@ admin_role_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/role/list/',label:'Role Management'}]
+                                params: [{link:':ADMIN/role/',label:'Role Management'}]
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/role/edit/',label:'Edit'}]
@@ -267,7 +285,7 @@ admin_role_edit:
                                         params: [{operation:'Operation'}]
                                 children:
                                     operation:
-                                        type: Seahinet\Admin\ViewModel\Operation\Grid
+                                        type: Seahinet\Admin\ViewModel\Role\Tabs\Operation
                                         template: admin/rbac/operation
                                         children:
                                             pager:
@@ -282,7 +300,7 @@ admin_operation_list:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/operation/list/',label:'Operation Management'}]
+                                params: [{link:':ADMIN/operation/',label:'Operation Management'}]
                             -
                                 method: addAdditional
                                 params: [{link:':ADMIN/operation/edit/',label:'Add New Operation'}]
@@ -298,7 +316,7 @@ admin_operation_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/operation/list/',label:'Operation Management'}]
+                                params: [{link:':ADMIN/operation/',label:'Operation Management'}]
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/operation/edit/',label:'Edit'}]

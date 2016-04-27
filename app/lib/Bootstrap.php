@@ -121,6 +121,18 @@ final class Bootstrap
         if (isset($config['event'])) {
             static::$eventDispatcher = static::$container->get('eventDispatcher');
             foreach ($config['event'] as $name => $events) {
+                if (!is_array($events)) {
+                    $events = [$events];
+                }
+                uasort($events, function($a, $b) {
+                    if (!isset($a['priority'])) {
+                        $a['priority'] = 0;
+                    }
+                    if (!isset($b['priority'])) {
+                        $b['priority'] = 0;
+                    }
+                    return $a['priority'] > $b['priority'] ? 1 : $a['priority'] == $b['priority'] ? 0 : -1;
+                });
                 foreach ($events as $event) {
                     static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
                 }

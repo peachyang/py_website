@@ -1,48 +1,54 @@
-<div id="canvas"></div>
-<script type="text/javascript">
-    $('#canvas').highcharts({
-        credits: false,
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: ''
-            },
-            plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-        },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'New York',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-            }, {
-                name: 'Berlin',
-                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-    });
-</script>
+<div class="dashboard">
+    <div class="table">
+        <?php
+        $col = 0;
+        foreach ($this->getConfig() as $key => $item):
+            if ($col % 4 === 0):
+                ?>
+                <div class="row">
+                <?php endif ?>
+                <div class="cell" data-color="<?php echo $item['color'] ?>" data-title="<?php echo $this->translate($item['title']) ?>" data-url="<?php echo $this->getAdminUrl($item['data']) ?>">
+                    <h4 class="title">
+                        <span class="label"><?php echo $this->translate($item['title']) ?>: </span>
+                        <span class="data amount">-</span></h4>
+                    <ul class="detail">
+                        <li>
+                            <span class="label"><?php echo $this->translate('Last 24 Hours') ?>: </span>
+                            <span class="data daily">-</span>
+                        </li>
+                        <li>
+                            <span class="label"><?php echo $this->translate('Last 30 Days') ?>: </span>
+                            <span class="data monthly">-</span>
+                        </li>
+                        <li>
+                            <span class="label"><?php echo $this->translate('Last 12 Months') ?>: </span>
+                            <span class="data yearly">-</span>
+                        </li>
+                    </ul>
+                </div>
+                <?php
+                if ($col++ % 4 === 0):
+                    ?>
+                </div>
+                <?php
+            endif;
+        endforeach;
+        ?>
+    </div>
+    <div class="chart">
+        <div class="filter clearfix">
+            <select id="filter">
+                <option value="d"><?php echo $this->translate('Last 24 Hours') ?></option>
+                <option value="m"><?php echo $this->translate('Last 30 Days') ?></option>
+                <option value="y"><?php echo $this->translate('Last 12 Months') ?></option>
+                <option value="c"><?php echo $this->translate('Compare') ?></option>
+            </select>
+            <input type="date" class="date" name="from1" value="<?php echo $current = date('Y-m-d') ?>" />
+            <input type="date" class="date" name="to1" value="<?php echo $current ?>" />
+            <input type="date" class="date" name="from2" value="<?php echo $current ?>" />
+            <input type="date" class="date" name="to2" value="<?php echo $current ?>" />
+            <button type="button" id="compare" class="btn"><?php echo $this->translate('Compare') ?></button>
+        </div>
+        <div id="canvas"></div>
+    </div>
+</div>

@@ -80,7 +80,7 @@ class IndexController extends ActionController
     {
         $builder = new CaptchaBuilder();
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
-        $builder->build(140, 52);
+        $builder->build(70, 26);
         $segment = new Segment('admin');
         $segment->set('captcha', strtoupper($builder->getPhrase()));
         $this->getResponse()

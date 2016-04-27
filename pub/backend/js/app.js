@@ -17,12 +17,20 @@
             if (localStorage) {
                 localStorage.admin_nav = flag;
             }
+            if ($('#canvas').length) {
+                setTimeout(function () {
+                    $('#canvas').highcharts().reflow();
+                }, 600);
+            }
         });
         if (localStorage && localStorage.admin_nav == 1) {
             $('.nav-container,.main-container').css('transition', 'none');
             $('#nav-toggle').addClass('active');
             $('.nav-container').addClass('active');
             $('.nav-container .dropdown-toggle').removeAttr('data-toggle');
+            if ($('#canvas').length) {
+                $('#canvas').highcharts().reflow();
+            }
             setTimeout(function () {
                 $('.nav-container,.main-container').removeAttr('style');
             }, 600);

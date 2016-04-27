@@ -187,17 +187,25 @@ admin_dashboard:
                 action:
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/highcharts.js
+                        params: pub/backend/js/highcharts/highcharts.src.js
                     -
                         method: addScript
                         params: pub/backend/js/highcharts/modules/exporting.js
                     -
                         method: addScript
                         params: pub/backend/js/highcharts/modules/no-data-to-display.js
+                    -
+                        method: addScript
+                        params: pub/backend/js/highcharts/config.js
             content:
                 children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/dashboard/',label:'Dashboard'}]
                     dashboard:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Admin\ViewModel\Dashboard
                         template: admin/dashboard/charts
 admin_user:
     update: edit

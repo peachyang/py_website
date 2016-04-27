@@ -9,7 +9,7 @@ class Page extends AbstractModel
 
     public function _construct()
     {
-        $this->init('cms_page', 'id', ['id', 'parent_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'content']);
+        $this->init('cms_page', 'id', ['id', 'parent_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'thumbnail', 'image', 'content']);
         $this->withLanguage('cms_page_language', 'page_id');
     }
 

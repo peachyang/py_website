@@ -1,0 +1,5 @@
+---
+route:
+    -
+        listener: [\Seahinet\Admin\Listeners\Visitors, stat]
+        priority: 20

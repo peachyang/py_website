@@ -1,10 +1,13 @@
 ---
 route:
-    listener: [\Seahinet\Lib\Listeners\Route, dispatch]
-    priority: 10
+    -
+        listener: [\Seahinet\Lib\Listeners\Route, dispatch]
+        priority: 10
 render:
-    listener: [\Seahinet\Lib\Listeners\Render, render]
-    priority: 10
+    -
+        listener: [\Seahinet\Lib\Listeners\Render, render]
+        priority: 10
 respond:
-    listener: [\Seahinet\Lib\Listeners\Respond, respond]
-    priority: 10
+    -
+        listener: [\Seahinet\Lib\Listeners\Respond, respond]
+        priority: 10

@@ -2,7 +2,7 @@
 
 namespace Seahinet\Admin\Source;
 
-use Seahinet\Cms\Model\Collection\Role as Collection;
+use Seahinet\Admin\Model\Collection\Role as Collection;
 use Seahinet\Lib\Source\SourceInterface;
 
 class Role implements SourceInterface

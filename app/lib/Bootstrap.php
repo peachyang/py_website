@@ -84,8 +84,8 @@ final class Bootstrap
         if (is_null(static::$container)) {
             static::init($server);
         }
-        $event = static::$eventDispatcher->trigger('route', ['routers' => static::$container->get('config')['route']]);
-        static::$eventDispatcher->trigger('render', ['response' => $event['response']]);
+        static::$eventDispatcher->trigger('route', ['routers' => static::$container->get('config')['route']]);
+        static::$eventDispatcher->trigger('render', ['response' => static::$container->get('response')->getData()]);
         static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
     }
 
@@ -120,8 +120,10 @@ final class Bootstrap
     {
         if (isset($config['event'])) {
             static::$eventDispatcher = static::$container->get('eventDispatcher');
-            foreach ($config['event'] as $name => $event) {
-                static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
+            foreach ($config['event'] as $name => $events) {
+                foreach ($events as $event) {
+                    static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
+                }
             }
         }
     }
@@ -135,7 +137,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : preg_replace('/^([a-z]{2})[^\,\;]+([A-Z]{2})\W?.*$/i', '$1-$2', $server['HTTP_ACCEPT_LANGUAGE'])));
+            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -164,7 +166,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            if (!is_null(static::$language)) {
+            if (!is_null(static::$language) && static::$language['store_id']) {
                 static::$store = new Store();
                 static::$store->load(static::$language['store_id']);
             } else {
@@ -195,7 +197,7 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            if (!is_null(static::$store)) {
+            if (!is_null(static::$store) && static::$store['merchant_id']) {
                 static::$merchant = new Merchant();
                 static::$merchant->load(static::$store['merchant_id']);
             } else {

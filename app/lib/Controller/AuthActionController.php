@@ -33,6 +33,11 @@ class AuthActionController extends ActionController
     protected function response($result, $url)
     {
         if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($result['error'] && isset($result['error_url'])) {
+                $result['redirect'] = $result['error_url'];
+            } else if (!$result['error'] && isset($result['success_url'])) {
+                $result['redirect'] = $result['success_url'];
+            }
             return $result;
         } else {
             $this->addMessage($result['message'], 'danger', 'admin');
@@ -59,6 +64,12 @@ class AuthActionController extends ActionController
         if ($captcha && (empty($data['captcha']) || !$this->validateCaptcha($data['captcha'], $captcha))) {
             $result['message'][] = ['message' => $this->translate('The captcha value is wrong.'), 'level' => 'danger'];
             $result['error'] = 1;
+        }
+        if (isset($data['success_url'])) {
+            $result['success_url'] = rawurldecode($data['success_url']);
+        }
+        if (isset($data['error_url'])) {
+            $result['error_url'] = rawurldecode($data['error_url']);
         }
         return $result;
     }

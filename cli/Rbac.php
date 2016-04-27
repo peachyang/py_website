@@ -34,15 +34,16 @@ class Rbac extends AbstractCli
                 echo $e->getMessage();
             }
             foreach ($finder as $file) {
-                $className = 'Seahinet\\' . str_replace(DS, '\\', trim($file->getRelativePath(), DS)) . '\\' . str_replace('.php', '', $file->getFilename());
-                $reflection = new ReflectionClass($className);
+                $className = str_replace(DS, '\\', trim($file->getRelativePath(), DS)) . '\\' . str_replace('.php', '', $file->getFilename());
+                $reflection = new ReflectionClass('Seahinet\\' . $className);
                 if ($reflection->isSubclassOf('Seahinet\\Lib\\Controller\\AuthActionController')) {
+                    $operation = preg_replace('/Controller(?:\\\\)?/','',$className) . '::';
                     foreach ($reflection->getMethods() as $method) {
                         if ($method->isPublic() && substr($method->getName(), -6) === 'Action' && $method->getName() !== 'notFoundAction') {
                             try {
                                 $model = new Operation;
                                 $model->setData([
-                                    'name' => $className . '::' . $method->getName(),
+                                    'name' => $operation . str_replace('Action','',$method->getName()),
                                     'is_system' => 1
                                 ])->save();
                                 $count++;

@@ -12,4 +12,11 @@ class DashboardController extends AuthActionController
         return $this->getLayout('admin_dashboard');
     }
 
+    public function visitorsAction()
+    {
+        $cache = $this->getContainer()->get('cache');
+        $visitors = $cache->fetch('UV', 'STAT_');
+        return $visitors;
+    }
+
 }

@@ -17,6 +17,7 @@ final class Config extends ArrayObject implements Singleton
         Traits\ArrayMerge;
 
     protected static $instance = null;
+    protected $keys = [];
 
     /**
      * @param array|Container $config
@@ -109,6 +110,25 @@ final class Config extends ArrayObject implements Singleton
         }
     }
 
+    private function getConfigByScope(array $array)
+    {
+        if (empty($this->keys)) {
+            $this->keys = [
+                'l' => 'l' . Bootstrap::getLanguage()->getId(),
+                's' => 's' . Bootstrap::getStore()->getId(),
+                'm' => 'm' . Bootstrap::getMerchant()->getId()
+            ];
+        }
+        $result = isset($array[$this->keys['l']]) ?
+                    $array[$this->keys['l']] :
+                    (isset($array[$this->keys['s']]) ?
+                            $array[$this->keys['s']] :
+                            (isset($array[$this->keys['m']]) ?
+                                    $array[$this->keys['m']] :
+                                    $array));
+        return $result;
+    }
+
     private function getConfigByPath($path, $config = null)
     {
         if (count($path) > 1) {
@@ -119,14 +139,7 @@ final class Config extends ArrayObject implements Singleton
                 return $this->getConfigByPath($path, $config);
             }
         } else if (isset($config[$path[0]])) {
-            $result = $config[$path[0]];
-            return isset($result['l' . Bootstrap::getLanguage()->getId()]) ?
-                    $result['l' . Bootstrap::getLanguage()->getId()] :
-                    (isset($result['s' . Bootstrap::getStore()->getId()]) ?
-                            $result['s' . Bootstrap::getStore()->getId()] :
-                            (isset($result['m' . Bootstrap::getMerchant()->getId()]) ?
-                                    $result['m' . Bootstrap::getMerchant()->getId()] :
-                                    $result));
+            return $this->getConfigByScope($config[$path[0]]);
         }
         return null;
     }
@@ -139,5 +152,5 @@ final class Config extends ArrayObject implements Singleton
             return parent::offsetGet($key);
         }
     }
-
+    
 }

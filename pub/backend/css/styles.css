@@ -181,3 +181,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}
 .admin .nav-container.active~.footer{opacity:1;width:172px;transition:opacity .6s .6s}
 @media (max-height:480px){.admin>.footer{display:none}}
+
+.uploadfilepopupb{width: 100%; height: 100%; position:fixed;}
+.uploadfilepopup{background: #fff; width: 800px; height: 600px;border:1px #eee solid; margin: 50px auto;box-shadow:0 5px 15px rgba(0, 0, 0, 0.5);border-radius:5;}
+
+

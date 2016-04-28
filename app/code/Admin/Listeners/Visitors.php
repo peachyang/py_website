@@ -1,11 +1,11 @@
 <?php
 
-namespace Seahinet\Admin\Listener;
+namespace Seahinet\Admin\Listeners;
 
 use Seahinet\Lib\Listeners\ListenerInterface;
 use Seahinet\Lib\Session\Segment;
 
-class Visitor implements ListenerInterface
+class Visitors implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container;
@@ -18,9 +18,9 @@ class Visitor implements ListenerInterface
             $cache = $this->getContainer()->get('cache');
             $count = $cache->fetch('UV', 'STAT_');
             if ($count) {
-                $count[date('Y-m-d')]++;
+                $count[time()] ++;
             } else {
-                $count[date('Y-m-d')] = 1;
+                $count = [time() => 1];
             }
             $cache->save('UV', $count, 'STAT_');
         }

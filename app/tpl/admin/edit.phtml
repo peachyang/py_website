@@ -16,7 +16,7 @@ $elements = $this->getVariable('elements');
                 ?>
                 <div class="input-box">
                     <?php if (isset($item['label'])): ?>
-                        <label for="<?php echo $key ?>" class="control-label<?php if(isset($item['required'])): ?> required<?php endif ?>">
+                        <label for="<?php echo $key ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
                             <?php echo $this->translate($item['label']) ?>
                         </label>
                     <?php endif ?>
@@ -65,7 +65,11 @@ $elements = $this->getVariable('elements');
                                               echo $item['class'];
                                           }
                                           ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
-                                  <?php else: ?>
+                                      <?php
+                                  elseif ($item['type'] === 'widget' && isset($item['widget'])):
+                                      echo $this->{$item['widget']};
+                                  else:
+                                      ?>
                             <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
                             if (!isset($item['attrs']['class'])):
                                 ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
@@ -82,7 +86,7 @@ $elements = $this->getVariable('elements');
             <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
             <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
             <?php if ($this->getDeleteUrl()): ?>
-            <a href="<?php echo $this->getDeleteUrl() ?>" class="btn btn-delete" data-method="delete" data-params="id=<?php echo $this->getVariable('model')->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>&success_url=<?php echo rawurlencode($this->getRequest()->getHeader('HTTP_REFERER')) ?>">
+                <a href="<?php echo $this->getDeleteUrl() ?>" class="btn btn-delete" data-method="delete" data-params="id=<?php echo $this->getVariable('model')->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>&success_url=<?php echo rawurlencode($this->getRequest()->getHeader('HTTP_REFERER')) ?>">
                     <span><?php echo $this->translate('Delete') ?></span>
                 </a>
             <?php endif; ?>

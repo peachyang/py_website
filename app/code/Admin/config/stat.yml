@@ -1,4 +1,5 @@
 ---
 uv:
-    data: dashboard/visitors
+    data: dashboard/visitors/
     title: Unique Visitors
+    color: '#F00'

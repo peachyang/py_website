@@ -33,6 +33,25 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .table-no-border th,.table-no-border td{border:none!important}
 .table-striped>tbody>tr:nth-child(even){background-color:#f9f9f9}
 .table-hover>tbody>tr:hover{background-color:#f5f5f5!important}
+.modal-open{overflow:hidden;}
+.modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;display:none;overflow:hidden;-webkit-overflow-scrolling:touch;outline:0}
+.modal.fade .modal-dialog{-webkit-transition:-webkit-transform .3s ease-out;-o-transition:-o-transform .3s ease-out;transition:transform .3s ease-out;-webkit-transform:translate(0, -25%);-ms-transform:translate(0, -25%);-o-transform:translate(0, -25%);transform:translate(0, -25%)}
+.modal.in .modal-dialog{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transform:translate(0, 0);transform:translate(0, 0)}
+.modal-open .modal{overflow-x:hidden;overflow-y:auto}
+.modal-dialog{position:relative;width:auto;margin:10px}
+.modal-content{position:relative;background-color:#fff;-webkit-background-clip:padding-box;background-clip:padding-box;border:1px solid #999;border:1px solid rgba(0, 0, 0, .2);border-radius:6px;outline:0;-webkit-box-shadow:0 3px 9px rgba(0, 0, 0, .5);box-shadow:0 3px 9px rgba(0, 0, 0, .5)}
+.modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1040;background-color:#000}
+.modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
+.modal-backdrop.in{filter:alpha(opacity=50);opacity:.5}
+.modal-header{padding:15px;border-bottom:1px solid #e5e5e5}
+.modal-header .close{margin-top:-2px}
+.modal-title{margin:0;line-height:1.42857143}
+.modal-body{position:relative;padding:15px}
+.modal-footer{padding:15px;text-align:right;border-top:1px solid #e5e5e5}
+.modal-footer .btn + .btn{margin-bottom:0;margin-left:5px}
+.modal-footer .btn-group .btn + .btn{margin-left:-1px;}
+.modal-footer .btn-block + .btn-block{margin-left:0}
+.modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
 .nav-tabs{border-bottom:1px solid #CCE0E9}
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
@@ -176,6 +195,23 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .edit .buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
+.admin .dashboard{padding:30px 0 30px 30px}
+.admin .dashboard .table{border:1px solid #ccc}
+.admin .dashboard .table .caption{border-bottom:1px solid #ccc;text-indent:30px}
+.admin .dashboard .table .row{display:table;padding:20px 0;width:100%}
+.admin .dashboard .table .cell .detail>li{display:table-row}
+.admin .dashboard .table .cell{display:table-cell}
+.admin .dashboard .table .cell+.cell{border-left:1px solid #ccc}
+.admin .dashboard .table .cell .title{width:50%;text-align:right;font-size:12px;line-height:24px}
+.admin .dashboard .table .cell .title .data{font-size:24px}
+.admin .dashboard .table .cell .detail{display:table;margin:0 auto;padding:15px 0}
+.admin .dashboard .table .cell .detail>li>span{display:table-cell;width:50%;font-size:13px;line-height:18px}
+.admin .dashboard .chart{margin-top:30px;border:1px solid #ccc}
+.admin .dashboard .chart #canvas{padding:20px;max-width:100%}
+.admin .dashboard .chart .filter{padding:0 20px;border-bottom:1px solid #ccc}
+.admin .dashboard .chart .filter select,.admin .dashboard .chart .filter .date{background:#fff;border:1px solid #ccc;height:26px;font-size:12px;line-height:1;padding:3px 6px;margin:2px 0}
+.admin .dashboard .chart .filter .btn{float:right;border:none;border-radius:3px;background:#00BA35;color:#fff;padding:0 18px;font-size:12px;line-height:30px;vertical-align:top}
+.admin .dashboard .chart #filter~*{display:none}
 .admin>.footer{position:fixed;bottom:10px;left:0;width:51px;filter:alpha(Opacity=0);opacity:0;z-index:9;overflow:hidden;pointer-events:none}
 .admin>.footer .copyright{width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}

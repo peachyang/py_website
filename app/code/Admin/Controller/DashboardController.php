@@ -42,8 +42,11 @@ class DashboardController extends AuthActionController
         ];
         if ($visitors) {
             $current = new DateTime();
-            foreach ($visitors as $timestamp => $count) {
-                $time = new DateTime(date('Y-m-d h:i:s', $timestamp));
+            foreach ($visitors as $time => $count) {
+                if (is_numeric($time)) {
+                    $time = date('Y-m-d h:0:0', $time);
+                }
+                $time = new DateTime($time);
                 $diff = $current->diff($time);
                 if ($diff->d < 1) {
                     $result['daily'] += $count;

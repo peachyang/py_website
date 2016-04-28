@@ -17,10 +17,14 @@ class Visitors implements ListenerInterface
             $segment->set('statUv', 1);
             $cache = $this->getContainer()->get('cache');
             $count = $cache->fetch('UV', 'STAT_');
+            $date = strtotime(date('Y-m-d H:0:0'));
             if ($count) {
-                $count[time()] ++;
+                if(!isset($count[$date])){
+                    $count[$date] = 1;
+                }
+                $count[$date] ++;
             } else {
-                $count = [time() => 1];
+                $count = [$date => 1];
             }
             $cache->save('UV', $count, 'STAT_');
         }

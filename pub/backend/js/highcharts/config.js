@@ -10,8 +10,10 @@ var loadData = function (canvas, params) {
             var data = [];
             var cat = [];
             for (var i in r['filted']) {
-                cat.push(i);
                 data.push(r['filted'][i]);
+            }
+            for (var i in r['keys']) {
+                cat.push(r['keys'][i]);
             }
             if (count-- == $('.dashboard [data-url]').length) {
                 var axis = $('#canvas').highcharts().xAxis;
@@ -24,6 +26,16 @@ var loadData = function (canvas, params) {
                 name: $(o).data('title'),
                 data: data
             }, false);
+            if (r['compared']) {
+                var data = [];
+                for (var i in r['compared']) {
+                    data.push(r['compared'][i]);
+                }
+                $(canvas).highcharts().addSeries({
+                    name: $(o).data('title'),
+                    data: data
+                }, false);
+            }
             if (!count) {
                 $(canvas).highcharts().redraw();
             }

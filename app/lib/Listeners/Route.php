@@ -53,7 +53,7 @@ class Route implements ListenerInterface
         } else {
             $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
         }
-        $controller = new $className();
+        $controller = new $className;
         $this->getContainer()->get('response')->setData($controller->dispatch($request, $routeMatch));
     }
 

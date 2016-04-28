@@ -1,16 +1,16 @@
 ---
 admin:
-    -
+    dashboard:
         icon: tachometer
         link: dashboard
         title: Dashboard
         priority: 0
-    -
+    cache:
         icon: database
         link: cache
         title: Cache Management
         priority: 150
-    -
+    permissions:
         icon: users
         title: Permissions
         priority: 200
@@ -43,3 +43,12 @@ admin:
                 link: operation/edit/
                 title: Add New Operation
                 priority: 60
+    system:
+        icon: cogs
+        title: System Configuration
+        priority: 900
+        children:
+            -
+                link: config/global/
+                title: Global Configuration
+                priority: 0

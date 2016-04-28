@@ -207,6 +207,13 @@ abstract class ActionController
         return (array) $segment->getMessage();
     }
 
+    /**
+     * Get layout
+     * 
+     * @param string $handler
+     * @param bool $render
+     * @return \Seahinet\Lib\ViewModel\Root|array
+     */
     protected function getLayout($handler, $render = true)
     {
         return $this->getContainer()->get('layout')->getLayout($handler, $render);

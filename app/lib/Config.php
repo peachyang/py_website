@@ -13,7 +13,8 @@ use Symfony\Component\Yaml\Parser;
 final class Config extends ArrayObject implements Singleton
 {
 
-    use Traits\DB,
+    use Traits\Container,
+        Traits\DB,
         Traits\ArrayMerge;
 
     protected static $instance = null;
@@ -120,12 +121,12 @@ final class Config extends ArrayObject implements Singleton
             ];
         }
         $result = isset($array[$this->keys['l']]) ?
-                    $array[$this->keys['l']] :
-                    (isset($array[$this->keys['s']]) ?
-                            $array[$this->keys['s']] :
-                            (isset($array[$this->keys['m']]) ?
-                                    $array[$this->keys['m']] :
-                                    $array));
+                $array[$this->keys['l']] :
+                (isset($array[$this->keys['s']]) ?
+                        $array[$this->keys['s']] :
+                        (isset($array[$this->keys['m']]) ?
+                                $array[$this->keys['m']] :
+                                $array));
         return $result;
     }
 
@@ -152,5 +153,5 @@ final class Config extends ArrayObject implements Singleton
             return parent::offsetGet($key);
         }
     }
-    
+
 }

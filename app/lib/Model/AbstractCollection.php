@@ -29,7 +29,8 @@ use Zend\Stdlib\ArrayObject;
 abstract class AbstractCollection extends ArrayObject
 {
 
-    use \Seahinet\Lib\Traits\DB,
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB,
         \Seahinet\Lib\Traits\DataCache;
 
     /**
@@ -135,7 +136,7 @@ abstract class AbstractCollection extends ArrayObject
         }
         return $this;
     }
-    
+
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {

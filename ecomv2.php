@@ -183,4 +183,18 @@ CREATE TABLE IF NOT EXISTS `email_template_language`(
     CONSTRAINT FK_EMAIL_TAMPLATE_LANGUAGE_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `core_schedule`(
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Schedule ID',
+    `code` VARCHAR(255) NOT NULL COMMENT 'Run code',
+    `status` CHAR(1) NOT NULL DEFAULT '0' COMMENT 'Is job finished',
+    `messages` TEXT COMMENT 'Exception',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    `scheduled_at` TIMESTAMP DEFAULT NULL COMMENT 'Scheduled time',
+    `executed_at` TIMESTAMP DEFAULT NULL COMMENT 'Executed time',
+    `finished_at` TIMESTAMP DEFAULT NULL COMMENT 'Finishd time',
+    PRIMARY KEY (`id`),
+    INDEX IDX_CORE_SCHEDULE_STATUS (`status`),
+    INDEX IDX_CORE_SCHEDULE_SCHEDULED_AT (`scheduled_at`)
+);
+
 SET FOREIGN_KEY_CHECKS = 1;

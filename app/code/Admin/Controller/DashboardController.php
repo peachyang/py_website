@@ -7,7 +7,7 @@ use Seahinet\Lib\Controller\AuthActionController;
 
 class DashboardController extends AuthActionController
 {
-
+    
     public function indexAction()
     {
         return $this->getLayout('admin_dashboard');
@@ -18,8 +18,6 @@ class DashboardController extends AuthActionController
         $filter = $this->getRequest()->getQuery('filter', 'd');
         $cache = $this->getContainer()->get('cache');
         $visitors = $cache->fetch('UV', 'STAT_');
-        $start = $this->translate('Start Date');
-        $end = $this->translate('End Date');
         if ($filter === 'd') {
             $filted = array_fill(1, 24, 0);
         } else if ($filter === 'm') {
@@ -27,7 +25,7 @@ class DashboardController extends AuthActionController
         } else if ($filter === 'y') {
             $filted = array_fill(1, 12, 0);
         } else {
-            $filted = [$start => 0, $end => 0];
+            $filted = [];
             $from1 = strtotime($this->getRequest()->getQuery('from1', 0));
             $from2 = strtotime($this->getRequest()->getQuery('from2', 0));
             $to1 = strtotime($this->getRequest()->getQuery('to1', 0));
@@ -38,10 +36,12 @@ class DashboardController extends AuthActionController
             'daily' => 0,
             'monthly' => 0,
             'yearly' => 0,
-            'filted' => $filted
+            'filted' => $filted,
+            'keys' => array_keys($filted)
         ];
         if ($visitors) {
-            $current = new DateTime();
+            $current = new DateTime;
+            $keys = [];
             foreach ($visitors as $time => $count) {
                 if (is_numeric($time)) {
                     $time = date('Y-m-d h:0:0', $time);
@@ -68,14 +68,28 @@ class DashboardController extends AuthActionController
                 }
                 if ($filter === 'c') {
                     $ts = $time->getTimestamp();
+                    $key = date('Y-m-d', $ts);
+                    $result['compared'] = [];
                     if ($ts >= $from1 && $ts <= $to1) {
-                        $result['filted'][$start] += $count;
+                        if (!isset($result['filted'][$key])) {
+                            $result['filted'][$key] = 0;
+                        }
+                        $result['compared'][$key] = null;
+                        $result['filted'][$key] += $count;
+                        $keys[$key] = 1;
                     }
                     if ($ts >= $from2 && $ts <= $to2) {
-                        $result['filted'][$end] += $count;
+                        if (!isset($result['compared'][$key]) || is_null($result['compared'][$key])) {
+                            $result['compared'][$key] = 0;
+                        }
+                        $result['compared'][$key] += $count;
+                        $keys[$key] = 1;
                     }
                 }
                 $result['amount'] += $count;
+            }
+            if(!empty($keys)){
+                $result['keys'] = array_keys($keys);
             }
         }
         return $result;

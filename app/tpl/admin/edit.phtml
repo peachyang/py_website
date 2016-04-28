@@ -7,80 +7,11 @@ $elements = $this->getVariable('elements');
         <?php echo $this->getChild('tabs') ?>
         <div class="page-content table tab-pane fade active in" id="main-tab">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <?php foreach ($elements as $key => $item): ?>
-                <?php if ($item['type'] === 'hidden'): ?>
-                    <input type="hidden" name="<?php echo $key ?>" value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" />
-                    <?php
-                    continue;
-                endif;
-                ?>
-                <div class="input-box">
-                    <?php if (isset($item['label'])): ?>
-                        <label for="<?php echo $key ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
-                            <?php echo $this->translate($item['label']) ?>
-                        </label>
-                    <?php endif ?>
-                    <div class="cell">
-                        <?php if ($item['type'] === 'select'): ?>
-                            <select name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
-                            if (!isset($item['attrs']['class'])):
-                                ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                                        if (isset($item['class'])) {
-                                            echo $item['class'];
-                                        }
-                                        ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>>
-                                        <?php if (!isset($item['required']) || !$item['required']): ?>
-                                    <option><?php echo $this->translate(isset($item['empty_string']) ? $item['empty_string'] : 'Please Select') ?></option>
-                                <?php endif ?>
-                                <?php
-                                foreach ($item['options'] as $value => $label):
-                                    if (is_array($label)):
-                                        ?>
-                                        <optgroup label="<?php echo $value ?>">
-                                            <?php foreach ($label as $v => $l): ?>
-                                                <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
-                                            <?php endforeach; ?>
-                                        </optgroup>
-                                    <?php else: ?>
-                                        <option value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            </select>
-                        <?php elseif ($item['type'] === 'radio' || $item['type'] === 'checkbox'): ?>
-                            <?php foreach ($item['options'] as $value => $label): ?>
-                                <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key, '-', $value ?>"<?php
-                                if (!isset($item['attrs']['class'])):
-                                    ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                                           if (isset($item['class'])) {
-                                               echo $item['class'];
-                                           }
-                                           ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>/>
-                                <label for="<?php echo $key, '-', $value ?>" class="control-label"><?php echo $label ?></label>
-                            <?php endforeach ?>
-                        <?php elseif ($item['type'] === 'textarea'): ?>
-                            <textarea name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
-                            if (!isset($item['attrs']['class'])):
-                                ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                                          if (isset($item['class'])) {
-                                              echo $item['class'];
-                                          }
-                                          ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
-                                      <?php
-                                  elseif ($item['type'] === 'widget' && isset($item['widget'])):
-                                      echo $this->{$item['widget']};
-                                  else:
-                                      ?>
-                            <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
-                            if (!isset($item['attrs']['class'])):
-                                ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                                       if (isset($item['class'])) {
-                                           echo $item['class'];
-                                       }
-                                       ?>"<?php endif ?> value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php if (isset($item['attrs'])) echo $this->getAttrs($item['attrs']) ?>/>
-                               <?php endif ?>
-                    </div>
-                </div>
-            <?php endforeach ?>
+            <?php
+            foreach ($elements as $key => $item) {
+                echo $this->getInputBox($key, $item);
+            }
+            ?>
         </div>
         <div class="buttons-set">
             <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>

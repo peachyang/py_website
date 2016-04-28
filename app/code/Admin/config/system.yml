@@ -1,0 +1,14 @@
+---
+global:
+    label: Global Configuration
+    children:
+        base_url:
+            type: url
+            required: required
+            label: Base Url
+            priority: 10
+        admin_path:
+            type: text
+            required: required
+            label: Backend Path
+            priority: 20

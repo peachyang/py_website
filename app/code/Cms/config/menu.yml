@@ -1,8 +1,8 @@
 ---
 admin:
-    -
+    cms:
         icon: television
-        title: 'CMS'
+        title: CMS
         priority: 10
         children:
             -

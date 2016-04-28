@@ -1,26 +1,38 @@
 <?php
 $tabs = $this->getTabs();
 if (count($tabs)):
+    $flag = $this->getMainTabLabel();
     ?>
     <ul class="nav nav-tabs clearfix" role="tablist">
-        <li role="presentation" class="active">
-            <a href="#main-tab" aria-controls="main-tab" role="tab" data-toggle="tab">
-                <?php echo $this->translate($this->getMainTabLabel()) ?>
-            </a>
-        </li>
+        <?php if ($flag): ?>
+            <li role="presentation" class="active">
+                <a href="#main-tab" aria-controls="main-tab" role="tab" data-toggle="tab">
+                    <?php echo $this->translate($this->getMainTabLabel()) ?>
+                </a>
+            </li>
+        <?php endif ?>
         <?php foreach ($this->getTabs() as $id => $tab): ?>
-            <li role="presentation">
+            <li role="presentation"<?php
+            if (!$flag) {
+                echo ' class="active"';
+                $flag = true;
+            }
+            ?>>
                 <a href="#<?php echo $id ?>" aria-controls="profile" role="tab" data-toggle="tab">
                     <?php echo $this->translate($tab) ?>
                 </a>
             </li>
         <?php endforeach ?>
     </ul>
-    <?php foreach ($this->getTabs() as $id => $tab): ?>
-        <div role="tabpanel" class="tab-pane table fade" id="<?php echo $id ?>">
-            <?php echo $this->$id ?>
-        </div>
-        <?php
+    <?php
+    foreach ($this->getTabs() as $id => $tab):
+        if ($this->hasTab($id)):
+            ?>
+            <div role="tabpanel" class="tab-pane table fade" id="<?php echo $id ?>">
+                <?php echo $this->$id ?>
+            </div>
+            <?php
+        endif;
     endforeach;
 endif;
 ?>

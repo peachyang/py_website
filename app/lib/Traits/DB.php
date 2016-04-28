@@ -11,8 +11,6 @@ use Zend\Db\TableGateway\TableGateway;
 trait DB
 {
 
-    use Container;
-
     /**
      * @var TableGateway
      */
@@ -22,6 +20,11 @@ trait DB
      * @var ConnectionInterface
      */
     protected $connection = null;
+
+    /**
+     * @var bool
+     */
+    protected $transaction = false;
 
     /**
      * @param string|TableIdentifier|array $table
@@ -37,8 +40,8 @@ trait DB
 
     protected function getConnection()
     {
-        if (is_null($this->connection) && !is_null($this->tableGateway)) {
-            $this->connection = $this->tableGateway->getAdapter()->getDriver()->getConnection();
+        if (is_null($this->connection)) {
+            $this->connection = $this->getContainer()->get('dbAdapter')->getDriver()->getConnection();
         }
         return $this->connection;
     }
@@ -95,17 +98,22 @@ trait DB
     protected function beginTransaction()
     {
         $this->getConnection()->beginTransaction();
-        return $this;
-    }
-    
-    protected function commit(){
-        $this->getConnection()->commit();
+        $this->transaction = true;
         return $this;
     }
 
-    protected function rollback(){
-        $this->getConnection()->rollback();
+    protected function commit()
+    {
+        $this->getConnection()->commit();
+        $this->transaction = false;
         return $this;
     }
-    
+
+    protected function rollback()
+    {
+        $this->getConnection()->rollback();
+        $this->transaction = false;
+        return $this;
+    }
+
 }

@@ -46,6 +46,12 @@ class Role extends AbstractModel
         parent::afterLoad();
     }
 
+    protected function beforeSave()
+    {
+        $this->beginTransaction();
+        parent::beforeSave();
+    }
+    
     protected function afterSave()
     {
         if (!empty($this->storage['child_id'])) {
@@ -70,6 +76,7 @@ class Role extends AbstractModel
         $this->flushList('admin_operation\\');
         $this->getCacheObject()->delete($this->storage['name'], 'RBAC_ROLE_');
         parent::afterSave();
+        $this->commit();
     }
 
     protected function addChildren($children, $parent, $pid)

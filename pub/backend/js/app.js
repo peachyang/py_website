@@ -127,5 +127,15 @@
         if ($('.message-box>.alert').length) {
             addMessages();
         }
+        $('select.scope option').each(function () {
+            var next = $(this).next();
+            var hasM = $(this).nextAll('[value^=m]').length;
+            var prefix = hasM ? '&#x2502;' : '&#x3000;';
+            if ($(this).is('[value^=s]')) {
+                $(this).prepend(hasM ? '&#x251c;' : '&#x2514;');
+            } else if ($(this).is('[value^=l]')) {
+                $(this).prepend(prefix + (next && $(next).is('[value^=l]') ? '&#x251c;' : '&#x2514;'));
+            }
+        });
     });
 })(jQuery);

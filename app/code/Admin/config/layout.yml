@@ -187,7 +187,7 @@ admin_dashboard:
                 action:
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/highcharts.src.js
+                        params: pub/backend/js/highcharts/highcharts.js
                     -
                         method: addScript
                         params: pub/backend/js/highcharts/modules/exporting.js
@@ -418,4 +418,17 @@ admin_language_merchant:
                                 params: [{link:':ADMIN/language/merchant/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Language\Merchant
-
+admin_config:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Config
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                            scope:
+                                type: Seahinet\Admin\ViewModel\Language
+                                template: admin/scope

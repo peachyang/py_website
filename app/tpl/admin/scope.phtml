@@ -1,22 +1,44 @@
-<label><?php echo $this->translate('Scope') ?>: </label>
-<select class="scope">
-    <?php
-    $cm = false;
-    $cs = false;
-    foreach ($this->getVariable('collection') as $item):
-        if ($item['merchant_id'] !== $cm):
+<?php
+$uri = $this->getUri();
+$scope = $this->getQuery('scope');
+$scopeId = $this->getQuery('scope_id');
+?>
+<div class="scope dropdown">
+    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+        <?php echo $this->translate('Scope') ?>: 
+        <span></span>
+    </a>
+    <ul class="dropdown-menu">
+        <?php
+        $cm = false;
+        $cs = false;
+        foreach ($this->getVariable('collection') as $item):
+            if ($item['merchant_id'] !== $cm):
+                ?>
+                <li class="scope-merchant<?php if ($scope === 'merchant' && $scopeId === $item['merchant_id']): ?> selected<?php endif ?>" data-id="<?php echo $item['merchant_id'] ?>">
+                    <a href="<?php echo $uri->withQuery('scope=merchant&scope_id=' . $item['merchant_id']) ?>">
+                        <?php echo $item['merchant'] ?>
+                    </a>
+                </li>
+                <?php
+                $cm = $item['merchant_id'];
+            endif;
+            if ($item['store_id'] !== $cs):
+                ?>
+                <li class="scope-store<?php if ($scope === 'store' && $scopeId === $item['store_id']): ?> selected<?php endif ?>" data-id="<?php echo $item['store_id'] ?>">
+                    <a href="<?php echo $uri->withQuery('scope=store&scope_id=' . $item['store_id']) ?>">
+                        <?php echo $item['store'] ?>
+                    </a>
+                </li>
+                <?php
+                $cs = $item['store_id'];
+            endif;
             ?>
-            <option value="m<?php echo $item['merchant_id'] ?>"><?php echo $item['merchant'] ?></option>
-            <?php
-            $cm = $item['merchant_id'];
-        endif;
-        if ($item['store_id'] !== $cs):
-            ?>
-            <option value="s<?php echo $item['store_id'] ?>"><?php echo $item['store'] ?></option>
-            <?php
-            $cs = $item['store_id'];
-        endif;
-        ?>
-        <option value="l<?php echo $item['language_id'] ?>"><?php echo $item['language'] ?></option>
-    <?php endforeach ?>
-</select>
+            <li class="scope-language<?php if ($scope === 'language' && $scopeId === $item['language_id']): ?> selected<?php endif ?>" data-id="<?php echo $item['language_id'] ?>">
+                <a href="<?php echo $uri->withQuery('scope=language&scope_id=' . $item['language_id']) ?>">
+                    <?php echo $item['language'] ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

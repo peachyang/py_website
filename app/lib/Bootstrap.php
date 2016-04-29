@@ -158,12 +158,12 @@ final class Bootstrap
                 }
             }
             if (is_null(static::$language)) {
-                static::$language = static::getStore($server, $segment)->getLanguage();
+                static::$language = static::getMerchant($server, $segment)->getLanguage();
                 $code = static::$language['code'];
             }
             $segment->set('language', $code);
             if (!isset($_COOKIE['language']) || $_COOKIE['language'] !== $code) {
-                static::getContainer()->get('response')->withHeader('Set-Cookie', 'language=zh_CN; path=/ ');
+                @setcookie('language', $code, 0, '/');
             }
         }
         return static::$language;
@@ -178,23 +178,21 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            if (!is_null(static::$language) && static::$language['store_id']) {
-                static::$store = new Store();
-                static::$store->load(static::$language['store_id']);
-            } else {
-                $code = $segment->get('store') ? : (isset($server['store']) ? : null);
-                if (is_string($code)) {
-                    $store = new Store;
-                    $store->load($code, 'code');
-                    if ($store->getId()) {
-                        static::$store = $store;
-                    }
+            $code = $segment->get('store') ? : (isset($_COOKIE['store']) ? $_COOKIE['store'] : (isset($server['store']) ? : null));
+            if (is_string($code)) {
+                $store = new Store;
+                $store->load($code, 'code');
+                if ($store->getId()) {
+                    static::$store = $store;
                 }
-                if (is_null(static::$store)) {
-                    static::$store = static::getMerchant($server, $segment)->getStore();
-                    $code = static::$store['code'];
-                }
-                $segment->set('store', $code);
+            }
+            if (is_null(static::$store)) {
+                static::$store = static::getMerchant($server, $segment)->getStore();
+                $code = static::$store['code'];
+            }
+            $segment->set('store', $code);
+            if (!isset($_COOKIE['store']) || $_COOKIE['store'] !== $code) {
+                @setcookie('store', $code, 0, '/');
             }
         }
         return static::$store;
@@ -209,7 +207,10 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            if (!is_null(static::$store) && static::$store['merchant_id']) {
+            if (!is_null(static::$language) && static::$language['merchant_id']) {
+                static::$merchant = new Merchant();
+                static::$merchant->load(static::$language['merchant_id']);
+            } else if (!is_null(static::$store) && static::$store['merchant_id']) {
                 static::$merchant = new Merchant();
                 static::$merchant->load(static::$store['merchant_id']);
             } else {

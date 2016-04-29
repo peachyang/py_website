@@ -10,14 +10,14 @@ class Language implements SourceInterface
     public function getSourceArray()
     {
         $collection = new Collection;
-        $collection->join('core_store', 'core_store.id=store_id', ['store' => 'code'], 'left');
-        $collection->where(['core_store.status' => 1, 'core_language.status' => 1]);
+        $collection->join('core_merchant', 'core_merchant.id=merchant_id', ['merchant' => 'code'], 'left');
+        $collection->where(['core_merchant.status' => 1, 'core_language.status' => 1]);
         $result = [];
         foreach ($collection as $item) {
-            if (!isset($result[$item['store']])) {
-                $result[$item['store']] = [];
+            if (!isset($result[$item['merchant']])) {
+                $result[$item['merchant']] = [];
             }
-            $result[$item['store']][$item['id']] = $item['name'];
+            $result[$item['merchant']][$item['id']] = $item['name'];
         }
         return $result;
     }

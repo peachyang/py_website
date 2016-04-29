@@ -29,6 +29,16 @@ abstract class AbstractViewModel implements Serializable
     protected $csrf = null;
 
     /**
+     * @var array
+     */
+    protected $query = null;
+
+    /**
+     * @var \Seahinet\Lib\Http\Uri
+     */
+    protected $uri = null;
+
+    /**
      * @var string
      */
     protected $template = null;
@@ -219,7 +229,7 @@ abstract class AbstractViewModel implements Serializable
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
-        if($this instanceof Singleton){
+        if ($this instanceof Singleton) {
             static::$instance = $this;
         }
     }
@@ -234,7 +244,18 @@ abstract class AbstractViewModel implements Serializable
 
     public function getQuery($key = null, $default = '')
     {
-        return $this->getRequest()->getQuery($key, $default);
+        if (is_null($this->query)) {
+            $this->query = $this->getRequest()->getQuery();
+        }
+        return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
+    }
+
+    public function getUri()
+    {
+        if (is_null($this->uri)) {
+            $this->uri = $this->getRequest()->getUri();
+        }
+        return $this->uri;
     }
 
     public function isAdminPage()

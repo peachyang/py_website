@@ -429,6 +429,3 @@ admin_config:
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
-                            scope:
-                                type: Seahinet\Admin\ViewModel\Language
-                                template: admin/scope

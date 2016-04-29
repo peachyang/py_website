@@ -11,11 +11,6 @@ class Pager extends AbstractViewModel
 {
 
     /**
-     * @var \Seahinet\Lib\Http\Uri
-     */
-    protected $uri = null;
-
-    /**
      * @var AbstractCollection 
      */
     protected $collection = null;
@@ -111,17 +106,6 @@ class Pager extends AbstractViewModel
             $this->showLabel = $flag;
         }
         return $this->showLabel;
-    }
-
-    /**
-     * @return \Seahinet\Lib\Http\Uri
-     */
-    protected function getUri()
-    {
-        if (is_null($this->uri)) {
-            $this->uri = $this->getRequest()->getUri();
-        }
-        return $this->uri;
     }
 
     /**

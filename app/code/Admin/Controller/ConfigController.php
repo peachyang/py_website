@@ -3,13 +3,12 @@
 namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Lib\Model\Config as Model;
 
 class ConfigController extends AuthActionController
 {
 
     use \Seahinet\Lib\Traits\DB;
-    
+
     protected $key = null;
     protected $config = null;
 
@@ -48,16 +47,21 @@ class ConfigController extends AuthActionController
                 $key = $data['key'];
                 try {
                     $this->beginTransaction();
+                    $tableGateway = $this->getTableGateway('core_config');
+                    $scope = substr($data['scope'], 0, 1);
+                    $scope_id = substr($data['scope'], 1);
+                    $where = $scope === 'l' ?
+                            ['language_id' => $scope_id] :
+                            ($scope === 's' ? ['store_id' => $scope_id] :
+                                    ['merchant_id' => $scope_id]);
                     foreach ($data as $path => $value) {
-                        if ($path !== 'key' && $path !== 'csrf') {
-                            $model = new Model;
-                            $model->load($key . '/' . $path, 'path');
-                            $model->offsetSet('value', $value);
-                            $model->save();
+                        if (!in_array($path, ['key', 'csrf', 'scope'])) {
+                            $this->upsert(['value' => $value], $where + ['path' => $key . '/' . $path]);
                         }
                     }
                     $this->commit();
-                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                    $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
+                    $result['message'][] = ['message' => $this->translate('Configuration saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $this->rollback();

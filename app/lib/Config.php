@@ -145,10 +145,29 @@ final class Config extends ArrayObject implements Singleton
         return null;
     }
 
+    private function getDefaultConfig($path, $config)
+    {
+        if (count($path) > 1) {
+            $key = array_shift($path);
+            $config = isset($config[$key]) ? $config[$key] : null;
+            if (!is_null($config) && isset($config['children'])) {
+                return $this->getDefaultConfig($path, $config['children']);
+            }
+        } else if (isset($config[$path[0]]['default'])) {
+            return $config[$path[0]]['default'];
+        }
+        return null;
+    }
+
     public function offsetGet($key)
     {
         if (strpos($key, '/')) {
-            return $this->getConfigByPath(explode('/', trim($key, '/')));
+            $path = explode('/', trim($key, '/'));
+            $result = $this->getConfigByPath($path);
+            if (is_null($result)) {
+                $result = $this->getDefaultConfig($path, $this->storage['system']);
+            }
+            return $result;
         } else {
             return parent::offsetGet($key);
         }

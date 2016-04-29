@@ -32,11 +32,11 @@ else:
                             ?>
                             <optgroup label="<?php echo $value ?>">
                                 <?php foreach ($label as $v => $l): ?>
-                                    <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || $v == $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $l ?></option>
+                                    <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || (string)$v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
                                 <?php endforeach; ?>
                             </optgroup>
                         <?php else: ?>
-                            <option value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
+                            <option value="<?php echo $value ?>"<?php if (isset($item['value']) && (string)$value === $item['value']): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
                         <?php endif ?>
                     <?php endforeach ?>
                 </select>
@@ -72,6 +72,11 @@ else:
                            }
                            ?>"<?php endif ?> value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
                    <?php endif ?>
+                   <?php if (isset($item['comment'])): ?>
+                <div class="comment">
+                    <?php echo nl2br($this->translate($item['comment'])) ?>
+                </div>
+            <?php endif ?>
         </div>
     </div>
 <?php endif; ?>

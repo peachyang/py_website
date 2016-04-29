@@ -87,7 +87,7 @@ class Config extends Edit
             }
             return $result;
         }
-        $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default'])? : '');
+        $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default']) ? (string)$item['default'] : '');
         return $item;
     }
 

@@ -7,38 +7,14 @@ use Seahinet\Lib\ViewModel\AbstractViewModel;
 class Grid extends AbstractViewModel
 {
 
-    /**
-     * @var \Seahinet\Lib\Http\Uri
-     */
-    protected $uri = null;
-    protected $query = null;
     protected $count = null;
     protected $action = [];
     protected $messAction = [];
     protected $translateDomain = null;
 
-    /**
-     * @return \Seahinet\Lib\Http\Uri
-     */
-    protected function getUri()
-    {
-        if (is_null($this->uri)) {
-            $this->uri = $this->getRequest()->getUri();
-        }
-        return $this->uri;
-    }
-
     public function getCurrentUrl()
     {
         return $this->getUri()->withQuery('')->withFragment('')->__toString();
-    }
-
-    public function getQuery($key = null, $default = '')
-    {
-        if (is_null($this->query)) {
-            $this->query = parent::getQuery();
-        }
-        return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
     }
 
     public function __construct()

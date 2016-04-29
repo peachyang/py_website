@@ -72,13 +72,31 @@ trait DB
 
     /**
      * @param  array $set
-     * @param  string|array|\Closure $where
+     * @param  Where|string|array|\Closure $where
      * @return int
      */
     public function update($set, $where = null)
     {
         if (!is_null($this->tableGateway)) {
             return $this->tableGateway->update($set, $where);
+        }
+        return 0;
+    }
+
+    /**
+     * @param array $set
+     * @param Where|string|array|\Closure $where
+     * @return int
+     */
+    public function upsert($set, $where)
+    {
+        if (!is_null($this->tableGateway)) {
+            $select = $this->select($where)->toArray();
+            if (count($select)) {
+                return $this->update($set, $where);
+            } else {
+                return $this->insert($set + $where);
+            }
         }
         return 0;
     }

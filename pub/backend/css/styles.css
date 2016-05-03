@@ -89,7 +89,7 @@ label,.label{vertical-align:top}
 .form-control{display:block;width:100%;height:26px;padding:0 .75em;font-size:12px;line-height:26px;color:#555;background-color:#fff;background-image:none;border:1px solid #8b8c8c;transition:border-color ease-in-out .15s}
 .form-control:focus{border-color:#009fe9;outline:none}
 .form-control::-moz-placeholder,.form-control:-ms-input-placeholder,.form-control::-webkit-input-placeholder{color:#999}
-textarea.form-control,select[multiple].form-control{height:4em}
+textarea.form-control,select[multiple].form-control{height:4.25em;padding-top:.25em;padding-bottom:.25em}
 .form-inline .form-control,.form-control.captcha{display:inline-block;width:auto;vertical-align:top}
 .form-inline .control-label{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}

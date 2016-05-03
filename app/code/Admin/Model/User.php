@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
 
@@ -13,6 +14,7 @@ class User extends AbstractModel
 {
 
     protected $role = null;
+    protected $store = null;
 
     protected function _construct()
     {
@@ -24,6 +26,7 @@ class User extends AbstractModel
         $storage = [
             'id' => $this->storage['id'],
             'role_id' => $this->storage['role_id'],
+            'store_id' => $this->storage['store_id'],
             'username' => $this->storage['username'],
             'email' => $this->storage['email']
         ];
@@ -60,6 +63,18 @@ class User extends AbstractModel
             }
         }
         return $this->role;
+    }
+
+    public function getStore()
+    {
+        if (is_null($this->store) && $this->offsetGet('store_id')) {
+            $store = new Store;
+            $store->load($this->offsetGet('store_id'));
+            if ($store->getId()) {
+                $this->store = $store;
+            }
+        }
+        return $this->store;
     }
 
     protected function beforeSave()

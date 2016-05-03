@@ -4,7 +4,9 @@ namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
 use Seahinet\Cms\Source\Page;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
+use Seahinet\Lib\Source\Store;
 
 class PageEdit extends Edit
 {
@@ -31,6 +33,7 @@ class PageEdit extends Edit
     protected function prepareElements($columns = [])
     {
         $model = $this->getVariable('model');
+        $user = (new Segment('admin'))->get('user');
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -41,6 +44,15 @@ class PageEdit extends Edit
                 'label' => 'Parent ID',
                 'empty_string' => '(NULL)'
             ],
+            'store_id' => ($user->getStore() ? [
+                'type' => 'hidden',
+                'value' => $user->getStore()->getId()
+                    ] : [
+                'type' => 'select',
+                'options' => (new Store)->getSourceArray(),
+                'label' => 'Store',
+                'empty_string' => '(NULL)'
+                    ]),
             'title' => [
                 'type' => 'text',
                 'label' => 'Title',

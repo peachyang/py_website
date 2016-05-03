@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model;
 
 use Seahinet\Lib\Model\Collection\Store as StoreCollection;
+use Seahinet\Lib\Model\Collection\Language as LanguageCollection;
 
 class Merchant extends AbstractModel
 {

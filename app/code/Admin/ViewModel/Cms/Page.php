@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Cms\Model\Collection\Page as Collection;
+use Seahinet\Lib\Session\Segment;
 
 class Page extends Grid
 {
@@ -79,7 +80,12 @@ class Page extends Grid
 
     protected function prepareCollection($collection = null)
     {
-        return parent::prepareCollection(new Collection);
+        $user = (new Segment('admin'))->get('user');
+        $collection = new Collection;
+        if ($user->getStore()) {
+            $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        return parent::prepareCollection($collection);
     }
 
 }

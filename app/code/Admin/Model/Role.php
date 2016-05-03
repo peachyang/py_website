@@ -22,8 +22,9 @@ class Role extends AbstractModel
         return !is_null($this->role) && $this->role->hasPermission('ALL') || $this->role->hasPermission($name);
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result = [])
     {
+        parent::afterLoad($result);
         $cache = $this->getContainer()->get('cache');
         $this->role = $cache->fetch($this->offsetGet('name'), 'RBAC_ROLE_');
         if (!$this->role) {
@@ -43,7 +44,6 @@ class Role extends AbstractModel
             $this->addChildren($children, $this->role, $this->getId());
             $cache->save($this->offsetGet('name'), $this->role, 'RBAC_ROLE_');
         }
-        parent::afterLoad();
     }
 
     protected function beforeSave()

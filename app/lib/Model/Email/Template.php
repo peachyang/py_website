@@ -23,11 +23,11 @@ class Template extends AbstractModel
 
     protected function afterLoad()
     {
+        parent::afterLoad();
         $data = @gzdecode($this->storage['content']);
         if ($data !== false) {
             $this->storage['content'] = $data;
         }
-        parent::afterLoad();
     }
 
     /**

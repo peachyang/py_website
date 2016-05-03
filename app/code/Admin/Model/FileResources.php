@@ -66,36 +66,8 @@ class FileResources extends AbstractModel
             'max_height' => null,
             'min_width' => 1,
             'min_height' => 1,
-            // Set the following option to false to enable resumable uploads:
-            'discard_aborted_uploads' => true,
-            // Set to 0 to use the GD library to scale and orient images,
-            // set to 1 to use imagick (if installed, falls back to GD),
-            // set to 2 to use the ImageMagick convert binary directly:
-            'image_library' => 1,
-            // Uncomment the following to define an array of resource limits
-            // for imagick:
-            /*
-             'imagick_resource_limits' => array(
-                 imagick::RESOURCETYPE_MAP => 32,
-                 imagick::RESOURCETYPE_MEMORY => 32
-             ),
-        */
-            // Command or path for to the ImageMagick convert binary:
-            'convert_bin' => 'convert',
-            // Uncomment the following to add parameters in front of each
-            // ImageMagick convert call (the limit constraints seem only
-            // to have an effect if put in front):
-                /*
-        'convert_params' => '-limit memory 32MiB -limit map 32MiB',
-        */
-            // Command or path for to the ImageMagick identify binary:
-            'identify_bin' => 'identify',
+            
             'image_versions' => array(
-                // The empty image version key defines options for the original image:
-                '' => array(
-                    // Automatically rotate images based on EXIF meta data:
-                    'auto_orient' => true
-                ),
                 // Uncomment the following to create medium sized images:
                 /*
                 'medium' => array(
@@ -117,8 +89,7 @@ class FileResources extends AbstractModel
                 'max_width' => 80,
                 'max_height' => 80
             )
-        ),
-        'print_response' => true
+        )
         );
     
     }
@@ -126,7 +97,11 @@ class FileResources extends AbstractModel
     
     
     
-    
+    public function post(){
+        
+        
+        
+    }
     
           
     protected function beforeSave()

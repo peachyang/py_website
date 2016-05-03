@@ -27,7 +27,7 @@ class Router extends Route
             } else {
                 $options['action'] = 'index';
             }
-            if (class_exists($options['namespace'] . '\\' . $options['controller']) && is_callable([$options['namespace'] . '\\' . $options['controller'], $options['action'] . 'Action'])) {
+            if (class_exists($options['namespace'] . '\\' . $options['controller'])) {
                 return new RouteMatch($options, $request);
             }
         }

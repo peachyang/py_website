@@ -3,19 +3,20 @@
 namespace Seahinet\Lib\Stdlib;
 
 use ArrayAccess;
+use ArrayIterator;
+use IteratorAggregate;
 use Serializable;
 
 /**
  * Simplify PHP ArrayObject
- * It is not Traversable
  */
-class ArrayObject implements ArrayAccess, Serializable
+class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
 {
 
     /**
      * @var array
      */
-    protected $storage;
+    protected $storage = [];
 
     /**
      * Returns the value at the specified key by reference
@@ -120,7 +121,10 @@ class ArrayObject implements ArrayAccess, Serializable
      */
     public function serialize()
     {
-        return serialize($this->storage);
+        return serialize(array_filter(get_object_vars($this), function($value) {
+                    return !is_object($value);
+                })
+        );
     }
 
     /**
@@ -129,9 +133,12 @@ class ArrayObject implements ArrayAccess, Serializable
      * @param  string $data
      * @return void
      */
-    public function unserialize($serialized)
+    public function unserialize($data)
     {
-        $this->storage = unserialize($serialized);
+        $data = unserialize($data);
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
         if ($this instanceof Singleton) {
             static::$instance = $this;
         }
@@ -143,6 +150,22 @@ class ArrayObject implements ArrayAccess, Serializable
     public function toArray()
     {
         return $this->storage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->storage);
     }
 
 }

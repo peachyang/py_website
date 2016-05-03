@@ -27,7 +27,7 @@ class IndexController extends ActionController
     {
         $segment = new Segment('admin');
         if ($segment->get('isLoggedin')) {
-            if ($segment->get('user')->getRole()->hasPermission('Seahinet\\Admin\\Controller\\DashboardController::indexAction')) {
+            if ($segment->get('user')->getRole()->hasPermission('Admin\\Dashboard::index')) {
                 return $this->redirect(':ADMIN/dashboard/');
             } else {
                 return $this->redirect(':ADMIN/user/');

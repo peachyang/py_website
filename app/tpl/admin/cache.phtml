@@ -2,7 +2,7 @@
     <table class="table table-hover table-striped table-no-border">
         <thead class="sort-by">
             <tr>
-                <th class="checkbox"><input type="checkbox" /></th>
+                <th class="checkbox"><input type="checkbox" class="selectall" /></th>
                 <th><?php echo $this->translate('Identifier') ?></th>
                 <th><?php echo $this->translate('Action') ?></th>
             </tr>
@@ -31,7 +31,7 @@
         <tfoot>
             <tr>
                 <td class="checkbox">
-                    <input type="checkbox" />
+                    <input type="checkbox" class="selectall" />
                 </td>
                 <td colspan="2" class="text-left">
                     <a href="<?php echo $this->getFlushUrl() ?>" data-method="get" data-serialize=".grid tbody [name]"><?php echo $this->translate('Flush') ?></a>

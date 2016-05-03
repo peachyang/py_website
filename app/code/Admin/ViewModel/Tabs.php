@@ -25,9 +25,19 @@ class Tabs extends AbstractViewModel
         return $this;
     }
 
+    public function hasTab($id)
+    {
+        return isset($this->tabs[$id]);
+    }
+
+    public function addTab($id, $tab)
+    {
+        return $this->tabs[$id] = $tab;
+    }
+
     public function getMainTabLabel()
     {
-        return 'Info';
+        return false;
     }
 
 }

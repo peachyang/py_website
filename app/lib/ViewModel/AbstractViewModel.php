@@ -29,6 +29,16 @@ abstract class AbstractViewModel implements Serializable
     protected $csrf = null;
 
     /**
+     * @var array
+     */
+    protected $query = null;
+
+    /**
+     * @var \Seahinet\Lib\Http\Uri
+     */
+    protected $uri = null;
+
+    /**
      * @var string
      */
     protected $template = null;
@@ -50,12 +60,7 @@ abstract class AbstractViewModel implements Serializable
 
     public function __toString()
     {
-        try {
-            return $this->render();
-        } catch (\Exception $e) {
-            $this->getContainer()->get('log')->logException($e);
-            return '';
-        }
+        return $this->render();
     }
 
     /**
@@ -66,28 +71,33 @@ abstract class AbstractViewModel implements Serializable
      */
     public function render()
     {
-        if (is_null($this->getTemplate())) {
-            return $this instanceof JsonSerializable ? $this->jsonSerialize() : '';
-        }
-        if ($this->getCacheKey()) {
-            $lang = $this->getContainer()->get('language')['code'];
-            $cache = $this->getContainer()->get('cache');
-            $rendered = $cache->fetch($lang . $this->getCacheKey(), 'VIEWMODEL_RENDERED_');
-            if ($rendered) {
-                return $rendered;
+        try {
+            if (is_null($this->getTemplate())) {
+                return $this instanceof JsonSerializable ? $this->jsonSerialize() : '';
             }
+            if ($this->getCacheKey()) {
+                $lang = $this->getContainer()->get('language')['code'];
+                $cache = $this->getContainer()->get('cache');
+                $rendered = $cache->fetch($lang . $this->getCacheKey(), 'VIEWMODEL_RENDERED_');
+                if ($rendered) {
+                    return $rendered;
+                }
+            }
+            if ($this->getContainer()->has('renderer')) {
+                $rendered = $this->getContainer()->get('renderer')->render($this->getTemplate(), $this);
+            } else if (file_exists(BP . 'app/tpl/' . $this->getTemplate() . '.phtml')) {
+                $rendered = $this->getRendered();
+            } else {
+                $rendered = '';
+            }
+            if ($this->getCacheKey()) {
+                $cache->save($lang . $this->getCacheKey(), $rendered, 'VIEWMODEL_RENDERED_');
+            }
+            return $rendered;
+        } catch (\Exception $e) {
+            $this->getContainer()->get('log')->logException($e);
+            return '';
         }
-        if ($this->getContainer()->has('renderer')) {
-            $rendered = $this->getContainer()->get('renderer')->render($this->getTemplate(), $this);
-        } else if (file_exists(BP . 'app/tpl/' . $this->getTemplate() . '.phtml')) {
-            $rendered = $this->getRendered();
-        } else {
-            $rendered = '';
-        }
-        if ($this->getCacheKey()) {
-            $cache->save($lang . $this->getCacheKey(), $rendered, 'VIEWMODEL_RENDERED_');
-        }
-        return $rendered;
     }
 
     /**
@@ -219,7 +229,7 @@ abstract class AbstractViewModel implements Serializable
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
-        if($this instanceof Singleton){
+        if ($this instanceof Singleton) {
             static::$instance = $this;
         }
     }
@@ -234,7 +244,18 @@ abstract class AbstractViewModel implements Serializable
 
     public function getQuery($key = null, $default = '')
     {
-        return $this->getRequest()->getQuery($key, $default);
+        if (is_null($this->query)) {
+            $this->query = $this->getRequest()->getQuery();
+        }
+        return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
+    }
+
+    public function getUri()
+    {
+        if (is_null($this->uri)) {
+            $this->uri = $this->getRequest()->getUri();
+        }
+        return $this->uri;
     }
 
     public function isAdminPage()

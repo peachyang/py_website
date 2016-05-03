@@ -33,13 +33,21 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .table-no-border th,.table-no-border td{border:none!important}
 .table-striped>tbody>tr:nth-child(even){background-color:#f9f9f9}
 .table-hover>tbody>tr:hover{background-color:#f5f5f5!important}
+.scope.dropdown{display:inline-block;margin:10px 0 0 20px}
+.scope.dropdown .dropdown-toggle{text-decoration:none;font-size:12px;line-height:1}
+.scope.dropdown .dropdown-toggle>span{display:inline-block;border:1px solid #ccc;padding:3px 6px}
+.scope.dropdown .dropdown-toggle>span:after{content:" ";display:inline-block;width:0;height:0;border:3px solid transparent;border-top-color:#666}
+.scope.dropdown .dropdown-menu{background:#fff;border:1px solid #ccc;margin-top:-1px;min-width:100%;padding:3px 0}
+.scope.dropdown .dropdown-menu a{display:block;font-size:12px;line-height:1.25;padding:0 .25em;white-space:nowrap}
+.scope.dropdown .dropdown-menu .scope-store a{padding-left:1em}
+.scope.dropdown .dropdown-menu .scope-language a{padding-left:2em}
 .modal-open{overflow:hidden;}
 .modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;display:none;overflow:hidden;-webkit-overflow-scrolling:touch;outline:0}
-.modal.fade .modal-dialog{-webkit-transition:-webkit-transform .3s ease-out;-o-transition:-o-transform .3s ease-out;transition:transform .3s ease-out;-webkit-transform:translate(0, -25%);-ms-transform:translate(0, -25%);-o-transform:translate(0, -25%);transform:translate(0, -25%)}
-.modal.in .modal-dialog{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transform:translate(0, 0);transform:translate(0, 0)}
+.modal.fade .modal-dialog{transition:-webkit-transform .3s ease-out;transition:transform .3s ease-out;transition:transform .3s ease-out, -webkit-transform .3s ease-out;-webkit-transform:translate(0, -25%);transform:translate(0, -25%)}
+.modal.in .modal-dialog{-webkit-transform:translate(0, 0);transform:translate(0, 0)}
 .modal-open .modal{overflow-x:hidden;overflow-y:auto}
 .modal-dialog{position:relative;width:auto;margin:10px}
-.modal-content{position:relative;background-color:#fff;-webkit-background-clip:padding-box;background-clip:padding-box;border:1px solid #999;border:1px solid rgba(0, 0, 0, .2);border-radius:6px;outline:0;-webkit-box-shadow:0 3px 9px rgba(0, 0, 0, .5);box-shadow:0 3px 9px rgba(0, 0, 0, .5)}
+.modal-content{position:relative;background-color:#fff;background-clip:padding-box;border:1px solid #999;border:1px solid rgba(0, 0, 0, .2);border-radius:6px;outline:0;box-shadow:0 3px 9px rgba(0, 0, 0, .5)}
 .modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1040;background-color:#000}
 .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
 .modal-backdrop.in{filter:alpha(opacity=50);opacity:.5}
@@ -81,7 +89,7 @@ label,.label{vertical-align:top}
 .form-control{display:block;width:100%;height:26px;padding:0 .75em;font-size:12px;line-height:26px;color:#555;background-color:#fff;background-image:none;border:1px solid #8b8c8c;transition:border-color ease-in-out .15s}
 .form-control:focus{border-color:#009fe9;outline:none}
 .form-control::-moz-placeholder,.form-control:-ms-input-placeholder,.form-control::-webkit-input-placeholder{color:#999}
-textarea.form-control,select[multiple].form-control{height:4em}
+textarea.form-control,select[multiple].form-control{height:4.25em;padding-top:.25em;padding-bottom:.25em}
 .form-inline .form-control,.form-control.captcha{display:inline-block;width:auto;vertical-align:top}
 .form-inline .control-label{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}
@@ -125,6 +133,9 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .header .top-menu .dropdown .dropdown-toggle{display:inline-block;width:44px;font-size:16px;text-align:center}
 .admin .header .top-menu .messages .badge{display:none;position:absolute;top:5px;left:5px;min-width:10px;padding:1px 4px;font-size:12px;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:middle;background-color:#F08300;border-radius:10px}
 .admin .header .top-menu .messages.has-message .badge{display:block}
+.admin .header .top-menu .messages.has-message .fa-bell{-webkit-transform-origin:center top;transform-origin:center top;-webkit-animation:bellring 1.2s infinite;animation:bellring 1.2s infinite}
+@-webkit-keyframes bellring{0%{-webkit-transform:rotate(30deg)}50%{-webkit-transform:rotate(-30deg)}100%{-webkit-transform:rotate(30deg)}}
+@keyframes bellring{0%{-webkit-transform:rotate(30deg);transform:rotate(30deg)}50%{-webkit-transform:rotate(-30deg);transform:rotate(-30deg)}100%{-webkit-transform:rotate(30deg);transform:rotate(30deg)}}
 .admin .header .top-menu .dropdown .dropdown-menu{display:none;right:-1px;width:10rem;border-radius:0 0 5px 5px;padding:5px 0;border:1px solid #e7e7e7;background:#fff}
 .admin .header .top-menu .messages.open.has-message .dropdown-menu,.admin .header .top-menu .language.open .dropdown-menu{display:block}
 .admin .header .top-menu .messages .dropdown-menu .alert{border-left:none;border-right:none;text-align:left}
@@ -144,7 +155,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";transition:margin-right ease .5s;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
 .admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px}
 .admin .nav-container .nav .dropdown-menu>.item a:focus,.admin .nav-container .nav .dropdown-menu>.item a:hover{text-decoration:none;color:#fff}
-.admin .nav-container.active{width:172px;overflow:hidden;background:#3e3d3d}
+.admin .nav-container.active{width:180px;overflow:hidden;background:#3e3d3d}
 .admin .nav-container.active .nav>.item{border:none}
 .admin .nav-container.active .nav>.item>a>.fa{display:none}
 .admin .nav-container.active .nav>.item>a>.title{display:block}
@@ -152,7 +163,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container.active .nav .dropdown-menu>.item a{border:none;line-height:24px;font-size:12px;padding:0 25px;white-space:normal}
 .admin .nav-container.active .nav .dropdown-menu>.item a:before{display:none}
 .admin .main-container{display:block;width:100%;float:right;height:100%;padding-top:45px;padding-left:51px;transition:padding .6s}
-.admin .nav-container.active~.main-container{padding-left:172px}
+.admin .nav-container.active~.main-container{padding-left:180px}
 .admin .breadcrumb{padding-left:10px;border-bottom:1px solid #cce0e9;background:#f7f8fa}
 .admin .breadcrumb li{font-size:12px;color:#6c6c6c;line-height:30px}
 .admin .breadcrumb li:before{color:#6c6c6c}
@@ -194,6 +205,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane .cell .form-control{max-width:320px}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
+.admin .edit .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
+.admin .edit .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
 .admin .dashboard{padding:30px 0 30px 30px}
 .admin .dashboard .table{border:1px solid #ccc}
@@ -215,6 +228,6 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin>.footer{position:fixed;bottom:10px;left:0;width:51px;filter:alpha(Opacity=0);opacity:0;z-index:9;overflow:hidden;pointer-events:none}
 .admin>.footer .copyright{width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}
-.admin .nav-container.active~.footer{opacity:1;width:172px;transition:opacity .6s .6s}
+.admin .nav-container.active~.footer{opacity:1;width:180px;transition:opacity .6s .6s}
 @media (max-height:480px){.admin>.footer{display:none}}
 

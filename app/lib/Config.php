@@ -13,7 +13,8 @@ use Symfony\Component\Yaml\Parser;
 final class Config extends ArrayObject implements Singleton
 {
 
-    use Traits\DB,
+    use Traits\Container,
+        Traits\DB,
         Traits\ArrayMerge;
 
     protected static $instance = null;
@@ -120,12 +121,12 @@ final class Config extends ArrayObject implements Singleton
             ];
         }
         $result = isset($array[$this->keys['l']]) ?
-                    $array[$this->keys['l']] :
-                    (isset($array[$this->keys['s']]) ?
-                            $array[$this->keys['s']] :
-                            (isset($array[$this->keys['m']]) ?
-                                    $array[$this->keys['m']] :
-                                    $array));
+                $array[$this->keys['l']] :
+                (isset($array[$this->keys['s']]) ?
+                        $array[$this->keys['s']] :
+                        (isset($array[$this->keys['m']]) ?
+                                $array[$this->keys['m']] :
+                                $array));
         return $result;
     }
 
@@ -144,13 +145,32 @@ final class Config extends ArrayObject implements Singleton
         return null;
     }
 
+    private function getDefaultConfig($path, $config)
+    {
+        if (count($path) > 1) {
+            $key = array_shift($path);
+            $config = isset($config[$key]) ? $config[$key] : null;
+            if (!is_null($config) && isset($config['children'])) {
+                return $this->getDefaultConfig($path, $config['children']);
+            }
+        } else if (isset($config[$path[0]]['default'])) {
+            return $config[$path[0]]['default'];
+        }
+        return null;
+    }
+
     public function offsetGet($key)
     {
         if (strpos($key, '/')) {
-            return $this->getConfigByPath(explode('/', trim($key, '/')));
+            $path = explode('/', trim($key, '/'));
+            $result = $this->getConfigByPath($path);
+            if (is_null($result)) {
+                $result = $this->getDefaultConfig($path, $this->storage['system']);
+            }
+            return $result;
         } else {
             return parent::offsetGet($key);
         }
     }
-    
+
 }

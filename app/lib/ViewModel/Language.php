@@ -19,8 +19,7 @@ class Language extends AbstractViewModel
     public function getLanguage()
     {
         $language = new LanguageCollection;
-        $store = Bootstrap::getStore();
-        $language->where(['store_id' => Bootstrap::getStore()->getId(), 'status' => 1]);
+        $language->where(['merchant_id' => Bootstrap::getMerchant()->getId(), 'status' => 1]);
         return $language;
     }
 

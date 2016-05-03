@@ -2,6 +2,8 @@
 
 namespace Seahinet\Lib\ViewModel;
 
+use CSSmin;
+use JShrink\Minifier;
 use Seahinet\Lib\Stdlib\Singleton;
 
 /**
@@ -81,11 +83,6 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function addScript($script, $condition = null)
     {
-        if (is_string($script) && strpos($script, '://') === false) {
-            $script = $this->getBaseUrl($script);
-        } else if (strpos($script['src'], '://') === false) {
-            $script['src'] = $this->getBaseUrl($script['src']);
-        }
         if (is_null($condition)) {
             $this->script['normal'][] = $script;
         } else {
@@ -110,9 +107,6 @@ final class Head extends AbstractViewModel implements Singleton
 
     public function addLink($link, $type = 'stylesheet', $condition = null)
     {
-        if (strpos($link, '://') === false) {
-            $link = $this->getBaseUrl($link);
-        }
         if (is_null($condition)) {
             $this->link['normal'][$link] = $type;
         } else {
@@ -127,8 +121,21 @@ final class Head extends AbstractViewModel implements Singleton
     protected function renderLink($links)
     {
         $result = '';
+        $combine = $this->getContainer()->get('config')['global/combine_css'];
+        $files = [];
         foreach ($links as $link => $type) {
-            $result .= '<link href="' . $link . '" rel="' . $type . '" />';
+            if ($combine && $type === 'stylesheet' && strpos($link, '://') === false) {
+                $files[] = $link;
+            } else {
+                if (strpos($link, '://') === false) {
+                    $link = $this->getBaseUrl($link);
+                }
+                $result .= '<link href="' . $link . '" rel="' . $type . '" />';
+            }
+        }
+        if ($combine) {
+            $link = $this->getCombinedFile($files, true);
+            $result .= '<link href="' . $link . '.css" rel="stylesheet" />';
         }
         return $result;
     }
@@ -136,17 +143,61 @@ final class Head extends AbstractViewModel implements Singleton
     protected function renderScript($scripts)
     {
         $result = '';
+        $combine = $this->getContainer()->get('config')['global/combine_js'];
+        $files = [];
         foreach ($scripts as $script) {
-            $result .= '<script type="text/javascript" ';
             if (is_string($script)) {
                 $script = ['src' => $script];
             }
-            foreach ($script as $key => $value) {
-                $result .= $key . '="' . $value . '" ';
+            if ($combine && strpos($script['src'], '://') === false) {
+                $files[] = $script['src'];
+            } else {
+                if (strpos($script['src'], '://') === false) {
+                    $script['src'] = $this->getBaseUrl($script['src']);
+                }
+                $result .= '<script type="text/javascript" ';
+                if (is_string($script)) {
+                    $script = ['src' => $script];
+                }
+                foreach ($script as $key => $value) {
+                    $result .= $key . '="' . $value . '" ';
+                }
+                $result .= '></script>';
             }
-            $result .= '></script>';
+        }
+        if ($combine) {
+            $link = $this->getCombinedFile($files, false);
+            $result .= '<script type="text/javascript" src="' . $link . '.js"></script>';
         }
         return $result;
+    }
+
+    protected function getCombinedFile(array $files, $isCss)
+    {
+        $content = '';
+        foreach ($files as $file) {
+            $content .= file_get_contents(BP . $file);
+        }
+        $name = md5(implode('', $files));
+        if ($isCss) {
+            $path = 'pub/cache/css/';
+            if (!is_dir(BP . $path)) {
+                mkdir($path, 0777, true);
+            }
+            if (!file_exists(BP . $path . $name . '.css')) {
+                $adapter = new CSSmin;
+                file_put_contents(BP . $path . $name . '.css', $adapter->run($content));
+            }
+        } else {
+            $path = 'pub/cache/js/';
+            if (!is_dir(BP . $path)) {
+                mkdir($path, 0777, true);
+            }
+            if (!file_exists(BP . $path . $name . '.js')) {
+                file_put_contents(BP . $path . $name . '.js', Minifier::minify($content));
+            }
+        }
+        return $this->getBaseUrl($path . $name);
     }
 
 }

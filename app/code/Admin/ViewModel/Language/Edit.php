@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Language;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Lib\Source\Store;
+use Seahinet\Lib\Source\Merchant;
 
 class Edit extends PEdit
 {
@@ -43,10 +43,10 @@ class Edit extends PEdit
                 'label' => 'Name',
                 'required' => 'required'
             ],
-            'store_id' => [
+            'merchant_id' => [
                 'type' => 'select',
-                'label' => 'Store',
-                'options' => (new Store)->getSourceArray(),
+                'label' => 'Merchant',
+                'options' => (new Merchant)->getSourceArray(),
                 'required' => 'required'
             ],
             'status' => [

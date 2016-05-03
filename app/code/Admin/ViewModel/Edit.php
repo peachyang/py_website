@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
 class Edit extends AbstractViewModel
 {
@@ -39,25 +40,27 @@ class Edit extends AbstractViewModel
     protected function prepareElements($columns = [])
     {
         $model = $this->getVariable('model');
-        if (empty($columns)) {
-            $tableColumns = $model->getColumns();
-            $values = $model->getArrayCopy();
-            foreach ($tableColumns as $column) {
-                $columns[$column] = [
-                    'type' => 'text',
-                    'value' => isset($values[$column]) ? $values[$column] : '',
-                    'label' => $column
-                ];
-            }
-        } else if ($model) {
-            $values = $model->getArrayCopy();
-            foreach ($columns as $key => $column) {
-                if (!isset($columns[$key]['value'])) {
-                    $columns[$key]['value'] = isset($values[$key]) ? $values[$key] : '';
+        if ($model) {
+            if (empty($columns)) {
+                $tableColumns = $model->getColumns();
+                $values = $model->getArrayCopy();
+                foreach ($tableColumns as $column) {
+                    $columns[$column] = [
+                        'type' => 'text',
+                        'value' => isset($values[$column]) ? $values[$column] : '',
+                        'label' => $column
+                    ];
                 }
-            }
-            if (!empty($values['language']) && isset($columns['language_id[]'])) {
-                $columns['language_id[]']['value'] = array_keys($values['language']);
+            } else {
+                $values = $model->getArrayCopy();
+                foreach ($columns as $key => $column) {
+                    if (!isset($columns[$key]['value'])) {
+                        $columns[$key]['value'] = isset($values[$key]) ? $values[$key] : '';
+                    }
+                }
+                if (!empty($values['language']) && isset($columns['language_id[]'])) {
+                    $columns['language_id[]']['value'] = array_keys($values['language']);
+                }
             }
         }
         return $columns;
@@ -72,6 +75,18 @@ class Edit extends AbstractViewModel
             }
         }
         return $result;
+    }
+
+    public function getInputBox($key, $item)
+    {
+        $box = new Template;
+        $box->setVariables([
+            'key' => $key,
+            'item' => $item,
+            'parent' => $this
+        ]);
+        $box->setTemplate('admin/renderer/inputBox');
+        return $box;
     }
 
 }

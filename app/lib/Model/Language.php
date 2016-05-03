@@ -7,15 +7,15 @@ class Language extends AbstractModel
 
     protected function _construct()
     {
-        $this->init('core_language', 'id', ['id', 'store_id', 'code', 'name', 'status']);
+        $this->init('core_language', 'id', ['id', 'merchant_id', 'code', 'name', 'status']);
     }
 
-    public function getStore()
+    public function getMerchant()
     {
         if ($this->isLoaded) {
-            $store = new Store;
-            $store->load($this->offsetGet('store_id'));
-            return $store;
+            $merchant = new Merchant;
+            $merchant->load($this->offsetGet('merchant_id'));
+            return $merchant;
         }
         return null;
     }

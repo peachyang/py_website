@@ -68,7 +68,7 @@ $query = $this->getQuery();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->getVariable('collection') as $item) : ?>
+            <?php foreach ($this->getVariable('collection')->toArray() as $item): ?>
                 <tr>
                     <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>

@@ -13,7 +13,8 @@ use Zend\Db\Adapter\Exception\InvalidQueryException;
 class Rbac extends AbstractCli
 {
 
-    use \Seahinet\Lib\Traits\DB;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB;
 
     public function run()
     {
@@ -37,13 +38,13 @@ class Rbac extends AbstractCli
                 $className = str_replace(DS, '\\', trim($file->getRelativePath(), DS)) . '\\' . str_replace('.php', '', $file->getFilename());
                 $reflection = new ReflectionClass('Seahinet\\' . $className);
                 if ($reflection->isSubclassOf('Seahinet\\Lib\\Controller\\AuthActionController')) {
-                    $operation = preg_replace('/Controller(?:\\\\)?/','',$className) . '::';
+                    $operation = preg_replace('/Controller(?:\\\\)?/', '', $className) . '::';
                     foreach ($reflection->getMethods() as $method) {
                         if ($method->isPublic() && substr($method->getName(), -6) === 'Action' && $method->getName() !== 'notFoundAction') {
                             try {
                                 $model = new Operation;
                                 $model->setData([
-                                    'name' => $operation . str_replace('Action','',$method->getName()),
+                                    'name' => $operation . str_replace('Action', '', $method->getName()),
                                     'is_system' => 1
                                 ])->save();
                                 $count++;

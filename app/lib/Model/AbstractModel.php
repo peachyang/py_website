@@ -3,10 +3,8 @@
 namespace Seahinet\Lib\Model;
 
 use Exception;
-use Seahinet\Lib\Stdlib\Singleton;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Stdlib\ArrayObject;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
-use Zend\Stdlib\ArrayObject;
 
 /**
  * Data operator for single model
@@ -14,7 +12,8 @@ use Zend\Stdlib\ArrayObject;
 abstract class AbstractModel extends ArrayObject
 {
 
-    use \Seahinet\Lib\Traits\DB,
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB,
         \Seahinet\Lib\Traits\DataCache;
 
     protected $columns = [];
@@ -24,12 +23,11 @@ abstract class AbstractModel extends ArrayObject
     protected $isLoaded = false;
     protected $cacheKey = '';
     protected $eventDispatcher = null;
-    protected $languageInfo = null;
     protected $tableName = '';
 
-    public function __construct($input = array(), $flags = self::ARRAY_AS_PROPS, $iteratorClass = 'ArrayIterator')
+    public function __construct($input = array())
     {
-        parent::__construct($input, $flags, $iteratorClass);
+        $this->storage = $input;
         $this->_construct();
     }
 
@@ -52,17 +50,6 @@ abstract class AbstractModel extends ArrayObject
         $this->cacheKey = $table . '\\';
         $this->columns = $columns;
         $this->primaryKey = $primaryKey;
-    }
-
-    /**
-     * Join language table
-     * 
-     * @param string $table
-     * @param string $column
-     */
-    protected function withLanguage($table, $column)
-    {
-        $this->languageInfo = [$table, $column];
     }
 
     /**
@@ -142,37 +129,25 @@ abstract class AbstractModel extends ArrayObject
                     $result = $this->fetchRow($id, $key, $this->getCacheKey());
                 }
                 if (!$result) {
-                    $this->beforeLoad();
                     $select = $this->tableGateway->getSql()->select();
                     $select->where([$this->tableName . '.' . $key => $id]);
-                    if (!is_null($this->languageInfo)) {
-                        $select->join($this->languageInfo[0], $this->tableName . '.' . $this->primaryKey . '=' . $this->languageInfo[0] . '.' . $this->languageInfo[1], [], 'left');
-                        $select->join('core_language', 'core_language.id=' . $this->languageInfo[0] . '.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
-                        if ($key !== $this->primaryKey) {
-                            $select->where(['core_language.id' => $this->getContainer()->get('language')->getId()]);
-                        }
-                    }
+                    $this->beforeLoad($select);
                     $result = $this->tableGateway->selectWith($select)->toArray();
                     if (count($result)) {
-                        $this->storage = array_merge($this->storage, $result[0]);
-                        if (!is_null($this->languageInfo)) {
-                            $this->storage['language'] = [];
-                            foreach ($result as $record) {
-                                $this->storage['language'][$record['language_id']] = $record['language'];
-                            }
-                        }
-                        $this->afterLoad();
+                        $this->afterLoad($result);
                         $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
                         if ($key !== $this->primaryKey) {
                             $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
                         }
                     }
                 } else {
-                    $this->storage = array_merge($this->storage, $result);
-                    $this->afterLoad();
+                    $this->afterLoad($result);
                 }
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
+                if ($this->transaction) {
+                    $this->rollback();
+                }
                 throw $e;
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
@@ -214,7 +189,9 @@ abstract class AbstractModel extends ArrayObject
             }
         } catch (InvalidQueryException $e) {
             $this->getContainer()->get('log')->logException($e);
-            $this->rollback();
+            if ($this->transaction) {
+                $this->rollback();
+            }
             throw $e;
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
@@ -239,7 +216,9 @@ abstract class AbstractModel extends ArrayObject
                 $this->afterRemove();
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
-                $this->rollback();
+                if ($this->transaction) {
+                    $this->rollback();
+                }
                 throw $e;
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
@@ -296,65 +275,40 @@ abstract class AbstractModel extends ArrayObject
 
     protected function beforeSave()
     {
-        $this->beginTransaction();
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.before', ['model' => $this]);
     }
 
     protected function afterSave()
     {
-        if (!is_null($this->languageInfo) && $this->getId() && count($this->storage['language_id'])) {
-            $tableGateway = new TableGateway($this->languageInfo[0], $this->tableGateway->getAdapter());
-            $tableGateway->delete([$this->languageInfo[1] => $this->getId()]);
-            foreach ((array) $this->storage['language_id'] as $language) {
-                $tableGateway->insert([$this->languageInfo[1] => $this->getId(), 'language_id' => $language]);
-            }
-        }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
-        $this->commit();
     }
 
-    protected function beforeLoad()
+    protected function beforeLoad($select)
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.before', ['model' => $this]);
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result = [])
     {
         $this->isNew = false;
         $this->isLoaded = true;
         $this->updatedColumns = [];
+        if (isset($result[0])) {
+            $this->storage = array_merge($this->storage, $result[0]);
+        } else {
+            $this->storage = array_merge($this->storage, $result);
+        }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
     }
 
     protected function beforeRemove()
     {
-        $this->beginTransaction();
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.before', ['model' => $this]);
     }
 
     protected function afterRemove()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.after', ['model' => $this]);
-        $this->commit();
-    }
-
-    public function serialize()
-    {
-        return serialize(array_filter(get_object_vars($this), function($value) {
-                    return !is_object($value);
-                })
-        );
-    }
-
-    public function unserialize($data)
-    {
-        $data = unserialize($data);
-        foreach ($data as $key => $value) {
-            $this->$key = $value;
-        }
-        if ($this instanceof Singleton) {
-            static::$instance = $this;
-        }
     }
 
     /**

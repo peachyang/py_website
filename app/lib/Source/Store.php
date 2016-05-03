@@ -17,7 +17,7 @@ class Store implements SourceInterface
             if (!isset($result[$item['merchant']])) {
                 $result[$item['merchant']] = [];
             }
-            $result[$item['merchant']][$item['id']] = $item['code'];
+            $result[$item['merchant']][$item['id']] = $item['name'];
         }
         return $result;
     }

@@ -1,0 +1,34 @@
+---
+global:
+    label: Global Configuration
+    children:
+        base_url:
+            type: url
+            required: required
+            label: Base Url
+            priority: 10
+            scope: [merchant,store]
+            comment: Make sure that base Url ends with '/' (slash), e.g. http://yourdomain/
+        admin_path:
+            type: text
+            required: required
+            label: Backend Path
+            priority: 20
+            scope: [merchant,store]
+            default: admin
+        combine_css:
+            type: select
+            label: Combine CSS File
+            required: required
+            priority: 100
+            scope: merchant
+            default: 0
+            options: ['Disabled','Enabled']
+        combine_js:
+            type: select
+            label: Combine JS File
+            required: required
+            priority: 110
+            scope: merchant
+            default: 0
+            options: ['Disabled','Enabled']

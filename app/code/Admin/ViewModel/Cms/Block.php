@@ -48,7 +48,12 @@ class Block extends Grid
 
     protected function prepareCollection($collection = null)
     {
-        return parent::prepareCollection(new Collection);
+        $user = (new Segment('admin'))->get('user');
+        $collection = new Collection;
+        if ($user->getStore()) {
+            $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        return parent::prepareCollection($collection);
     }
 
 }

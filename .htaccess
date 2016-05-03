@@ -13,12 +13,12 @@ Options FollowSymLinks
     SecFilterScanPOST Off
 </IfModule>
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript image/svg+xml
     #BrowserMatch ^Mozilla/4 gzip-only-text/html
     #BrowserMatch ^Mozilla/4\.0[678] no-gzip
     #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
-    #Header append Vary User-Agent env=!dont-vary
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+    Header append Vary User-Agent env=!dont-vary
 </IfModule>
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks

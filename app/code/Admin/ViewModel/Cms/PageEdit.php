@@ -84,7 +84,6 @@ class PageEdit extends Edit
             'testimages' => [
                 'type' => 'button',
                 'label' => 'Upload Images',
-                'attrs'=> array('onclick'=>''),
                 'class'=>'chooseimages'
             ],
             'content' => [

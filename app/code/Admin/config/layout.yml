@@ -172,6 +172,9 @@ edit:
                         params: [{src:'pub/backend/js/tab.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
+                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
                         params: [{src:'pub/tool/ckeditor/ckeditor.js'}]
                     -
                         method: addScript

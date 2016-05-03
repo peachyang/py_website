@@ -3,7 +3,9 @@
 namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
+use Seahinet\Lib\Source\Store;
 
 class BlockEdit extends Edit
 {
@@ -29,6 +31,7 @@ class BlockEdit extends Edit
 
     protected function prepareElements($columns = [])
     {
+        $user = (new Segment('admin'))->get('user');
         $columns = [
             'id' => [
                 'type' => 'hidden',

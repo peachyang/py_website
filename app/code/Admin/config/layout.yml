@@ -186,6 +186,9 @@ admin_dashboard:
             head:
                 action:
                     -
+                        method: setTitle
+                        params: Dashboard
+                    -
                         method: addScript
                         params: pub/backend/js/highcharts/highcharts.js
                     -
@@ -211,6 +214,11 @@ admin_user:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Account
             content:
                 children:
                     breadcrumb:
@@ -224,6 +232,11 @@ admin_user_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: User Management
             content:
                 children:
                     breadcrumb:
@@ -256,6 +269,11 @@ admin_role_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Role Management
             content:
                 children:
                     breadcrumb:
@@ -302,6 +320,11 @@ admin_operation_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Operation Management
             content:
                 children:
                     breadcrumb:
@@ -334,6 +357,11 @@ admin_cache:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Cache Management
             content:
                 children:
                     breadcrumb:
@@ -351,6 +379,11 @@ admin_language_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Language Management
             content:
                 children:
                     breadcrumb:
@@ -422,6 +455,11 @@ admin_config:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: System Configuration
             content:
                 children:
                     edit:

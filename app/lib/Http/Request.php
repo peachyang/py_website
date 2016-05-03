@@ -150,6 +150,14 @@ class Request extends Message implements RequestInterface
     }
 
     /**
+     * @return UploadedFile
+     */
+    public function getUploadedFile()
+    {
+        return $this->uploadedFile;
+    }
+
+    /**
      * @param string $method
      * @return Request
      * @throws InvalidRequestMethod

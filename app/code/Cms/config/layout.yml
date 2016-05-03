@@ -11,6 +11,11 @@ admin_cms_page_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Page Management / CMS
             content:
                 children:
                     breadcrumb:
@@ -43,6 +48,11 @@ admin_cms_block_list:
     update: grid
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Block Management / CMS
             content:
                 children:
                     breadcrumb:

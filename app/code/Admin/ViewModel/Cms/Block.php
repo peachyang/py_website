@@ -4,7 +4,7 @@ namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Cms\Model\Collection\Block as Collection;
-use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\Session\Segment;
 
 class Block extends Grid
 {

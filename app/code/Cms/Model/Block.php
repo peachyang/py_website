@@ -10,7 +10,6 @@ class Block extends AbstractModel
     public function _construct()
     {
         $this->init('cms_block', 'id', ['id', 'store_id', 'status', 'code', 'content']);
-        $this->withLanguage('cms_block_language', 'block_id');
     }
 
     protected function beforeSave()

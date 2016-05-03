@@ -29,7 +29,6 @@ abstract class Factory
         'memcached' => ['version' => '2.0.0', 'name' => 'memcached'],
         'mongo' => ['version' => '1.3.0', 'name' => 'mongo'], // deprecated
         'mongodb' => ['version' => '1.1.0', 'name' => 'mongodb'],
-        'predis' => ['version' => '2.2.7', 'name' => 'redis'],
         'redis' => ['version' => '2.2.7', 'name' => 'redis'],
         'wincache' => ['version' => '1.3.5.0', 'name' => 'wincache']
     ];

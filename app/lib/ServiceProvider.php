@@ -61,6 +61,27 @@ class ServiceProvider implements ServiceProviderInterface
                 return new Mailer($container);
             };
         }
+        if (!$container->has('imagine')) {
+            $container['imagine'] = function($container) {
+                if (extension_loaded('gmagick')) {
+                    return new \Imagine\Gmagick\Imagine;
+                } else if (extension_loaded('imagick')) {
+                    return new \Imagine\Imagick\Imagine;
+                } else {
+                    return new \Imagine\Gd\Imagine;
+                }
+            };
+        }
+        if (!$container->has('csspp')) {
+            $container['csspp'] = function($container) {
+                $config = $container->get('config');
+                if ($config['global/css_preprocessor']) {
+                    return new \Leafo\ScssPhp\Compiler;
+                } else {
+                    return new \lessc;
+                }
+            };
+        }
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\Collection\Merchant;
+use Seahinet\Lib\Session\Segment;
 
 class Language extends Grid
 {
@@ -15,6 +16,12 @@ class Language extends Grid
                 ->columns(['merchant' => 'code', 'merchant_id' => 'id'])
                 ->order('core_merchant.id, core_store.id, core_language.id');
         return $collection->load();
+    }
+
+    public function getUser()
+    {
+        $segment = new Segment('admin');
+        return $segment->get('user');
     }
 
 }

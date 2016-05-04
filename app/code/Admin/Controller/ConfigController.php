@@ -50,10 +50,8 @@ class ConfigController extends AuthActionController
                     $tableGateway = $this->getTableGateway('core_config');
                     $scope = substr($data['scope'], 0, 1);
                     $scope_id = substr($data['scope'], 1);
-                    $where = $scope === 'l' ?
-                            ['language_id' => $scope_id] :
-                            ($scope === 's' ? ['store_id' => $scope_id] :
-                                    ['merchant_id' => $scope_id]);
+                    $where = $scope === 's' ? ['store_id' => $scope_id] :
+                                    ['merchant_id' => $scope_id];
                     foreach ($data as $path => $value) {
                         if (!in_array($path, ['key', 'csrf', 'scope'])) {
                             $this->upsert(['value' => $value], $where + ['path' => $key . '/' . $path]);

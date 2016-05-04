@@ -127,5 +127,14 @@
         if ($('.message-box>.alert').length) {
             addMessages();
         }
+        $('.scope').each(function () {
+            var selected = $(this).find('.dropdown-menu>.selected');
+            if (selected.length) {
+                $(this).find('.dropdown-toggle>span').text($(selected).text());
+            } else {
+                $(this).find('.dropdown-toggle>span').text($(this).find('.dropdown-menu>:first-child').text());
+                $('[type=hidden][name=scope]').val('m' + $(this).find('.dropdown-menu>:first-child').data('id'));
+            }
+        });
     });
 })(jQuery);

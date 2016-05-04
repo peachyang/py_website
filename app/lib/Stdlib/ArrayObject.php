@@ -168,4 +168,14 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
         return new ArrayIterator($this->storage);
     }
 
+    /**
+     * @param \Traversable|array $array
+     * @return ArrayObject
+     */
+    public function fromArray($array)
+    {
+        $this->storage += $array;
+        return $this;
+    }
+
 }

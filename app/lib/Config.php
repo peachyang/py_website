@@ -82,9 +82,7 @@ final class Config extends ArrayObject implements Singleton
         $result = $tableGateway->select()->toArray();
         $config = [];
         foreach ($result as $item) {
-            if (!is_null($item['language_id'])) {
-                $value['l' . $item['language_id']] = $item['value'];
-            } else if (!is_null($item['store_id'])) {
+            if (!is_null($item['store_id'])) {
                 $value['s' . $item['store_id']] = $item['value'];
             } else {
                 $value['m' . $item['merchant_id']] = $item['value'];
@@ -120,13 +118,9 @@ final class Config extends ArrayObject implements Singleton
                 'm' => 'm' . Bootstrap::getMerchant()->getId()
             ];
         }
-        $result = isset($array[$this->keys['l']]) ?
-                $array[$this->keys['l']] :
-                (isset($array[$this->keys['s']]) ?
-                        $array[$this->keys['s']] :
-                        (isset($array[$this->keys['m']]) ?
-                                $array[$this->keys['m']] :
-                                $array));
+        $result = isset($array[$this->keys['s']]) ? $array[$this->keys['s']] :
+                                (isset($array[$this->keys['m']]) ?
+                                        $array[$this->keys['m']] : $array);
         return $result;
     }
 

@@ -2,6 +2,8 @@
 
 namespace Seahinet\Admin\ViewModel;
 
+use Seahinet\Lib\Session\Segment;
+
 class Config extends Edit
 {
 
@@ -9,6 +11,7 @@ class Config extends Edit
     protected $elements = null;
     protected $config = null;
     protected $tab = null;
+    protected $store = false;
 
     public function __construct()
     {
@@ -87,8 +90,17 @@ class Config extends Edit
             }
             return $result;
         }
-        $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default']) ? (string)$item['default'] : '');
+        $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default']) ? (string) $item['default'] : '');
         return $item;
+    }
+
+    public function getStore()
+    {
+        if ($this->store === false) {
+            $segment = new Segment('admin');
+            $this->store = $segment->get('user')->getStore();
+        }
+        return $this->store;
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 $elements = $this->getVariable('elements');
-$scope = $this->getQuery('scope', 'merchant');
+$scope = $this->getStore() ? 'store' : $this->getQuery('scope', 'merchant');
+$scopeId = $this->getStore() ? $this->getStore()->getId() : $this->getQuery('scope_id');
 uasort($elements, function($a, $b) {
     if (!isset($a['type']) && isset($b['type'])) {
         return 1;
@@ -18,10 +19,10 @@ uasort($elements, function($a, $b) {
 ?>
 <div class="edit">
     <form action="<?php echo $this->getSaveUrl() ?>" method="post">
-        <?php echo $this->getChild('tabs') ?>
+        <?php echo $this->getChild('tabs'), $this->getStore() ? '' : $this->getChild('scope') ?>
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="key" value="<?php echo $this->getKey() ?>" />
-        <input type="hidden" name="scope" value="<?php echo substr($scope, 0, 1), $this->getQuery('scope_id') ?>" />
+        <input type="hidden" name="scope" value="<?php echo substr($scope, 0, 1), $scopeId ?>" />
         <?php
         $count = 0;
         foreach ($elements as $key => $item):

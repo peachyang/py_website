@@ -172,7 +172,7 @@ abstract class AbstractCollection extends ArrayObject
         }
         return parent::getArrayCopy();
     }
-
+    
     public function &__get($key)
     {
         if (!$this->isLoaded) {

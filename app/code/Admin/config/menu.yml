@@ -24,25 +24,13 @@ admin:
                 title: User Management
                 priority: 10
             -
-                link: user/edit/
-                title: Add New User
-                priority: 20
-            -
                 link: role
                 title: Role Management
                 priority: 30
             -
-                link: role/edit/
-                title: Add New Role
-                priority: 40
-            -
                 link: operation
                 title: Operation Management
                 priority: 50
-            -
-                link: operation/edit/
-                title: Add New Operation
-                priority: 60
     system:
         icon: cogs
         title: System Configuration
@@ -52,3 +40,7 @@ admin:
                 link: config/global/
                 title: Global Configuration
                 priority: 0
+            -
+                link: config/email/
+                title: Email Configuration
+                priority: 10

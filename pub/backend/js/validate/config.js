@@ -1,6 +1,14 @@
-(function ($) {
-    "use strict";
+(function (factory) {
+    if (typeof define === "function" && define.amd) {
+        define(["jquery"], factory);
+    } else if (typeof module === "object" && module.exports) {
+        module.exports = factory(require("jquery"));
+    } else {
+        factory(jQuery);
+    }
+}(function ($) {
     $(function () {
+        "use strict";
         var lang = $('html').attr('lang');
         if (lang) {
             var url = GLOBAL.BASE_URL + 'pub/' + ($('body').is('.admin') ? 'backend' : 'frontend');
@@ -23,4 +31,4 @@
             });
         });
     });
-})(jQuery);
+}));

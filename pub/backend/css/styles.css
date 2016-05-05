@@ -191,7 +191,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table tfoot .pager .last{border-left:1px solid}
 .admin .grid .table .checkbox,.admin .grid .table .action{width:1px;white-space:nowrap}
 .admin .grid .table .action a+a{margin-left:4px}
-.admin .edit .nav-tabs{padding-left:30px}
+.admin .edit .nav-tabs{padding-left:30px;margin-top:10px}
 .csscalc .admin .edit .nav-tabs{padding:0;margin-left:30px;width:calc(100% - 30px)}
 .admin .edit .nav-tabs>li>a{font-size:13px;color:#333;border-radius:0;padding:1px 12px;text-decoration:none;display:block}
 .admin .edit .nav-tabs>li>a:hover{background:#999}

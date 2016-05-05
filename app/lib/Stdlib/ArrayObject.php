@@ -149,7 +149,7 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
      */
     public function toArray()
     {
-        return $this->storage;
+        return $this->getArrayCopy();
     }
 
     /**

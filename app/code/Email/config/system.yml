@@ -1,0 +1,68 @@
+---
+email:
+    label: Email Configuration
+    children:
+        transport:
+            label: Transport
+            children:
+                service:
+                    label: Service
+                    required: required
+                    type: select
+                    priority: 0
+                    scope: merchant
+                    options:
+                        Swift_SmtpTransport: SMTP
+                        Swift_SendmailTransport: Sendmail
+                        Swift_MailTransport: Mail
+                host:
+                    type: text
+                    label: Host
+                    priority: 10
+                    scope: merchant
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"
+                port:
+                    type: tel
+                    label: Port
+                    priority: 20
+                    scope: merchant
+                    default: 25
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"
+                encryption:
+                    type: select
+                    label: Encryption
+                    scope: merchant
+                    priority: 30
+                    options:
+                        null: ''
+                        tls: TLS
+                        ssl: SSL
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"
+                auth:
+                    type: select
+                    label: Auth Mode
+                    scope: merchant
+                    priority: 40
+                    options:
+                        PLAIN: PLAIN
+                        LOGIN: LOGIN
+                        CRAM-MD5: CRAM-MD5
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"
+                username:
+                    type: text
+                    label: Username
+                    scope: merchant
+                    priority: 50
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"
+                password:
+                    type: password
+                    label: Password
+                    scope: merchant
+                    priority: 60
+                    attrs:
+                        data-base: "'#transport-service':'Swift_SmtpTransport'"

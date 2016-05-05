@@ -1,0 +1,8 @@
+---
+admin:
+    cms:
+        children:
+            -
+                link: 'email_template/'
+                title: 'Email Template'
+                priority: 40

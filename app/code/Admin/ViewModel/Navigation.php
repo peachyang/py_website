@@ -19,7 +19,7 @@ class Navigation extends AbstractViewModel
         $this->role = $segment->get('user')->getRole();
     }
 
-    protected function sortItems($a, $b)
+    protected function sortItems(&$a, &$b)
     {
         if (!isset($a['priority'])) {
             $a['priority'] = 0;

@@ -19,7 +19,7 @@ uasort($elements, function($a, $b) {
 ?>
 <div class="edit">
     <form action="<?php echo $this->getSaveUrl() ?>" method="post">
-        <?php echo $this->getChild('tabs'), $this->getStore() ? '' : $this->getChild('scope') ?>
+        <?php echo $this->getStore() ? '' : $this->getChild('scope'), $this->getChild('tabs') ?>
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="key" value="<?php echo $this->getKey() ?>" />
         <input type="hidden" name="scope" value="<?php echo substr($scope, 0, 1), $scopeId ?>" />

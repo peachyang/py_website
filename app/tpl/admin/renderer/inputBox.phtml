@@ -1,6 +1,7 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
+$id = preg_replace('/\W/', '-', $key);
 $parent = $this->getVariable('parent');
 if ($item['type'] === 'hidden'):
     ?>
@@ -10,13 +11,13 @@ else:
     ?>
     <div class="input-box">
         <?php if (isset($item['label'])): ?>
-            <label for="<?php echo $key ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
+            <label for="<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
                 <?php echo $this->translate($item['label']) ?>
             </label>
         <?php endif ?>
         <div class="cell">
             <?php if ($item['type'] === 'select'): ?>
-                <select name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
+                <select name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
                 if (!isset($item['attrs']['class'])):
                     ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                             if (isset($item['class'])) {
@@ -32,27 +33,27 @@ else:
                             ?>
                             <optgroup label="<?php echo $value ?>">
                                 <?php foreach ($label as $v => $l): ?>
-                                    <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || (string)$v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
+                                    <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || (string) $v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
                                 <?php endforeach; ?>
                             </optgroup>
                         <?php else: ?>
-                            <option value="<?php echo $value ?>"<?php if (isset($item['value']) && (string)$value === $item['value']): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
+                            <option value="<?php echo $value ?>"<?php if (isset($item['value']) && (string) $value === $item['value']): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
                         <?php endif ?>
                     <?php endforeach ?>
                 </select>
             <?php elseif ($item['type'] === 'radio' || $item['type'] === 'checkbox'): ?>
                 <?php foreach ($item['options'] as $value => $label): ?>
-                    <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key, '-', $value ?>"<?php
+                    <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $id, '-', $value ?>"<?php
                     if (!isset($item['attrs']['class'])):
                         ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                                if (isset($item['class'])) {
                                    echo $item['class'];
                                }
                                ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
-                    <label for="<?php echo $key, '-', $value ?>" class="control-label"><?php echo $label ?></label>
+                    <label for="<?php echo $id, '-', $value ?>" class="control-label"><?php echo $label ?></label>
                 <?php endforeach ?>
             <?php elseif ($item['type'] === 'textarea'): ?>
-                <textarea name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
+                <textarea name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
                 if (!isset($item['attrs']['class'])):
                     ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                               if (isset($item['class'])) {
@@ -64,7 +65,7 @@ else:
                           echo $parent->{$item['widget']};
                       else:
                           ?>
-                <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $key ?>"<?php
+                <input type="<?php echo $item['type'] ?>" name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
                 if (!isset($item['attrs']['class'])):
                     ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                            if (isset($item['class'])) {

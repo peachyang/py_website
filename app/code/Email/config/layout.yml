@@ -1,0 +1,38 @@
+---
+admin_email_template_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Email Template / CMS
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/email_template/',label:'Email Template'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/email_template/edit/',label:'Add New Template'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Email\Grid
+admin_email_template_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/email_template/',label:'Template Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Email\Edit

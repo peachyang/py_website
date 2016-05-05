@@ -1,6 +1,14 @@
-(function ($) {
-    "use strict";
+(function (factory) {
+    if (typeof define === "function" && define.amd) {
+        define(["jquery"], factory);
+    } else if (typeof module === "object" && module.exports) {
+        module.exports = factory(require("jquery"));
+    } else {
+        factory(jQuery);
+    }
+}(function ($) {
     $(function () {
+        "use strict";
         $('#nav-toggle').click(function () {
             $('.nav-container .open').removeClass('open');
             if ($(this).is('.active')) {
@@ -137,4 +145,4 @@
             }
         });
     });
-})(jQuery);
+}));

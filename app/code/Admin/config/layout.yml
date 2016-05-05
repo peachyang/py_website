@@ -455,11 +455,6 @@ admin_config:
     update: edit
     root:
         children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: System Configuration
             content:
                 children:
                     edit:

@@ -43,7 +43,7 @@ class Route implements ListenerInterface
     {
         $routers = $event['routers'];
         $dispatcher = $this->getDispatcher($routers);
-        $request = new Request();
+        $request = $this->getContainer()->get('request');
         $routeMatch = $dispatcher->dispatch($request);
         if (!$routeMatch) {
             $routeMatch = $routers['default'];

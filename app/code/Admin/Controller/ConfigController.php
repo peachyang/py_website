@@ -33,6 +33,7 @@ class ConfigController extends AuthActionController
         $root = $this->getLayout('admin_config');
         $content = $root->getChild('content');
         $content->getChild('edit')->setKey($this->key)->setElements($this->config['children']);
+        $root->getChild('head')->setTitle($this->translate($this->config['label']) . ' / ' . $this->translate('System Configuration'));
         $content->getChild('breadcrumb')->addCrumb(['link' => ':ADMIN/config/' . $this->key . '/', 'label' => $this->translate('System Configuration') . ' > ' . $this->translate($this->config['label'])]);
         return $root;
     }
@@ -51,7 +52,7 @@ class ConfigController extends AuthActionController
                     $scope = substr($data['scope'], 0, 1);
                     $scope_id = substr($data['scope'], 1);
                     $where = $scope === 's' ? ['store_id' => $scope_id] :
-                                    ['merchant_id' => $scope_id];
+                            ['merchant_id' => $scope_id];
                     foreach ($data as $path => $value) {
                         if (!in_array($path, ['key', 'csrf', 'scope'])) {
                             $this->upsert(['value' => $value], $where + ['path' => $key . '/' . $path]);

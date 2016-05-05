@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use Locale;
+use Seahinet\Lib\Model\Collection\Translate;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\Translator\Category;
 use SplFileObject;
@@ -111,7 +112,14 @@ class Translator implements Singleton
                     return $this->storage[$locale];
                 }
             }
-            $this->storage[$locale] = [static::DEFAULT_DOMAIN => new Category()];
+            $this->storage[$locale] = [];
+            $collection = new Translate;
+            $collection->where(['status' => 1, 'locale' => $locale]);
+            $result = [];
+            foreach ($collection as $item) {
+                $result[$item['string']] = $item['translate'];
+            }
+            $this->storage[$locale][static::DEFAULT_DOMAIN] = new Category($result);
             $finder = new Finder();
             $finder->files()->in(BP . 'app/i18n/' . $locale)->name('*.csv');
             foreach ($finder as $file) {

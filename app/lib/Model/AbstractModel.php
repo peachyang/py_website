@@ -265,6 +265,11 @@ abstract class AbstractModel extends ArrayObject
         return $pairs;
     }
 
+    /**
+     * Get event dispatcher
+     * 
+     * @return type
+     */
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {
@@ -273,21 +278,37 @@ abstract class AbstractModel extends ArrayObject
         return $this->eventDispatcher;
     }
 
+    /**
+     * Event before save
+     */
     protected function beforeSave()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.before', ['model' => $this]);
     }
 
+    /**
+     * Event after save
+     */
     protected function afterSave()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
     }
 
+    /**
+     * Event before load
+     * 
+     * @param \Zend\Db\Sql\Select $select
+     */
     protected function beforeLoad($select)
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.before', ['model' => $this]);
     }
 
+    /**
+     * Event after load
+     * 
+     * @param array $result
+     */
     protected function afterLoad($result = [])
     {
         $this->isNew = false;
@@ -301,11 +322,17 @@ abstract class AbstractModel extends ArrayObject
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
     }
 
+    /**
+     * Event before remove
+     */
     protected function beforeRemove()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.before', ['model' => $this]);
     }
 
+    /**
+     * Event after remove
+     */
     protected function afterRemove()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.remove.after', ['model' => $this]);

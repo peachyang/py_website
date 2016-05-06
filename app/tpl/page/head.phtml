@@ -1,6 +1,16 @@
+<?php
+$title = $this->getTitle();
+if (strpos($title, '/')) {
+    $t = [];
+    foreach (explode('/', $title) as $part) {
+        $t[] = $this->translate(trim($part));
+    }
+    $title = implode(' / ', $t);
+}
+?>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<title><?php echo $this->getTitle() ?></title>
+<title><?php echo $title ?></title>
 <script>
-    var GLOBAL={BASE_URL:'<?php echo $this->getBaseUrl() ?>'};
+    var GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>'};
 </script>
 <?php echo $this->getMeta(), $this->getLink(), $this->getScript(); ?>

@@ -144,5 +144,35 @@
                 $('[type=hidden][name=scope]').val('m' + $(this).find('.dropdown-menu>:first-child').data('id'));
             }
         });
+        $('a[href="' + location.href + '"]').addClass('active');
+        $('[data-base]').each(function () {
+            var o = this;
+            $(o).parents('.input-box').hide();
+            o.disabled = true;
+            var base = $(o).data('base');
+            try {
+                var target = eval('(' + base + ')');
+            } catch (e) {
+                var target = base.indexOf(':') === -1 ? eval('({"' + base + '":1})') : eval('({' + base + '})');
+            }
+            for (var i in target) {
+                if ($(i).val() == target[i]) {
+                    $(o).parents('.input-box').show();
+                    o.disabled = false;
+                } else {
+                    $(o).parents('.input-box').hide();
+                    o.disabled = true;
+                }
+                $(i).change(function () {
+                    if ($(this).val() == target[i]) {
+                        $(o).parents('.input-box').show();
+                        o.disabled = false;
+                    } else {
+                        $(o).parents('.input-box').hide();
+                        o.disabled = true;
+                    }
+                });
+            }
+        });
     });
 }));

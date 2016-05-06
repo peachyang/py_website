@@ -75,7 +75,7 @@ class Config extends Edit
     protected function getTab()
     {
         if (is_null($this->tab)) {
-            $this->tab = $this->getChild('tab');
+            $this->tab = $this->getChild('tabs');
         }
         return $this->tab;
     }

@@ -33,7 +33,7 @@ class ConfigController extends AuthActionController
         $root = $this->getLayout('admin_config');
         $content = $root->getChild('content');
         $content->getChild('edit')->setKey($this->key)->setElements($this->config['children']);
-        $root->getChild('head')->setTitle($this->translate($this->config['label']) . ' / ' . $this->translate('System Configuration'));
+        $root->getChild('head')->setTitle($this->config['label'] . ' / ' . 'System Configuration');
         $content->getChild('breadcrumb')->addCrumb(['link' => ':ADMIN/config/' . $this->key . '/', 'label' => $this->translate('System Configuration') . ' > ' . $this->translate($this->config['label'])]);
         return $root;
     }

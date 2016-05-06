@@ -1,0 +1,38 @@
+---
+admin_message_template_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Message Template / CMS
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/message_template/',label:'Message Template'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/message_template/edit/',label:'Add New Message'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Email\Grid
+admin_message_template_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/message_template/',label:'Message Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Email\Edit

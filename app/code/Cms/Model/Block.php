@@ -16,13 +16,13 @@ class Block extends AbstractModel
     {
         $this->storage['content'] = gzencode($this->storage['content']);
         $this->beginTransaction();
-        parent::beforeSave($columns);
+        parent::beforeSave();
     }
 
     protected function afterSave()
     {
         if (isset($this->storage['language_id'])) {
-            $tableGateway = new TableGateway('cms_block_language');
+            $tableGateway = new TableGateway('cms_block_language', $this->getContainer()->get('dbAdapter'));
             $tableGateway->delete(['block_id' => $this->getId()]);
             foreach ($this->storage['language_id'] as $language_id) {
                 $tableGateway->insert(['block_id' => $this->getId(), 'language_id' => $language_id]);

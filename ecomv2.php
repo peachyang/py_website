@@ -355,6 +355,7 @@ CREATE TABLE IF NOT EXISTS `i18n_currency`(
     `code` CHAR(3) NOT NULL COMMENT 'ISO 4217 currency code',
     `symbol` VARCHAR(10) NOT NULL DEFAULT '$' COMMENT 'Currency symbol',
     `rate` DECIMAL(12,6) NOT NULL DEFAULT 1 COMMENT 'Currency rate',
+    `format` VARCHAR(30) NOT NULL DEFAULT '%s%.2f' COMMENT 'Price format',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Updated time',
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_I18N_CURRENCY_CODE UNIQUE (`code`)

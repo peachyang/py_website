@@ -4,7 +4,6 @@ namespace Seahinet\Cli;
 
 require __DIR__ . '/../app/bootstrap.php';
 
-use DateTime;
 use Error;
 use Exception;
 use Seahinet\Lib\Model\Collection\Cron as Collection;

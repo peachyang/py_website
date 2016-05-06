@@ -67,7 +67,10 @@ class Config extends Edit
     protected function prepareElements($columns = [])
     {
         foreach ((array) $this->getElements() as $key => $item) {
-            $columns[$key] = $this->getColumn($item, $key, $this->getKey());
+            $column = $this->getColumn($item, $key, $this->getKey());
+            if ($column) {
+                $columns[$key] = $column;
+            }
         }
         return $columns;
     }
@@ -82,13 +85,24 @@ class Config extends Edit
 
     protected function getColumn($item, $key, $prefix)
     {
+        if (isset($item['scope']) && !in_array($this->getStore() ? 'store' : $this->getQuery('scope', 'merchant'), (array) $item['scope'])) {
+            return null;
+        }
         if (isset($item['children'])) {
             $result = [];
-            $this->getTab()->addTab($key, $item['label']);
             foreach ($item['children'] as $ckey => $child) {
-                $result[$ckey] = $this->getColumn($child, $ckey, $prefix . '/' . $key);
+                $column = $this->getColumn($child, $ckey, $prefix . '/' . $key);
+                if ($column) {
+                    $result[$ckey] = $column;
+                }
+            }
+            if (!empty($result)) {
+                $this->getTab()->addTab($key, $item['label']);
             }
             return $result;
+        }
+        if (isset($item['source']) && is_subclass_of($item['source'], '\\Seahinet\\Lib\\Source\\SourceInterface')) {
+            $item['options'] = (new $item['source'])->getSourceArray($item);
         }
         $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default']) ? (string) $item['default'] : '');
         return $item;

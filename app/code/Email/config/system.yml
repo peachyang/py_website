@@ -4,6 +4,7 @@ email:
     children:
         transport:
             label: Transport
+            scope: merchant
             children:
                 service:
                     label: Service
@@ -19,6 +20,7 @@ email:
                     type: text
                     label: Host
                     priority: 10
+                    required: required
                     scope: merchant
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
@@ -26,6 +28,7 @@ email:
                     type: tel
                     label: Port
                     priority: 20
+                    required: required
                     scope: merchant
                     default: 25
                     attrs:
@@ -34,7 +37,9 @@ email:
                     type: select
                     label: Encryption
                     scope: merchant
+                    required: required
                     priority: 30
+                    default: null
                     options:
                         null: ''
                         tls: TLS
@@ -45,7 +50,9 @@ email:
                     type: select
                     label: Auth Mode
                     scope: merchant
+                    required: required
                     priority: 40
+                    default: LOGIN
                     options:
                         PLAIN: PLAIN
                         LOGIN: LOGIN
@@ -56,6 +63,7 @@ email:
                     type: text
                     label: Username
                     scope: merchant
+                    required: required
                     priority: 50
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
@@ -63,6 +71,7 @@ email:
                     type: password
                     label: Password
                     scope: merchant
+                    required: required
                     priority: 60
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"

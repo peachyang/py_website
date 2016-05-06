@@ -94,7 +94,7 @@ $query = $this->getQuery();
         </tbody>
         <tfoot>
             <tr>
-                <?php if ($this->getMessAction): ?>
+                <?php if ($this->getMessAction()): ?>
                     <td class="checkbox">
                         <input type="checkbox" class="selectall" />
                     </td>
@@ -102,7 +102,7 @@ $query = $this->getQuery();
                         <?php
                         foreach ($this->getMessAction() as $action) {
                             if (is_callable([$this, $action])) {
-                                echo $this->$action($item);
+                                echo $this->$action();
                             }
                         }
                         ?>

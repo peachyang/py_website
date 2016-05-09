@@ -7,7 +7,7 @@ admin_email_template_list:
                 action:
                     -
                         method: setTitle
-                        params: Email Template / CMS
+                        params: Email Template
             content:
                 children:
                     breadcrumb:
@@ -20,6 +20,11 @@ admin_email_template_list:
                                 params: [{link:':ADMIN/email_template/edit/',label:'Add New Template'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Email\Grid
+            extra:
+                children:
+                    send:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/email/send
 admin_email_template_edit:
     update: edit
     root:
@@ -36,3 +41,44 @@ admin_email_template_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Email\Edit
+            extra:
+                children:
+                    send:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/email/send
+admin_email_subscriber_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Subscriber / Newsletter
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/email_subscriber/',label:'Newsletter Subscriber'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Email\Subscriber
+admin_email_queue_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Email Queue
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/email_queue/',label:'Email Queue'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Email\Queue

@@ -9,6 +9,8 @@ use Seahinet\Lib\Session\Segment;
 class Block extends Grid
 {
 
+    protected $translateDomain = 'cms';
+
     public function getEditUrl($id = null)
     {
         return $this->getAdminUrl(':ADMIN/cms_block/edit/' . (is_null($id) ? '' : '?id=' . $id));
@@ -36,7 +38,7 @@ class Block extends Grid
             ],
             'status' => [
                 'label' => 'Status',
-                'sortby' => 'cms_page:status',
+                'sortby' => 'cms_block:status',
                 'type' => 'select',
                 'options' => [
                     'Disabled',

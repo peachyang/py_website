@@ -18,7 +18,7 @@ $parent = $this->getVariable('parent');
                         echo $item['class'];
                     }
                     ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>>
-                    <?php if (!isset($item['required']) || !$item['required']): ?>
+                    <?php if ((!isset($item['required']) || !$item['required'])&&!isset($item['attrs']['multiple'])): ?>
                 <option><?php echo $this->translate(isset($item['empty_string']) ? $item['empty_string'] : 'Please Select') ?></option>
             <?php endif ?>
             <?php

@@ -1,8 +1,19 @@
 ---
 admin:
-    cms:
+    email:
+        icon: envelope
+        title: E-mail
+        priority: 50
         children:
             -
                 link: 'email_template/'
                 title: 'Email Template'
                 priority: 40
+            -
+                link: 'email_subscriber/'
+                title: 'Newsletter Subscriber'
+                priority: 50
+            -
+                link: 'email_queue/'
+                title: 'Email Queue'
+                priority: 55

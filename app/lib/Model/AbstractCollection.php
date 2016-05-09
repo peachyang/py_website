@@ -45,13 +45,13 @@ abstract class AbstractCollection extends ArrayObject
 
     public function __construct()
     {
-        $this->_construct();
+        $this->construct();
     }
 
     /**
      * Overwrite normal method instead of magic method
      */
-    abstract protected function _construct();
+    abstract protected function construct();
 
     public function __call($name, $arguments)
     {

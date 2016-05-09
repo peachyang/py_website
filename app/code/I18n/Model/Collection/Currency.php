@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\AbstractCollection;
 class Currency extends AbstractCollection
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('i18n_currency');
     }

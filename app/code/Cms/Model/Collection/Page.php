@@ -9,7 +9,7 @@ use Zend\Db\Sql\Predicate\In;
 class Page extends AbstractCollection
 {
 
-    public function _construct()
+    public function construct()
     {
         $this->init('cms_page');
     }

@@ -10,7 +10,7 @@ use Zend\Db\TableGateway\TableGateway;
 class Template extends AbstractModel
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('email_template', 'id', ['id', 'code', 'subject', 'content']);
     }
@@ -51,6 +51,7 @@ class Template extends AbstractModel
                 $language[$item['language_id']] = $item['language'];
             }
             $this->storage['language'] = $language;
+            $this->storage['language_id'] = array_keys($language);
         }
         $data = @gzdecode($this->storage['content']);
         if ($data !== false) {

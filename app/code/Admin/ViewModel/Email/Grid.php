@@ -11,6 +11,7 @@ class Grid extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $translateDomain = 'email';
 
     public function getEditAction($item)
     {
@@ -63,7 +64,7 @@ class Grid extends PGrid
             ],
             'status' => [
                 'label' => 'Status',
-                'sortby' => 'cms_page:status',
+                'sortby' => 'status',
                 'type' => 'select',
                 'options' => [
                     'Disabled',

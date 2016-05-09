@@ -9,7 +9,7 @@ class Operation extends AbstractModel
 
     protected $role = null;
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('admin_operation', 'id', ['id', 'name', 'description', 'is_system']);
     }

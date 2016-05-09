@@ -81,3 +81,40 @@ admin_cms_block_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Cms\BlockEdit
+admin_cms_category_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Category Management / CMS
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_category/',label:'Category Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/cms_category/edit/',label:'Add New Category'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Cms\Category
+admin_cms_category_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/cms_category/',label:'Category Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Cms\CategoryEdit

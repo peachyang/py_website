@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\Collection\Language as LanguageCollection;
 class Store extends AbstractModel
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('core_store', 'id', ['id', 'merchant_id', 'code', 'name', 'status']);
     }

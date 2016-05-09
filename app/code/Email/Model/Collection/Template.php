@@ -9,7 +9,7 @@ use Zend\Db\Sql\Predicate\In;
 class Template extends AbstractCollection
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('email_template');
     }

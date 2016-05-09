@@ -30,7 +30,9 @@ class ServiceProvider implements ServiceProviderInterface
             $container['eventDispatcher'] = EventDispatcher::instance();
         }
         if (!$container->has('layout')) {
-            $container['layout'] = Layout::instance($config['layout']);
+            $container['layout'] = function($container){
+                return Layout::instance($container);
+            };
         }
         if (!$container->has('request') && isset($_SERVER['REQUEST_METHOD'])) {
             $request = new Request;

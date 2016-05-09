@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Email\Model\Collection;
+namespace Seahinet\Message\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Language;
@@ -9,7 +9,7 @@ use Zend\Db\Sql\Predicate\In;
 class Template extends AbstractCollection
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('message_template');
     }

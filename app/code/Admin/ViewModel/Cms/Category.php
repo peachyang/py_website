@@ -50,6 +50,9 @@ class Category extends Grid
             'id' => [
                 'label' => 'ID',
             ],
+            'parent_id' => [
+                'label' => 'Parent ID',
+            ],
             'name' => [
                 'label' => 'Name',
                 'class' => 'text-left'

@@ -106,13 +106,13 @@ class Grid extends AbstractViewModel
         return $collection;
     }
 
-    protected function getRendered()
+    protected function getRendered($template)
     {
         $this->setVariables([
             'collection' => $this->prepareCollection(),
             'attributes' => $this->prepareColumns()
         ]);
-        return parent::getRendered();
+        return parent::getRendered($template);
     }
 
     public function getTranslateDomain()

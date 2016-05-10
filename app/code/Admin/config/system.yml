@@ -16,6 +16,20 @@ global:
             priority: 20
             scope: [merchant,store]
             default: admin
+        frontend_theme:
+            type: text
+            required: required
+            label: Frontend Theme
+            priority: 30
+            scope: [merchant,store]
+            default: default
+        backend_theme:
+            type: text
+            required: required
+            label: Backend Theme
+            priority: 31
+            scope: [merchant,store]
+            default: default
         css_preprocessor:
             type: select
             required: reqired

@@ -8,31 +8,31 @@ admin_login:
                 action:
                     -
                         method: addLink
-                        params: pub/backend/css/normalize.css
+                        params: backend/css/normalize.css
                     -
                         method: addLink
-                        params: pub/backend/css/styles.css
+                        params: backend/css/styles.css
                     -
                         method: addLink
-                        params: [pub/backend/css/styles.css,stylesheet,lt IE 9]
+                        params: [backend/css/styles.css,stylesheet,lt IE 9]
                     -
                         method: addScript
-                        params: pub/backend/js/jquery.js
+                        params: backend/js/jquery.js
                     -
                         method: addScript
-                        params: pub/backend/js/validate/jquery.validate.min.js
+                        params: backend/js/validate/jquery.validate.min.js
                     -
                         method: addScript
-                        params: pub/backend/js/validate/config.js
+                        params: backend/js/validate/config.js
                     -
                         method: addScript
-                        params: pub/backend/js/modernizr.js
+                        params: backend/js/modernizr.js
                     -
                         method: addScript
-                        params: pub/backend/js/app.js
+                        params: backend/js/app.js
                     -
                         method: addScript
-                        params: [pub/backend/js/selectivizr.js,lt IE 9]
+                        params: [backend/js/selectivizr.js,lt IE 9]
                     -
                         method: setTitle
                         params: Log Into Seahinet Admin Panel
@@ -81,37 +81,37 @@ admin:
                 action:
                     -
                         method: addLink
-                        params: pub/backend/css/normalize.css
+                        params: backend/css/normalize.css
                     -
                         method: addLink
-                        params: pub/backend/css/font-awesome.css
+                        params: backend/css/font-awesome.css
                     -
                         method: addLink
-                        params: pub/backend/css/styles.css
+                        params: backend/css/styles.css
                     -
                         method: addLink
-                        params: [pub/backend/css/styles-ie.css,stylesheet,lt IE 9]
+                        params: [backend/css/styles-ie.css,stylesheet,lt IE 9]
                     -
                         method: addScript
-                        params: pub/backend/js/jquery.js
+                        params: backend/js/jquery.js
                     -
                         method: addScript
-                        params: pub/backend/js/validate/jquery.validate.min.js
+                        params: backend/js/validate/jquery.validate.min.js
                     -
                         method: addScript
-                        params: pub/backend/js/validate/config.js
+                        params: backend/js/validate/config.js
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/modernizr.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/modernizr.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/dropdown.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/dropdown.js',defer:'defer',async:'async'}]
                     -    
                         method: addScript
-                        params: [{src:'pub/backend/js/app.js',defer:'defer'}]
+                        params: [{src:'backend/js/app.js',defer:'defer'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/selectivizr.js',defer:'defer'},lt IE 9]
+                        params: [{src:'backend/js/selectivizr.js',defer:'defer'},lt IE 9]
                     -
                         method: setTitle
                         params: ''
@@ -169,31 +169,31 @@ edit:
                 action:
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/tab.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/tool/ckeditor/ckeditor.js'}]
+                        params: [{src:'tool/ckeditor/ckeditor.js'}]
                     -
                         method: addScript
-                        params: [{src:'pub/tool/ckeditor/adapters/jquery.js'}]
+                        params: [{src:'tool/ckeditor/adapters/jquery.js'}]
                     -
                         method: addScript
-                        params: [{src:'pub/tool/ckeditor.js',defer:'defer',async:'async'}]
+                        params: [{src:'tool/ckeditor.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/jquery.ui.widget.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/jquery.ui.widget.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/jquery.iframe-transport.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/jquery.iframe-transport.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/jquery.fileupload.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/jquery.fileupload.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/jquery.fileuploadbootstrap.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/jquery.fileuploadbootstrap.js',defer:'defer',async:'async'}]
 admin_dashboard:
     update: admin
     root:
@@ -205,16 +205,16 @@ admin_dashboard:
                         params: Dashboard
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/highcharts.js
+                        params: backend/js/highcharts/highcharts.js
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/modules/exporting.js
+                        params: backend/js/highcharts/modules/exporting.js
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/modules/no-data-to-display.js
+                        params: backend/js/highcharts/modules/no-data-to-display.js
                     -
                         method: addScript
-                        params: pub/backend/js/highcharts/config.js
+                        params: backend/js/highcharts/config.js
             content:
                 children:
                     breadcrumb:

@@ -23,10 +23,24 @@ global:
             priority: 30
             scope: [merchant,store]
             default: default
+        frontend_pub_theme:
+            type: text
+            required: required
+            label: Frontend Public Theme
+            priority: 30
+            scope: [merchant,store]
+            default: default
         backend_theme:
             type: text
             required: required
             label: Backend Theme
+            priority: 31
+            scope: [merchant,store]
+            default: default
+        backend_pub_theme:
+            type: text
+            required: required
+            label: Backend Public Theme
             priority: 31
             scope: [merchant,store]
             default: default

@@ -15,7 +15,7 @@ trait Currency
         $result = ['error' => 0, 'message' => []];
         try {
             $this->beginTransaction();
-            foreach ($from as $item) {
+            foreach ((array)$from as $item) {
                 if ($item === $to) {
                     $rate = 1;
                 } else {

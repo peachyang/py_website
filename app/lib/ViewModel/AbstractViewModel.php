@@ -41,6 +41,16 @@ abstract class AbstractViewModel implements Serializable
     /**
      * @var string
      */
+    protected $pubUrl = '';
+
+    /**
+     * @var bool 
+     */
+    private static $isAdmin = null;
+
+    /**
+     * @var string
+     */
     protected $template = null;
 
     /**
@@ -262,7 +272,18 @@ abstract class AbstractViewModel implements Serializable
 
     public function isAdminPage()
     {
-        return in_array('admin', Root::instance()->getBodyClass(true));
+        if (is_null(self::$isAdmin)) {
+            self::$isAdmin = in_array('admin', Root::instance()->getBodyClass(true));
+        }
+        return self::$isAdmin;
+    }
+
+    public function getPubUrl($path = '')
+    {
+        if ($this->pubUrl === '') {
+            $this->pubUrl = $this->getBaseUrl('pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/');
+        }
+        return $this->pubUrl . $path;
     }
 
 }

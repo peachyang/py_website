@@ -58,7 +58,7 @@ class CurrencyController extends AuthActionController
         $code = $this->getRequest()->getQuery('code', null);
         $config = $this->getContainer()->get('config');
         $base = $config['i18n/currency/base'];
-        $collection = is_null($code) ? $config['i18n/currency/enabled'] : (array) $code;
+        $collection = is_null($code) ? $config['i18n/currency/enabled[]'] : (array) $code;
         if (is_string($collection)) {
             $collection = explode(',', $collection);
         }

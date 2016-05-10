@@ -121,14 +121,16 @@ final class Head extends AbstractViewModel implements Singleton
     protected function renderLink($links)
     {
         $result = '';
-        $combine = $this->getContainer()->get('config')['global/combine_css'];
+        $config = $this->getContainer()->get('config');
+        $combine = $config['global/combine_css'];
         $files = [];
+        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
         foreach ($links as $link => $type) {
             if ($combine && $type === 'stylesheet' && strpos($link, '://') === false) {
-                $files[] = $link;
+                $files[] = $prefix . '/' . $link;
             } else {
                 if (strpos($link, '://') === false) {
-                    $link = $this->getBaseUrl($link);
+                    $link = $this->getBaseUrl($prefix . $link);
                 }
                 $result .= '<link href="' . $link . '" rel="' . $type . '" />';
             }
@@ -143,17 +145,19 @@ final class Head extends AbstractViewModel implements Singleton
     protected function renderScript($scripts)
     {
         $result = '';
-        $combine = $this->getContainer()->get('config')['global/combine_js'];
+        $config = $this->getContainer()->get('config');
+        $combine = $config['global/combine_js'];
         $files = [];
+        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
         foreach ($scripts as $script) {
             if (is_string($script)) {
                 $script = ['src' => $script];
             }
             if ($combine && strpos($script['src'], '://') === false) {
-                $files[] = $script['src'];
+                $files[] = $prefix . $script['src'];
             } else {
                 if (strpos($script['src'], '://') === false) {
-                    $script['src'] = $this->getBaseUrl($script['src']);
+                    $script['src'] = $this->getBaseUrl($prefix . $script['src']);
                 }
                 $result .= '<script type="text/javascript" ';
                 if (is_string($script)) {
@@ -189,7 +193,7 @@ final class Head extends AbstractViewModel implements Singleton
         }
         $name = md5(implode('', $files));
         if ($isCss) {
-            $path = 'pub/cache/css/';
+            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/css/';
             if (!is_dir(BP . $path)) {
                 mkdir($path, 0777, true);
             }
@@ -198,7 +202,7 @@ final class Head extends AbstractViewModel implements Singleton
                 file_put_contents(BP . $path . $name . '.css', $adapter->run($content));
             }
         } else {
-            $path = 'pub/cache/js/';
+            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/js/';
             if (!is_dir(BP . $path)) {
                 mkdir($path, 0777, true);
             }

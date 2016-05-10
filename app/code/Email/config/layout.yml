@@ -10,7 +10,7 @@ admin_email_template_list:
                         params: Email Template
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
@@ -36,7 +36,7 @@ admin_email_template_edit:
                 action:
                     -
                         method: addScript
-                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:

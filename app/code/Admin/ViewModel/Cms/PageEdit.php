@@ -96,8 +96,9 @@ class PageEdit extends Edit
                 'label' => 'Images'
             ],
             'testimages' => [
-                'type' => 'button',
+                'type' => 'widget',
                 'label' => 'Upload Images',
+                'widget' => 'testimages',
                 'class'=>'chooseimages'
             ],
             'content' => [

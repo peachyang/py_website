@@ -3,7 +3,7 @@ window.onload = function()
 	if($('html').attr('lang')!='null'&&$('html').attr('lang')!=''){
 		var cklanguage=$('html').attr('lang');
 	}else{
-		var cklanguage='zh-cn';
+		var cklanguage='zh';
 	}
 	// custombar or fullbar toolbar 
 	$('textarea.htmleditor').each(function(){

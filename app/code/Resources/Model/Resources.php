@@ -16,9 +16,9 @@ class Resources extends AbstractModel
     protected $error_messages;
     protected $options;
     
-    protected function _construct()
+    protected function construct()
     {
-        $this->init('file_resources', 'id', ['id', 'merchant_id', 'file_name', 'old_name', 'file_type', 'category_id']);
+        $this->init('file_resources', 'id', ['id', 'store_id', 'file_name', 'old_name', 'file_type', 'category_id']);
         $this->error_messages= array(
             1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
             2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
@@ -47,7 +47,7 @@ class Resources extends AbstractModel
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
-            'file_types'=>array(0=>'others',1=>'images',2=>'video',3=>'pdf'),
+            'file_types'=>array('others'=>'others','images'=>'images','images'=>'video','images'=>'pdf'),
             // Defines which files (based on their names) are accepted for upload:
             'accept_file_types' => '/.+$/i',
             // The php.ini settings upload_max_filesize and post_max_size

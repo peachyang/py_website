@@ -13,7 +13,7 @@ class Category extends AbstractCollection
 {
 
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('resources_category');
     }

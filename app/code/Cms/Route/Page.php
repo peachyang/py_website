@@ -2,7 +2,7 @@
 
 namespace Seahinet\Cms\Route;
 
-use Seahinet\Cms\Model\Page as PageModel;
+use Seahinet\Cms\Model;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Route\Route;
 use Seahinet\Lib\Route\RouteMatch;
@@ -14,7 +14,7 @@ class Page extends Route
     {
         $path = trim($request->getUri()->getPath(), '/');
         if ($path === '') {
-            $home = new PageModel();
+            $home = new Model\Page;
             $home->load('home', 'uri_key');
             if ($home->getId() && $home['status']) {
                 return new RouteMatch(['page' => $home, 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
@@ -31,14 +31,21 @@ class Page extends Route
         }
         $parts = explode('/', $path);
         $stack = [];
-        while ($part = array_pop($parts)) {
-            $model = new PageModel();
-            $model->load($part, 'uri_key');
-            if ($model->getId() && $model['status']) {
-                $stack[] = $model;
+        $part = array_pop($parts);
+        $page = new Model\Page;
+        $page->load($part, 'uri_key');
+        if ($page->getId() && $page['status']) {
+            while ($part = array_pop($parts)) {
+                $model = new Model\Category;
+                $model->load($part, 'uri_key');
+                if ($model->getId() && $model['status']) {
+                    $stack[] = $model;
+                }
             }
+        } else {
+            return false;
         }
-        if (empty($stack)) {
+        if (empty($stack) || !in_array($stack[0]->getId(), $page['category_id'])) {
             return false;
         }
         for ($i = 0; $i < count($stack); $i++) {
@@ -50,7 +57,7 @@ class Page extends Route
                 return false;
             }
         }
-        return new RouteMatch(['page' => $stack[0], 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
+        return new RouteMatch(['page' => $page, 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'], $request);
     }
 
 }

@@ -15,7 +15,7 @@ class Grid extends PGrid
     public function getEditAction($item)
     {
         return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
-                '"><span class="fa fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 

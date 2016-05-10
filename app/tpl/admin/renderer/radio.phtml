@@ -19,7 +19,7 @@ $parent = $this->getVariable('parent');
                            echo $item['class'];
                        }
                        ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
-            <label for="<?php echo $id, '-', $value ?>" class="control-label"><?php echo $label ?></label>
+            <label for="<?php echo $id, '-', $value ?>"><?php echo $label ?></label>
         <?php endforeach ?>
         <?php if (isset($item['comment'])): ?>
             <div class="comment">

@@ -83,6 +83,8 @@ class Request extends Message implements RequestInterface
     }
 
     /**
+     * @param string $key
+     * @param mixed $default
      * @return array
      * @throws \RuntimeException
      */
@@ -95,9 +97,7 @@ class Request extends Message implements RequestInterface
             $body = (string) $this->getBody();
             parse_str($body, $parsed);
             if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
-                throw new \RuntimeException(
-                'Request body media type parser return value must be an array, an object, or null'
-                );
+                $parsed = [];
             }
             $this->post = $parsed;
         }

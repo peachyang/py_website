@@ -8,6 +8,9 @@ admin_email_template_list:
                     -
                         method: setTitle
                         params: Email Template
+                    -
+                        method: addScript
+                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
@@ -29,13 +32,18 @@ admin_email_template_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'pub/backend/js/modal.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/email_template/',label:'Template Management'}]
+                                params: [{link:':ADMIN/email_template/',label:'Email Template'}]
                             -
                                 method: addCrumb
                                 params: [{label:'Edit'}]

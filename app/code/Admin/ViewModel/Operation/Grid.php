@@ -17,7 +17,7 @@ class Grid extends PGrid
             return '';
         }
         return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
-                '"><span class="fa fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
@@ -28,7 +28,7 @@ class Grid extends PGrid
         }
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
-                '"><span class="fa fa-remove" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
     }
 

@@ -71,4 +71,13 @@ class Edit extends PEdit
         return parent::prepareElements($columns);
     }
 
+    public function getAdditionalButtons()
+    {
+        return '<button type="button" class="btn btn-theme" data-id="' .
+                $this->getVariable('model')->getId()
+                . '" data-toggle="modal" data-target="#modal-send-email" title="' .
+                $this->translate('Send') . '"><span>' .
+                $this->translate('Send') . '</span></button>';
+    }
+
 }

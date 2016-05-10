@@ -25,14 +25,16 @@ if (count($tabs)):
         <?php endforeach ?>
     </ul>
     <?php
-    foreach ($this->getTabs() as $id => $tab):
-        if ($this->hasTab($id)):
-            ?>
-            <div role="tabpanel" class="tab-pane table fade" id="<?php echo $id ?>">
-                <?php echo $this->$id ?>
-            </div>
-            <?php
-        endif;
-    endforeach;
+    if ($this->generateTabPane()):
+        foreach ($this->getTabs() as $id => $tab):
+            if ($this->hasTab($id)):
+                ?>
+                <div role="tabpanel" class="tab-pane table fade" id="<?php echo $id ?>">
+                    <?php echo $this->$id ?>
+                </div>
+                <?php
+            endif;
+        endforeach;
+    endif;
 endif;
 ?>

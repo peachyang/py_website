@@ -58,7 +58,7 @@ class Request extends Message implements RequestInterface
         }
         $method = $server['REQUEST_METHOD'];
         $uri = Uri::createFromEnvironment($server);
-        $headers = Headers::createFromEnvironment($server);
+        $headers = Headers::createFromEnvironment($server); 
         $body = new RequestBody();
         $uploadedFiles = UploadedFile::createFromEnvironment();
         $this->withMethod($method)

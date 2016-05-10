@@ -91,6 +91,15 @@ class PageEdit extends Edit
                 'type' => 'text',
                 'label' => 'Meta Description'
             ],
+            'images' => [
+                'type' => 'text',
+                'label' => 'Images'
+            ],
+            'testimages' => [
+                'type' => 'button',
+                'label' => 'Upload Images',
+                'class'=>'chooseimages'
+            ],
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content',

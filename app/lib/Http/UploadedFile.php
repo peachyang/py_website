@@ -202,5 +202,13 @@ class UploadedFile implements UploadedFileInterface
     {
         return $this->size;
     }
-
+    
+    /**
+     * @return blooean
+     */
+    public function getMoved()
+    {
+        return $this->moved;
+    }
+    
 }

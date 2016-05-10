@@ -1,0 +1,11 @@
+---
+admin:
+    resources:
+        icon: television
+        title: resources
+        priority: 10
+        children:
+            -
+                link: 'resources/'
+                title: 'Resources category Management'
+                priority: 0

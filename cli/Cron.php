@@ -118,7 +118,8 @@ class Cron extends AbstractCli
     {
         if (!empty($this->getConfig())) {
             $count = 0;
-            for ($ts = time();; $ts+=60) {
+            $ts = time();
+            for ($max = $ts + 300; $ts < $max; $ts+=60) {
                 $d = getdate($ts);
                 foreach ($this->getConfig() as $config) {
                     if (!isset($config['time']) || !isset($config['code'])) {
@@ -137,7 +138,7 @@ class Cron extends AbstractCli
                                 'scheduled_at' => date('Y-m-d h:i:s', $ts)
                             ]);
                             $model->save();
-                            $count ++;
+                            $count++;
                         } catch (Exception $e) {
                             
                         }
@@ -161,15 +162,15 @@ class Cron extends AbstractCli
                 $ts = time();
                 $time = date('Y-m-d h:i:s', $ts);
                 $model = new Model([
-                    'id' => $item->offsetGet('id')
+                    'id' => $item['id']
                 ]);
-                if ($item->offsetGet('status') == 2) {
-                    $model->offsetSet('status', 4)
+                if ($item['status'] == 2) {
+                    $model->setData('status', 4)
                             ->save();
                     continue;
                 }
-                if (strtotime($item->offsetGet('scheduled_at')) + 1800 < $ts) {
-                    $model->offsetSet('status', 3)
+                if (strtotime($item['scheduled_at']) + 1800 < $ts) {
+                    $model->setData('status', 3)
                             ->save();
                     continue;
                 }
@@ -178,7 +179,7 @@ class Cron extends AbstractCli
                     'status' => 2,
                 ]);
                 $model->save();
-                $code = exclude('::', $time['code']);
+                $code = explode('::', trim($item['code']));
                 try {
                     $class = new $code[0];
                     $class->{$code[1]}();

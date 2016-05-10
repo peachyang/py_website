@@ -6,6 +6,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\Stdlib\ArrayObject;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Main configuration of system
@@ -65,7 +66,11 @@ final class Config extends ArrayObject implements Singleton
             if (!isset($config[$key])) {
                 $config[$key] = [];
             }
-            $array = $parser->parse($file->getContents());
+            try {
+                $array = $parser->parse($file->getContents());
+            } catch (ParseException $e) {
+                throw new ParseException('Parse error: ' . $file->getRealPath());
+            }
             if ($array) {
                 $config[$key] = $this->arrayMerge($config[$key], $array);
             }

@@ -1,4 +1,4 @@
 ---
 -
-    time: 0 0 * * *
+    time: '0 0 * * *'
     code: '\\Seahinet\\I18n\\Listeners\\Currency::schedule'

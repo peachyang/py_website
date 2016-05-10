@@ -1,6 +1,8 @@
 <?php
 $item = $this->getVariable('item');
 $parent = $this->getVariable('parent');
+$key = $this->getVariable('key');
+$id = preg_replace('/\W/', '-', $key);
 ?>
 <div class="input-box">
     <?php if (isset($item['label'])): ?>

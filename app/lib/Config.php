@@ -69,7 +69,7 @@ final class Config extends ArrayObject implements Singleton
             try {
                 $array = $parser->parse($file->getContents());
             } catch (ParseException $e) {
-                throw new ParseException('Parse error: ' . $file->getRealPath());
+                throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
             }
             if ($array) {
                 $config[$key] = $this->arrayMerge($config[$key], $array);

@@ -3,7 +3,6 @@
 namespace Seahinet\I18n\Listeners;
 
 use Seahinet\Lib\Listeners\ListenerInterface;
-use Seahinet\I18n\Model\Currency as Model;
 use Zend\Db\Sql\Predicate\NotIn;
 
 class Currency implements ListenerInterface

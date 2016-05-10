@@ -10,13 +10,14 @@ class Grid extends PGrid
 
     protected $editUrl = '';
     protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $sendUrl = '';
+    protected $action = ['getEditAction', 'getDeleteAction', 'getSendAction'];
     protected $translateDomain = 'email';
 
     public function getEditAction($item)
     {
         return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
-                '"><span class="fa fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
@@ -24,8 +25,18 @@ class Grid extends PGrid
     {
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
-                '"><span class="fa fa-remove" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
+    }
+
+    public function getSendAction($item)
+    {
+        return '<button type="button" class="btn" data-id="' .
+                $item['id'] .
+                '" data-toggle="modal" data-target="#modal-send-email" title="' .
+                $this->translate('Send') .
+                '"><span class="fa fa-fw fa-paper-plane" aria-hidden="true"></span><span class="sr-only">' .
+                $this->translate('Send') . '</span></button>';
     }
 
     public function getEditUrl()

@@ -33,6 +33,20 @@ class Config extends Edit
         if (is_null($this->elements)) {
             $this->elements = $this->getContainer()->get('config')['system'][$this->getKey()]['children'];
         }
+        uasort($this->elements, function(&$a, &$b) {
+            if (!isset($a['type']) && isset($b['type'])) {
+                return 1;
+            } elseif (!isset($b['type']) && isset($a['type'])) {
+                return -1;
+            }
+            if (!isset($a['priority'])) {
+                $a['priority'] = 0;
+            }
+            if (!isset($b['priority'])) {
+                $b['priority'] = 0;
+            }
+            return $a['priority'] == $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+        });
         return $this->elements;
     }
 

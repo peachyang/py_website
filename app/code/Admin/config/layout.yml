@@ -462,6 +462,10 @@ admin_config:
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: generateTabPane
+                                        params: false
                             scope:
                                 type: Seahinet\Admin\ViewModel\Language
                                 template: admin/scope

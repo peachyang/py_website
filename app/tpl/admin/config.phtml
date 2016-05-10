@@ -2,20 +2,6 @@
 $elements = $this->getVariable('elements');
 $scope = $this->getStore() ? 'store' : $this->getQuery('scope', 'merchant');
 $scopeId = $this->getStore() ? $this->getStore()->getId() : $this->getQuery('scope_id');
-uasort($elements, function($a, $b) {
-    if (!isset($a['type']) && isset($b['type'])) {
-        return 1;
-    } elseif (!isset($b['type']) && isset($a['type'])) {
-        return -1;
-    }
-    if (!isset($a['priority'])) {
-        $a['priority'] = 0;
-    }
-    if (!isset($b['priority'])) {
-        $b['priority'] = 0;
-    }
-    return $a['priority'] == $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
-});
 ?>
 <div class="edit">
     <form action="<?php echo $this->getSaveUrl() ?>" method="post">

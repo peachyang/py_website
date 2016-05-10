@@ -89,4 +89,9 @@ class Edit extends AbstractViewModel
         return $box;
     }
 
+    public function getAdditionalButtons()
+    {
+        return '';
+    }
+
 }

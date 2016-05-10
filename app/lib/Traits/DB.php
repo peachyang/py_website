@@ -48,24 +48,28 @@ trait DB
 
     /**
      * @param Where|\Closure|string|array $where
+     * @param TableGateway $tableGateway
      * @return ResultSet
      */
-    protected function select($where = null)
+    protected function select($where = null, $tableGateway = null)
     {
-        if (!is_null($this->tableGateway)) {
-            return $this->tableGateway->select($where);
+        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        if (!is_null($tableGateway)) {
+            return $tableGateway->select($where);
         }
         return [];
     }
 
     /**
      * @param  array $set
+     * @param TableGateway $tableGateway
      * @return int
      */
-    public function insert($set)
+    public function insert($set, $tableGateway = null)
     {
-        if (!is_null($this->tableGateway)) {
-            return $this->tableGateway->insert($set);
+        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        if (!is_null($tableGateway)) {
+            return $tableGateway->insert($set);
         }
         return 0;
     }
@@ -73,12 +77,14 @@ trait DB
     /**
      * @param  array $set
      * @param  Where|string|array|\Closure $where
+     * @param TableGateway $tableGateway
      * @return int
      */
-    public function update($set, $where = null)
+    public function update($set, $where = null, $tableGateway = null)
     {
-        if (!is_null($this->tableGateway)) {
-            return $this->tableGateway->update($set, $where);
+        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        if (!is_null($tableGateway)) {
+            return $tableGateway->update($set, $where);
         }
         return 0;
     }
@@ -86,16 +92,18 @@ trait DB
     /**
      * @param array $set
      * @param Where|string|array|\Closure $where
+     * @param TableGateway $tableGateway
      * @return int
      */
-    public function upsert($set, $where)
+    public function upsert($set, $where, $tableGateway = null)
     {
-        if (!is_null($this->tableGateway)) {
-            $select = $this->select($where)->toArray();
+        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        if (!is_null($tableGateway)) {
+            $select = $this->select($where, $tableGateway)->toArray();
             if (count($select)) {
-                return $this->update($set, $where);
+                return $this->update($set, $where, $tableGateway);
             } else {
-                return $this->insert($set + $where);
+                return $this->insert($set + $where, $tableGateway);
             }
         }
         return 0;
@@ -103,12 +111,14 @@ trait DB
 
     /**
      * @param  Where|\Closure|string|array $where
+     * @param TableGateway $tableGateway
      * @return int
      */
-    public function delete($where)
+    public function delete($where, $tableGateway = null)
     {
-        if (!is_null($this->tableGateway)) {
-            return $this->tableGateway->delete($where);
+        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        if (!is_null($tableGateway)) {
+            return $tableGateway->delete($where);
         }
         return 0;
     }

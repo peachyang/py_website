@@ -45,7 +45,8 @@ class Page extends AbstractModel
         $select->join('cms_page_language', 'cms_page_language.page_id=cms_page.id', [], 'left');
         $select->join('core_language', 'cms_page_language.language_id=core_language.id', ['language_id' => 'id', 'language' => 'name'], 'left');
         $select->join('cms_category_page', 'cms_category_page.page_id=cms_page.id', [], 'left');
-        $select->join('cms_category', 'cms_category.category_id=cms_category_page.category_id', ['category_id' => 'id', 'category' => 'name'], 'left');
+        $select->join('cms_category', 'cms_category.id=cms_category_page.category_id', ['category_id' => 'id'], 'left');
+        $select->join('cms_category_language', 'cms_category.id=cms_category_language.category_id', ['category' => 'name'], 'left');
         parent::beforeLoad($select);
     }
 

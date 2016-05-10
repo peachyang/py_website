@@ -51,7 +51,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
 .modal-backdrop.in{filter:alpha(opacity=50);opacity:.5}
 .modal-header{padding:15px;border-bottom:1px solid #e5e5e5}
-.modal-header .close{margin-top:-2px}
+.modal-header .close{margin-top:-2px; float:right;;}
 .modal-title{margin:0;line-height:1.42857143}
 .modal-body{position:relative;padding:15px}
 .modal-footer{padding:15px;text-align:right;border-top:1px solid #e5e5e5}
@@ -59,11 +59,16 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-footer .btn-group .btn + .btn{margin-left:-1px;}
 .modal-footer .btn-block + .btn-block{margin-left:0}
 .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
-.nav-tabs{border-bottom:1px solid #CCE0E9}
+.upimage-header{height:40px;margin-top:35px;}
+.upimage-body{height:500px;}
+.upimage-span-name{width:70%;}
+.upimage-span-note{width:20%;}
+.upimage-span-move{width:10%;}
+.nav-tabs{}
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #CCE0E9;border-bottom-color:transparent}
-.nav-tabs~.tab-pane{display:none}
+.nav-tabs~.tab-pane{display:none;}
 .nav-tabs~.tab-pane.active{display:block}
 .breadcrumb li{display:inline}
 .breadcrumb li:not(.label)+li:before{content:">";margin:0 4px}

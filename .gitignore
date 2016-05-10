@@ -4,6 +4,7 @@
 /var/
 /app/config/adapter.yml
 /pub/cache/
+/pub/cache/resources/
 !.htaccess
 .user.ini
 *.log

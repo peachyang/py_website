@@ -7,9 +7,9 @@ use Seahinet\Lib\Session\Segment;
 
 
 /**
- * System backend user
+ * System backend Resources category
  */
-class FileResoucesCategory extends AbstractModel
+class Category extends AbstractModel
 {
 
 
@@ -19,6 +19,8 @@ class FileResoucesCategory extends AbstractModel
     }
 
    
+    
+    
     protected function beforeSave()
     {
        

@@ -1,7 +1,7 @@
 $(function () {
 	
 	var uploadingImgI=0;
-
+	var uploadingImgResult=false;
     if($('input.chooseimages').length>0){
     	$('input.chooseimages').bind('click',initiUpload);
 
@@ -18,16 +18,17 @@ $(function () {
   		      '<div class="modal-body">'+
   		      '<ul class="nav nav-tabs images-tabs" role="tablist"><li role="presentation" class="active"><a href="#chooseimages" aria-controls="chooseimages" role="tab" data-toggle="tab">Choose Images</a></li>'+
   		      '<li role="presentation"><a href="#uploadimages" aria-controls="uploadimages" role="tab" data-toggle="tab">Upload Images</a></li></ul>'+
-  		      '<div role="tabpanel" class="tab-pane active" id="chooseimages">fsdfsdfffffff</div>'+
+  		      '<div role="tabpanel" class="tab-pane active" id="chooseimages">'+
+  		      '<div class="upimage-header"><p><select></select></p></div>'+
+  		      '<div class="upimage-body">dgfdgfdgg</div></div>'+
   		      '<div role="tabpanel" class="tab-pane" id="uploadimages">'+
-  		      '<div><p><input id="imagesfileupload" type="file" name="files[]" data-url="'+GLOBAL.BASE_URL+'admin/fileUpload/UploadImages/" multiple />  <button>Upload</button></p></div>'+
-  		      '<div style="height:200px;" id="imgLoad"></div>'+
+  		      '<div class="upimage-header"><p><input id="imagesfileupload" type="file" name="files[]" data-url="'+GLOBAL.BASE_URL+'admin/Resources_Resources/UploadImages/" multiple />  <button>Upload</button></p></div>'+
+  		      '<div id="imgLoad" class="upimage-body"></div>'+
   		      '</div>'+
   		      '</div>'+
   		    '</div>'+
   		  '</div>'+
   		'</div').appendTo(document.body);
-  	
   $('div#imagesModal').modal({
   	  keyboard: false
   }).on('show.bs.modal', function (e) {
@@ -37,29 +38,25 @@ $(function () {
 		});
 
   });
-  
-  
-  
-  
-  
+ 
   $("input#imagesfileupload").fileupload({
 		dataType: 'json',
 		add : function(e, data) {
 			var imgId =uploadingImgI;
 			//将需要上传的图片保存变成HTML，在页面上方便的调用
 			data.order=imgId;
-			var str = "<span class='upimgspan' id='upImg"+imgId+"' />";
-			console.log(str);
-			data.context = $(str).html(data['files'][0].name+'<div id="progress'+imgId+'" class="upimgprogress"><div class="bar"></div></div>').appendTo($("div#imgLoad")).click(function() {
+			var str = "<div id='upImg"+imgId+"' />";
+			data.context ='<span class="upimage-span-name">'+$(str).html(data['files'][0].name+'</span><span id="uploadnote'+imgId+'"  class="upimage-span-note">Waiting...</span>').appendTo($("div#imgLoad")).click(function() {
+				$('span#uploadnote'+imgId).html('Uploading...');
 				data.submit().success(function (result,textStatus, jqXHR) {
-					console.log(result);
-					console.log(data);
-					if(result.error=='success'){
+					//console.log(result);
+					if(result.error==0){
+						$('span#uploadnote'+imgId).html('Finished...');
 						//alert(result.files[0].name);
-						$('span#upImg'+imgId).remove();
+						$('div#upImg'+imgId).remove();
 						$.each(result.files, function(index, file) {
 							//console.log('span#upImg'+imgId);
-							//$.fwutility.uploadingImgResult=true;
+							uploadingImgResult=true;
 						});	
 					}else{
 						alert(result.error);
@@ -68,22 +65,14 @@ $(function () {
 				});						
 			});
 			//add the image cancle button
-			data.context = $('<button id="ImgMove'+imgId+'" class="imgMove" />').html('move').appendTo($("span#upImg"+imgId)).click(
+			data.context = $('<span class="fa fa-remove upimage-span-move" id="ImgMove'+imgId+'" />').appendTo($("div#upImg"+imgId)).click(
 					function(){
 						moveImg(imgId);
 					}
 			);				
 			uploadingImgI++;
-		},
-		progress: function (e,data) {
-			//console.log(data.order);
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$('div#progress'+data.order+' .bar').css(
-					'width',
-					progress + '%'
-			);
-			//console.log(progress);
 		}
+		
 	});
   
   
@@ -96,7 +85,7 @@ $(function () {
 	 *singer image cancel
 	 */
 	function moveImg(imgId){
-		$("span#upImg"+imgId).remove();
+		$("div#upImg"+imgId).remove();
 	}
 	
 	

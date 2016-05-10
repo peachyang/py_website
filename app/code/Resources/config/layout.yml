@@ -1,0 +1,46 @@
+---
+resources:
+    update: default
+    root:
+        children:
+            content:
+                children:
+                    page:
+                        type: Seahinet\Resources\ViewModel\Resources
+admin_resources_category_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Resources category Management / Resouces
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resources_Category/',label:'Resources category Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/Resources_Category/edit/',label:'Add New category'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Resources\Category
+admin_resources_category_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resources_Category/',label:'Resources category Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Resources\CategoryEdit

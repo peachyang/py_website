@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\Controller;
+namespace Seahinet\Admin\Controller\Resources;
 
 use Seahinet\Lib\Controller\AuthActionController;
 

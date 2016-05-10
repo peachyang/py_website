@@ -44,3 +44,21 @@ admin_resources_category_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Resources\CategoryEdit
+admin_resources_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Resources Management / Resouces
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resources_Resources/',label:'Resources Management'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Resources\Resources

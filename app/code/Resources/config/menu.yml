@@ -2,10 +2,10 @@
 admin:
     resources:
         icon: television
-        title: resources
-        priority: 10
+        title: Resources
+        priority: 30
         children:
             -
-                link: 'resources/'
-                title: 'Resources category Management'
+                link: 'resources_Category/'
+                title: 'Category'
                 priority: 0

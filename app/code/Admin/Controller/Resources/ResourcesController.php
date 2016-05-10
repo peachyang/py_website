@@ -9,6 +9,14 @@ use Seahinet\Resources\Model\Resources  as Model;
 class ResourcesController extends AuthActionController
 {
 
+    public function indexAction()
+    {
+    
+        $root = $this->getLayout('admin_resources_list');
+        return $root;
+    
+    }
+    
     public function uploadImagesAction()
     {
         
@@ -29,7 +37,7 @@ class ResourcesController extends AuthActionController
                        }
                        
 
-                       $model->setData('merchant_id', 0);
+                       $model->setData('store_id', 0);
                        $model->setData('file_name', $fileName);
                        $model->setData('old_name', $fileName);
                        $model->setData('file_type', 1);

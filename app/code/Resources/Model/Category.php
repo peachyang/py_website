@@ -13,9 +13,9 @@ class Category extends AbstractModel
 {
 
 
-    protected function _construct()
+    protected function construct()
     {
-        $this->init('file_resources_category', 'id', ['id', 'merchant_id', 'parent', 'code']);
+        $this->init('file_resources_category', 'id', ['id', 'store_id', 'parent_id', 'code']);
     }
 
    

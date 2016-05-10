@@ -12,7 +12,7 @@ class Role extends AbstractModel
 
     protected $role = null;
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('admin_role', 'id', ['id', 'name', 'status']);
     }

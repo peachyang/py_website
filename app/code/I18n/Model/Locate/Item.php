@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Lib\Model\I18n;
+namespace Seahinet\I18n\Model\Locate;
 
 use Seahinet\Lib\Stdlib\ArrayObject;
 

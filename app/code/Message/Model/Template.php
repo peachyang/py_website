@@ -8,7 +8,7 @@ use Zend\Db\TableGateway\TableGateway;
 class Template extends AbstractModel
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('message_template', 'id', ['id', 'code', 'content']);
     }

@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\AbstractModel;
 class Block extends AbstractModel
 {
 
-    public function _construct()
+    public function construct()
     {
         $this->init('cms_block', 'id', ['id', 'store_id', 'status', 'code', 'content']);
     }
@@ -41,13 +41,14 @@ class Block extends AbstractModel
 
     protected function afterLoad($result = [])
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         if (isset($result[0])) {
             $language = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
             }
             $this->storage['language'] = $language;
+            $this->storage['language_id'] = array_keys($language);
         }
         $data = @gzdecode($this->storage['content']);
         if ($data !== false) {

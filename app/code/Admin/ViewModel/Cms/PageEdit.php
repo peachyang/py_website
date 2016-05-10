@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
-use Seahinet\Cms\Source\Page;
+use Seahinet\Cms\Source\Category;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
@@ -38,12 +38,6 @@ class PageEdit extends Edit
             'id' => [
                 'type' => 'hidden',
             ],
-            'parent_id' => [
-                'type' => 'select',
-                'options' => (new Page)->getSourceArray($model ? $model->getId() : []),
-                'label' => 'Parent ID',
-                'empty_string' => '(NULL)'
-            ],
             'store_id' => ($user->getStore() ? [
                 'type' => 'hidden',
                 'value' => $user->getStore()->getId()
@@ -57,6 +51,14 @@ class PageEdit extends Edit
                 'type' => 'text',
                 'label' => 'Title',
                 'required' => 'required'
+            ],
+            'category_id[]' => [
+                'type' => 'select',
+                'options' => (new Category)->getSourceArray(),
+                'label' => 'Category',
+                'attrs' => [
+                    'multiple' => 'multiple'
+                ]
             ],
             'language_id[]' => [
                 'type' => 'select',

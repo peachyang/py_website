@@ -12,6 +12,7 @@ class Page extends Grid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $translateDomain = 'cms';
 
     public function getEditAction($item)
     {
@@ -50,8 +51,10 @@ class Page extends Grid
             'id' => [
                 'label' => 'ID',
             ],
-            'parent_id' => [
-                'label' => 'Parent ID',
+            'category' => [
+                'label' => 'Category',
+                'use4sort' => false,
+                'use4filter' => false
             ],
             'title' => [
                 'label' => 'Title',

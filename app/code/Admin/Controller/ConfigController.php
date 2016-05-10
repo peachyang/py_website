@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\Controller\Resources;
 
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 
 class ConfigController extends AuthActionController
 {
@@ -46,26 +47,34 @@ class ConfigController extends AuthActionController
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 $key = $data['key'];
-                try {
-                    $this->beginTransaction();
-                    $tableGateway = $this->getTableGateway('core_config');
-                    $scope = substr($data['scope'], 0, 1);
-                    $scope_id = substr($data['scope'], 1);
-                    $where = $scope === 's' ? ['store_id' => $scope_id] :
-                            ['merchant_id' => $scope_id];
-                    foreach ($data as $path => $value) {
-                        if (!in_array($path, ['key', 'csrf', 'scope'])) {
-                            $this->upsert(['value' => $value], $where + ['path' => $key . '/' . $path]);
-                        }
-                    }
-                    $this->commit();
-                    $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
-                    $result['message'][] = ['message' => $this->translate('Configuration saved successfully.'), 'level' => 'success'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $this->rollback();
-                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
+                $scope = substr($data['scope'], 0, 1);
+                $scope_id = substr($data['scope'], 1);
+                $where = $scope === 's' ? ['store_id' => $scope_id] :
+                        ['merchant_id' => $scope_id];
+                $segment = new Segment('admin');
+                $store = $segment->get('user')->getStore();
+                if ($store && ($scope !== 's' || $scope_id != $store->getId())) {
                     $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('Failed to save configuration.'), 'level' => 'danger'];
+                } else {
+                    try {
+                        $this->beginTransaction();
+                        $tableGateway = $this->getTableGateway('core_config');
+                        foreach ($data as $path => $value) {
+                            if (!in_array($path, ['key', 'csrf', 'scope'])) {
+                                $this->upsert(['value' => is_array($value) ? implode(',', $value) : $value], $where + ['path' => $key . '/' . $path]);
+                                $this->getContainer()->get('eventDispatcher')->trigger('system.config.' . $key . '/' . $path . '.save.after', ['value' => $value, 'scope' => $where]);
+                            }
+                        }
+                        $this->commit();
+                        $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
+                        $result['message'][] = ['message' => $this->translate('Configuration saved successfully.'), 'level' => 'success'];
+                    } catch (Exception $e) {
+                        $this->getContainer()->get('log')->logException($e);
+                        $this->rollback();
+                        $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
+                        $result['error'] = 1;
+                    }
                 }
             }
         }

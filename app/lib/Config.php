@@ -119,8 +119,8 @@ final class Config extends ArrayObject implements Singleton
             ];
         }
         $result = isset($array[$this->keys['s']]) ? $array[$this->keys['s']] :
-                                (isset($array[$this->keys['m']]) ?
-                                        $array[$this->keys['m']] : $array);
+                (isset($array[$this->keys['m']]) ?
+                        $array[$this->keys['m']] : $array);
         return $result;
     }
 
@@ -135,6 +135,9 @@ final class Config extends ArrayObject implements Singleton
             }
         } else if (isset($config[$path[0]])) {
             return $this->getConfigByScope($config[$path[0]]);
+        } else if (strpos($path[0], '[]')) {
+            $path[0] = str_replace('[]', '', $path[0]);
+            return explode(',', $this->getConfigByPath($path, $config));
         }
         return null;
     }

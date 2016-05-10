@@ -63,7 +63,7 @@ class Grid extends PGrid
             ],
             'status' => [
                 'label' => 'Status',
-                'sortby' => 'cms_page:status',
+                'sortby' => 'status',
                 'type' => 'select',
                 'options' => [
                     'Disabled',

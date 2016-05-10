@@ -8,9 +8,9 @@ use Zend\Db\TableGateway\TableGateway;
 class Page extends AbstractModel
 {
 
-    public function _construct()
+    public function construct()
     {
-        $this->init('cms_page', 'id', ['id', 'parent_id', 'store_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'thumbnail', 'image', 'content']);
+        $this->init('cms_page', 'id', ['id', 'store_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'thumbnail', 'image', 'content']);
     }
 
     protected function beforeSave()
@@ -29,6 +29,13 @@ class Page extends AbstractModel
                 $tableGateway->insert(['page_id' => $this->getId(), 'language_id' => $language_id]);
             }
         }
+        if (isset($this->storage['category_id'])) {
+            $tableGateway = new TableGateway('cms_category_page', $this->getContainer()->get('dbAdapter'));
+            $tableGateway->delete(['page_id' => $this->getId()]);
+            foreach ($this->storage['category_id'] as $category_id) {
+                $tableGateway->insert(['page_id' => $this->getId(), 'category_id' => $category_id]);
+            }
+        }
         parent::afterSave();
         $this->commit();
     }
@@ -37,18 +44,25 @@ class Page extends AbstractModel
     {
         $select->join('cms_page_language', 'cms_page_language.page_id=cms_page.id', [], 'left');
         $select->join('core_language', 'cms_page_language.language_id=core_language.id', ['language_id' => 'id', 'language' => 'name'], 'left');
+        $select->join('cms_category_page', 'cms_category_page.page_id=cms_page.id', [], 'left');
+        $select->join('cms_category', 'cms_category.category_id=cms_category_page.category_id', ['category_id' => 'id', 'category' => 'name'], 'left');
         parent::beforeLoad($select);
     }
 
     protected function afterLoad($result = [])
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         if (isset($result[0])) {
             $language = [];
+            $category = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
+                $category[$item['category_id']] = $item['category'];
             }
             $this->storage['language'] = $language;
+            $this->storage['language_id'] = array_keys($language);
+            $this->storage['category'] = $category;
+            $this->storage['category_id'] = array_keys($category);
         }
         $data = @gzdecode($this->storage['content']);
         if ($data !== false) {

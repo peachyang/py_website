@@ -85,7 +85,7 @@ class Edit extends AbstractViewModel
             'item' => $item,
             'parent' => $this
         ]);
-        $box->setTemplate('admin/renderer/inputBox');
+        $box->setTemplate('admin/renderer/' . $item['type']);
         return $box;
     }
 

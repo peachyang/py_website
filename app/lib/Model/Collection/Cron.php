@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\AbstractCollection;
 class Cron extends AbstractCollection
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('core_schedule');
     }

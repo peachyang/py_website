@@ -16,6 +16,14 @@ global:
             priority: 20
             scope: [merchant,store]
             default: admin
+        css_preprocessor:
+            type: select
+            required: reqired
+            label: CSS Preprocessor
+            priority: 90
+            scope: merchant
+            default: 1
+            options: [SCSS,LESS]
         combine_css:
             type: select
             label: Combine CSS File

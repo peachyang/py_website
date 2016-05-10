@@ -16,7 +16,7 @@ class User extends AbstractModel
     protected $role = null;
     protected $store = null;
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('admin_user', 'id', ['id', 'role_id', 'status', 'username', 'password', 'email', 'logdate', 'lognum', 'rp_token', 'rp_token_created_at']);
     }

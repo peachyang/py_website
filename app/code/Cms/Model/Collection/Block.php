@@ -9,7 +9,7 @@ use Zend\Db\Sql\Predicate\In;
 class Block extends AbstractCollection
 {
 
-    public function _construct()
+    public function construct()
     {
         $this->init('cms_block');
         $this->select->join('cms_block_language', 'cms_block.id=cms_block_language.block_id', [], 'left');

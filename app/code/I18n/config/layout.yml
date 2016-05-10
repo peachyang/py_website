@@ -1,0 +1,50 @@
+---
+admin_currency_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Currency Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/config/i18n/',label:'System Configuration'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/config/i18n/',label:'I18N'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_currency/',label:'Currency Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_currency/sync/',label:'Synchronize'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Currency\Grid
+admin_currency_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/config/i18n/',label:'System Configuration'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/config/i18n/',label:'I18N'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_currency/',label:'Currency Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Currency\Edit

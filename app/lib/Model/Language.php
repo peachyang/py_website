@@ -5,7 +5,7 @@ namespace Seahinet\Lib\Model;
 class Language extends AbstractModel
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('core_language', 'id', ['id', 'merchant_id', 'code', 'name', 'status']);
     }

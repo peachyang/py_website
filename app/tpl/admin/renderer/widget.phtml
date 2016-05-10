@@ -1,0 +1,19 @@
+<?php
+$item = $this->getVariable('item');
+$parent = $this->getVariable('parent');
+?>
+<div class="input-box">
+    <?php if (isset($item['label'])): ?>
+        <label for="<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
+            <?php echo $this->translate($item['label']) ?>
+        </label>
+    <?php endif ?>
+    <div class="cell">
+        <?php echo $parent->{$item['widget']} ?>
+        <?php if (isset($item['comment'])): ?>
+            <div class="comment">
+                <?php echo nl2br($this->translate($item['comment'])) ?>
+            </div>
+        <?php endif ?>
+    </div>
+</div>

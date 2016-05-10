@@ -1,11 +1,11 @@
 <?php
 
-namespace Seahinet\Lib\Model;
+namespace Seahinet\I18n\Model;
 
 use BadMethodCallException;
 use Zend\Db\TableGateway\TableGateway;
 
-class I18n
+class Locate
 {
 
     use \Seahinet\Lib\Traits\Container;

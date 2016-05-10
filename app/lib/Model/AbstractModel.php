@@ -28,13 +28,13 @@ abstract class AbstractModel extends ArrayObject
     public function __construct($input = array())
     {
         $this->storage = $input;
-        $this->_construct();
+        $this->construct();
     }
 
     /**
      * Overwrite normal method instead of magic method
      */
-    abstract protected function _construct();
+    abstract protected function construct();
 
     /**
      * Data operator initialization

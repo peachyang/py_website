@@ -1,0 +1,30 @@
+---
+i18n:
+    label: I18N
+    children:
+        currency:
+            label: Currency
+            scope: merchant
+            children:
+                base:
+                    type: select
+                    label: Base Currency
+                    required: required
+                    priority: 0
+                    source: \Seahinet\I18n\Source\Currency
+                    default: CNY
+                enabled[]:
+                    type: select
+                    label: Enabled Currency
+                    required: required
+                    priority: 10
+                    attrs:
+                        multiple: multiple
+                    source: \Seahinet\I18n\Source\Currency
+                    default: CNY
+                rate:
+                    type: link
+                    label: Currency Rate
+                    link: i18n_currency/
+                    content: View More
+                    priority: 20

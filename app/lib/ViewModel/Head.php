@@ -176,7 +176,16 @@ final class Head extends AbstractViewModel implements Singleton
     {
         $content = '';
         foreach ($files as $file) {
-            $content .= file_get_contents(BP . $file);
+            $temp = file_get_contents(BP . $file);
+            if (substr($file, -4) !== '.css') {
+                try {
+                    $temp = $this->getContainer()->get('csspp')->compile($temp);
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $temp = '';
+                }
+            }
+            $content .= $temp;
         }
         $name = md5(implode('', $files));
         if ($isCss) {

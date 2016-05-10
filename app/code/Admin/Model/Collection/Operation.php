@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\AbstractCollection;
 class Operation extends AbstractCollection
 {
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('admin_operation');
     }

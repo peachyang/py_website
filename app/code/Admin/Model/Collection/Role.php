@@ -9,7 +9,7 @@ class Role extends AbstractCollection
 
     public $i = 0;
 
-    protected function _construct()
+    protected function construct()
     {
         $this->init('admin_role');
     }

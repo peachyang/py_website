@@ -1,0 +1,36 @@
+<div class="modal fade" id="modal-send-email">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><?php echo $this->translate('Send Email') ?></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-box">
+                        <label for="sendmail-rcpt" class="control-label"><?php echo $this->translate('Rcpt To') ?></label>
+                        <select name="rcpt" id="sendmail-rcpt" class="form-control">
+                            <option value="0"><?php echo $this->translate('Newsletter Subscribers') ?></option>
+                            <option value="1"><?php echo $this->translate('Customize') ?></option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="sendmail-rcpt" class="control-label"><?php echo $this->translate('Email') ?></label>
+                        <input type="text" />
+                    </div>
+                    <div class="input-box">
+                        <label for="sendmail-rcpt" class="control-label"></label>
+                        <select name="rcpt" id="sendmail-rcpt" class="form-control">
+                            <option value="0"><?php echo $this->translate('Newsletter Subscribers') ?></option>
+                            <option value="1"><?php echo $this->translate('Customize') ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                    <button type="button" class="btn btn-primary"><?php echo $this->translate('Schedule') ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

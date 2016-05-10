@@ -62,12 +62,12 @@ class Config extends Edit
         return $this;
     }
 
-    protected function getRendered()
+    protected function getRendered($template)
     {
         if (!$this->getKey()) {
             return '';
         }
-        return parent::getRendered();
+        return parent::getRendered($template);
     }
 
     protected function getConfig()

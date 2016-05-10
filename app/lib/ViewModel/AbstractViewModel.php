@@ -83,10 +83,11 @@ abstract class AbstractViewModel implements Serializable
                     return $rendered;
                 }
             }
+            $template = BP . 'app/tpl/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_theme' : 'global/frontend_theme'] . DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
-                $rendered = $this->getContainer()->get('renderer')->render($this->getTemplate(), $this);
-            } else if (file_exists(BP . 'app/tpl/' . $this->getTemplate() . '.phtml')) {
-                $rendered = $this->getRendered();
+                $rendered = $this->getContainer()->get('renderer')->render($template, $this);
+            } else if (file_exists($template . '.phtml')) {
+                $rendered = $this->getRendered($template . '.phtml');
             } else {
                 $rendered = '';
             }
@@ -103,12 +104,13 @@ abstract class AbstractViewModel implements Serializable
     /**
      * Render template by default
      * 
+     * @param string $template
      * @return string
      */
-    protected function getRendered()
+    protected function getRendered($template)
     {
         ob_start();
-        include BP . 'app/tpl/' . $this->getTemplate() . '.phtml';
+        include $template;
         return ob_get_clean();
     }
 

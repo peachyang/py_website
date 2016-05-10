@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Cms;
 
 use Seahinet\Admin\ViewModel\Edit;
+use Seahinet\Cms\Source\Category;
 use Seahinet\Lib\Source\Language;
 
 class CategoryEdit extends Edit
@@ -37,6 +38,12 @@ class CategoryEdit extends Edit
                 'type' => 'text',
                 'label' => 'Name',
                 'required' => 'required'
+            ],
+            'parent_id' => [
+                'type' => 'select',
+                'label' => 'Parent ID',
+                'empty_string' => '(NULL)',
+                'options' => (new Category)->getSourceArray()
             ],
             'language_id[]' => [
                 'type' => 'select',

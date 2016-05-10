@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Resources;
+namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;

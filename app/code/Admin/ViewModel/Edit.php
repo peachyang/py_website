@@ -28,13 +28,13 @@ class Edit extends AbstractViewModel
         return false;
     }
 
-    protected function getRendered()
+    protected function getRendered($template)
     {
         $this->setVariables([
             'elements' => $this->prepareElements(),
             'title' => $this->getTitle()
         ]);
-        return parent::getRendered();
+        return parent::getRendered($template);
     }
 
     protected function prepareElements($columns = [])

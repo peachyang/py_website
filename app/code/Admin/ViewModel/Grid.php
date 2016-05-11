@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\ViewModel;
 
+use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Grid extends AbstractViewModel
@@ -108,8 +109,12 @@ class Grid extends AbstractViewModel
 
     protected function getRendered($template)
     {
+        $collection = $this->prepareCollection();
+        if ($collection instanceof AbstractCollection) {
+            $collection->load();
+        }
         $this->setVariables([
-            'collection' => $this->prepareCollection(),
+            'collection' => $collection,
             'attributes' => $this->prepareColumns()
         ]);
         return parent::getRendered($template);

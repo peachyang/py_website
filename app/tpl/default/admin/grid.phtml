@@ -109,7 +109,7 @@ $query = $this->getQuery();
                     </td>
                 <?php endif ?>
                 <td colspan="<?php echo $count + 1 ?>" class="text-right">
-                    <?php echo $this->pager->setCollection($this->getVariable('collection')) ?>
+                    <?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?>
                 </td>
             </tr>
         </tfoot>

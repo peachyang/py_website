@@ -11,7 +11,7 @@ $id = preg_replace('/\W/', '-', $key);
         </label>
     <?php endif ?>
     <div class="cell">
-        <?php echo $parent->{$item['widget']} ?>
+        <?php echo $parent->{$item['widget']}->setVariable('item', $item) ?>
         <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

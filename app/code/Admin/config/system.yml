@@ -8,7 +8,14 @@ global:
             label: Base Url
             priority: 10
             scope: [merchant,store]
-            comment: Make sure that base Url ends with '/' (slash), e.g. http://yourdomain/
+            default: /
+            comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
+        cookie_free_domain:
+            type: url
+            label: Cookie-free Domain
+            priority: 11
+            scope: [merchant,store]
+            comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
         admin_path:
             type: text
             required: required
@@ -19,7 +26,7 @@ global:
         frontend_theme:
             type: text
             required: required
-            label: Frontend Theme
+            label: Frontend Template Theme
             priority: 30
             scope: [merchant,store]
             default: default
@@ -27,21 +34,21 @@ global:
             type: text
             required: required
             label: Frontend Public Theme
-            priority: 30
+            priority: 31
             scope: [merchant,store]
             default: default
         backend_theme:
             type: text
             required: required
-            label: Backend Theme
-            priority: 31
+            label: Backend Template Theme
+            priority: 35
             scope: [merchant,store]
             default: default
         backend_pub_theme:
             type: text
             required: required
             label: Backend Public Theme
-            priority: 31
+            priority: 36
             scope: [merchant,store]
             default: default
         css_preprocessor:

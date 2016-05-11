@@ -281,9 +281,13 @@ abstract class AbstractViewModel implements Serializable
     public function getPubUrl($path = '')
     {
         if ($this->pubUrl === '') {
-            $this->pubUrl = $this->getBaseUrl('pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/');
+            $config = $this->getContainer()->get('config');
+            $base = $config['global/cookie_free_domain'];
+            $prefix = 'pub/theme/' . $config[$this->isAdminPage() ?
+                            'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
+            $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
         }
-        return $this->pubUrl . $path;
+        return $this->pubUrl . ltrim($path, '/');
     }
 
 }

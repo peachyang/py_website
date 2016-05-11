@@ -130,7 +130,7 @@ final class Head extends AbstractViewModel implements Singleton
                 $files[] = $prefix . '/' . $link;
             } else {
                 if (strpos($link, '://') === false) {
-                    $link = $this->getBaseUrl($prefix . $link);
+                    $link = $this->getPubUrl($link);
                 }
                 $result .= '<link href="' . $link . '" rel="' . $type . '" />';
             }
@@ -157,7 +157,7 @@ final class Head extends AbstractViewModel implements Singleton
                 $files[] = $prefix . $script['src'];
             } else {
                 if (strpos($script['src'], '://') === false) {
-                    $script['src'] = $this->getBaseUrl($prefix . $script['src']);
+                    $script['src'] = $this->getPubUrl($script['src']);
                 }
                 $result .= '<script type="text/javascript" ';
                 if (is_string($script)) {
@@ -194,23 +194,25 @@ final class Head extends AbstractViewModel implements Singleton
         $name = md5(implode('', $files));
         if ($isCss) {
             $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/css/';
-            if (!is_dir(BP . $path)) {
-                mkdir($path, 0777, true);
-            }
+
             if (!file_exists(BP . $path . $name . '.css')) {
+                if (!is_dir(BP . $path)) {
+                    mkdir($path, 0777, true);
+                }
                 $adapter = new CSSmin;
                 file_put_contents(BP . $path . $name . '.css', $adapter->run($content));
             }
         } else {
             $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/js/';
-            if (!is_dir(BP . $path)) {
-                mkdir($path, 0777, true);
-            }
+
             if (!file_exists(BP . $path . $name . '.js')) {
+                if (!is_dir(BP . $path)) {
+                    mkdir($path, 0777, true);
+                }
                 file_put_contents(BP . $path . $name . '.js', Minifier::minify($content));
             }
         }
-        return $this->getBaseUrl($path . $name);
+        return $this->getPubUrl('cache/' . ($isCss ? 'css/' : 'js/') . $name);
     }
 
 }

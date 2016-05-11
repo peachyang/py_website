@@ -32,7 +32,7 @@ class Dispatcher extends GroupCountBased
      */
     public function dispatch($request, $uri = null)
     {
-        $result = parent::dispatch($request->getMethod(), (string) $request->getUri()->getPath());
+        $result = parent::dispatch($request->getMethod(), $request->getUri()->getPath());
         if ($result[0] === static::FOUND) {
             return new RouteMatch(array_merge(['controller' => $result[1]], $result[2]), $request);
         } else {

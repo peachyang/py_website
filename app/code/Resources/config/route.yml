@@ -1,4 +1,0 @@
----
-resource:
-    route: Seahinet\Resources\Route\Router
-    priority: 101

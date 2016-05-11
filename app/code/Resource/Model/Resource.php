@@ -42,8 +42,8 @@ class Resource extends AbstractModel
         
         $this->options = array(
             'script_url' =>'',
-            'upload_dir' => '/home/html/ecomv2admin/pub/Resources/',
-            'upload_url' => 'http://ecomv2admin/lh.com/pub/Resources/',
+            'upload_dir' => '/home/html/ecomv2admin/pub/Resource/',
+            'upload_url' => 'http://ecomv2admin/lh.com/pub/Resource/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,

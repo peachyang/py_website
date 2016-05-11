@@ -3,5 +3,5 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
-    RewriteRule ^/pub/resources/resized/(\d+)x(\d*)/(.*)$ ../../resource/resize/?width=$1&height=$2&file=$3
+    RewriteRule ^/pub/resource/resized/(?:\d+x\d*)/.+\.(?:jpe?g|png|gif|wbmp|xbm)$ ../../index.php [L]
 </IfModule>

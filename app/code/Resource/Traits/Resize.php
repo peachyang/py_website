@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Resources\Traits;
+namespace Seahinet\Resource\Traits;
 
 use Imagine\Image\Box;
 

@@ -3,8 +3,7 @@
 /composer.lock
 /var/
 /app/config/adapter.yml
-/pub/*/cache/
-/pub/*/cache/resources/
+cache/*
 !.htaccess
 .user.ini
 *.log

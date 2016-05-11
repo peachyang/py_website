@@ -310,9 +310,9 @@ CREATE TABLE IF NOT EXISTS `core_schedule`(
     `status` CHAR(1) NOT NULL DEFAULT '0' COMMENT 'Is job finished',
     `messages` TEXT COMMENT 'Exception',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `scheduled_at` TIMESTAMP DEFAULT NULL COMMENT 'Scheduled time',
-    `executed_at` TIMESTAMP DEFAULT NULL COMMENT 'Executed time',
-    `finished_at` TIMESTAMP DEFAULT NULL COMMENT 'Finishd time',
+    `scheduled_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Scheduled time',
+    `executed_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Executed time',
+    `finished_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Finishd time',
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_SCHEDULE_STATUS (`status`),
     INDEX IDX_CORE_SCHEDULE_SCHEDULED_AT (`scheduled_at`)
@@ -448,8 +448,8 @@ CREATE TABLE IF NOT EXISTS `email_queue`(
     `to` VARCHAR(255) NOT NULL COMMENT 'Rcpt to',
     `status` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `scheduled_at` TIMESTAMP DEFAULT NULL COMMENT 'Scheduled time',
-    `finished_at` TIMESTAMP DEFAULT NULL COMMENT 'Finished time',
+    `scheduled_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Scheduled time',
+    `finished_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Finished time',
     PRIMARY KEY (`id`),
     INDEX IDX_EMAIL_QUEUE_TEMPLATE_ID (`template_id`),
     CONSTRAINT FK_EMAIL_QUEUE_TEMPLATE_ID_EMAIL_TAMPLATE_ID FOREIGN KEY (`template_id`) REFERENCES `email_template`(`id`) ON DELETE SET NULL ON UPDATE CASCADE

@@ -64,7 +64,6 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .upimage-span-name{width:70%;}
 .upimage-span-note{width:20%;}
 .upimage-span-move{width:10%;}
-.nav-tabs{}
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #CCE0E9;border-bottom-color:transparent}
@@ -210,8 +209,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane .cell .form-control{max-width:320px}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
-.admin .edit .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
-.admin .edit .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
+.admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
+.admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
 .admin .resourceimagea{display:inline-block; width:80px; height:80px; background-image:url(../images/upload_image.jpg);filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";-moz-background-size:100% 100%;background-size:100% 100%;}
 .admin .dashboard{padding:30px 0 30px 30px}

@@ -45,9 +45,9 @@ admin_cms_page_edit:
                     edit:
                         type: Seahinet\Admin\ViewModel\Cms\PageEdit
                         children:
-                            testimages:
+                            pageimage:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: Resources/imagesbutton      
+                                template: Resources/singerimage      
 admin_cms_block_list:
     update: grid
     root:

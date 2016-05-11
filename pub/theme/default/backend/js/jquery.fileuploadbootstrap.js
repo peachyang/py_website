@@ -2,8 +2,8 @@ $(function () {
 	
 	var uploadingImgI=0;
 	var uploadingImgResult=false;
-    if($('input.chooseimages').length>0){
-    	$('input.chooseimages').bind('click',initiUpload);
+    if($('a.chooseimages').length>0){
+    	$('a.chooseimages').bind('click',initiUpload);
 
     }
     
@@ -22,7 +22,7 @@ $(function () {
   		      '<div class="upimage-header"><p><select></select></p></div>'+
   		      '<div class="upimage-body">dgfdgfdgg</div></div>'+
   		      '<div role="tabpanel" class="tab-pane" id="uploadimages">'+
-  		      '<div class="upimage-header"><p><input id="imagesfileupload" type="file" name="files[]" data-url="'+GLOBAL.BASE_URL+'admin/Resources_Resources/UploadImages/" multiple />  <button>Upload</button></p></div>'+
+  		      '<div class="upimage-header"><p><input id="imagesfileupload" type="file" name="files[]" data-url="'+GLOBAL.BASE_URL+'admin/Resource_Resource/UploadImages/" multiple />  <button>Upload</button></p></div>'+
   		      '<div id="imgLoad" class="upimage-body"></div>'+
   		      '</div>'+
   		      '</div>'+

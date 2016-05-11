@@ -1,0 +1,15 @@
+---
+admin:
+    Resource:
+        icon: television
+        title: Resource
+        priority: 30
+        children:
+            -
+                link: 'Resource_Category/'
+                title: 'Category'
+                priority: 0
+            -
+                link: 'Resource_Resource/'
+                title: 'Resouce'
+                priority: 0

@@ -1,0 +1,64 @@
+---
+Resource:
+    update: default
+    root:
+        children:
+            content:
+                children:
+                    page:
+                        type: Seahinet\Resource\ViewModel\Resource
+admin_Resource_category_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Resource category Management / Resouces
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resource_Category/',label:'Resource category Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/Resource_Category/edit/',label:'Add New category'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Resource\Category
+admin_Resource_category_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resource_Category/',label:'Resource category Management'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Resource\CategoryEdit
+admin_Resource_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Resource Management / Resouces
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/Resource_Resource/',label:'Resource Management'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Resource\Resource

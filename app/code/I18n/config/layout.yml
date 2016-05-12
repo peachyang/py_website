@@ -1,4 +1,12 @@
 ---
+admin:
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/translate.js',defer:'defer',async:'async'}]
 admin_currency_list:
     update: grid
     root:

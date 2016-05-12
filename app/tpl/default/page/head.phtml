@@ -10,7 +10,7 @@ if (strpos($title, '/')) {
 ?>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <title><?php echo $title ?></title>
-<script>
-    var GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?PHP echo $this->getPubUrl() ?>'};
-</script>
 <?php echo $this->getMeta(), $this->getLink(), $this->getScript(); ?>
+<script>
+    window.GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?PHP echo $this->getPubUrl() ?>'};
+</script>

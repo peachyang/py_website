@@ -122,9 +122,9 @@ final class Head extends AbstractViewModel implements Singleton
     {
         $result = '';
         $config = $this->getContainer()->get('config');
-        $combine = $config['global/combine_css'];
+        $combine = $config['theme/global/combine_css'];
         $files = [];
-        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
+        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/';
         foreach ($links as $link => $type) {
             if ($combine && $type === 'stylesheet' && strpos($link, '://') === false) {
                 $files[] = $prefix . '/' . $link;
@@ -146,9 +146,9 @@ final class Head extends AbstractViewModel implements Singleton
     {
         $result = '';
         $config = $this->getContainer()->get('config');
-        $combine = $config['global/combine_js'];
+        $combine = $config['theme/global/combine_js'];
         $files = [];
-        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
+        $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/';
         foreach ($scripts as $script) {
             if (is_string($script)) {
                 $script = ['src' => $script];
@@ -181,7 +181,7 @@ final class Head extends AbstractViewModel implements Singleton
         $content = '';
         foreach ($files as $file) {
             $temp = file_get_contents(BP . $file);
-            if (substr($file, -4) !== '.css') {
+            if ($isCss && substr($file, -4) !== '.css') {
                 try {
                     $temp = $this->getContainer()->get('csspp')->compile($temp);
                 } catch (Exception $e) {
@@ -193,7 +193,7 @@ final class Head extends AbstractViewModel implements Singleton
         }
         $name = md5(implode('', $files));
         if ($isCss) {
-            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/css/';
+            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/cache/css/';
 
             if (!file_exists(BP . $path . $name . '.css')) {
                 if (!is_dir(BP . $path)) {
@@ -203,7 +203,7 @@ final class Head extends AbstractViewModel implements Singleton
                 file_put_contents(BP . $path . $name . '.css', $adapter->run($content));
             }
         } else {
-            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/cache/js/';
+            $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/cache/js/';
 
             if (!file_exists(BP . $path . $name . '.js')) {
                 if (!is_dir(BP . $path)) {

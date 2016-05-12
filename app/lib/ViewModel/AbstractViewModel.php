@@ -93,7 +93,7 @@ abstract class AbstractViewModel implements Serializable
                     return $rendered;
                 }
             }
-            $template = BP . 'app/tpl/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'global/backend_theme' : 'global/frontend_theme'] . DS . $this->getTemplate();
+            $template = BP . 'app/tpl/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'theme/backend/template' : 'theme/frontend/template'] . DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);
             } else if (file_exists($template . '.phtml')) {
@@ -284,7 +284,7 @@ abstract class AbstractViewModel implements Serializable
             $config = $this->getContainer()->get('config');
             $base = $config['global/cookie_free_domain'];
             $prefix = 'pub/theme/' . $config[$this->isAdminPage() ?
-                            'global/backend_pub_theme' : 'global/frontend_pub_theme'] . '/';
+                            'theme/backend/static' : 'theme/frontend/static'] . '/';
             $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
         }
         return $this->pubUrl . ltrim($path, '/');

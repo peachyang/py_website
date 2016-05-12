@@ -152,10 +152,7 @@
                 $('[type=hidden][name=scope]').val('m' + $(this).find('.dropdown-menu>:first-child').data('id'));
             }
         });
-        $('a[href="' + location.href + '"]').each(function(){
-            $(this).parents('.dropdown').addClass('open');
-            $(this).addClass('active');
-        });
+        $('a[href="' + location.href + '"]').addClass('active');
         $('[data-base]').each(function () {
             var o = this;
             $(o).parents('.input-box').hide();

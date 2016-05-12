@@ -2,12 +2,12 @@
 admin:
     dashboard:
         icon: tachometer
-        link: dashboard
+        link: dashboard/
         title: Dashboard
         priority: 0
     cache:
         icon: database
-        link: cache
+        link: cache/
         title: Cache Management
         priority: 150
     permissions:
@@ -16,7 +16,7 @@ admin:
         priority: 200
         children:
             -
-                link: user
+                link: user/
                 title: My Account
                 priority: 0
             -
@@ -24,11 +24,11 @@ admin:
                 title: User Management
                 priority: 10
             -
-                link: role
+                link: role/
                 title: Role Management
                 priority: 30
             -
-                link: operation
+                link: operation/
                 title: Operation Management
                 priority: 50
     system:
@@ -41,6 +41,6 @@ admin:
                 title: Global Configuration
                 priority: 0
             -
-                link: config/email/
-                title: Email Configuration
+                link: config/theme/
+                title: Theme Configuration
                 priority: 10

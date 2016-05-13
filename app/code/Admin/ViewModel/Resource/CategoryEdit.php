@@ -66,6 +66,12 @@ class CategoryEdit extends Edit
                 'attrs' => [
                     'multiple' => 'multiple'
                 ]
+            ],
+            'name_language' => [
+                'type' => 'widget',
+                'label' => 'Category Name',
+                'widget' => 'category_language',
+                'required' => 'required'
             ]
             
         ];

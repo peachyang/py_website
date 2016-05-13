@@ -49,6 +49,10 @@ admin_resource_category_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Resource\CategoryEdit
+                        children:
+                            category_language:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: Resource/category_language
 admin_resource_list:
     update: grid
     root:

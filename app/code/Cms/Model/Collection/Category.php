@@ -20,7 +20,7 @@ class Category extends AbstractCollection
     {
         $ids = [];
         $data = [];
-        foreach ($this->storage as $key => $item) {
+        foreach ($this->storage as $item) {
             $ids[] = $item['id'];
             $data[$item['id']] = $item;
             $data[$item['id']]['language'] = [];

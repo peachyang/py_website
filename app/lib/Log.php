@@ -84,7 +84,7 @@ class Log
      */
     public function logException(Exception $e)
     {
-        $this->getLogger()->error($e->getMessage());
+        $this->getLogger()->error($e->getMessage() . chr(10) . $e->getTraceAsString());
     }
 
     /**
@@ -92,7 +92,7 @@ class Log
      */
     public function logError(Error $e)
     {
-        $this->getLogger()->error($e->getMessage());
+        $this->getLogger()->error($e->getMessage() . chr(10) . $e->getTraceAsString());
     }
 
     /**

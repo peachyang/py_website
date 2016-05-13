@@ -11,13 +11,13 @@ use Seahinet\Lib\Session\Segment;
 /**
  * System backend Resource category
  */
-class Category extends AbstractCollection
+class Resource extends AbstractCollection
 {
 
 
     protected function construct()
     {
-        $this->init('resource_category');
+        $this->init('resource');
     }
 
     protected function afterLoad()
@@ -38,15 +38,15 @@ class Category extends AbstractCollection
         echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
         $languages->load(false);
         foreach ($languages as $item) {
-            if (isset($data[$item['category_id']])) {
-                $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
+            if (isset($data[$item['page_id']])) {
+                $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
             }
         }
-        print_r($data);
-        //exit();
         $this->storage = array_values($data);
         parent::afterLoad();
     }  
     
     
+    
+
 }

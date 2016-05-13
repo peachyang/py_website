@@ -12,7 +12,7 @@ class ResourceController extends AuthActionController
     public function indexAction()
     {
     
-        $root = $this->getLayout('admin_Resource_list');
+        $root = $this->getLayout('admin_resource_list');
         return $root;
     
     }

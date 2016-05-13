@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Resource;
 
 use Seahinet\Admin\ViewModel\Grid;
-use Seahinet\Resource\Model\Collection\Category as Collection;
+use Seahinet\Resource\Model\Collection\Resource as Collection;
 use Seahinet\Lib\Session\Segment;
 
 class Resource extends Grid
@@ -61,6 +61,15 @@ class Resource extends Grid
             'file_type' => [
                 'label' => 'File Type',
                 'class' => 'text-left',
+                'sortby' => 'resource:file_type',
+                'type' => 'select',
+                'options' => [
+                    'others',
+                    'images',
+                    'video',
+                    'pdf',
+                    'zip'
+                ]
             ],
             'old_name' => [
                 'label' => 'Old Name',

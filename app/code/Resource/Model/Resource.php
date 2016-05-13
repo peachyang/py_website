@@ -47,7 +47,7 @@ class Resource extends AbstractModel
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
-            'file_types'=>array('others'=>'others','images'=>'images','images'=>'video','images'=>'pdf'),
+            'file_types'=>array('others'=>'others','images'=>'images','video'=>'video','pdf'=>'pdf','zip'=>'zip'),
             // Defines which files (based on their names) are accepted for upload:
             'accept_file_types' => '/.+$/i',
             // The php.ini settings upload_max_filesize and post_max_size

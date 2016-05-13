@@ -1,7 +1,7 @@
 ---
 admin:
     Resource:
-        icon: television
+        icon: file-image-o
         title: Resource
         priority: 30
         children:
@@ -11,5 +11,5 @@ admin:
                 priority: 0
             -
                 link: 'Resource_Resource/'
-                title: 'Resouce'
-                priority: 0
+                title: 'Resource'
+                priority: 10

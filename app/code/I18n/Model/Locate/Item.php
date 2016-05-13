@@ -17,7 +17,7 @@ class Item extends ArrayObject
         if (is_null($locale) || !isset($this->storage['name'][$locale])) {
             return $this->storage['default_name'];
         }
-        return $this->storage['name'];
+        return $this->storage['name'][$locale];
     }
 
 }

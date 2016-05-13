@@ -2,27 +2,45 @@
 global:
     label: Global Configuration
     children:
-        base_url:
-            type: url
-            required: required
-            label: Base Url
+        url:
+            label: Url
+            priority: 0
+            scope: [merchant,store]
+            children:
+                base_url:
+                    type: url
+                    required: required
+                    label: Base Url
+                    priority: 0
+                    scope: [merchant,store]
+                    default: /
+                    comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
+                cookie_free_domain:
+                    type: url
+                    label: Cookie-free Domain
+                    priority: 1
+                    scope: [merchant,store]
+                    comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
+                admin_path:
+                    type: text
+                    required: required
+                    label: Backend Path
+                    priority: 10
+                    scope: [merchant,store]
+                    default: admin
+        locale:
+            label: Locale
             priority: 10
             scope: [merchant,store]
-            default: /
-            comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
-        cookie_free_domain:
-            type: url
-            label: Cookie-free Domain
-            priority: 11
-            scope: [merchant,store]
-            comment: Make sure that the Url ends with '/' (slash), e.g. http://yourdomain/
-        admin_path:
-            type: text
-            required: required
-            label: Backend Path
-            priority: 20
-            scope: [merchant,store]
-            default: admin
+            children:
+                timezone:
+                    type: select
+                    required: required
+                    label: Timezone
+                    priority: 0
+                    scope: [merchant]
+                    default: Etc/GMT
+                    source: Seahinet\Lib\Source\Timezone
 theme:
     label: Theme Configuration
     children:

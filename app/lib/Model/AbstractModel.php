@@ -47,7 +47,7 @@ abstract class AbstractModel extends ArrayObject
     {
         $this->tableName = $table;
         $this->getTableGateway($table);
-        $this->cacheKey = $table . '\\';
+        $this->cacheKey = $table;
         $this->columns = $columns;
         $this->primaryKey = $primaryKey;
     }
@@ -177,14 +177,12 @@ abstract class AbstractModel extends ArrayObject
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
                 $this->flushRow($id, null, $this->getCacheKey(), $key === $this->primaryKey ? null : $key);
-                $this->load($id, $key);
                 $this->flushList($this->getCacheKey());
             } else if ($this->isNew) {
                 $this->beforeSave();
                 $this->insert($columns);
                 $this->setId($this->tableGateway->getLastInsertValue());
                 $this->afterSave();
-                $this->load($this->getId());
                 $this->flushList($this->getCacheKey());
             }
         } catch (InvalidQueryException $e) {
@@ -205,7 +203,6 @@ abstract class AbstractModel extends ArrayObject
         if ($this->getId()) {
             try {
                 $this->beforeRemove();
-                $key = $this->cacheKey . $this->primaryKey . '\\' . $this->getId();
                 $this->delete([$this->primaryKey => $this->getId()]);
                 $this->flushRow($this->getId(), null, $this->getCacheKey());
                 $this->flushList($this->getCacheKey());

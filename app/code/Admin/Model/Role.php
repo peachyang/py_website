@@ -73,7 +73,7 @@ class Role extends AbstractModel
                 }
             }
         }
-        $this->flushList('admin_operation\\');
+        $this->flushList('admin_operation');
         $this->getCacheObject()->delete($this->storage['name'], 'RBAC_ROLE_');
         parent::afterSave();
         $this->commit();

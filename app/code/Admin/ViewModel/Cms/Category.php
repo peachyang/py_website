@@ -83,7 +83,6 @@ class Category extends Grid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->withLanguage();
         return parent::prepareCollection($collection);
     }
 

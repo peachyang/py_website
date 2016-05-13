@@ -3,6 +3,8 @@
 namespace Seahinet\Cms\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\Model\Collection\Language;
+use Zend\Db\Sql\Predicate\In;
 
 class Category extends AbstractCollection
 {
@@ -14,28 +16,28 @@ class Category extends AbstractCollection
         $this->init('cms_category');
     }
 
-    public function withLanguage()
-    {
-        $this->withLanguage = true;
-        $this->select->join('cms_category_language', 'cms_category_language.category_id=cms_category.id', ['name'], 'left')
-                ->join('core_language', 'cms_category_language.language_id=core_language.id', ['language_id' => 'id', 'language' => 'name'], 'left');
-    }
-
     protected function afterLoad()
     {
-        if ($this->withLanguage) {
-            $data = [];
-            foreach ($this->storage as $item) {
-                if (!isset($data[$item['id']])) {
-                    $data[$item['id']] = $item;
-                    $data[$item['id']]['name'] = [];
-                    $data[$item['id']]['language'] = [];
-                }
-                $data[$item['id']]['name'][$item['language_id']] = $item['name'];
-                $data[$item['id']]['language'][$item['language_id']] = $item['language'];
-            }
-            $this->storage = $data;
+        $ids = [];
+        $data = [];
+        foreach ($this->storage as $key => $item) {
+            $ids[] = $item['id'];
+            $data[$item['id']] = $item;
+            $data[$item['id']]['language'] = [];
+            $data[$item['id']]['name'] = [];
         }
+        $languages = new Language;
+        $languages->join('cms_category_language', 'core_language.id=cms_category_language.language_id', ['category_id', 'name'], 'right')
+                ->columns(['language_id' => 'id', 'language' => 'code'])
+                ->where(new In('category_id', $ids));
+        $languages->load(false);
+        foreach ($languages as $item) {
+            if (isset($data[$item['category_id']])) {
+                $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
+                $data[$item['category_id']]['name'][$item['language_id']] = $item['name'];
+            }
+        }
+        $this->storage = array_values($data);
         parent::afterLoad();
     }
 

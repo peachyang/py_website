@@ -34,7 +34,7 @@ class CategoryController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
-                $model = new Model;
+                $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }

@@ -51,14 +51,14 @@ class Category extends Grid
                 'label' => 'ID',
                 'use4filter' => false
             ],
-            'parent' => [
+            'parent_id' => [
                 'label' => 'Parent'
             ],
             'name' => [
                 'label' => 'Category name',
                 'class' => 'text-left'
             ],
-            'Code' => [
+            'code' => [
                 'label' => 'Code',
                 'class' => 'text-left',
                 'use4sort' => false,
@@ -71,7 +71,7 @@ class Category extends Grid
             ]
         ];
     }
-
+    
     protected function prepareCollection($collection = null)
     {
         $user = (new Segment('admin'))->get('user');

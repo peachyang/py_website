@@ -17,8 +17,6 @@
         	languageHtml=languageHtml+'</table>';
         	$('div#category_name').html(languageHtml);
         });
-
-        
-        
+ 
     });
 }));

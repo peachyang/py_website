@@ -18,9 +18,10 @@ class Template extends AbstractCollection
     {
         $ids = [];
         $data = [];
-        foreach ($this->storage as $key => $item) {
+        foreach ($this->storage as $item) {
             $ids[] = $item['id'];
             $data[$item['id']] = $item;
+            $data[$item['id']]['language'] = [];
             $content = @gzdecode($item['content']);
             if ($content !== false) {
                 $data[$item['id']]['content'] = $content;

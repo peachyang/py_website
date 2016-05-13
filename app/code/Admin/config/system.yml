@@ -41,6 +41,14 @@ global:
                     scope: [merchant]
                     default: Etc/GMT
                     source: Seahinet\Lib\Source\Timezone
+                country:
+                    type: select
+                    required: required
+                    label: Default Country
+                    priority: 10
+                    default: CN
+                    scope: [merchant]
+                    source: Seahinet\I18n\Source\Country
 theme:
     label: Theme Configuration
     children:

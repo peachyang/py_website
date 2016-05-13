@@ -27,7 +27,7 @@ class Locate
                 if (isset($result[$item['id']])) {
                     $result[$item['id']]['name'][$item['locale']] = $item['name'];
                 } else {
-                    $result[$item['id']] = new I18n\Item($item);
+                    $result[$item['id']] = new Locate\Item($item);
                     $result[$item['id']]['name'] = [$item['locale'] => $item['name']];
                     unset($result[$item['id']]['locale']);
                 }

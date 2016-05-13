@@ -5,6 +5,8 @@ namespace Seahinet\Resource\Model\Collection;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\Predicate\In;
+use Zend\Db\Sql\Select;
+use Zend\Db\TableGateway\TableGateway;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Bootstrap;
 
@@ -36,15 +38,17 @@ class Category extends AbstractCollection
         //$languages->join('resource_category_language', 'core_language.id=resource_category_language.language_id', ['category_id'], 'left')
         //->columns(['language_id' => 'id', 'language' => 'code'])
         //->where(new In('category_id', $ids))
-        
-        $cagoryName=$this->select
-                         ->from(['c'=>'resource_category_language'],['name'])
-                         ->join(['l'=>'core_language'],'c.language_id=l.id')
-                         ->where(new In('category_id', $ids))
-                         ->where(["l.language_id"=>Bootstrap::getLanguage()->getId()]);
-        echo '======================';
-        exit('**************');
-        echo $cagoryName->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
+
+        $tableGateway=new TableGateway('resource_category_language', $this->getContainer()->get('dbAdapter'));
+        $cagoryNameSql=$tableGateway->getSql()
+                                 ->select()
+                                 ->join(['l'=>'core_language'],'language_id=id',['name'],'left')
+                                 ->where(new In('category_id', $ids))
+                                 ->where(["language_id"=>Bootstrap::getLanguage()->getId()]);
+         $cagoryNameR=$tableGateway->selectWith($cagoryNameSql);
+
+        echo $cagoryNameSql->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
+        var_dump($cagoryNameR);
         exit('test!');
         $languages->load(false);
         foreach ($languages as $item) {

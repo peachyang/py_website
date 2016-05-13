@@ -21,7 +21,7 @@ class Currency implements ListenerInterface
             foreach ($event['value'] as $code) {
                 $this->upsert(['code' => $code], ['code' => $code]);
             }
-            $this->flushList('i18n_currency\\');
+            $this->flushList('i18n_currency');
         } catch (\Exception $e) {
             
         }

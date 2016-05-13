@@ -55,7 +55,9 @@ class Category extends Grid
             ],
             'name' => [
                 'label' => 'Name',
-                'class' => 'text-left'
+                'class' => 'text-left',
+                'use4sort' => false,
+                'use4filter' => false
             ],
             'uri_key' => [
                 'label' => 'Uri Key',
@@ -81,6 +83,7 @@ class Category extends Grid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
+        $collection->withLanguage();
         return parent::prepareCollection($collection);
     }
 

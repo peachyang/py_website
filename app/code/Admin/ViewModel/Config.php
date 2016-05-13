@@ -31,7 +31,7 @@ class Config extends Edit
     public function getElements()
     {
         if (is_null($this->elements)) {
-            $this->elements = $this->getContainer()->get('config')['system'][$this->getKey()]['children'];
+            $this->elements = $this->getConfig()['system'][$this->getKey()]['children'];
         }
         uasort($this->elements, function(&$a, &$b) {
             if (!isset($a['type']) && isset($b['type'])) {
@@ -68,14 +68,6 @@ class Config extends Edit
             return '';
         }
         return parent::getRendered($template);
-    }
-
-    protected function getConfig()
-    {
-        if (is_null($this->config)) {
-            $this->config = $this->getContainer()->get('config');
-        }
-        return $this->config;
     }
 
     protected function prepareElements($columns = [])

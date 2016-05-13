@@ -77,7 +77,7 @@ abstract class AbstractCollection extends ArrayObject
     {
         $this->tableName = $table;
         $this->getTableGateway($table);
-        $this->cacheKey = $table . '\\';
+        $this->cacheKey = $table;
         $this->primaryKey = $primaryKey;
         if (is_null($this->select)) {
             $this->select = $this->tableGateway->getSql()->select();

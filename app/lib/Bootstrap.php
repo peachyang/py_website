@@ -3,7 +3,6 @@
 namespace Seahinet\Lib;
 
 use Interop\Container\ContainerInterface;
-use Locale;
 use Symfony\Component\Yaml\Yaml;
 use Seahinet\Lib\Model\Merchant;
 use Seahinet\Lib\Model\Store;
@@ -68,6 +67,7 @@ final class Bootstrap
         }
         $config = static::prepareConfig();
         static::handleConfig($config);
+        date_default_timezone_set($config['global/locale/timezone']? : 'UTC');
         $segment = new Session\Segment('core');
         $language = static::getLanguage($server, $segment);
         static::$container['language'] = $language;
@@ -149,7 +149,9 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? : (isset($_COOKIE['language']) ? $_COOKIE['language'] : (isset($server['language']) ? $server['language'] : null));
+            $code = $segment->get('language')? :
+                    (isset($_COOKIE['language']) ? $_COOKIE['language'] :
+                (isset($server['language']) ? $server['language'] : null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -178,7 +180,8 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('store') ? : (isset($_COOKIE['store']) ? $_COOKIE['store'] : (isset($server['store']) ? : null));
+            $code = $segment->get('store') ? : (isset($_COOKIE['store']) ?
+                    $_COOKIE['store'] : (isset($server['store']) ? : null));
             if (is_string($code)) {
                 $store = new Store;
                 $store->load($code, 'code');

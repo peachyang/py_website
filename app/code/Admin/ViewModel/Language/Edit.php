@@ -49,6 +49,12 @@ class Edit extends PEdit
                 'options' => (new Merchant)->getSourceArray(),
                 'required' => 'required'
             ],
+            'is_default' => [
+                'type' => 'select',
+                'label' => 'Is Default',
+                'required' => 'required',
+                'options' => ['No', 'Yes']
+            ],
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

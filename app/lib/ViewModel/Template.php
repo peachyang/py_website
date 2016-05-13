@@ -7,5 +7,5 @@ namespace Seahinet\Lib\ViewModel;
  */
 class Template extends AbstractViewModel
 {
-    
+
 }

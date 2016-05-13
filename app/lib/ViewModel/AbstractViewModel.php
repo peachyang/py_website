@@ -68,6 +68,11 @@ abstract class AbstractViewModel implements Serializable
      */
     protected $request = null;
 
+    /**
+     * @var \Seahinet\Lib\Config 
+     */
+    protected $config = null;
+
     public function __toString()
     {
         return $this->render();
@@ -93,7 +98,7 @@ abstract class AbstractViewModel implements Serializable
                     return $rendered;
                 }
             }
-            $template = BP . 'app/tpl/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'theme/backend/template' : 'theme/frontend/template'] . DS . $this->getTemplate();
+            $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ? 'theme/backend/template' : 'theme/frontend/template'] . DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);
             } else if (file_exists($template . '.phtml')) {
@@ -281,13 +286,21 @@ abstract class AbstractViewModel implements Serializable
     public function getPubUrl($path = '')
     {
         if ($this->pubUrl === '') {
-            $config = $this->getContainer()->get('config');
-            $base = $config['global/cookie_free_domain'];
+            $config = $this->getConfig();
+            $base = $config['global/url/cookie_free_domain'];
             $prefix = 'pub/theme/' . $config[$this->isAdminPage() ?
                             'theme/backend/static' : 'theme/frontend/static'] . '/';
             $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
         }
         return $this->pubUrl . ltrim($path, '/');
+    }
+
+    public function getConfig()
+    {
+        if (is_null($this->config)) {
+            $this->config = $this->getContainer()->get('config');
+        }
+        return $this->config;
     }
 
 }

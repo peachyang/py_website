@@ -11,7 +11,7 @@
         "use strict";
         var lang = $('html').attr('lang');
         if (lang) {
-            var url = GLOBAL.BASE_URL + 'pub/' + ($('body').is('.admin') ? 'backend' : 'frontend');
+            var url = GLOBAL.PUB_URL + ($('body').is('.admin') ? 'backend' : 'frontend');
             if (/^(?:de|es_CL|fi|nl|pt)/.test(lang)) {
                 $.get(url + '/js/validate/localization/methods_' + lang.replace(/^(de|es_CL|fi|nl|pt)\_.+$/, '$1') + '.min.js');
             }

@@ -98,7 +98,7 @@ textarea.form-control,select[multiple].form-control{min-height:4.25em;padding-to
 .form-inline .control-label{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}
 .form-control.invalid{border-color:red}
-label.invalid{font-size:12px;position:absolute;bottom:100%;margin-bottom:3px;left:0;background:#000;color:#fff;border-radius:3px;padding:2px 8px;text-align:center}
+label.invalid{display:inline-block;font-size:12px;position:absolute;bottom:100%;margin-bottom:3px;left:0;background:#000;color:#fff;border-radius:3px;padding:2px 8px;text-align:center}
 label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px solid transparent;border-top-color:#000;border-bottom:none}
 .form-control[type=checkbox],.form-control[type=radio]{width:auto;height:auto;padding:0;background:none;border:none;vertical-align:top;display:inline-block;margin-top:5px}
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
@@ -195,7 +195,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table tfoot .pager .last{border-left:1px solid}
 .admin .grid .table .checkbox,.admin .grid .table .action{width:1px;white-space:nowrap}
 .admin .grid .table .action a+a{margin-left:4px}
-.admin .edit .nav-tabs{padding-left:30px;margin-top:10px}
+.admin .edit .nav-tabs{padding-left:30px;margin-top:10px;border-bottom:1px solid #CCE0E9}
 .csscalc .admin .edit .nav-tabs{padding:0;margin-left:30px;width:calc(100% - 30px)}
 .admin .edit .nav-tabs>li>a{font-size:13px;color:#333;border-radius:0;padding:1px 12px;text-decoration:none;display:block}
 .admin .edit .nav-tabs>li>a:hover{background:#999}

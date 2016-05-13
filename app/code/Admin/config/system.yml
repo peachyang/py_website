@@ -23,55 +23,73 @@ global:
             priority: 20
             scope: [merchant,store]
             default: admin
-        frontend_theme:
-            type: text
-            required: required
-            label: Frontend Template Theme
-            priority: 30
-            scope: [merchant,store]
-            default: default
-        frontend_pub_theme:
-            type: text
-            required: required
-            label: Frontend Public Theme
-            priority: 31
-            scope: [merchant,store]
-            default: default
-        backend_theme:
-            type: text
-            required: required
-            label: Backend Template Theme
-            priority: 35
-            scope: [merchant,store]
-            default: default
-        backend_pub_theme:
-            type: text
-            required: required
-            label: Backend Public Theme
-            priority: 36
-            scope: [merchant,store]
-            default: default
-        css_preprocessor:
-            type: select
-            required: reqired
-            label: CSS Preprocessor
-            priority: 90
+theme:
+    label: Theme Configuration
+    children:
+        global:
+            label: Global
             scope: merchant
-            default: 1
-            options: [SCSS,LESS]
-        combine_css:
-            type: select
-            label: Combine CSS File
-            required: required
-            priority: 100
+            priority: 0
+            children:
+                css_preprocessor:
+                    type: select
+                    required: reqired
+                    label: CSS Preprocessor
+                    priority: 90
+                    scope: merchant
+                    default: 1
+                    options: [SCSS,LESS]
+                combine_css:
+                    type: select
+                    label: Combine CSS File
+                    required: required
+                    priority: 100
+                    scope: merchant
+                    default: 0
+                    options: ['Disabled','Enabled']
+                combine_js:
+                    type: select
+                    label: Combine JS File
+                    required: required
+                    priority: 110
+                    scope: merchant
+                    default: 0
+                    options: ['Disabled','Enabled']
+        frontend:
+            label: Frontend
             scope: merchant
-            default: 0
-            options: ['Disabled','Enabled']
-        combine_js:
-            type: select
-            label: Combine JS File
-            required: required
-            priority: 110
+            priority: 10
+            children:
+                template:
+                    type: text
+                    required: required
+                    label: Template
+                    priority: 0
+                    scope: merchant
+                    default: default
+                static:
+                    type: text
+                    required: required
+                    label: Static Files
+                    priority: 10
+                    scope: merchant
+                    default: default
+        backend:
+            label: Backend
             scope: merchant
-            default: 0
-            options: ['Disabled','Enabled']
+            priority: 20
+            children:
+                template:
+                    type: text
+                    required: required
+                    label: Template
+                    priority: 0
+                    scope: merchant
+                    default: default
+                static:
+                    type: text
+                    required: required
+                    label: Static Files
+                    priority: 10
+                    scope: merchant
+                    default: default

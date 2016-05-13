@@ -77,7 +77,7 @@ class ServiceProvider implements ServiceProviderInterface
         if (!$container->has('csspp')) {
             $container['csspp'] = function($container) {
                 $config = $container->get('config');
-                if ($config['global/css_preprocessor']) {
+                if ($config['theme/global/css_preprocessor']) {
                     return new \Leafo\ScssPhp\Compiler;
                 } else {
                     return new \lessc;

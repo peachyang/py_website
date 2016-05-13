@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Lib\Admin\Controller\Message;
+namespace Seahinet\Admin\Controller\Message;
 
 use Exception;
 use Seahinet\Message\Model\Template as Model;

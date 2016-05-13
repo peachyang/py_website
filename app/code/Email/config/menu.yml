@@ -17,3 +17,9 @@ admin:
                 link: 'email_queue/'
                 title: 'Email Queue'
                 priority: 55
+    system:
+        children:
+            -
+                link: config/email/
+                title: Email Configuration
+                priority: 20

@@ -211,7 +211,7 @@ class Cron extends AbstractCli
 
     protected function usageHelp()
     {
-        return <<<USAGE
+        return <<<'USAGE'
 Usage:  php -f script.php
         
         Add code into crontab

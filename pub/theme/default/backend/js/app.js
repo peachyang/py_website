@@ -121,7 +121,7 @@
                 data: $(this).serialize(),
                 success: function (xhr) {
                     responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
-                    if($(o).parents('.modal').length){
+                    if ($(o).parents('.modal').length) {
                         $(o).parents('.modal').modal('hide');
                     }
                 }
@@ -129,7 +129,7 @@
             return false;
         });
         $('#modal-send-email').on({
-            'show.bs.modal':function(e){
+            'show.bs.modal': function (e) {
                 $(this).find('#sendmail-template_id').val($(e.relatedTarget).data('id'));
             }
         });
@@ -155,7 +155,8 @@
         $('a[href="' + location.href + '"]').addClass('active');
         $('[data-base]').each(function () {
             var o = this;
-            $(o).parents('.input-box').hide();
+            var p = $(o).parents('.input-box').first();
+            $(p).hide();
             o.disabled = true;
             var base = $(o).data('base');
             try {
@@ -164,19 +165,21 @@
                 var target = base.indexOf(':') === -1 ? eval('({"' + base + '":1})') : eval('({' + base + '})');
             }
             for (var i in target) {
-                if ($(i).val() == target[i]) {
-                    $(o).parents('.input-box').show();
+                var v = $(i).val();
+                if (v == target[i] || $.inArray(target[i], v) !== -1) {
+                    $(p).show();
                     o.disabled = false;
                 } else {
-                    $(o).parents('.input-box').hide();
+                    $(p).hide();
                     o.disabled = true;
                 }
                 $(i).change(function () {
-                    if ($(this).val() == target[i]) {
-                        $(o).parents('.input-box').show();
+                    var v = $(this).val();
+                    if (v == target[i] || $.inArray(target[i], v) !== -1) {
+                        $(p).show();
                         o.disabled = false;
                     } else {
-                        $(o).parents('.input-box').hide();
+                        $(p).hide();
                         o.disabled = true;
                     }
                 });

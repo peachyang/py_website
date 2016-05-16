@@ -1,8 +1,11 @@
+<?php
+$stat = $this->getConfig()['stat'];
+?>
 <div class="dashboard">
     <div class="table">
         <?php
         $col = 0;
-        foreach ($this->getConfig() as $key => $item):
+        foreach ($stat as $key => $item):
             if ($col % 4 === 0):
                 ?>
                 <div class="row">

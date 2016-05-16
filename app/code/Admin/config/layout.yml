@@ -214,7 +214,7 @@ admin_dashboard:
                                 method: addCrumb
                                 params: [{link:':ADMIN/dashboard/',label:'Dashboard'}]
                     dashboard:
-                        type: Seahinet\Admin\ViewModel\Dashboard
+                        type: Seahinet\Lib\ViewModel\Template
                         template: admin/dashboard/charts
 admin_user:
     update: edit

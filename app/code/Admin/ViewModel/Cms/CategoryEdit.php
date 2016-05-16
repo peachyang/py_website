@@ -30,26 +30,23 @@ class CategoryEdit extends Edit
 
     protected function prepareElements($columns = [])
     {
+        $languages = (new Language)->getSourceArray();
+        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden',
-            ],
-            'name' => [
-                'type' => 'text',
-                'label' => 'Name',
-                'required' => 'required'
             ],
             'parent_id' => [
                 'type' => 'select',
                 'label' => 'Parent ID',
                 'empty_string' => '(NULL)',
-                'options' => (new Category)->getSourceArray()
+                'options' => (new Category)->getSourceArray($model ? $model->getId() : [])
             ],
             'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',
                 'required' => 'required',
-                'options' => (new Language)->getSourceArray(),
+                'options' => $languages,
                 'attrs' => [
                     'multiple' => 'multiple'
                 ]
@@ -67,6 +64,13 @@ class CategoryEdit extends Edit
                     0 => 'Disabled'
                 ],
                 'required' => 'required'
+            ],
+            'name' => [
+                'type' => 'multitext',
+                'label' => 'Name',
+                'required' => 'required',
+                'base' => '#language_id--',
+                'options' => $languages
             ]
         ];
         return parent::prepareElements($columns);

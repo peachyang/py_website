@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model;
+use Seahinet\Lib\Source\LanguageCode;
 
 class LanguageController extends AuthActionController
 {
@@ -51,11 +52,15 @@ class LanguageController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data);
+            $result = $this->validateForm($data, ['code', 'merchant_id']);
             if ($result['error'] === 0) {
                 $model = new Model\Language($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
+                }
+                if (!isset($data['name']) || $data['name'] === '') {
+                    $code = (new LanguageCode)->getSourceArray($data['code']);
+                    $model->setData('name', $code? : '');
                 }
                 try {
                     $model->save();

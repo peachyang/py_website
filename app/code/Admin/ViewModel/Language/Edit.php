@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Language;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Lib\Source\Merchant;
+use Seahinet\Lib\Source\LanguageCode;
 
 class Edit extends PEdit
 {
@@ -34,14 +35,14 @@ class Edit extends PEdit
                 'type' => 'hidden',
             ],
             'code' => [
-                'type' => 'text',
+                'type' => 'select',
                 'label' => 'Code',
-                'required' => 'required'
+                'required' => 'required',
+                'options' => (new LanguageCode)->getSourceArray()
             ],
             'name' => [
                 'type' => 'text',
-                'label' => 'Name',
-                'required' => 'required'
+                'label' => 'Name'
             ],
             'merchant_id' => [
                 'type' => 'select',

@@ -40,6 +40,7 @@ class CategoryEdit extends Edit
             ],
             'parent_id' => [
                 'type' => 'select',
+                'value'=>(($model&&$model->getId())?(new Category())->getParentIdArray($model->getId()):[]),
                 'options' => (new Category())->getSourceArray($model ? $model->getId() : []),
                 'label' => 'Parent ID',
                 'empty_string' => '(Top category)'
@@ -62,6 +63,7 @@ class CategoryEdit extends Edit
                 'type' => 'select',
                 'label' => 'Language',
                 'required' => 'required',
+                'value'=>(($model&&$model->getId())?(new Category())->getLanguageIdArray($model->getId()):[]),
                 'options' => (new Language)->getSourceArray(),
                 'attrs' => [
                     'multiple' => 'multiple'
@@ -71,6 +73,7 @@ class CategoryEdit extends Edit
                 'type' => 'widget',
                 'label' => 'Category Name',
                 'widget' => 'category_language',
+                'namelanguage'=>(($model&&$model->getId())?(new Category())->getNameArray($model->getId()):[]),
                 'required' => 'required'
             ]
             

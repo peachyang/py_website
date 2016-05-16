@@ -33,18 +33,17 @@ class Category extends AbstractCollection
             $data[$item['id']] = $item;
            
         }
-       
         $languages = new Language;
         $languages->join('resource_category_language', 'core_language.id=resource_category_language.language_id', ['category_id', 'name'], 'right')
-                  ->columns(['language_id' => 'id', 'language' => 'code'])
-                  ->where(new In('category_id', $ids))
-                  ->where(["language_id"=>Bootstrap::getLanguage()->getId()]);
+                  ->columns(['language_id' => 'id', 'language' => 'code','language_name' => 'name'])
+                  ->where(new In('category_id', $ids));
         //echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
         $languages->load(false);
         foreach ($languages as $item) {
             if (isset($data[$item['category_id']])) {
                 $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
                 $data[$item['category_id']]['name'][$item['language_id']] = $item['name'];
+                $data[$item['category_id']]['language_name'][$item['language_id']] = $item['language_name'];
                 
             }
         }

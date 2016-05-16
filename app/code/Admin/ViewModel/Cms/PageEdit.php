@@ -34,6 +34,7 @@ class PageEdit extends Edit
     {
         $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
+  
         $columns = [
             'id' => [
                 'type' => 'hidden',

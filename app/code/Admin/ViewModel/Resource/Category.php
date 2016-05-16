@@ -5,6 +5,9 @@ namespace Seahinet\Admin\ViewModel\Resource;
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Resource\Model\Collection\Category as Collection;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Resource\Source\Category as CategorySource;
+use Seahinet\Lib\Source\Store;
+use Seahinet\Lib\Source\Language;
 
 class Category extends Grid
 {
@@ -46,13 +49,32 @@ class Category extends Grid
 
     protected function prepareColumns()
     {
+        
+        $model = $this->getVariable('model');
+        $user = (new Segment('admin'))->get('user');
         return [
             'id' => [
                 'label' => 'ID',
                 'use4filter' => false
             ],
+            'store_id' => ($user->getStore() ? [
+                'type' => 'hidden',
+                'value' => $user->getStore()->getId()
+            ] : [
+                'type' => 'select',
+                'options' => (new Store)->getSourceArray(),
+                'label' => 'Store',
+                'required' => 'required',
+            ]),
+            'code' => [
+                'type' => 'text',
+                'label' => 'Code',
+                'required' => 'required'
+            ],
             'parent_id' => [
-                'label' => 'Parent'
+                'label' => 'Parent',
+                'type' => 'select',
+                'options' => (new CategorySource())->getSourceArray($model ? $model->getId() : [])
             ],
             'name' => [
                 'label' => 'Category name',

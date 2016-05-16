@@ -5,13 +5,15 @@ namespace Seahinet\Admin\ViewModel\Resource;
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Resource\Model\Collection\Resource as Collection;
 use Seahinet\Lib\Session\Segment;
-
+use Seahinet\Lib\Source\Language;
+use Seahinet\Lib\Source\Store;
+use Seahinet\Resource\Source\Category;
 class Resource extends Grid
 {
 
     protected $editUrl = '';
     protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $action = ['getDeleteAction'];
 
     public function getEditAction($item)
     {
@@ -46,17 +48,28 @@ class Resource extends Grid
 
     protected function prepareColumns()
     {
+        $model = $this->getVariable('model');
+        $user = (new Segment('admin'))->get('user');
         return [
             'id' => [
                 'label' => 'ID',
                 'use4filter' => false
             ],
-            'store_id' => [
-                'label' => 'Store'
-            ],
+            'store_id' => ($user->getStore() ? [
+                'type' => 'hidden',
+                'value' => $user->getStore()->getId()
+                    ] : [
+                'type' => 'select',
+                'options' => (new Store)->getSourceArray(),
+                'label' => 'Store',
+                 'required' => 'required',
+                    ]),
             'category_id' => [
+                'type' => 'select',
+                'value'=>(($model&&$model->getId())?(new Category())->getParentIdArray($model->getId()):[]),
+                'options' => (new Category())->getSourceArray($model ? $model->getId() : []),
                 'label' => 'Category',
-                'class' => 'text-left'
+                'empty_string' => '(Top category)'
             ],
             'file_type' => [
                 'label' => 'File Type',

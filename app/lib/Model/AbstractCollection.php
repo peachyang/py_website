@@ -80,7 +80,7 @@ abstract class AbstractCollection extends ArrayObject
         $this->cacheKey = $table;
         $this->primaryKey = $primaryKey;
         if (is_null($this->select)) {
-            $this->select = $this->tableGateway->getSql()->select();
+            $this->select = $this->getTableGateway($this->tableName)->getSql()->select();
         }
     }
 
@@ -105,7 +105,7 @@ abstract class AbstractCollection extends ArrayObject
             try {
                 $this->beforeLoadCache();
                 if ($useCache) {
-                    $cacheKey = md5($this->select->getSqlString($this->tableGateway->getAdapter()->getPlatform()));
+                    $cacheKey = md5($this->select->getSqlString($this->getTableGateway($this->tableName)->getAdapter()->getPlatform()));
                     $result = $this->fetchList($cacheKey, $this->getCacheKey());
                 } else {
                     $result = false;
@@ -113,7 +113,7 @@ abstract class AbstractCollection extends ArrayObject
                 $this->afterLoadCache();
                 if (!$result) {
                     $this->beforeLoad();
-                    $result = $this->tableGateway->selectWith($this->select)->toArray();
+                    $result = $this->getTableGateway($this->tableName)->selectWith($this->select)->toArray();
                     if (count($result)) {
                         $this->storage = $result;
                         $this->afterLoad();

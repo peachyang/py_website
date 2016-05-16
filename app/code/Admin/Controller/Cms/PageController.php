@@ -63,8 +63,8 @@ class PageController extends AuthActionController
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }
-                if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
-                    $model->setData('parent_id', null);
+                if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
+                    $model->setData('store_id', null);
                 }
                 try {
                     $model->save();

@@ -21,7 +21,7 @@ class Currency extends AbstractCli
 
     protected function usageHelp()
     {
-        return <<<USAGE
+        return <<<'USAGE'
 Usage:  php -f script.php -- [options]
 
     help|-h           Help

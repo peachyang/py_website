@@ -129,10 +129,10 @@ abstract class AbstractModel extends ArrayObject
                     $result = $this->fetchRow($id, $key, $this->getCacheKey());
                 }
                 if (!$result) {
-                    $select = $this->tableGateway->getSql()->select();
+                    $select = $this->getTableGateway($this->tableName)->getSql()->select();
                     $select->where([$this->tableName . '.' . $key => $id]);
                     $this->beforeLoad($select);
-                    $result = $this->tableGateway->selectWith($select)->toArray();
+                    $result = $this->getTableGateway($this->tableName)->selectWith($select)->toArray();
                     if (count($result)) {
                         $this->afterLoad($result);
                         $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
@@ -181,7 +181,7 @@ abstract class AbstractModel extends ArrayObject
             } else if ($this->isNew) {
                 $this->beforeSave();
                 $this->insert($columns);
-                $this->setId($this->tableGateway->getLastInsertValue());
+                $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());
             }
@@ -233,10 +233,10 @@ abstract class AbstractModel extends ArrayObject
     {
         if (empty($this->columns)) {
             $cache = $this->getContainer()->get('cache');
-            $columns = $cache->fetch($this->tableGateway->getTable(), 'TABLE_DESCRIPTION_');
+            $columns = $cache->fetch($this->tableName, 'TABLE_DESCRIPTION_');
             if (!$columns) {
-                $columns = $this->tableGateway->getAdapter()->query('DESCRIBE ' . $this->tableGateway->getTable(), 'execute');
-                $cache->save($this->tableGateway->getTable(), $columns, 'TABLE_DESCRIPTION_');
+                $columns = $this->getTableGateway($this->tableName)->getAdapter()->query('DESCRIBE ' . $this->getTableGateway($this->tableName)->getTable(), 'execute');
+                $cache->save($this->tableName, $columns, 'TABLE_DESCRIPTION_');
             }
             foreach ($columns as $column) {
                 $this->columns[] = $column['Field'];
@@ -255,7 +255,7 @@ abstract class AbstractModel extends ArrayObject
         $columns = $this->getColumns();
         $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $columns) && $this->isNew || in_array($key, $this->updatedColumns)) {
+            if (in_array($key, $columns) && ($this->isNew || in_array($key, $this->updatedColumns))) {
                 $pairs[$key] = $value;
             }
         }

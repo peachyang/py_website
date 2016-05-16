@@ -30,7 +30,7 @@ trait DB
      * @param string|TableIdentifier|array $table
      * @return TableGateway
      */
-    protected function getTableGateway($table)
+    protected function getTableGateway($table = '')
     {
         if (is_null($this->tableGateway)) {
             $this->tableGateway = new TableGateway($table, $this->getContainer()->get('dbAdapter'));

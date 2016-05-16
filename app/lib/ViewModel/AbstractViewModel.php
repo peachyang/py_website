@@ -98,7 +98,9 @@ abstract class AbstractViewModel implements Serializable
                     return $rendered;
                 }
             }
-            $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ? 'theme/backend/template' : 'theme/frontend/template'] . DS . $this->getTemplate();
+            $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ?
+                    'theme/backend/template' : 'theme/frontend/template'] .
+                    DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);
             } else if (file_exists($template . '.phtml')) {
@@ -251,6 +253,11 @@ abstract class AbstractViewModel implements Serializable
         }
     }
 
+    /**
+     * Get request
+     * 
+     * @return \Seahinet\Lib\Http\Request
+     */
     protected function getRequest()
     {
         if (is_null($this->request)) {
@@ -259,6 +266,11 @@ abstract class AbstractViewModel implements Serializable
         return $this->request;
     }
 
+    /**
+     * Get request query
+     * 
+     * @return array
+     */
     public function getQuery($key = null, $default = '')
     {
         if (is_null($this->query)) {
@@ -267,6 +279,11 @@ abstract class AbstractViewModel implements Serializable
         return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
     }
 
+    /**
+     * Get request uri
+     * 
+     * @return \Seahinet\Lib\Http\Uri
+     */
     public function getUri()
     {
         if (is_null($this->uri)) {
@@ -275,6 +292,11 @@ abstract class AbstractViewModel implements Serializable
         return $this->uri;
     }
 
+    /**
+     * Is admin page
+     * 
+     * @return bool
+     */
     public function isAdminPage()
     {
         if (is_null(self::$isAdmin)) {
@@ -283,6 +305,12 @@ abstract class AbstractViewModel implements Serializable
         return self::$isAdmin;
     }
 
+    /**
+     * Get static files url
+     * 
+     * @param string $path
+     * @return string
+     */
     public function getPubUrl($path = '')
     {
         if ($this->pubUrl === '') {
@@ -295,6 +323,11 @@ abstract class AbstractViewModel implements Serializable
         return $this->pubUrl . ltrim($path, '/');
     }
 
+    /**
+     * Get system config
+     * 
+     * @return \Seahinet\Lib\Config
+     */
     public function getConfig()
     {
         if (is_null($this->config)) {

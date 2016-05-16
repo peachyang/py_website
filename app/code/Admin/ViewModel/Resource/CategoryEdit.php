@@ -51,7 +51,7 @@ class CategoryEdit extends Edit
                 'type' => 'select',
                 'options' => (new Store)->getSourceArray(),
                 'label' => 'Store',
-                'empty_string' => '(NULL)'
+                 'required' => 'required',
                     ]),
             'code' => [
                 'type' => 'text',
@@ -66,6 +66,12 @@ class CategoryEdit extends Edit
                 'attrs' => [
                     'multiple' => 'multiple'
                 ]
+            ],
+            'name_language' => [
+                'type' => 'widget',
+                'label' => 'Category Name',
+                'widget' => 'category_language',
+                'required' => 'required'
             ]
             
         ];

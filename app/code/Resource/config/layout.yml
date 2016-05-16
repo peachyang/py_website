@@ -1,13 +1,13 @@
 ---
-Resource:
+resource:
     update: default
     root:
         children:
             content:
                 children:
                     page:
-                        type: Seahinet\Resource\ViewModel\Resource
-admin_Resource_category_list:
+                        type: Seahinet\resource\ViewModel\resource
+admin_resource_category_list:
     update: grid
     root:
         children:
@@ -15,36 +15,45 @@ admin_Resource_category_list:
                 action:
                     -
                         method: setTitle
-                        params: Resource category Management / Resouces
+                        params: resource category Management / Resouces
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/Resource_Category/',label:'Resource category Management'}]
+                                params: [{link:':ADMIN/resource_Category/',label:'resource category Management'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/Resource_Category/edit/',label:'Add New category'}]
+                                params: [{link:':ADMIN/resource_Category/edit/',label:'Add New category'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Category
-admin_Resource_category_edit:
+admin_resource_category_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/resource/resource.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/Resource_Category/',label:'Resource category Management'}]
+                                params: [{link:':ADMIN/resource_Category/',label:'resource category Management'}]
                             -
                                 method: addCrumb
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Resource\CategoryEdit
-admin_Resource_list:
+                        children:
+                            category_language:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: Resource/category_language
+admin_resource_list:
     update: grid
     root:
         children:
@@ -52,13 +61,13 @@ admin_Resource_list:
                 action:
                     -
                         method: setTitle
-                        params: Resource Management / Resouces
+                        params: resource Management / Resouces
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/Resource_Resource/',label:'Resource Management'}]
+                                params: [{link:':ADMIN/resource_resource/',label:'resource Management'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Resource

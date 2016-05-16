@@ -5,7 +5,10 @@ namespace Seahinet\Resource\Model\Collection;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\Predicate\In;
+use Zend\Db\Sql\Select;
+use Zend\Db\TableGateway\TableGateway;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Lib\Bootstrap;
 
 
 /**
@@ -30,23 +33,26 @@ class Category extends AbstractCollection
             $data[$item['id']] = $item;
            
         }
-
+       
         $languages = new Language;
-        $languages->join('resource_category_language', 'core_language.id=resource_category_language.language_id', ['category_id'], 'right')
-        ->columns(['language_id' => 'id', 'language' => 'code'])
-        ->where(new In('category_id', $ids));
+        $languages->join('resource_category_language', 'core_language.id=resource_category_language.language_id', ['category_id', 'name'], 'right')
+                  ->columns(['language_id' => 'id', 'language' => 'code'])
+                  ->where(new In('category_id', $ids))
+                  ->where(["language_id"=>Bootstrap::getLanguage()->getId()]);
         //echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
         $languages->load(false);
         foreach ($languages as $item) {
-            if (isset($data[$item['page_id']])) {
-                $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
+            if (isset($data[$item['category_id']])) {
+                $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
+                $data[$item['category_id']]['name'][$item['language_id']] = $item['name'];
+                
             }
         }
+        
         $this->storage = array_values($data);
+        //exit();
         parent::afterLoad();
     }  
     
     
-    
-
 }

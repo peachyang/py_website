@@ -175,19 +175,10 @@ edit:
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'tool/ckeditor/ckeditor.js'}]
+                        params: [{src:'backend/js/jquery.ui.widget.js'}]
                     -
                         method: addScript
-                        params: [{src:'tool/ckeditor/adapters/jquery.js'}]
-                    -
-                        method: addScript
-                        params: [{src:'tool/ckeditor.js',defer:'defer',async:'async'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.ui.widget.js',defer:'defer',async:'async'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.iframe-transport.js',defer:'defer',async:'async'}]
+                        params: [{src:'backend/js/jquery.iframe-transport.js'}]
                     -
                         method: addScript
                         params: [{src:'backend/js/jquery.fileupload.js',defer:'defer',async:'async'}]

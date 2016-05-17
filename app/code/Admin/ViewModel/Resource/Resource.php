@@ -71,9 +71,16 @@ class Resource extends Grid
                 'label' => 'Category',
                 'empty_string' => '(Top category)'
             ],
+            'list_image_v' => [
+                'type' => 'widget',
+//                'label' => 'View Image',
+                'widget' => 'list_image_v',
+                'imagedata'=>["filetype"=>'image'],
+                'use4filter' => false,
+                'use4inputbox' => true
+            ],
             'file_type' => [
                 'label' => 'File Type',
-                'class' => 'text-left',
                 'sortby' => 'resource:file_type',
                 'type' => 'select',
                 'options' => [
@@ -86,11 +93,9 @@ class Resource extends Grid
             ],
             'old_name' => [
                 'label' => 'Old Name',
-                'class' => 'text-left',
             ],
             'file_name' => [
                 'label' => 'File name',
-                'class' => 'text-left',
             ]
         ];
     }

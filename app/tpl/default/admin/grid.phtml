@@ -2,6 +2,12 @@
 $attributes = $this->getVariable('attributes');
 $count = count($attributes);
 $query = $this->getQuery();
+
+// $elements = $this->getVariable('elements');
+// var_dump($attributes); exit('-----------------------------');
+// foreach ($elements as $key => $item) {
+//     echo $this->getInputBox($key, $item);
+// }
 ?>
 <div class="grid">
     <div class="filters">
@@ -75,7 +81,18 @@ $query = $this->getQuery();
                     <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
-                            <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain()) ?>
+                            <?php
+                            if(isset($name['use4inputbox'])&&$name['use4inputbox']){
+                                //var_dump($attr);echo '*************';
+                                //var_dump($name);exit('=====');
+                                echo $this->getInputBox($attr, $name);
+                            }else{
+                                echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                            }
+                            
+                            
+                            
+                            ?>
                         </td>
                     <?php endforeach ?>
                     <?php if ($this->getAction()): ?>

@@ -35,7 +35,7 @@ class Resource extends AbstractCollection
         $languages->join('resource_category_language', 'core_language.id=resource_category_language.language_id', ['category_id'], 'right')
         ->columns(['language_id' => 'id', 'language' => 'code'])
         ->where(new In('category_id', $ids));
-        echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
+        //echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
         $languages->load(false);
         foreach ($languages as $item) {
             if (isset($data[$item['page_id']])) {

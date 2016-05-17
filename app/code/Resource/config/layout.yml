@@ -68,6 +68,10 @@ admin_resource_list:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/resource_resource/',label:'resource Management'}]
+                                params: [{link:':ADMIN/resource_resource/',label:'Resource Management'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Resource
+                        children:
+                            list_image_v:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: Resource/list_image_v

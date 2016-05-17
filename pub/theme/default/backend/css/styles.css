@@ -177,6 +177,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .filters{background:#f7f8fa;border-bottom:1px solid #cce0e9;padding:9px 0 7px}
 .admin .grid .filters .input-box{display:inline-block;padding:12px 0 12px 23px;margin:0;vertical-align:top}
 .admin .grid .filters .control-label{line-height:21px;font-size:12px;color:#6c6c6c}
+.admin .grid .filters .cell{display:inline-block}
 .admin .grid .filters .form-control{width:99px;height:21px;line-height:21px;border-radius:4px;border:1px solid #a3a3a3;box-shadow:0 0 6px #999 inset}
 .admin .grid .filters .to{font-size:21px;line-height:21px;color:#6c6c6c;margin:0 5px}
 .admin .grid .filters .buttons-set{display:inline-block;vertical-align:top;margin:0}
@@ -186,6 +187,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .sort-by th{background:#f7f8fa;color:#02a0e9}
 .admin .grid .table{font-size:12px;padding:20px}
 .admin .grid .table-striped>tbody>tr:nth-child(even){background-color:#f3fbfe}
+.admin .grid .table tbody .control-label{display:none}
 .admin .grid .table tfoot{color:#02a0e9}
 .admin .grid .table tfoot .pager{display:inline}
 .admin .grid .table tfoot .pager li{font-size:12px;padding:0 4px}

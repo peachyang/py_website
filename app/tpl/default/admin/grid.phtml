@@ -7,32 +7,21 @@ $query = $this->getQuery();
     <div class="filters">
         <form action="<?php echo $this->getCurrentUrl() ?>" method="get" class="form-inline">
             <?php
-            foreach ($attributes as $attr => $name):
+            foreach ($attributes as $attr => $name) {
                 if (isset($name['use4filter']) && !$name['use4filter']) {
                     continue;
                 }
                 if (!isset($name['type'])) {
                     $name['type'] = 'text';
                 }
-                $key = isset($name['sortby']) ? $name['sortby'] : $attr;
-                ?>
-                <div class="input-box">
-                    <label class="control-label" for="sortby:<?php echo $attr ?>"><?php echo $this->translate($name['label'], [], $this->getTranslateDomain()) ?></label>
-                    <?php if ($name['type'] === 'select' && isset($name['options'])): ?>
-                        <select class="form-control" id="sortby:<?php echo $attr ?>" name="<?php echo $key ?>">
-                            <option></option>
-                            <?php foreach ($name['options'] as $k => $v): ?>
-                                <option value="<?php echo $k ?>"<?php if (isset($query[$key]) && $query[$key] !== '' && $query[$key] == $k): ?> selected="selected"<?php endif ?>><?php echo $this->translate($v, [], $this->getTranslateDomain()) ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    <?php else: ?>
-                        <input type="<?php echo $name['type'] ?>" name="<?php echo $key ?>" id="sortby:<?php echo $attr ?>" class="form-control" value="<?php echo isset($query[$key]) ? $query[$key] : '' ?>" />
-                    <?php endif ?>
-                </div>
-            <?php endforeach ?>
+                echo $this->getInputBox($attr, $name);
+            }
+            ?>
             <div class="input-box">
                 <label class="control-label" for="sortby:limit"><?php echo $this->translate('Item(s) per page') ?></label>
-                <input type="tel" name="limit" id="sortby:limit" class="form-control" value="<?php echo isset($query['limit']) ? $query['limit'] : 20 ?>" />
+                <div class="cell">
+                    <input type="tel" name="limit" id="sortby:limit" class="form-control" value="<?php echo isset($query['limit']) ? $query['limit'] : 20 ?>" />
+                </div>
             </div>
             <div class="buttons-set">
                 <button type="submit" class="btn"><?php echo $this->translate('Search') ?></button>
@@ -75,7 +64,15 @@ $query = $this->getQuery();
                     <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
-                            <?php echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain()) ?>
+                            <?php
+                            if ($name['editable']) {
+                                echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
+                            } else if ($name['type'] === 'image') {
+                                echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
+                            } else {
+                                echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                            }
+                            ?>
                         </td>
                     <?php endforeach ?>
                     <?php if ($this->getAction()): ?>

@@ -9,6 +9,8 @@ window.translate = function () {
         var text = args[0];
         if (this.data && this.data[text]) {
             return this.data[text];
+        } else if (window.localStorage && localStorage.translate[text]) {
+            return localStorage.translate[text];
         }
         return text;
     }

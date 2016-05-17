@@ -8,6 +8,7 @@ use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Resource\Source\Category;
+
 class Resource extends Grid
 {
 
@@ -56,17 +57,17 @@ class Resource extends Grid
                 'use4filter' => false
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
+                'value' => $user->getStore()->getId(),
+                'use4sort' => false,
+                'use4filter' => false
                     ] : [
                 'type' => 'select',
                 'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                 'required' => 'required',
+                'label' => 'Store'
                     ]),
             'category_id' => [
                 'type' => 'select',
-                'value'=>(($model&&$model->getId())?(new Category())->getParentIdArray($model->getId()):[]),
+                'value' => (($model && $model->getId()) ? (new Category())->getParentIdArray($model->getId()) : []),
                 'options' => (new Category())->getSourceArray($model ? $model->getId() : []),
                 'label' => 'Category',
                 'empty_string' => '(Top category)'

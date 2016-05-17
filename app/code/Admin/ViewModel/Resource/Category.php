@@ -49,7 +49,6 @@ class Category extends Grid
 
     protected function prepareColumns()
     {
-        
         $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
         return [
@@ -58,18 +57,17 @@ class Category extends Grid
                 'use4filter' => false
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-            ] : [
+                'value' => $user->getStore()->getId(),
+                'use4sort' => false,
+                'use4filter' => false
+                    ] : [
                 'type' => 'select',
                 'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'required' => 'required',
-            ]),
+                'label' => 'Store'
+                    ]),
             'code' => [
                 'type' => 'text',
-                'label' => 'Code',
-                'required' => 'required'
+                'label' => 'Code'
             ],
             'parent_id' => [
                 'label' => 'Parent',

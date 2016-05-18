@@ -1,8 +1,7 @@
 ---
-admin:
-    system:
-        children:
-            -
-                link: 'config/i18n/'
-                title: 'I18N'
-                priority: 20
+system:
+    children:
+        -
+            link: 'config/i18n/'
+            title: 'I18N'
+            priority: 20

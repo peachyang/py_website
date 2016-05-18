@@ -170,7 +170,7 @@ class Translator implements Singleton
         if (is_null($locale)) {
             $locale = $this->getLocale();
         }
-        if (!$message) {
+        if (!$message || !is_string($message)) {
             return '';
         }
         $messages = $this->loadMessages($locale);

@@ -1,17 +1,19 @@
-window.translate = function () {
+(function () {
     "use strict";
-    var args = arguments;
-    if (args.length > 1) {
-        this.data[args[0]] = args[1];
-    } else if (typeof args[0] === 'object') {
-        this.data = args[0];
-    } else {
-        var text = args[0];
-        if (this.data && this.data[text]) {
-            return this.data[text];
-        } else if (window.localStorage && localStorage.translate[text]) {
-            return localStorage.translate[text];
+    window.translate = function () {
+        var args = arguments;
+        if (args.length > 1) {
+            translate.prototype.data[args[0]] = args[1];
+        } else if (typeof args[0] === 'object') {
+            translate.prototype.data = args[0];
+        } else {
+            var text = args[0];
+            if (translate.prototype.data && translate.prototype.data[text]) {
+                return translate.prototype.data[text];
+            } else if (window.localStorage && localStorage.translate && localStorage.translate[text]) {
+                return localStorage.translate[text];
+            }
+            return text;
         }
-        return text;
-    }
-};
+    };
+})();

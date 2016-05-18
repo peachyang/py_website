@@ -14,7 +14,7 @@ class Navigation extends AbstractViewModel
     public function __construct()
     {
         $config = $this->getConfig();
-        $this->items = isset($config['menu']['admin']) ? $config['menu']['admin'] : [];
+        $this->items = isset($config['menu']) ? $config['menu'] : [];
         $segment = new Segment('admin');
         $this->role = $segment->get('user')->getRole();
     }

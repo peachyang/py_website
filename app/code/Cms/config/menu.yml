@@ -1,19 +1,18 @@
 ---
-admin:
-    cms:
-        icon: television
-        title: CMS
-        priority: 10
-        children:
-            -
-                link: 'cms_page/'
-                title: 'Page Management'
-                priority: 0
-            -
-                link: 'cms_category/'
-                title: 'Category Management'
-                priority: 10
-            -
-                link: 'cms_block/'
-                title: 'Block Management'
-                priority: 20
+cms:
+    icon: television
+    title: CMS
+    priority: 10
+    children:
+        -
+            link: 'cms_page/'
+            title: 'Page Management'
+            priority: 0
+        -
+            link: 'cms_category/'
+            title: 'Category Management'
+            priority: 10
+        -
+            link: 'cms_block/'
+            title: 'Block Management'
+            priority: 20

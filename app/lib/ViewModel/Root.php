@@ -12,6 +12,7 @@ final class Root extends AbstractViewModel implements Singleton
 
     protected static $instance = null;
     protected $bodyClass = [];
+    protected $handler = '';
 
     private function __construct()
     {
@@ -49,6 +50,20 @@ final class Root extends AbstractViewModel implements Singleton
     public function getLang()
     {
         return $this->getContainer()->get('language')['code'];
+    }
+
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    public function setHandler($handler)
+    {
+        if ($this->handler === '') {
+            $this->addBodyClass(trim(preg_replace('/[^a-z]/', '-', strtolower($handler)), '-'));
+        }
+        $this->handler = $handler;
+        return $this;
     }
 
 }

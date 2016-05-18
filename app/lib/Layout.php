@@ -62,7 +62,7 @@ class Layout extends ArrayObject implements Singleton
         }
         if ($render) {
             $root = $this->renderLayout($layout['root'], 'root');
-            $root->addBodyClass(trim(preg_replace('/[^a-z]/', '-', strtolower($handler)), '- '));
+            $root->setHandler($handler);
             $cache->save($handler, $root, 'LAYOUT_RENDERED_');
             return $root;
         }

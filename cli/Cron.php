@@ -117,9 +117,7 @@ class Cron extends AbstractCli
     protected function addJob()
     {
         if (!empty($this->getConfig())) {
-            $count = 0;
-            $ts = time();
-            for ($max = $ts + 300; $ts < $max; $ts+=60) {
+            for ($count = 0, $ts = time(), $max = $ts + 300; $ts < $max; $ts+=60) {
                 $d = getdate($ts);
                 foreach ($this->getConfig() as $config) {
                     if (!isset($config['time']) || !isset($config['code'])) {

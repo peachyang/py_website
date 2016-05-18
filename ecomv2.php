@@ -37,7 +37,7 @@ INSERT INTO `core_store` VALUES (null,1,'default','Default',1,1,null,null);
 CREATE TABLE IF NOT EXISTS `core_language`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Language ID',
     `merchant_id` INTEGER UNSIGNED NOT NULL COMMENT 'Merchant ID',
-    `code` VARCHAR(10) NOT NULL DEFAULT '' COMMENT 'ISO 639-1 language code',
+    `code` VARCHAR(10) NOT NULL DEFAULT '' COMMENT 'RFC 5646 language code',
     `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Language name',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `core_language`(
 
 CREATE TRIGGER `TGR_UPDATE_CORE_LANGUAGE` BEFORE UPDATE ON `core_language` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
-INSERT INTO `core_language` VALUES (null,1,'en_US','English',1,1,null,null);
+INSERT INTO `core_language` VALUES (null,1,'en-US','English',1,1,null,null);
 
 CREATE TABLE IF NOT EXISTS `cms_page`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Page ID',
@@ -320,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `core_translate`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Translation ID',
     `string` VARCHAR(255) NOT NULL COMMENT 'Translation string',
     `translate` VARCHAR(255) NOT NULL COMMENT 'Translate',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en_US' COMMENT 'Locale',
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Updated time',
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `i18n_country`(
 
 CREATE TABLE IF NOT EXISTS `i18n_country_name`(
     `country_id` INTEGER UNSIGNED NOT NULL COMMENT 'Country ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en_US' COMMENT 'Locale',
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
     `name` VARCHAR(255) NOT NULL COMMENT 'Region name',
     PRIMARY KEY (`country_id`,`locale`),
     INDEX IDX_I18N_COUNTRY_NAME_COUNTRY_ID (`country_id`),
@@ -363,7 +363,7 @@ CREATE TABLE IF NOT EXISTS `i18n_region`(
 
 CREATE TABLE IF NOT EXISTS `i18n_region_name`(
     `region_id` INTEGER UNSIGNED NOT NULL COMMENT 'Region ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en_US' COMMENT 'Locale',
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
     `name` VARCHAR(255) NOT NULL COMMENT 'Region name',
     PRIMARY KEY (`region_id`,`locale`),
     INDEX IDX_I18N_REGION_NAME_REGION_ID (`region_id`),
@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `i18n_city`(
 
 CREATE TABLE IF NOT EXISTS `i18n_city_name`(
     `city_id` INTEGER UNSIGNED NOT NULL COMMENT 'City ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en_US' COMMENT 'Locale',
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
     `name` VARCHAR(255) NOT NULL COMMENT 'City name',
     PRIMARY KEY (`city_id`,`locale`),
     INDEX IDX_I18N_CITY_NAME_CITY_ID (`city_id`),
@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `i18n_county`(
 
 CREATE TABLE IF NOT EXISTS `i18n_county_name`(
     `county_id` INTEGER UNSIGNED NOT NULL COMMENT 'County ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en_US' COMMENT 'Locale',
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
     `name` VARCHAR(255) NOT NULL COMMENT 'County name',
     PRIMARY KEY (`county_id`,`locale`),
     INDEX IDX_I18N_COUNTY_NAME_COUNTY_ID (`county_id`),

@@ -10,16 +10,16 @@ trait Currency
 
     protected $sync_url = 'http://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={{from}}{{to}}=x';
 
-    protected function sync($from, $to)
+    protected function sync($cur, $base)
     {
         $result = ['error' => 0, 'message' => []];
         try {
             $this->beginTransaction();
-            foreach ((array)$from as $item) {
-                if ($item === $to) {
+            foreach ((array)$cur as $item) {
+                if ($item === $base) {
                     $rate = 1;
                 } else {
-                    $url = str_replace(['{{from}}', '{{to}}'], [$item, $to], $this->sync_url);
+                    $url = str_replace(['{{from}}', '{{to}}'], [$base, $item], $this->sync_url);
                     $fp = @fopen($url, 'r');
                     if (!$fp) {
                         throw new Exception('Connection timed out.');

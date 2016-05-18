@@ -1,4 +1,4 @@
 ---
 -
     time: '*/5 * * * *'
-    code: '\Seahinet\Email\Listeners\Cron::schedule'
+    code: 'Seahinet\Email\Listeners\Cron::schedule'

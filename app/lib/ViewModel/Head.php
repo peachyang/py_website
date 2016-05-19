@@ -31,17 +31,33 @@ final class Head extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
+    /**
+     * Get translated title for title element
+     * 
+     * @return string
+     */
     public function getTitle()
     {
-        return $this->translate($this->title ? $this->title : $this->translate('Default Title'));
+        return $this->translate($this->title ? $this->title : 'Default Title');
     }
 
+    /**
+     * Set title for title element
+     * 
+     * @param string $title
+     * @return Head
+     */
     public function setTitle($title)
     {
         $this->title = $title;
         return $this;
     }
 
+    /**
+     * Get meta elements
+     * 
+     * @return string
+     */
     public function getMeta()
     {
         $result = '';
@@ -51,22 +67,46 @@ final class Head extends AbstractViewModel implements Singleton
         return $result;
     }
 
+    /**
+     * Add meta infomation
+     * 
+     * @param string $name
+     * @param string $content
+     * @return Head
+     */
     public function addMeta($name, $content)
     {
         $this->meta[$name] = $content;
         return $this;
     }
 
+    /**
+     * Set meta description
+     * 
+     * @param string $content
+     * @return Head
+     */
     public function setDescription($content)
     {
         return $this->addMeta('description', $content);
     }
 
+    /**
+     * Set meta keywords
+     * 
+     * @param string $content
+     * @return Head
+     */
     public function setKeywords($content)
     {
         return $this->addMeta('keywords', $content);
     }
 
+    /**
+     * Get script elements
+     * 
+     * @return string
+     */
     public function getScript()
     {
         $result = '';
@@ -81,6 +121,13 @@ final class Head extends AbstractViewModel implements Singleton
         return $result;
     }
 
+    /**
+     * Add script infomation
+     * 
+     * @param string|array $script
+     * @param string $condition
+     * @return Head
+     */
     public function addScript($script, $condition = null)
     {
         if (is_null($condition)) {
@@ -94,6 +141,11 @@ final class Head extends AbstractViewModel implements Singleton
         return $this;
     }
 
+    /**
+     * Get link elements
+     * 
+     * @return string
+     */
     public function getLink()
     {
         $result = $this->renderLink($this->link['normal']);
@@ -105,6 +157,14 @@ final class Head extends AbstractViewModel implements Singleton
         return $result;
     }
 
+    /**
+     * Add link infomation
+     * 
+     * @param string $link
+     * @param string $type
+     * @param string $condition
+     * @return Head
+     */
     public function addLink($link, $type = 'stylesheet', $condition = null)
     {
         if (is_null($condition)) {
@@ -118,6 +178,12 @@ final class Head extends AbstractViewModel implements Singleton
         return $this;
     }
 
+    /**
+     * Render links' array to HTML
+     * 
+     * @param array $links
+     * @return string
+     */
     protected function renderLink($links)
     {
         $result = '';
@@ -142,6 +208,12 @@ final class Head extends AbstractViewModel implements Singleton
         return $result;
     }
 
+    /**
+     * Render scripts' array to HTML
+     * 
+     * @param array $scripts
+     * @return string
+     */
     protected function renderScript($scripts)
     {
         $result = '';
@@ -176,6 +248,13 @@ final class Head extends AbstractViewModel implements Singleton
         return $result;
     }
 
+    /**
+     * Combine js/css files
+     * 
+     * @param array $files
+     * @param bool $isCss
+     * @return string Combined url
+     */
     protected function getCombinedFile(array $files, $isCss)
     {
         $content = '';

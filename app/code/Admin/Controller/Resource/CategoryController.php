@@ -51,7 +51,7 @@ class CategoryController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/resource_Category/');
+        return $this->response($result, ':ADMIN/resource_category/');
     }
     
     public function deleteAction()
@@ -77,7 +77,7 @@ class CategoryController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/resource_Category/');
+        return $this->response($result, ':ADMIN/resource_category/');
     }
     
 }

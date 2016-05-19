@@ -57,7 +57,7 @@ class Rbac extends AbstractCli
                     }
                 }
             }
-            echo ($count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.') . chr(10);
+            echo ($count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.'), PHP_EOL;
         } else {
             echo $this->usageHelp();
         }

@@ -132,6 +132,8 @@ abstract class AbstractViewModel implements Serializable
     }
 
     /**
+     * Get template file path
+     * 
      * @return string
      */
     public function getTemplate()
@@ -140,6 +142,8 @@ abstract class AbstractViewModel implements Serializable
     }
 
     /**
+     * Set template file path
+     * 
      * @param string $template
      * @return AbstractViewModel
      */
@@ -150,6 +154,8 @@ abstract class AbstractViewModel implements Serializable
     }
 
     /**
+     * Get name to cache code
+     * 
      * @return string
      */
     public function getCacheKey()
@@ -158,6 +164,8 @@ abstract class AbstractViewModel implements Serializable
     }
 
     /**
+     * Get CSRF key value
+     * 
      * @return string
      */
     public function getCsrfKey()
@@ -168,27 +176,57 @@ abstract class AbstractViewModel implements Serializable
         return $this->csrf->getValue();
     }
 
+    /**
+     * Get variable or child view model
+     * 
+     * @param string $name
+     * @return mixed
+     */
     public function __get($name)
     {
         return $this->getVariable($name)? : $this->getChild($name);
     }
 
+    /**
+     * Returns the variable at the specified key
+     * 
+     * @param string $key
+     * @return mixed
+     */
     public function getVariable($key)
     {
         return isset($this->variables[$key]) ? $this->variables[$key] : '';
     }
 
+    /**
+     * Sets the value at the specified key to value
+     * 
+     * @param string $key
+     * @param mixed $value
+     * @return AbstractViewModel
+     */
     public function setVariable($key, $value)
     {
         $this->variables[$key] = $value;
         return $this;
     }
 
+    /**
+     * Get variables and children view models
+     * 
+     * @return array
+     */
     public function getVariables()
     {
-        return $this->children + $this->variables;
+        return $this->variables + $this->children;
     }
 
+    /**
+     * Sets variables
+     * 
+     * @param array $variables
+     * @return AbstractViewModel
+     */
     public function setVariables(array $variables)
     {
         foreach ($variables as $key => $value) {
@@ -234,6 +272,11 @@ abstract class AbstractViewModel implements Serializable
         return $this;
     }
 
+    /**
+     * Serialize this view model
+     * 
+     * @return string
+     */
     public function serialize()
     {
         return serialize(array_filter(get_object_vars($this), function($value) {
@@ -242,6 +285,11 @@ abstract class AbstractViewModel implements Serializable
         );
     }
 
+    /**
+     * Unserialize this view model
+     * 
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);

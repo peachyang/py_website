@@ -25,6 +25,9 @@ class CurrencyController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Currency');
+        } else {
+            return $this->redirectReferer(':ADMIN/i18n_currency/');
         }
         return $root;
     }

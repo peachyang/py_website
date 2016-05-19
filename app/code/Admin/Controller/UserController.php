@@ -37,6 +37,9 @@ class UserController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit User / User Management');
+        } else {
+            $root->getChild('head')->setTitle('Add New User / User Management');
         }
         return $root;
     }

@@ -13,21 +13,39 @@ class Edit extends AbstractViewModel
         $this->setTemplate('admin/edit');
     }
 
+    /**
+     * Get title for form
+     * 
+     * @return string
+     */
     public function getTitle()
     {
         return $this->getQuery('id') ? 'Edit' : 'Add';
     }
 
+    /**
+     * Get saving url for form
+     * 
+     * @return string
+     */
     public function getSaveUrl()
     {
         return $this->getAdminUrl($this->getVariable('save_url'));
     }
 
+    /**
+     * Get deleting url for current record
+     * 
+     * @return string|bool
+     */
     public function getDeleteUrl()
     {
         return false;
     }
 
+    /**
+     * {@inhertdoc}
+     */
     protected function getRendered($template)
     {
         $this->setVariables([
@@ -37,6 +55,12 @@ class Edit extends AbstractViewModel
         return parent::getRendered($template);
     }
 
+    /**
+     * Add value to each column
+     * 
+     * @param array $columns
+     * @return array
+     */
     protected function prepareElements($columns = [])
     {
         $model = $this->getVariable('model');
@@ -66,6 +90,12 @@ class Edit extends AbstractViewModel
         return $columns;
     }
 
+    /**
+     * Get attributes' HTML code of element
+     * 
+     * @param array $attrs
+     * @return string
+     */
     public function getAttrs($attrs = [])
     {
         $result = '';
@@ -77,6 +107,13 @@ class Edit extends AbstractViewModel
         return $result;
     }
 
+    /**
+     * Get input box for different form elements
+     * 
+     * @param string $key
+     * @param array $item
+     * @return Template
+     */
     public function getInputBox($key, $item)
     {
         $box = new Template;
@@ -89,6 +126,11 @@ class Edit extends AbstractViewModel
         return $box;
     }
 
+    /**
+     * Get additional buttons' HTML code
+     * 
+     * @return string
+     */
     public function getAdditionalButtons()
     {
         return '';

@@ -87,18 +87,31 @@ abstract class AbstractModel extends ArrayObject
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($key, $value)
     {
         $this->updatedColumns[] = $key;
         parent::offsetSet($key, $value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($key)
     {
         $this->updatedColumns[] = $key;
         parent::offsetUnset($key);
     }
 
+    /**
+     * Set the value at the specified key to value
+     * 
+     * @param string|array $key
+     * @param mixed $value
+     * @return AbstractModel
+     */
     public function setData($key, $value = null)
     {
         if (is_array($key)) {
@@ -117,6 +130,7 @@ abstract class AbstractModel extends ArrayObject
      * @param int|string $id    Primary key value by default
      * @param string $key
      * @return AbstractModel
+     * @throws InvalidQueryException
      */
     public function load($id, $key = null)
     {
@@ -162,6 +176,7 @@ abstract class AbstractModel extends ArrayObject
      * 
      * @param array $constraint     Update query constraint
      * @return AbstractModel
+     * @throws InvalidQueryException
      */
     public function save($constraint = [], $insertForce = false)
     {
@@ -197,6 +212,11 @@ abstract class AbstractModel extends ArrayObject
         return $this;
     }
 
+    /**
+     * Remove data
+     * 
+     * @throws InvalidQueryException
+     */
     public function remove()
     {
         if ($this->getId()) {
@@ -291,7 +311,7 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
-     * Event before load
+     * Event before load data
      * 
      * @param \Zend\Db\Sql\Select $select
      */
@@ -301,7 +321,7 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
-     * Event after load
+     * Event after load data
      * 
      * @param array $result
      */

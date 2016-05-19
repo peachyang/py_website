@@ -23,6 +23,9 @@ class OperationController extends AuthActionController
                 return $this->redirectReferer(':ADMIN/operation/');
             }
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Operation / Operation Management');
+        } else {
+            $root->getChild('head')->setTitle('Add New Operation / Operation Management');
         }
         return $root;
     }

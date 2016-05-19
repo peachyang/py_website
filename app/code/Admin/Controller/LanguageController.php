@@ -21,6 +21,9 @@ class LanguageController extends AuthActionController
             $model = new Model\Language;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Language');
+        } else {
+            $root->getChild('head')->setTitle('Add New Language');
         }
         return $root;
     }
@@ -32,6 +35,9 @@ class LanguageController extends AuthActionController
             $model = new Model\Store;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Store');
+        } else {
+            $root->getChild('head')->setTitle('Add New Store');
         }
         return $root;
     }
@@ -43,6 +49,9 @@ class LanguageController extends AuthActionController
             $model = new Model\Merchant;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Merchant');
+        } else {
+            $root->getChild('head')->setTitle('Add New Merchant');
         }
         return $root;
     }

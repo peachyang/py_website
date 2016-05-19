@@ -6,7 +6,7 @@ trait ArrayMerge
 {
 
     /**
-     * Merge array recursive
+     * Merge array recursively
      * 
      * @param array $a
      * @param array $b

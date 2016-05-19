@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Message;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Lib\Source\Language;
+use Seahinet\Lib\Session\Segment;
 
 class Edit extends PEdit
 {
@@ -24,7 +25,7 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Message' : 'Add Message';
+        return $this->getQuery('id') ? 'Edit Template' : 'Add Template';
     }
 
     protected function prepareElements($columns = [])

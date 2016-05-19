@@ -57,6 +57,11 @@ theme:
             scope: merchant
             priority: 0
             children:
+                notice:
+                    type: text
+                    label: Global Notice
+                    priority: 0
+                    scope: merchant
                 css_preprocessor:
                     type: select
                     required: reqired

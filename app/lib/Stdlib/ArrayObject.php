@@ -145,6 +145,8 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
     }
 
     /**
+     * Get data array
+     * 
      * @return array
      */
     public function toArray()
@@ -153,6 +155,8 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
     }
 
     /**
+     * Get data array
+     * 
      * @return array
      */
     public function getArrayCopy()
@@ -161,6 +165,8 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
     }
 
     /**
+     * Retrieve an external iterator
+     * 
      * @return ArrayIterator
      */
     public function getIterator()
@@ -169,6 +175,18 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
     }
 
     /**
+     * Walk collection
+     * 
+     * @param callable $callback
+     */
+    public function walk($callback, ...$params)
+    {
+        array_walk($this->storage, $callback, $params);
+    }
+
+    /**
+     * Combine data from array
+     * 
      * @param \Traversable|array $array
      * @return ArrayObject
      */

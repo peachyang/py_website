@@ -22,6 +22,9 @@ class TemplateController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Template / Email Template');
+        } else {
+            $root->getChild('head')->setTitle('Add New Template / Email Template');
         }
         return $root;
     }

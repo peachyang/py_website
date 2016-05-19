@@ -18,11 +18,14 @@ class BlockController extends AuthActionController
     public function editAction()
     {
         $root = $this->getLayout('admin_cms_block_edit');
-        $model = new Model;
         if ($id = $this->getRequest()->getQuery('id')) {
+            $model = new Model;
             $model->load($id);
+            $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Block / CMS');
+        } else {
+            $root->getChild('head')->setTitle('Add New Block / CMS');
         }
-        $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
     }
 

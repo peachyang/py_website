@@ -16,6 +16,11 @@ class Language extends AbstractViewModel
         $this->setTemplate('page/language');
     }
 
+    /**
+     * Get languages
+     * 
+     * @return LanguageCollection
+     */
     public function getLanguage()
     {
         $language = new LanguageCollection;
@@ -23,16 +28,33 @@ class Language extends AbstractViewModel
         return $language;
     }
 
+    /**
+     * Get url with language code
+     * 
+     * @param array|\Seahinet\Lib\Model\AbstractModel $language
+     * @return string
+     */
     public function getUrl($language)
     {
         return $this->getBaseUrl('language/switch/' . $language['code']);
     }
 
+    /**
+     * Get current language name
+     * 
+     * @return string
+     */
     public function getCurrentLanguage()
     {
         return Bootstrap::getLanguage()['name'];
     }
 
+    /**
+     * Whether edit link shown or not
+     * 
+     * @param bool $flag
+     * @return bool
+     */
     public function showEdit($flag = null)
     {
         if (is_bool($flag)) {
@@ -41,11 +63,22 @@ class Language extends AbstractViewModel
         return $this->showEdit;
     }
 
+    /**
+     * Get edit link url
+     * 
+     * @return string
+     */
     public function getEditUrl()
     {
         return $this->isAdminPage() ? $this->getAdminUrl($this->editUrl) : $this->getBaseUrl($this->editUrl);
     }
 
+    /**
+     * Set edit link url
+     * 
+     * @param string $editUrl
+     * @return Language
+     */
     public function setEditUrl($editUrl)
     {
         $this->editUrl = $editUrl;

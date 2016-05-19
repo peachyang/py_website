@@ -14,26 +14,47 @@ class Grid extends AbstractViewModel
     protected $messAction = [];
     protected $translateDomain = null;
 
-    public function getCurrentUrl()
-    {
-        return $this->getUri()->withQuery('')->withFragment('')->__toString();
-    }
-
     public function __construct()
     {
         $this->setTemplate('admin/grid');
     }
 
+    /**
+     * Get current url
+     * 
+     * @return string
+     */
+    public function getCurrentUrl()
+    {
+        return $this->getUri()->withQuery('')->withFragment('')->__toString();
+    }
+
+    /**
+     * Get operations for each row
+     * 
+     * @return array
+     */
     public function getAction()
     {
         return $this->action;
     }
 
+    /**
+     * Get operations for multiple rows
+     * 
+     * @return array
+     */
     public function getMessAction()
     {
         return $this->messAction;
     }
 
+    /**
+     * Get order by url for each attribute
+     * 
+     * @param string $attr
+     * @return string
+     */
     public function getOrderByUrl($attr)
     {
         $query = $this->getQuery();
@@ -57,6 +78,12 @@ class Grid extends AbstractViewModel
         return $this->getUri()->withQuery(http_build_query($query))->__toString();
     }
 
+    /**
+     * Get limit url
+     * 
+     * @param string $attr
+     * @return string
+     */
     public function getLimitUrl()
     {
         $query = $this->getQuery();
@@ -69,11 +96,22 @@ class Grid extends AbstractViewModel
         return $url;
     }
 
+    /**
+     * Prepare columns/attributes
+     * 
+     * @return array
+     */
     protected function prepareColumns()
     {
         return [];
     }
 
+    /**
+     * Handle sql for collection
+     * 
+     * @param AbstractCollection $collection
+     * @return AbstractCollection
+     */
     protected function prepareCollection($collection = null)
     {
         if (is_null($collection)) {
@@ -108,6 +146,9 @@ class Grid extends AbstractViewModel
         return $collection;
     }
 
+    /**
+     * {@inhertdoc}
+     */
     protected function getRendered($template)
     {
         $collection = $this->prepareCollection();
@@ -121,11 +162,23 @@ class Grid extends AbstractViewModel
         return parent::getRendered($template);
     }
 
+    /**
+     * Get translate domain
+     * 
+     * @return string
+     */
     public function getTranslateDomain()
     {
         return $this->translateDomain;
     }
 
+    /**
+     * Get input box for different form elements
+     * 
+     * @param string $key
+     * @param array $item
+     * @return Template
+     */
     public function getInputBox($key, $item)
     {
         $box = new Template;

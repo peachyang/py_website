@@ -165,14 +165,13 @@ abstract class AbstractModel extends ArrayObject
      */
     public function save($constraint = [], $insertForce = false)
     {
-        $columns = $this->prepareColumns();
         try {
             if (!$insertForce && (!empty($constraint) || $this->getId())) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
                 $this->beforeSave();
-                $this->update($columns, $constraint);
+                $this->update($this->prepareColumns(), $constraint);
                 $this->afterSave();
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
@@ -180,7 +179,7 @@ abstract class AbstractModel extends ArrayObject
                 $this->flushList($this->getCacheKey());
             } else if ($this->isNew) {
                 $this->beforeSave();
-                $this->insert($columns);
+                $this->insert($this->prepareColumns());
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());

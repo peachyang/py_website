@@ -29,6 +29,8 @@ $query = $this->getQuery();
             </div>
         </form>
     </div>
+    
+    
     <table class="table table-hover table-striped table-no-border">
         <thead class="sort-by">
             <tr>
@@ -57,24 +59,33 @@ $query = $this->getQuery();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->getVariable('collection')->toArray() as $item): ?>
+            <?php 
+            foreach ($this->getVariable('collection')->toArray() as $item): 
+            
+            ?>
                 <tr>
+                
                     <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
                     <?php endif ?>
+                    
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
                             <?php
-                            if (isset($name['editable'])&&$name['editable']) {
-                                echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
-                            } else if (isset($name['type'])&&$name['type'] === 'image') {
-                                echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
-                            } else {
+                            if($attr==='file_name'){
+                                if($item['file_type']==='images'){
+                                    echo '<img src="'.$name['fileUrl'].'images/50x50/' . $item['file_name'].'" alt="'.$item['file_name'].'" id="'.$item['id'].'" />';
+                                }else{
+                                    echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                                }
+                            }else{
                                 echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
                             }
                             ?>
                         </td>
                     <?php endforeach ?>
+                    
+                    
                     <?php if ($this->getAction()): ?>
                         <td class="text-center action">
                             <?php

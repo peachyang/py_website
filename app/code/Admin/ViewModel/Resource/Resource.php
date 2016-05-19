@@ -8,6 +8,7 @@ use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Resource\Source\Category;
+use Seahinet\Resource\Model\Resource as model;
 class Resource extends Grid
 {
 
@@ -48,41 +49,37 @@ class Resource extends Grid
 
     protected function prepareColumns()
     {
-        $model = $this->getVariable('model');
+        $model = new model;
         $user = (new Segment('admin'))->get('user');
         return [
             'id' => [
                 'label' => 'ID',
-                'use4filter' => false
+                'use4filter' => false,
+                'use4popupfilter' => false
             ],
             'store_id' => ($user->getStore() ? [
+                'use4popupfilter' => false,
                 'type' => 'hidden',
                 'value' => $user->getStore()->getId()
                     ] : [
                 'type' => 'select',
+                'use4popupfilter' => false,
                 'options' => (new Store)->getSourceArray(),
                 'label' => 'Store',
                  'required' => 'required',
                     ]),
             'category_id' => [
                 'type' => 'select',
-                'value'=>(($model&&$model->getId())?(new Category())->getParentIdArray($model->getId()):[]),
                 'options' => (new Category())->getSourceArray($model ? $model->getId() : []),
                 'label' => 'Category',
-                'empty_string' => '(Top category)'
-            ],
-            'list_image_v' => [
-                'type' => 'widget',
-//                'label' => 'View Image',
-                'widget' => 'list_image_v',
-                'imagedata'=>["filetype"=>'image'],
-                'use4filter' => false,
-                'use4inputbox' => true
+                'empty_string' => '(Top category)',
+                'use4popupfilter' => true
             ],
             'file_type' => [
                 'label' => 'File Type',
                 'sortby' => 'resource:file_type',
                 'type' => 'select',
+                'use4popupfilter' => true,
                 'options' => [
                     'others',
                     'images',
@@ -93,9 +90,12 @@ class Resource extends Grid
             ],
             'old_name' => [
                 'label' => 'Old Name',
+                'use4popupfilter' => true
             ],
             'file_name' => [
                 'label' => 'File name',
+                'fileUrl' => $model->options['upload_url'],
+                'use4popupfilter' => true
             ]
         ];
     }

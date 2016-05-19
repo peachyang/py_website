@@ -57,5 +57,12 @@ class ResourceController extends AuthActionController
         return $result;
     }
 
+    public function popupListImagesAction()
+    {
+        $root = $this->getLayout('admin_popup_images_list');
+        return $root;
+    
+    }
+    
 
 }

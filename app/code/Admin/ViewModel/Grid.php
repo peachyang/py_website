@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
 class Grid extends AbstractViewModel
 {
@@ -123,6 +124,18 @@ class Grid extends AbstractViewModel
     public function getTranslateDomain()
     {
         return $this->translateDomain;
+    }
+
+    public function getInputBox($key, $item)
+    {
+        $box = new Template;
+        $box->setVariables([
+            'key' => $key,
+            'item' => $item,
+            'parent' => $this
+        ]);
+        $box->setTemplate('admin/renderer/' . $item['type']);
+        return $box;
     }
 
 }

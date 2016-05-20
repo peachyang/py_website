@@ -8,6 +8,9 @@ use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Database handler
+ */
 trait DB
 {
 

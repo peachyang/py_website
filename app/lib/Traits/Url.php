@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Traits;
 
+/**
+ * Get url
+ */
 trait Url
 {
 

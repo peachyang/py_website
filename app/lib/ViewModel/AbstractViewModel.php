@@ -99,11 +99,13 @@ abstract class AbstractViewModel implements Serializable
                 }
             }
             $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ?
-                    'theme/backend/template' : 'theme/frontend/template'] .
+                            'theme/backend/template' : 'theme/frontend/template'] .
                     DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);
             } else if (file_exists($template . '.phtml')) {
+                $rendered = $this->getRendered($template . '.phtml');
+            } else if (file_exists($template = BP . 'app/tpl/default/' . $this->getTemplate())) {
                 $rendered = $this->getRendered($template . '.phtml');
             } else {
                 $rendered = '';

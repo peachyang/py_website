@@ -6,9 +6,15 @@ require __DIR__ . '/../app/bootstrap.php';
 
 use Seahinet\I18n\Listeners\Currency as Listener;
 
+/**
+ * Synchronize currency rate
+ */
 class Currency extends AbstractCli
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function run()
     {
         if (isset($this->args['sync']) || isset($this->args['s'])) {
@@ -19,6 +25,9 @@ class Currency extends AbstractCli
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function usageHelp()
     {
         return <<<'USAGE'

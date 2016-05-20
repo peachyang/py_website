@@ -13,9 +13,13 @@ class PageController extends ActionController
         if (!$page) {
             return $this->notFoundAction();
         }
-        $layout = $this->getLayout('cms_page', true);
-        $layout->getChild('page', true)->setPageModel($page);
-        return $layout;
+        $root = $this->getLayout('cms_page');
+        $head = $root->getChild('head');
+        $head->setTitle($page['title'])
+                ->setKeywords($page['keywords'])
+                ->setDescription($page['description']);
+        $root->getChild('page', true)->setPageModel($page);
+        return $root;
     }
 
 }

@@ -1,31 +1,29 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Language;
+namespace Seahinet\Admin\ViewModel\I18n\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Lib\Source\Merchant;
-use Seahinet\Lib\Source\LanguageCode;
 
-class Edit extends PEdit
+class Merchant extends PEdit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('language/save/');
+        return $this->getAdminUrl('i18n_merchant/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('language/delete/');
+            return $this->getAdminUrl('i18n_merchant/delete/');
         }
         return false;
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Language' : 'Add Language';
+        return $this->getQuery('id') ? 'Edit Merchant' : 'Add Merchant';
     }
 
     protected function prepareElements($columns = [])
@@ -35,19 +33,8 @@ class Edit extends PEdit
                 'type' => 'hidden',
             ],
             'code' => [
-                'type' => 'select',
-                'label' => 'Code',
-                'required' => 'required',
-                'options' => (new LanguageCode)->getSourceArray()
-            ],
-            'name' => [
                 'type' => 'text',
-                'label' => 'Name'
-            ],
-            'merchant_id' => [
-                'type' => 'select',
-                'label' => 'Merchant',
-                'options' => (new Merchant)->getSourceArray(),
+                'label' => 'Name',
                 'required' => 'required'
             ],
             'is_default' => [

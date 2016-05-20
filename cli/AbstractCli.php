@@ -4,6 +4,9 @@ namespace Seahinet\Cli;
 
 use Seahinet\Lib\Bootstrap;
 
+/**
+ * Abstract class for cli mode
+ */
 abstract class AbstractCli
 {
 
@@ -20,6 +23,11 @@ abstract class AbstractCli
         $this->run();
     }
 
+    /**
+     * Parse arguments into array
+     * 
+     * @return AbstractCli
+     */
     protected function parseArgs()
     {
         $current = null;
@@ -39,8 +47,14 @@ abstract class AbstractCli
         return $this;
     }
 
+    /**
+     * Run codes
+     */
     abstract public function run();
 
+    /**
+     * Show helping text
+     */
     protected function showHelp()
     {
         if (isset($this->args['h']) || isset($this->args['help'])) {
@@ -49,6 +63,11 @@ abstract class AbstractCli
         }
     }
     
+    /**
+     * Helping text
+     * 
+     * @return string
+     */
     protected function usageHelp(){
         return <<<'USAGE'
 Usage:  php -f script.php -- [options]

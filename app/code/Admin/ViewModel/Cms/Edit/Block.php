@@ -1,13 +1,13 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms;
+namespace Seahinet\Admin\ViewModel\Cms\Edit;
 
-use Seahinet\Admin\ViewModel\Edit;
+use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 
-class BlockEdit extends Edit
+class Block extends PEdit
 {
 
     public function getSaveUrl()

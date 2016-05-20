@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Traits;
 
+/**
+ * Translate sentence
+ */
 trait Translate
 {
 

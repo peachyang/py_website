@@ -6,9 +6,15 @@ require __DIR__ . '/../app/bootstrap.php';
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Change file mode for security
+ */
 class FileMode extends AbstractCli
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function run()
     {
         $finder = new Finder;
@@ -22,6 +28,9 @@ class FileMode extends AbstractCli
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function usageHelp()
     {
         return <<<'USAGE'

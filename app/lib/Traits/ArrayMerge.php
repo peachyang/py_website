@@ -2,6 +2,9 @@
 
 namespace Seahinet\Lib\Traits;
 
+/**
+ * Merge array recursively
+ */
 trait ArrayMerge
 {
 

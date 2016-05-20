@@ -62,6 +62,38 @@ theme:
                     label: Global Notice
                     priority: 0
                     scope: merchant
+                default_title:
+                    type: text
+                    label: Default Title
+                    priority: 10
+                    scope: merchant
+                    default: Default Title
+                default_keywords:
+                    type: text
+                    label: Default Keywords
+                    priority: 11
+                    scope: merchant
+                    default: Default Keywords
+                default_description:
+                    type: text
+                    label: Default Description
+                    priority: 12
+                    scope: merchant
+                    default: Default Description
+                robots:
+                    type: select
+                    label: Robots
+                    priority: 13
+                    scope: merchant
+                    default: NOINDEX,NOFOLLOW,NOARCHIVE
+                    options:
+                        INDEX,FOLLOW,ARCHIVE: INDEX,FOLLOW,ARCHIVE
+                        NOINDEX,FOLLOW,ARCHIVE: NOINDEX,FOLLOW,ARCHIVE
+                        INDEX,NOFOLLOW,ARCHIVE: INDEX,NOFOLLOW,ARCHIVE
+                        INDEX,FOLLOW,NOARCHIVE: INDEX,FOLLOW,NOARCHIVE
+                        NOINDEX,NOFOLLOW,ARCHIVE: NOINDEX,NOFOLLOW,ARCHIVE
+                        NOINDEX,FOLLOW,NOARCHIVE: NOINDEX,FOLLOW,NOARCHIVE
+                        NOINDEX,NOFOLLOW,NOARCHIVE: NOINDEX,NOFOLLOW,NOARCHIVE
                 css_preprocessor:
                     type: select
                     required: reqired

@@ -14,6 +14,8 @@ final class Head extends AbstractViewModel implements Singleton
 
     protected static $instance = null;
     protected $title = '';
+    protected $description = '';
+    protected $keywords = '';
     protected $script = ['condition' => [], 'normal' => []];
     protected $link = ['condition' => [], 'normal' => []];
     protected $meta = [];
@@ -38,7 +40,7 @@ final class Head extends AbstractViewModel implements Singleton
      */
     public function getTitle()
     {
-        return $this->translate($this->title ? $this->title : 'Default Title');
+        return $this->translate($this->title ? $this->title : $this->getConfig()['theme/global/default_title']);
     }
 
     /**
@@ -88,7 +90,8 @@ final class Head extends AbstractViewModel implements Singleton
      */
     public function setDescription($content)
     {
-        return $this->addMeta('description', $content);
+        $this->description = $content;
+        return $this;
     }
 
     /**
@@ -99,7 +102,30 @@ final class Head extends AbstractViewModel implements Singleton
      */
     public function setKeywords($content)
     {
-        return $this->addMeta('keywords', $content);
+        $this->keywords = $content;
+        return $this;
+    }
+
+    /**
+     * Set meta description
+     * 
+     * @param string $content
+     * @return Head
+     */
+    public function getDescription()
+    {
+        return $this->description ? $this->description : $this->translate($this->getConfig()['theme/global/default_description']);
+    }
+
+    /**
+     * Set meta keywords
+     * 
+     * @param string $content
+     * @return Head
+     */
+    public function getKeywords()
+    {
+        return $this->keywords ? $this->keywords : $this->translate($this->getConfig()['theme/global/default_keywords']);
     }
 
     /**

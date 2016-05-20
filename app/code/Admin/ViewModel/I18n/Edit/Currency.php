@@ -1,11 +1,10 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Currency;
+namespace Seahinet\Admin\ViewModel\I18n\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Lib\Source\Language;
 
-class Edit extends PEdit
+class Currency extends PEdit
 {
 
     public function getSaveUrl()

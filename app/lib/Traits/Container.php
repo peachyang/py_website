@@ -5,6 +5,9 @@ namespace Seahinet\Lib\Traits;
 use Interop\Container\ContainerInterface;
 use Seahinet\Lib\Bootstrap;
 
+/**
+ * Get/Set DI Container
+ */
 trait Container
 {
 

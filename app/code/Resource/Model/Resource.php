@@ -13,8 +13,8 @@ class Resource extends AbstractModel
 {
 
 
-    protected $error_messages;
-    protected $options;
+    public  $error_messages;
+    public $options;
     
     protected function construct()
     {
@@ -43,7 +43,7 @@ class Resource extends AbstractModel
         $this->options = array(
             'script_url' =>'',
             'upload_dir' => '/home/html/ecomv2admin/pub/Resource/',
-            'upload_url' => 'http://ecomv2admin/lh.com/pub/Resource/',
+            'upload_url' => 'http://ecomv2.lh.com/pub/Resource/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,

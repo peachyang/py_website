@@ -95,7 +95,8 @@ class Page extends PEdit
             'pageimage' => [
                 'type' => 'widget',
                 'label' => 'Images',
-                'widget' => 'pageimage'
+                'widget' => 'pageimage',
+                'multiple' => 'multiple'
             ],
             'content' => [
                 'type' => 'textarea',

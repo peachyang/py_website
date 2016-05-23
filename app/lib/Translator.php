@@ -56,7 +56,6 @@ class Translator implements Singleton
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($locale);
-            static::$defaultLocale = Locale::getDefault();
         }
         return static::$instance;
     }
@@ -74,6 +73,9 @@ class Translator implements Singleton
      */
     public static function getDefaultLocale()
     {
+        if (is_null(static::$defaultLocale)) {
+            static::$defaultLocale = Locale::getDefault();
+        }
         return static::$defaultLocale;
     }
 

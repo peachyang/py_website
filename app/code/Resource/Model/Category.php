@@ -18,18 +18,16 @@ class Category extends AbstractModel
 
     protected function beforeSave()
     {
-
         $this->beginTransaction();
         parent::beforeSave();
     }
     
     protected function afterSave(){
         parent::afterSave();
-        if(isset($this->storage['language_id'])){
+        if (isset($this->storage['name'])) {
             $tableGateway = new TableGateway('resource_category_language', $this->getContainer()->get('dbAdapter'));
-            foreach ((array) $this->storage['language_id'] as $k => $v) {
-                $this->upsert(['name' => $this->storage['name_'.$v]], ['category_id' => $this->getId(), 'language_id' => $v], $tableGateway);
-                
+            foreach ((array) $this->storage['name'] as $language_id => $name) {
+                $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
             }
         }
         $this->commit();

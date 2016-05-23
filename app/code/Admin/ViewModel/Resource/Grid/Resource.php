@@ -1,16 +1,15 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Resource;
+namespace Seahinet\Admin\ViewModel\Resource\Grid;
 
-use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Resource\Model\Collection\Resource as Collection;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Resource\Source\Category;
 use Seahinet\Resource\Model\Resource as model;
 
-class Resource extends Grid
+class Resource extends PGrid
 {
 
     protected $editUrl = '';

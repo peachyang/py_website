@@ -14,7 +14,7 @@ class Category implements SourceInterface
     {
         $collection = new Collection;
         if (!empty($except)) {
-            $collection->where(new NotIn('cms_page.id', (array) $except));
+            $collection->where(new NotIn('id', (array) $except));
         }
         $result = [];
         $language = Bootstrap::getLanguage()->getId();

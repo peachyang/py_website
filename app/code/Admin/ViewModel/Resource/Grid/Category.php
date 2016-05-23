@@ -1,15 +1,14 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Resource;
+namespace Seahinet\Admin\ViewModel\Resource\Grid;
 
-use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Resource\Model\Collection\Category as Collection;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Resource\Source\Category as CategorySource;
 use Seahinet\Lib\Source\Store;
-use Seahinet\Lib\Source\Language;
 
-class Category extends Grid
+class Category extends PGrid
 {
 
     protected $editUrl = '';
@@ -70,12 +69,12 @@ class Category extends Grid
                 'label' => 'Code'
             ],
             'parent_id' => [
-                'label' => 'Parent',
+                'label' => 'Parent ID',
                 'type' => 'select',
                 'options' => (new CategorySource())->getSourceArray($model ? $model->getId() : [])
             ],
             'name' => [
-                'label' => 'Category name',
+                'label' => 'Name',
                 'class' => 'text-left'
             ],
             'code' => [

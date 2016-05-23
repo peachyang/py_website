@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Cms\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Cms\Source\Category;
+use Seahinet\Cms\Source\Category as CategorySource;
 use Seahinet\Lib\Source\Language;
 
 class Category extends PEdit
@@ -40,7 +40,7 @@ class Category extends PEdit
                 'type' => 'select',
                 'label' => 'Parent ID',
                 'empty_string' => '(NULL)',
-                'options' => (new Category)->getSourceArray($model ? $model->getId() : [])
+                'options' => (new CategorySource)->getSourceArray($model ? $model->getId() : [])
             ],
             'language_id[]' => [
                 'type' => 'select',

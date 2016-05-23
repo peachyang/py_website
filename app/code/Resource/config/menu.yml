@@ -1,14 +1,11 @@
 ---
-resource:
-    icon: file-image-o
-    title: Resource
-    priority: 30
+cms:
     children:
         -
-            link: 'resource_category/'
-            title: 'Category'
-            priority: 0
-        -
             link: 'resource_resource/'
-            title: 'Resource'
-            priority: 10
+            title: Resource Management
+            priority: 30
+        -
+            link: 'resource_category/'
+            title: Resource Category
+            priority: 40

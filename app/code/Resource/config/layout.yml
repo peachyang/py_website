@@ -1,12 +1,4 @@
 ---
-resource:
-    update: default
-    root:
-        children:
-            content:
-                children:
-                    page:
-                        type: Seahinet\resource\ViewModel\resource
 admin_resource_category_list:
     update: grid
     root:
@@ -15,19 +7,19 @@ admin_resource_category_list:
                 action:
                     -
                         method: setTitle
-                        params: Resource Category Management / Resource
+                        params: Resource Category / Resource Management / CMS
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/resource_category/',label:'Resource Category Management'}]
+                                params: [{link:':ADMIN/resource_category/',label:'Resource Category'}]
                             -
                                 method: addAdditional
                                 params: [{link:':ADMIN/resource_category/edit/',label:'Add New Category'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Resource\Category
+                        type: Seahinet\Admin\ViewModel\Resource\Grid\Category
 admin_resource_category_edit:
     update: edit
     root:
@@ -43,16 +35,16 @@ admin_resource_category_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/resource_category/',label:'Resource Category Management'}]
+                                params: [{link:':ADMIN/resource_category/',label:'Resource Category'}]
                             -
                                 method: addCrumb
                                 params: [{label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Resource\CategoryEdit
+                        type: Seahinet\Admin\ViewModel\Resource\Edit\Category
                         children:
                             category_language:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: Resource/category_language
+                                template: resource/category_language
 admin_resource_list:
     update: grid
     root:
@@ -61,7 +53,7 @@ admin_resource_list:
                 action:
                     -
                         method: setTitle
-                        params: Resource Management / Resources
+                        params: Resource Management / CMS
             content:
                 children:
                     breadcrumb:
@@ -70,8 +62,8 @@ admin_resource_list:
                                 method: addCrumb
                                 params: [{link:':ADMIN/resource_resource/',label:'Resource Management'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Resource\Resource
-                        template: Resource/grid
+                        type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
+                        template: resource/grid
 admin_popup_images_list:
     update: grid
     root:
@@ -82,5 +74,5 @@ admin_popup_images_list:
                 children:
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Resource
-                        template: Resource/gridpopup             
+                        template: resource/gridpopup             
                                         

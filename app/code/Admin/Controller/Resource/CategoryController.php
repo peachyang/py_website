@@ -22,6 +22,9 @@ class CategoryController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Category / Resource Category / CMS');
+        } else {
+            $root->getChild('head')->setTitle('Add New Category / Resource Category / CMS');
         }
         return $root;
     }

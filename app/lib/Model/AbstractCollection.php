@@ -22,7 +22,6 @@ use Seahinet\Lib\Stdlib\ArrayObject;
  * @method Select limit(int $limit)
  * @method Select offset(int $offset)
  * @method Select combine(Select $select, string $type, string $modifier)
- * @method Select reset(string $part)
  * @method string getRawState(null|string $key)
  * @method string getSqlString(\Zend\Db\Adapter\Platform\PlatformInterface $adapterPlatform)
  */
@@ -272,6 +271,19 @@ abstract class AbstractCollection extends ArrayObject
             $this->load();
         }
         return parent::count();
+    }
+
+    /**
+     * Reset part of select object
+     * 
+     * @param string $part
+     * @return Select
+     */
+    public function reset($part)
+    {
+        $this->isLoaded = false;
+        $this->storage = [];
+        return $this->select->reset($part);
     }
 
 }

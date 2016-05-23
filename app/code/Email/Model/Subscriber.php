@@ -12,6 +12,12 @@ class Subscriber extends AbstractModel
         $this->init('newsletter_subscriber', 'id', ['id', 'email', 'name', 'language_id', 'status']);
     }
 
+    public function beforeSave()
+    {
+        $this['code'] = md5(random_bytes(32));
+        parent::beforeSave();
+    }
+    
     public function unsubscribe()
     {
         if ($this->isLoaded || $this->getId()) {

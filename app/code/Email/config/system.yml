@@ -2,21 +2,10 @@
 email:
     label: Email Configuration
     children:
-        newsletter:
-            label: Newsletter
-            scope: merchant
-            priority: 0
-            children:
-                sender:
-                    type: email
-                    label: Sender Email
-                    scope: merchant
-                    required: required
-                    priority: 0
         transport:
             label: Transport
             scope: merchant
-            priority: 10
+            priority: 0
             children:
                 service:
                     label: Service
@@ -87,3 +76,14 @@ email:
                     priority: 60
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
+        newsletter:
+            label: Newsletter
+            scope: merchant
+            priority: 10
+            children:
+                sender:
+                    type: email
+                    label: Sender Email
+                    scope: merchant
+                    required: required
+                    priority: 0

@@ -5,8 +5,8 @@ namespace Seahinet\Admin\Controller;
 use Exception;
 use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Admin\Model\User;
+use Seahinet\Email\Model\Template;
 use Seahinet\Lib\Controller\ActionController;
-use Seahinet\Lib\Model\Email\Template;
 use Seahinet\Lib\Session\Segment;
 use Swift_SwiftException;
 use Zend\Crypt\Password\Bcrypt;
@@ -43,37 +43,23 @@ class IndexController extends ActionController
 
     public function loginAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['username'])) {
-                $this->addMessage($this->translate('The username field is required and can not be empty.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['password'])) {
-                $this->addMessage($this->translate('The password field is required and can not be empty.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['captcha']) || !$this->validateCaptcha($data['captcha'], 'admin')) {
-                $this->addMessage($this->translate('The captcha value is wrong.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
+            $result = $this->validateForm($data, ['username', 'password'], 'admin');
             $user = new User;
             if ($user->login($data['username'], $data['password'])) {
-                $this->addMessage($this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'success', 'admin');
+                $result['message'][] = ['message' => $this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'level' => 'success'];
                 $user->setData([
                     'logdate' => gmdate('Y-m-d h:i:s'),
                     'lognum' => $user->offsetGet('lognum') + 1
                 ])->save();
                 return $this->redirectLoggedin();
             } else {
-                $this->addMessage($this->translate('Login failed. Invalid username or password.'), 'danger', 'admin');
+                $result['message'][] = ['message' => $this->translate('Login failed. Invalid username or password.'), 'level' => 'danger'];
             }
         }
-        return $this->redirectReferer();
+        return $this->response($result, $this->getAdminUrl());
     }
 
     public function captchaAction()
@@ -104,81 +90,66 @@ class IndexController extends ActionController
 
     public function forgotPostAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['username'])) {
-                $this->addMessage($this->translate('The username field is required and can not be empty.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['captcha']) || !$this->validateCaptcha($data['captcha'], 'admin')) {
-                $this->addMessage($this->translate('The captcha value is wrong.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            $user = new User;
-            $user->load($data['username'], 'username');
-            if ($user->getId()) {
-                $token = md5(random_bytes(32));
-                $user->setData([
-                    'rp_token' => $token,
-                    'rp_token_created_at' => time() + 86400
-                ])->save();
-                try {
-                    $mailer = $this->getContainer()->get('mailer');
-                    $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
-                    $this->addMessage($this->translate('You will receive an email with a link to reset your password.'), 'success', 'admin');
-                    return $this->redirect(':ADMIN');
-                } catch (Swift_SwiftException $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $this->addMessage($this->translate('An error detected while email transporting.'), 'danger', 'admin');
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $this->addMessage($this->translate('An error detected. Please try again later.'), 'danger', 'admin');
+            $result = $this->validateForm($data, ['username'], 'admin');
+            if ($result['error'] === 0) {
+                $user = new User;
+                $user->load($data['username'], 'username');
+                if ($user->getId()) {
+                    $token = md5(random_bytes(32));
+                    $user->setData([
+                        'rp_token' => $token,
+                        'rp_token_created_at' => date('Y-m-d h:i:s')
+                    ])->save();
+                    try {
+                        $mailer = $this->getContainer()->get('mailer');
+                        $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                        $result['message'][] = ['message' => $this->translate('You will receive an email with a link to reset your password.'), 'level' => 'success'];
+                    } catch (Swift_SwiftException $e) {
+                        $this->getContainer()->get('log')->logException($e);
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => $this->translate('An error detected while email transporting. Please try again later.'), 'level' => 'danger'];
+                    } catch (Exception $e) {
+                        $this->getContainer()->get('log')->logException($e);
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => $this->translate('An error detected. Please try again later.'), 'level' => 'danger'];
+                    }
+                } else {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('The username does not exist.'), 'level' => 'danger'];
                 }
-            } else {
-                $this->addMessage($this->translate('The username does not exist.'), 'danger', 'admin');
             }
         }
-        return $this->redirectReferer();
+        return $this->response($result, ':ADMIN');
     }
 
     public function resetPostAction()
     {
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (empty($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-                $this->addMessage($this->translate('The form submitted did not originate from the expected site.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['username'])) {
-                $this->addMessage($this->translate('The username field is required and can not be empty.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['password'])) {
-                $this->addMessage($this->translate('The password field is required and can not be empty.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            } else if (empty($data['cpassword']) || $data['cpassword'] !== $data['password']) {
-                $this->addMessage($this->translate('The confirm password is not equal to the password.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            if (empty($data['captcha']) || !$this->validateCaptcha($data['captcha'], 'admin')) {
-                $this->addMessage($this->translate('The captcha value is wrong.'), 'danger', 'admin');
-                return $this->redirectReferer();
-            }
-            $user = new User;
-            $user->load($data['username'], 'username');
-            if ($user->getId() && $data['token'] == $user->offsetGet('rp_token') && time() <= $user->offsetGet('rp_token_created_at')) {
-                $user->setData(['password' => (new Bcrypt)->create($data['password']), 'rp_token' => null, 'rp_token_created_at' => null])->save();
-                $this->addMessage($this->translate('The password has been reset successfully.'), 'success', 'admin');
-                return $this->redirect(':ADMIN');
-            } else {
-                $this->addMessage($this->translate('Invalid token.'), 'danger', 'admin');
+            $result = $this->validateForm($data, ['username', 'password'], 'admin');
+            if ($result['error'] === 0) {
+                if (empty($data['cpassword']) || $data['cpassword'] !== $data['password']) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
+                } else {
+                    $user = new User;
+                    $user->load($data['username'], 'username');
+                    if ($user->getId() && $data['token'] == $user->offsetGet('rp_token') && time() <= strtotime($user->offsetGet('rp_token_created_at')) + 86400) {
+                        $user->setData(['password' => (new Bcrypt)->create($data['password']), 'rp_token' => null, 'rp_token_created_at' => null])
+                                ->save();
+                        $result['message'][] = ['message' => $this->translate('The password has been reset successfully.'), 'level' => 'success'];
+                    } else {
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => $this->translate('Invalid token.'), 'level' => 'danger'];
+                    }
+                }
             }
         }
-        return $this->redirectReferer();
+        return $this->response($result, ':ADMIN');
     }
 
 }

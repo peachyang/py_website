@@ -9,6 +9,9 @@ use Exception;
 use Seahinet\Lib\Model\Collection\Cron as Collection;
 use Seahinet\Lib\Model\Cron as Model;
 
+/**
+ * Execute with crontab
+ */
 class Cron extends AbstractCli
 {
 
@@ -16,6 +19,11 @@ class Cron extends AbstractCli
 
     protected $config = null;
 
+    /**
+     * Get cron config
+     * 
+     * @return array
+     */
     protected function getConfig()
     {
         if (is_null($this->config)) {
@@ -24,6 +32,14 @@ class Cron extends AbstractCli
         return $this->config;
     }
 
+    /**
+     * Whether timestamp valid or not
+     * 
+     * @param string $expr
+     * @param int $num
+     * @return boolean
+     * @throws Exception
+     */
     public function matchCronExpression($expr, $num)
     {
         if ($expr === '*') {
@@ -76,6 +92,13 @@ class Cron extends AbstractCli
         return ($num >= $from) && ($num <= $to) && ($num % $mod === 0);
     }
 
+    /**
+     * String to numeric
+     * 
+     * @staticvar array $data
+     * @param string $value
+     * @return boolean|int
+     */
     public function getNumeric($value)
     {
         static $data = array(
@@ -114,6 +137,11 @@ class Cron extends AbstractCli
         return false;
     }
 
+    /**
+     * Add jobs to database
+     * 
+     * @return Cron
+     */
     protected function addJob()
     {
         if (!empty($this->getConfig())) {
@@ -150,6 +178,11 @@ class Cron extends AbstractCli
         return $this;
     }
 
+    /**
+     * Execute the scheduled jobs
+     * 
+     * @return Cron
+     */
     protected function execJob()
     {
         $collection = new Collection;
@@ -202,11 +235,17 @@ class Cron extends AbstractCli
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function run()
     {
         $this->addJob()->execJob();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function usageHelp()
     {
         return <<<'USAGE'

@@ -8,6 +8,9 @@ use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Database handler
+ */
 trait DB
 {
 
@@ -38,6 +41,9 @@ trait DB
         return $this->tableGateway;
     }
 
+    /**
+     * @return \Zend\Db\Adapter\Driver\ConnectionInterface
+     */
     protected function getConnection()
     {
         if (is_null($this->connection)) {
@@ -123,6 +129,9 @@ trait DB
         return 0;
     }
 
+    /**
+     * Begin transaction
+     */
     protected function beginTransaction()
     {
         $this->getConnection()->beginTransaction();
@@ -130,6 +139,9 @@ trait DB
         return $this;
     }
 
+    /**
+     * Commit transaction
+     */
     protected function commit()
     {
         $this->getConnection()->commit();
@@ -137,6 +149,9 @@ trait DB
         return $this;
     }
 
+    /**
+     * Rollback transaction
+     */
     protected function rollback()
     {
         $this->getConnection()->rollback();

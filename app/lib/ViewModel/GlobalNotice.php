@@ -26,9 +26,14 @@ final class GlobalNotice extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
+    /**
+     * Get the notice customized at the admin page
+     * 
+     * @return string
+     */
     public function getNotice()
     {
-        return $this->getVariable('notice');
+        return $this->getContainer()->get('config')['theme/global/notice'];
     }
 
 }

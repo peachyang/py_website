@@ -1,11 +1,11 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Currency;
+namespace Seahinet\Admin\ViewModel\I18n\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\I18n\Model\Collection\Currency as Collection;
 
-class Grid extends PGrid
+class Currency extends PGrid
 {
 
     protected $editUrl = '';

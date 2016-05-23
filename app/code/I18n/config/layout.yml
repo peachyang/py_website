@@ -1,5 +1,84 @@
 ---
-admin_currency_list:
+admin_i18n_language_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Language Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_merchant/edit/',label:'Add New Merchant'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_store/edit/',label:'Add New Store'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_language/edit/',label:'Add New Language'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_translation/',label:'Translation'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\I18n\Grid\Language
+                        template: admin/i18n/language
+admin_i18n_language_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\I18n\Edit\Language
+admin_i18n_store_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\I18n\Edit\Store
+admin_i18n_merchant_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_merchant/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\I18n\Edit\Merchant
+admin_i18n_currency_list:
     update: grid
     root:
         children:
@@ -25,8 +104,8 @@ admin_currency_list:
                                 method: addAdditional
                                 params: [{link:':ADMIN/i18n_currency/sync/',label:'Synchronize'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Currency\Grid
-admin_currency_edit:
+                        type: Seahinet\Admin\ViewModel\I18n\Grid\Currency
+admin_i18n_currency_edit:
     update: edit
     root:
         children:
@@ -47,4 +126,48 @@ admin_currency_edit:
                                 method: addCrumb
                                 params: [{label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Currency\Edit
+                        type: Seahinet\Admin\ViewModel\I18n\Edit\Currency
+admin_i18n_translation_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Translation Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_translation/',label:'Translation'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/i18n_translation/edit/',label:'Add New Translation'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\I18n\Grid\Translation
+                        template: admin/i18n/translation
+admin_i18n_translation_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_language/list/',label:'Language Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/i18n_translation/',label:'Translation'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\I18n\Edit\Translation

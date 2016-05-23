@@ -1,30 +1,28 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Email;
+namespace Seahinet\Admin\Controller\I18n;
 
-use Exception;
-use Seahinet\Email\Model\Template as Model;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\I18n\Model\Translation as Model;
 
-class TemplateController extends AuthActionController
+class TranslationController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_email_template_list');
-        return $root;
+        return $this->getLayout('admin_i18n_translation_list');
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_email_template_edit');
+        $root = $this->getLayout('admin_i18n_translation_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Template / Email Template');
+            $root->getChild('head')->setTitle('Edit Translation');
         } else {
-            $root->getChild('head')->setTitle('Add New Template / Email Template');
+            $root->getChild('head')->setTitle('Add Translation');
         }
         return $root;
     }
@@ -50,7 +48,7 @@ class TemplateController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/email_template/');
+        return $this->response($result, ':ADMIN/i18n_translation/');
     }
 
     public function deleteAction()
@@ -68,7 +66,6 @@ class TemplateController extends AuthActionController
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['removeLine'] = 1;
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
@@ -76,7 +73,7 @@ class TemplateController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/email_template/');
+        return $this->response($result, ':ADMIN/i18n_translation/');
     }
 
 }

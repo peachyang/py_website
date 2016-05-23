@@ -24,7 +24,7 @@
                 <tr>
                     <?php if (isset($merchant[$item['merchant_id']])): ?>
                         <td class="text-vmiddle" rowspan="<?php echo max($countS, $countL) ?>">
-                            <a href="<?php echo $this->getAdminUrl('language/merchant/?id=' . $item['merchant_id']) ?>">
+                            <a href="<?php echo $this->getAdminUrl('i18n_merchant/edit/?id=' . $item['merchant_id']) ?>">
                                 <?php echo $this->translate($item['merchant'], [], 'language') ?>
                             </a>
                         </td>
@@ -34,7 +34,7 @@
                     if (isset($stores[$item['store_id']])):
                         ?>
                         <td>
-                            <a href="<?php echo $this->getAdminUrl('language/store/?id=' . $item['store_id']) ?>">
+                            <a href="<?php echo $this->getAdminUrl('i18n_store/edit/?id=' . $item['store_id']) ?>">
                                 <?php echo $this->translate($item['store'], [], 'language') ?>
                             </a>
                         </td>
@@ -46,7 +46,7 @@
                     if (isset($languages[$item['language_id']])):
                         ?>
                         <td>
-                            <a href="<?php echo $this->getAdminUrl('language/edit/?id=' . $item['language_id']) ?>">
+                            <a href="<?php echo $this->getAdminUrl('i18n_language/edit/?id=' . $item['language_id']) ?>">
                                 <?php echo $this->translate($item['language'], [], 'language') ?>
                             </a>
                         </td>

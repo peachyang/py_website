@@ -15,17 +15,17 @@ admin_resource_category_list:
                 action:
                     -
                         method: setTitle
-                        params: resource category Management / Resouces
+                        params: Resource Category Management / Resource
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/resource_Category/',label:'resource category Management'}]
+                                params: [{link:':ADMIN/resource_category/',label:'Resource Category Management'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/resource_Category/edit/',label:'Add New category'}]
+                                params: [{link:':ADMIN/resource_category/edit/',label:'Add New Category'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Category
 admin_resource_category_edit:
@@ -43,7 +43,7 @@ admin_resource_category_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/resource_Category/',label:'resource category Management'}]
+                                params: [{link:':ADMIN/resource_category/',label:'Resource Category Management'}]
                             -
                                 method: addCrumb
                                 params: [{label:'Edit'}]
@@ -61,7 +61,7 @@ admin_resource_list:
                 action:
                     -
                         method: setTitle
-                        params: resource Management / Resouces
+                        params: Resource Management / Resources
             content:
                 children:
                     breadcrumb:

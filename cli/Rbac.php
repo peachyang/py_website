@@ -10,12 +10,18 @@ use Seahinet\Admin\Model\Operation;
 use Symfony\Component\Finder\Finder;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 
+/**
+ * Generate rbac opertions to database
+ */
 class Rbac extends AbstractCli
 {
 
     use \Seahinet\Lib\Traits\Container,
         \Seahinet\Lib\Traits\DB;
 
+    /**
+     * {@inheritdoc}
+     */
     public function run()
     {
         if (isset($this->args['generate']) || isset($this->args['g'])) {
@@ -57,12 +63,15 @@ class Rbac extends AbstractCli
                     }
                 }
             }
-            echo ($count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.') . chr(10);
+            echo ($count ? $count . ' item(s) have been generated successfully.' : 'No item has been generated.'), PHP_EOL;
         } else {
             echo $this->usageHelp();
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function usageHelp()
     {
         return <<<'USAGE'

@@ -1,30 +1,23 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Email;
+namespace Seahinet\Admin\Controller\I18n;
 
-use Exception;
-use Seahinet\Email\Model\Template as Model;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Model;
 
-class TemplateController extends AuthActionController
+class MerchantController extends AuthActionController
 {
-
-    public function indexAction()
-    {
-        $root = $this->getLayout('admin_email_template_list');
-        return $root;
-    }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_email_template_edit');
+        $root = $this->getLayout('admin_i18n_merchant_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
-            $model = new Model;
+            $model = new Model\Merchant;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Template / Email Template');
+            $root->getChild('head')->setTitle('Edit Merchant');
         } else {
-            $root->getChild('head')->setTitle('Add New Template / Email Template');
+            $root->getChild('head')->setTitle('Add New Merchant');
         }
         return $root;
     }
@@ -36,7 +29,7 @@ class TemplateController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
-                $model = new Model($data);
+                $model = new Model\Merchant($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }
@@ -50,7 +43,7 @@ class TemplateController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/email_template/');
+        return $this->response($result, ':ADMIN/i18n_language/list/');
     }
 
     public function deleteAction()
@@ -61,14 +54,13 @@ class TemplateController extends AuthActionController
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 try {
-                    $model = new Model;
+                    $model = new Model\Merchant;
                     $count = 0;
                     foreach ((array) $data['id'] as $id) {
                         $model->setId($id)->remove();
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['removeLine'] = 1;
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
@@ -76,7 +68,7 @@ class TemplateController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/email_template/');
+        return $this->response($result, ':ADMIN/i18n_language/list/');
     }
 
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms;
+namespace Seahinet\Admin\ViewModel\Cms\Grid;
 
-use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Cms\Model\Collection\Page as Collection;
 use Seahinet\Lib\Session\Segment;
 
-class Page extends Grid
+class Page extends PGrid
 {
 
     protected $editUrl = '';

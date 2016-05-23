@@ -37,11 +37,14 @@ abstract class AbstractCollection extends ArrayObject
      * @var Select 
      */
     protected $select = null;
+
+    /**
+     * @var \Seahinet\Lib\EventDispatcher 
+     */
+    protected $eventDispatcher = null;
     protected $cacheKey = '';
     protected $isLoaded = false;
-    protected $eventDispatcher = null;
     protected $tableName = '';
-    protected $primaryKey = '';
 
     public function __construct()
     {
@@ -73,12 +76,11 @@ abstract class AbstractCollection extends ArrayObject
      * 
      * @param string $table
      */
-    protected function init($table, $primaryKey = 'id')
+    protected function init($table)
     {
         $this->tableName = $table;
         $this->getTableGateway($table);
         $this->cacheKey = $table;
-        $this->primaryKey = $primaryKey;
         if (is_null($this->select)) {
             $this->select = $this->getTableGateway($this->tableName)->getSql()->select();
         }
@@ -136,6 +138,24 @@ abstract class AbstractCollection extends ArrayObject
         return $this;
     }
 
+    /**
+     * Walk collection
+     * 
+     * @param callable $callback
+     */
+    public function walk($callback, ...$params)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        array_walk($this->storage, $callback, $params);
+    }
+
+    /**
+     * Get event dispatcher object
+     * 
+     * @return \Seahinet\Lib\EventDispatcher
+     */
     protected function getEventDispatcher()
     {
         if (is_null($this->eventDispatcher)) {
@@ -144,27 +164,42 @@ abstract class AbstractCollection extends ArrayObject
         return $this->eventDispatcher;
     }
 
+    /**
+     * Event before load cache
+     */
     protected function beforeLoadCache()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.before', ['collection' => $this]);
     }
 
+    /**
+     * Event after load cache
+     */
     protected function afterLoadCache()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.after', ['collection' => $this]);
     }
 
+    /**
+     * Event before load data
+     */
     protected function beforeLoad()
     {
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.before', ['collection' => $this]);
     }
 
+    /**
+     * Event after load cache
+     */
     protected function afterLoad()
     {
         $this->isLoaded = true;
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getArrayCopy()
     {
         if (!$this->isLoaded) {
@@ -173,6 +208,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::getArrayCopy();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function &__get($key)
     {
         if (!$this->isLoaded) {
@@ -181,6 +219,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::__get($key);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function &offsetGet($key)
     {
         if (!$this->isLoaded) {
@@ -189,6 +230,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::offsetGet($key);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getIterator()
     {
         if (!$this->isLoaded) {
@@ -197,6 +241,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::getIterator();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($key)
     {
         if (!$this->isLoaded) {
@@ -205,6 +252,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::offsetUnset($key);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function __unset($key)
     {
         if (!$this->isLoaded) {
@@ -213,6 +263,9 @@ abstract class AbstractCollection extends ArrayObject
         return parent::__unset($key);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function count()
     {
         if (!$this->isLoaded) {

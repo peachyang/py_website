@@ -1,11 +1,12 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel;
+namespace Seahinet\Admin\ViewModel\I18n\Grid;
 
+use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Lib\Model\Collection\Merchant;
 use Seahinet\Lib\Session\Segment;
 
-class Language extends Grid
+class Language extends PGrid
 {
 
     protected function prepareCollection($collection = null)

@@ -3,7 +3,7 @@
 namespace Seahinet\Lib;
 
 use Locale;
-use Seahinet\Lib\Model\Collection\Translate;
+use Seahinet\I18n\Model\Collection\Translation;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\Translator\Category;
 use SplFileObject;
@@ -113,7 +113,7 @@ class Translator implements Singleton
                 }
             }
             $this->storage[$locale] = [];
-            $collection = new Translate;
+            $collection = new Translation;
             $collection->where(['status' => 1, 'locale' => $locale]);
             $result = [];
             foreach ($collection as $item) {

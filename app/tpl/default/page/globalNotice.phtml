@@ -7,7 +7,9 @@
         <?php echo $this->translate('Cookie seems to be disabled in your browser.') ?><br />
         <?php echo $this->translate('You must have Cookie enabled in your browser to utilize the functionality of this website.') ?>
     </div>
-    <div class="notice">
-        <?php echo $this->translate($this->getNotice()) ?>
-    </div>
+    <?php if ($notice = $this->getNotice()): ?>
+        <div class="notice">
+            <?php echo $this->translate($notice) ?>
+        </div>
+    <?php endif ?>
 </div>

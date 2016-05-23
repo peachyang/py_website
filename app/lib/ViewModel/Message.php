@@ -24,16 +24,27 @@ class Message extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
+    /**
+     * Add session segment to handle
+     * 
+     * @param string $name
+     * @return Message
+     */
     public function addHandledSegment($name)
     {
         if (is_array($name)) {
-            $this->segments+=$name;
+            $this->segments += $name;
         } else {
             $this->segments[] = $name;
         }
         return $this;
     }
 
+    /**
+     * Get messages from session
+     * 
+     * @return array
+     */
     public function getMessages()
     {
         $messages = [];

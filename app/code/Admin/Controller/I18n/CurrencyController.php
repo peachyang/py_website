@@ -14,17 +14,20 @@ class CurrencyController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_currency_list');
+        $root = $this->getLayout('admin_i18n_currency_list');
         return $root;
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_currency_edit');
+        $root = $this->getLayout('admin_i18n_currency_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Currency');
+        } else {
+            return $this->redirectReferer(':ADMIN/i18n_currency/');
         }
         return $root;
     }

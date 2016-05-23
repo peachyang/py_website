@@ -1,8 +1,10 @@
 <?php
 
-namespace Seahinet\Lib\Source;
+namespace Seahinet\I18n\Source;
 
-class LanguageCode implements SourceInterface
+use Seahinet\Lib\Source\SourceInterface;
+
+class Locale implements SourceInterface
 {
 
     protected $code = [

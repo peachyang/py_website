@@ -1,11 +1,11 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms;
+namespace Seahinet\Admin\ViewModel\Cms\Grid;
 
-use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Cms\Model\Collection\Category as Collection;
 
-class Category extends Grid
+class Category extends PGrid
 {
 
     protected $editUrl = '';

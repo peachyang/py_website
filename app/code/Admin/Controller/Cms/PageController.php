@@ -22,6 +22,9 @@ class PageController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
+            $root->getChild('head')->setTitle('Edit Page / CMS');
+        } else {
+            $root->getChild('head')->setTitle('Add New Page / CMS');
         }
         return $root;
     }

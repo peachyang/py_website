@@ -1,43 +1,45 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms;
+namespace Seahinet\Admin\ViewModel\Cms\Edit;
 
-use Seahinet\Admin\ViewModel\Edit;
-use Seahinet\Cms\Source\Category;
+use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 
-class PageEdit extends Edit
+class Block extends PEdit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('cms_page/save/');
+        return $this->getAdminUrl('cms_block/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('cms_page/delete/');
+            return $this->getAdminUrl('cms_block/delete/');
         }
         return false;
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Page' : 'Add Page';
+        return $this->getQuery('id') ? 'Edit Block' : 'Add Block';
     }
 
     protected function prepareElements($columns = [])
     {
-        $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
-  
         $columns = [
             'id' => [
                 'type' => 'hidden',
+            ],
+            'code' => [
+                'type' => 'text',
+                'label' => 'Code',
+                'required' => 'required'
             ],
             'store_id' => ($user->getStore() ? [
                 'type' => 'hidden',
@@ -48,19 +50,6 @@ class PageEdit extends Edit
                 'label' => 'Store',
                 'empty_string' => '(NULL)'
                     ]),
-            'title' => [
-                'type' => 'text',
-                'label' => 'Title',
-                'required' => 'required'
-            ],
-            'category_id[]' => [
-                'type' => 'select',
-                'options' => (new Category)->getSourceArray(),
-                'label' => 'Category',
-                'attrs' => [
-                    'multiple' => 'multiple'
-                ]
-            ],
             'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',
@@ -69,11 +58,6 @@ class PageEdit extends Edit
                 'attrs' => [
                     'multiple' => 'multiple'
                 ]
-            ],
-            'uri_key' => [
-                'type' => 'text',
-                'label' => 'Uri Key',
-                'required' => 'required'
             ],
             'status' => [
                 'type' => 'select',
@@ -84,24 +68,10 @@ class PageEdit extends Edit
                 ],
                 'required' => 'required'
             ],
-            'keywords' => [
-                'type' => 'text',
-                'label' => 'Meta Keywords'
-            ],
-            'description' => [
-                'type' => 'text',
-                'label' => 'Meta Description'
-            ],
-            'pageimage' => [
-                'type' => 'widget',
-                'label' => 'Images',
-                'widget' => 'pageimage',
-                'multiple' => 'multiple'
-            ],
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content',
-                'class' => 'htmleditor fullbar'
+                'class'=>'htmleditor fullbar'
             ]
         ];
         return parent::prepareElements($columns);

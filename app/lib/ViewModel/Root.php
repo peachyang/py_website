@@ -30,33 +30,67 @@ final class Root extends AbstractViewModel implements Singleton
         return static::$instance;
     }
 
+    /**
+     * Get class attribute of body element
+     * 
+     * @param bool $asArray
+     * @return array|string
+     */
     public function getBodyClass($asArray = false)
     {
         return $asArray ? $this->bodyClass : implode(' ', $this->bodyClass);
     }
 
+    /**
+     * Set class attribute of body element
+     * 
+     * @param array $bodyClass
+     * @return Root
+     */
     public function setBodyClass(array $bodyClass)
     {
         $this->bodyClass = $bodyClass;
         return $this;
     }
 
+    /**
+     * Add a class to body element
+     * 
+     * @param array $bodyClass
+     * @return Root
+     */
     public function addBodyClass($bodyClass)
     {
         $this->bodyClass[] = $bodyClass;
         return $this;
     }
 
+    /**
+     * Get lang attribute for html element
+     * 
+     * @return string
+     */
     public function getLang()
     {
         return $this->getContainer()->get('language')['code'];
     }
 
+    /**
+     * Get layout handler
+     * 
+     * @return string
+     */
     public function getHandler()
     {
         return $this->handler;
     }
 
+    /**
+     * Set layout handler
+     * 
+     * @param string $handler
+     * @return Root
+     */
     public function setHandler($handler)
     {
         if ($this->handler === '') {

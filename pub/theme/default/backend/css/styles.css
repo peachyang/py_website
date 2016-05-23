@@ -12,6 +12,7 @@ input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 button,html input[type="button"],input[type="reset"],input[type="submit"],label[for]{cursor:pointer}
 .cookies .global-notice .no-cookie{display:none}
+.no-transition{transition:none!important}
 .input-box{position:relative}
 .input-box+.input-box{margin-top:12px;margin-top:.75rem}
 .list-inline,.form-inline,.breadcrumb,.pager{font-size:0}

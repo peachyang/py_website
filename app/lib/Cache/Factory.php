@@ -71,6 +71,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\MemcacheCache
      */
     private static function prepareMemcache($config)
     {
@@ -90,6 +91,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\MemcachedCache
      */
     private static function prepareMemcached($config)
     {
@@ -109,6 +111,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\RedisCache
      */
     private static function prepareRedis($config)
     {
@@ -121,6 +124,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\PredisCache
      */
     private static function preparePredis($config)
     {
@@ -136,6 +140,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\FilesystemCache
      */
     private static function prepareFilesystem($config)
     {
@@ -145,6 +150,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\PHPFileCache
      */
     private static function preparePHPFile($config)
     {
@@ -154,6 +160,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\MongoDBCache
      */
     private static function prepareMongo($config)
     {
@@ -176,6 +183,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return MongoDBCache
      */
     private static function prepareMongoDB($config)
     {
@@ -215,6 +223,7 @@ abstract class Factory
 
     /**
      * @param array|\ArrayAccess $config
+     * @return DoctrineCache\SQLite3Cache
      */
     private static function prepareSQLite3($config)
     {

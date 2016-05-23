@@ -18,9 +18,8 @@
 	
 $.fileuploadbootstrap ={
 		uploadingImgI:0,
-		uploadingImgResult:false,
+		checkUploadImgFunTimeOut:Object,
 		initiUpload:function(){
-	    	
 	    	if($("div.uploadfilepopupb").length>0){
 	    		$("div.uploadfilepopupb").remove();
 	    	}
@@ -75,10 +74,7 @@ $.fileuploadbootstrap ={
 							$('span#uploadnote'+imgId).html('Finished...');
 							//alert(result.files[0].name);
 							$('div#upImg'+imgId).remove();
-							$.each(result.files, function(index, file) {
-								//console.log('span#upImg'+imgId);
-								uploadingImgResult=true;
-							});	
+							$.fileuploadbootstrap.checkUploadTolist()
 						}else{
 							alert(result.error);
 						}
@@ -117,6 +113,7 @@ $.fileuploadbootstrap ={
 	    		});
 	    		
 	    	});
+	    	$('a.chooseimages').click();
 	    },
 	    /**
 		 *singer image cancel
@@ -128,26 +125,20 @@ $.fileuploadbootstrap ={
 			var anchors = $("div.upimgdiv");
 			if(anchors.length!=0){
 				for(var i=0;i<anchors.length;i++){
-					$.fileuploadbootstrap.uploadingImgResult=false;
 					anchors[i].click();
-					if(i==(anchors.length-1)){
-						this.checkUploadTolist(i,anchors.length-1,imagsrcname,imagname);
-					}
 				}	
 			}else{
-				alert('Please choose images-------!');
+				alert('Please choose images!');
 			}
 					
 		},
 		/**
 		 *检查图片是否全部上传完
 		 */
-		checkUploadTolist:function(i,vlength,imagsrcname,imagname){
-			if(i==vlength && $.fileuploadbootstrap.uploadingImgResult){
-				this.listImg(1,this.merchantId,imagsrcname,imagname);
-				clearTimeout($.fileuploadbootstrap.checkUploadImgFunTimeOut);
-			}else{
-				$.fileuploadbootstrap.checkUploadImgFunTimeOut=setTimeout('$.fileuploadbootstrap.checkUploadTolist('+i+','+vlength+',"'+imagsrcname+'","'+imagname+'")',1000);
+		checkUploadTolist:function(){
+			if($("div.upimgdiv").length==0){
+				var dataA={};
+				this.loadImagesList(dataA);
 			}
 		}
 

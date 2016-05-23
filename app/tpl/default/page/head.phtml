@@ -13,4 +13,5 @@ if (strpos($title, '/')) {
 <?php echo $this->getMeta(), $this->getLink(), $this->getScript(); ?>
 <script>
     window.GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?PHP echo $this->getPubUrl() ?>'};
+    <?php echo $this->translate ?>
 </script>

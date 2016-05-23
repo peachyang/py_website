@@ -96,6 +96,9 @@ admin:
                         params: backend/js/jquery.js
                     -
                         method: addScript
+                        params: backend/js/translate.js
+                    -
+                        method: addScript
                         params: backend/js/validate/jquery.validate.min.js
                     -
                         method: addScript

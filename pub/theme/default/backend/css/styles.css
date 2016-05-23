@@ -215,8 +215,10 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
-.admin .resourceimagea{width:105px; height:105px; border:2px dotted #ddd; border-radius:5px;-moz-border-radius:5px; margin: 5px;display:table-cell;vertical-align:middle; text-align:center; padding:0;}
+.admin .resourceimagea{min-width:105px; min-height:115px; border:2px dotted #ddd; border-radius:5px;-moz-border-radius:5px; margin: 5px;display:inline-block;vertical-align:middle; text-align:center; padding:0;}
 .admin .resourceimagea img{max-height:100px; max-width:100px;}
+.admin .resourceimagea i{margin:5px;}
+.admin .resourceimageaplusi{font-size:40px; color:#aaa;}
 .admin .dashboard{padding:30px 0 30px 30px}
 .admin .dashboard .table{border:1px solid #ccc}
 .admin .dashboard .table .caption{border-bottom:1px solid #ccc;text-indent:30px}

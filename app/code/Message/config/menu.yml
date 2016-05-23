@@ -1,8 +1,7 @@
 ---
-admin:
-    email:
-        children:
-            -
-                link: 'message_template/'
-                title: 'Message Template'
-                priority: 60
+email:
+    children:
+        -
+            link: 'message_template/'
+            title: 'Message Template'
+            priority: 60

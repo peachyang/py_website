@@ -9,6 +9,7 @@ use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Resource\Source\Category;
 use Seahinet\Resource\Model\Resource as model;
+
 class Resource extends Grid
 {
 
@@ -60,13 +61,14 @@ class Resource extends Grid
             'store_id' => ($user->getStore() ? [
                 'use4popupfilter' => false,
                 'type' => 'hidden',
-                'value' => $user->getStore()->getId()
+                'value' => $user->getStore()->getId(),
+                'use4sort' => false,
+                'use4filter' => false
                     ] : [
                 'type' => 'select',
                 'use4popupfilter' => false,
                 'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                 'required' => 'required',
+                'label' => 'Store'
                     ]),
             'category_id' => [
                 'type' => 'select',

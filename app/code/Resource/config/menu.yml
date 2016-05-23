@@ -1,15 +1,14 @@
 ---
-admin:
-    Resource:
-        icon: file-image-o
-        title: Resource
-        priority: 30
-        children:
-            -
-                link: 'Resource_Category/'
-                title: 'Category'
-                priority: 0
-            -
-                link: 'Resource_Resource/'
-                title: 'Resource'
-                priority: 10
+resource:
+    icon: file-image-o
+    title: Resource
+    priority: 30
+    children:
+        -
+            link: 'resource_category/'
+            title: 'Category'
+            priority: 0
+        -
+            link: 'resource_resource/'
+            title: 'Resource'
+            priority: 10

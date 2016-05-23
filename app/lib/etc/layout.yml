@@ -9,6 +9,9 @@ default:
                     -
                         method: addMeta
                         params: ["viewport","width=device-width, initial-scale=1.0, user-scalable=no"]
+                children:
+                    translate:
+                        type: Seahinet\Lib\ViewModel\Translate
             content:
                 type: Seahinet\Lib\ViewModel\Wrapper
                 children:

@@ -1,5 +1,16 @@
 <?php 
 $item = $this->getVariable('item');
-echo '<a class="resourceimagea chooseimages" rel="'.$item['widget'].'" order="0"><img src="'.$this->getPubUrl('backend/images/upload_image.jpg').'" alt="" id="" /></a>';
+echo '<a class="resourceimagea chooseimages" rel="'.$item['widget'].'" order="0">';
+echo '<img src="'.$this->getPubUrl('backend/images/upload_image.jpg').'" alt="" id="" widget="'.$item['widget'].'" order="0" /><br />';
+if($item['multiple']=='multiple'){
+echo '<i class="fa fa-arrow-left left"></i><i class="fa fa-trash-o delete"></i><i class="fa fa-arrow-right right"></i>';
+}else{
+    echo '<i class="fa fa-trash-o"></i>';
+}
+echo '</a>';
+if($item['multiple']=='multiple'){
+    echo '<i class="fa fa-plus-square resourceimageaplusi" rel="'.$item['widget'].'"></i>';
+    
+}
 echo '<input type="hidden" name="'.$item['widget'].'" id="'.$item['widget'].'" />';
 ?>

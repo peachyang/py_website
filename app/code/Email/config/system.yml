@@ -38,7 +38,6 @@ email:
                     type: select
                     label: Encryption
                     scope: merchant
-                    required: required
                     priority: 30
                     default: null
                     options:

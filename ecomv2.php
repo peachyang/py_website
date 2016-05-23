@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `core_store`(
     `merchant_id` INTEGER UNSIGNED NOT NULL COMMENT 'Merchant ID',
     `code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Store code',
     `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Store name',
+    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Updated time',
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `core_language`(
     `merchant_id` INTEGER UNSIGNED NOT NULL COMMENT 'Merchant ID',
     `code` VARCHAR(10) NOT NULL DEFAULT '' COMMENT 'RFC 5646 language code',
     `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Language name',
+    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Updated time',
@@ -246,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `core_config` (
 
 CREATE TRIGGER `TGR_UPDATE_CORE_CONFIG` BEFORE UPDATE ON `core_config` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
-INSERT INTO `core_config` VALUES (null,1,null,'global/base_url','/',null,null),(null,1,NULL,'global/admin_path','admin',null,null);
+INSERT INTO `core_config` VALUES (null,1,null,'global/url/base_url','/',null,null),(null,1,NULL,'global/url/admin_path','admin',null,null);
 
 CREATE TABLE IF NOT EXISTS `core_session` (
     `id` CHAR(32) NOT NULL COMMENT 'Session ID',

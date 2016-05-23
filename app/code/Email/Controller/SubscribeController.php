@@ -14,14 +14,16 @@ class SubscribeController extends ActionController
     {
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getQuery();
+            $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data);
             if (!$result['error']) {
                 try {
                     $model = new Model;
+                    $model->load($data['email'], 'email');
                     $model->setData([
                         'email' => $data['email'],
-                        'language_id' => Bootstrap::getLanguage()->getId()
+                        'language_id' => Bootstrap::getLanguage()->getId(),
+                        'status' => 1
                     ])->save();
                     $result['message'][] = ['message' => $this->translate('Thank you for your subscription.'), 'level' => 'success'];
                 } catch (Exception $e) {

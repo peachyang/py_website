@@ -10,7 +10,7 @@ if (count($languages)):
         <ul class="dropdown-menu">
             <?php foreach ($languages as $language): ?>
                 <li lang="<?php echo str_replace('_', '-', $language['code']) ?>">
-                    <a href="<?php echo $this->getUrl($language) ?>">
+                    <a href="<?php echo $this->getUrl($language) ?>/">
                         <?php echo $language['name'] ?>
                     </a>
                 </li>

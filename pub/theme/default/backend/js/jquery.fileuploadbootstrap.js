@@ -135,7 +135,7 @@ $.fileuploadbootstrap ={
 					}
 				}	
 			}else{
-				alert('Please choose images!');
+				alert('Please choose images-------!');
 			}
 					
 		},

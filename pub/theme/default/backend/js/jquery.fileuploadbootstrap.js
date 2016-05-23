@@ -17,6 +17,8 @@
 }(function( $ ) {
 	
 $.fileuploadbootstrap ={
+		uploadingImgI:0,
+		uploadingImgResult:false,
 		initiUpload:function(){
 	    	
 	    	if($("div.uploadfilepopupb").length>0){
@@ -32,9 +34,18 @@ $.fileuploadbootstrap ={
 	  		      '<li role="presentation"><a href="#uploadimages" aria-controls="uploadimages" role="tab" data-toggle="tab">Upload Images</a></li></ul>'+
 	  		      '<div role="tabpanel" class="tab-pane active" id="chooseimages">'+
 	  		      '<div class="upimage-body" id="chooseimagesbody"></div></div>'+
-	  		      '<div role="tabpanel" class="tab-pane" id="uploadimages">'+
-	  		      '<div class="upimage-header"><p><input id="imagesfileupload" type="file" name="files[]" data-url="'+GLOBAL.BASE_URL+'admin/Resource_Resource/UploadImages/" multiple />  <button>Upload</button></p></div>'+
-	  		      '<div id="imgLoad" class="upimage-body"></div>'+
+	  		      '<div class="tab-pane upimage-body" id="uploadimages">'+
+	  		      '<div class="breadcrumb clearfix"></div><div class="grid"><div class="filters upimage-header"><form class="form-inline">'+
+	  		      '<div class="input-box"><label class="control-label" for="category_id">Category </label><div class="cell">'+
+	  		      '<select class="form-control " id="category_id" name="category_id"><option value="">(Top category)</option><option value="21">Prosuct Images</option><option value="22">Dress</option></select>'+
+	  		      '</div></div>'+
+	  		      '<div class="input-box"><label class="control-label" for="imagesfileupload">Choose Images </label><div class="cell">'+
+	  		      '<input id="imagesfileupload" type="file" name="files[]" class="form-control" data-url="'+GLOBAL.BASE_URL+'admin/Resource_Resource/UploadImages/" multiple />'+
+	  		      '</div></div>'+
+	  		      '<div class="input-box"><a class="control-a" onclick="$.fileuploadbootstrap.upImgFro();">Upload</a></div>'+
+	  		      '</form></div>'+
+	  		      '<div id="imgLoad" class="image-body-list"></div>'+
+	  		      '</div>'+
 	  		      '</div>'+
 	  		      '</div>'+
 	  		    '</div>'+
@@ -51,11 +62,12 @@ $.fileuploadbootstrap ={
 	  $("input#imagesfileupload").fileupload({
 			dataType: 'json',
 			add : function(e, data) {
-				var imgId =uploadingImgI;
+				var imgId =$.fileuploadbootstrap.uploadingImgI;
 				//将需要上传的图片保存变成HTML，在页面上方便的调用
 				data.order=imgId;
-				var str = "<div id='upImg"+imgId+"' />";
-				data.context ='<span class="upimage-span-name">'+$(str).html(data['files'][0].name+'</span><span id="uploadnote'+imgId+'"  class="upimage-span-note">Waiting...</span>').appendTo($("div#imgLoad")).click(function() {
+				var str = '<div id="upImg'+imgId+'" class="upimgdiv"/>';
+				data.context =$(str).html('<span class="upimage-name">'+data['files'][0].name+'</span><span id="uploadnote'+imgId+'"  class="upimage-note">Waiting...</span>').appendTo($("div#imgLoad")).click(function() {
+					
 					$('span#uploadnote'+imgId).html('Uploading...');
 					data.submit().success(function (result,textStatus, jqXHR) {
 						//console.log(result);
@@ -70,16 +82,15 @@ $.fileuploadbootstrap ={
 						}else{
 							alert(result.error);
 						}
-
 					});						
 				});
 				//add the image cancle button
-				data.context = $('<span class="fa fa-remove upimage-span-move" id="ImgMove'+imgId+'" />').appendTo($("div#upImg"+imgId)).click(
+				data.context = $('<span class="fa fa-remove upimage-move" id="imgmove'+imgId+'" />').appendTo($("div#upImg"+imgId)).click(
 						function(){
 							$.fileuploadbootstrap.moveImg(imgId);
 						}
 				);				
-				uploadingImgI++;
+				$.fileuploadbootstrap.uploadingImgI++;
 			}
 			
 		});
@@ -90,10 +101,17 @@ $.fileuploadbootstrap ={
 	    		
 	    		$("div#chooseimagesbody img").on('click',function(){
 	    			if($('a[rel='+$("input#reldata").val()+'] img').length>0){
-	    				$('a[rel='+$("input#reldata").val()+'][order='+$("input#reldata").attr('order')+'] img').prop('src',$(this).attr('src')).prop('alt',$(this).attr('alt'));
+	    				$('a[rel='+$("input#reldata").val()+'][order='+$("input#reldata").attr('order')+'] img').prop('src',$(this).attr('src')).prop('alt',$(this).attr('alt')).prop('id',$(this).attr('id'));
 	    			}
-	    			
-	    			var dataStr=$(this).attr('alt')+':'+$(this).attr('id')+':'+$("input#reldata").attr('order');
+	    			var dataStr='';
+	    			if($('a[rel='+$("input#reldata").val()+'] img').length>0){
+	    				$('a[rel='+$("input#reldata").val()+'] img').each(function(){
+	    					console.log($(this));
+	    					if($(this).attr('alt')!=''&&$(this).attr('id')!=''){
+	    						dataStr=dataStr+$(this).attr('alt')+':'+$(this).attr('id')+':'+$(this).attr('order')+',';
+	    					}
+	    				});
+	    			}
 	    			$('input#'+$("input#reldata").val()).val(dataStr);
 	    			$('div#imagesModal').modal('hide');
 	    		});
@@ -105,13 +123,36 @@ $.fileuploadbootstrap ={
 		 */
 		moveImg:function(imgId){
 			$("div#upImg"+imgId).remove();
+		},
+	    upImgFro:function(imagsrcname,imagname){	
+			var anchors = $("div.upimgdiv");
+			if(anchors.length!=0){
+				for(var i=0;i<anchors.length;i++){
+					$.fileuploadbootstrap.uploadingImgResult=false;
+					anchors[i].click();
+					if(i==(anchors.length-1)){
+						this.checkUploadTolist(i,anchors.length-1,imagsrcname,imagname);
+					}
+				}	
+			}else{
+				alert('Please choose images!');
+			}
+					
+		},
+		/**
+		 *检查图片是否全部上传完
+		 */
+		checkUploadTolist:function(i,vlength,imagsrcname,imagname){
+			if(i==vlength && $.fileuploadbootstrap.uploadingImgResult){
+				this.listImg(1,this.merchantId,imagsrcname,imagname);
+				clearTimeout($.fileuploadbootstrap.checkUploadImgFunTimeOut);
+			}else{
+				$.fileuploadbootstrap.checkUploadImgFunTimeOut=setTimeout('$.fileuploadbootstrap.checkUploadTolist('+i+','+vlength+',"'+imagsrcname+'","'+imagname+'")',1000);
+			}
 		}
 
 }
 
-
-var uploadingImgI=0;
-var uploadingImgResult=false;
 if($('a.chooseimages img').length>0){
 	$('a.chooseimages img').bind('click',$.fileuploadbootstrap.initiUpload);
 

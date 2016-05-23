@@ -63,9 +63,10 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .upimage-header{margin-top:5px;}
 .image-body-list{height:450px;overflow-y:scroll;}
 .image-body-list-b{text-align:right;}
-.upimage-span-name{width:70%;}
-.upimage-span-note{width:20%;}
-.upimage-span-move{width:10%;}
+.upimage-name{width:70%;}
+.upimage-note{width:20%;}
+.upimage-move{width:10%;}
+#imagesfileupload{width:auto;}
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #CCE0E9;border-bottom-color:transparent}
@@ -179,6 +180,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .filters{background:#f7f8fa;border-bottom:1px solid #cce0e9;padding:9px 0 7px}
 .admin .grid .filters .input-box{display:inline-block;padding:12px 0 12px 23px;margin:0;vertical-align:top}
 .admin .grid .filters .control-label{line-height:21px;font-size:12px;color:#6c6c6c}
+.admin .grid .filters .control-a{font-size:14px; padding:8px;}
 .admin .grid .filters .cell{display:inline-block}
 .admin .grid .filters .form-control{width:99px;height:21px;line-height:21px;border-radius:4px;border:1px solid #a3a3a3;box-shadow:0 0 6px #999 inset}
 .admin .grid .filters .to{font-size:21px;line-height:21px;color:#6c6c6c;margin:0 5px}

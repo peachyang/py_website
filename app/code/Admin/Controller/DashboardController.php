@@ -44,7 +44,7 @@ class DashboardController extends AuthActionController
             $keys = [];
             foreach ($visitors as $time => $count) {
                 if (is_numeric($time)) {
-                    $time = date('Y-m-d h:0:0', $time);
+                    $time = date(DateTime::RFC3339, $time);
                 }
                 $time = new DateTime($time);
                 $diff = $current->diff($time);

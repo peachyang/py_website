@@ -14,6 +14,9 @@ $query = $this->getQuery();
                 if (!isset($name['type'])) {
                     $name['type'] = 'text';
                 }
+                if(isset($query[$attr])){
+                    $name['value'] = $query[$attr];
+                }
                 echo $this->getInputBox($attr, $name);
             }
             ?>

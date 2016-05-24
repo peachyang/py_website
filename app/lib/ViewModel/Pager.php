@@ -19,6 +19,11 @@ class Pager extends AbstractViewModel
      * @var bool
      */
     protected $showLabel = true;
+    
+    /**
+     * @var int
+     */
+    protected $count = 0;
 
     public function __construct()
     {

@@ -186,6 +186,10 @@ abstract class AbstractViewModel implements Serializable
      */
     public function __get($name)
     {
+        $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+        if (is_callable([$this, $method])) {
+            return $this->$method();
+        }
         return $this->getVariable($name)? : $this->getChild($name);
     }
 
@@ -371,6 +375,17 @@ abstract class AbstractViewModel implements Serializable
             $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
         }
         return $this->pubUrl . ltrim($path, '/');
+    }
+
+    /**
+     * Get resource url
+     * 
+     * @param string $path
+     * @return string
+     */
+    public function getResourceUrl($path = '')
+    {
+        return $this->getBaseUrl('pub/resource/' . $path);
     }
 
     /**

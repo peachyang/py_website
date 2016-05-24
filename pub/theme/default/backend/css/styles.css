@@ -60,13 +60,19 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-footer .btn-group .btn + .btn{margin-left:-1px;}
 .modal-footer .btn-block + .btn-block{margin-left:0}
 .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
-.upimage-header{margin-top:5px;}
-.image-body-list{height:450px;overflow-y:scroll;}
-.image-body-list-b{text-align:right;}
-.upimage-name{width:70%;}
-.upimage-note{width:20%;}
-.upimage-move{width:10%;}
-#imagesfileupload{width:auto;}
+.image-body-list{height:450px;overflow-y:scroll}
+.image-body-list-b{text-align:right}
+#upload-list span{display:inline-block}
+#upload-list .upload-name{width:70%}
+#upload-list .upload-note{width:20%}
+#upload-list .upload-move{width:10%}
+#resource-list .grid .title{display:block;line-height:1.5;word-break:break-all}
+.widget-upload{font-size:0!important}
+.widget-upload .inline-box{display:inline-block;vertical-align:middle;width:122px;margin-right:6px;border:1px solid #aaa}
+.widget-upload .inline-box .btn{padding:0;display:block;text-align:center;height:120px;width:100%}
+.widget-upload .inline-box .btn img{pointer-events:none}
+.widget-upload .inline-box .delete{display:block;text-align:center;font-size:16px;line-height:1.2;border-top:1px solid #aaa}
+.widget-upload .add{vertical-align:middle;font-size:32px;line-height:139.2px;text-decoration:none}
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #CCE0E9;border-bottom-color:transparent}
@@ -97,8 +103,9 @@ label,.label{vertical-align:top}
 .form-control::-moz-placeholder,.form-control:-ms-input-placeholder,.form-control::-webkit-input-placeholder{color:#999}
 select.form-control{padding:0 .42em}
 textarea.form-control,select[multiple].form-control{min-height:4.25em;padding-top:.25em;padding-bottom:.25em;resize:vertical}
+.form-control[type=file]{border:none;box-shadow:none;padding:0;line-height:20px}
 .form-inline .form-control,.form-control.captcha{display:inline-block;width:auto;vertical-align:top}
-.form-inline .control-label{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
+.form-inline .control-label,.form-inline .cell{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}
 .form-control.invalid{border-color:red}
 label.invalid{display:inline-block;font-size:12px;position:absolute;bottom:100%;margin-bottom:3px;left:0;background:#000;color:#fff;border-radius:3px;padding:2px 8px;text-align:center}
@@ -201,13 +208,13 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table tfoot .pager .last{border-left:1px solid}
 .admin .grid .table .checkbox,.admin .grid .table .action{width:1px;white-space:nowrap}
 .admin .grid .table .action a+a{margin-left:4px}
-.admin .edit .nav-tabs{padding-left:30px;margin-top:10px;border-bottom:1px solid #CCE0E9}
-.csscalc .admin .edit .nav-tabs{padding:0;margin-left:30px;width:calc(100% - 30px)}
-.admin .edit .nav-tabs>li>a{font-size:13px;color:#333;border-radius:0;padding:1px 12px;text-decoration:none;display:block}
-.admin .edit .nav-tabs>li>a:hover{background:#999}
+.admin .nav-tabs{padding-left:30px;margin-top:10px;border-bottom:1px solid #CCE0E9}
+.csscalc .admin .nav-tabs{padding:0;margin-left:30px;width:calc(100% - 30px)}
+.admin .nav-tabs>li>a{font-size:13px;color:#333;border-radius:0;padding:1px 12px;text-decoration:none;display:block}
+.admin .nav-tabs>li>a:hover{background:#999}
 .admin .edit .page-title{font-size:1.125rem;line-height:3.33333333;padding:0 0 0 30px;background:#fafafa}
 .admin .edit .page-title:before{content:'\f040';margin:0 10px;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-.admin .edit .tab-pane{padding:10px 0 0 30px}
+.admin .tab-pane{padding:10px 0 0 30px}
 .admin .edit .tab-pane.active{display:table}
 .admin .edit .tab-pane .input-box{display:table-row}
 .admin .edit .tab-pane .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}

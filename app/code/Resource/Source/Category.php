@@ -9,7 +9,9 @@ use Seahinet\Lib\Bootstrap;
 
 class Category implements SourceInterface
 {
+
     use \Seahinet\Lib\Traits\Container;
+
     public function getSourceArray($except = [])
     {
         $collection = new Collection;
@@ -22,33 +24,37 @@ class Category implements SourceInterface
         }
         return $result;
     }
-    
-    public function getNameArray($except = []){
+
+    public function getNameArray($except = [])
+    {
         $collection = new Collection;
         $result = [];
-        $languages=$collection->toArray()[0]['language'];
-        $languages_names=$collection->toArray()[0]['language_name'];
-        $names=$collection->toArray()[0]['name'];
+        $languages = $collection->toArray()[0]['language'];
+        $languages_names = $collection->toArray()[0]['language_name'];
+        $names = $collection->toArray()[0]['name'];
         foreach ($languages as $k => $c) {
-            $result[$k] = ['name'=>$names[$k],'language_name'=>$languages_names[$k]];
+            $result[$k] = ['name' => $names[$k], 'language_name' => $languages_names[$k]];
         }
         return $result;
     }
-    
-    public function getLanguageIdArray($except = []){
+
+    public function getLanguageIdArray($except = [])
+    {
         $collection = new Collection;
         $result = [];
-        $languages=$collection->toArray()[0]['language'];
+        $languages = $collection->toArray()[0]['language'];
         foreach ($languages as $k => $c) {
             $result[] = $k;
         }
         return $result;
     }
-    public function getParentIdArray($except = []){
+
+    public function getParentIdArray($except = [])
+    {
         $collection = new Collection;
         $result = [];
-        $result=$collection->toArray()[0]['parent_id'];
+        $result = $collection->toArray()[0]['parent_id'];
         return $result;
     }
-    
+
 }

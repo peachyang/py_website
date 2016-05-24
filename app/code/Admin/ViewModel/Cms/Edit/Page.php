@@ -34,7 +34,7 @@ class Page extends PEdit
     {
         $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
-  
+
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -92,10 +92,15 @@ class Page extends PEdit
                 'type' => 'text',
                 'label' => 'Meta Description'
             ],
-            'pageimage' => [
+            'thumbnail' => [
                 'type' => 'widget',
-                'label' => 'Images',
-                'widget' => 'pageimage',
+                'label' => 'Thumbnail',
+                'widget' => 'upload'
+            ],
+            'image' => [
+                'type' => 'widget',
+                'label' => 'Image',
+                'widget' => 'upload',
                 'multiple' => 'multiple'
             ],
             'content' => [
@@ -105,6 +110,16 @@ class Page extends PEdit
             ]
         ];
         return parent::prepareElements($columns);
+    }
+
+    public function getImage()
+    {
+        return $this->getVariable('model')->getImage();
+    }
+
+    public function getThumbnail()
+    {
+        return $this->getVariable('model')->getThumbnail();
     }
 
 }

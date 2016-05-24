@@ -14,6 +14,9 @@ $query = $this->getQuery();
                 if (!isset($name['type'])) {
                     $name['type'] = 'text';
                 }
+                if (isset($query[$attr])) {
+                    $name['value'] = $query[$attr];
+                }
                 echo $this->getInputBox($attr, $name);
             }
             ?>
@@ -25,32 +28,36 @@ $query = $this->getQuery();
             </div>
             <div class="buttons-set">
                 <button type="submit" class="btn"><?php echo $this->translate('Search') ?></button>
-                <a href="<?php echo $this->getCurrentUrl() ?>" class="btn"><?php echo $this->translate('Reset') ?></a>
+                <button type="reset" class="btn"><?php echo $this->translate('Reset') ?></button>
             </div>
         </form>
     </div>
-    
-    
-   <div class="image-body-list"> 
-    <table class="table table-hover table-striped table-no-border">
-        <tbody>
-        <tr>  
-            <?php
-            $i=0;
-            foreach ($this->getVariable('collection')->toArray() as $item):
-            echo '<td>';
-            echo '<img src="'.$attributes['file_name']['fileUrl'].'images/100x100/' . $item['file_name'].'" alt="'.$item['file_name'].'" id="'.$item['id'].'" />';
-           echo '</td>';
-           if (($i+1)%6==0){
-               echo '</tr><tr>';
-           }
-           $i++;
-           endforeach;
-           ?> 
+    <div class="image-body-list"> 
+        <table class="table table-hover table-striped table-no-border">
+            <tbody>
+                <tr>  
+                    <?php
+                    $i = 0;
+                    foreach ($this->getVariable('collection')->toArray() as $item):
+                        ?>
+                        <td>
+                            <a href="javascript:void(0);" class="select" title="<?php echo $item['file_name'] ?>">
+                                <img src="<?php echo $attributes['file_name']['fileUrl'], 'images/resized/120x120/', $item['file_name'] ?>" alt="<?php echo $item['file_name'] ?>" data-id="<?php echo $item['id'] ?>" height="100" />
+                                <span class="title"><?php echo $item['file_name'] ?></span>
+                            </a>
+                        </td>
+                        <?php
+                        if (($i + 1) % 6 == 0) {
+                            echo '</tr><tr>';
+                        }
+                        $i++;
+                    endforeach;
+                    ?> 
                 </tr>
-        </tbody>
-    </table>
-</div>    
-    
-    <div class="image-body-list-b"><?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?></div>
+            </tbody>
+        </table>
+    </div>    
+    <div class="image-body-list-b">
+        <?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?>
+    </div>
 </div>

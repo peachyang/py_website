@@ -7,7 +7,8 @@ use Seahinet\Resource\Model\Collection\Resource as Collection;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Resource\Source\Category;
-use Seahinet\Resource\Model\Resource as model;
+use Seahinet\Resource\Source\FileType;
+use Seahinet\Resource\Model\Resource as Model;
 
 class Resource extends PGrid
 {
@@ -15,6 +16,7 @@ class Resource extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getDeleteAction'];
+    protected $imageOnly = false;
 
     public function getEditAction($item)
     {
@@ -49,7 +51,7 @@ class Resource extends PGrid
 
     protected function prepareColumns()
     {
-        $model = new model;
+        $model = new Model;
         $user = (new Segment('admin'))->get('user');
         return [
             'id' => [
@@ -71,23 +73,16 @@ class Resource extends PGrid
                     ]),
             'category_id' => [
                 'type' => 'select',
-                'options' => (new Category())->getSourceArray($model ? $model->getId() : []),
+                'options' => (new Category)->getSourceArray(),
                 'label' => 'Category',
-                'empty_string' => '(Top category)',
+                'empty_string' => '(NULL)',
                 'use4popupfilter' => true
             ],
             'file_type' => [
                 'label' => 'File Type',
-                'sortby' => 'resource:file_type',
                 'type' => 'select',
-                'use4popupfilter' => true,
-                'options' => [
-                    'others',
-                    'images',
-                    'video',
-                    'pdf',
-                    'zip'
-                ]
+                'use4popupfilter' => !$this->imageOnly,
+                'options' => (new FileType)->getSourceArray()
             ],
             'old_name' => [
                 'label' => 'Old Name',
@@ -95,7 +90,7 @@ class Resource extends PGrid
             ],
             'file_name' => [
                 'label' => 'File name',
-                'fileUrl' => $model->options['upload_url'],
+                'fileUrl' => $this->getResourceUrl(),
                 'use4popupfilter' => true
             ]
         ];
@@ -109,6 +104,12 @@ class Resource extends PGrid
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
         return parent::prepareCollection($collection);
+    }
+
+    public function setImageOnly($imageOnly)
+    {
+        $this->imageOnly = (bool) $imageOnly;
+        return $this;
     }
 
 }

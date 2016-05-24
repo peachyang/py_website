@@ -182,12 +182,6 @@ edit:
                     -
                         method: addScript
                         params: [{src:'backend/js/jquery.iframe-transport.js'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.fileupload.js',defer:'defer',async:'async'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.fileuploadbootstrap.js',defer:'defer',async:'async'}]
 admin_dashboard:
     update: admin
     root:

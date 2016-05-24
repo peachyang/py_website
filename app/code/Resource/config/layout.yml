@@ -74,5 +74,5 @@ admin_popup_images_list:
                 children:
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
-                        template: resource/gridpopup             
+                        template: resource/gridpopup
                                         

@@ -32,6 +32,29 @@ admin_cms_page_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileuploadbootstrap.js
+                    -
+                        method: addLink
+                        params: backend/css/jquery-ui.min.css
             content:
                 children:
                     breadcrumb:
@@ -45,9 +68,14 @@ admin_cms_page_edit:
                     edit:
                         type: Seahinet\Admin\ViewModel\Cms\Edit\Page
                         children:
-                            pageimage:
+                            upload:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: resource/singerimage      
+                                template: resource/widget
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/modal
 admin_cms_block_list:
     update: grid
     root:

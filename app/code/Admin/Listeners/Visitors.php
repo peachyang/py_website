@@ -17,7 +17,7 @@ class Visitors implements ListenerInterface
             $segment->set('statUv', 1);
             $cache = $this->getContainer()->get('cache');
             $count = $cache->fetch('UV', 'STAT_');
-            $date = strtotime(date('Y-m-d H:0:0 e', time()));
+            $date = date('Y-m-d\TH:0:0P', time());
             if ($count) {
                 if (!isset($count[$date])) {
                     $count[$date] = 1;

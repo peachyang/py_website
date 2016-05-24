@@ -48,12 +48,10 @@ class Category extends PGrid
 
     protected function prepareColumns()
     {
-        $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
         return [
             'id' => [
-                'label' => 'ID',
-                'use4filter' => false
+                'label' => 'ID'
             ],
             'store_id' => ($user->getStore() ? [
                 'value' => $user->getStore()->getId(),
@@ -71,7 +69,7 @@ class Category extends PGrid
             'parent_id' => [
                 'label' => 'Parent ID',
                 'type' => 'select',
-                'options' => (new CategorySource())->getSourceArray($model ? $model->getId() : [])
+                'options' => (new CategorySource)->getSourceArray()
             ],
             'name' => [
                 'label' => 'Name',

@@ -3,7 +3,6 @@ $item = $this->getVariable('item');
 $parent = $this->getVariable('parent');
 $key = $this->getVariable('key');
 $id = preg_replace('/\W/', '-', $key);
-//var_dump($parent);exit('test!');
 ?>
 <div class="input-box">
     <?php if (isset($item['label'])): ?>
@@ -11,9 +10,13 @@ $id = preg_replace('/\W/', '-', $key);
             <?php echo $this->translate($item['label']) ?>
         </label>
     <?php endif ?>
-    <div class="cell">
-    <?php echo $parent->{$item['widget']}->setVariable('item', $item);?>
-        
+    <div class="cell widget-<?php echo $item['widget'] ?>">
+        <?php
+        echo $parent->getChild($item['widget'])
+                ->setVariable('item', $item)
+                ->setVariable('key', $key)
+                ->setVariable('parent', $parent)
+        ?>
         <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

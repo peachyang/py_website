@@ -1,0 +1,60 @@
+<?php
+$categories = $this->getCategorySource();
+?>
+<div class="modal fade" id="resource-modal" tabindex="-1" role="dialog" aria-labelledby="resource-modal-label" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="resource-modal-label"><?php echo $this->translate('Resource Management') ?></h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="reldata" id="reldata" value="' + $(this).attr('widget') + '" data-order="' + $(this).data('order') + '" />
+                <ul class="nav nav-tabs clearfix" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#select-resource" aria-controls="select-resource" role="tab" data-toggle="tab">
+                            <?php echo $this->translate('Select Resource') ?>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#upload-resource" aria-controls="upload-resource" role="tab" data-toggle="tab">
+                            <?php echo $this->translate('Upload Resource') ?>
+                        </a>
+                    </li>
+                </ul>
+                <div role="tabpanel" class="tab-pane active" id="select-resource">
+                    <div id="resource-list"></div>
+                </div>
+                <div class="tab-pane" id="upload-resource">
+                    <div class="grid">
+                        <form id="upload-form" action="<?php echo $this->getBaseUrl('admin/resource_resource/uploadImages/') ?>" method="post" enctype="multipart/form-data">
+                            <div class="input-box">
+                                <label class="control-label" for="category_id"><?php echo $this->translate('Category') ?></label>
+                                <div class="cell">
+                                    <select class="form-control " id="category_id" name="category_id">
+                                        <option value=""><?php echo $this->translate('(NULL)') ?></option>
+                                        <?php foreach ($categories as $id => $name): ?>
+                                            <option value="<?php echo $id ?>"><?php echo $name ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <label class="control-label" for="file-upload"><?php echo $this->translate('Select Resource') ?></label>
+                                <div class="cell">
+                                    <input id="upload-element" type="file" name="files[]" class="form-control" data-url="<?php echo $this->getBaseUrl('admin/resource_resource/uploadImages/') ?>" multiple />
+                                </div>
+                            </div>
+                            <div class="input-box" id="upload-list"></div>
+                            <div class="buttons-set">
+                                <button type="submit" class="btn"><?php echo $this->translate('Upload') ?></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

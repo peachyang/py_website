@@ -25,7 +25,7 @@ trait Resize
             $this->imagine = $this->getContainer()->get('imagine');
         }
         $image = $this->imagine->open($file);
-        $image->resize(new Box($width, $height ? $height : $width));
+        $image->thumbnail(new Box($width, $height ? $height : $width));
         return $image;
     }
 

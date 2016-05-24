@@ -2,25 +2,22 @@
 
 namespace Seahinet\Resource\ViewModel;
 
-use Seahinet\Resource\Model as ResourceModel;
+use Seahinet\Resource\Model\Resource as ResourceModel;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Resource extends AbstractViewModel
 {
 
-    /**
-     * @var PageModel
-     */
-    protected $ResourceModel = null;
+    protected $resourceModel = null;
 
     public function getResourceModel()
     {
-        return $this->ResourceModel;
+        return $this->resourceModel;
     }
 
-    public function setPageModel(ResourceModel $ResourceModel)
+    public function setResourceModel(ResourceModel $ResourceModel)
     {
-        $this->ResourceModel = $ResourceModel;
+        $this->resourceModel = $ResourceModel;
         return $this;
     }
 

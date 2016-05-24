@@ -3,6 +3,7 @@
 namespace Seahinet\Cms\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Resource\Model\Resource;
 use Zend\Db\TableGateway\TableGateway;
 
 class Page extends AbstractModel
@@ -69,6 +70,26 @@ class Page extends AbstractModel
         if ($data !== false) {
             $this->storage['content'] = $data;
         }
+    }
+
+    public function getImage()
+    {
+        if ($this->isLoaded && !empty($this->storage['image'])) {
+            $model = new Resource;
+            $model->load($this->storage['image']);
+            return $model;
+        }
+        return null;
+    }
+
+    public function getThumbnail()
+    {
+        if ($this->isLoaded && !empty($this->storage['thumbnail'])) {
+            $model = new Resource;
+            $model->load($this->storage['thumbnail']);
+            return $model;
+        }
+        return null;
     }
 
 }

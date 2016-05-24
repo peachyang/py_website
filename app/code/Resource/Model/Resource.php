@@ -11,32 +11,31 @@ use Imagine\Image\Box;
 class Resource extends AbstractModel
 {
 
-    public $error_messages = [
+    public static $errorMessage = [
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-            2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-            3 => 'The uploaded file was only partially uploaded',
-            4 => 'No file was uploaded',
-            6 => 'Missing a temporary folder',
-            7 => 'Failed to write file to disk',
-            8 => 'A PHP extension stopped the file upload',
-            'post_max_size' => 'The uploaded file exceeds the post_max_size directive in php.ini',
-            'max_file_size' => 'File is too big',
-            'min_file_size' => 'File is too small',
-            'accept_file_types' => 'Filetype not allowed',
-            'max_number_of_files' => 'Maximum number of files exceeded',
-            'max_width' => 'Image exceeds maximum width',
-            'min_width' => 'Image requires a minimum width',
-            'max_height' => 'Image exceeds maximum height',
-            'min_height' => 'Image requires a minimum height',
-            'abort' => 'File upload aborted',
-            'image_resize' => 'Failed to resize image'
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk',
+        8 => 'A PHP extension stopped the file upload',
+        'post_max_size' => 'The uploaded file exceeds the post_max_size directive in php.ini',
+        'max_file_size' => 'File is too big',
+        'min_file_size' => 'File is too small',
+        'accept_file_types' => 'Filetype not allowed',
+        'max_number_of_files' => 'Maximum number of files exceeded',
+        'max_width' => 'Image exceeds maximum width',
+        'min_width' => 'Image requires a minimum width',
+        'max_height' => 'Image exceeds maximum height',
+        'min_height' => 'Image requires a minimum height',
+        'abort' => 'File upload aborted',
+        'image_resize' => 'Failed to resize image'
     ];
     public $options;
 
     protected function construct()
     {
         $this->init('resource', 'id', ['id', 'store_id', 'file_name', 'old_name', 'file_type', 'category_id']);
-
         $this->options = array(
             'script_url' => '',
             'upload_dir' => BP . 'pub/resource/',
@@ -45,17 +44,11 @@ class Resource extends AbstractModel
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'file_types' => array('others' => 'others', 'images' => 'images', 'video' => 'video', 'pdf' => 'pdf', 'zip' => 'zip'),
-            // Defines which files (based on their names) are accepted for upload:
             'accept_file_types' => '/.+$/i',
-            // The php.ini settings upload_max_filesize and post_max_size
-            // take precedence over the following max_file_size setting:
             'max_file_size' => null,
             'min_file_size' => 1,
-            // The maximum number of files for the upload directory:
             'max_number_of_files' => null,
-            // Defines which files are handled as image files:
             'image_file_types' => '/\.(gif|jpe?g|png)$/i',
-            // Image resolution restrictions:
             'max_width' => null,
             'max_height' => null,
             'min_width' => 1,
@@ -103,7 +96,6 @@ class Resource extends AbstractModel
      */
     public function getTargetPath($fileType)
     {
-
         if (isset($this->options['file_types'][$fileType]) && $this->options['file_types'][$fileType] != '') {
             if (!is_dir($this->options['upload_dir'] . $this->options['file_types'][$fileType])) {
                 mkdir($this->options['upload_dir'] . $this->options['file_types'][$fileType], $this->options['mkdir_mode'], true);
@@ -128,7 +120,9 @@ class Resource extends AbstractModel
     {
         $imagine = $this->getContainer()->get('imagine');
         foreach ($this->options['image_versions'] as $k => $v) {
-            $imagine->open($imagePath)->thumbnail(new Box($v['max_width'], $v['max_height']))->save($targetPath . $k . '/' . $fileName);
+            $imagine->open($imagePath)
+                    ->thumbnail(new Box($v['max_width'], $v['max_height']))
+                    ->save($targetPath . $k . '/' . $fileName);
         }
         return true;
     }
@@ -175,10 +169,10 @@ class Resource extends AbstractModel
             $file->error = $this->get_error_message('max_number_of_files');
             return false;
         }
-        $max_width = @$this->options['max_width'];
-        $max_height = @$this->options['max_height'];
-        $min_width = @$this->options['min_width'];
-        $min_height = @$this->options['min_height'];
+        $max_width = $this->options['max_width'];
+        $max_height = $this->options['max_height'];
+        $min_width = $this->options['min_width'];
+        $min_height = $this->options['min_height'];
         if (($max_width || $max_height || $min_width || $min_height) && preg_match($this->options['image_file_types'], $file->name)) {
             list($img_width, $img_height) = $this->get_image_size($uploaded_file);
 
@@ -219,8 +213,8 @@ class Resource extends AbstractModel
 
     protected function get_error_message($error)
     {
-        return isset($this->error_messages[$error]) ?
-                $this->error_messages[$error] : $error;
+        return isset(self::$errorMessage[$error]) ?
+                self::$errorMessage[$error] : $error;
     }
 
     protected function get_file_name($file_path, $name, $size, $type, $error, $index, $content_range)

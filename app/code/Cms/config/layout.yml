@@ -47,7 +47,7 @@ admin_cms_page_edit:
                         children:
                             pageimage:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: Resource/singerimage      
+                                template: resource/singerimage      
 admin_cms_block_list:
     update: grid
     root:

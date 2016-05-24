@@ -38,8 +38,8 @@ class Resource extends AbstractCollection
         //echo $languages->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform());
         $languages->load(false);
         foreach ($languages as $item) {
-            if (isset($data[$item['page_id']])) {
-                $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
+            if (isset($data[$item['category_id']])) {
+                $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
             }
         }
         $this->storage = array_values($data);

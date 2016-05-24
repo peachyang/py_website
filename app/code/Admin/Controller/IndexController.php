@@ -47,16 +47,18 @@ class IndexController extends ActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['username', 'password'], 'admin');
-            $user = new User;
-            if ($user->login($data['username'], $data['password'])) {
-                $result['message'][] = ['message' => $this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'level' => 'success'];
-                $user->setData([
-                    'logdate' => gmdate('Y-m-d h:i:s'),
-                    'lognum' => $user->offsetGet('lognum') + 1
-                ])->save();
-                return $this->redirectLoggedin();
-            } else {
-                $result['message'][] = ['message' => $this->translate('Login failed. Invalid username or password.'), 'level' => 'danger'];
+            if ($result['error'] === 0) {
+                $user = new User;
+                if ($user->login($data['username'], $data['password'])) {
+                    $result['message'][] = ['message' => $this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'level' => 'success'];
+                    $user->setData([
+                        'logdate' => gmdate('Y-m-d h:i:s'),
+                        'lognum' => $user->offsetGet('lognum') + 1
+                    ])->save();
+                    return $this->redirectLoggedin();
+                } else {
+                    $result['message'][] = ['message' => $this->translate('Login failed. Invalid username or password.'), 'level' => 'danger'];
+                }
             }
         }
         return $this->response($result, $this->getAdminUrl());

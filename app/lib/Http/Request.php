@@ -58,7 +58,7 @@ class Request extends Message implements RequestInterface
         }
         $method = $server['REQUEST_METHOD'];
         $uri = Uri::createFromEnvironment($server);
-        $headers = Headers::createFromEnvironment($server); 
+        $headers = Headers::createFromEnvironment($server);
         $body = new RequestBody();
         $uploadedFiles = UploadedFile::createFromEnvironment();
         $this->withMethod($method)
@@ -94,12 +94,27 @@ class Request extends Message implements RequestInterface
             if (!$this->body) {
                 return null;
             }
-            $body = (string) $this->getBody();
-            parse_str($body, $parsed);
-            if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
-                $parsed = [];
+            if ($_POST) {
+                $this->post = $_POST;
+            } else {
+                $body = (string) $this->getBody();
+                $type = $this->getMediaType();
+                if ($type === 'application/json') {
+                    $parsed = json_decode($body, true);
+                } else if ($type === 'application/xml' || $type === 'text/xml') {
+                    $backup = libxml_disable_entity_loader(true);
+                    $parsed = simplexml_load_string($body);
+                    libxml_disable_entity_loader($backup);
+                } else if ($type === 'application/x-www-form-urlencoded') {
+                    parse_str($body, $parsed);
+                } else {
+                    $parsed = [];
+                }
+                if (!is_null($parsed) && !is_object($parsed) && !is_array($parsed)) {
+                    $parsed = [];
+                }
+                $this->post = $parsed;
             }
-            $this->post = $parsed;
         }
         return is_null($key) ? $this->post : (isset($this->post[$key]) ? $this->post[$key] : $default);
     }
@@ -344,11 +359,28 @@ class Request extends Message implements RequestInterface
     }
 
     /**
+     * Get HTTP status head
+     * 
      * @return string
      */
     public function renderStatusLine()
     {
         return $this->method . ' ' . (string) $this->uri . ' HTTP/' . $this->version;
+    }
+
+    /**
+     * Get content type
+     * 
+     * @return string
+     */
+    protected function getMediaType()
+    {
+        $contentType = $this->getHeader('CONTENT_TYPE');
+        if ($contentType) {
+            $contentTypeParts = preg_split('/\s*[;,]\s*/', $contentType);
+            return strtolower($contentTypeParts[0]);
+        }
+        return null;
     }
 
 }

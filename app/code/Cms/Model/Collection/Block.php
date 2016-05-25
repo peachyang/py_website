@@ -18,29 +18,35 @@ class Block extends AbstractCollection
 
     protected function afterLoad()
     {
+        parent::afterLoad();
         $ids = [];
         $data = [];
-        foreach ($this->storage as $item) {
-            $ids[] = $item['id'];
-            $data[$item['id']] = $item;
-            $data[$item['id']]['language'] = [];
+        foreach ($this->storage as $key => $item) {
             $content = @gzdecode($item['content']);
-            if ($content !== false) {
-                $data[$item['id']]['content'] = $content;
+            if (isset($item['id'])) {
+                $ids[] = $item['id'];
+                $data[$item['id']] = $item;
+                $data[$item['id']]['language'] = [];
+                if ($content !== false) {
+                    $data[$item['id']]['content'] = $content;
+                }
+            } else if ($content !== false) {
+                $this->storage[$key]['content'] = $content;
             }
         }
-        $languages = new Language;
-        $languages->join('cms_block_language', 'core_language.id=cms_block_language.language_id', ['block_id'], 'right')
-                ->columns(['language_id' => 'id', 'language' => 'code'])
-                ->where(new In('block_id', $ids));
-        $languages->load(false);
-        foreach ($languages as $item) {
-            if (isset($data[$item['block_id']])) {
-                $data[$item['block_id']]['language'][$item['language_id']] = $item['language'];
+        if (!empty($ids)) {
+            $languages = new Language;
+            $languages->join('cms_block_language', 'core_language.id=cms_block_language.language_id', ['block_id'], 'right')
+                    ->columns(['language_id' => 'id', 'language' => 'code'])
+                    ->where(new In('block_id', $ids));
+            $languages->load(false);
+            foreach ($languages as $item) {
+                if (isset($data[$item['block_id']])) {
+                    $data[$item['block_id']]['language'][$item['language_id']] = $item['language'];
+                }
             }
+            $this->storage = $data;
         }
-        $this->storage = $data;
-        parent::afterLoad();
     }
 
 }

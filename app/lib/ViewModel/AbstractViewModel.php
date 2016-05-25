@@ -6,6 +6,7 @@ use JsonSerializable;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
+use Seahinet\Resource\Model\Resource;
 use Serializable;
 
 /**
@@ -385,7 +386,7 @@ abstract class AbstractViewModel implements Serializable
      */
     public function getResourceUrl($path = '')
     {
-        return $this->getBaseUrl('pub/resource/' . $path);
+        return $this->getBaseUrl(Resource::$options['path'] . $path);
     }
 
     /**

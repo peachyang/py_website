@@ -17,6 +17,9 @@ $query = $this->getQuery();
                 if (isset($query[$attr])) {
                     $name['value'] = $query[$attr];
                 }
+                if ($attr === 'file_type' && isset($query['file_type']) && strpos($query['file_type'], '%')) {
+                    $name['type'] = 'hidden';
+                }
                 echo $this->getInputBox($attr, $name);
             }
             ?>
@@ -41,9 +44,9 @@ $query = $this->getQuery();
                     foreach ($this->getVariable('collection')->toArray() as $item):
                         ?>
                         <td>
-                            <a href="javascript:void(0);" class="select" title="<?php echo $item['file_name'] ?>">
-                                <img src="<?php echo $attributes['file_name']['fileUrl'], 'images/resized/120x120/', $item['file_name'] ?>" alt="<?php echo $item['file_name'] ?>" data-id="<?php echo $item['id'] ?>" height="100" />
-                                <span class="title"><?php echo $item['file_name'] ?></span>
+                            <a href="javascript:void(0);" class="select" title="<?php echo $item['real_name'] ?>">
+                                <img src="<?php echo $attributes['real_name']['fileUrl'], 'image/resized/100x100/', $item['real_name'] ?>" alt="<?php echo $item['real_name'] ?>" data-id="<?php echo $item['id'] ?>" height="100" />
+                                <span class="title"><?php echo $item['real_name'] ?></span>
                             </a>
                         </td>
                         <?php

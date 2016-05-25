@@ -16,29 +16,35 @@ class Template extends AbstractCollection
 
     protected function afterLoad()
     {
+        parent::afterLoad();
         $ids = [];
         $data = [];
-        foreach ($this->storage as $item) {
-            $ids[] = $item['id'];
-            $data[$item['id']] = $item;
-            $data[$item['id']]['language'] = [];
+        foreach ($this->storage as $key => $item) {
             $content = @gzdecode($item['content']);
-            if ($content !== false) {
-                $data[$item['id']]['content'] = $content;
+            if (isset($item['id'])) {
+                $ids[] = $item['id'];
+                $data[$item['id']] = $item;
+                $data[$item['id']]['language'] = [];
+                if ($content !== false) {
+                    $data[$item['id']]['content'] = $content;
+                }
+            } else if ($content !== false) {
+                $this->storage[$key]['content'] = $content;
             }
         }
-        $languages = new Language;
-        $languages->join('message_template_language', 'core_language.id=message_template_language.language_id', ['template_id'], 'right')
-                ->columns(['language_id' => 'id', 'language' => 'code'])
-                ->where(new In('template_id', $ids));
-        $languages->load(false);
-        foreach ($languages as $item) {
-            if (isset($data[$item['template_id']])) {
-                $data[$item['template_id']]['language'][$item['language_id']] = $item['language'];
+        if (!empty($ids)) {
+            $languages = new Language;
+            $languages->join('message_template_language', 'core_language.id=message_template_language.language_id', ['template_id'], 'right')
+                    ->columns(['language_id' => 'id', 'language' => 'code'])
+                    ->where(new In('template_id', $ids));
+            $languages->load(false);
+            foreach ($languages as $item) {
+                if (isset($data[$item['template_id']])) {
+                    $data[$item['template_id']]['language'][$item['language_id']] = $item['language'];
+                }
             }
+            $this->storage = array_values($data);
         }
-        $this->storage = array_values($data);
-        parent::afterLoad();
     }
 
 }

@@ -52,6 +52,21 @@ admin_resource_list:
             head:
                 action:
                     -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/config.js
+                    -
                         method: setTitle
                         params: Resource Management / CMS
             content:
@@ -61,9 +76,17 @@ admin_resource_list:
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/resource_resource/',label:'Resource Management'}]
+                            -
+                                method: addAdditional
+                                params: [{'label':'Upload','data':{'toggle':'modal','target':'#resource-modal','upload':'upload'}}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
                         template: resource/grid
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/modal
 admin_popup_images_list:
     update: grid
     root:

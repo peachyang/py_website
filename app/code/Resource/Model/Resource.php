@@ -31,64 +31,22 @@ class Resource extends AbstractModel
         'abort' => 'File upload aborted',
         'image_resize' => 'Failed to resize image'
     ];
-    public $options;
+    public static $options = [
+        'path' => 'pub/resource/',
+        'dir_mode' => 0755,
+        'max_file_size' => null,
+        'min_file_size' => 1,
+        'max_number_of_files' => null,
+        'image_file_types' => '/\.(gif|jpe?g|png)$/i',
+        'max_width' => null,
+        'max_height' => null,
+        'min_width' => 1,
+        'min_height' => 1
+    ];
 
     protected function construct()
     {
-        $this->init('resource', 'id', ['id', 'store_id', 'file_name', 'old_name', 'file_type', 'category_id']);
-        $this->options = array(
-            'script_url' => '',
-            'upload_dir' => BP . 'pub/resource/',
-            'upload_url' => 'pub/resource/',
-            'input_stream' => 'php://input',
-            'user_dirs' => false,
-            'mkdir_mode' => 0755,
-            'file_types' => array('others' => 'others', 'images' => 'images', 'video' => 'video', 'pdf' => 'pdf', 'zip' => 'zip'),
-            'accept_file_types' => '/.+$/i',
-            'max_file_size' => null,
-            'min_file_size' => 1,
-            'max_number_of_files' => null,
-            'image_file_types' => '/\.(gif|jpe?g|png)$/i',
-            'max_width' => null,
-            'max_height' => null,
-            'min_width' => 1,
-            'min_height' => 1,
-            'image_versions' => array(
-                '50x50' => array(
-                    'max_width' => 50,
-                    'max_height' => 50,
-                    'quality' => 100
-                ),
-                '100x100' => array(
-                    'max_width' => 100,
-                    'max_height' => 100,
-                    'quality' => 100
-                ),
-                '150x150' => array(
-                    'max_width' => 150,
-                    'max_height' => 150,
-                    'quality' => 100
-                ),
-                '200x200' => array(
-                    'max_width' => 200,
-                    'max_height' => 200,
-                    'quality' => 100
-                ),
-                '400x400' => array(
-                    'max_width' => 400,
-                    'max_height' => 400,
-                    'quality' => 100
-                ),
-                '800x800' => array(
-                    'max_width' => 800,
-                    'max_height' => 800,
-                    'quality' => 100
-                )
-            )
-        );
-        if (!is_dir($this->options['upload_dir'])) {
-            mkdir($this->options['upload_dir'], $this->options['mkdir_mode'], true);
-        }
+        $this->init('resource', 'id', ['id', 'store_id', 'real_name', 'uploaded_name', 'md5', 'file_type', 'category_id']);
     }
 
     /**
@@ -130,7 +88,7 @@ class Resource extends AbstractModel
     protected function validate($uploaded_file, $file, $error, $index)
     {
         if ($error) {
-            $file->error = $this->get_error_message($error);
+            $file->error = $this->getErrorMessage($error);
             return false;
         }
         $content_length = $this->fix_integer_overflow(
@@ -138,11 +96,11 @@ class Resource extends AbstractModel
         );
         $post_max_size = $this->get_config_bytes(ini_get('post_max_size'));
         if ($post_max_size && ($content_length > $post_max_size)) {
-            $file->error = $this->get_error_message('post_max_size');
+            $file->error = $this->getErrorMessage('post_max_size');
             return false;
         }
         if (!preg_match($this->options['accept_file_types'], $file->name)) {
-            $file->error = $this->get_error_message('accept_file_types');
+            $file->error = $this->getErrorMessage('accept_file_types');
             return false;
         }
         if ($uploaded_file && is_uploaded_file($uploaded_file)) {
@@ -154,19 +112,19 @@ class Resource extends AbstractModel
                 $file_size > $this->options['max_file_size'] ||
                 $file->size > $this->options['max_file_size'])
         ) {
-            $file->error = $this->get_error_message('max_file_size');
+            $file->error = $this->getErrorMessage('max_file_size');
             return false;
         }
         if ($this->options['min_file_size'] &&
                 $file_size < $this->options['min_file_size']) {
-            $file->error = $this->get_error_message('min_file_size');
+            $file->error = $this->getErrorMessage('min_file_size');
             return false;
         }
         if (is_int($this->options['max_number_of_files']) &&
                 ($this->count_file_objects() >= $this->options['max_number_of_files']) &&
                 // Ignore additional chunks of existing files:
                 !is_file($this->get_upload_path($file->name))) {
-            $file->error = $this->get_error_message('max_number_of_files');
+            $file->error = $this->getErrorMessage('max_number_of_files');
             return false;
         }
         $max_width = $this->options['max_width'];
@@ -192,37 +150,29 @@ class Resource extends AbstractModel
         }
         if (!empty($img_width)) {
             if ($max_width && $img_width > $max_width) {
-                $file->error = $this->get_error_message('max_width');
+                $file->error = $this->getErrorMessage('max_width');
                 return false;
             }
             if ($max_height && $img_height > $max_height) {
-                $file->error = $this->get_error_message('max_height');
+                $file->error = $this->getErrorMessage('max_height');
                 return false;
             }
             if ($min_width && $img_width < $min_width) {
-                $file->error = $this->get_error_message('min_width');
+                $file->error = $this->getErrorMessage('min_width');
                 return false;
             }
             if ($min_height && $img_height < $min_height) {
-                $file->error = $this->get_error_message('min_height');
+                $file->error = $this->getErrorMessage('min_height');
                 return false;
             }
         }
         return true;
     }
 
-    protected function get_error_message($error)
+    protected function getErrorMessage($error)
     {
         return isset(self::$errorMessage[$error]) ?
                 self::$errorMessage[$error] : $error;
-    }
-
-    protected function get_file_name($file_path, $name, $size, $type, $error, $index, $content_range)
-    {
-        $name = $this->trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range);
-        return $this->get_unique_filename(
-                        $file_path, $this->fix_file_extension($file_path, $name, $size, $type, $error, $index, $content_range), $size, $type, $error, $index, $content_range
-        );
     }
 
 }

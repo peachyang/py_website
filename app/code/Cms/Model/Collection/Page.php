@@ -18,41 +18,47 @@ class Page extends AbstractCollection
 
     protected function afterLoad()
     {
+        parent::afterLoad();
         $ids = [];
         $data = [];
         foreach ($this->storage as $item) {
-            $ids[] = $item['id'];
-            $data[$item['id']] = $item;
-            $data[$item['id']]['language'] = [];
-            $data[$item['id']]['category'] = [];
             $content = @gzdecode($item['content']);
-            if ($content !== false) {
-                $data[$item['id']]['content'] = $content;
+            if (isset($item['id'])) {
+                $ids[] = $item['id'];
+                $data[$item['id']] = $item;
+                $data[$item['id']]['language'] = [];
+                $data[$item['id']]['category'] = [];
+                if ($content !== false) {
+                    $data[$item['id']]['content'] = $content;
+                }
+            } else if ($content !== false) {
+                $this->storage[$key]['content'] = $content;
             }
         }
-        $languages = new Language;
-        $languages->join('cms_page_language', 'core_language.id=cms_page_language.language_id', ['page_id'], 'right')
-                ->columns(['language_id' => 'id', 'language' => 'code'])
-                ->where(new In('page_id', $ids));
-        $languages->load(false);
-        foreach ($languages as $item) {
-            if (isset($data[$item['page_id']])) {
-                $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
+        if (!empty($ids)) {
+            $languages = new Language;
+            $languages->join('cms_page_language', 'core_language.id=cms_page_language.language_id', ['page_id'], 'right')
+                    ->columns(['language_id' => 'id', 'language' => 'code'])
+                    ->where(new In('page_id', $ids));
+            $languages->load(false);
+            foreach ($languages as $item) {
+                if (isset($data[$item['page_id']])) {
+                    $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
+                }
             }
-        }
-        $tableGateway = new TableGateway('cms_category_page', $this->getContainer()->get('dbAdapter'));
-        $select = $tableGateway->getSql()->select();
-        $select->join('cms_category_language', 'cms_category_page.category_id=cms_category_language.category_id', ['name'], 'left')
-                ->where(new In('page_id', $ids))
-                ->where(['language_id' => Bootstrap::getLanguage()->getId()]);
-        $category = $tableGateway->selectWith($select);
-        foreach ($category as $item) {
-            if (isset($data[$item['page_id']])) {
-                $data[$item['page_id']]['category'][$item['category_id']] = $item['name'];
+            $tableGateway = new TableGateway('cms_category_page', $this->getContainer()->get('dbAdapter'));
+            $select = $tableGateway->getSql()->select();
+            $select->join('cms_category_language', 'cms_category_page.category_id=cms_category_language.category_id', ['name'], 'left')
+                    ->where(new In('page_id', $ids))
+                    ->where(['language_id' => Bootstrap::getLanguage()->getId()]);
+            $category = $tableGateway->selectWith($select);
+            foreach ($category as $item) {
+                if (isset($data[$item['page_id']])) {
+                    $data[$item['page_id']]['category'][$item['category_id']] = $item['name'];
+                }
             }
+            $this->storage = array_values($data);
         }
-        $this->storage = array_values($data);
-        parent::afterLoad();
     }
 
 }

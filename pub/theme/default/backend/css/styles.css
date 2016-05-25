@@ -62,10 +62,11 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
 .image-body-list{height:450px;overflow-y:scroll}
 .image-body-list-b{text-align:right}
-#upload-list span{display:inline-block}
+#upload-list span{display:inline-block;font-size:12px;padding:6px 0}
 #upload-list .upload-name{width:70%}
 #upload-list .upload-note{width:20%}
 #upload-list .upload-move{width:10%}
+#upload-resource .buttons-set{padding:20px 0;background:#F7F8FA;border-top:1px solid #cce0e9}
 #resource-list .grid .title{display:block;line-height:1.5;word-break:break-all}
 .widget-upload{font-size:0!important}
 .widget-upload .inline-box{display:inline-block;vertical-align:middle;width:122px;margin-right:6px;border:1px solid #aaa}
@@ -218,7 +219,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane.active{display:table}
 .admin .edit .tab-pane .input-box{display:table-row}
 .admin .edit .tab-pane .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
-.admin .edit .tab-pane .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px}
+.admin .edit .tab-pane .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px;vertical-align:top}
 .admin .edit .tab-pane .cell .form-control{max-width:320px}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}

@@ -19,14 +19,13 @@ trait Resize
      * @param int $height
      * @return \Imagine\Image\AbstractImage
      */
-    protected function resize($file, $width, $height)
+    protected function resize($file, $width, $height = 0)
     {
         if (is_null($this->imagine)) {
             $this->imagine = $this->getContainer()->get('imagine');
         }
         $image = $this->imagine->open($file);
-        $image->thumbnail(new Box($width, $height ? $height : $width));
-        return $image;
+        return $image->thumbnail(new Box($width, $height ? $height : $width));
     }
 
 }

@@ -56,7 +56,7 @@ class TranslationController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data);
+            $result = $this->validateForm($data, ['id']);
             if ($result['error'] === 0) {
                 try {
                     $model = new Model;
@@ -66,6 +66,7 @@ class TranslationController extends AuthActionController
                         $count++;
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
+                    $result['removeLine'] = (array) $data['id'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];

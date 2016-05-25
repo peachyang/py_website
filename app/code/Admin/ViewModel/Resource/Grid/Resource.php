@@ -16,7 +16,7 @@ class Resource extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getDeleteAction'];
-    protected $imageOnly = false;
+    protected $messAction = ['getMessDeleteAction'];
 
     public function getEditAction($item)
     {
@@ -33,10 +33,16 @@ class Resource extends PGrid
                 $this->translate('Delete') . '</span></a>';
     }
 
+    public function getMessDeleteAction()
+    {
+        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-serialize=".grid .table" title="' . $this->translate('Delete') .
+                '"><span>' . $this->translate('Delete') . '</span></a>';
+    }
+
     public function getEditUrl()
     {
         if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/Resource_Resource/edit/');
+            $this->editUrl = $this->getAdminUrl(':ADMIN/resource_resource/edit/');
         }
         return $this->editUrl;
     }
@@ -44,7 +50,7 @@ class Resource extends PGrid
     public function getDeleteUrl()
     {
         if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/Resource_Resource/delete/');
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/resource_resource/delete/');
         }
         return $this->deleteUrl;
     }
@@ -54,11 +60,6 @@ class Resource extends PGrid
         $model = new Model;
         $user = (new Segment('admin'))->get('user');
         return [
-            'id' => [
-                'label' => 'ID',
-                'use4filter' => false,
-                'use4popupfilter' => false
-            ],
             'store_id' => ($user->getStore() ? [
                 'use4popupfilter' => false,
                 'type' => 'hidden',
@@ -81,15 +82,15 @@ class Resource extends PGrid
             'file_type' => [
                 'label' => 'File Type',
                 'type' => 'select',
-                'use4popupfilter' => !$this->imageOnly,
+                'use4popupfilter' => true,
                 'options' => (new FileType)->getSourceArray()
             ],
-            'old_name' => [
-                'label' => 'Old Name',
+            'uploaded_name' => [
+                'label' => 'Uploaded Name',
                 'use4popupfilter' => true
             ],
-            'file_name' => [
-                'label' => 'File name',
+            'real_name' => [
+                'label' => 'Real Name',
                 'fileUrl' => $this->getResourceUrl(),
                 'use4popupfilter' => true
             ]
@@ -104,12 +105,6 @@ class Resource extends PGrid
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
         return parent::prepareCollection($collection);
-    }
-
-    public function setImageOnly($imageOnly)
-    {
-        $this->imageOnly = (bool) $imageOnly;
-        return $this;
     }
 
 }

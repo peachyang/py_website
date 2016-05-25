@@ -11,11 +11,11 @@ class ResizeController extends ActionController
 
     public function indexAction()
     {
-        $file = BP . 'pub/resource/images/' . $this->getOption('file');
+        $file = BP . 'pub/resource/image/' . $this->getOption('file');
         if (!file_exists($file)) {
             return $this->notFoundAction();
         }
-        $resized = BP . 'pub/resource/images/resized/' . $this->getOption('width') . 'x' . $this->getOption('height') . '/' . $this->getOption('file');
+        $resized = BP . 'pub/resource/image/resized/' . $this->getOption('width') . 'x' . $this->getOption('height') . '/' . $this->getOption('file');
         $path = dirname($resized);
         if (!is_dir($path)) {
             mkdir($path, 0777, true);

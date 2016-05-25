@@ -36,7 +36,7 @@ admin_cms_page_edit:
                 action:
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload.js
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
                         params: backend/js/jquery.ui/core.js
@@ -51,7 +51,10 @@ admin_cms_page_edit:
                         params: backend/js/jquery.ui/sortable.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileuploadbootstrap.js
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/config.js
                     -
                         method: addLink
                         params: backend/css/jquery-ui.min.css

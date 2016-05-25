@@ -34,7 +34,6 @@ class Page extends PEdit
     {
         $model = $this->getVariable('model');
         $user = (new Segment('admin'))->get('user');
-
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -100,8 +99,7 @@ class Page extends PEdit
             'image' => [
                 'type' => 'widget',
                 'label' => 'Image',
-                'widget' => 'upload',
-                'multiple' => 'multiple'
+                'widget' => 'upload'
             ],
             'content' => [
                 'type' => 'textarea',
@@ -120,6 +118,11 @@ class Page extends PEdit
     public function getThumbnail()
     {
         return $this->getVariable('model')->getThumbnail();
+    }
+
+    public function getImageOnly()
+    {
+        return true;
     }
 
 }

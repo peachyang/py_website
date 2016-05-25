@@ -5,6 +5,7 @@ namespace Seahinet\Admin\ViewModel;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 use Seahinet\Lib\ViewModel\Template;
+use Zend\Db\Sql\Predicate\Like;
 
 class Grid extends AbstractViewModel
 {
@@ -137,7 +138,14 @@ class Grid extends AbstractViewModel
                 if (trim($value) === '') {
                     unset($condition[$key]);
                 } else if (strpos($key, ':')) {
-                    $condition[str_replace(':', '.', $key)] = $value;
+                    if (strpos($value, '%') !== false) {
+                        $collection->where(new Like(str_replace(':', '.', $key), $value));
+                    } else {
+                        $condition[str_replace(':', '.', $key)] = $value;
+                    }
+                    unset($condition[$key]);
+                } else if (strpos($value, '%') !== false) {
+                    $collection->where(new Like($key, $value));
                     unset($condition[$key]);
                 }
             }

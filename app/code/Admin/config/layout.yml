@@ -173,15 +173,6 @@ edit:
                     -
                         method: addScript
                         params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.ui.widget.js'}]
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/jquery.iframe-transport.js'}]
 admin_dashboard:
     update: admin
     root:

@@ -4,13 +4,14 @@ namespace Seahinet\Lib\Stdlib;
 
 use ArrayAccess;
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use Serializable;
 
 /**
  * Simplify PHP ArrayObject
  */
-class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
+class ArrayObject implements ArrayAccess, Countable, Serializable, IteratorAggregate
 {
 
     /**
@@ -194,6 +195,16 @@ class ArrayObject implements ArrayAccess, Serializable, IteratorAggregate
     {
         $this->storage += $array;
         return $this;
+    }
+
+    /**
+     * Get count of array
+     * 
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->storage);
     }
 
 }

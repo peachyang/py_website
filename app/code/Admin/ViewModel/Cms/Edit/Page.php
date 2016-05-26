@@ -38,6 +38,9 @@ class Page extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'store_id' => ($user->getStore() ? [
                 'type' => 'hidden',
                 'value' => $user->getStore()->getId()

@@ -34,6 +34,9 @@ class Edit extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'code' => [
                 'type' => 'text',
                 'label' => 'Code',

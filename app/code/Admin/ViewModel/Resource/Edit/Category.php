@@ -39,6 +39,9 @@ class Category extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'parent_id' => [
                 'type' => 'select',
                 'options' => (new CategorySource)->getSourceArray($model ? $model->getId() : []),

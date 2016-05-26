@@ -10,7 +10,7 @@ class Category extends AbstractModel
 
     protected function construct()
     {
-        $this->init('cms_category', 'id', ['id', 'uri_key', 'status']);
+        $this->init('cms_category', 'id', ['id', 'uri_key', 'status', 'parent_id']);
     }
 
     protected function beforeSave()

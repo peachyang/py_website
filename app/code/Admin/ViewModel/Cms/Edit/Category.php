@@ -36,6 +36,9 @@ class Category extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'parent_id' => [
                 'type' => 'select',
                 'label' => 'Parent ID',

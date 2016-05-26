@@ -87,7 +87,10 @@
                             $(o).find('.upload-note .fa').removeClass('fa-pause').addClass('fa-spinner fa-spin');
                             data.submit().success(function (result, textStatus, jqXHR) {
                                 if (result.error == 0) {
-                                    addMessages(result.message)
+                                    addMessages(result.message);
+                                    if ($(o).siblings('.item').length === 0) {
+                                        $('#resource-modal .nav-tabs [href="#select-resource"]').tab('show');
+                                    }
                                     $(o).remove();
                                 } else {
                                     alert(result.error);

@@ -32,6 +32,9 @@ class Merchant extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'code' => [
                 'type' => 'text',
                 'label' => 'Name',

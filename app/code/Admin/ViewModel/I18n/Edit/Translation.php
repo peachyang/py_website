@@ -24,6 +24,9 @@ class Translation extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'locale' => [
                 'type' => 'select',
                 'label' => 'Locale',

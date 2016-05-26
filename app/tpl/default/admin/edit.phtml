@@ -6,7 +6,6 @@ $elements = $this->getVariable('elements');
     <form action="<?php echo $this->getSaveUrl() ?>" method="post">
         <?php echo $this->getChild('tabs') ?>
         <div class="page-content table tab-pane fade active in" id="main-tab">
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <?php
             foreach ($elements as $key => $item) {
                 echo $this->getInputBox($key, $item);

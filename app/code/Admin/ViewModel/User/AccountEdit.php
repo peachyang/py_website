@@ -23,6 +23,9 @@ class AccountEdit extends Edit
             'id' => [
                 'type' => 'hidden'
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'username' => [
                 'type' => 'text',
                 'label' => 'Username',

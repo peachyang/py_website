@@ -34,6 +34,9 @@ class Language extends PEdit
             'id' => [
                 'type' => 'hidden',
             ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
             'code' => [
                 'type' => 'select',
                 'label' => 'Code',

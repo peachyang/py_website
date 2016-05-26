@@ -32,7 +32,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .table>thead>tr>th{vertical-align:bottom;border-bottom:1px solid #ddd;white-space:nowrap}
 .table>caption+thead>tr:first-child>th,.table>colgroup+thead>tr:first-child>th,.table>thead:first-child>tr:first-child>th,.table>caption+thead>tr:first-child>td,.table>colgroup+thead>tr:first-child>td,.table>thead:first-child>tr:first-child>td{border-top:0}
 .table-no-border th,.table-no-border td{border:none!important}
-.table-striped>tbody>tr:nth-child(even){background-color:#f9f9f9}
+.table-striped>tbody>tr:nth-child(even){background-color:#f6fbfd}
 .table-hover>tbody>tr:hover{background-color:#f5f5f5!important}
 .scope.dropdown{display:inline-block;margin:10px 0 0 20px}
 .scope.dropdown .dropdown-toggle{text-decoration:none;font-size:12px;line-height:1}
@@ -188,15 +188,15 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .breadcrumb .current{color:#02a0e9}
 .admin .breadcrumb .buttons-set{float:right;width:50%;padding-right:10px;font-size:12px;line-height:30px;text-align:right;color:#6c6c6c}
 .admin .breadcrumb .buttons-set+ol{float:left;width:50%}
-.admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:9px 0 7px}
-.admin .grid .filters .input-box{display:inline-block;padding:12px 0 12px 23px;margin:0;vertical-align:top}
+.admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:18px 0}
+.admin .grid .filters .input-box{display:inline-block;padding:2px 0 0 23px;margin:0;vertical-align:top}
 .admin .grid .filters .control-label{line-height:21px;font-size:12px;color:#6c6c6c}
 .admin .grid .filters .control-a{font-size:14px; padding:8px;}
 .admin .grid .filters .cell{display:inline-block}
 .admin .grid .filters .form-control{width:99px;height:21px;line-height:21px;border-radius:4px;border:1px solid #a3a3a3;box-shadow:0 0 6px #999 inset}
 .admin .grid .filters .to{font-size:21px;line-height:21px;color:#6c6c6c;margin:0 5px}
 .admin .grid .filters .buttons-set{display:inline-block;vertical-align:top;margin:0}
-.admin .grid .filters .buttons-set .btn{color:#fff;background:#02a0e9;box-shadow:0 0 4px 1px #0286c4 inset;padding:9px 20px;font-size:18px;line-height:1;margin-left:36px;border-radius:3px;text-decoration:none}
+.admin .grid .filters .buttons-set .btn{color:#fff;background:#02a0e9;box-shadow:0 0 4px 1px #0286c4 inset;padding:5px 10px;font-size:14px;line-height:1;margin-left:36px;border-radius:3px;text-decoration:none}
 .admin .grid .filters .buttons-set .btn:hover,.admin .grid .filters .buttons-set .btn:focus{background:#028ccc}
 .admin .grid td,.admin .grid th{padding:7px 8px}
 .admin .grid .sort-by th{background:#fafafa;color:#02a0e9}

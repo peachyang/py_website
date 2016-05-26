@@ -70,7 +70,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 #resource-list .grid .title{display:block;line-height:1.5;word-break:break-all}
 .widget-upload{font-size:0!important}
 .widget-upload .inline-box{display:inline-block;vertical-align:middle;width:122px;margin-right:6px;border:1px solid #aaa}
-.widget-upload .inline-box .btn{padding:0;display:block;text-align:center;height:120px;width:100%}
+.widget-upload .inline-box .btn{padding:10px;display:block;text-align:center;height:120px;width:100%}
 .widget-upload .inline-box .btn img{pointer-events:none}
 .widget-upload .inline-box .delete{display:block;text-align:center;font-size:16px;line-height:1.2;border-top:1px solid #aaa}
 .widget-upload .add{vertical-align:middle;font-size:32px;line-height:139.2px;text-decoration:none}
@@ -81,6 +81,9 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .nav-tabs~.tab-pane.active{display:block}
 .breadcrumb li{display:inline}
 .breadcrumb li:not(.label)+li:before{content:">";margin:0 4px}
+.breadcrumb .buttons-set{font-size:0}
+.breadcrumb .buttons-set>*{font-size:12px;line-height:1.2;color:#666;margin-left:8px}
+.breadcrumb .buttons-set>*:hover{text-decoration:underline}
 .alert{padding:6px 12px;font-size:12px;line-height:1;border:1px solid transparent}
 .alert a{font-weight:bold}
 .alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}
@@ -153,7 +156,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 @keyframes bellring{0%{-webkit-transform:rotate(30deg);transform:rotate(30deg)}50%{-webkit-transform:rotate(-30deg);transform:rotate(-30deg)}100%{-webkit-transform:rotate(30deg);transform:rotate(30deg)}}
 .admin .header .top-menu .dropdown .dropdown-menu{display:none;right:-1px;width:10rem;border-radius:0 0 5px 5px;padding:5px 0;border:1px solid #e7e7e7;background:#fff}
 .admin .header .top-menu .messages.open.has-message .dropdown-menu,.admin .header .top-menu .language.open .dropdown-menu{display:block}
-.admin .header .top-menu .messages .dropdown-menu .alert{border-left:none;border-right:none;text-align:left}
+.admin .header .top-menu .messages .dropdown-menu .alert{border-left:none;border-right:none;text-align:left;word-break:break-all}
 .admin .header .top-menu .language .current{display:none}
 .admin .header .top-menu .language .dropdown-menu{width:auto;text-align:center}
 .admin .header .top-menu .language .dropdown-menu a{display:block;line-height:2;white-space:nowrap;padding:0 10px}

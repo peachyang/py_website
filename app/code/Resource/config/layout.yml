@@ -78,7 +78,7 @@ admin_resource_list:
                                 params: [{link:':ADMIN/resource_resource/',label:'Resource Management'}]
                             -
                                 method: addAdditional
-                                params: [{'label':'Upload','data':{'toggle':'modal','target':'#resource-modal','upload':'upload'}}]
+                                params: [{'label':'Upload','data':{'toggle':'modal','target':'#resource-modal','upload':'upload','reload':'reload'}}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
                         template: resource/grid

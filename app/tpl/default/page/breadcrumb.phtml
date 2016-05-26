@@ -12,8 +12,9 @@
                     echo $this->isAdminPage() ?
                             $this->getAdminUrl($crumb['link']) :
                             $this->getBaseUrl($crumb['link'])
-                    ?>" title="<?php echo $this->translate($crumb['label']) ?>">
-                           <?php echo $this->translate($crumb['label']) ?>
+                    ?>" title="<?php echo $this->translate($crumb['label'])
+                    ?>">
+                        <?php echo $this->translate($crumb['label']) ?>
                     </a>
                 <?php else: ?>
                     <button type="button" class="btn"<?php

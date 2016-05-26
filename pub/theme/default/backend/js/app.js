@@ -78,7 +78,12 @@
                 });
             }
         });
-        var addMessages = function () {
+        window.addMessages = function (messages) {
+            var html = '';
+            for (var i in messages) {
+                html += '<div class="alert alert-' + messages[i].level + '">' + messages[i].message + '</div>';
+            }
+            $('.header .top-menu .messages .message-box').append(html);
             $('.header .top-menu .messages .badge').text($('.message-box>.alert').length);
             $('.header .top-menu .messages').addClass('has-message');
         };
@@ -91,12 +96,7 @@
             } else if (json.reload) {
                 location.reload();
             } else if (json.message.length) {
-                var html = '';
-                for (var i in json.message) {
-                    html += '<div class="alert alert-' + json.message[i].level + '">' + json.message[i].message + '</div>';
-                }
-                $('.header .top-menu .messages .message-box').append(html);
-                addMessages();
+                addMessages(json.message);
             }
             if (json.removeLine) {
                 var t = $(this).parentsUntil('tbody,ul,ol,dl').last();

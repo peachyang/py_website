@@ -72,6 +72,9 @@
                         if (a.length) {
                             $(widgetUpload.target).trigger('resource.selected');
                         }
+                        if ($(widgetUpload.target).is('[data-reload]')) {
+                            location.reload();
+                        }
                     }
                 });
                 $("#upload-element").fileupload({
@@ -84,6 +87,7 @@
                             $(o).find('.upload-note .fa').removeClass('fa-pause').addClass('fa-spinner fa-spin');
                             data.submit().success(function (result, textStatus, jqXHR) {
                                 if (result.error == 0) {
+                                    addMessages(result.message)
                                     $(o).remove();
                                 } else {
                                     alert(result.error);

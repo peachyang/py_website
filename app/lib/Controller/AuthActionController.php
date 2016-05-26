@@ -28,6 +28,13 @@ class AuthActionController extends ActionController
                 $method = 'notFoundAction';
             }
         }
+        if ($method !== 'notFoundAction') {
+            $param = ['controller' => $this, 'method' => $method];
+            $dispatcher = $this->getContainer()->get('eventDispatcher');
+            $dispatcher->trigger(get_class($this) . '.dispatch.before', $param);
+            $dispatcher->trigger('auth.dispatch.before', $param);
+            $dispatcher->trigger('dispatch.before', $param);
+        }
         return $this->$method();
     }
 

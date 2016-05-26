@@ -112,12 +112,20 @@ class Page extends PEdit
 
     public function getImage()
     {
-        return $this->getVariable('model')->getImage();
+        if ($this->getVariable('model')) {
+            return $this->getVariable('model')->getImage();
+        } else {
+            return [];
+        }
     }
 
     public function getThumbnail()
     {
-        return $this->getVariable('model')->getThumbnail();
+        if ($this->getVariable('model')) {
+            return $this->getVariable('model')->getThumbnail();
+        } else {
+            return [];
+        }
     }
 
     public function getImageOnly()

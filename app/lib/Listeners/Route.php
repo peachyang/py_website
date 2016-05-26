@@ -39,7 +39,7 @@ class Route implements ListenerInterface
         return new Dispatcher($data);
     }
 
-    public function dispatch($event)
+    public function dispatch($event, $name)
     {
         $routers = $event['routers'];
         $dispatcher = $this->getDispatcher($routers);

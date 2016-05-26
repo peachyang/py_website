@@ -24,8 +24,8 @@ class CacheController extends AuthActionController
                 $code = [$code];
             }
             foreach ($code as $prefix) {
-                $eventDispatcher->trigger($prefix . '.cache.delete.before');
                 $list = $cache->fetch('CACHE_LIST_' . $prefix);
+                $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
                 if ($list) {
                     foreach ((array) $list as $key => $value) {
                         $cache->delete($key, $prefix);
@@ -33,7 +33,7 @@ class CacheController extends AuthActionController
                 } else {
                     $cache->delete($prefix);
                 }
-                $eventDispatcher->trigger($prefix . '.cache.delete.after');
+                $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
                 $count ++;
             }
             $result['message'][] = ['message' => $this->translate('%d cache(s) have been flushed successfully.', [$count]), 'level' => 'success'];

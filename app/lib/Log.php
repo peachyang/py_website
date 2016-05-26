@@ -58,9 +58,10 @@ class Log
     protected function getLogger()
     {
         if (is_null(static::$logger)) {
-            static::$logger = new Logger('default');
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0777));
-            static::$logger->pushHandler(new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0777));
+            static::$logger = new Logger('default', [
+                new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false),
+                new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false)
+            ]);
         }
         return static::$logger;
     }
@@ -72,8 +73,8 @@ class Log
     {
         $name = isset($config['name']) ? $config['name'] : 'default';
         $handlers = isset($config['handlers']) ? $config['handlers'] : [
-            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false, 0640),
-            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false, 0640)
+            new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false),
+            new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false)
         ];
         $processors = isset($config['processors']) ? $config['processors'] : [];
         static::$logger = new Logger($name, $handlers, $processors);
@@ -96,11 +97,11 @@ class Log
     }
 
     /**
-     * @param mixed $level
      * @param string $message
+     * @param mixed $level
      * @param array $context
      */
-    public function log($level = Logger::DEBUG, $message = '', array $context = [])
+    public function log($message = '', $level = Logger::DEBUG, array $context = [])
     {
         $this->getLogger()->log($level, $message, $context);
     }

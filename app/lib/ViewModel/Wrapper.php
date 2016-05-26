@@ -12,7 +12,7 @@ class Wrapper extends AbstractViewModel
      */
     public function render()
     {
-        return (string) implode('', (array) $this->getVariables());
+        return implode('', $this->getVariables());
     }
 
 }

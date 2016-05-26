@@ -57,7 +57,7 @@ INSERT INTO `core_language` VALUES (null,1,'en-US','English',1,1,null,null);
 
 CREATE TABLE IF NOT EXISTS `cms_page`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Page ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `uri_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URI Key',
     `title` VARCHAR(255) DEFAULT '' COMMENT 'Page title',
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `cms_page_language`(
 CREATE TABLE IF NOT EXISTS `cms_category`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
     `uri_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URI Key',
-    `parent_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Parent Category ID',
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent Category ID',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `cms_category_page`(
 
 CREATE TABLE IF NOT EXISTS `cms_block`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Block ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `code` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Identify code',
     `content` BLOB COMMENT 'Page content',
@@ -204,14 +204,14 @@ INSERT INTO `admin_permission` VALUES (1,-1,1,null);
 CREATE TABLE IF NOT EXISTS `admin_user` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Admin ID',
     `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `username` VARCHAR(255) NOT NULL COMMENT 'Username',
     `password` CHAR(60) NOT NULL COMMENT 'Password',
     `email` VARCHAR(255) NOT NULL COMMENT 'E-Mail',
     `logdate` TIMESTAMP NULL DEFAULT NULL COMMENT 'Last login time',
     `lognum` INTEGER UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Login number',
-    `rp_token` CHAR(32) DEFAULT NULL COMMENT 'Reset password link token',
+    `rp_token` CHAR(32) NULL DEFAULT NULL COMMENT 'Reset password link token',
     `rp_token_created_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Reset password link token creation date',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
@@ -230,8 +230,8 @@ INSERT INTO `admin_user` VALUES (null,1,null,1,'admin','$2y$10$5.GIrJ/AdDHso6cx6
 
 CREATE TABLE IF NOT EXISTS `core_config` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Config ID',
-    `merchant_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Merchant ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `merchant_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Merchant ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
     `path` VARCHAR(255) NOT NULL COMMENT 'Config path',
     `value` VARCHAR(255) COMMENT 'Config value',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
@@ -458,9 +458,9 @@ CREATE TABLE IF NOT EXISTS `email_queue`(
 
 CREATE TABLE IF NOT EXISTS `resource_category` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
-    `parent_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Parent category ID',
-    `code` VARCHAR(45) DEFAULT NULL COMMENT 'Category code',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent category ID',
+    `code` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Category code',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated Time',
     PRIMARY KEY (`id`),
@@ -486,12 +486,12 @@ CREATE TABLE IF NOT EXISTS `resource_category_language` (
 
 CREATE TABLE IF NOT EXISTS `resource` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Resource ID',
-    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
-    `category_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Category ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
+    `category_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Category ID',
     `real_name` VARCHAR(120) NOT NULL COMMENT 'Real files name',
     `uploaded_name` VARCHAR(120) DEFAULT '' COMMENT 'Uploaded files name',
     `file_type` VARCHAR(20) DEFAULT '' COMMENT 'File MIME',
-    `md5` CHAR(32) DEFAULT NULL COMMENT 'Resrouce md5 hash value',
+    `md5` CHAR(32) NULL DEFAULT NULL COMMENT 'Resrouce md5 hash value',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated TIme',
     PRIMARY KEY (`id`),

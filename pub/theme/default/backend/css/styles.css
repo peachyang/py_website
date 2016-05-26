@@ -107,7 +107,7 @@ label,.label{vertical-align:top}
 .form-control::-moz-placeholder,.form-control:-ms-input-placeholder,.form-control::-webkit-input-placeholder{color:#999}
 select.form-control{padding:0 .42em}
 textarea.form-control,select[multiple].form-control{min-height:4.25em;padding-top:.25em;padding-bottom:.25em;resize:vertical}
-.form-control[type=file]{border:none;box-shadow:none;padding:0;line-height:20px}
+.form-control[type=file]{border:none;box-shadow:none;padding:0;line-height:20px;width:auto}
 .form-inline .form-control,.form-control.captcha{display:inline-block;width:auto;vertical-align:top}
 .form-inline .control-label,.form-inline .cell{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}
@@ -188,14 +188,15 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .breadcrumb .current{color:#02a0e9}
 .admin .breadcrumb .buttons-set{float:right;width:50%;padding-right:10px;font-size:12px;line-height:30px;text-align:right;color:#6c6c6c}
 .admin .breadcrumb .buttons-set+ol{float:left;width:50%}
-.admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:18px 0}
-.admin .grid .filters .input-box{display:inline-block;padding:2px 0 0 23px;margin:0;vertical-align:top}
+.admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:8px 0}
+.admin .grid .filters .input-box{display:inline-block;padding:12px 0 10px 23px;margin:0;vertical-align:top}
 .admin .grid .filters .control-label{line-height:21px;font-size:12px;color:#6c6c6c}
 .admin .grid .filters .control-a{font-size:14px; padding:8px;}
 .admin .grid .filters .cell{display:inline-block}
-.admin .grid .filters .form-control{width:99px;height:21px;line-height:21px;border-radius:4px;border:1px solid #a3a3a3;box-shadow:0 0 6px #999 inset}
+.admin .grid .filters .form-control{width:99px;height:21px;line-height:21px}
+.admin .grid .filters .form-control[type=file]{width:auto;line-height:16px}
 .admin .grid .filters .to{font-size:21px;line-height:21px;color:#6c6c6c;margin:0 5px}
-.admin .grid .filters .buttons-set{display:inline-block;vertical-align:top;margin:0}
+.admin .grid .filters .buttons-set{display:inline-block;vertical-align:top;margin:0;padding:10px 0 8px}
 .admin .grid .filters .buttons-set .btn{color:#fff;background:#02a0e9;box-shadow:0 0 4px 1px #0286c4 inset;padding:5px 10px;font-size:14px;line-height:1;margin-left:36px;border-radius:3px;text-decoration:none}
 .admin .grid .filters .buttons-set .btn:hover,.admin .grid .filters .buttons-set .btn:focus{background:#028ccc}
 .admin .grid td,.admin .grid th{padding:7px 8px}

@@ -58,9 +58,13 @@ $query = $this->getQuery();
                     ?> 
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="text-right">
+                        <?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
-    </div>    
-    <div class="image-body-list-b">
-        <?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?>
     </div>
 </div>

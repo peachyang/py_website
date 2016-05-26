@@ -44,6 +44,9 @@
                 }).delegate('.filters form', 'submit', function () {
                     widgetUpload.loadImagesList($(this).serialize());
                     return false;
+                }).delegate('.pager a', 'click', function () {
+                    widgetUpload.loadImagesList($(this).attr('href').replace(/^[^\?]+\?/,''));
+                    return false;
                 });
                 $('#upload-list').delegate('.upload-remove', 'click', function () {
                     $(this).parent('.item').remove();

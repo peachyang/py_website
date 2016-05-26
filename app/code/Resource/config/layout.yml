@@ -24,11 +24,6 @@ admin_resource_category_edit:
     update: edit
     root:
         children:
-            head:
-                action:
-                    -
-                        method: addScript
-                        params: [{src:'backend/js/resource/resource.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
@@ -41,10 +36,6 @@ admin_resource_category_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Resource\Edit\Category
-                        children:
-                            category_language:
-                                type: Seahinet\Lib\ViewModel\Template
-                                template: resource/category_language
 admin_resource_list:
     update: grid
     root:

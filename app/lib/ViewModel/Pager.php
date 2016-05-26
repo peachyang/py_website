@@ -23,7 +23,7 @@ class Pager extends AbstractViewModel
     /**
      * @var int
      */
-    protected $count = 0;
+    protected $total = null;
 
     public function __construct()
     {
@@ -63,10 +63,10 @@ class Pager extends AbstractViewModel
      */
     public function getCount()
     {
-        if (is_null($this->count)) {
-            $this->count = count($this->getCollection()->getArrayCopy());
+        if (is_null($this->total)) {
+            $this->total = count($this->getCollection());
         }
-        return $this->count;
+        return $this->total;
     }
 
     /**

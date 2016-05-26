@@ -44,6 +44,7 @@ Options FollowSymLinks
     ExpiresByType application/x-compressed A0
     ExpiresByType application/x-gzip A0
     ExpiresByType application/x-bzip2 A0
+    ExpiresByType application/x-tar A0
     ExpiresByType application/xml A0
     ExpiresByType application/json A0
 </IfModule>

@@ -97,7 +97,7 @@ class ResourceController extends AuthActionController
      * 
      * @param \Seahinet\Lib\Http\UploadedFile $file
      * @param string $path
-     * @param string $mode
+     * @param int $mode
      * @return array
      * @throws Exception
      */

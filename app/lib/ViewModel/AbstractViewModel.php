@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\ViewModel;
 
 use JsonSerializable;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
@@ -92,7 +93,7 @@ abstract class AbstractViewModel implements Serializable
                 return $this instanceof JsonSerializable ? $this->jsonSerialize() : '';
             }
             if ($this->getCacheKey()) {
-                $lang = $this->getContainer()->get('language')['code'];
+                $lang = Bootstrap::getLanguage()['code'];
                 $cache = $this->getContainer()->get('cache');
                 $rendered = $cache->fetch($lang . $this->getCacheKey(), 'VIEWMODEL_RENDERED_');
                 if ($rendered) {

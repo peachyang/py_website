@@ -24,6 +24,9 @@ class Respond implements ListenerInterface
                     header(sprintf('%s: %s', $name, $values), false);
                 }
             }
+            foreach ($response->getCookies()->toHeaders() as $value) {
+                header(sprintf('Set-Cookie: %s', $value), false);
+            }
         }
 
         $body = $response->getBody();

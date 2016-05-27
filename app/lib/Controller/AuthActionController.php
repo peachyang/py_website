@@ -11,6 +11,9 @@ use Seahinet\Lib\Session\Segment;
 class AuthActionController extends ActionController
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function dispatch($request = null, $routeMatch = null)
     {
         $this->request = $request;
@@ -28,6 +31,14 @@ class AuthActionController extends ActionController
                 $method = 'notFoundAction';
             }
         }
+        return $this->doDispatch($method);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doDispatch($method = 'notFoundAction')
+    {
         if ($method !== 'notFoundAction') {
             $param = ['controller' => $this, 'method' => $method];
             $dispatcher = $this->getContainer()->get('eventDispatcher');
@@ -35,7 +46,15 @@ class AuthActionController extends ActionController
             $dispatcher->trigger('auth.dispatch.before', $param);
             $dispatcher->trigger('dispatch.before', $param);
         }
-        return $this->$method();
+        $result = $this->$method();
+        if ($method !== 'notFoundAction') {
+            $param = ['controller' => $this, 'method' => $method, 'result' => &$result];
+            $dispatcher = $this->getContainer()->get('eventDispatcher');
+            $dispatcher->trigger(get_class($this) . '.dispatch.after', $param);
+            $dispatcher->trigger('auth.dispatch.after', $param);
+            $dispatcher->trigger('dispatch.after', $param);
+        }
+        return $result;
     }
 
 }

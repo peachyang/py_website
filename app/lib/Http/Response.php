@@ -94,12 +94,23 @@ class Response extends Message implements ResponseInterface
      */
     protected $data = null;
 
+    /**
+     * @var Cookies
+     */
+    protected $cookies = null;
+
     public function __construct()
     {
         $this->headers = new Headers();
+        $this->cookies = new Cookies();
         $this->body = new Body(fopen('php://temp', 'r+'));
     }
 
+    /**
+     * Get reason phrase based on status code
+     * 
+     * @return string
+     */
     public function getReasonPhrase()
     {
         if (!$this->reasonPhrase && isset($this->recommendedReasonPhrases[$this->statusCode])) {
@@ -108,11 +119,24 @@ class Response extends Message implements ResponseInterface
         return $this->reasonPhrase;
     }
 
+    /**
+     * Get HTTP status code
+     * 
+     * @return int
+     */
     public function getStatusCode()
     {
         return $this->statusCode;
     }
 
+    /**
+     * Set status code
+     * 
+     * @param int $code
+     * @param string $reasonPhrase
+     * @return \Seahinet\Lib\Http\Response
+     * @throws \InvalidArgumentException
+     */
     public function withStatus($code, $reasonPhrase = '')
     {
         if (!isset($this->recommendedReasonPhrases[$code])) {
@@ -124,6 +148,8 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
+     * Get HTTP status head
+     * 
      * @return string
      */
     public function renderStatusLine()
@@ -134,6 +160,12 @@ class Response extends Message implements ResponseInterface
         return trim($status);
     }
 
+    /**
+     * Set response body
+     * 
+     * @param \Psr\Http\Message\StreamInterface $body
+     * @return Response
+     */
     public function withBody(\Psr\Http\Message\StreamInterface $body)
     {
         if (is_resource($this->body)) {
@@ -151,6 +183,29 @@ class Response extends Message implements ResponseInterface
     {
         $this->data = $data;
         return $this;
+    }
+
+    /**
+     * Set cookie
+     * 
+     * @param string $name
+     * @param array|string $value
+     * @return Response
+     */
+    public function withCookie($name, $value)
+    {
+        $this->cookies->set($name, $value);
+        return $this;
+    }
+
+    /**
+     * Get cookies
+     * 
+     * @return Cookies
+     */
+    public function getCookies()
+    {
+        return $this->cookies;
     }
 
 }

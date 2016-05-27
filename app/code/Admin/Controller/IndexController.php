@@ -55,6 +55,7 @@ class IndexController extends ActionController
                         'logdate' => gmdate('Y-m-d h:i:s'),
                         'lognum' => $user->offsetGet('lognum') + 1
                     ])->save();
+                    $this->getContainer()->get('log')->log($data['username'] . ' has logged in', 200);
                     return $this->redirectLoggedin();
                 } else {
                     $result['message'][] = ['message' => $this->translate('Login failed. Invalid username or password.'), 'level' => 'danger'];

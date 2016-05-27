@@ -13,7 +13,7 @@
             target: null,
             init: function () {
                 if ($('.widget-upload').length) {
-                    $('.widget-upload').delegate('.delete', 'click', function () {
+                    $('.widget-upload').on('click', '.delete', function () {
                         var p = $(this).parent('.inline-box');
                         if ($(p).siblings('.inline-box').length === 0) {
                             $(p).children('[type=hidden]').val('');
@@ -22,7 +22,7 @@
                             $(p).remove();
                         }
                         return false;
-                    }).delegate('.add', 'click', function () {
+                    }).on('click', '.add', function () {
                         var o = $(this).prev('.inline-box');
                         var odiv = $('<div class="inline-box"></div>');
                         $(odiv).html($(o).html());
@@ -30,7 +30,7 @@
                         $(odiv).find('img').attr('src', GLOBAL.PUB_URL + 'backend/images/placeholder.png');
                         $(this).before(odiv);
                         return false;
-                    }).delegate('.inline-box .btn', 'resource.selected', function () {
+                    }).on('resource.selected', '.inline-box .btn', function () {
                         var a = $('#resource-list .active img');
                         $(this).children('img').attr('src', $(a).attr('src'));
                         $(this).siblings('[type=hidden]').val($(a).data('id'));
@@ -38,17 +38,17 @@
                         items: ".inline-box"
                     });
                 }
-                $('#resource-list').delegate('a.select', 'click', function () {
+                $('#resource-list').on('click', 'a.select', function () {
                     $(this).addClass('active');
                     $('#resource-modal').modal('hide');
-                }).delegate('.filters form', 'submit', function () {
+                }).on('submit', '.filters form', function () {
                     widgetUpload.loadImagesList($(this).serialize());
                     return false;
-                }).delegate('.pager a', 'click', function () {
-                    widgetUpload.loadImagesList($(this).attr('href').replace(/^[^\?]+\?/,''));
+                }).on('click', '.pager a', function () {
+                    widgetUpload.loadImagesList($(this).attr('href').replace(/^[^\?]+\?/, ''));
                     return false;
                 });
-                $('#upload-list').delegate('.upload-remove', 'click', function () {
+                $('#upload-list').on('click', '.upload-remove', function () {
                     $(this).parent('.item').remove();
                     return false;
                 });
@@ -85,7 +85,7 @@
                     add: function (e, data) {
                         data.context = $('<div class="item"></div>').html('<span class="upload-name">' +
                                 data['files'][0].name +
-                                '</span><span class="upload-note"><span class="fa fa-pause"></span></span><a href="javascript:void(0);" class="upload-remove"><span class="fa fa-remove"></span></a>').bind('upload', function () {
+                                '</span><span class="upload-note"><span class="fa fa-pause"></span></span><a href="javascript:void(0);" class="upload-remove"><span class="fa fa-remove"></span></a>').on('upload', function () {
                             var o = this;
                             $(o).find('.upload-note .fa').removeClass('fa-pause').addClass('fa-spinner fa-spin');
                             data.submit().success(function (result, textStatus, jqXHR) {

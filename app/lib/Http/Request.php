@@ -49,6 +49,11 @@ class Request extends Message implements RequestInterface
     protected $post = null;
 
     /**
+     * @var array 
+     */
+    protected $cookies = null;
+
+    /**
      * @param array $server
      */
     public function __construct($server = array())
@@ -59,10 +64,12 @@ class Request extends Message implements RequestInterface
         $method = $server['REQUEST_METHOD'];
         $uri = Uri::createFromEnvironment($server);
         $headers = Headers::createFromEnvironment($server);
+        $cookies = Cookies::parseHeader($headers->offsetGet('Cookie'));
         $body = new RequestBody();
         $uploadedFiles = UploadedFile::createFromEnvironment();
         $this->withMethod($method)
                 ->withHeaders($headers)
+                ->withCookies($cookies)
                 ->withUri($uri)
                 ->withBody($body)
                 ->withUploadedFile($uploadedFiles);
@@ -173,6 +180,24 @@ class Request extends Message implements RequestInterface
     }
 
     /**
+     * @return Cookies
+     */
+    public function getCookies()
+    {
+        return $this->cookies;
+    }
+
+    /**
+     * @param string $key
+     * @param string $default
+     * @return string
+     */
+    public function getCookie($key, $default = '')
+    {
+        return isset($this->cookies[$key]) ? $this->cookies[$key] : $default;
+    }
+
+    /**
      * @param string $method
      * @return Request
      * @throws InvalidRequestMethod
@@ -231,6 +256,16 @@ class Request extends Message implements RequestInterface
     public function withUploadedFile($uploadedFile)
     {
         $this->uploadedFile = $uploadedFile;
+        return $this;
+    }
+
+    /**
+     * @param array $cookies
+     * @return Request
+     */
+    public function withCookies($cookies)
+    {
+        $this->cookies = $cookies;
         return $this;
     }
 

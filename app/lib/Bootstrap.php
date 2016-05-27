@@ -151,7 +151,7 @@ final class Bootstrap
             }
             $code = $segment->get('language')? :
                     (isset($_COOKIE['language']) ? $_COOKIE['language'] :
-                (isset($server['language']) ? $server['language'] : null));
+                            (isset($server['language']) ? $server['language'] : null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -165,7 +165,7 @@ final class Bootstrap
             }
             $segment->set('language', $code);
             if (!isset($_COOKIE['language']) || $_COOKIE['language'] !== $code) {
-                @setcookie('language', $code, 0, '/');
+                static::getContainer()->get('response')->withCookie('language', ['value' => $code, 'path' => '/']);
             }
         }
         return static::$language;
@@ -181,7 +181,7 @@ final class Bootstrap
                 $segment = new Session\Segment('core');
             }
             $code = $segment->get('store') ? : (isset($_COOKIE['store']) ?
-                    $_COOKIE['store'] : (isset($server['store']) ? : null));
+                            $_COOKIE['store'] : (isset($server['store']) ? : null));
             if (is_string($code)) {
                 $store = new Store;
                 $store->load($code, 'code');
@@ -195,7 +195,7 @@ final class Bootstrap
             }
             $segment->set('store', $code);
             if (!isset($_COOKIE['store']) || $_COOKIE['store'] !== $code) {
-                @setcookie('store', $code, 0, '/');
+                static::getContainer()->get('response')->withCookie('store', ['value' => $code, 'path' => '/']);
             }
         }
         return static::$store;

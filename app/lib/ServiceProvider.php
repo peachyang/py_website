@@ -30,7 +30,7 @@ class ServiceProvider implements ServiceProviderInterface
             $container['eventDispatcher'] = EventDispatcher::instance();
         }
         if (!$container->has('layout')) {
-            $container['layout'] = function($container){
+            $container['layout'] = function($container) {
                 return Layout::instance($container);
             };
         }
@@ -82,6 +82,23 @@ class ServiceProvider implements ServiceProviderInterface
                 } else {
                     return new \lessc;
                 }
+            };
+        }
+        if (!$container->has('htmlpurifier')) {
+            $container['htmlpurifier'] = function($container) {
+                $config = \HTMLPurifier_Config::create([
+                            'Attr.AllowedRel' => 'nofollow',
+                            'Attr.EnableID' => true,
+                            'Attr.IDPrefix' => 'user-',
+                            'AutoFormat.RemoveEmpty' => true,
+                            'CSS.AllowImportant' => true,
+                            'CSS.MaxImgLength' => null,
+                            'Cache.SerializerPath' => BP . 'var/cache/',
+                            'Cache.SerializerPermissions' => 0775,
+                            'HTML.MaxImgLength' => null
+                ]);
+                $config->getDefinition('HTML');
+                return new \HTMLPurifier($config);
             };
         }
     }

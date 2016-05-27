@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib\ViewModel;
 
-use CSSmin;
+use CssMin;
 use JShrink\Minifier;
 use Seahinet\Lib\Stdlib\Singleton;
 
@@ -304,8 +304,7 @@ final class Head extends AbstractViewModel implements Singleton
                 if (!is_dir(BP . $path)) {
                     mkdir($path, 0777, true);
                 }
-                $adapter = new CSSmin;
-                file_put_contents(BP . $path . $name . '.css', $adapter->run($content));
+                file_put_contents(BP . $path . $name . '.css', CssMin::minify($content));
             }
         } else {
             $path = 'pub/theme/' . $this->getContainer()->get('config')[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/cache/js/';

@@ -1,6 +1,6 @@
 html{height:100%;font:16px/1.25 "Microsoft Yahei",SimHei,"WenQuanYi Zen Hei",STHeiti,sans-serif}
 [lang|=en]{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
-body{height:100%;position:relative;min-width:560px}
+body{height:100%;position:relative}
 *,*:before,*:after{box-sizing:border-box}
 a{color:inherit;text-decoration:none}
 a:focus,a:hover{text-decoration:underline}

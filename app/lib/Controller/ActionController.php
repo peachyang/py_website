@@ -39,9 +39,11 @@ abstract class ActionController
     protected $csrf = null;
 
     /**
+     * Dispath a request
+     * 
      * @param Request $request
      * @param RouteMatch $routeMatch
-     * @return Response|null|string
+     * @return mixed
      */
     public function dispatch($request = null, $routeMatch = null)
     {
@@ -55,13 +57,31 @@ abstract class ActionController
                 $method = 'notFoundAction';
             }
         }
+        return $this->doDispatch($method);
+    }
+
+    /**
+     * Do dispatch
+     * 
+     * @param string $method
+     * @return mixed
+     */
+    protected function doDispatch($method = 'notFoundAction')
+    {
         if ($method !== 'notFoundAction') {
             $param = ['controller' => $this, 'method' => $method];
             $dispatcher = $this->getContainer()->get('eventDispatcher');
             $dispatcher->trigger(get_class($this) . '.dispatch.before', $param);
             $dispatcher->trigger('dispatch.before', $param);
         }
-        return $this->$method();
+        $result = $this->$method();
+        if ($method !== 'notFoundAction') {
+            $param = ['controller' => $this, 'method' => $method, 'result' => &$result];
+            $dispatcher = $this->getContainer()->get('eventDispatcher');
+            $dispatcher->trigger(get_class($this) . '.dispatch.after', $param);
+            $dispatcher->trigger('dispatch.after', $param);
+        }
+        return $result;
     }
 
     /**

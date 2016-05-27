@@ -16,7 +16,7 @@ class LanguageController extends ActionController
         if ($language->getId()) {
             $segment = new Session\Segment('core');
             $segment->set('language', $code);
-            setcookie(language, $code, 0, '/');
+            $this->getResponse()->withCookie('language', ['value' => $code, 'path' => '/']);
         }
         if ($this->getRequest()->isXmlHttpRequest()) {
             return ['redirect' => $this->getRequest()->getHeader('HTTP_REFERER')];

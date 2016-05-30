@@ -157,6 +157,11 @@ grid:
     update: admin
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/grid.js',defer:'defer',async:'async'}]
             content:
                 children:
                     grid:

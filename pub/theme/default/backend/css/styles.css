@@ -5,8 +5,11 @@ body{height:100%;position:relative}
 a{color:inherit;text-decoration:none}
 a:focus,a:hover{text-decoration:underline}
 h1,h2,h3,h4,h5,h6{margin:0;font-weight:normal}
-ul,ol,dl{list-style:none;margin:0;padding:0}
-ul>li,ol>li,dl>dt,dl>dd{margin:0;padding:0}
+ul,ol,dl,menu{list-style:none;margin:0;padding:0}
+ul>li,ol>li,dl>dt,dl>dd,menu>li,menu>menuitem{margin:0;padding:0}
+menu.context{position:absolute;background:#fff;border:1px solid #e7e7e7}
+menu.context a{display:block;font-size:12px;line-height:2;padding:0 1em 0 0.5em;white-space:nowrap}
+menu.context .fa{margin-right:4px}
 address{font-style:normal}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}

@@ -22,7 +22,7 @@ class Currency extends PGrid
     public function getSyncAction($item)
     {
         return '<a href="' . $this->getSyncUrl() . '?code=' . $item['code'] . '" title="' . $this->translate('Synchronize') .
-                '"><span class="fa fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Synchronize') . '</span></a>';
     }
 

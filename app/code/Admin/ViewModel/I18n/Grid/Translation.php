@@ -24,7 +24,7 @@ class Translation extends PGrid
     {
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' .
                 $item['id'] . '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
-                '"><span class="fa fa-remove" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
     }
 

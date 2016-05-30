@@ -13,7 +13,7 @@ class Cache extends Grid
     {
         return '<a href="' . $this->getFlushUrl() . '?code=' . $item .
                 '" title="' . $this->translate('Flush') .
-                '"><span class="fa fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
+                '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Flush') . '</span></a>';
     }
 

@@ -44,7 +44,7 @@ abstract class Factory
             if (isset($config['adapter']) && static::checkExtension($config['adapter'])) {
                 $method = 'prepare' . $config['adapter'];
                 $class = 'Doctrine\\Common\\Cache\\' . $config['adapter'] . 'Cache';
-                if (is_callable('\\Seahinet\\Lib\\Cache\\Factory::' . $method)) {
+                if (is_callable(__CLASS__ . '::' . $method)) {
                     return static::$method($config);
                 } else if (class_exists($class)) {
                     return new $class;

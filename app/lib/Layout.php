@@ -11,8 +11,8 @@ use Seahinet\Lib\Stdlib\Singleton;
 class Layout extends ArrayObject implements Singleton
 {
 
-    use Traits\Container,
-        Traits\ArrayMerge;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\ArrayMerge;
 
     protected static $layout = null;
 

@@ -15,7 +15,7 @@ use Symfony\Component\Finder\Finder;
 class Translator implements Singleton
 {
 
-    use Traits\Container;
+    use \Seahinet\Lib\Traits\Container;
 
     const DEFAULT_DOMAIN = 'default';
     const CACHE_KEY = 'TRANSLATOR_PAIRS_';

@@ -57,7 +57,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return ResultSet
      */
-    protected function select($where = null, $tableGateway = null)
+    public function select($where = null, $tableGateway = null)
     {
         $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
         if (!is_null($tableGateway)) {

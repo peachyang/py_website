@@ -5,6 +5,7 @@ namespace Seahinet\Lib;
 use ArrayAccess;
 use BadMethodCallException;
 use Doctrine\Common\Cache\CacheProvider;
+use Seahinet\Lib\Cache\Factory;
 use Seahinet\Lib\Stdlib\Singleton;
 
 /**
@@ -17,7 +18,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 final class Cache implements ArrayAccess, Singleton
 {
 
-    use Traits\Container;
+    use \Seahinet\Lib\Traits\Container;
 
     /**
      * @var Cache
@@ -48,7 +49,7 @@ final class Cache implements ArrayAccess, Singleton
             $adapterObject = $this->getContainer()->get('config')['adapter'];
             $config = isset($adapterObject['cache']) ? $adapterObject['cache'] : [];
         }
-        $this->pool = Cache\Factory::getCachePool($config);
+        $this->pool = Factory::getCachePool($config);
     }
 
     /**

@@ -10,7 +10,7 @@ use Swift_Mailer;
 class Mailer extends Swift_Mailer
 {
 
-    use Traits\Container;
+    use \Seahinet\Lib\Traits\Container;
 
     /**
      * Allowed transportation class

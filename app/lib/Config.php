@@ -14,9 +14,9 @@ use Symfony\Component\Yaml\Exception\ParseException;
 final class Config extends ArrayObject implements Singleton
 {
 
-    use Traits\Container,
-        Traits\DB,
-        Traits\ArrayMerge;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\ArrayMerge;
 
     protected static $instance = null;
     protected $keys = [];

@@ -2,94 +2,112 @@
 
 namespace Seahinet\Lib\Indexer\Handler;
 
+use Exception;
+use Seahinet\Lib\Exception\BadIndexerException;
+use Seahinet\Lib\Model\Collection\Language;
+use MongoDB\Driver\Manager;
 use MongoDB\Collection as MongoDBCollection;
 
-class MongoDB implements HandlerInterface
+class MongoDB extends AbstractHandler
 {
 
-    use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Lib\Traits\DB;
+    use \Seahinet\Lib\Traits\Container;
 
-    protected $collection = null;
+    protected $collection = [];
+    protected $manager = null;
+    protected $db = null;
+    protected $entityType = null;
 
-    public function __construct(MongoDBCollection $collection)
+    public function __construct(Manager $manager, $db, $entityType)
     {
-        $this->collection = $collection;
+        $this->manager = $manager;
+        $this->db = $db;
+        $this->entityType = $entityType;
     }
 
-    public function delete($constraint)
+    protected function getCollection($languageId)
     {
-        $this->collection->deleteMany($constraint);
-    }
-
-    public function insert($values)
-    {
-        $this->collection->insertOne($values);
-    }
-
-    public function reindex()
-    {
-        $this->collection->deleteMany('1');
-        $adapter = $this->getContainer()->get('dbAdapter');
-        $tableGateway = new TableGateway('eav_entity_type', $adapter);
-        $select = $tableGateway->getSql()->select();
-        $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
-                ->where(['eav_entity_type.code' => $this->entityType])
-                ->order('sort_order asc');
-        $result = $tableGateway->selectWith($select)->toArray();
-        if (count($result) === 0) {
-            throw new InvalidArgumentException('Invalid entity type code: ' . $this->entityType);
+        if (!isset($this->collection[$languageId])) {
+            $this->collection[$languageId] = new MongoDBCollection($this->manager, $this->db, $this->entityType . '_' . $languageId . '_index');
         }
-        $select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left')
-                ->join($result[0]['value_table_prefix'] . '_int', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_int.attribute_id AND ' . $result[0]['value_table_prefix'] . '_int.type_id=eav_entity_type.id', ['value_int' => 'value'], 'left')
-                ->join($result[0]['value_table_prefix'] . '_varchar', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_varchar.attribute_id AND ' . $result[0]['value_table_prefix'] . '_varchar.type_id=eav_entity_type.id', ['value_varchar' => 'value'], 'left')
-                ->join($result[0]['value_table_prefix'] . '_datetime', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_datetime.attribute_id AND ' . $result[0]['value_table_prefix'] . '_datetime.type_id=eav_entity_type.id', ['value_datetime' => 'value'], 'left')
-                ->join($result[0]['value_table_prefix'] . '_blob', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_blob.attribute_id AND ' . $result[0]['value_table_prefix'] . '_blob.type_id=eav_entity_type.id', ['value_blob' => 'value'], 'left')
-                ->join($result[0]['value_table_prefix'] . '_text', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_text.attribute_id AND ' . $result[0]['value_table_prefix'] . '_text.type_id=eav_entity_type.id', ['value_text' => 'value'], 'left')
-                ->join($result[0]['value_table_prefix'] . '_decimal', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_decimal.attribute_id AND ' . $result[0]['value_table_prefix'] . '_decimal.type_id=eav_entity_type.id', ['value_decimal' => 'value'], 'left');
-        $data = $tableGateway->selectWith($select)->toArray();
-        $items = [];
-        foreach ($data as $record) {
-            if (!isset($record['id']) || !$record['id']) {
-                continue;
-            }
-            if (!isset($items[$record['id']])) {
-                $items[$record['id']] = [
-                    'id' => $record['id'],
-                    'store_id' => $record['store_id'],
-                    'increment_id' => $record['increment_id'],
-                    'status' => $record['status'],
-                    'created_at' => $record['created_at']
-                ];
-            }
-            if ($record['attr']) {
-                $items[$record['id']][$record['attr']] = $record['value_int']? : (
-                        $record['value_varchar']? : (
-                                $record['value_decimal']? : (
-                                        $record['value_text']? : (
-                                                $record['value_datetime']? :
-                                                        $record['value_blob']
-                                                ))));
-            }
-        }
-        foreach ($items as $set) {
-            $this->insert($set);
+        return $this->collection[$languageId];
+    }
+
+    public function delete($languageId, $constraint)
+    {
+        try {
+            return $this->getCollection($languageId)->deleteMany($constraint);
+        } catch (Exception $e) {
+            throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function select($constraint)
+    public function insert($languageId, $values)
     {
-        return $this->collection->find($constraint);
+        try {
+            $values['_id'] = $values['id'];
+            return $this->getCollection($languageId)->insertOne($values);
+        } catch (Exception $e) {
+            throw new BadIndexerException($e->getMessage());
+        }
     }
 
-    public function update($values, $constraint)
+    public function select($languageId, $constraint)
     {
-        $this->collection->updateOne($constraint, $values);
+        try {
+            return $this->getCollection($languageId)->find($constraint)->toArray();
+        } catch (Exception $e) {
+            throw new BadIndexerException($e->getMessage());
+        }
     }
 
-    public function upsert($values, $constraint)
+    public function update($languageId, $values, $constraint)
     {
-        $this->collection->updateOne($constraint, $values, ['upsert' => true]);
+        try {
+            return $this->getCollection($languageId)->updateOne($constraint, $values);
+        } catch (Exception $e) {
+            throw new BadIndexerException($e->getMessage());
+        }
+    }
+
+    public function upsert($languageId, $values, $constraint)
+    {
+        try {
+            return $this->getCollection($languageId)->updateOne($constraint, $values, ['upsert' => true]);
+        } catch (Exception $e) {
+            throw new BadIndexerException($e->getMessage());
+        }
+    }
+
+    protected function buildData($data)
+    {
+        foreach ($data as $languageId => $values) {
+            $sets = [];
+            foreach ($values as $id => $set) {
+                $set['_id'] = $id;
+                $sets[] = $set;
+            }
+            $this->getCollection($languageId)->insertMany($sets);
+        }
+    }
+
+    protected function buildStructure($columns)
+    {
+        $languages = new Language;
+        foreach ($languages as $language) {
+            $this->getCollection($language['id'])->drop();
+            $indexes = [
+                ['key' => ['id' => 1]],
+                ['key' => ['store_id' => 1]],
+                ['key' => ['increment_id' => 1]],
+            ];
+            foreach ($columns as $column) {
+                if ($column['is_unique']) {
+                    $indexes[] = ['key' => [$column['attr'] => 1], 'unique' => true];
+                }
+            }
+            $this->getCollection($language['id'])->createIndexes($indexes);
+        }
     }
 
 }

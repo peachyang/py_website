@@ -17,9 +17,9 @@ class Resource extends AbstractCollection
         $this->init('resource');
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         if (isset($this->storage[0]['id'])) {
             $ids = [];
             $data = [];

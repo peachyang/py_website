@@ -26,6 +26,11 @@ class ServiceProvider implements ServiceProviderInterface
         if (!$container->has('cache')) {
             $container['cache'] = Cache::instance(isset($config['adapter']['cache']) ? $config['adapter']['cache'] : $container);
         }
+        if (!$container->has('indexer')) {
+            $container['indexer'] = function($container) {
+                return Indexer::instance($container);
+            };
+        }
         if (!$container->has('eventDispatcher')) {
             $container['eventDispatcher'] = EventDispatcher::instance();
         }

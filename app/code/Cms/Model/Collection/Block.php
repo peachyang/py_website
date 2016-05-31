@@ -16,9 +16,9 @@ class Block extends AbstractCollection
         $this->select->join('core_language', 'core_language.id=cms_block_language.language_id', ['language_id' => 'id', 'language' => 'code'], 'left');
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         $ids = [];
         $data = [];
         foreach ($this->storage as $key => $item) {

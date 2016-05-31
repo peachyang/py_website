@@ -16,9 +16,9 @@ class Page extends AbstractCollection
         $this->init('cms_page');
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         $ids = [];
         $data = [];
         foreach ($this->storage as $item) {

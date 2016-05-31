@@ -104,27 +104,23 @@ abstract class AbstractCollection extends ArrayObject
     {
         if (!$this->isLoaded) {
             try {
-                $this->beforeLoadCache();
                 if ($useCache) {
                     $cacheKey = md5($this->select->getSqlString($this->getTableGateway($this->tableName)->getAdapter()->getPlatform()));
                     $result = $this->fetchList($cacheKey, $this->getCacheKey());
                 } else {
                     $result = false;
                 }
-                $this->afterLoadCache();
                 if (!$result) {
                     $this->beforeLoad();
                     $result = $this->getTableGateway($this->tableName)->selectWith($this->select)->toArray();
                     if (count($result)) {
-                        $this->storage = $result;
-                        $this->afterLoad();
+                        $this->afterLoad($result);
                         if ($useCache) {
                             $this->addCacheList($cacheKey, $result, $this->getCacheKey());
                         }
                     }
                 } else {
-                    $this->storage = $result;
-                    $this->afterLoad();
+                    $this->afterLoad($result);
                 }
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
@@ -164,22 +160,6 @@ abstract class AbstractCollection extends ArrayObject
     }
 
     /**
-     * Event before load cache
-     */
-    protected function beforeLoadCache()
-    {
-        $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.before', ['collection' => $this]);
-    }
-
-    /**
-     * Event after load cache
-     */
-    protected function afterLoadCache()
-    {
-        $this->getEventDispatcher()->trigger(get_class($this) . '.collection.loadcache.after', ['collection' => $this]);
-    }
-
-    /**
      * Event before load data
      */
     protected function beforeLoad()
@@ -190,9 +170,10 @@ abstract class AbstractCollection extends ArrayObject
     /**
      * Event after load cache
      */
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
         $this->isLoaded = true;
+        $this->storage = $result;
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
     }
 

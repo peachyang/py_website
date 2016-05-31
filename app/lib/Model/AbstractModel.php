@@ -330,6 +330,9 @@ abstract class AbstractModel extends ArrayObject
         $this->isNew = false;
         $this->isLoaded = true;
         $this->updatedColumns = [];
+        if (is_object($result) && is_callable([$result, 'toArray'])) {
+            $result = $result->toArray();
+        }
         if (isset($result[0])) {
             $this->storage = array_merge($this->storage, $result[0]);
         } else {

@@ -14,9 +14,9 @@ class Template extends AbstractCollection
         $this->init('message_template');
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         $ids = [];
         $data = [];
         foreach ($this->storage as $key => $item) {

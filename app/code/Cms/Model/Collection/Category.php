@@ -16,9 +16,9 @@ class Category extends AbstractCollection
         $this->init('cms_category');
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
-        parent::afterLoad();
+        parent::afterLoad($result);
         if (isset($this->storage[0]['id'])) {
             $ids = [];
             $data = [];

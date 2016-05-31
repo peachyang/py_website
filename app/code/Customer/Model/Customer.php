@@ -2,9 +2,9 @@
 
 namespace Seahinet\Customer\Model;
 
-use Seahinet\Lib\Model\AbstractEAVModel;
+use Seahinet\Lib\Model\Eav\Entity;
 
-class Customer extends AbstractEAVModel
+class Customer extends Entity
 {
 
     protected function construct()

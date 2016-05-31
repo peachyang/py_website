@@ -103,16 +103,12 @@ trait DB
      */
     public function upsert($set, $where, $tableGateway = null)
     {
-        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
-        if (!is_null($tableGateway)) {
-            $select = $this->select($where, $tableGateway)->toArray();
-            if (count($select)) {
-                return $this->update($set, $where, $tableGateway);
-            } else {
-                return $this->insert($set + $where, $tableGateway);
-            }
+        $select = $this->select($where, $tableGateway)->toArray();
+        if (count($select)) {
+            return $this->update($set, $where, $tableGateway);
+        } else {
+            return $this->insert($set + $where, $tableGateway);
         }
-        return 0;
     }
 
     /**

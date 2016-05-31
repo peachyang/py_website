@@ -3,7 +3,6 @@
 namespace Seahinet\Lib\Indexer;
 
 use MongoDB\Driver\Manager as MongoDBManager;
-use MongoDB\Collection as MongoDBCollection;
 
 abstract class Factory
 {
@@ -16,11 +15,11 @@ abstract class Factory
                 if (is_callable(__CLASS__ . '::' . $method)) {
                     $handler = static::$method($config, $entityType);
                 }
-                if (!$handler) {
-                    $handler = static::prepareDatabase($entityType);
-                }
-                return $handler;
             }
+            if (empty($handler)) {
+                $handler = static::prepareDatabase($entityType);
+            }
+            return $handler;
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -60,12 +59,10 @@ abstract class Factory
                     unset($config['socket']);
                 }
             }
-
             $db = isset($config['db']) ? $config['db'] : 'seahinet';
             unset($config['db']);
             $manager = new MongoDBManager($server, $config);
-            $collection = new MongoDBCollection($manager, $db, $entityType . '_indexer');
-            return new Handler\MongoDB($collection);
+            return new Handler\MongoDB($manager, $db, $entityType);
         }
         return false;
     }

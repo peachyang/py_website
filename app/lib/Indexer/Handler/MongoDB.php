@@ -7,15 +7,34 @@ use Seahinet\Lib\Exception\BadIndexerException;
 use Seahinet\Lib\Model\Collection\Language;
 use MongoDB\Driver\Manager;
 use MongoDB\Collection as MongoDBCollection;
+use Zend\Db\Sql\Select;
 
+/**
+ * MongoDB indexer handler
+ */
 class MongoDB extends AbstractHandler
 {
 
     use \Seahinet\Lib\Traits\Container;
 
+    /**
+     * @var array
+     */
     protected $collection = [];
+
+    /**
+     * @var Manager 
+     */
     protected $manager = null;
+
+    /**
+     * @var string
+     */
     protected $db = null;
+
+    /**
+     * @var string
+     */
     protected $entityType = null;
 
     public function __construct(Manager $manager, $db, $entityType)
@@ -25,6 +44,12 @@ class MongoDB extends AbstractHandler
         $this->entityType = $entityType;
     }
 
+    /**
+     * Get collection based on language id
+     * 
+     * @param int $languageId
+     * @return MongoDBCollection
+     */
     protected function getCollection($languageId)
     {
         if (!isset($this->collection[$languageId])) {
@@ -33,52 +58,161 @@ class MongoDB extends AbstractHandler
         return $this->collection[$languageId];
     }
 
-    public function delete($languageId, $constraint)
+    /**
+     * {@inhertdoc}
+     */
+    public function delete($languageId, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->deleteMany($constraint);
+            return $this->getCollection($languageId)->deleteMany($constraint, $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function insert($languageId, $values)
+    /**
+     * {@inhertdoc}
+     */
+    public function insert($languageId, $values, array $options = [])
     {
         try {
             $values['_id'] = $values['id'];
-            return $this->getCollection($languageId)->insertOne($values);
+            return $this->getCollection($languageId)->insertOne($values, $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function select($languageId, $constraint)
+    /**
+     * Generate option based on SQL
+     * 
+     * @param Select $select
+     * @return array
+     */
+    protected function getOptionFromSelect(Select $select)
+    {
+        $options = [];
+        $states = $select->getRawState();
+        if ($limit = $states['limit']) {
+            $options['limit'] = $limit;
+        }
+        if ($skip = $states['offset']) {
+            $options['skip'] = $skip;
+        }
+        if ($sort = $states['order']) {
+            $options['sort'] = [];
+            foreach ($sort as $key => $value) {
+                $parts = is_int($key) ? explode(' ', trim($value)) : [$key, $value];
+                $options['sort'][$parts[0]] = !isset($parts[1]) || strcasecmp($parts[1], 'desc') ? 1 : -1;
+            }
+        }
+        return $options;
+    }
+
+    /**
+     * Generate filter based on SQL
+     * 
+     * @param Select $select
+     * @return array
+     */
+    protected function getFilterFromSelect(Select $select)
+    {
+        $predicates = $select->getRawState('where')->getExpressionData();
+        $parts = [];
+        $hasOr = false;
+        for ($i = 0; $i < count($predicates); $i++) {
+            $predicate = $predicates[$i];
+            if (is_array($predicate)) {
+                $expression = preg_replace('#^(?:\s*\%s\s+)([^\s]+)(?:\s+\%s\s*)$#', '$1', $predicate[0]);
+                $parts[$i] = [$predicate[1][0] => [str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['$gte', '$lte', '$ne', '$ne', '$gt', '$lt', '$eq'], $expression) => $predicate[1][1]]];
+            }
+        }
+        $handleAnd = function($a, $b) {
+            if (isset($a['$and'])) {
+                $a = $a['$and'];
+            } else {
+                $a = [$a];
+            }
+            if (isset($b['$and'])) {
+                $b = $b['$and'];
+            } else {
+                $b = [$b];
+            }
+            return array_merge($a, $b);
+        };
+        for ($i = 0; $i < count($predicates); $i++) {
+            $predicate = $predicates[$i];
+            if (is_string($predicate)) {
+                if (trim($predicate) === 'OR') {
+                    $hasOr = true;
+                } else {
+                    for ($j = $i - 1; $j > 0; $j--) {
+                        if (isset($parts[$j])) {
+                            break;
+                        }
+                    }
+                    for ($k = $i + 1; $k < count($predicates); $k++) {
+                        if (isset($parts[$k])) {
+                            break;
+                        }
+                    }
+                    $parts[$i] = ['$and' => $handleAnd($parts[$j], $parts[$k])];
+                    unset($parts[$j]);
+                    unset($parts[$k]);
+                }
+            }
+        }
+        if ($hasOr) {
+            $parts = ['$or' => array_values($parts)];
+        } else if(!empty($parts)){
+            $parts = array_values($parts)[0];
+        }
+        return $parts;
+    }
+
+    /**
+     * {@inhertdoc}
+     */
+    public function select($languageId, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->find($constraint)->toArray();
+            if ($constraint instanceof Select) {
+                $options += $this->getOptionFromSelect($constraint);
+                $constraint = $this->getFilterFromSelect($constraint);
+            }
+            return $this->getCollection($languageId)->find($constraint, $options)->toArray();
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function update($languageId, $values, $constraint)
+    /**
+     * {@inhertdoc}
+     */
+    public function update($languageId, $values, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->updateOne($constraint, $values);
+            return $this->getCollection($languageId)->updateOne($constraint, $values, $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function upsert($languageId, $values, $constraint)
+    /**
+     * {@inhertdoc}
+     */
+    public function upsert($languageId, $values, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->updateOne($constraint, $values, ['upsert' => true]);
+            return $this->getCollection($languageId)->updateOne($constraint, $values, ['upsert' => true] + $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
+    /**
+     * {@inhertdoc}
+     */
     protected function buildData($data)
     {
         foreach ($data as $languageId => $values) {
@@ -91,7 +225,10 @@ class MongoDB extends AbstractHandler
         }
     }
 
-    protected function buildStructure($columns)
+    /**
+     * {@inhertdoc}
+     */
+    protected function buildStructure($columns, $keys)
     {
         $languages = new Language;
         foreach ($languages as $language) {

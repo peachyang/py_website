@@ -2,18 +2,23 @@
 
 namespace Seahinet\Lib\Model\Collection\Eav;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
-use Zend\Db\TableGateway\TableGateway;
 
 abstract class Collection extends AbstractCollection
 {
 
+    const ENTITY_TYPE = '';
+
     protected $languageId = 0;
 
-    public function __construct($languageId)
+    public function __construct($languageId = 0)
     {
-        $this->languageId = $languageId;
-        parent::__construct();
+        if ($languageId) {
+            $this->languageId = $languageId;
+        } else {
+            $this->languageId = Bootstrap::getLanguage()->getId();
+        }
     }
 
     public function load($useCache = true)
@@ -30,12 +35,7 @@ abstract class Collection extends AbstractCollection
                     }
                 }
             } catch (BadIndexerException $e) {
-                if ($result = $this->loadFromDb()) {
-                    $this->afterLoad($result);
-                    if ($useCache) {
-                        $this->addCacheList($cacheKey, $result, $this->getCacheKey());
-                    }
-                }
+                $this->afterLoad([]);
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);
                 throw $e;
@@ -53,12 +53,7 @@ abstract class Collection extends AbstractCollection
 
     protected function loadFromIndexer()
     {
-        return $this->getContainer()->get('indexer')->select($this->entityType, $this->languageId);
-    }
-
-    protected function loadFromDb()
-    {
-        
+        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, $this->select);
     }
 
 }

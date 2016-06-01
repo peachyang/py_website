@@ -4,9 +4,19 @@ namespace Seahinet\Lib\Indexer;
 
 use MongoDB\Driver\Manager as MongoDBManager;
 
+/**
+ * Indexer handler factory
+ */
 abstract class Factory
 {
 
+    /**
+     * Get handler based on configuration
+     * 
+     * @param array $config
+     * @param string $entityType
+     * @return Handler\AbstractHandler
+     */
     public static function getHandler($config, $entityType)
     {
         try {
@@ -26,11 +36,24 @@ abstract class Factory
         return null;
     }
 
+    /**
+     * Get database handler
+     * 
+     * @param string $entityType
+     * @return Handler\Database
+     */
     private static function prepareDatabase($entityType)
     {
         return new Handler\Database($entityType);
     }
 
+    /**
+     * Get mongodb handler
+     * 
+     * @param array $config
+     * @param string $entityType
+     * @return Handler\MongoDB
+     */
     private static function prepareMongoDB($config, $entityType)
     {
         if (extension_loaded('mongodb') && version_compare(phpversion('mongodb'), '1.1.0', '>=')) {

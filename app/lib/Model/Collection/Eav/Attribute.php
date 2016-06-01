@@ -22,12 +22,12 @@ class Attribute extends AbstractCollection
 
     public function withGroup()
     {
-        $this->select->join('eav_attribute_group', 'eav_attribute.group_id=eav_attribute_group.id', ['group' => 'name', 'group_id' => 'id'], 'left');
+        $this->select->join('eav_attribute_group', 'eav_attribute.attribute_group_id=eav_attribute_group.id', ['attribute_group' => 'name', 'attribute_group_id' => 'id'], 'left');
     }
 
     public function withSet()
     {
-        $this->select->join('eav_attribute_set', 'eav_attribute.set_id=eav_attribute_set.id', ['set' => 'name', 'set_id' => 'id'], 'left');
+        $this->select->join('eav_attribute_set', 'eav_attribute.attribute_set_id=eav_attribute_set.id', ['attribute_set' => 'name', 'attribute_set_id' => 'id'], 'left');
     }
     
 }

@@ -18,13 +18,6 @@ class Resource extends PGrid
     protected $action = ['getDeleteAction'];
     protected $messAction = ['getMessDeleteAction'];
 
-    public function getEditAction($item)
-    {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
-                '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
-                $this->translate('Edit') . '</span></a>';
-    }
-
     public function getDeleteAction($item)
     {
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
@@ -37,14 +30,6 @@ class Resource extends PGrid
     {
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-serialize=".grid .table" title="' . $this->translate('Delete') .
                 '"><span>' . $this->translate('Delete') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/resource_resource/edit/');
-        }
-        return $this->editUrl;
     }
 
     public function getDeleteUrl()

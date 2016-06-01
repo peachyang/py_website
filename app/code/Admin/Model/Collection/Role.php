@@ -28,8 +28,9 @@ class Role extends AbstractCollection
         return $this;
     }
 
-    protected function afterLoad()
+    protected function afterLoad($result)
     {
+        parent::afterLoad($result);
         if (isset($this->storage[0]['operation']) || isset($this->storage[0]['child_id'])) {
             $storage = [];
             foreach ($this->storage as $item) {
@@ -64,7 +65,6 @@ class Role extends AbstractCollection
             }
             $this->storage = array_values($storage);
         }
-        parent::afterLoad();
     }
 
 }

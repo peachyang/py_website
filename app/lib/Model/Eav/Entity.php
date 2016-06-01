@@ -6,13 +6,15 @@ use Exception;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Exception\BadIndexerException;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\TableGateway\TableGateway;
 
 abstract class Entity extends AbstractModel
 {
 
-    protected $entityType = null;
+    const ENTITY_TYPE = '';
+
     protected $entityTable = '';
     protected $valueTablePrefix = '';
     protected $languageId = 0;
@@ -29,10 +31,9 @@ abstract class Entity extends AbstractModel
         $this->construct();
     }
 
-    protected function init($entityType, $primaryKey = 'id', $columns = ['id', 'type_id', 'attribute_set_id', 'store_id', 'increment_id', 'status'])
+    protected function init($primaryKey = 'id', $columns = ['id', 'type_id', 'attribute_set_id', 'store_id', 'increment_id', 'status'], $null = null)
     {
-        $this->entityType = $entityType;
-        $this->cacheKey = $entityType . '_' . $this->languageId;
+        $this->cacheKey = static::ENTITY_TYPE . '_' . $this->languageId;
         $this->columns = $columns;
         $this->primaryKey = $primaryKey;
     }
@@ -41,6 +42,7 @@ abstract class Entity extends AbstractModel
     {
         if (!$this->isLoaded) {
             try {
+                $this->beforeLoad(null);
                 if ($result = $this->loadFromCache($id, $key)) {
                     $this->afterLoad($result);
                 } else if ($result = $this->loadFromIndexer($id, $key)) {
@@ -82,7 +84,7 @@ abstract class Entity extends AbstractModel
 
     protected function loadFromIndexer($id, $key = null)
     {
-        return $this->getContainer()->get('indexer')->select($this->entityType, $this->languageId, [(is_null($key) ? $this->primaryKey : $key) => $id]);
+        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, [(is_null($key) ? $this->primaryKey : $key) => (string) $id]);
     }
 
     protected function getEntityTable()
@@ -91,7 +93,7 @@ abstract class Entity extends AbstractModel
             $tableGateway = new TableGateway('eav_entity_type', $this->getContainer()->get('dbAdapter'));
             $select = $tableGateway->getSql()->select();
             $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
-                    ->where(['eav_entity_type.code' => $this->entityType])
+                    ->where(['eav_entity_type.code' => static::ENTITY_TYPE])
                     ->order('sort_order asc');
             $result = $tableGateway->selectWith($select)->toArray();
             if (count($result)) {
@@ -170,7 +172,7 @@ abstract class Entity extends AbstractModel
                     }
                     $tableGateways[$attr['type']]->update(['value' => $attributes[$attr['code']]], ['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']]);
                 }
-                $this->getContainer()->get('indexer')->update($this->entityType, $this->languageId, $columns + $attributes, [$this->primaryKey => $this->getId()]);
+                $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, $columns + $attributes, [$this->primaryKey => $this->getId()]);
                 $this->afterSave();
                 $this->commit();
                 $id = array_values($constraint)[0];
@@ -195,7 +197,7 @@ abstract class Entity extends AbstractModel
                         $tableGateways[$attr['type']]->insert(['value' => $attributes[$attr['code']], 'language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']]);
                     }
                 }
-                $this->getContainer()->get('indexer')->insert($this->entityType, $this->languageId, [$this->primaryKey => $this->getId()] + $columns + $attributes, [$this->primaryKey => $this->getId()]);
+                $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $this->languageId, [$this->primaryKey => $this->getId()] + $columns + $attributes, [$this->primaryKey => $this->getId()]);
                 $this->afterSave();
                 $this->commit();
                 $this->flushList($this->getCacheKey());
@@ -217,7 +219,7 @@ abstract class Entity extends AbstractModel
             try {
                 $this->beforeRemove();
                 $this->getTableGateway($this->getEntityTable())->delete([$this->primaryKey => $this->getId()]);
-                $this->getContainer()->get('indexer')->delete($this->entityType, $this->languageId, [$this->primaryKey => $this->getId()]);
+                $this->getContainer()->get('indexer')->delete(static::ENTITY_TYPE, $this->languageId, [$this->primaryKey => $this->getId()]);
                 $this->flushRow($this->getId(), null, $this->getCacheKey());
                 $this->flushList($this->getCacheKey());
                 $this->storage = [];
@@ -241,20 +243,13 @@ abstract class Entity extends AbstractModel
     protected function prepareAttributes()
     {
         if (empty($this->attributes)) {
-            $cache = $this->getContainer()->get('cache');
-            $this->attributes = $cache->fetch($this->getEntityTable(), 'EAV_ATTRIBUTES_');
-            if (!$this->attributes) {
-                $tableGateway = new TableGateway('eav_attribute', $this->getContainer()->get('dbAdapter'));
-                $select = $tableGateway->getSql()->select();
-                $select->columns(['code', 'id', 'type'])
-                        ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'left')
-                        ->where(['eav_entity_type.code' => $this->entityType]);
-                $this->attributes = $tableGateway->selectWith($select)->toArray();
-                $cache->save($this->getEntityTable(), $this->attributes, 'EAV_ATTRIBUTES_');
-            }
+            $this->attributes = new Attribute;
+            $this->attributes->columns(['code', 'id', 'type'])
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'left')
+                    ->where(['eav_entity_type.code' => static::ENTITY_TYPE]);
         }
         $attrs = [];
-        array_walk($this->attributes, function($attr) use (&$attrs) {
+        $this->attributes->walk(function($attr) use (&$attrs) {
             $attrs[] = $attr['code'];
         });
         $pairs = [];

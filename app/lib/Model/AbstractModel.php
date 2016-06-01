@@ -330,13 +330,22 @@ abstract class AbstractModel extends ArrayObject
         $this->isNew = false;
         $this->isLoaded = true;
         $this->updatedColumns = [];
-        if (is_object($result) && is_callable([$result, 'toArray'])) {
-            $result = $result->toArray();
+        $toArray = function($object) {
+            if (is_callable([$object, 'toArray'])) {
+                return $object->toArray();
+            } else if (is_callable([$object, 'getArrayCopy'])) {
+                return $object->getArrayCopy();
+            } else {
+                return (array) $object;
+            }
+        };
+        if (is_object($result)) {
+            $result = $toArray($result);
         }
         if (isset($result[0])) {
-            $this->storage = array_merge($this->storage, $result[0]);
+            $this->storage = (is_object($result[0]) ? $toArray($result[0]) : $result[0]) + $this->storage;
         } else {
-            $this->storage = array_merge($this->storage, $result);
+            $this->storage = $result + $this->storage;
         }
         $this->getEventDispatcher()->trigger(get_class($this) . '.model.load.after', ['model' => $this]);
     }

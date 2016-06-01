@@ -30,7 +30,12 @@ class Route implements ListenerInterface
             $collector = new Collector(new Std, new Generator);
             foreach ($routers as $router) {
                 if (isset($router['route'])) {
-                    $collector->addRoute((isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['route'], isset($router['controller']) ? $router['controller'] : $routers['default']['controller'], isset($router['priority']) ? $router['priority'] : 0);
+                    $collector->addRoute(
+                            (isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['route'], (isset($router['controller']) ?
+                                    $router['controller'] : (
+                                    isset($router['namespace']) ? $router['namespace'] :
+                                            $routers['default']['controller'])), (isset($router['priority']) ? $router['priority'] : 0)
+                    );
                 }
             }
             $data = $collector->getData();
@@ -49,7 +54,13 @@ class Route implements ListenerInterface
             $routeMatch = $routers['default'];
         }
         if (isset($routeMatch['namespace'])) {
-            $className = $routeMatch['namespace'] . '\\' . (isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController');
+            $className = $routeMatch['namespace'] . '\\' .
+                    (isset($routeMatch['controller']) ?
+                            (strpos($routeMatch['controller'], 'Controller') ?
+                                    $routeMatch['controller'] :
+                                    str_replace(' ', '\\', ucwords(str_replace('_', ' ', $routeMatch['controller']))) . 'Controller'
+                            ) :
+                            'IndexController');
         } else {
             $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
         }

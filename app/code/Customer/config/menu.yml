@@ -1,0 +1,14 @@
+---
+customer:
+    icon: users
+    title: Customer Management
+    priority: 20
+    children:
+        -
+            link: customer_manage/
+            title: Customer Management
+            priority: 0
+        -
+            link: customer_attribute/
+            title: Attribute Management
+            priority: 10

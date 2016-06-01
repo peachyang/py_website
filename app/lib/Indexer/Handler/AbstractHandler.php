@@ -2,11 +2,17 @@
 
 namespace Seahinet\Lib\Indexer\Handler;
 
+use InvalidArgumentException;
 use Zend\Db\TableGateway\TableGateway;
 
 abstract class AbstractHandler
 {
 
+    /**
+     * Reindex indexer
+     * 
+     * @throws InvalidArgumentException
+     */
     public function reindex()
     {
         $adapter = $this->getContainer()->get('dbAdapter');
@@ -14,13 +20,15 @@ abstract class AbstractHandler
         $select = $tableGateway->getSql()->select();
         $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
                 ->where(['eav_entity_type.code' => $this->entityType])
-                ->order('sort_order asc');
+                ->order('sort_order asc')
+                ->columns(['entity_table', 'value_table_prefix']);
         $result = $tableGateway->selectWith($select)->toArray();
         if (count($result) === 0) {
             throw new InvalidArgumentException('Invalid entity type code: ' . $this->entityType);
         }
-        $this->buildStructure($result);
-        $select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left')
+        $keys = array_keys($tableGateway->selectWith($select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left'))->toArray()[0]);
+        $this->buildStructure($result, $keys);
+        $select
                 ->join($result[0]['value_table_prefix'] . '_int', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_int.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_int.entity_id', ['value_int' => 'value', 'language_int' => 'language_id'], 'left')
                 ->join($result[0]['value_table_prefix'] . '_varchar', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_varchar.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_int.entity_id', ['value_varchar' => 'value', 'language_varchar' => 'language_id'], 'left')
                 ->join($result[0]['value_table_prefix'] . '_datetime', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_datetime.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_int.entity_id', ['value_datetime' => 'value', 'language_datetime' => 'language_id'], 'left')
@@ -65,17 +73,70 @@ abstract class AbstractHandler
         $this->buildData($items);
     }
 
-    abstract protected function buildStructure($columns);
+    /**
+     * Build database structure
+     * 
+     * @param array $attributes
+     * @param array $columns
+     */
+    abstract protected function buildStructure($attributes, $columns);
 
+    /**
+     * Append data to database
+     * 
+     * @param array $data
+     */
     abstract protected function buildData($data);
 
-    abstract public function select($languageId, $constraint);
+    /**
+     * Select data from indexer
+     * 
+     * @param int $languageId
+     * @param array|\Zend\Db\Sql\Select $constraint
+     * @param array $options
+     * @throws \Seahinet\Lib\Exception\BadIndexerException
+     */
+    abstract public function select($languageId, $constraint = [], array $options = []);
 
-    abstract public function insert($languageId, $values);
+    /**
+     * Insert data into indexer
+     * 
+     * @param int $languageId
+     * @param array $values
+     * @param array $options
+     * @throws \Seahinet\Lib\Exception\BadIndexerException
+     */
+    abstract public function insert($languageId, $values, array $options = []);
 
-    abstract public function update($languageId, $values, $constraint);
+    /**
+     * Update data of indexer
+     * 
+     * @param int $languageId
+     * @param array $values
+     * @param array $constraint
+     * @param array $options
+     * @throws \Seahinet\Lib\Exception\BadIndexerException
+     */
+    abstract public function update($languageId, $values, $constraint = [], array $options = []);
 
-    abstract public function upsert($languageId, $values, $constraint);
+    /**
+     * Insert/Update data of indexer
+     * 
+     * @param int $languageId
+     * @param array $values
+     * @param array $constraint
+     * @param array $options
+     * @throws \Seahinet\Lib\Exception\BadIndexerException
+     */
+    abstract public function upsert($languageId, $values, $constraint = [], array $options = []);
 
-    abstract public function delete($languageId, $constraint);
+    /**
+     * Delete data of indexer
+     * 
+     * @param int $languageId
+     * @param array $constraint
+     * @param array $options
+     * @throws \Seahinet\Lib\Exception\BadIndexerException
+     */
+    abstract public function delete($languageId, $constraint = [], array $options = []);
 }

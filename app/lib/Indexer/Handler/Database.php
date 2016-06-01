@@ -5,15 +5,26 @@ namespace Seahinet\Lib\Indexer\Handler;
 use Exception;
 use Seahinet\Lib\Exception\BadIndexerException;
 use Seahinet\Lib\Model\Collection\Language;
+use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Ddl;
 use Zend\Db\TableGateway\TableGateway;
 
+/**
+ * Database indexer handler
+ */
 class Database extends AbstractHandler
 {
 
     use \Seahinet\Lib\Traits\Container;
 
+    /**
+     * @var string
+     */
     protected $entityType = null;
+
+    /**
+     * @var array
+     */
     protected $tableGateways = [];
 
     public function __construct($entityType)
@@ -21,7 +32,10 @@ class Database extends AbstractHandler
         $this->entityType = $entityType;
     }
 
-    protected function buildStructure($columns)
+    /**
+     * {@inhertdoc}
+     */
+    protected function buildStructure($columns, $keys)
     {
         $adapter = $this->getContainer()->get('dbAdapter');
         $platform = $adapter->getPlatform();
@@ -34,17 +48,25 @@ class Database extends AbstractHandler
             );
             $ddl = new Ddl\CreateTable($table);
             $ddl->addColumn(new Ddl\Column\Integer('id', false, 0))
-                    ->addColumn(new Ddl\Column\Integer('store_id', false, 0, ['unsigned' => 1]))
+                    ->addColumn(new Ddl\Column\Integer('store_id', false, 0))
                     ->addColumn(new Ddl\Column\Varchar('increment_id', 255, true, ''))
                     ->addColumn(new Ddl\Column\Boolean('status', true, 1))
                     ->addColumn(new Ddl\Column\Timestamp('created_at', true))
                     ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_' . strtoupper($entityTable) . '_ID', 'id', $entityTable, 'id', 'CASCADE', 'CASCADE'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'));
+            foreach (array_diff($keys, [
+                'id', 'store_id', 'increment_id', 'status', 'created_at',
+                'updated_at', 'type_id', 'attribute_set_id', 'attr', 'type',
+                'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
+                'value_table_prefix', 'is_form'
+            ]) as $key) {
+                $ddl->addColumn(new Ddl\Column\Varchar($key, 255, true, ''));
+            }
             foreach ($columns as $attr) {
                 if ($attr['attr']) {
                     if ($attr['type'] === 'int') {
-                        $column = new Ddl\Column\Integer($attr['attr'], (bool) $attr['is_required'], $attr['default_value'], ['unsigned' => 1]);
+                        $column = new Ddl\Column\Integer($attr['attr'], (bool) $attr['is_required'], $attr['default_value']);
                     } else if ($attr['type'] === 'varchar') {
                         $column = new Ddl\Column\Varchar($attr['attr'], 255, (bool) $attr['is_required'], $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {
@@ -68,6 +90,9 @@ class Database extends AbstractHandler
         }
     }
 
+    /**
+     * {@inhertdoc}
+     */
     public function buildData($data)
     {
         $adapter = $this->getContainer()->get('dbAdapter');
@@ -89,6 +114,12 @@ class Database extends AbstractHandler
         }
     }
 
+    /**
+     * Get table gateway based on language id
+     * 
+     * @param int $languageId
+     * @return TableGateway
+     */
     protected function getTableGateway($languageId)
     {
         if (is_array($languageId) || is_object($languageId)) {
@@ -100,16 +131,25 @@ class Database extends AbstractHandler
         return $this->tableGateways[$languageId];
     }
 
-    public function select($languageId, $where = null)
+    /**
+     * {@inhertdoc}
+     */
+    public function select($languageId, $where = [], array $options = [])
     {
         try {
+            if ($where instanceof Select) {
+                return $this->getTableGateway($languageId)->selectWith($where)->toArray();
+            }
             return $this->getTableGateway($languageId)->select($where)->toArray();
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
     }
 
-    public function insert($languageId, $set)
+    /**
+     * {@inhertdoc}
+     */
+    public function insert($languageId, $set, array $options = [])
     {
         try {
             return $this->getTableGateway($languageId)->insert($set);
@@ -118,7 +158,10 @@ class Database extends AbstractHandler
         }
     }
 
-    public function update($languageId, $set, $where = null)
+    /**
+     * {@inhertdoc}
+     */
+    public function update($languageId, $set, $where = [], array $options = [])
     {
         try {
             return $this->getTableGateway($languageId)->update($set, $where);
@@ -127,7 +170,10 @@ class Database extends AbstractHandler
         }
     }
 
-    public function upsert($languageId, $set, $where)
+    /**
+     * {@inhertdoc}
+     */
+    public function upsert($languageId, $set, $where = [], array $options = [])
     {
         $select = $this->select($languageId, $where)->toArray();
         if (count($select)) {
@@ -137,7 +183,10 @@ class Database extends AbstractHandler
         }
     }
 
-    public function delete($languageId, $where)
+    /**
+     * {@inhertdoc}
+     */
+    public function delete($languageId, $where = [], array $options = [])
     {
         try {
             return $this->getTableGateway($languageId)->delete($where);

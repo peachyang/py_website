@@ -37,6 +37,7 @@ class FileMode extends AbstractCli
 Usage:  php -f script.php -- [options]
 
     Not effected on Windows
+    
 USAGE;
     }
 

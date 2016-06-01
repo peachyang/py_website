@@ -374,6 +374,28 @@ admin_cache:
                     grid:
                         type: Seahinet\Admin\ViewModel\Cache
                         template: admin/cache
+admin_indexer:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Indexer Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/indexer/',label:'Indexer Management'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/indexer/reindex',label:'Reindex All'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Indexer
+                        template: admin/grid-simple
 admin_config:
     update: edit
     root:

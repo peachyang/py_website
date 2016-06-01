@@ -8,6 +8,7 @@ cache/
 resized/
 !.htaccess
 .user.ini
+maintence
 *.log
 *.jar
 *.war

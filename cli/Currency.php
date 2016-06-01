@@ -19,7 +19,7 @@ class Currency extends AbstractCli
     {
         if (isset($this->args['sync']) || isset($this->args['s'])) {
             $listener = new Listener;
-            echo $listener->schedule();
+            echo $listener->schedule(), PHP_EOL;
         } else {
             echo $this->usageHelp();
         }

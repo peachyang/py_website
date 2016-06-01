@@ -7,10 +7,19 @@ dashboard:
 cache:
     icon: database
     link: cache/
-    title: Cache Management
+    title: Cache and Indexer
     priority: 150
+    children:
+        -
+            link: cache/
+            title: Cache Management
+            priority: 0
+        -
+            link: indexer/
+            title: Indexer Management
+            priority: 10
 permissions:
-    icon: users
+    icon: universal-access
     title: Permissions
     priority: 200
     children:

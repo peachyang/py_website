@@ -22,7 +22,7 @@ class TranslationController extends AuthActionController
             $root->getChild('edit', true)->setVariable('model', $model);
             $root->getChild('head')->setTitle('Edit Translation');
         } else {
-            $root->getChild('head')->setTitle('Add Translation');
+            $root->getChild('head')->setTitle('Add New Translation');
         }
         return $root;
     }

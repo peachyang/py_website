@@ -143,19 +143,6 @@ abstract class ActionController
     }
 
     /**
-     * Forward to the specified path with re-route
-     * 
-     * @param string $path
-     * @return null
-     */
-    protected function forward($path = '/')
-    {
-        $this->getRequest()->getUri()->withPath($path);
-        $this->getContainer()->get('eventDispatcher')->trigger('route', ['routers' => $this->getContainer()->get('config')['route']]);
-        return null;
-    }
-
-    /**
      * @param string $name
      * @return mixed
      */
@@ -286,7 +273,7 @@ abstract class ActionController
             $result['error'] = 1;
         }
         foreach ($required as $item) {
-            if (empty($data[$item])) {
+            if (!is_numeric($data[$item]) && empty($data[$item])) {
                 $result['message'][] = ['message' => $this->translate('The ' . $item . ' field is required and can not be empty.'), 'level' => 'danger'];
                 $result['error'] = 1;
             }

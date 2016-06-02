@@ -10,7 +10,7 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit User' : 'Add User';
+        return $this->getQuery('id') ? 'Edit User' : 'Add New User';
     }
 
     public function getSaveUrl()

@@ -3,27 +3,27 @@
 namespace Seahinet\Admin\Controller\Customer;
 
 use Exception;
-use Seahinet\Lib\Model\Eav\Attribute as Model;
+use Seahinet\Customer\Model\Group as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 
-class AttributeController extends AuthActionController
+class GroupController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_customer_attribute_list');
+        $root = $this->getLayout('admin_customer_group_list');
         return $root;
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_customer_attribute_edit');
+        $root = $this->getLayout('admin_customer_group_edit');
         $model = new Model;
         if ($id = $this->getRequest()->getQuery('id')) {
             $model->load($id);
-            $root->getChild('head')->setTitle('Edit Customer Attribute / Customer Management');
+            $root->getChild('head')->setTitle('Edit Customer Group / Customer Management');
         } else {
-            $root->getChild('head')->setTitle('Add New Customer Attribute / Customer Management');
+            $root->getChild('head')->setTitle('Add New Customer Group / Customer Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
@@ -52,7 +52,7 @@ class AttributeController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        return $this->response($result, ':ADMIN/customer_group/');
     }
 
     public function saveAction()
@@ -60,7 +60,7 @@ class AttributeController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['level']);
+            $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
@@ -76,7 +76,7 @@ class AttributeController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        return $this->response($result, ':ADMIN/customer_group/');
     }
 
 }

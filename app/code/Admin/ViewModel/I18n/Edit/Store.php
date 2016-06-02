@@ -24,7 +24,7 @@ class Store extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Store' : 'Add Store';
+        return $this->getQuery('id') ? 'Edit Store' : 'Add New Store';
     }
 
     protected function prepareElements($columns = [])

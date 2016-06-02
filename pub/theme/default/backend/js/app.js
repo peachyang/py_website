@@ -109,7 +109,7 @@
                 }
             }
         };
-        $('a[data-method]').click(function () {
+        $(document.body).on('click.seahinet.ajax', 'a[data-method]', function () {
             var o = this;
             if ($(o).is('[data-params]')) {
                 var data = $(o).data('params');
@@ -126,8 +126,7 @@
                 }
             });
             return false;
-        });
-        $('form[data-ajax]').submit(function () {
+        }).on('submit.seahinet.ajax', 'form[data-ajax]', function () {
             var o = this;
             $.ajax($(o).attr('action'), {
                 type: $(o).attr('method'),

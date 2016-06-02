@@ -1,37 +1,35 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Cms\Edit;
+namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Cms\Source\Category as CategorySource;
 use Seahinet\Lib\Source\Language;
 
-class Category extends PEdit
+class Level extends PEdit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('cms_category/save/');
+        return $this->getAdminUrl('customer_level/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('cms_category/delete/');
+            return $this->getAdminUrl('customer_level/delete/');
         }
         return false;
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Category' : 'Add New Category';
+        return $this->getQuery('id') ? 'Edit Customer Level' : 'Add New Customer Level';
     }
 
     protected function prepareElements($columns = [])
     {
         $languages = (new Language)->getSourceArray();
-        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -39,11 +37,10 @@ class Category extends PEdit
             'csrf' => [
                 'type' => 'csrf'
             ],
-            'parent_id' => [
-                'type' => 'select',
-                'label' => 'Parent ID',
-                'empty_string' => '(NULL)',
-                'options' => (new CategorySource)->getSourceArray($model ? $model->getId() : [])
+            'level' => [
+                'type' => 'tel',
+                'label' => 'Level',
+                'required' => 'required'
             ],
             'language_id[]' => [
                 'type' => 'select',
@@ -53,20 +50,6 @@ class Category extends PEdit
                 'attrs' => [
                     'multiple' => 'multiple'
                 ]
-            ],
-            'uri_key' => [
-                'type' => 'text',
-                'label' => 'Uri Key',
-                'required' => 'required'
-            ],
-            'status' => [
-                'type' => 'select',
-                'label' => 'Status',
-                'options' => [
-                    1 => 'Enabled',
-                    0 => 'Disabled'
-                ],
-                'required' => 'required'
             ],
             'name' => [
                 'type' => 'multitext',

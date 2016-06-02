@@ -392,7 +392,7 @@ admin_indexer:
                                 params: [{link:':ADMIN/indexer/',label:'Indexer Management'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/indexer/reindex',label:'Reindex All'}]
+                                params: [{link:':ADMIN/indexer/rebuild/',label:'Rebuild All'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Indexer
                         template: admin/grid-simple

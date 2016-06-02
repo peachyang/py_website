@@ -7,6 +7,7 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Exception\BadIndexerException;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -33,7 +34,7 @@ abstract class Entity extends AbstractModel
 
     protected function init($primaryKey = 'id', $columns = ['id', 'type_id', 'attribute_set_id', 'store_id', 'increment_id', 'status'], $null = null)
     {
-        $this->cacheKey = static::ENTITY_TYPE . '_' . $this->languageId;
+        $this->cacheKey = static::ENTITY_TYPE;
         $this->columns = $columns;
         $this->primaryKey = $primaryKey;
     }
@@ -47,7 +48,7 @@ abstract class Entity extends AbstractModel
                     $this->afterLoad($result);
                 } else if ($result = $this->loadFromIndexer($id, $key)) {
                     $this->afterLoad($result);
-                    $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
+                    $this->flushRow($this->languageId . '-' . $this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
                     if ($key !== $this->primaryKey) {
                         $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
                     }
@@ -55,7 +56,7 @@ abstract class Entity extends AbstractModel
             } catch (BadIndexerException $e) {
                 if ($result = $this->loadFromDb()) {
                     $this->afterLoad($result);
-                    $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
+                    $this->flushRow($this->languageId . '-' . $this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
                     if ($key !== $this->primaryKey) {
                         $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
                     }
@@ -75,9 +76,9 @@ abstract class Entity extends AbstractModel
     {
         if (is_null($key) || $key === $this->primaryKey) {
             $key = $this->primaryKey;
-            $result = $this->fetchRow($id, null, $this->getCacheKey());
+            $result = $this->fetchRow($this->languageId . '-' . $id, null, $this->getCacheKey());
         } else {
-            $result = $this->fetchRow($id, $key, $this->getCacheKey());
+            $result = $this->fetchRow($this->languageId . '-' . $id, $this->languageId . '-' . $key, $this->getCacheKey());
         }
         return $result;
     }
@@ -166,18 +167,39 @@ abstract class Entity extends AbstractModel
                 $tableGateway->update($columns, ['id' => $this->getId()]);
                 $adapter = $this->getContainer()->get('dbAdapter');
                 $tableGateways = [];
+                $languages = new \Seahinet\Lib\Model\Collection\Language;
+                $languages->columns(['id']);
+                $index = [];
                 foreach ($this->attributes as $attr) {
                     if (!isset($tableGateways[$attr['type']])) {
                         $tableGateways[$attr['type']] = new TableGateway($this->valueTablePrefix . '_' . $attr['type'], $adapter);
                     }
-                    $tableGateways[$attr['type']]->update(['value' => $attributes[$attr['code']]], ['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']]);
+                    if (is_array($attributes[$attr['code']])) {
+                        foreach ($attributes[$attr['code']] as $id => $value) {
+                            if (!isset($index[$id])) {
+                                $index[$id] = [];
+                            }
+                            $index[$id][$attr['code']] = $value;
+                            $this->upsert(['value' => $value], ['language_id' => $id, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                        }
+                    } else {
+                        foreach ($languages as $language) {
+                            if (!isset($index[$language['id']])) {
+                                $index[$language['id']] = [];
+                            }
+                            $index[$language['id']][$attr['code']] = $attributes[$attr['code']];
+                            $this->upsert(['value' => $attributes[$attr['code']]], ['language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                        }
+                    }
                 }
-                $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, $columns + $attributes, [$this->primaryKey => $this->getId()]);
+                foreach ($languages as $language) {
+                    $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + $index[$language['id']], [$this->primaryKey => $this->getId()]);
+                }
                 $this->afterSave();
                 $this->commit();
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
-                $this->flushRow($id, null, $this->getCacheKey(), $key === $this->primaryKey ? null : $key);
+                $this->flushRow($this->languageId . '-' . $id, null, $this->getCacheKey(), $key === $this->primaryKey ? null : $key);
                 $this->flushList($this->getCacheKey());
             } else if ($this->isNew) {
                 $this->beginTransaction();
@@ -189,15 +211,34 @@ abstract class Entity extends AbstractModel
                 $adapter = $this->getContainer()->get('dbAdapter');
                 $tableGateways = [];
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
+                $languages = new \Seahinet\Lib\Model\Collection\Language;
+                $languages->columns(['id']);
+                $index = [];
                 foreach ($this->attributes as $attr) {
                     if (!isset($tableGateways[$attr['type']])) {
                         $tableGateways[$attr['type']] = new TableGateway($this->valueTablePrefix . '_' . $attr['type'], $adapter);
                     }
-                    if (isset($attributes[$attr['code']])) {
-                        $tableGateways[$attr['type']]->insert(['value' => $attributes[$attr['code']], 'language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']]);
+                    if (is_array($attributes[$attr['code']])) {
+                        foreach ($attributes[$attr['code']] as $id => $value) {
+                            if (!isset($index[$id])) {
+                                $index[$id] = [];
+                            }
+                            $index[$id][$attr['code']] = $value;
+                            $this->insert(['value' => $value, 'language_id' => $id, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                        }
+                    } else {
+                        foreach ($languages as $language) {
+                            if (!isset($index[$language['id']])) {
+                                $index[$language['id']] = [];
+                            }
+                            $index[$language['id']][$attr['code']] = $attributes[$attr['code']];
+                            $this->insert(['value' => $attributes[$attr['code']], 'language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                        }
                     }
                 }
-                $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $this->languageId, [$this->primaryKey => $this->getId()] + $columns + $attributes, [$this->primaryKey => $this->getId()]);
+                foreach ($languages as $language) {
+                    $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + $index[$language['id']]);
+                }
                 $this->afterSave();
                 $this->commit();
                 $this->flushList($this->getCacheKey());
@@ -220,7 +261,7 @@ abstract class Entity extends AbstractModel
                 $this->beforeRemove();
                 $this->getTableGateway($this->getEntityTable())->delete([$this->primaryKey => $this->getId()]);
                 $this->getContainer()->get('indexer')->delete(static::ENTITY_TYPE, $this->languageId, [$this->primaryKey => $this->getId()]);
-                $this->flushRow($this->getId(), null, $this->getCacheKey());
+                $this->flushRow($this->languageId . '-' . $this->getId(), null, $this->getCacheKey());
                 $this->flushList($this->getCacheKey());
                 $this->storage = [];
                 $this->isLoaded = false;

@@ -97,15 +97,6 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($key)
-    {
-        $this->updatedColumns[] = $key;
-        parent::offsetUnset($key);
-    }
-
-    /**
      * Set the value at the specified key to value
      * 
      * @param string|array $key

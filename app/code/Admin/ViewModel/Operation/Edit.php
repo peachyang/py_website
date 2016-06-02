@@ -9,7 +9,7 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Operation' : 'Add Operation';
+        return $this->getQuery('id') ? 'Edit Operation' : 'Add New Operation';
     }
 
     public function getSaveUrl()

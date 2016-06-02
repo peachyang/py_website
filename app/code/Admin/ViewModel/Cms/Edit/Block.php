@@ -26,7 +26,7 @@ class Block extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Block' : 'Add Block';
+        return $this->getQuery('id') ? 'Edit Block' : 'Add New Block';
     }
 
     protected function prepareElements($columns = [])

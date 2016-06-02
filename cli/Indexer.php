@@ -42,7 +42,7 @@ class Indexer extends AbstractCli
             touch(BP . 'maintence');
             try {
                 $manager->reindex($indexer);
-                echo $indexer, ' indexer has been rebuild successfully.', PHP_EOL;
+                echo ucfirst($indexer), ' indexer has been rebuild successfully.', PHP_EOL;
             } catch (\Exception $e) {
                 echo $e->getMessage(), PHP_EOL;
             } finally {

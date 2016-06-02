@@ -3,27 +3,27 @@
 namespace Seahinet\Admin\Controller\Customer;
 
 use Exception;
-use Seahinet\Lib\Model\Eav\Attribute as Model;
+use Seahinet\Customer\Model\Level as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 
-class AttributeController extends AuthActionController
+class LevelController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_customer_attribute_list');
+        $root = $this->getLayout('admin_customer_level_list');
         return $root;
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_customer_attribute_edit');
+        $root = $this->getLayout('admin_customer_level_edit');
         $model = new Model;
         if ($id = $this->getRequest()->getQuery('id')) {
             $model->load($id);
-            $root->getChild('head')->setTitle('Edit Customer Attribute / Customer Management');
+            $root->getChild('head')->setTitle('Edit Customer Level / Customer Management');
         } else {
-            $root->getChild('head')->setTitle('Add New Customer Attribute / Customer Management');
+            $root->getChild('head')->setTitle('Add New Customer Level / Customer Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
@@ -52,7 +52,7 @@ class AttributeController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        return $this->response($result, ':ADMIN/customer_level/');
     }
 
     public function saveAction()
@@ -76,7 +76,7 @@ class AttributeController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        return $this->response($result, ':ADMIN/customer_level/');
     }
 
 }

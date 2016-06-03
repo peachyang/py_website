@@ -104,7 +104,7 @@
                     $(t).remove();
                 } else {
                     $(json.removeLine).each(function () {
-                        $('tr,li,dt,dd').filter('[data-id=' + this + ']').remove();
+                        $('tr,td,li,dt,dd').filter('[data-id=' + this + ']').remove();
                     });
                 }
             }
@@ -169,6 +169,9 @@
             var o = this;
             var p = $(o).parents('.input-box').first();
             $(p).hide();
+            $(o).find('input,select,textarea,button').each(function () {
+                this.disabled = true;
+            });
             o.disabled = true;
             var base = $(o).data('base');
             try {
@@ -176,26 +179,55 @@
             } catch (e) {
                 var target = base.indexOf(':') === -1 ? eval('({"' + base + '":1})') : eval('({' + base + '})');
             }
-            for (var i in target) {
-                var v = $(i).val();
-                if (v == target[i] || $.inArray(target[i], v) !== -1) {
+            var toggle = function (s, t) {
+                if (typeof s !== 'object') {
+                    s = [s];
+                }
+                if (typeof t !== 'object') {
+                    t = [t];
+                }
+                var f = false;
+                for (var i in s) {
+                    if ($.inArray(s[i], t) !== -1) {
+                        f = true;
+                        break;
+                    }
+                }
+                if (f) {
                     $(p).show();
                     o.disabled = false;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = false;
+                    });
                 } else {
                     $(p).hide();
                     o.disabled = true;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = true;
+                    });
                 }
+            };
+            for (var i in target) {
+                toggle($(i).val(), target[i]);
                 $(i).change(function () {
-                    var v = $(this).val();
-                    if (v == target[i] || $.inArray(target[i], v) !== -1) {
-                        $(p).show();
-                        o.disabled = false;
-                    } else {
-                        $(p).hide();
-                        o.disabled = true;
-                    }
+                    toggle($(this).val(), target[i]);
                 });
             }
+        });
+        $('#attribute-options').on('click', 'a.add', function () {
+            var o = $('<div class="template"></div>');
+            $(o).html($('#attribute-options .template').first().html());
+            $(o).find('input').val('');
+            $(this).before(o);
+            return false;
+        }).on('click', 'a.delete', function () {
+            var p = $(this).parents('#attribute-options .template');
+            if ($(p).siblings('.template').length) {
+                $(p).remove();
+            } else {
+                $(p).find('input').val('');
+            }
+            return false;
         });
     });
 }));

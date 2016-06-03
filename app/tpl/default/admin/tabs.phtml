@@ -18,7 +18,7 @@ if (count($tabs)):
                 $flag = true;
             }
             ?>>
-                <a href="#<?php echo $id ?>" aria-controls="profile" role="tab" data-toggle="tab">
+                <a href="#<?php echo $id ?>" aria-controls="<?php echo $id ?>" role="tab" data-toggle="tab">
                     <?php echo $this->translate($tab) ?>
                 </a>
             </li>

@@ -228,6 +228,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
 .admin .edit .tab-pane .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px;vertical-align:top}
 .admin .edit .tab-pane .cell .form-control{max-width:320px}
+.admin .edit .tab-pane .input-box .input-box:first-child .control-label,.admin .edit .tab-pane .input-box .input-box:first-child .cell{padding-top:0}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}

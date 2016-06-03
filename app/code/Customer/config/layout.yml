@@ -168,3 +168,17 @@ admin_customer_attribute_edit:
                                 params: [{link:':ADMIN/customer_attribute/edit/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params: [label,'Label / Options']
+                                children:
+                                    label:
+                                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Label
+                                        template: admin/eav/label                                        

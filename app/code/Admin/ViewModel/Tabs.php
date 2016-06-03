@@ -9,6 +9,7 @@ class Tabs extends AbstractViewModel
 
     protected $tabs = [];
     protected $generateTabPane = true;
+    protected $mainTabLabel = false;
 
     public function __construct()
     {
@@ -38,7 +39,13 @@ class Tabs extends AbstractViewModel
 
     public function getMainTabLabel()
     {
-        return false;
+        return $this->mainTabLabel;
+    }
+
+    public function setMainTabLabel($mainTabLabel)
+    {
+        $this->mainTabLabel = $mainTabLabel;
+        return $this;
     }
 
     public function generateTabPane($flag = null)

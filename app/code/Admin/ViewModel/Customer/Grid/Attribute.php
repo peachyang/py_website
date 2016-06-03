@@ -12,7 +12,7 @@ class Attribute extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
-    protected $translateDomain = 'customer';
+    protected $translateDomain = 'eav';
 
     public function getEditAction($item)
     {
@@ -82,6 +82,14 @@ class Attribute extends PGrid
             ],
             'sortable' => [
                 'label' => 'Sortable',
+                'type' => 'select',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
+            ],
+            'comparable' => [
+                'label' => 'Comparable',
                 'type' => 'select',
                 'options' => [
                     1 => 'Yes',

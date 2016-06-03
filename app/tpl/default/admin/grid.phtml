@@ -14,7 +14,7 @@ $query = $this->getQuery();
                 if (!isset($name['type'])) {
                     $name['type'] = 'text';
                 }
-                if(isset($query[$attr])){
+                if (isset($query[$attr])) {
                     $name['value'] = $query[$attr];
                 }
                 echo $this->getInputBox($attr, $name);
@@ -61,19 +61,21 @@ $query = $this->getQuery();
         </thead>
         <tbody>
             <?php foreach ($this->getVariable('collection')->toArray() as $item): ?>
-                <tr<?php if(isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                     <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
                     <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
                             <?php
-                            if (isset($name['editable']) && $name['editable']) {
-                                echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
-                            } else if (isset($name['type']) && $name['type'] === 'image') {
-                                echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
-                            } else {
-                                echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                            if (isset($item[$attr])) {
+                                if (isset($name['editable']) && $name['editable']) {
+                                    echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
+                                } else if (isset($name['type']) && $name['type'] === 'image') {
+                                    echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
+                                } else {
+                                    echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                                }
                             }
                             ?>
                         </td>

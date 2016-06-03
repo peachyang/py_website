@@ -26,57 +26,24 @@ class AttributeController extends AuthActionController
             $root->getChild('head')->setTitle('Add New Customer Attribute / Customer Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
+        $root->getChild('label', true)->setVariable('model', $model);
         return $root;
     }
 
     public function deleteAction()
     {
-        $result = ['error' => 0, 'message' => []];
-        if ($this->getRequest()->isDelete()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['id']);
-            if ($result['error'] === 0) {
-                try {
-                    $model = new Model;
-                    $count = 0;
-                    foreach ((array) $data['id'] as $id) {
-                        $model->setId($id)->remove();
-                        $count++;
-                    }
-                    $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['removeLine'] = (array) $data['id'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
-                    $result['error'] = 1;
-                }
-            }
-        }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        return $this->doDelete('\\Seahinet\\Lib\\Model\\Eav\\Attribute', ':ADMIN/customer_attribute/');
     }
 
     public function saveAction()
     {
-        $result = ['error' => 0, 'message' => []];
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['level']);
-            if ($result['error'] === 0) {
-                $model = new Model($data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
-                    $model->setId(null);
+        return $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute', ':ADMIN/customer_attribute/', [], function($modal, $data) {
+                    $modal->setData('type_id', 1);
+                    if (!isset($data['sort_order']) || !$data['sort_order']) {
+                        $modal->setData('sort_order', 0);
+                    }
                 }
-                try {
-                    $model->save();
-                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
-                    $result['error'] = 1;
-                }
-            }
-        }
-        return $this->response($result, ':ADMIN/customer_attribute/');
+        );
     }
 
 }

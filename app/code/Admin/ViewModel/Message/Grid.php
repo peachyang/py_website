@@ -52,10 +52,6 @@ class Grid extends PGrid
             'code' => [
                 'label' => 'Code',
             ],
-            'subject' => [
-                'label' => 'Subject',
-                'class' => 'text-left'
-            ],
             'language' => [
                 'label' => 'Language',
                 'use4sort' => false,

@@ -239,7 +239,7 @@ class MongoDB extends AbstractHandler
             ];
             foreach ($columns as $column) {
                 if ($column['is_unique']) {
-                    $indexes[] = ['key' => [$column['attr'] => 1], 'unique' => true];
+                    $indexes[] = ['key' => [$column['attr'] => 1]];#, 'unique' => true];
                 }
             }
             $this->getCollection($language['id'])->createIndexes($indexes);

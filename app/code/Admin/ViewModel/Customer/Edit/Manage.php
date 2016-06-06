@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
+use Seahinet\Lib\Source\Eav\Attribute\Set;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
@@ -32,6 +33,7 @@ class Manage extends PEdit
     protected function prepareElements($columns = [])
     {
         $user = (new Segment('admin'))->get('user');
+        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden'
@@ -45,6 +47,16 @@ class Manage extends PEdit
                     ] : [
                 'type' => 'hidden'
                     ]),
+            'attribute_set_id' => [
+                'type' => 'select',
+                'label' => 'Attribute Set',
+                'required' => 'required',
+                'options' => (new Set)->getSourceArray(),
+                'value' => $this->getQuery('attribute_set', $model['attribute_set_id']),
+                'attrs' => [
+                    'onchange' => 'location.href=\'' . $this->getUri()->withQuery(http_build_query($query = array_diff_key($this->getQuery(), ['attribute_set' => '']))) . (empty($query) ? '?' : '&') . 'attribute_set=\'+this.value;'
+                ]
+            ],
             'store_id' => ($user->getStore() ? [
                 'type' => 'hidden',
                 'value' => $user->getStore()->getId()

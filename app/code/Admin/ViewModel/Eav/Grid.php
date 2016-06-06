@@ -19,7 +19,6 @@ abstract class Grid extends PGrid
         $collection = $this->getVariable('collection');
         $attributes->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
-                ->order('sort_order, eav_attribute.id')
                 ->where(['eav_entity_type.code' => $collection::ENTITY_TYPE])
                 ->where('(filterable=1 OR sortable=1)');
         $user = (new Segment('admin'))->get('user');

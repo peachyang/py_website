@@ -6,6 +6,7 @@ use Exception;
 use Seahinet\Customer\Model\Customer as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Session\Segment;
 
 class ManageController extends AuthActionController
@@ -19,10 +20,11 @@ class ManageController extends AuthActionController
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_customer_edit');
+        $query = $this->getRequest()->getQuery();
+        $root = $this->getLayout(!isset($query['id']) && !isset($query['attribute_set']) ? 'admin_customer_beforeedit' : 'admin_customer_edit');
         $model = new Model;
-        if ($id = $this->getRequest()->getQuery('id')) {
-            $model->load($id);
+        if (isset($query['id'])) {
+            $model->load($query['id']);
             $root->getChild('head')->setTitle('Edit Customer / Customer Management');
         } else {
             $root->getChild('head')->setTitle('Add New Customer / Customer Management');
@@ -42,8 +44,8 @@ class ManageController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
-            $attributes->where(['is_required' => 1])->columns(['code']);
-            $required = ['store_id', 'language_id'];
+            $attributes->withSet()->where(['is_required' => 1, 'attribute_set_id' => $data['attribute_set_id']])->columns(['code']);
+            $required = ['store_id', 'language_id', 'attribute_set_id'];
             $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];
             });
@@ -53,6 +55,9 @@ class ManageController extends AuthActionController
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }
+                $type = new Type;
+                $type->load(Model::ENTITY_TYPE, 'code');
+                $model->setData('type_id', $type->getId());
                 $user = (new Segment('admin'))->get('user');
                 if ($user->getStore()) {
                     $model->setData('store_id', $user->getStore()->getId());

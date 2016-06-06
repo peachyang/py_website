@@ -12,7 +12,7 @@ class Attribute extends AbstractModel
 
     protected function construct()
     {
-        $this->init('eav_attribute', 'id', ['id', 'type_id', 'attribute_set_id', 'attribute_group_id', 'code', 'type', 'input', 'validation', 'is_required', 'default_value', 'is_unique', 'sort_order']);
+        $this->init('eav_attribute', 'id', ['id', 'type_id', 'code', 'type', 'input', 'validation', 'is_required', 'default_value', 'is_unique', 'searchable', 'filterable', 'comparable', 'sortable']);
     }
 
     public function getOptions($language = false)
@@ -88,7 +88,7 @@ class Attribute extends AbstractModel
                     $tableGateway->insert(['label' => $value, 'attribute_id' => $this->getId(), 'language_id' => $id]);
                 }
             }
-            if (isset($this->storage['option'])) {
+            if (isset($this->storage['option']) && isset($this->storage['input']) && in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                 $tableGateway = new TableGateway('eav_attribute_option', $adapter);
                 $tableGateway->delete(['attribute_id' => $this->getId()]);
                 $labelGateway = new TableGateway('eav_attribute_option_label', $adapter);

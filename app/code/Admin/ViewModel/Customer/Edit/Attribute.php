@@ -145,10 +145,6 @@ class Attribute extends PEdit
                     1 => 'Yes',
                     0 => 'No'
                 ]
-            ],
-            'sort_order' => [
-                'label' => 'Sort Order',
-                'type' => 'tel'
             ]
         ];
         return parent::prepareElements($columns);

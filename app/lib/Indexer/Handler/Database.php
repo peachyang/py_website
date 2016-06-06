@@ -48,6 +48,7 @@ class Database extends AbstractHandler
             );
             $ddl = new Ddl\CreateTable($table);
             $ddl->addColumn(new Ddl\Column\Integer('id', false, 0))
+                    ->addColumn(new Ddl\Column\Integer('attribute_set_id', false, 0))
                     ->addColumn(new Ddl\Column\Integer('store_id', false, 0))
                     ->addColumn(new Ddl\Column\Varchar('increment_id', 255, true, ''))
                     ->addColumn(new Ddl\Column\Boolean('status', true, 1))
@@ -66,21 +67,22 @@ class Database extends AbstractHandler
             foreach ($columns as $attr) {
                 if ($attr['attr']) {
                     if ($attr['type'] === 'int') {
-                        $column = new Ddl\Column\Integer($attr['attr'], (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Integer($attr['attr'], true, $attr['default_value']);
                     } else if ($attr['type'] === 'varchar') {
-                        $column = new Ddl\Column\Varchar($attr['attr'], 255, (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Varchar($attr['attr'], 255, true, $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {
-                        $column = new Ddl\Column\Timestamp($attr['attr'], (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Timestamp($attr['attr'], true, $attr['default_value']);
                     } else if ($attr['type'] === 'decimal') {
-                        $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, $attr['default_value']);
                     } else if ($attr['type'] === 'blob') {
-                        $column = new Ddl\Column\Blob($attr['attr'], 65535, (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Blob($attr['attr'], 65535, true, $attr['default_value']);
                     } else {
-                        $column = new Ddl\Column\Text($attr['attr'], 65535, (bool) $attr['is_required'], $attr['default_value']);
+                        $column = new Ddl\Column\Text($attr['attr'], 65535, true, $attr['default_value']);
                     }
                     $ddl->addColumn($column);
                     if ($attr['is_unique']) {
-                        $ddl->addConstraint(new Ddl\Constraint\UniqueKey($attr['attr'], 'UNQ_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
+                        #$ddl->addConstraint(new Ddl\Constraint\UniqueKey($attr['attr'], 'UNQ_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
+                        $ddl->addConstraint(Ddl\Index\Index($attr['attr'], 'IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
                     }
                 }
             }

@@ -2,8 +2,9 @@
 
 namespace Seahinet\Admin\Controller\Customer;
 
-use Exception;
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Model\Eav\Attribute as Model;
+use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class AttributeController extends AuthActionController
@@ -37,11 +38,10 @@ class AttributeController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute', ':ADMIN/customer_attribute/', [], function($modal, $data) {
-                    $modal->setData('type_id', 1);
-                    if (!isset($data['sort_order']) || !$data['sort_order']) {
-                        $modal->setData('sort_order', 0);
-                    }
+        return $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute', ':ADMIN/customer_attribute/', [], function($model, $data) {
+                    $type = new Type;
+                    $type->load(Customer::ENTITY_TYPE, 'code');
+                    $model->setData('type_id', $type->getId());
                 }
         );
     }

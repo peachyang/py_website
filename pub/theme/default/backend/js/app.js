@@ -46,7 +46,7 @@
                 $('.nav-container,.main-container').removeClass('no-transition');
             }, 600);
         }
-        $('.nav-container').delegate('.dropdown-toggle:not([data-toggle=dropdown])', 'click', function () {
+        $('.nav-container').on('click', '.dropdown-toggle:not([data-toggle=dropdown])', function () {
             var parent = $(this).parent('.dropdown');
             $(parent).siblings('.open').removeClass('open');
             $(parent).toggleClass('open');
@@ -56,27 +56,6 @@
         });
         $('img.captcha').click(function () {
             $(this).attr('src', $(this).attr('src') + '?' + (new Date().getTime()));
-        });
-        $('.grid .table,.grid ul,.grid ol,.grid dl').each(function () {
-            if ($(this).find('[type=checkbox].selectall').length) {
-                $(this).delegate('[type=checkbox]', 'click', function () {
-                    var flag = this.checked;
-                    var parent = $(this).parents('.grid .table,.grid ul,.grid ol,.grid dl').last();
-                    if ($(this).is('.selectall')) {
-                        $(parent).find('[type=checkbox]').not(this).each(function () {
-                            this.checked = flag;
-                        });
-                    } else if (flag && !$(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
-                        $(parent).find('.selectall').each(function () {
-                            this.checked = flag;
-                        });
-                    } else if (!flag && $(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
-                        $(parent).find('.selectall').each(function () {
-                            this.checked = flag;
-                        });
-                    }
-                });
-            }
         });
         window.addMessages = function (messages) {
             var html = '';
@@ -88,6 +67,7 @@
             $('.header .top-menu .messages').addClass('has-message');
         };
         var responseHandler = function (json) {
+            var o = this;
             if (typeof json === 'string') {
                 json = eval('(' + json + ')');
             }
@@ -99,15 +79,20 @@
                 addMessages(json.message);
             }
             if (json.removeLine) {
-                var t = $(this).parentsUntil('tbody,ul,ol,dl').last();
+                if ($(o).is('menu a')) {
+                    var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
+                } else {
+                    var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
+                }
                 if ($(t).is('tr,li,dt,dd')) {
                     $(t).remove();
                 } else {
                     $(json.removeLine).each(function () {
-                        $('tr,td,li,dt,dd').filter('[data-id=' + this + ']').remove();
+                        $(o).parents('[data-id=' + this + ']').first().remove();
                     });
                 }
             }
+            $(o).trigger('afterajax.seahinet', json);
         };
         $(document.body).on('click.seahinet.ajax', 'a[data-method]', function () {
             var o = this;
@@ -143,13 +128,6 @@
         $('#modal-send-email').on({
             'show.bs.modal': function (e) {
                 $(this).find('#sendmail-template_id').val($(e.relatedTarget).data('id'));
-            }
-        });
-        $('.grid .table tbody td').click(function () {
-            if ($(this).siblings('.checkbox').length) {
-                $(this).siblings('.checkbox').children('[type=checkbox]').trigger('click');
-            } else if ($(this).parent('tr').data('href')) {
-                location.href = $(this).parent('tr').data('href');
             }
         });
         if ($('.message-box>.alert').length) {
@@ -213,21 +191,6 @@
                     toggle($(this).val(), target[i]);
                 });
             }
-        });
-        $('#attribute-options').on('click', 'a.add', function () {
-            var o = $('<div class="template"></div>');
-            $(o).html($('#attribute-options .template').first().html());
-            $(o).find('input').val('');
-            $(this).before(o);
-            return false;
-        }).on('click', 'a.delete', function () {
-            var p = $(this).parents('#attribute-options .template');
-            if ($(p).siblings('.template').length) {
-                $(p).remove();
-            } else {
-                $(p).find('input').val('');
-            }
-            return false;
         });
     });
 }));

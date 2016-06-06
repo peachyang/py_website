@@ -20,6 +20,23 @@ admin_customer_list:
                                 params: [{link:':ADMIN/customer_manage/edit/',label:'Add New Customer'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Customer\Grid\Manage
+admin_customer_beforeedit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Eav\BeforeEdit
+                        template: admin/eav/beforeEdit
 admin_customer_edit:
     update: edit
     root:
@@ -153,6 +170,11 @@ admin_customer_attribute_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/eav.js
             content:
                 children:
                     breadcrumb:
@@ -181,4 +203,76 @@ admin_customer_attribute_edit:
                                 children:
                                     label:
                                         type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Label
-                                        template: admin/eav/label                                        
+                                        template: admin/eav/label
+admin_customer_attribute_set_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Customer Attribute Set / Customer Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_attribute_set/',label:'Customer Attribute Set'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/customer_attribute_set/edit/',label:'Add New Attribute Set'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Customer\Grid\Attribute\Set
+admin_customer_attribute_set_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/eav.js
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_attribute_set/',label:'Customer Attribute Set'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_attribute_set/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Set
+                        children:
+                            apply:
+                                type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Group
+                                template: admin/eav/set
+            extra:
+                children:
+                    new-group:
+                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Group
+                        template: admin/eav/group

@@ -7,6 +7,7 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Eav\Attribute as AttributeModel;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Lib\Source\Eav\Attribute\Set;
 use Seahinet\Lib\Source\Store;
 
 abstract class Edit extends PEdit
@@ -35,10 +36,11 @@ abstract class Edit extends PEdit
         $languageId = Bootstrap::getLanguage()->getId();
         $model = $this->getVariable('model');
         $attributes->withGroup()
+                ->withSet()
                 ->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->order('sort_order, eav_attribute.id')
-                ->where(['eav_entity_type.code' => $model::ENTITY_TYPE]);
+                ->where(['eav_entity_type.code' => $model::ENTITY_TYPE, 'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])]);
         if ($this->group) {
             $columns = [];
             $attributes->where(['eav_attribute_group.name' => $this->group]);
@@ -57,6 +59,16 @@ abstract class Edit extends PEdit
                         ] : [
                     'type' => 'hidden'
                         ]),
+                'attribute_set_id' => [
+                    'type' => 'select',
+                    'label' => 'Attribute Set',
+                    'required' => 'required',
+                    'options' => (new Set)->getSourceArray(),
+                    'value' => $this->getQuery('attribute_set', $model['attribute_set_id']),
+                    'attr' => [
+                        'onchange' => 'location.href=\'' . $this->getUri()->withQuery(http_build_query($query = array_diff_key($this->getQuery(), ['attribute_set' => '']))) . (empty($query) ? '?' : '&') . 'attribute_set=\'+this.value;'
+                    ]
+                ],
                 'store_id' => ($user->getStore() ? [
                     'type' => 'hidden',
                     'value' => $user->getStore()->getId()

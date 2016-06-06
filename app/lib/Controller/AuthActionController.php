@@ -81,7 +81,7 @@ class AuthActionController extends ActionController
                 }
             }
         }
-        return $this->response($result? : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
     protected function doSave($modelName, $redirect = null, $required = [], $beforeSave = null)
@@ -99,6 +99,7 @@ class AuthActionController extends ActionController
                 }
                 try {
                     $model->save();
+                    $result['data'] = $model->getArrayCopy();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
@@ -107,7 +108,7 @@ class AuthActionController extends ActionController
                 }
             }
         }
-        return $this->response($result? : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
 }

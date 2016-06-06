@@ -6,7 +6,7 @@ use Exception;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Exception\BadIndexerException;
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\TableGateway\TableGateway;
@@ -93,9 +93,7 @@ abstract class Entity extends AbstractModel
         if (!$this->entityTable) {
             $tableGateway = new TableGateway('eav_entity_type', $this->getContainer()->get('dbAdapter'));
             $select = $tableGateway->getSql()->select();
-            $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
-                    ->where(['eav_entity_type.code' => static::ENTITY_TYPE])
-                    ->order('sort_order asc');
+            $select->where(['eav_entity_type.code' => static::ENTITY_TYPE]);
             $result = $tableGateway->selectWith($select)->toArray();
             if (count($result)) {
                 $this->entityTable = $result[0]['entity_table'];
@@ -262,10 +260,10 @@ abstract class Entity extends AbstractModel
     protected function prepareAttributes()
     {
         if (empty($this->attributes)) {
-            $this->attributes = new Attribute;
-            $this->attributes->columns(['code', 'id', 'type'])
+            $this->attributes = new AttributeCollection;
+            $this->attributes->withSet()->columns(['code', 'id', 'type'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'left')
-                    ->where(['eav_entity_type.code' => static::ENTITY_TYPE]);
+                    ->where(['eav_entity_type.code' => static::ENTITY_TYPE, 'attribute_set_id' => $this->storage['attribute_set_id']]);
         }
         $attrs = [];
         $this->attributes->walk(function($attr) use (&$attrs) {

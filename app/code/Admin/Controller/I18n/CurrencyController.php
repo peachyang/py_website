@@ -34,26 +34,7 @@ class CurrencyController extends AuthActionController
 
     public function saveAction()
     {
-        $result = ['error' => 0, 'message' => []];
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data);
-            if ($result['error'] === 0) {
-                $model = new Model;
-                $model->setData('id', $data['id'])
-                        ->setData('symbol', $data['symbol'])
-                        ->setData('rate', $data['rate']);
-                try {
-                    $model->save();
-                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
-                    $result['error'] = 1;
-                }
-            }
-        }
-        return $this->response($result, ':ADMIN/i18n_currency/');
+        return $this->doSave('\\Seahinet\I18n\\Model\\Currency', ':ADMIN/i18n_currency/', ['id', 'symbol', 'rate', 'format']);
     }
 
     public function syncAction()

@@ -12,3 +12,15 @@ customer:
             link: customer_attribute/
             title: Attribute Management
             priority: 10
+        -
+            link: customer_attribute_set/
+            title: Attribute Set Management
+            priority: 11
+        -
+            link: customer_group/
+            title: Customer Group
+            priority: 20
+        -
+            link: customer_level/
+            title: Customer Level
+            priority: 30

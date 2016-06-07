@@ -19,6 +19,17 @@ abstract class Collection extends AbstractCollection
         } else {
             $this->languageId = Bootstrap::getLanguage()->getId();
         }
+        $this->init();
+    }
+
+    protected function init($null = null)
+    {
+        $this->tableName = static::ENTITY_TYPE . '_' . $this->languageId . '_index';
+        $this->getTableGateway($this->tableName);
+        $this->cacheKey = static::ENTITY_TYPE;
+        if (is_null($this->select)) {
+            $this->select = $this->getTableGateway($this->tableName)->getSql()->select();
+        }
     }
 
     public function load($useCache = true)

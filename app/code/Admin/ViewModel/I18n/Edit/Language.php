@@ -25,7 +25,7 @@ class Language extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Language' : 'Add Language';
+        return $this->getQuery('id') ? 'Edit Language' : 'Add New Language';
     }
 
     protected function prepareElements($columns = [])

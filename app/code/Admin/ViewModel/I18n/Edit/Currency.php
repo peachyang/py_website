@@ -14,7 +14,7 @@ class Currency extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Currency' : 'Add Currency';
+        return 'Edit Currency';
     }
 
     protected function prepareElements($columns = [])

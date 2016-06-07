@@ -1,0 +1,5 @@
+---
+Seahinet\Customer\Model\Customer.model.save.before:
+    -
+        listener: [\Seahinet\Customer\Listeners\Increment, generate]
+        priority: 10

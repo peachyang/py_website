@@ -3,6 +3,7 @@
 namespace Seahinet\Cms\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Zend\Db\TableGateway\TableGateway;
 
 class Block extends AbstractModel
 {

@@ -94,10 +94,10 @@ class MongoDB extends AbstractHandler
         $options = [];
         $states = $select->getRawState();
         if ($limit = $states['limit']) {
-            $options['limit'] = $limit;
+            $options['limit'] = (int) $limit;
         }
         if ($skip = $states['offset']) {
-            $options['skip'] = $skip;
+            $options['skip'] = (int) $skip;
         }
         if ($sort = $states['order']) {
             $options['sort'] = [];
@@ -140,7 +140,7 @@ class MongoDB extends AbstractHandler
             }
             return array_merge($a, $b);
         };
-        for ($i = 0; $i < count($predicates); $i++) {
+        for ($i = 0; $i < count($predicates) - 1; $i++) {
             $predicate = $predicates[$i];
             if (is_string($predicate)) {
                 if (trim($predicate) === 'OR') {
@@ -156,15 +156,14 @@ class MongoDB extends AbstractHandler
                             break;
                         }
                     }
-                    $parts[$i] = ['$and' => $handleAnd($parts[$j], $parts[$k])];
+                    $parts[$k] = ['$and' => $handleAnd($parts[$j], $parts[$k])];
                     unset($parts[$j]);
-                    unset($parts[$k]);
                 }
             }
         }
         if ($hasOr) {
             $parts = ['$or' => array_values($parts)];
-        } else if(!empty($parts)){
+        } else if (!empty($parts)) {
             $parts = array_values($parts)[0];
         }
         return $parts;
@@ -192,7 +191,7 @@ class MongoDB extends AbstractHandler
     public function update($languageId, $values, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->updateOne($constraint, $values, $options);
+            return $this->getCollection($languageId)->updateOne($constraint, ['$set' => $values], $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
@@ -204,7 +203,7 @@ class MongoDB extends AbstractHandler
     public function upsert($languageId, $values, $constraint = [], array $options = [])
     {
         try {
-            return $this->getCollection($languageId)->updateOne($constraint, $values, ['upsert' => true] + $options);
+            return $this->getCollection($languageId)->updateOne($constraint, ['$set' => $values], ['upsert' => true] + $options);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }
@@ -240,7 +239,7 @@ class MongoDB extends AbstractHandler
             ];
             foreach ($columns as $column) {
                 if ($column['is_unique']) {
-                    $indexes[] = ['key' => [$column['attr'] => 1], 'unique' => true];
+                    $indexes[] = ['key' => [$column['attr'] => 1]];#, 'unique' => true];
                 }
             }
             $this->getCollection($language['id'])->createIndexes($indexes);

@@ -27,7 +27,7 @@ class Page extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Page' : 'Add Page';
+        return $this->getQuery('id') ? 'Edit Page' : 'Add New Page';
     }
 
     protected function prepareElements($columns = [])

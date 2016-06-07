@@ -71,6 +71,15 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 #upload-list .upload-move{width:10%}
 #upload-resource .buttons-set{padding:20px 0;background:#F7F8FA;border-top:1px solid #cce0e9}
 #resource-list .grid .title{display:block;line-height:1.5;word-break:break-all}
+#unapplied-attribute,#attribute-groups{float:left;width:45%;max-width:320px;height:300px;border:1px solid #8b8c8c;padding:0 5px}
+#unapplied-attribute{margin-left:20px}
+#unapplied-attribute .item,#attribute-groups .item{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:move;line-height:2}
+#unapplied-attribute .item:hover,#attribute-groups .item:hover{background:#f5f5f5}
+#unapplied-attribute .item .remove{display:none}
+#attribute-groups .item .attribute,#attribute-groups .group>.title{display:block;float:left;width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#attribute-groups .item .remove,#attribute-groups .group>.remove{display:block;float:right;width:10%;text-align:right}
+#attribute-groups .content{min-height:2em;padding-left:1em;clear:both}
+#attribute-groups .item.placeholder,#unapplied-attribute .item.placeholder{background:#f6fbfb;height:2em}
 .widget-upload{font-size:0!important}
 .widget-upload .inline-box{display:inline-block;vertical-align:middle;width:122px;margin-right:6px;border:1px solid #aaa}
 .widget-upload .inline-box .btn{padding:10px;display:block;text-align:center;height:120px;width:100%}
@@ -228,6 +237,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
 .admin .edit .tab-pane .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px;vertical-align:top}
 .admin .edit .tab-pane .cell .form-control{max-width:320px}
+.admin .edit .tab-pane .input-box .input-box:first-child .control-label,.admin .edit .tab-pane .input-box .input-box:first-child .cell{padding-top:0}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}

@@ -23,7 +23,7 @@ class Merchant extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Merchant' : 'Add Merchant';
+        return $this->getQuery('id') ? 'Edit Merchant' : 'Add New Merchant';
     }
 
     protected function prepareElements($columns = [])

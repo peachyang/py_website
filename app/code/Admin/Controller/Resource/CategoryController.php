@@ -1,4 +1,5 @@
 <?php
+
 namespace Seahinet\Admin\Controller\Resource;
 
 use Seahinet\Lib\Controller\AuthActionController;
@@ -7,12 +8,12 @@ use Seahinet\Resource\Model\Category as Model;
 
 class CategoryController extends AuthActionController
 {
+
     public function indexAction()
     {
-        
+
         $root = $this->getLayout('admin_resource_category_list');
         return $root;
-        
     }
 
     public function editAction()
@@ -28,59 +29,26 @@ class CategoryController extends AuthActionController
         }
         return $root;
     }
-    
-    
+
     public function saveAction()
     {
-        $result = ['error' => 0, 'message' => []];
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data);
-            if ($result['error'] === 0) {
-                $model = new Model($data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
-                    $model->setId(null);
+        return $this->doSave('\\Seahinet\\Resource\\Model\\Category', ':ADMIN/resource_category/', ['language_id', 'code', 'name'], function($model, $data) {
+                    if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
+                        $model->setData('parent_id', null);
+                    }
+                    $user = (new Segment('admin'))->get('user');
+                    if ($user->getStore()) {
+                        $model->setData('store_id', $user->getStore()->getId());
+                    } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
+                        $model->setData('store_id', null);
+                    }
                 }
-                if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
-                    $model->setData('parent_id', null);
-                }
-                try {
-                    $model->save();
-                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
-                    $result['error'] = 1;
-                }
-            }
-        }
-        return $this->response($result, ':ADMIN/resource_category/');
+        );
     }
-    
+
     public function deleteAction()
     {
-        $result = ['error' => 0, 'message' => []];
-        if ($this->getRequest()->isDelete()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['id']);
-            if ($result['error'] === 0) {
-                try {
-                    $model = new Model;
-                    $count = 0;
-                    foreach ((array) $data['id'] as $id) {
-                        $model->setId($id)->remove();
-                        $count++;
-                    }
-                    $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
-                    $result['removeLine'] = (array) $data['id'];
-                } catch (Exception $e) {
-                    $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
-                    $result['error'] = 1;
-                }
-            }
-        }
-        return $this->response($result, ':ADMIN/resource_category/');
+        return $this->doDelete('\\Seahinet\\Resource\\Model\\Category', ':ADMIN/resource_category/');
     }
-    
+
 }

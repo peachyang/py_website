@@ -25,7 +25,7 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Template' : 'Add Template';
+        return $this->getQuery('id') ? 'Edit Template' : 'Add New Template';
     }
 
     protected function prepareElements($columns = [])

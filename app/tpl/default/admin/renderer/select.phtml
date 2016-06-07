@@ -25,7 +25,7 @@ $parent = $this->getVariable('parent');
             foreach ($item['options'] as $value => $label):
                 if (is_array($label)):
                     ?>
-                    <optgroup label="<?php echo $value ?>">
+                    <optgroup label="<?php echo $this->translate($value) ?>">
                         <?php foreach ($label as $v => $l): ?>
                             <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || (string) $v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
                         <?php endforeach; ?>

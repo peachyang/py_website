@@ -97,15 +97,6 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($key)
-    {
-        $this->updatedColumns[] = $key;
-        parent::offsetUnset($key);
-    }
-
-    /**
      * Set the value at the specified key to value
      * 
      * @param string|array $key
@@ -192,7 +183,7 @@ abstract class AbstractModel extends ArrayObject
                 $key = array_keys($constraint)[0];
                 $this->flushRow($id, null, $this->getCacheKey(), $key === $this->primaryKey ? null : $key);
                 $this->flushList($this->getCacheKey());
-            } else if ($this->isNew) {
+            } else if ($this->isNew || $insertForce) {
                 $this->beforeSave();
                 $this->insert($this->prepareColumns());
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());

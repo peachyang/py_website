@@ -15,7 +15,7 @@ class Translation extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Translation' : 'Add Translation';
+        return $this->getQuery('id') ? 'Edit Translation' : 'Add New Translation';
     }
 
     protected function prepareElements($columns = [])

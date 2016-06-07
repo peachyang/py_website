@@ -124,13 +124,17 @@ class Grid extends AbstractViewModel
             $collection->offset(($condition['page'] - 1) * $limit);
             unset($condition['page']);
         }
-        $collection->limit((int) $limit);
+        $collection->limit($limit);
         unset($condition['limit']);
         if (isset($condition['asc'])) {
-            $collection->order($condition['asc'] . ' ASC');
+            $collection->order((strpos($condition['asc'], ':') ?
+                            str_replace(':', '.', $condition['asc']) :
+                            $condition['asc']) . ' ASC');
             unset($condition['asc']);
         } else if (isset($condition['desc'])) {
-            $collection->order($condition['desc'] . ' DESC');
+            $collection->order((strpos($condition['desc'], ':') ?
+                            str_replace(':', '.', $condition['desc']) :
+                            $condition['desc']) . ' DESC');
             unset($condition['desc']);
         }
         if (!empty($condition)) {
@@ -163,10 +167,8 @@ class Grid extends AbstractViewModel
         if ($collection instanceof AbstractCollection) {
             $collection->load();
         }
-        $this->setVariables([
-            'collection' => $collection,
-            'attributes' => $this->prepareColumns()
-        ]);
+        $this->setVariable('collection', $collection)
+                ->setVariable('attributes', $this->prepareColumns());
         return parent::getRendered($template);
     }
 

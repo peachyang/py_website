@@ -8,8 +8,37 @@
     }
 }(function ($) {
     $(function () {
+        "use strict";
         $.fn.grid = function () {
             var t = $(this).find('[data-id]');
+            if ($(this).find('[type=checkbox].selectall').length) {
+                $(this).on('click', '[type=checkbox]', function () {
+                    var flag = this.checked;
+                    var parent = $(this).parents('.table').last();
+                    if ($(this).is('.selectall')) {
+                        $(parent).find('[type=checkbox]').not(this).each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (flag && !$(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (!flag && $(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    }
+                });
+            }
+            $(this).find('tbody td').click(function () {
+                if ($(this).find('a,button,input,select,textarea').length) {
+                    return;
+                } else if ($(this).siblings('.checkbox').length) {
+                    $(this).siblings('.checkbox').children('[type=checkbox]').trigger('click');
+                } else if ($(this).parent('tr').data('href')) {
+                    location.href = $(this).parent('tr').data('href');
+                }
+            });
             if ($(t).has('.action')) {
                 $(t).on('contextmenu', function (e) {
                     var m = $('<menu class="context"></menu>');

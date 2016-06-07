@@ -25,7 +25,7 @@ class Category extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Category' : 'Add Category';
+        return $this->getQuery('id') ? 'Edit Category' : 'Add New Category';
     }
 
     protected function prepareElements($columns = [])

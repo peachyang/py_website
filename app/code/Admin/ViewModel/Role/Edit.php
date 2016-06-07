@@ -9,7 +9,7 @@ class Edit extends PEdit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Role' : 'Add Role';
+        return $this->getQuery('id') ? 'Edit Role' : 'Add New Role';
     }
 
     public function getSaveUrl()

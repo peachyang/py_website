@@ -111,6 +111,7 @@ class AccountController extends ActionController
                 $customer = new Model;
                 $customer->setData([
                     'attribute_set_id' => $config['customer/registion/set'],
+                    'group_id' => $config['customer/registion/group'],
                     'type_id' => $attributes[0]['type_id'],
                     'store_id' => Bootstrap::getStore()->getId(),
                     'language_id' => Bootstrap::getLanguage()->getId(),

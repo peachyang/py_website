@@ -3,6 +3,7 @@
 namespace Seahinet\Email\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Zend\Math\Rand;
 
 class Subscriber extends AbstractModel
 {
@@ -14,7 +15,7 @@ class Subscriber extends AbstractModel
 
     public function beforeSave()
     {
-        $this['code'] = md5(random_bytes(32));
+        $this['code'] = Rand::getString(32);
         parent::beforeSave();
     }
     

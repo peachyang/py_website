@@ -253,7 +253,7 @@ abstract class ActionController
             if ($result['error']) {
                 return $this->redirectReferer($url);
             }
-            return $this->redirect($url);
+            return $this->redirect(isset($result['success_url']) ? $result['success_url'] : $url);
         }
     }
 

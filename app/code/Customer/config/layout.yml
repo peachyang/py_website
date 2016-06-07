@@ -1,4 +1,46 @@
 ---
+customer_account_login:
+    update: default
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Customer Login
+            content:
+                children:
+                    form:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer/login
+customer_account_create:
+    update: default
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Create New Customer Account
+            content:
+                children:
+                    form:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer/create
+customer_account_forgotpwd:
+    update: default
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Forgot Password
+            content:
+                children:
+                    form:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer/forgotPwd
 admin_customer_list:
     update: grid
     root:
@@ -35,7 +77,7 @@ admin_customer_beforeedit:
                                 method: addCrumb
                                 params: [{link:':ADMIN/customer_manage/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Eav\BeforeEdit
+                        type: Seahinet\Admin\ViewModel\Customer\BeforeEdit
                         template: admin/eav/beforeEdit
 admin_customer_edit:
     update: edit

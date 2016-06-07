@@ -49,6 +49,9 @@ class User extends AbstractModel
     {
         if (!$this->isLoaded) {
             $this->load($username, 'username');
+        } else if ($this->storage['username'] !== $username) {
+            $this->isLoaded = false;
+            $this->load($username, 'username');
         }
         return $this->offsetGet('status') && (new Bcrypt)->verify($password, $this->offsetGet('password'));
     }

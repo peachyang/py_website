@@ -54,7 +54,7 @@ abstract class Entity extends AbstractModel
                     }
                 }
             } catch (BadIndexerException $e) {
-                if ($result = $this->loadFromDb()) {
+                if ($result = $this->loadFromDb($id, $key)) {
                     $this->afterLoad($result);
                     $this->flushRow($this->languageId . '-' . $this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
                     if ($key !== $this->primaryKey) {
@@ -104,7 +104,7 @@ abstract class Entity extends AbstractModel
         return $this->entityTable;
     }
 
-    protected function loadFromDb()
+    protected function loadFromDb($id, $key = null)
     {
         $select = $this->getTableGateway($this->getEntityTable())->getSql()->select();
         $select->join('eav_attribute', 'eav_attribute.type_id=' . $this->entityTable . '.type_id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
@@ -147,7 +147,16 @@ abstract class Entity extends AbstractModel
                                                 ))));
             }
         }
-        return array_values($items);
+        if (is_null($key) || $key === $this->primaryKey) {
+            return isset($items[$id]) ? $items[$id] : [];
+        } else {
+            foreach ($items as $item) {
+                if (isset($item[$key]) && $item[$key] == $id) {
+                    return $item;
+                }
+            }
+        }
+        return [];
     }
 
     public function save($constraint = [], $insertForce = false)

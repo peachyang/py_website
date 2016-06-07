@@ -44,7 +44,12 @@ class ManageController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
-            $attributes->withSet()->where(['is_required' => 1, 'attribute_set_id' => $data['attribute_set_id']])->columns(['code']);
+            $attributes->withSet()->where([
+                        'is_required' => 1,
+                        'attribute_set_id' => $data['attribute_set_id']
+                    ])->columns(['code'])
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
             $required = ['store_id', 'language_id', 'attribute_set_id'];
             $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];

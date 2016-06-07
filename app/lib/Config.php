@@ -158,7 +158,7 @@ final class Config extends ArrayObject implements Singleton
         } else if (isset($config[$path[0]]['default'])) {
             return $config[$path[0]]['default'];
         }
-        return null;
+        return [];
     }
 
     public function offsetGet($key)

@@ -155,7 +155,7 @@
             try {
                 var target = eval('(' + base + ')');
             } catch (e) {
-                var target = base.indexOf(':') === -1 ? eval('({"' + base + '":1})') : eval('({' + base + '})');
+                var target = base.indexOf(':') === -1 ? eval('({"' + base + '":"1"})') : eval('({' + base + '})');
             }
             var toggle = function (s, t) {
                 if (typeof s !== 'object') {

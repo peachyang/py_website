@@ -10,6 +10,7 @@ use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Swift_SwiftException;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Math\Rand;
 
 class IndexController extends ActionController
 {
@@ -67,7 +68,7 @@ class IndexController extends ActionController
 
     public function captchaAction()
     {
-        $builder = new CaptchaBuilder();
+        $builder = new CaptchaBuilder;
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
         $builder->build(70, 26);
         $segment = new Segment('admin');
@@ -101,14 +102,14 @@ class IndexController extends ActionController
                 $user = new User;
                 $user->load($data['username'], 'username');
                 if ($user->getId()) {
-                    $token = md5(random_bytes(32));
+                    $token = Rand::getString(32);
                     $user->setData([
                         'rp_token' => $token,
                         'rp_token_created_at' => date('Y-m-d h:i:s')
                     ])->save();
                     try {
                         $mailer = $this->getContainer()->get('mailer');
-                        $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                        $mailer->send((new Template)->load('forgot_admin_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
                         $result['message'][] = ['message' => $this->translate('You will receive an email with a link to reset your password.'), 'level' => 'success'];
                     } catch (Swift_SwiftException $e) {
                         $this->getContainer()->get('log')->logException($e);

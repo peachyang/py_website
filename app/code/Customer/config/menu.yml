@@ -24,3 +24,9 @@ customer:
             link: customer_level/
             title: Customer Level
             priority: 30
+system:
+    children:
+        -
+            link: config/customer/
+            title: Customer Configuration
+            priority: 50

@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
-use Seahinet\Lib\Source\Eav\Attribute\Set;
+use Seahinet\Customer\Source\Set;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;

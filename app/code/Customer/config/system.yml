@@ -1,0 +1,86 @@
+---
+customer:
+    label: Customer Configuration
+    children:
+        registion:
+            label: Registion Options
+            scope: merchant
+            priority: 20
+            children:
+                enabled:
+                    label: Enabled
+                    type: select
+                    priority: 10
+                    required: required
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No
+                set:
+                    label: Default Attribute Set
+                    type: select
+                    priority: 0
+                    required: required
+                    default: 1
+                    source: \Seahinet\Customer\Source\Set
+                group:
+                    label: Default Customer Group
+                    type: select
+                    priority: 0
+                    required: required
+                    default: 1
+                    source: \Seahinet\Customer\Source\Group
+                comfirm:
+                    label: Require Emails Confirmation
+                    type: select
+                    priority: 10
+                    required: required
+                    default: 0
+                    options:
+                        1: Yes
+                        0: No
+        captcha:
+            label: CAPTCHA
+            scope: merchant
+            priority: 90
+            children:
+                form[]:
+                    label: Forms
+                    type: multiselect
+                    priority: 0
+                    scope: merchant
+                    options:
+                        login: Login
+                        register: Register
+                        forgotpwd: Forgot Password
+                mode:
+                    label: Displaying Mode
+                    type: select
+                    priority: 1
+                    scope: merchant
+                    required: required
+                    default: 0
+                    options:
+                        - Always
+                        - After number of attempts to login
+                attempt:
+                    label: Number of Unsuccessful Attempts to Login
+                    type: tel
+                    priority: 2
+                    scope: merchant
+                    default: 0
+                    attrs:
+                        data-base: '#captcha-mode'
+                    comment: If 0 is specified, CAPTCHA on the Login form will be always available.
+                symbol:
+                    label: Symbols Used in CAPTCHA
+                    type: text
+                    default: abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789
+                    comment: 'Please use only letters (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed. Similar looking characters (e.g. "i", "l", "1") decrease chance of correct recognition by customer.'
+                number:
+                    label: Number of Symbols
+                    type: range
+                    default: 5
+                    attrs:
+                        min: 1
+                        max: 8

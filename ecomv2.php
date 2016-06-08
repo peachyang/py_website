@@ -577,8 +577,9 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
 CREATE TRIGGER `TGR_UPDATE_EAV_ATTRIBUTE` BEFORE UPDATE ON `eav_attribute` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 INSERT INTO `eav_attribute` VALUES 
-(NULL,1,'username','varchar','text','',1,'',1,1,1,1,NULL,NULL),
-(NULL,1,'password','varchar','password','',1,'',0,0,0,0,NULL,NULL)
+(NULL,1,'username','varchar','text','',1,'',1,1,1,0,1,NULL,NULL),
+(NULL,1,'password','varchar','password','',1,'',0,0,0,0,NULL,NULL),
+(NULL,1,'email','varchar','email','',1,'',1,1,1,0,1,NULL,NULL)
 ;
 
 CREATE TABLE IF NOT EXISTS `eav_entity_attribute` (
@@ -777,6 +778,8 @@ CREATE TABLE IF NOT EXISTS `customer_entity` (
     `language_id` INTEGER NOT NULL COMMENT 'Language ID',
     `increment_id` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Entity increment ID',
     `open_id` CHAR(32) NULL DEFAULT NULL COMMENT 'OAuth open ID',
+    `confirm_token` CHAR(32) NULL DEFAULT NULL COMMENT 'Confirming link token',
+    `confirm_token_created_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Confirming link token creation date',
     `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
@@ -784,6 +787,7 @@ CREATE TABLE IF NOT EXISTS `customer_entity` (
     INDEX IDX_CUSTOMER_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_CUSTOMER_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
     INDEX IDX_CUSTOMER_ENTITY_STORE_ID (`store_id`),
+    CONSTRAINT UNQ_CUSTOMER_ENTITY_CONFIRM_TOKEN UNIQUE (`confirm_token`),
     CONSTRAINT FK_CUSTOMER_ENTITY_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CUSTOMER_ENTITY_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CUSTOMER_ENTITY_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE

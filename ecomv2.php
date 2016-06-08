@@ -258,6 +258,7 @@ CREATE TABLE IF NOT EXISTS `email_template` (
     `code` VARCHAR(255) NOT NULL COMMENT 'Template code',
     `subject` VARCHAR(255) DEFAULT '' COMMENT 'Subject',
     `content` BLOB COMMENT 'Content',
+    `css` BLOB COMMENT 'CSS',
     `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
@@ -566,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ATTR_TYPE_ID (`type_id`),
     INDEX IDX_EAV_ATTR_SEARCHABLE (`searchable`),
-    INDEX IDX_EAV_ATTR_SEARCHABLE (`sortable`),
+    INDEX IDX_EAV_ATTR_SORTABLE (`sortable`),
     INDEX IDX_EAV_ATTR_FILTERABLE (`filterable`),
     INDEX IDX_EAV_ATTR_COMPARABLE (`comparable`),
     CONSTRAINT UNQ_EAV_ATTR_TYPE_ID_CODE UNIQUE (`type_id`,`code`),
@@ -578,7 +579,7 @@ CREATE TRIGGER `TGR_UPDATE_EAV_ATTRIBUTE` BEFORE UPDATE ON `eav_attribute` FOR E
 
 INSERT INTO `eav_attribute` VALUES 
 (NULL,1,'username','varchar','text','',1,'',1,1,1,0,1,NULL,NULL),
-(NULL,1,'password','varchar','password','',1,'',0,0,0,0,NULL,NULL),
+(NULL,1,'password','varchar','password','',1,'',0,0,0,0,0,NULL,NULL),
 (NULL,1,'email','varchar','email','',1,'',1,1,1,0,1,NULL,NULL)
 ;
 

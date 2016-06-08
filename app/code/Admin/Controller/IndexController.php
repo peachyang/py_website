@@ -5,7 +5,8 @@ namespace Seahinet\Admin\Controller;
 use Exception;
 use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Admin\Model\User;
-use Seahinet\Email\Model\Template;
+use Seahinet\Email\Model\Template as TemplateModel;
+use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Swift_SwiftException;
@@ -108,8 +109,20 @@ class IndexController extends ActionController
                         'rp_token_created_at' => date('Y-m-d h:i:s')
                     ])->save();
                     try {
-                        $mailer = $this->getContainer()->get('mailer');
-                        $mailer->send((new Template)->load('forgot_admin_password', 'code')->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])->addFrom('idriszhang@seahinet.com')->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                        $config = $this->getContainer()->get('dbAdapter');
+                        $collection = new TemplateCollection;
+                        $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')
+                                ->where([
+                                    'code' => $config['email/customer/confirm_template'],
+                                    'language_id' => \Seahinet\Lib\Bootstrap::getLanguage()->getId()
+                        ]);
+                        if (count($collection)) {
+                            $mailer = $this->getContainer()->get('mailer');
+                            $mailer->send((new TemplateModel($collection[0]))
+                                            ->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])
+                                            ->addFrom($config['email/admin/sender_email']? : $config['email/default/sender_email'], $config['email/admin/sender_name']? : $config['email/default/sender_name'])
+                                            ->addTo($user->offsetGet('email'), $user->offsetGet('username')));
+                        }
                         $result['message'][] = ['message' => $this->translate('You will receive an email with a link to reset your password.'), 'level' => 'success'];
                     } catch (Swift_SwiftException $e) {
                         $this->getContainer()->get('log')->logException($e);

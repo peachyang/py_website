@@ -84,3 +84,36 @@ customer:
                     attrs:
                         min: 1
                         max: 8
+email:
+    children:
+        customer:
+            label: Customer
+            scope: merchant
+            priority: 20
+            children:
+                sender_email:
+                    label: Sender Email
+                    type: email
+                    scope: merchant
+                sender_name:
+                    label: Sender Name
+                    type: text
+                    scope: merchant
+                forgot_template:
+                    label: Forgot Email Template
+                    type: select
+                    scope: merchant
+                    default: forgot_password
+                    source: \Seahinet\Email\Source\Template
+                welcome_template:
+                    label: Welcome Email Template
+                    type: select
+                    scope: merchant
+                    default: new_customer
+                    source: \Seahinet\Email\Source\Template
+                confirm_template:
+                    label: Confirmation Email Template
+                    type: select
+                    scope: merchant
+                    default: customer_confirmation
+                    source: \Seahinet\Email\Source\Template

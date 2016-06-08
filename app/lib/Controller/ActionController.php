@@ -239,7 +239,7 @@ abstract class ActionController
      * @param string $url
      * @return Response|array
      */
-    protected function response($result, $url)
+    protected function response($result, $url, $segment = 'admin')
     {
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($result['error'] && isset($result['error_url'])) {
@@ -249,7 +249,7 @@ abstract class ActionController
             }
             return $result;
         } else {
-            $this->addMessage($result['message'], 'danger', 'admin');
+            $this->addMessage($result['message'], 'danger', $segment);
             if ($result['error']) {
                 return $this->redirectReferer($url);
             }
@@ -273,7 +273,7 @@ abstract class ActionController
             $result['error'] = 1;
         }
         foreach ($required as $item) {
-            if (!is_numeric($data[$item]) && empty($data[$item])) {
+            if (!isset($data[$item]) || !is_numeric($data[$item]) && empty($data[$item])) {
                 $result['message'][] = ['message' => $this->translate('The ' . $item . ' field is required and can not be empty.'), 'level' => 'danger'];
                 $result['error'] = 1;
             }

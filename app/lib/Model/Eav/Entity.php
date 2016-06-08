@@ -129,13 +129,17 @@ abstract class Entity extends AbstractModel
                 continue;
             }
             if (!isset($items[$record['id']])) {
-                $items[$record['id']] = [
-                    'id' => $record['id'],
-                    'store_id' => $record['store_id'],
-                    'increment_id' => $record['increment_id'],
-                    'status' => $record['status'],
-                    'created_at' => $record['created_at']
-                ];
+                $items[$record['id']] = [];
+                foreach (array_diff(array_keys($record), [
+                    'type_id', 'attr', 'type', 'is_required', 'default_value',
+                    'is_unique', 'code', 'entity_table', 'value_table_prefix',
+                    'is_form', 'value_varchar', 'value_decimal', 'value_text',
+                    'value_int', 'value_blob', 'value_datetime',
+                    'language_varchar', 'language_decimal', 'language_text',
+                    'language_int', 'language_blob', 'language_datetime'
+                ]) as $key) {
+                    $items[$record['id']][$key] = $record[$key];
+                }
             }
             if ($record['attr']) {
                 $items[$record['id']][$record['attr']] = $record['value_int']? : (
@@ -181,6 +185,9 @@ abstract class Entity extends AbstractModel
                 $languages->columns(['id']);
                 $index = [];
                 foreach ($this->attributes as $attr) {
+                    if (!isset($attributes[$attr['code']])) {
+                        continue;
+                    }
                     if (!isset($tableGateways[$attr['type']])) {
                         $tableGateways[$attr['type']] = new TableGateway($this->valueTablePrefix . '_' . $attr['type'], $adapter);
                     }
@@ -212,9 +219,9 @@ abstract class Entity extends AbstractModel
                 }
                 foreach ($languages as $language) {
                     if ($isUpdate) {
-                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + $index[$language['id']], [$this->primaryKey => $this->getId()]);
+                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + isset($index[$language['id']]) ? $index[$language['id']] : [], [$this->primaryKey => $this->getId()]);
                     } else {
-                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + $index[$language['id']]);
+                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + isset($index[$language['id']]) ? $index[$language['id']] : []);
                     }
                 }
                 $this->afterSave();

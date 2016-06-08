@@ -9,13 +9,19 @@
             </div>
         </div>
         <div class="input-box">
+            <label class="control-label required" for="reg:email"><?php echo $this->translate('Email') ?></label>
+            <div class="cell">
+                <input type="email" name="email" id="reg:email" class="form-control required email" />
+            </div>
+        </div>
+        <div class="input-box">
             <label class="control-label required" for="reg:password"><?php echo $this->translate('Password') ?></label>
             <div class="cell">
                 <input type="password" name="password" id="reg:password" class="form-control required" minlength="6" />
             </div>
         </div>
         <div class="input-box">
-            <label class="control-label required" for="reg:cpassword"><?php echo $this->translate('Password') ?></label>
+            <label class="control-label required" for="reg:cpassword"><?php echo $this->translate('Confirm Password') ?></label>
             <div class="cell">
                 <input type="password" name="cpassword" id="reg:cpassword" class="form-control required" data-rule-equalto="#reg:password" />
             </div>
@@ -30,7 +36,7 @@
             </div>
         <?php endif ?>
         <div class="buttons-set">
-            <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Login') ?></span></button>
+            <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Submit') ?></span></button>
         </div>
     </fieldset>
 </form>

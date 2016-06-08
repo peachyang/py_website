@@ -1,5 +1,5 @@
 ---
 customer:
     method: [GET,POST]
-    route: /customer/{controller}/{action}[/]
+    route: /customer/{controller}/[{action}[/]]
     namespace: Seahinet\Customer\Controller

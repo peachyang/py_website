@@ -2,9 +2,11 @@
 
 namespace Seahinet\Customer\Model;
 
+use Exception;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Db\TableGateway\TableGateway;
 
 class Customer extends Entity
 {
@@ -13,7 +15,7 @@ class Customer extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'open_id', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'open_id', 'confirm_token', 'confirm_token_created_at', 'status']);
     }
 
     public function __clone()
@@ -38,6 +40,22 @@ class Customer extends Entity
             $this->storage['open_id'] = md5(random_bytes(32) . serialize($this->storage));
         }
         parent::beforeSave();
+    }
+
+    protected function afterSave()
+    {
+        parent::afterSave();
+        if (isset($this->storage['group_id'])) {
+            try {
+                $tableGateway = new TableGateway('customer_in_group', $this->getContainer()->get('dbAdapter'));
+                $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
+                foreach ($groups as $id) {
+                    $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);
+                }
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+            }
+        }
     }
 
     public function login($username, $password)

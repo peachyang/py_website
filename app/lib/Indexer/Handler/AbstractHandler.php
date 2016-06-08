@@ -46,6 +46,9 @@ abstract class AbstractHandler
                                             $record['language_datetime']? :
                                                     $record['language_blob']
                                             ))));
+            if (!$languageId) {
+                continue;
+            }
             if (!isset($items[$languageId])) {
                 $items[$languageId] = [];
             }

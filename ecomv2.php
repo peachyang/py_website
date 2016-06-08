@@ -577,8 +577,9 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
 CREATE TRIGGER `TGR_UPDATE_EAV_ATTRIBUTE` BEFORE UPDATE ON `eav_attribute` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 INSERT INTO `eav_attribute` VALUES 
-(NULL,1,'username','varchar','text','',1,'',1,1,1,1,NULL,NULL),
-(NULL,1,'password','varchar','password','',1,'',0,0,0,0,NULL,NULL)
+(NULL,1,'username','varchar','text','',1,'',1,1,1,0,1,NULL,NULL),
+(NULL,1,'password','varchar','password','',1,'',0,0,0,0,NULL,NULL),
+(NULL,1,'email','varchar','email','',1,'',1,1,1,0,1,NULL,NULL)
 ;
 
 CREATE TABLE IF NOT EXISTS `eav_entity_attribute` (

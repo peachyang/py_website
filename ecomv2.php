@@ -922,6 +922,8 @@ CREATE TABLE IF NOT EXISTS `customer_group` (
 
 CREATE TRIGGER `TGR_UPDATE_CUSTOMER_GROUP` BEFORE UPDATE ON `customer_group` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
+INSERT INTO `customer_group` VALUES (NULL,'Default',NULL,NULL);
+
 CREATE TABLE IF NOT EXISTS `customer_in_group` (
     `group_id` INTEGER NOT NULL COMMENT 'Customer group ID',
     `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',

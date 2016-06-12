@@ -11,6 +11,9 @@ use Zend\Db\TableGateway\TableGateway;
 class Template extends AbstractModel
 {
 
+    use \Seahinet\Lib\Traits\Url,
+        \Seahinet\Cms\Traits\Renderer;
+
     protected function construct()
     {
         $this->init('email_template', 'id', ['id', 'code', 'subject', 'content', 'css']);
@@ -74,9 +77,12 @@ class Template extends AbstractModel
         if ($this->offsetExists('content')) {
             $message->setSubject($this->offsetGet('subject'));
             $content = $this->offsetGet('content');
-            if (!empty($vars)) {
-                $content = str_replace(array_keys($vars), array_values($vars), $content);
-            }
+            $vars += [
+                'base_url' => $this->getBaseUrl(),
+                'pub_url' => $this->getPubUrl(),
+                'res_url' => $this->getResourceUrl()
+            ];
+            $content = $this->replace($content, $vars);
             if ($content) {
                 $css = $this->offsetGet('css');
                 $message->setBody(

@@ -100,9 +100,104 @@ class ServiceProvider implements ServiceProviderInterface
                             'CSS.MaxImgLength' => null,
                             'Cache.SerializerPath' => BP . 'var/cache/',
                             'Cache.SerializerPermissions' => 0775,
-                            'HTML.MaxImgLength' => null
+                            'HTML.DefinitionID' => 'html5-definitions',
+                            'HTML.DefinitionRev' => 1,
+                            'HTML.MaxImgLength' => null,
+                            'HTML.SafeEmbed' => true,
+                            'HTML.SafeObject' => true
                 ]);
-                $config->getDefinition('HTML');
+                $def = $config->maybeGetRawHTMLDefinition();
+                $def->addElement('section', 'Block', 'Flow', 'Common');
+                $def->addElement('nav', 'Block', 'Flow', 'Common');
+                $def->addElement('article', 'Block', 'Flow', 'Common');
+                $def->addElement('aside', 'Block', 'Flow', 'Common');
+                $def->addElement('header', 'Block', 'Flow', 'Common');
+                $def->addElement('footer', 'Block', 'Flow', 'Common');
+                $def->addElement('address', 'Block', 'Flow', 'Common');
+                $def->addElement('hgroup', 'Block', 'Required: h1 | h2 | h3 | h4 | h5 | h6', 'Common');
+                $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+                $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+                $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [
+                    'src' => 'URI',
+                    'type' => 'Text',
+                    'width' => 'Length',
+                    'height' => 'Length',
+                    'poster' => 'URI',
+                    'preload' => 'Enum#auto,metadata,none',
+                    'controls' => 'Bool',
+                ]);
+                $def->addElement('source', 'Block', 'Flow', 'Common', [
+                    'src' => 'URI',
+                    'type' => 'Text',
+                ]);
+                $def->addElement('sub', 'Inline', 'Inline', 'Common');
+                $def->addElement('sup', 'Inline', 'Inline', 'Common');
+                $def->addElement('mark', 'Inline', 'Inline', 'Common');
+                $def->addElement('wbr', 'Inline', 'Empty', 'Core');
+                $def->addElement('button', 'Inline', 'Inline', 'Common', [
+                    'type' => 'Enum#submit,reset,button',
+                    'disabled' => 'Text',
+                    'data-dismiss' => 'Text',
+                    'data-toggle' => 'Text',
+                    'data-placement' => 'Text',
+                    'title' => 'Text',
+                    'data-content' => 'Text',
+                    'data-target' => 'Text'
+                ]);
+                $def->addElement('input', 'Inline', 'Empty', 'Common', [
+                    'type' => 'Enum#button,checkbox,date,datetime,email,file,hidden,image,number,password,radio,range,reset,submit,tel,text,time',
+                    'placeholder' => 'Text',
+                    'checked' => 'Text',
+                    'disabled' => 'Text',
+                    'readonly' => 'Text',
+                    'autofocus' => 'Text',
+                    'name' => 'Text',
+                    'value' => 'CDATA',
+                    'required' => 'Text',
+                    'min' => 'Number',
+                    'max' => 'Number',
+                    'minlength' => 'Number',
+                    'maxlength' => 'Number',
+                    'data-rule-range' => 'Text',
+                    'data-rule-rangelength' => 'Text',
+                    'data-rule-equalto' => 'CDATA',
+                    'data-rule-remote' => 'URI'
+                ]);
+                $def->addElement('select', 'Inline', 'Required: option', 'Common', [
+                    'disabled' => 'Text',
+                    'required' => 'Text',
+                    'name' => 'Text',
+                    'multiple' => 'Text'
+                ]);
+                $def->addElement('textarea', 'Inline', 'Inline', 'Common', [
+                    'disabled' => 'Text',
+                    'minlength' => 'Number',
+                    'maxlength' => 'Number',
+                    'readonly' => 'Text',
+                    'name' => 'Text',
+                    'placeholder' => 'Text',
+                    'required' => 'Text',
+                    'cols' => 'Number',
+                    'rows' => 'Number',
+                    'wrap' => 'Enum#hard,soft'
+                ]);
+                $def->addElement('form', 'Inline', 'Flow', 'Common', [
+                    'action' => 'URI',
+                    'method' => 'Enum#get,post,delete',
+                    'enctype' => 'Enum#application/x-www-form-urlencoded,multipart/form-data,text/plain',
+                    'target' => 'FrameTarget'
+                ]);
+                $def->addElement('legend', 'Block', 'Inline', 'Common');
+                $def->addElement('fieldset', 'Block', 'Required: legend', 'Common');
+                $def->addAttribute('a', 'data-toggle', 'Text');
+                $def->addAttribute('a', 'data-target', 'Text');
+                $def->addAttribute('a', 'data-content', 'Text');
+                $def->addAttribute('a', 'data-slide', 'Text');
+                $def->addAttribute('li', 'data-slide-to', 'Text');
+                $def->addAttribute('li', 'data-target', 'Text');
+                $def->addAttribute('div', 'data-spy', 'Text');
+                $def->addAttribute('div', 'data-offset-top', 'Number');
+                $def->addAttribute('div', 'data-offset-bottom', 'Number');
                 return new \HTMLPurifier($config);
             };
         }

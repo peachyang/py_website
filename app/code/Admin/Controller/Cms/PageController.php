@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller\Cms;
 
 use Seahinet\Cms\Model\Page as Model;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 
 class PageController extends AuthActionController
 {

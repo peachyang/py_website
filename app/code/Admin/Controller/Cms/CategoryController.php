@@ -2,7 +2,6 @@
 
 namespace Seahinet\Admin\Controller\Cms;
 
-use Exception;
 use Seahinet\Cms\Model\Category as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 

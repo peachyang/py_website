@@ -1,7 +1,7 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
-$id = preg_replace('/\W/', '-', $key);
+$id = preg_replace('/\W+/', '-', $key);
 $parent = $this->getVariable('parent');
 $values = $parent->$key;
 if (!is_array($values) && !$values instanceof \Traversable) {

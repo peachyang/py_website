@@ -45,7 +45,7 @@ class Block extends AbstractCollection
                     $data[$item['block_id']]['language'][$item['language_id']] = $item['language'];
                 }
             }
-            $this->storage = $data;
+            $this->storage = array_values($data);
         }
     }
 

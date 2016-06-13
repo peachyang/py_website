@@ -1,4 +1,8 @@
 ---
+customer_account:
+    update: default
+customer_account_dashboard:
+    update: customer_account
 customer_account_login:
     update: default
     root:

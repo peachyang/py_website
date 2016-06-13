@@ -772,7 +772,6 @@ CREATE TABLE IF NOT EXISTS `customer_entity` (
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
     `language_id` INTEGER NOT NULL COMMENT 'Language ID',
     `increment_id` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Entity increment ID',
-    `open_id` CHAR(32) NULL DEFAULT NULL COMMENT 'OAuth open ID',
     `confirm_token` CHAR(32) NULL DEFAULT NULL COMMENT 'Confirming link token',
     `confirm_token_created_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Confirming link token creation date',
     `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
@@ -952,6 +951,45 @@ CREATE TABLE IF NOT EXISTS `customer_level_language` (
     PRIMARY KEY (`level_id`,`language_id`),
     INDEX IDX_CUSTOMER_LEVEL_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_CUSTOMER_LEVEL_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `oauth_consumer` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Consumer ID',
+    `name` VARCHAR(255) DEFAULT '' COMMENT 'Consumer name',
+    `key` CHAR(32) NOT NULL COMMENT 'Key code',
+    `secret` CHAR(32) NOT NULL COMMENT 'Secret code',
+    `callback_url` VARCHAR(255) NOT NULL COMMENT 'Callback Url',
+    `rejected_callback_url` VARCHAR(255) DEFAULT '' COMMENT 'Rejected callback Url',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`id`),
+    CONSTRAINT UNQ_OAUTH_CONSUMER_KEY UNIQUE (`key`),
+    CONSTRAINT UNQ_OAUTH_CONSUMER_SECRET UNIQUE (`secret`)
+);
+
+CREATE TRIGGER `TGR_UPDATE_OAUTH_CONSUMER` BEFORE UPDATE ON `oauth_consumer` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `oauth_token` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Token ID',
+    `consumer_id` INTEGER NOT NULL COMMENT 'Consumer ID',
+    `open_id` CHAR(32) NOT NULL COMMENT 'Open ID',
+    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `status` BOOLEAN DEFAULT 1 COMMENT 'Authorized',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    PRIMARY KEY (`id`),
+    INDEX IDX_OAUTH_TOKEN_CONSUMER_ID (`consumer_id`),
+    INDEX IDX_OAUTH_TOKEN_CUSTOMER_ID (`customer_id`),
+    CONSTRAINT UNQ_OAUTH_TOKEN_CONSUMER_ID_CUSTOMER_ID UNIQUE (`consumer_id`,`customer_id`),
+    CONSTRAINT UNQ_OAUTH_TOKEN_CONSUMER_ID_OPEN_ID UNIQUE (`consumer_id`,`open_id`),
+    CONSTRAINT FK_OAUTH_TOKEN_CONSUMER_ID_OAUTH_CONSUMER_ID FOREIGN KEY (`consumer_id`) REFERENCES `oauth_consumer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_OAUTH_TOKEN_CUSTOMER_ID_ENTITY_CUSTOMER_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `eav_attribute_granted` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'Attribute ID',
+    `is_granted` BOOLEAN DEFAULT 1 COMMENT 'Is granted',
+    PRIMARY KEY (`attribute_id`),
+    CONSTRAINT FK_EAV_ATTR_GRANTED_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 SET FOREIGN_KEY_CHECKS = 1;

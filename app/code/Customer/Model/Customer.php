@@ -3,10 +3,12 @@
 namespace Seahinet\Customer\Model;
 
 use Exception;
+use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Math\Rand;
 
 class Customer extends Entity
 {
@@ -35,9 +37,6 @@ class Customer extends Entity
     {
         if (isset($this->storage['password']) && strpos($this->storage['password'], '$2y$') !== 0) {
             $this->storage['password'] = (new Bcrypt)->create($this->storage['password']);
-        }
-        if (!isset($this->storage['id']) && !isset($this->storage['open_id'])) {
-            $this->storage['open_id'] = md5(random_bytes(32) . serialize($this->storage));
         }
         parent::beforeSave();
     }

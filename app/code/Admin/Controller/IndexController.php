@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller;
 
 use Exception;
 use Gregwar\Captcha\CaptchaBuilder;
+use Gregwar\Captcha\PhraseBuilder;
 use Seahinet\Admin\Model\User;
 use Seahinet\Email\Model\Template as TemplateModel;
 use Seahinet\Email\Model\Collection\Template as TemplateCollection;
@@ -69,7 +70,8 @@ class IndexController extends ActionController
 
     public function captchaAction()
     {
-        $builder = new CaptchaBuilder;
+        $config = $this->getContainer()->get('config');
+        $builder = new CaptchaBuilder(null, new PhraseBuilder($config['customer/captcha/number'], $config['customer/captcha/symbol']));
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
         $builder->build(70, 26);
         $segment = new Segment('admin');

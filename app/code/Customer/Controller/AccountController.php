@@ -19,18 +19,25 @@ use Zend\Math\Rand;
 class AccountController extends ActionController
 {
 
-    protected static $allowedAction = [
-        'create', 'login', 'createpost', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
-    ];
+    protected $allowedAction;
+
+    public function __construct()
+    {
+        $this->allowedAction = $this->getContainer()->get('config')['customer/registion/enabled'] ? [
+            'create', 'login', 'createpost', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
+                ] : [
+            'login', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
+        ];
+    }
 
     public function dispatch($request = null, $routeMatch = null)
     {
         $options = $routeMatch->getOptions();
         $action = isset($options['action']) ? strtolower($options['action']) : 'index';
         $session = new Segment('customer');
-        if (!in_array($action, static::$allowedAction) && !$session->get('isLoggedin')) {
+        if (!in_array($action, $this->allowedAction) && !$session->get('isLoggedin')) {
             return $this->redirect('customer/account/login/');
-        } else if (in_array($action, static::$allowedAction) && $session->get('isLoggedin')) {
+        } else if (in_array($action, $this->allowedAction) && $session->get('isLoggedin')) {
             return $this->redirect('customer/account/');
         }
         return parent::dispatch($request, $routeMatch);
@@ -38,9 +45,6 @@ class AccountController extends ActionController
 
     public function createAction()
     {
-        if (!$this->getContainer()->get('config')['customer/registion/enabled']) {
-            return $this->redirect('customer/account/login/');
-        }
         return $this->getLayout('customer_account_create');
     }
 
@@ -71,9 +75,6 @@ class AccountController extends ActionController
     public function createPostAction()
     {
         $config = $this->getContainer()->get('config');
-        if (!$config['customer/registion/enabled']) {
-            return $this->redirect('customer/account/login/');
-        }
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
@@ -318,7 +319,7 @@ class AccountController extends ActionController
 
     public function indexAction()
     {
-        return '';
+        return $this->getLayout('customer_account_dashboard');
     }
 
 }

@@ -2,13 +2,13 @@
 
 namespace Seahinet\Lib\Controller;
 
-abstract class ApiActionController extends AbstractController
+abstract class ApiActionController extends ActionController
 {
 
-    public function dispatch(\Seahinet\Lib\Http\Request $request = null, $routeMatch = null)
+    public function dispatch($request = null, $routeMatch = null)
     {
-        if ($_SERVER['SCRIPT_NAME'] !== '/api.php') {
-            return $this->getResponse()->withStatus(400);
+        if (!isset($_SERVER['HTTPS'])) {
+            return $this->getResponse()->withStatus(403, 'SSL required');
         }
         return parent::dispatch($request, $routeMatch);
     }

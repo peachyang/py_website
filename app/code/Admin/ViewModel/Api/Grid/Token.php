@@ -92,6 +92,9 @@ class Token extends PGrid
             'customer_id' => [
                 'label' => 'Customer ID'
             ],
+            'admin_id' => [
+                'label' => 'Admin ID'
+            ],
             'status' => [
                 'label' => 'Status',
                 'type' => 'select',

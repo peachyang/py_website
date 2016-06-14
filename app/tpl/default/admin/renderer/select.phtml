@@ -27,11 +27,11 @@ $parent = $this->getVariable('parent');
                     ?>
                     <optgroup label="<?php echo $this->translate($value) ?>">
                         <?php foreach ($label as $v => $l): ?>
-                            <option value="<?php echo $v ?>"<?php if (isset($item['value']) && (in_array($v, (array) $item['value']) || (string) $v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
+                            <option value="<?php echo $v ?>"<?php if (isset($item['value']) && $item['value'] !== '' && (in_array($v, (array) $item['value']) || (string) $v === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($l) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 <?php else: ?>
-                    <option value="<?php echo $value ?>"<?php if (isset($item['value']) && (in_array($value, (array) $item['value']) || (string) $value === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
+                    <option value="<?php echo $value ?>"<?php if (isset($item['value']) && $item['value'] !== '' && (in_array($value, (array) $item['value']) || (string) $value === $item['value'])): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
                 <?php endif ?>
             <?php endforeach ?>
         </select>

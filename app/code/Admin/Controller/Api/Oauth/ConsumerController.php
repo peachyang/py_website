@@ -19,9 +19,9 @@ class ConsumerController extends AuthActionController
         $model = new Model;
         if ($id = $this->getRequest()->getQuery('id')) {
             $model->load($id);
-            $root->getChild('head')->setTitle('Edit Consumer');
+            $root->getChild('head')->setTitle('Edit Consumer / REST - OAuth');
         } else {
-            $root->getChild('head')->setTitle('Add New Consumer');
+            $root->getChild('head')->setTitle('Add New Consumer / REST - OAuth');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;

@@ -9,7 +9,7 @@ class Consumer extends AbstractModel
 
     protected function construct()
     {
-        $this->init('oauth_consumer', 'id', ['id', 'name', 'key', 'secret', 'callback_url', 'rejected_callback_url']);
+        $this->init('oauth_consumer', 'id', ['id', 'name', 'role_id', 'key', 'secret', 'callback_url', 'rejected_callback_url']);
     }
 
 }

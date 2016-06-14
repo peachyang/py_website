@@ -216,6 +216,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table{font-size:12px;padding:20px}
 .admin .grid .table-striped>tbody>tr:nth-child(even){background-color:#f3fbfe}
 .admin .grid .table tbody .control-label{display:none}
+.admin .grid .table [data-href]{cursor:pointer}
 .admin .grid .table tfoot{color:#02a0e9}
 .admin .grid .table tfoot .mess-action a{margin-right:4px}
 .admin .grid .table tfoot .pager{display:inline}

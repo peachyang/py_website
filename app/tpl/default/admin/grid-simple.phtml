@@ -33,7 +33,7 @@ $query = $this->getQuery();
         </thead>
         <tbody>
             <?php foreach ($this->getVariable('collection')->toArray() as $item): ?>
-                <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                <tr<?php if (!$this->getMessAction() && is_callable([$this, 'getRowLink'])): ?> data-href="<?php echo $this->getRowLink($item) ?>"<?php endif;if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                     <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
                     <?php endif ?>
@@ -45,7 +45,7 @@ $query = $this->getQuery();
                             } else if (isset($name['type']) && $name['type'] === 'image') {
                                 echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
                             } else {
-                                echo is_array($item[$attr]) ? implode(',', $item[$attr]) : $this->translate(isset($name['options'][$item[$attr]]) ? $name['options'][$item[$attr]] : $item[$attr], [], $this->getTranslateDomain());
+                                echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]], [], $this->getTranslateDomain()) : $item[$attr]);
                             }
                             ?>
                         </td>

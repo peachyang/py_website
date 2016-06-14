@@ -39,7 +39,7 @@
                     location.href = $(this).parent('tr').data('href');
                 }
             });
-            if ($(t).has('.action')) {
+            if ($(t).find('.action').length) {
                 $(t).on('contextmenu', function (e) {
                     var m = $('<menu class="context"></menu>');
                     $(this).find('.action').children('a').each(function () {

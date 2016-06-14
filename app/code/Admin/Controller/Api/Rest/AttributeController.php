@@ -2,9 +2,60 @@
 
 namespace Seahinet\Admin\Controller\Api\Rest;
 
+use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
+use Zend\Db\TableGateway\TableGateway;
 
 class AttributeController extends AuthActionController
 {
-    
+
+    use \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\DataCache;
+
+    public function indexAction()
+    {
+        return $this->getLayout('admin_rest_attribute_list');
+    }
+
+    public function editAction()
+    {
+        if ($this->getRequest()->getQuery('id')) {
+            return $this->getLayout('admin_rest_attribute_edit');
+        } else {
+            return $this->redirect(':ADMIN/api_rest_attribute/');
+        }
+    }
+
+    public function saveAction()
+    {
+        if ($this->getRequest()->getPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['role_id']);
+            if ($result['error'] === 0) {
+                $this->getTableGateway('api_rest_attribute');
+                try {
+                    $this->beginTransaction();
+                    $this->delete(['role_id' => $data['role_id']]);
+                    foreach ((array) $data['attribute_id'] as $id => $privileges) {
+                        $this->insert([
+                            'role_id' => $data['role_id'],
+                            'attribute_id' => $id,
+                            'readable' => isset($privileges['readable']),
+                            'writeable' => isset($privileges['writeable'])
+                        ]);
+                    }
+                    $this->commit();
+                    $this->flushList('api_rest_attribute');
+                    $result['message'][] = ['message' => $this->translate('REST attribute rules have been saved successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->rollback();
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
+                    $result['error'] = 1;
+                }
+            }
+        }
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], ':ADMIN/api_rest_attribute/');
+    }
+
 }

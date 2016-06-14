@@ -219,7 +219,7 @@ abstract class Entity extends AbstractModel
                 }
                 foreach ($languages as $language) {
                     if ($isUpdate) {
-                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + isset($index[$language['id']]) ? $index[$language['id']] : [], [$this->primaryKey => $this->getId()]);
+                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []), [$this->primaryKey => $this->getId()]);
                     } else {
                         $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));
                     }

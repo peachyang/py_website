@@ -2,6 +2,8 @@
 
 namespace Seahinet\Lib\ViewModel;
 
+use Error;
+
 class Wrapper extends AbstractViewModel
 {
 
@@ -12,7 +14,12 @@ class Wrapper extends AbstractViewModel
      */
     public function render()
     {
-        return implode('', $this->getVariables());
+        try {
+            return implode('', $this->getVariables());
+        } catch (Error $e) {
+            $this->getContainer()->get('log')->logError($e);
+            return '';
+        }
     }
 
 }

@@ -94,7 +94,7 @@ final class Root extends AbstractViewModel implements Singleton
     public function setHandler($handler)
     {
         if ($this->handler === '') {
-            $this->addBodyClass(trim(preg_replace('/[^a-z]/', '-', strtolower($handler)), '-'));
+            $this->addBodyClass(trim(preg_replace('/[^a-z]+/', '-', strtolower($handler)), '-'));
         }
         $this->handler = $handler;
         return $this;

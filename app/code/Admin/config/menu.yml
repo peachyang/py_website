@@ -39,6 +39,30 @@ permissions:
             link: operation/
             title: Operation Management
             priority: 50
+        -
+            link: api_soap_user/
+            title: SOAP/RPC - User
+            priority: 60
+        -
+            link: api_soap_role/
+            title: SOAP/RPC - Role
+            priority: 61
+        -
+            link: api_rest_role/
+            title: REST - Role
+            priority: 70
+        -
+            link: api_rest_attribute/
+            title: REST - Attributes
+            priority: 71
+        -
+            link: api_oauth_consumer/
+            title: REST - OAuth Consumer
+            priority: 75
+        -
+            link: api_oauth_token/
+            title: REST - OAuth Authorized Token
+            priority: 76
 system:
     icon: cogs
     title: System Configuration

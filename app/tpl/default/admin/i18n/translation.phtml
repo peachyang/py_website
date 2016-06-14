@@ -94,7 +94,7 @@ $query = $this->getQuery();
                         <input type="checkbox" class="selectall" />
                         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                     </td>
-                    <td colspan="<?php printf('%d', $count/= 2) ?>" class="text-left">
+                    <td colspan="<?php printf('%d', $count/= 2) ?>" class="text-left mess-action">
                         <?php
                         foreach ($this->getMessAction() as $action) {
                             if (is_callable([$this, $action])) {

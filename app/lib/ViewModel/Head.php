@@ -3,6 +3,8 @@
 namespace Seahinet\Lib\ViewModel;
 
 use CssMin;
+use Error;
+use Exception;
 use JShrink\Minifier;
 use Seahinet\Lib\Stdlib\Singleton;
 
@@ -220,7 +222,7 @@ final class Head extends AbstractViewModel implements Singleton
         foreach ($links as $link => $type) {
             if ($combine && $type === 'stylesheet' && strpos($link, '://') === false) {
                 $files[] = $prefix . '/' . $link;
-            } else {
+            } else if ($type !== 'stylesheet' || substr($link, -4) === '.css') {
                 if (strpos($link, '://') === false) {
                     $link = $this->getPubUrl($link);
                 }
@@ -289,6 +291,9 @@ final class Head extends AbstractViewModel implements Singleton
             if ($isCss && substr($file, -4) !== '.css') {
                 try {
                     $temp = $this->getContainer()->get('csspp')->compile($temp);
+                } catch (Error $e) {
+                    $this->getContainer()->get('log')->logError($e);
+                    $temp = '';
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $temp = '';

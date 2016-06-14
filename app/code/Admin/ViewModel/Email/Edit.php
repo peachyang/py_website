@@ -65,6 +65,10 @@ class Edit extends PEdit
                 ],
                 'required' => 'required'
             ],
+            'css' => [
+                'type' => 'textarea',
+                'label' => 'CSS'
+            ],
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content',

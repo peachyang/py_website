@@ -7,8 +7,9 @@ a:focus,a:hover{text-decoration:underline}
 h1,h2,h3,h4,h5,h6{margin:0;font-weight:normal}
 ul,ol,dl,menu{list-style:none;margin:0;padding:0}
 ul>li,ol>li,dl>dt,dl>dd,menu>li,menu>menuitem{margin:0;padding:0}
-menu.context{position:absolute;background:#fff;border:1px solid #e7e7e7}
+menu.context{position:absolute;background:#fff;border:1px solid #999;padding:4px 0;box-shadow:0 1px 3px rgba(0,0,0,0.3);border-radius:3px}
 menu.context a{display:block;font-size:12px;line-height:2;padding:0 1em 0 0.5em;white-space:nowrap}
+menu.context a:hover{background:#3980cb;color:#fff;text-decoration:none}
 menu.context .fa{margin-right:4px}
 address{font-style:normal}
 input[type=number]{-moz-appearance:textfield}
@@ -55,7 +56,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
 .modal-backdrop.in{filter:alpha(opacity=50);opacity:.5}
 .modal-header{padding:15px;border-bottom:1px solid #e5e5e5}
-.modal-header .close{margin-top:-2px; float:right;;}
+.modal-header .close{margin-top:-2px;float:right}
 .modal-title{margin:0;line-height:1.42857143}
 .modal-body{position:relative;padding:15px}
 .modal-footer{padding:15px;text-align:right;border-top:1px solid #e5e5e5}
@@ -111,7 +112,6 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .clearfix:after{content:" ";display:block;clear:both;width:0;height:0;padding:0;margin:0;overflow:hidden;border:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 label,.label{vertical-align:top}
-[type=checkbox],[type=radio]{vertical-align:text-top}
 .control-label{display:block;width:100%;font-size:13px;line-height:26px;color:#000;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .control-label.required:before{content:"*";color:#f00}
 .form-control{display:block;width:100%;height:26px;padding:0 .75em;font-size:12px;line-height:26px;color:#555;background-color:#fff;background-image:none;border:1px solid #8b8c8c;transition:border-color ease-in-out .15s}
@@ -217,6 +217,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table-striped>tbody>tr:nth-child(even){background-color:#f3fbfe}
 .admin .grid .table tbody .control-label{display:none}
 .admin .grid .table tfoot{color:#02a0e9}
+.admin .grid .table tfoot .mess-action a{margin-right:4px}
 .admin .grid .table tfoot .pager{display:inline}
 .admin .grid .table tfoot .pager li{font-size:12px;padding:0 4px}
 .admin .grid .table tfoot .pager .current:before{content:'['}

@@ -1,34 +1,43 @@
 <?php
 
-namespace Seahinet\CUstomer\Controller;
+namespace Seahinet\Customer\Controller;
 
+use Exception;
 use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
-use Seahinet\Email\Model\Template;
+use Seahinet\Email\Model\Template as TemplateModel;
+use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
-use Swift_SwiftException;
+use Swift_TransportException;
 use Zend\Math\Rand;
 
 class AccountController extends ActionController
 {
 
-    protected static $allowedAction = [
-        'create', 'login', 'createpost', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha'
-    ];
+    protected $allowedAction;
+
+    public function __construct()
+    {
+        $this->allowedAction = $this->getContainer()->get('config')['customer/registion/enabled'] ? [
+            'create', 'login', 'createpost', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
+                ] : [
+            'login', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
+        ];
+    }
 
     public function dispatch($request = null, $routeMatch = null)
     {
         $options = $routeMatch->getOptions();
         $action = isset($options['action']) ? strtolower($options['action']) : 'index';
         $session = new Segment('customer');
-        if (!in_array($action, static::$allowedAction) && !$session->get('isLoggedin')) {
+        if (!in_array($action, $this->allowedAction) && !$session->get('isLoggedin')) {
             return $this->redirect('customer/account/login/');
-        } else if (in_array($action, static::$allowedAction) && $session->get('isLoggedin')) {
+        } else if (in_array($action, $this->allowedAction) && $session->get('isLoggedin')) {
             return $this->redirect('customer/account/');
         }
         return parent::dispatch($request, $routeMatch);
@@ -65,6 +74,7 @@ class AccountController extends ActionController
 
     public function createPostAction()
     {
+        $config = $this->getContainer()->get('config');
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
@@ -83,7 +93,6 @@ class AccountController extends ActionController
                     $unique[] = $attribute['code'];
                 }
             }
-            $config = $this->getContainer()->get('config');
             $result = $this->validateForm($data, $required, in_array('register', explode(',', $config['customer/captcha/form'])) ? 'customer' : false);
             if ($data['password'] !== $data['cpassword']) {
                 $result['error'] = 1;
@@ -109,18 +118,54 @@ class AccountController extends ActionController
             }
             if ($result['error'] === 0) {
                 $customer = new Model;
+                $status = $config['customer/registion/comfirm'];
+                $languageId = Bootstrap::getLanguage()->getId();
                 $customer->setData([
                     'attribute_set_id' => $config['customer/registion/set'],
                     'group_id' => $config['customer/registion/group'],
                     'type_id' => $attributes[0]['type_id'],
                     'store_id' => Bootstrap::getStore()->getId(),
-                    'language_id' => Bootstrap::getLanguage()->getId(),
-                    'status' => (int) (!$config['customer/registion/confirm'])
-                        ] + $data)->save();
-                $customer->login($data['username'], $data['password']);
+                    'language_id' => $languageId,
+                    'status' => 1
+                        ] + $data);
+                $token = Rand::getString(32);
+                try {
+                    if ($status) {
+                        $customer->setData([
+                            'confirm_token' => $token,
+                            'confirm_token_created_at' => date('Y-m-d H:i:s'),
+                            'status' => 0
+                        ])->save();
+                        $url = 'customer/account/login/';
+                        $result['message'][] = ['message' => $this->translate('You will receive an email with a confirming link.'), 'level' => 'success'];
+                    } else {
+                        $customer->save();
+                        $customer->login($data['username'], $data['password']);
+                        $url = 'customer/account/';
+                        $result['message'][] = ['message' => $this->translate('Thanks for your registion.'), 'level' => 'success'];
+                    }
+                    $collection = new TemplateCollection;
+                    $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')
+                            ->where([
+                                'code' => $status ? $config['email/customer/confirm_template'] : $config['email/customer/welcome_template'],
+                                'language_id' => $languageId
+                    ]);
+                    if (count($collection)) {
+                        $mailer = $this->getContainer()->get('mailer');
+                        $mailer->send((new TemplateModel($collection[0]))
+                                        ->getMessage(['{{username}}' => $data['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
+                                        ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                        ->addTo($data['email'], $data['username']));
+                    }
+                } catch (Swift_TransportException $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected. Please try again later.'), 'level' => 'danger'];
+                }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/');
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : '/customer/account/create/', 'customer');
     }
 
     public function loginPostAction()
@@ -133,6 +178,7 @@ class AccountController extends ActionController
             if ($result['error'] == 0) {
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {
+                    $url = 'customer/account/';
                     $result['data'] = ['username' => $data['username']];
                     $result['message'][] = ['message' => $this->translate('Welcome %s.', [$customer['username']], 'customer'), 'level' => 'success'];
                 } else if ($customer['status']) {
@@ -149,7 +195,7 @@ class AccountController extends ActionController
                 $segment->set('fail2login', 0);
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/');
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : 'customer/account/login/', 'customer');
     }
 
     public function forgotPwdPostAction()
@@ -162,11 +208,23 @@ class AccountController extends ActionController
                 $customer->load($data['username'], 'username');
                 $password = Rand::getString(8);
                 try {
-                    $mailer = $this->getContainer()->get('mailer');
-                    $mailer->send((new Template)->load('forgot_password', 'code')->getMessage(['{{password}}' => $password])->addFrom('idriszhang@seahinet.com')->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
-                    $customer->setData('password', $password)->save();
+                    $config = $this->getContainer()->get('config');
+                    $collection = new TemplateCollection;
+                    $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')
+                            ->where([
+                                'code' => $config['email/customer/forgot_template'],
+                                'language_id' => $customer['language_id']
+                    ]);
+                    if (count($collection)) {
+                        $mailer = $this->getContainer()->get('mailer');
+                        $mailer->send((new TemplateModel($collection[0]))
+                                        ->getMessage(['{{username}}' => $data['username'], '{{password}}' => $password])
+                                        ->addFrom($config['email/customer/sender_email'], $config['email/customer/sender_name'])
+                                        ->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
+                        $customer->setData('password', $password)->save();
+                    }
                     $result['message'][] = ['message' => $this->translate('You will receive an email with a temporary password.'), 'level' => 'success'];
-                } catch (Swift_SwiftException $e) {
+                } catch (Swift_TransportException $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected while email transporting. Please try again later.'), 'level' => 'danger'];
@@ -177,7 +235,7 @@ class AccountController extends ActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/');
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
     }
 
     public function logoutAction()
@@ -189,7 +247,79 @@ class AccountController extends ActionController
             'message' => $this->translate('You have logged out successfully.'),
             'level' => 'success'
         ]]];
-        return $this->response($result, 'customer/account/login/');
+        return $this->response($result, 'customer/account/login/', 'customer');
+    }
+
+    public function confirmAction()
+    {
+        if ($token = $this->getRequest()->getQuery('token')) {
+            try {
+                $customer = new Model;
+                $customer->load($token, 'confirm_token');
+                if ($customer->getId() && $customer['status'] == 0) {
+                    $mailer = $this->getContainer()->get('mailer');
+                    $languageId = Bootstrap::getLanguage()->getId();
+                    $config = $this->getContainer()->get('config');
+                    if (strtotime($customer['confirm_token_created_at']) < time() + 86400) {
+                        $customer->setData([
+                            'status' => 1,
+                            'confirm_token' => null,
+                            'confirm_token_created_at' => null
+                        ])->save();
+                        $result = ['error' => 0, 'message' => [[
+                            'message' => $this->translate('Your account has been confirmed successfully.'),
+                            'level' => 'success'
+                        ]]];
+                        $collection = new TemplateCollection;
+                        $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')
+                                ->where([
+                                    'code' => $config['email/customer/welcome_template'],
+                                    'language_id' => $languageId
+                        ]);
+                        if (count($collection)) {
+                            $mailer->send((new TemplateModel($collection[0]))
+                                            ->getMessage(['{{username}}' => $customer['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
+                                            ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                            ->addTo($customer['email'], $customer['username']));
+                        }
+                    } else {
+                        $token = Rand::getString(32);
+                        $collection = new TemplateCollection;
+                        $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')
+                                ->where([
+                                    'code' => $config['email/customer/confirm_template'],
+                                    'language_id' => $languageId
+                        ]);
+                        if (count($collection)) {
+                            $mailer->send((new TemplateModel($collection[0]))
+                                            ->getMessage(['{{username}}' => $customer['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
+                                            ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                            ->addTo($customer['email'], $customer['username']));
+                            $customer->setData([
+                                'confirm_token' => $token,
+                                'confirm_token_created_at' => date('Y-m-d H:i:s')
+                            ])->save();
+                        }
+                        $result = ['error' => 0, 'message' => [[
+                            'message' => $this->translate('The confirming link is expired.'),
+                            'level' => 'danger'
+                        ]]];
+                    }
+                }
+            } catch (Swift_TransportException $e) {
+                $this->getContainer()->get('log')->logException($e);
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected. Please try again later.'), 'level' => 'danger'];
+            }
+        }
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
+    }
+
+    public function indexAction()
+    {
+        return $this->getLayout('customer_account_dashboard');
     }
 
 }

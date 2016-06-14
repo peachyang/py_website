@@ -65,7 +65,9 @@ class Mailer extends Swift_Mailer
         if (static::$ALLOWED_TRANSPORTATION[$config['email/transport/service']] === 'SMTP') {
             $transport->setHost($config['email/transport/host']);
             $transport->setPort($config['email/transport/port']);
-            $transport->setEncryption($config['email/transport/security']);
+            if ($encyption = $config['email/transport/security']) {
+                $transport->setEncryption($encyption);
+            }
             $transport->setAuthMode($config['email/transport/auth']);
             $transport->setUsername($config['email/transport/username']);
             $transport->setPassword($config['email/transport/password']);

@@ -7,7 +7,6 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
-use Seahinet\Resource\Model\Resource;
 use Serializable;
 
 /**
@@ -39,11 +38,6 @@ abstract class AbstractViewModel implements Serializable
      * @var \Seahinet\Lib\Http\Uri
      */
     protected $uri = null;
-
-    /**
-     * @var string
-     */
-    protected $pubUrl = '';
 
     /**
      * @var bool 
@@ -359,35 +353,6 @@ abstract class AbstractViewModel implements Serializable
             self::$isAdmin = in_array('admin', Root::instance()->getBodyClass(true));
         }
         return self::$isAdmin;
-    }
-
-    /**
-     * Get static files url
-     * 
-     * @param string $path
-     * @return string
-     */
-    public function getPubUrl($path = '')
-    {
-        if ($this->pubUrl === '') {
-            $config = $this->getConfig();
-            $base = $config['global/url/cookie_free_domain'];
-            $prefix = 'pub/theme/' . $config[$this->isAdminPage() ?
-                            'theme/backend/static' : 'theme/frontend/static'] . '/';
-            $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
-        }
-        return $this->pubUrl . ltrim($path, '/');
-    }
-
-    /**
-     * Get resource url
-     * 
-     * @param string $path
-     * @return string
-     */
-    public function getResourceUrl($path = '')
-    {
-        return $this->getBaseUrl(Resource::$options['path'] . $path);
     }
 
     /**

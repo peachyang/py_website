@@ -21,6 +21,7 @@ class Template extends AbstractCollection
         $data = [];
         foreach ($this->storage as $key => $item) {
             $content = @gzdecode($item['content']);
+            $css = @gzdecode($item['css']);
             if (isset($item['id'])) {
                 $ids[] = $item['id'];
                 $data[$item['id']] = $item;
@@ -28,8 +29,16 @@ class Template extends AbstractCollection
                 if ($content !== false) {
                     $data[$item['id']]['content'] = $content;
                 }
-            } else if ($content !== false) {
-                $this->storage[$key]['content'] = $content;
+                if ($css !== false) {
+                    $data[$item['id']]['css'] = $css;
+                }
+            } else {
+                if ($content !== false) {
+                    $this->storage[$key]['content'] = $content;
+                }
+                if ($css !== false) {
+                    $this->storage[$key]['css'] = $css;
+                }
             }
         }
         if (!empty($ids)) {

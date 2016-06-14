@@ -4,10 +4,13 @@ namespace Seahinet\Cms\ViewModel;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Cms\Model\Block as BlockModel;
+use Seahinet\Cms\Model\Collection\Block as BlockCollection;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
 
 class Block extends AbstractViewModel
 {
+
+    use \Seahinet\Cms\Traits\Renderer;
 
     /**
      * @var BlockModel
@@ -28,9 +31,12 @@ class Block extends AbstractViewModel
 
     public function setBlockId($id)
     {
-        $this->blockModel = new BlockModel;
-        $this->blockModel->load($id, 'code');
-        $this->cacheKey = $id;
+        $collection = new BlockCollection;
+        $collection->where(['cms_block.code' => $id, 'language_id' => Bootstrap::getLanguage()->getId()]);
+        if (count($collection)) {
+            $this->blockModel = new BlockModel($collection[0]);
+            $this->cacheKey = $id;
+        }
         return $this;
     }
 
@@ -44,7 +50,14 @@ class Block extends AbstractViewModel
             if ($rendered) {
                 return $rendered;
             }
-            $rendered = $this->blockModel['content'];
+            $content = $this->replace($this->blockModel['content'], [
+                'base_url' => $this->getBaseUrl(),
+                'pub_url' => $this->getPubUrl(),
+                'res_url' => $this->getResourceUrl()
+            ]);
+            $rendered = $this->blockModel['store_id'] ?
+                    $this->getContainer()->get('htmlpurifier')
+                            ->purify($content) : $content;
             $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
             return $rendered;
         }

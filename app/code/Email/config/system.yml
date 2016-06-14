@@ -75,6 +75,48 @@ email:
                     priority: 60
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
+        default:
+            label: Default
+            scope: merchant
+            priority: 5
+            children:
+                sender_email:
+                    type: email
+                    label: Sender Email
+                    scope: merchant
+                    required: required
+                    priority: 0
+                sender_name:
+                    type: text
+                    label: Sender Name
+                    scope: merchant
+                    required: required
+                    priority: 1
+        admin:
+            label: Backend
+            scope: merchant
+            priority: 6
+            children:
+                sender_email:
+                    type: email
+                    label: Sender Email
+                    scope: merchant
+                    required: required
+                    priority: 0
+                sender_name:
+                    type: text
+                    label: Sender Name
+                    scope: merchant
+                    required: required
+                    priority: 1
+                forgot_template:
+                    type: select
+                    label: Forgot Email Template
+                    scope: merchant
+                    required: required
+                    priority: 5
+                    default: forgot_admin_password
+                    source: Seahinet\Email\Source\Template
         newsletter:
             label: Newsletter
             scope: merchant

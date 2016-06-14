@@ -124,7 +124,7 @@ class Grid extends AbstractViewModel
             $collection->offset(($condition['page'] - 1) * $limit);
             unset($condition['page']);
         }
-        $collection->limit($limit);
+        $collection->limit((int) $limit);
         unset($condition['limit']);
         if (isset($condition['asc'])) {
             $collection->order((strpos($condition['asc'], ':') ?

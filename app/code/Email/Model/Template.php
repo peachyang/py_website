@@ -2,6 +2,7 @@
 
 namespace Seahinet\Email\Model;
 
+use Pelago\Emogrifier;
 use Seahinet\Lib\Model\AbstractModel;
 use Swift_Message;
 use Swift_Mime_SimpleMessage;
@@ -10,14 +11,18 @@ use Zend\Db\TableGateway\TableGateway;
 class Template extends AbstractModel
 {
 
+    use \Seahinet\Lib\Traits\Url,
+        \Seahinet\Cms\Traits\Renderer;
+
     protected function construct()
     {
-        $this->init('email_template', 'id', ['id', 'code', 'subject', 'content']);
+        $this->init('email_template', 'id', ['id', 'code', 'subject', 'content', 'css']);
     }
 
     protected function beforeSave()
     {
         $this->storage['content'] = gzencode($this->storage['content']);
+        $this->storage['css'] = gzencode($this->storage['css']);
         $this->beginTransaction();
         parent::beforeSave();
     }
@@ -53,9 +58,13 @@ class Template extends AbstractModel
             $this->storage['language'] = $language;
             $this->storage['language_id'] = array_keys($language);
         }
-        $data = @gzdecode($this->storage['content']);
-        if ($data !== false) {
-            $this->storage['content'] = $data;
+        $content = @gzdecode($this->storage['content']);
+        if ($content !== false) {
+            $this->storage['content'] = $content;
+        }
+        $css = @gzdecode($this->storage['css']);
+        if ($css !== false) {
+            $this->storage['css'] = $css;
         }
     }
 
@@ -65,13 +74,22 @@ class Template extends AbstractModel
      */
     public function injectMessage(Swift_Mime_SimpleMessage $message, array $vars = [])
     {
-        if ($this->isLoaded) {
+        if ($this->offsetExists('content')) {
             $message->setSubject($this->offsetGet('subject'));
             $content = $this->offsetGet('content');
-            if (!empty($vars)) {
-                $content = str_replace(array_keys($vars), array_values($vars), $content);
+            $vars += [
+                'base_url' => $this->getBaseUrl(),
+                'pub_url' => $this->getPubUrl(),
+                'res_url' => $this->getResourceUrl()
+            ];
+            $content = $this->replace($content, $vars);
+            if ($content) {
+                $css = $this->offsetGet('css');
+                $message->setBody(
+                        ($css ? (new Emogrifier($content, $css))
+                                        ->emogrifyBodyContent() : $content)
+                        , 'text/html', 'UTF-8');
             }
-            $message->setBody($content);
         }
         return $message;
     }

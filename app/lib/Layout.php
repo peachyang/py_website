@@ -61,6 +61,9 @@ class Layout extends ArrayObject implements Singleton
             $layout = $this->arrayMerge($this->getLayout($this->storage[$handler]['update']), $layout);
         }
         if ($render) {
+            if (empty($layout)) {
+                return '';
+            }
             $root = $this->renderLayout($layout['root'], 'root');
             $root->setHandler($handler);
             $cache->save($handler, $root, 'LAYOUT_RENDERED_');

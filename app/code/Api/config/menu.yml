@@ -1,0 +1,19 @@
+---
+permissions:
+    children:
+#        -
+#            link: api_soap_user/
+#            title: SOAP/RPC - User
+#            priority: 60
+#        -
+#            link: api_soap_role/
+#            title: SOAP/RPC - Role
+#            priority: 61
+        -
+            link: api_rest_role/
+            title: REST - Role
+            priority: 70
+        -
+            link: api_rest_attribute/
+            title: REST - Attributes
+            priority: 71

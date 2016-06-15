@@ -4,7 +4,6 @@ namespace Seahinet\Admin\Controller\Api\Rest;
 
 use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
-use Zend\Db\TableGateway\TableGateway;
 
 class AttributeController extends AuthActionController
 {

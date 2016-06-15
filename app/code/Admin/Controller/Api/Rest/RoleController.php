@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\Controller\Api\Rest;
 
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Oauth\Model\Role as Model;
+use Seahinet\Api\Model\Rest\Role as Model;
 
 class RoleController extends AuthActionController
 {

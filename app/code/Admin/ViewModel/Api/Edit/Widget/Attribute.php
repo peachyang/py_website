@@ -2,10 +2,10 @@
 
 namespace Seahinet\Admin\ViewModel\Api\Edit\Widget;
 
+use Seahinet\Api\Model\Collection\Rest\Attribute as PrivilegeCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
-use Seahinet\Oauth\Model\Collection\Attribute as PrivilegeCollection;
 
 class Attribute extends Template
 {

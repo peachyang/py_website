@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Oauth\Model\Collection;
+namespace Seahinet\Api\Model\Collection\Rest;
 
 use Seahinet\Lib\Model\AbstractCollection;
 

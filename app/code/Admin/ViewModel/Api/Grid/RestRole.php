@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Api\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
-use Seahinet\Oauth\Model\Collection\Role as Collection;
+use Seahinet\Api\Model\Collection\Rest\Role as Collection;
 
 class RestRole extends PGrid
 {

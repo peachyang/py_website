@@ -4,12 +4,22 @@ namespace Seahinet\Oauth\Controller;
 
 use Seahinet\Admin\Model\User;
 use Seahinet\Customer\Model\Customer;
-use Seahinet\Lib\Controller\ApiActionController;
+use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Oauth\Model\Collection\Token as TokenCollection;
 use Seahinet\Oauth\Model\Consumer;
+use Seahinet\Oauth\Model\Token;
 use Zend\Math\Rand;
 
-class AuthController extends ApiActionController
+class AuthController extends ActionController
 {
+
+    public function dispatch($request = null, $routeMatch = null)
+    {
+        if (!isset($_SERVER['HTTPS'])) {
+            return $this->getResponse()->withStatus(403, 'SSL required');
+        }
+        return parent::dispatch($request, $routeMatch);
+    }
 
     public function indexAction()
     {
@@ -44,12 +54,16 @@ class AuthController extends ApiActionController
                     if ($user->valid($data['username'], $data['password'])) {
                         $cache = $this->getContainer()->get('cache');
                         do {
-                            $code = Rand::getString(32, 'abcdefghijklmnopqrstuvwxyz0123456789');
+                            $code = Rand::getString(32, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
                         } while ($cache->fetch($code, 'OAUTH_'));
-                        $cache->save($code, ['consumer_id' => $consumer->getId(), 'user_id' => $user->getId()], 'OAUTH_', 600);
                         $callback = base64_decode($data['redirect_url']);
+                        $cache->save($code, [
+                            'consumer_id' => $consumer->getId(),
+                            'user_id' => $user->getId(),
+                            'redirect_url' => $callback
+                                ], 'OAUTH_', 600);
                         return $this->redirect($callback .
-                                        (strpos($callback, '?') === -1 ? '?' : '&') .
+                                        (strpos($callback, '?') === false ? '?' : '&') .
                                         'authorization_code=' . $code .
                                         (isset($data['state']) ?
                                                 '&state=' . $data['state'] : ''));
@@ -72,22 +86,47 @@ class AuthController extends ApiActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['code', 'client_id', 'redirect_uri', 'client_secret']);
-            if ($result['error'] === 0) {
+            if (isset($data['code']) && isset($data['client_id']) &&
+                    isset($data['client_secret']) && isset($data['redirect_url'])) {
+                $cache = $this->getContainer()->get('cache');
                 $info = $cache->fetch($data['code'], 'OAUTH_');
                 if ($info) {
                     $consumer = new Consumer;
                     $consumer->load($info['consumer_id']);
-                    if ($consumer->getId() && strpos(base64_decode($query['redirect_url']), $consumer['callback_url']) === 0) {
+                    if ($consumer['key'] != $data['client_id'] || $consumer['secret'] != $data['client_secret']) {
+                        return $this->getResponse()->withStatus(401);
+                    }
+                    if ($consumer->getId() && base64_decode($data['redirect_url']) === $info['redirect_url']) {
                         $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
                         $user->load($info['user_id']);
                         if ($user->getId()) {
-                            
+                            $constraint = [
+                                'consumer_id' => $consumer->getId(),
+                                ($consumer['role_id'] === -1 ? 'admin_id' : 'customer_id') => $user->getId()
+                            ];
+                            $collection = new TokenCollection;
+                            $collection->columns(['open_id'])->where($constraint);
+                            if (!count($collection)) {
+                                do {
+                                    $constraint['open_id'] = Rand::getString(32);
+                                    $collection->reset('where')->where($constraint);
+                                } while (count($collection));
+                                $token = new Token;
+                                $token->setData($constraint)->save();
+                                $openId = $constraint['open_id'];
+                            } else {
+                                $openId = $collection[0]['open_id'];
+                            }
+                            do {
+                                $code = Rand::getString(32);
+                            } while ($cache->fetch($code, 'OAUTH_'));
+                            $cache->save($code, ['consumer_id' => $consumer->getId(), 'user_id' => $user->getId(), 'open_id' => $openId], 'OAUTH_', 3600);
+                            return ['access_token' => $code, 'open_id' => $openId, 'expired_at' => date('l, d-M-Y H:i:s T', time() + 3600)];
                         }
                     }
                 }
             }
-            return $this->getResponse()->withStatus(401);
+            return $this->getResponse()->withStatus(400);
         }
         return $this->getResponse()->withStatus(405);
     }

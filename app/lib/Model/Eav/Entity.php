@@ -174,7 +174,9 @@ abstract class Entity extends AbstractModel
                 $attributes = $this->prepareAttributes();
                 $tableGateway = $this->getTableGateway($this->getEntityTable());
                 if ($isUpdate) {
-                    $tableGateway->update($columns, ['id' => $this->getId()]);
+                    if ($columns) {
+                        $tableGateway->update($columns, ['id' => $this->getId()]);
+                    }
                 } else {
                     $tableGateway->insert($columns);
                     $this->setId($tableGateway->getLastInsertValue());

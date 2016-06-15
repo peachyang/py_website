@@ -55,9 +55,9 @@ class AuthController extends ActionController
                         $cache = $this->getContainer()->get('cache');
                         do {
                             $code = Rand::getString(32, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-                        } while ($cache->fetch($code, 'OAUTH_'));
+                        } while ($cache->fetch('$AUTHORIZATION_CODE$' . $code, 'OAUTH_'));
                         $callback = base64_decode($data['redirect_url']);
-                        $cache->save($code, [
+                        $cache->save('$AUTHORIZATION_CODE$' . $code, [
                             'consumer_id' => $consumer->getId(),
                             'user_id' => $user->getId(),
                             'redirect_url' => $callback
@@ -89,12 +89,12 @@ class AuthController extends ActionController
             if (isset($data['code']) && isset($data['client_id']) &&
                     isset($data['client_secret']) && isset($data['redirect_url'])) {
                 $cache = $this->getContainer()->get('cache');
-                $info = $cache->fetch($data['code'], 'OAUTH_');
+                $info = $cache->fetch('$AUTHORIZATION_CODE$' . $data['code'], 'OAUTH_');
                 if ($info) {
                     $consumer = new Consumer;
                     $consumer->load($info['consumer_id']);
                     if ($consumer['key'] != $data['client_id'] || $consumer['secret'] != $data['client_secret']) {
-                        return $this->getResponse()->withStatus(401);
+                        return $this->getResponse()->withStatus(400);
                     }
                     if ($consumer->getId() && base64_decode($data['redirect_url']) === $info['redirect_url']) {
                         $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
@@ -108,7 +108,7 @@ class AuthController extends ActionController
                             $collection->columns(['open_id'])->where($constraint);
                             if (!count($collection)) {
                                 do {
-                                    $constraint['open_id'] = Rand::getString(32);
+                                    $constraint['open_id'] = Rand::getString(32, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
                                     $collection->reset('where')->where($constraint);
                                 } while (count($collection));
                                 $token = new Token;
@@ -118,9 +118,9 @@ class AuthController extends ActionController
                                 $openId = $collection[0]['open_id'];
                             }
                             do {
-                                $code = Rand::getString(32);
-                            } while ($cache->fetch($code, 'OAUTH_'));
-                            $cache->save($code, ['consumer_id' => $consumer->getId(), 'user_id' => $user->getId(), 'open_id' => $openId], 'OAUTH_', 3600);
+                                $code = Rand::getString(32, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+                            } while ($cache->fetch('$ACCESS_TOKEN$' . $code, 'OAUTH_'));
+                            $cache->save('$ACCESS_TOKEN$' . $code, ['consumer_id' => $consumer->getId(), 'user_id' => $user->getId(), 'open_id' => $openId], 'OAUTH_', 3600);
                             return ['access_token' => $code, 'open_id' => $openId, 'expired_at' => date('l, d-M-Y H:i:s T', time() + 3600)];
                         }
                     }
@@ -129,6 +129,18 @@ class AuthController extends ActionController
             return $this->getResponse()->withStatus(400);
         }
         return $this->getResponse()->withStatus(405);
+    }
+
+    public function touchAction()
+    {
+        $token = $this->getRequest()->getQuery('access_token');
+        $cache = $this->getContainer()->get('cache');
+        $data = $cache->fetch('$ACCESS_TOKEN$' . $token, 'OAUTH_');
+        if ($data) {
+            $cache->save('$ACCESS_TOKEN$' . $token, $data, 'OAUTH_', 3600);
+            return ['access_token' => $token, 'expired_at' => date('l, d-M-Y H:i:s T', time() + 3600)];
+        }
+        return $this->getResponse()->withStatus(400);
     }
 
 }

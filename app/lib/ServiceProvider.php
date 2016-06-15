@@ -40,7 +40,12 @@ class ServiceProvider implements ServiceProviderInterface
             };
         }
         if (!$container->has('request') && isset($_SERVER['REQUEST_METHOD'])) {
-            $request = new Request;
+            try {
+                $request = new Request;
+            } catch (\Seahinet\Lib\Exception\InvalidRequestMethod $e) {
+                header('HTTP/1.1 405 Method Not Allowed');
+                exit;
+            }
             $container['request'] = $request;
         }
         if (!$container->has('response')) {

@@ -1,0 +1,7 @@
+---
+admin_rest_role_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_rest_role_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

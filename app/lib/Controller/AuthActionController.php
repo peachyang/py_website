@@ -8,7 +8,7 @@ use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Segment;
 
 /**
- * Controller with authorization for backend pages
+ * Controller with authorization for backend request
  */
 class AuthActionController extends ActionController
 {

@@ -96,20 +96,22 @@
         };
         $(document.body).on('click.seahinet.ajax', 'a[data-method]', function () {
             var o = this;
-            if ($(o).is('[data-params]')) {
-                var data = $(o).data('params');
-            } else if ($(o).is('[data-serialize]')) {
-                var data = $($(o).data('serialize')).find('input:not([type=radio]):not([type=checkbox]),[type=radio]:checked,[type=checkbox]:checked,select,textarea,button[name]').serialize();
-            } else {
-                var data = '';
-            }
-            $.ajax($(o).attr('href'), {
-                type: $(o).data('method'),
-                data: data,
-                success: function (xhr) {
-                    responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
+            if ($(o).data('method') !== 'delete' || confirm(translate($(o).is('[data-serialize]') ? 'Are you sure to delete these records?' : 'Are you sure to delete this record?'))) {
+                if ($(o).is('[data-params]')) {
+                    var data = $(o).data('params');
+                } else if ($(o).is('[data-serialize]')) {
+                    var data = $($(o).data('serialize')).find('input:not([type=radio]):not([type=checkbox]),[type=radio]:checked,[type=checkbox]:checked,select,textarea,button[name]').serialize();
+                } else {
+                    var data = '';
                 }
-            });
+                $.ajax($(o).attr('href'), {
+                    type: $(o).data('method'),
+                    data: data,
+                    success: function (xhr) {
+                        responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
+                    }
+                });
+            }
             return false;
         }).on('submit.seahinet.ajax', 'form[data-ajax]', function () {
             var o = this;

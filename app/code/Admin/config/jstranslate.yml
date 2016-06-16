@@ -1,0 +1,19 @@
+---
+admin_user_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_user_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_role_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_role_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_operation_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_operation_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

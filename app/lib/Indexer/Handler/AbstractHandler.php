@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Indexer\Handler;
 
 use InvalidArgumentException;
+use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\TableGateway\TableGateway;
 
 abstract class AbstractHandler
@@ -53,14 +54,14 @@ abstract class AbstractHandler
                 $items[$languageId] = [];
             }
             if (!isset($items[$languageId][$record['id']])) {
-                $items[$languageId][$record['id']] = [
-                    'id' => $record['id'],
-                    'attribute_set_id' => $record['attribute_set_id'],
-                    'store_id' => $record['store_id'],
-                    'increment_id' => $record['increment_id'],
-                    'status' => $record['status'],
-                    'created_at' => $record['created_at']
-                ];
+                $items[$languageId][$record['id']] = [];
+                foreach (array_diff($keys, [
+                    'updated_at', 'type_id', 'attr', 'type',
+                    'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
+                    'value_table_prefix', 'is_form'
+                ]) as $key) {
+                    $items[$languageId][$record['id']][$key] = $record[$key];
+                }
             }
             if ($record['attr']) {
                 $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar']? : (
@@ -70,6 +71,14 @@ abstract class AbstractHandler
                                                 $record['value_datetime']? :
                                                         $record['value_blob']
                                                 ))));
+            }
+        }
+        $languages = new Language;
+        $languages->columns(['id'])->order('id ASC');
+        $ids = $languages->load(false)->toArray();
+        foreach ($ids as $key => $language) {
+            if (!isset($items[$language['id']])) {
+                $items[$language['id']] = $items[$ids[$key - 1]['id']];
             }
         }
         $this->buildData($items);

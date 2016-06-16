@@ -1,0 +1,17 @@
+---
+admin_i18n_language_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_i18n_store_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_i18n_merchant_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_i18n_translation_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_i18n_translation_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+                        

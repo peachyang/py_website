@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\I18n\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Model\Collection\Store as Collection;
 use Seahinet\Lib\Source\Merchant;
 
 class Store extends PEdit
@@ -17,7 +18,11 @@ class Store extends PEdit
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('i18n_store/delete/');
+            $collection = new Collection;
+            $collection->columns(['id'])
+                    ->where(['merchant_id' => $model->offsetGet('merchant_id')])
+                    ->where('id <> ' . $model->getId());
+            return $collection->count() ? $this->getAdminUrl('i18n_store/delete/') : false;
         }
         return false;
     }

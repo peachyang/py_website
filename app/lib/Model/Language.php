@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Model;
 
+use Exception;
 use Zend\Db\Sql\Where;
 
 class Language extends AbstractModel
@@ -22,6 +23,12 @@ class Language extends AbstractModel
         return null;
     }
 
+    protected function beforeSave()
+    {
+        $this->beginTransaction();
+        parent::beforeSave();
+    }
+
     protected function afterSave()
     {
         if ($this->storage['is_default']) {
@@ -29,17 +36,39 @@ class Language extends AbstractModel
             $where->notEqualTo('id', $this->getId())
                     ->equalTo('is_default', 1)
                     ->equalTo('merchant_id', $this->storage['merchant_id']);
-            $this->tableGateway->update(['is_default' => 0], $where);
+            $this->update(['is_default' => 0], $where);
             $this->getCacheObject()->delete($this->getCacheKey(), 'DATA_');
         }
         $this->flushList('core_merchant');
         parent::afterSave();
+        $this->commit();
+    }
+
+    protected function beforeRemove()
+    {
+        $this->beginTransaction();
+        $this->load($this->getId());
+        if ($this->storage['is_default']) {
+            $select = $this->tableGateway->getSql()->select();
+            $select->columns(['id'])->limit(1)
+                    ->where->notEqualTo('id', $this->getId())
+                    ->equalTo('merchant_id', $this->storage['merchant_id']);
+            $result = $this->tableGateway->selectWith($select)->toArray();
+            if (count($result)) {
+                $this->update(['is_default' => 1], ['id' => $result[0]['id']]);
+            } else {
+                $this->rollback();
+                throw new Exception('There must be one language record at least.');
+            }
+        }
+        parent::beforeRemove();
     }
 
     protected function afterRemove()
     {
         $this->flushList('core_merchant');
         parent::afterRemove();
+        $this->commit();
     }
 
 }

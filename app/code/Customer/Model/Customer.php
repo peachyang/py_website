@@ -2,13 +2,11 @@
 
 namespace Seahinet\Customer\Model;
 
-use Exception;
-use Seahinet\Customer\Model\Collection\Customer as Collection;
+use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Math\Rand;
 
 class Customer extends Entity
 {
@@ -45,14 +43,23 @@ class Customer extends Entity
     {
         parent::afterSave();
         if (isset($this->storage['group_id'])) {
-            try {
-                $tableGateway = new TableGateway('customer_in_group', $this->getContainer()->get('dbAdapter'));
-                $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
-                foreach ($groups as $id) {
-                    $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);
-                }
-            } catch (Exception $e) {
-                $this->getContainer()->get('log')->logException($e);
+            $tableGateway = new TableGateway('customer_in_group', $this->getContainer()->get('dbAdapter'));
+            $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
+            foreach ($groups as $id) {
+                $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);
+            }
+        }
+        if (isset($this->storage['address'])) {
+            $set = new Set;
+            $set->join('eav_entity_type', 'eav_entity_type.id=type_id', [], 'left')
+                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE]);
+            foreach ($this->storage['address'] as $key => $address) {
+                $address = new Address($this->storage['language_id'], [
+                    'attribute_set_id' => $set[0]['id'],
+                    'store_id' => $this->storage['store_id'],
+                    'customer_id' => $this->getId(),
+                    'id' => $key? : null] + $address);
+                $address->save();
             }
         }
     }

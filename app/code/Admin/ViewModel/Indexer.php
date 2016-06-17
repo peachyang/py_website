@@ -48,4 +48,5 @@ class Indexer extends Grid
         $collection = new Collection;
         return $collection;
     }
+
 }

@@ -51,7 +51,7 @@ class Role extends AbstractModel
         $this->beginTransaction();
         parent::beforeSave();
     }
-    
+
     protected function afterSave()
     {
         if (!empty($this->storage['child_id'])) {
@@ -64,7 +64,7 @@ class Role extends AbstractModel
         if (!empty($this->storage['operation_id'])) {
             $tableGateway = new TableGateway('admin_permission', $this->getContainer()->get('dbAdapter'));
             $tableGateway->delete(['role_id' => $this->getId()]);
-            if(in_array(-1, $this->storage['operation_id'])){
+            if (in_array(-1, $this->storage['operation_id'])) {
                 $this->storage['operation_id'] = [-1];
             }
             foreach ($this->storage['operation_id'] as $operationId) {

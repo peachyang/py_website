@@ -99,9 +99,11 @@ abstract class Edit extends PEdit
             $columns[$attribute['code']] = [
                 'label' => $attribute['label'],
                 'type' => $attribute['input'],
-                'class' => $attribute['validation'],
-                'options' => (new AttributeModel($attribute))->getOptions($languageId)
+                'class' => $attribute['validation']
             ];
+            if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
+            }
             if ($attribute['is_required']) {
                 $columns[$attribute['code']]['required'] = 'required';
             }

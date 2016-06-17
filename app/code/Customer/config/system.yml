@@ -39,6 +39,23 @@ customer:
                     options:
                         1: Yes
                         0: No
+        address:
+            label: Address
+            scope: merchant
+            priority: 30
+            children:
+                one_line:
+                    label: Format in One Line
+                    type: textarea
+                    priority: 0
+                    required: required
+                    default: '{{name}},{{tel}}  {{county}},{{city}},{{region}},{{country}}'
+                multi_line:
+                    label: Format in Multiple Lines
+                    type: textarea
+                    priority: 0
+                    required: required
+                    default: "{{label:name}}: {{name}}\n{{label:tel}}: {{tel}}\n{{label:country}}: {{country}}\n{{label:region}}: {{region}}\n{{label:city}}: {{city}}\n{{label:county}}: {{county}}"
         captcha:
             label: CAPTCHA
             scope: merchant

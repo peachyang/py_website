@@ -1,0 +1,27 @@
+<?php
+$elements = $this->getElements();
+$collection = $this->getCollection();
+if ($collection && count($collection)):
+    foreach ($collection as $address):
+        ?>
+        <div class="address-book">
+            <?php echo nl2br($address->display(false)) ?>
+        </div>
+        <?php
+    endforeach;
+endif;
+?>
+<div class="new-address">
+    <h3><?php echo $this->translate('New Address') ?></h3>
+    <?php
+    foreach ($elements as $key => $item) {
+        unset($item['required']);
+        echo $this->getInputBox('address[0][' . $key . ']', $item);
+    }
+    ?>
+    <script>
+        new Locate({
+            prefix: 'address-0-'
+        });
+    </script>
+</div>

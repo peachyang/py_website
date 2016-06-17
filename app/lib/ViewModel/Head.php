@@ -6,6 +6,7 @@ use CssMin;
 use Error;
 use Exception;
 use JShrink\Minifier;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Stdlib\Singleton;
 
 /**
@@ -322,6 +323,16 @@ final class Head extends AbstractViewModel implements Singleton
             }
         }
         return $this->getPubUrl('cache/' . ($isCss ? 'css/' : 'js/') . $name);
+    }
+
+    /**
+     * Get locale code
+     * 
+     * @return string
+     */
+    public function getLocale()
+    {
+        return Bootstrap::getLanguage()->offsetGet('code');
     }
 
 }

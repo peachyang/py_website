@@ -575,7 +575,7 @@ CREATE TABLE IF NOT EXISTS `eav_entity_attribute` (
     `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `attribute_group_id` INTEGER NOT NULL COMMENT 'EAV attribute group ID',
     `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
-    `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
+    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
     PRIMARY KEY (`attribute_set_id`,`attribute_group_id`,`attribute_id`),
     INDEX IDX_EAV_ENTITY_ATTR_ATTR_SET_ID (`attribute_set_id`),
     INDEX IDX_EAV_ENTITY_ATTR_ATTR_GROUP_ID (`attribute_group_id`),
@@ -1027,16 +1027,161 @@ CREATE TABLE IF NOT EXISTS `api_soap_user` (
 
 CREATE TRIGGER `TGR_UPDATE_API_SOAP_USER` BEFORE UPDATE ON `api_soap_user` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
+INSERT INTO `eav_entity_type` VALUES (2, 'address', 'address_entity', 'address_value', 0, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_set` VALUES (NULL, 2, 'Default', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', CURRENT_TIMESTAMP, NULL);
+
+CREATE TABLE IF NOT EXISTS `address_entity` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Address ID',
+    `type_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV entity type ID',
+    `attribute_set_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV attribute set ID',
+    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `customer_id` INTEGER NULL COMMENT 'Customer ID',
+    `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`id`),
+    INDEX IDX_ADDRESS_ENTITY_TYPE_ID (`type_id`),
+    INDEX IDX_ADDRESS_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
+    INDEX IDX_ADDRESS_ENTITY_CUSTOMER_ID (`customer_id`),
+    CONSTRAINT FK_ADDRESS_ENTITY_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_ENTITY_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_ENTITY_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_ENTITY_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_ENTITY` BEFORE UPDATE ON `address_entity` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_int` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` INTEGER NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_INT_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_INT_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_INT_ENTITY_ID (`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_INT_ATTR_ID_VALUE (`attribute_id`,`value`),
+    INDEX IDX_ADDRESS_VALUE_INT_ENTITY_ID_VALUE (`entity_id`,`value`),
+    CONSTRAINT FK_ADDRESS_VALUE_INT_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_INT_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_INT_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_INT` BEFORE UPDATE ON `address_value_int` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_datetime` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` TIMESTAMP NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_DATETIME_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_DATETIME_ENTITY_ID (`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_DATETIME_ATTR_ID_VALUE (`attribute_id`,`value`),
+    INDEX IDX_ADDRESS_VALUE_DATETIME_ENTITY_ID_VALUE (`entity_id`,`value`),
+    CONSTRAINT FK_ADDRESS_VALUE_DATETIME_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_DATETIME_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_DATETIME_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_DATETIME` BEFORE UPDATE ON `address_value_datetime` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_decimal` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` DECIMAL(12,4) NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_DECIMAL_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_DECIMAL_ATTR_ID_VALUE (`attribute_id`,`value`),
+    INDEX IDX_ADDRESS_VALUE_DECIMAL_ENTITY_ID_VALUE (`entity_id`,`value`),
+    CONSTRAINT FK_ADDRESS_VALUE_DECIMAL_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_DECIMAL_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_DECIMAL_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_DECIMAL` BEFORE UPDATE ON `address_value_decimal` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_varchar` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` VARCHAR(255) NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_VARCHAR_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_VARCHAR_ATTR_ID_VALUE (`attribute_id`,`value`),
+    INDEX IDX_ADDRESS_VALUE_VARCHAR_ENTITY_ID_VALUE (`entity_id`,`value`),
+    CONSTRAINT FK_ADDRESS_VALUE_VARCHAR_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_VARCHAR_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_VARCHAR_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_VARCHAR` BEFORE UPDATE ON `address_value_varchar` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_text` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` TEXT NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_TEXT_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_TEXT_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_TEXT_ENTITY_ID (`entity_id`),
+    CONSTRAINT FK_ADDRESS_VALUE_TEXT_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_TEXT_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_TEXT_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_TEXT` BEFORE UPDATE ON `address_value_text` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS `address_value_blob` (
+    `attribute_id` INTEGER NOT NULL COMMENT 'EAV attribute ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `entity_id` INTEGER NOT NULL COMMENT 'Address entity ID',
+    `value` BLOB NOT NULL COMMENT 'Address value',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
+    PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
+    INDEX IDX_ADDRESS_VALUE_BLOB_ATTR_ID (`attribute_id`),
+    INDEX IDX_ADDRESS_VALUE_BLOB_LANGUAGE_ID (`language_id`),
+    INDEX IDX_ADDRESS_VALUE_BLOB_ENTITY_ID (`entity_id`),
+    CONSTRAINT FK_ADDRESS_VALUE_BLOB_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_BLOB_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ADDRESS_VALUE_BLOB_ENTITY_ID_ADDRESS_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `address_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_BLOB` BEFORE UPDATE ON `address_value_blob` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
+
 INSERT INTO `eav_entity_type` VALUES (3, 'product', 'product_entity', 'product_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 3, 'Default', CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'General', CURRENT_TIMESTAMP, NULL);
+
+CREATE TABLE IF NOT EXISTS `product_type` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product type ID',
+    `code` VARCHAR(20) NOT NULL COMMENT 'Product type code',
+    `name` VARCHAR(255) NOT NULL COMMENT 'Product type name',
+    PRIMARY KEY (`id`),
+    INDEX IDX_PRODUCT_TYPE_CODE (`code`)
+);
+
+INSERT INTO `product_type` VALUES (NULL,'simple','Simple Product'),(NULL,'virtual','Virtual Product');
 
 CREATE TABLE IF NOT EXISTS `product_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product ID',
     `type_id` INTEGER NOT NULL COMMENT 'EAV entity type ID',
     `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `sku` VARCHAR(255) NOT NULL COMMENT 'Stock keeping unit',
-    `product_type` VARCHAR(10) DEFAULT 'simple' COMMENT 'Product type',
+    `product_type_id` INTEGER NOT NULL COMMENT 'Product type',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
     `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
@@ -1045,7 +1190,9 @@ CREATE TABLE IF NOT EXISTS `product_entity` (
     INDEX IDX_PRODUCT_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_PRODUCT_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
     INDEX IDX_PRODUCT_ENTITY_STORE_ID (`store_id`),
+    INDEX IDX_PRODUCT_ENTITY_PRODUCT_TYPE_ID (`product_type_id`),
     CONSTRAINT UNQ_PRODUCT_ENTITY_SKU UNIQUE (`sku`),
+    CONSTRAINT FK_PRODUCT_ENTITY_PRODUCT_TYPE_ID_PRODUCT_TYPE_ID FOREIGN KEY (`product_type_id`) REFERENCES `product_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_PRODUCT_ENTITY_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_PRODUCT_ENTITY_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_PRODUCT_ENTITY_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -1163,9 +1310,71 @@ CREATE TABLE IF NOT EXISTS `product_value_blob` (
 
 CREATE TRIGGER `TGR_UPDATE_PRODUCT_VALUE_BLOB` BEFORE UPDATE ON `product_value_blob` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
-INSERT INTO `eav_entity_type` VALUES (2, 'category', 'category_entity', 'category_value', 0, CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_set` VALUES (NULL, 2, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', CURRENT_TIMESTAMP, NULL);
+CREATE TABLE IF NOT EXISTS `product_option` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product option',
+    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `input` VARCHAR(10) NOT NULL COMMENT 'EAV attribute form element',
+    `is_required` BOOLEAN DEFAULT 0 COMMENT 'Is attribute required',
+    `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
+    `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
+    PRIMARY KEY (`id`),
+    INDEX IDX_PRODUCT_OPTION_PRODUCT_ID (`product_id`),
+    INDEX IDX_PRODUCT_OPTION_SORT_ORDER (`sort_order`),
+    CONSTRAINT FK_PRODUCT_OPTION_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `product_option_title` (
+    `option_id` INTEGER NOT NULL COMMENT 'Option ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `title` VARCHAR(255) DEFAULT '' COMMENT 'Product option title',
+    PRIMARY KEY (`option_id`,`language_id`),
+    CONSTRAINT FK_PRODUCT_OPTION_TITLE_OPTION_ID_PRODUCT_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `product_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PRODUCT_OPTION_TITLE_OPTION_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `product_option_price` (
+    `option_id` INTEGER NOT NULL COMMENT 'Option ID',
+    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `price` VARCHAR(255) DEFAULT '' COMMENT 'Product option price',
+    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
+    PRIMARY KEY (`option_id`,`store_id`),
+    CONSTRAINT FK_PRODUCT_OPTION_PRICE_OPTION_ID_PRODUCT_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `product_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PRODUCT_OPTION_PRICE_OPTION_ID_PRODUCT_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `product_option_value` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product option value',
+    `option_id` INTEGER NOT NULL COMMENT 'Option ID',
+    `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
+    `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
+    PRIMARY KEY (`id`),
+    INDEX IDX_PRODUCT_OPTION_VALUE_OPTION_ID (`option_id`),
+    INDEX IDX_PRODUCT_OPTION_VALUE_SORT_ORDER (`sort_order`),
+    CONSTRAINT FK_PRODUCT_OPTION_VALUE_OPTION_ID_PRODUCT_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `product_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `product_option_value_title` (
+    `value_id` INTEGER NOT NULL COMMENT 'Value ID',
+    `language_id` INTEGER NOT NULL COMMENT 'Language ID',
+    `title` VARCHAR(255) DEFAULT '' COMMENT 'Product option value title',
+    PRIMARY KEY (`value_id`,`language_id`),
+    CONSTRAINT FK_PRODUCT_OPTION_VALUE_TITLE_OPTION_ID_PRODUCT_VALUE_ID FOREIGN KEY (`value_id`) REFERENCES `product_option_value`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PRODUCT_OPTION_VALUE_TITLE_OPTION_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `product_option_value_price` (
+    `value_id` INTEGER NOT NULL COMMENT 'Value ID',
+    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `price` VARCHAR(255) DEFAULT '' COMMENT 'Product option value price',
+    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
+    PRIMARY KEY (`value_id`,`store_id`),
+    CONSTRAINT FK_PRODUCT_OPTION_VALUE_PRICE_OPTION_ID_PRODUCT_VALUE_ID FOREIGN KEY (`value_id`) REFERENCES `product_option_value`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PRODUCT_OPTION_VALUE_PRICE_OPTION_ID_PRODUCT_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO `eav_entity_type` VALUES (4, 'category', 'category_entity', 'category_value', 0, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_set` VALUES (NULL, 4, 'Default', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'General', CURRENT_TIMESTAMP, NULL);
 
 CREATE TABLE IF NOT EXISTS `category_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Category ID',

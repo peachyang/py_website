@@ -24,6 +24,10 @@ customer:
             link: customer_level/
             title: Customer Level
             priority: 30
+        -
+            link: customer_address/
+            title: Address Attribute Management
+            priority: 40
 system:
     children:
         -

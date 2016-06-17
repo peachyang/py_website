@@ -29,3 +29,9 @@ admin_customer_attribute_set_list:
 admin_customer_attribute_set_edit:
     - Are you sure to delete this record?
     - Are you sure to delete these records?
+admin_address_attribute_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_address_attribute_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

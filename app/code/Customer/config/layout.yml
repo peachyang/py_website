@@ -87,6 +87,11 @@ admin_customer_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/locate.js
             content:
                 children:
                     breadcrumb:
@@ -102,6 +107,19 @@ admin_customer_edit:
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - address
+                                            - Address Book
+                                children:
+                                    address:
+                                        type: Seahinet\Admin\ViewModel\Customer\Edit\Address
+                                        template: admin/customer/address
 admin_customer_group_list:
     update: grid
     root:
@@ -322,3 +340,65 @@ admin_customer_attribute_set_edit:
                     new-group:
                         type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Group
                         template: admin/eav/group
+admin_address_attribute_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Customer Attribute / Customer Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_address/',label:'Address Attribute'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/customer_address/edit/',label:'Add New Attribute'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Customer\Grid\Attribute\Address
+admin_address_attribute_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/eav.js
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_address/',label:'Address Attribute'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_address/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Address
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params: [label,'Label / Options']
+                                children:
+                                    label:
+                                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Label
+                                        template: admin/eav/label

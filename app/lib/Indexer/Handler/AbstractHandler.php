@@ -78,7 +78,9 @@ abstract class AbstractHandler
         $ids = $languages->load(false)->toArray();
         foreach ($ids as $key => $language) {
             if (!isset($items[$language['id']])) {
-                $items[$language['id']] = $items[$ids[$key - 1]['id']];
+                for ($i = $key - 1; $i >= 0 && isset($items[$ids[$i]['id']]); $i--) {
+                    $items[$language['id']] = $items[$ids[$i]['id']];
+                }
             }
         }
         $this->buildData($items);

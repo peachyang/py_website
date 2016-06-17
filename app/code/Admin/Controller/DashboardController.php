@@ -7,7 +7,7 @@ use Seahinet\Lib\Controller\AuthActionController;
 
 class DashboardController extends AuthActionController
 {
-    
+
     public function indexAction()
     {
         return $this->getLayout('admin_dashboard');
@@ -88,7 +88,7 @@ class DashboardController extends AuthActionController
                 }
                 $result['amount'] += $count;
             }
-            if(!empty($keys)){
+            if (!empty($keys)) {
                 $result['keys'] = array_keys($keys);
             }
         }

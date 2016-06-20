@@ -49,7 +49,6 @@ class Attribute extends PEdit
                     'int' => 'Integer',
                     'decimal' => 'Decimal',
                     'text' => 'Text',
-                    'blob' => 'Binary',
                     'datetime' => 'Date/Time'
                 ]
             ],

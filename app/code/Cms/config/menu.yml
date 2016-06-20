@@ -1,6 +1,6 @@
 ---
 cms:
-    icon: television
+    icon: code
     title: CMS
     priority: 10
     children:

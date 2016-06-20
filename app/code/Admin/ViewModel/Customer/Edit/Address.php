@@ -17,6 +17,9 @@ class Address extends AbstractViewModel
 
     public function getInputBox($key, $item)
     {
+        if (empty($item['type'])) {
+            return '';
+        }
         $box = new Template;
         $box->setVariables([
             'key' => $key,
@@ -35,7 +38,7 @@ class Address extends AbstractViewModel
                 $collection = new Collection($languageId);
                 $collection->where(['customer_id' => $id]);
                 $this->collection = [];
-                foreach($collection as $address){
+                foreach ($collection as $address) {
                     $this->collection[] = new Model($languageId, $address);
                 }
             }
@@ -53,16 +56,18 @@ class Address extends AbstractViewModel
                 ->where(['eav_entity_type.code' => Collection::ENTITY_TYPE]);
         $columns = [];
         foreach ($attributes as $attribute) {
-            $columns[$attribute['code']] = [
-                'label' => $attribute['label'],
-                'type' => $attribute['input'],
-                'class' => $attribute['validation']
-            ];
-            if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
-                $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
-            }
-            if ($attribute['is_required']) {
-                $columns[$attribute['code']]['required'] = 'required';
+            if ($attribute['id']) {
+                $columns[$attribute['code']] = [
+                    'label' => $attribute['label'],
+                    'type' => $attribute['input'],
+                    'class' => $attribute['validation']
+                ];
+                if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                    $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
+                }
+                if ($attribute['is_required']) {
+                    $columns[$attribute['code']]['required'] = 'required';
+                }
             }
         }
         return $columns;

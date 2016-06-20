@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Customer\Grid;
 
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
+use Seahinet\Lib\Session\Segment;
 
 class Manage extends PGrid
 {
@@ -46,7 +47,13 @@ class Manage extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        return parent::prepareCollection(new Collection);
+        $collection = new Collection;
+        $segment = new Segment('admin');
+        $store = $segment->user->getStore();
+        if ($store) {
+            $collection->where(['store_id' => $store->getId()]);
+        }
+        return parent::prepareCollection($collection);
     }
 
 }

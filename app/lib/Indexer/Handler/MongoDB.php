@@ -123,8 +123,12 @@ class MongoDB extends AbstractHandler
         for ($i = 0; $i < count($predicates); $i++) {
             $predicate = $predicates[$i];
             if (is_array($predicate)) {
-                $expression = preg_replace('#^(?:\s*\%s\s+)([^\s]+)(?:\s+\%s\s*)$#', '$1', $predicate[0]);
-                $parts[$i] = [$predicate[1][0] => [str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['$gte', '$lte', '$ne', '$ne', '$gt', '$lt', '$eq'], $expression) => $predicate[1][1]]];
+                $expression = preg_replace('#^(?:\s*\%s\s+)([^\s]+).+$#', '$1', $predicate[0]);
+                $value = $predicate[1];
+                $parts[$i] = [array_shift($value) => [
+                        '$' . strtolower(str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['gte', 'lte', 'ne', 'ne', 'gt', 'lt', 'eq'], $expression))
+                        => count($value) > 1 ? array_values($value) : $predicate[1][1]
+                ]];
             }
         }
         $handleAnd = function($a, $b) {

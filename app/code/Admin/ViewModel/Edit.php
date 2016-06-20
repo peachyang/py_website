@@ -116,6 +116,9 @@ class Edit extends AbstractViewModel
      */
     public function getInputBox($key, $item)
     {
+        if (empty($item['type'])) {
+            return '';
+        }
         $box = new Template;
         $box->setVariables([
             'key' => $key,

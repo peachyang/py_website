@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\ViewModel;
 
+use Error;
 use JsonSerializable;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Csrf;
@@ -83,7 +84,7 @@ abstract class AbstractViewModel implements Serializable
     public function render()
     {
         try {
-            if (is_null($this->getTemplate())) {
+            if (!$this->getTemplate()) {
                 return $this instanceof JsonSerializable ? $this->jsonSerialize() : '';
             }
             if ($this->getCacheKey()) {
@@ -124,9 +125,14 @@ abstract class AbstractViewModel implements Serializable
      */
     protected function getRendered($template)
     {
-        ob_start();
-        include $template;
-        return ob_get_clean();
+        try {
+            ob_start();
+            include $template;
+            return ob_get_clean();
+        } catch (Error $e) {
+            ob_clean();
+            return '';
+        }
     }
 
     /**

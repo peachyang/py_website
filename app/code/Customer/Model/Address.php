@@ -32,7 +32,7 @@ class Address extends Entity
         foreach ($matches[0] as $match) {
             $src = trim($match, '{}');
             if (strpos($match, 'label:') === false) {
-                $target = (isset($this->storage[$src]) ? (is_numeric($this->storage[$src]) ?
+                $target = (isset($this->storage[$src]) ? (is_numeric($this->storage[$src]) && in_array($src, ['country', 'region', 'city', 'county']) ?
                                         $locate->getLabel($src, $this->storage[$src])[$this->storage[$src]]->getName($language->offsetGet('code')) :
                                         $this->storage[$src]) : '');
             } else {

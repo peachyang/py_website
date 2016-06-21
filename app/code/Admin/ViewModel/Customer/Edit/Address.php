@@ -54,7 +54,18 @@ class Address extends AbstractViewModel
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->order('eav_attribute.id')
                 ->where(['eav_entity_type.code' => Collection::ENTITY_TYPE]);
-        $columns = [];
+        $columns = [
+            'id' => [
+                'type' => 'hidden'
+            ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
+            'customer_id' => [
+                'type' => 'hidden',
+                'value' => $this->getQuery('id')
+            ],
+        ];
         foreach ($attributes as $attribute) {
             if ($attribute['id']) {
                 $columns[$attribute['code']] = [

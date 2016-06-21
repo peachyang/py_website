@@ -1,3 +1,4 @@
+"Account Information","账户信息"
 "Add New Address Attribute","新建地址属性"
 "Add New Customer","新建顾客"
 "Add New Customer Attribute Group","新建顾客属性组"
@@ -43,6 +44,7 @@
 "Human-Friendly ID","人性化ID"
 "If 0 is specified, CAPTCHA on the Login form will be always available.","如果设置为0，登录验证码将总是显示。"
 "Level","等级"
+"New Address","新建地址"
 "Number of Symbols","字符数"
 "Number of Unsuccessful Attempts to Login","尝试登录失败次数"
 "Please use only letters (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed. Similar looking characters (e.g. ""i"", ""l"", ""1"") decrease chance of correct recognition by customer.","请只使用字母(a-z或A-Z)或数字(0-9)，不允许使用空格或其他字符。相似的字符(如：""i"",""l"",""1"")将降低验证码辨识度。"

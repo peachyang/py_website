@@ -8,9 +8,26 @@ use Seahinet\Lib\ViewModel\Template;
 class Edit extends AbstractViewModel
 {
 
+    protected $hasTitle = true;
+
     public function __construct()
     {
         $this->setTemplate('admin/edit');
+    }
+
+    /**
+     * Has form title
+     * 
+     * @param bool $hasTitle
+     * @return Edit|bool
+     */
+    public function hasTitle($hasTitle = null)
+    {
+        if (is_bool($hasTitle)) {
+            $this->hasTitle = $hasTitle;
+            return $this;
+        }
+        return $this->hasTitle;
     }
 
     /**

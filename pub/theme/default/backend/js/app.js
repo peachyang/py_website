@@ -132,6 +132,29 @@
                 $(this).find('#sendmail-template_id').val($(e.relatedTarget).data('id'));
             }
         });
+        $('.modal').on({
+            'show.bs.modal': function (e) {
+                if ($(e.relatedTarget).is('[data-info]')) {
+                    var info = $(e.relatedTarget).data('info');
+                    if (typeof info === 'string') {
+                        info = eval('(' + info + ')');
+                    }
+                    if (info.id) {
+                        for (var i in info) {
+                            var t = $(this).find('[name="' + i + '"]');
+                            if (t.length) {
+                                $(t).val(info[i]);
+                                if ($(t).is('select')) {
+                                    $(t).trigger('change.seahinet');
+                                }
+                            }
+                        }
+                    } else {
+                        $(this).find('form').trigger('reset');
+                    }
+                }
+            }
+        });
         if ($('.message-box>.alert').length) {
             addMessages();
         }

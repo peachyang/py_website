@@ -24,24 +24,32 @@
             localStorage['locate-' + GLOBAL.LOCALE + param] = JSON.stringify(response);
         }
         var options = typeof response === 'string' ? eval('(' + response + ')') : response;
-        var fg = document.createDocumentFragment();
-        $(fg).append('<option value=""></option>');
-        var value = $(target).data('default-value');
-        for (var i in options) {
-            $(fg).append('<option value="' + options[i].value + '"' +
-                    (value && value == options[i].value ?
-                            ' selected="selected"' : '')
-                    + '>' + options[i].label + '</option>');
+        if (options.length) {
+            $(this.objects[target + '-text']).attr({hidden: 'hidden', disabled: 'disabled'});
+            target = this.objects[target];
+            $(target).removeAttr('hidden').removeAttr('disabled');
+            var fg = document.createDocumentFragment();
+            $(fg).append('<option value=""></option>');
+            var value = $(target).data('default-value');
+            for (var i in options) {
+                $(fg).append('<option value="' + options[i].value + '"' +
+                        (value && value == options[i].value ?
+                                ' selected="selected"' : '')
+                        + '>' + options[i].label + '</option>');
+            }
+            $(target).html(fg);
+        } else {
+            $(this.objects[target + '-text']).removeAttr('hidden').removeAttr('disabled');
+            $(this.objects[target]).attr({hidden: 'hidden', disabled: 'disabled'});
         }
-        $(target).html(fg);
     };
     Locate.prototype.loadData = function (target, param) {
         var o = this;
         if (window.localStorage && localStorage['locate-' + GLOBAL.LOCALE + param]) {
-            o.appendOptions(o.objects[target], localStorage['locate-' + GLOBAL.LOCALE + param], param);
+            o.appendOptions(target, localStorage['locate-' + GLOBAL.LOCALE + param], param);
         } else {
             $.get(o.options.url, param).success(function (response) {
-                o.appendOptions(o.objects[target], response, param);
+                o.appendOptions(target, response, param);
             });
         }
     };
@@ -76,22 +84,35 @@
             region: $('#' + o.options.prefix + o.options.regionId),
             city: $('#' + o.options.prefix + o.options.cityId),
             county: $('#' + o.options.prefix + o.options.countyId),
+            'country-text': $('#' + o.options.prefix + o.options.countryId + '-text'),
+            'region-text': $('#' + o.options.prefix + o.options.regionId + '-text'),
+            'city-text': $('#' + o.options.prefix + o.options.cityId + '-text'),
+            'county-text': $('#' + o.options.prefix + o.options.countyId + '-text')
         };
         o.loadDefault();
-        $(o.objects.country).change(function () {
-            var param = 'region=' + $(this).val();
-            o.loadData('region', param);
-            $(o.objects.city).html('');
-            $(o.objects.county).html('');
+        $(o.objects.country).on('change.seahinet', function () {
+            var v = $(this).val();
+            if (v) {
+                var param = 'region=' + v;
+                o.loadData('region', param);
+                $(o.objects.city).html('');
+                $(o.objects.county).html('');
+            }
         });
-        $(o.objects.region).change(function () {
-            var param = 'city=' + $(this).val();
-            o.loadData('city', param);
-            $(o.objects.county).html('');
+        $(o.objects.region).on('change.seahinet', function () {
+            var v = $(this).val();
+            if (v) {
+                var param = 'city=' + v;
+                o.loadData('city', param);
+                $(o.objects.county).html('');
+            }
         });
-        $(o.objects.city).change(function () {
-            var param = 'county=' + $(this).val();
-            o.loadData('county', param);
+        $(o.objects.city).on('change.seahinet', function () {
+            var v = $(this).val();
+            if (v) {
+                var param = 'county=' + v;
+                o.loadData('county', param);
+            }
         });
     };
 }));

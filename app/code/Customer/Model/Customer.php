@@ -49,19 +49,6 @@ class Customer extends Entity
                 $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);
             }
         }
-        if (isset($this->storage['address'])) {
-            $set = new Set;
-            $set->join('eav_entity_type', 'eav_entity_type.id=type_id', [], 'left')
-                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE]);
-            foreach ($this->storage['address'] as $key => $address) {
-                $address = new Address($this->storage['language_id'], [
-                    'attribute_set_id' => $set[0]['id'],
-                    'store_id' => $this->storage['store_id'],
-                    'customer_id' => $this->getId(),
-                    'id' => $key? : null] + $address);
-                $address->save();
-            }
-        }
     }
 
     public function login($username, $password)

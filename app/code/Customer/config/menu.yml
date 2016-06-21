@@ -25,7 +25,7 @@ customer:
             title: Customer Level
             priority: 30
         -
-            link: customer_address/
+            link: customer_attribute_address/
             title: Address Attribute Management
             priority: 40
 system:

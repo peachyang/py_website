@@ -4,6 +4,7 @@ namespace Seahinet\Customer\Model;
 
 use Seahinet\I18n\Model\Locate;
 use Seahinet\Lib\Bootstrap;
+use Seahinet\Customer\Model\Collection\Address as Collection;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
 
@@ -14,12 +15,26 @@ class Address extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'customer_id', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'customer_id', 'is_default', 'status']);
     }
 
     public function __toString()
     {
         return $this->display();
+    }
+
+    protected function afterSave()
+    {
+        if (isset($this->storage['is_default']) && $this->storage['is_default']) {
+            $collection = new Collection;
+            $collection->where(['is_default' => '1', 'customer_id' => $this->storage['customer_id']])
+            ->where->notEqualTo('id', $this->getId());
+            foreach ($collection as $item) {
+                $address = new static($this->languageId, $item);
+                $address->setData('is_default', '0')->save();
+            }
+        }
+        parent::afterSave();
     }
 
     public function display($inOneLine = true)
@@ -32,9 +47,22 @@ class Address extends Entity
         foreach ($matches[0] as $match) {
             $src = trim($match, '{}');
             if (strpos($match, 'label:') === false) {
-                $target = (isset($this->storage[$src]) ? (is_numeric($this->storage[$src]) && in_array($src, ['country', 'region', 'city', 'county']) ?
-                                        $locate->getLabel($src, $this->storage[$src])[$this->storage[$src]]->getName($language->offsetGet('code')) :
-                                        $this->storage[$src]) : '');
+                if (isset($this->storage[$src])) {
+                    $target = $this->storage[$src];
+                    if (is_numeric($this->storage[$src]) && in_array($src, ['country', 'region', 'city', 'county'])) {
+                        $pid = $src === 'region' ? $this->storage['country'] :
+                                ($src === 'city' ? $this->storage['region'] :
+                                        ($src === 'county' ? $this->storage['city'] : ''));
+                        if (is_numeric($pid)) {
+                            $label = $locate->getLabel($src, $this->storage[$src], $pid);
+                            if (count($label)) {
+                                $target = $label[$this->storage[$src]]->getName($language->offsetGet('code'));
+                            }
+                        }
+                    }
+                } else {
+                    $target = '';
+                }
             } else {
                 $attribute = new Attribute;
                 $attribute->withLabel($language->getId())

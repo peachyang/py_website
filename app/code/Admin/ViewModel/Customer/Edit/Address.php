@@ -81,6 +81,15 @@ class Address extends AbstractViewModel
                 }
             }
         }
+        $columns['is_default'] = [
+            'type' => 'radio',
+            'label' => 'As Default Address',
+            'required' => 'required',
+            'options' => [
+                1 => 'Yes',
+                0 => 'No'
+            ]
+        ];
         return $columns;
     }
 

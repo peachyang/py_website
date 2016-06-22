@@ -1278,7 +1278,7 @@ CREATE TABLE IF NOT EXISTS `product_option_title` (
 CREATE TABLE IF NOT EXISTS `product_option_price` (
     `option_id` INTEGER NOT NULL COMMENT 'Option ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
-    `price` VARCHAR(255) DEFAULT '' COMMENT 'Product option price',
+    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option price',
     `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
     PRIMARY KEY (`option_id`,`store_id`),
     INDEX IDX_PRODUCT_OPTION_PRICE_STORE_ID (`store_id`),
@@ -1310,7 +1310,7 @@ CREATE TABLE IF NOT EXISTS `product_option_value_title` (
 CREATE TABLE IF NOT EXISTS `product_option_value_price` (
     `value_id` INTEGER NOT NULL COMMENT 'Value ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
-    `price` VARCHAR(255) DEFAULT '' COMMENT 'Product option value price',
+    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option value price',
     `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
     PRIMARY KEY (`value_id`,`store_id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_PRICE_STORE_ID (`store_id`),
@@ -1352,6 +1352,8 @@ CREATE TRIGGER `TGR_UPDATE_WAREHOUSE` BEFORE UPDATE ON `warehouse` FOR EACH ROW 
 CREATE TABLE IF NOT EXISTS `warehouse_inventory` (
     `warehouse_id` INTEGER NOT NULL COMMENT 'Warehouse ID',
     `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `sku` VARCHAR(255) NOT NULL COMMENT 'Product sku',
+    `barcode` VARCHAR(255) DEFAULT '' COMMENT 'Product barcode',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
     `reserve_qty` DECIMAL(12,4) DEFAULT 0 COMMENT 'Reserve quentity',
     `min_qty` DECIMAL(12,4) DEFAULT 1 COMMENT 'Minimal quentity',
@@ -1362,7 +1364,7 @@ CREATE TABLE IF NOT EXISTS `warehouse_inventory` (
     `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
-    PRIMARY KEY (`product_id`,`warehouse_id`),
+    PRIMARY KEY (`product_id`,`warehouse_id`,`sku`),
     INDEX IDX_WAREHOUSE_INVENTORY_WAREHOUSE_ID (`warehouse_id`),
     CONSTRAINT CHK_WAREHOUSE_INVENTORY_QTY CHECK (`qty` > 0),
     CONSTRAINT FK_WAREHOUSE_INVENTORY_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,

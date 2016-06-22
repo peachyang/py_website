@@ -15,7 +15,7 @@ class IndexerController extends AuthActionController
 
     public function rebuildAction()
     {
-        $code = $this->getRequest()->getQuery('code');
+        $code = $this->getRequest()->getQuery('id');
         $result = ['message' => [], 'error' => 0];
         if (!$code) {
             $code = new Type;

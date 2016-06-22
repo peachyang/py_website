@@ -273,11 +273,13 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard .event .time:before{content:'['}
 .admin .dashboard .event .time:after{content:'] '}
 .admin #address-book>.btn{display:block;margin:0 15px 10px;padding:0}
-.admin #address-book .address-book{display:inline-block;padding:0 15px 10px;margin-right:20px;border:1px solid transparent}
-.admin #address-book .address-book.active{border-color:#666}
-.admin #address-book .address-book .buttons-set{text-align:right;visibility:hidden;margin-bottom:5px}
+.admin #address-book .address-book{display:inline-block;padding:3px 15px 10px;margin-right:20px}
+.admin #address-book .address-book .buttons-set{text-align:right;margin-bottom:5px;height:20px}
+.admin #address-book .address-book .buttons-set>span{display:none;float:left}
+.admin #address-book .address-book .buttons-set .btn{visibility:hidden;vertical-align:top;float:right}
+.admin #address-book .address-book.active .buttons-set>span{display:block}
 .admin #address-book .address-book:hover{box-shadow:0 0 7px #666}
-.admin #address-book .address-book:hover .buttons-set{visibility:visible}
+.admin #address-book .address-book:hover .buttons-set .btn{visibility:visible}
 .admin>.footer{position:fixed;bottom:10px;left:0;width:51px;filter:alpha(Opacity=0);opacity:0;z-index:9;overflow:hidden;pointer-events:none}
 .admin>.footer .copyright{width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}

@@ -21,7 +21,7 @@ $parent = $this->getVariable('parent');
                     ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>>
             <option value=""><?php echo $this->translate(isset($item['empty_string']) ? $item['empty_string'] : 'Please Select') ?></option>
         </select>
-        <input type="text" name="<?php echo $key ?>" id="<?php echo $id ?>-text"<?php if (isset($item['value'])): ?> value="<?php echo $item['value'] ?>"<?php
+        <input type="text" name="<?php echo $key ?>" pattern="^\D" id="<?php echo $id ?>-text"<?php if (isset($item['value'])): ?> value="<?php echo $item['value'] ?>"<?php
         endif;
         if (!isset($item['attrs']['class'])):
             ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php

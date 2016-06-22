@@ -231,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `core_config` (
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_CONFIG_STORE_ID (`store_id`),
     INDEX IDX_CORE_CONFIG_MERCHANT_ID (`merchant_id`),
+    CONSTRAINT CHK_CORE_CONFIG_MERCHANT_ID_STORE_ID CHECK ((`merchant_id` IS NOT NULL AND `store_id` IS NULL) OR (`store_id` IS NOT NULL)),
     CONSTRAINT UNQ_CORE_CONFIG_MERCHANT_ID_STORE_ID_PATH UNIQUE (`merchant_id`,`store_id`,`path`),
     CONSTRAINT FK_CORE_CONFIG_MERCHANT_ID_CORE_MARCHANT_ID FOREIGN KEY (`merchant_id`) REFERENCES `core_merchant`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CORE_CONFIG_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -715,13 +716,25 @@ CREATE TABLE IF NOT EXISTS `eav_value_text` (
 CREATE TRIGGER `TGR_UPDATE_EAV_VALUE_TEXT` BEFORE UPDATE ON `eav_value_text` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 INSERT INTO `eav_entity_type` VALUES (1, 'customer', 'customer_entity', 'customer_value', 0, CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_set` VALUES (NULL, 1, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 1, 'General', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_set` VALUES (1, 1, 'Default', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (1, 1, 'General', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute` VALUES 
+(1,1,'username','varchar','text','',1,'',1,1,1,1,1,NULL,NULL),
+(2,1,'password','varchar','password','',1,'',0,0,0,0,0,NULL,NULL),
+(3,1,'email','varchar','email','',1,'',1,1,1,1,1,NULL,NULL);
+INSERT INTO `eav_entity_attribute` VALUES 
+(1, 1, 1, 0),
+(1, 1, 2, 0),
+(1, 1, 3, 0);
+INSERT INTO `eav_attribute_label` VALUES
+(1, 1, 'Username'),
+(2, 1, 'Password'),
+(3, 1, 'Email');
 
 CREATE TABLE IF NOT EXISTS `customer_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Customer ID',
     `type_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV attribute set ID',
+    `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
     `language_id` INTEGER NOT NULL COMMENT 'Language ID',
     `increment_id` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Entity increment ID',
@@ -975,13 +988,41 @@ CREATE TRIGGER `TGR_UPDATE_API_SOAP_USER` BEFORE UPDATE ON `api_soap_user` FOR E
 INSERT INTO `eav_entity_type` VALUES (2, 'address', 'address_entity', 'address_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 2, 'Default', CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute` VALUES 
+(4,2,'name','varchar','text','',1,'',0,0,0,0,0,NULL,NULL),
+(5,2,'country','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
+(6,2,'region','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
+(7,2,'city','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
+(8,2,'county','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
+(9,2,'address','text','text','',1,'',0,0,0,0,0,NULL,NULL),
+(10,2,'tel','varchar','tel','',1,'',0,0,0,0,0,NULL,NULL),
+(11,2,'email','varchar','email','',0,'',0,0,0,0,0,NULL,NULL);
+INSERT INTO `eav_entity_attribute` VALUES 
+(2, 2, 4, 0),
+(2, 2, 5, 0),
+(2, 2, 6, 0),
+(2, 2, 7, 0),
+(2, 2, 8, 0),
+(2, 2, 9, 0),
+(2, 2, 10, 0),
+(2, 2, 11, 0);
+INSERT INTO `eav_attribute_label` VALUES
+(4, 1, 'Name'),
+(5, 1, 'Country'),
+(6, 1, 'Region'),
+(7, 1, 'City'),
+(8, 1, 'County'),
+(9, 1, 'Address'),
+(10, 1, 'Telephone'),
+(11, 1, 'Email');
 
 CREATE TABLE IF NOT EXISTS `address_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Address ID',
-    `type_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER NOT NULL DEFAULT 1 COMMENT 'EAV attribute set ID',
+    `type_id` INTEGER NOT NULL DEFAULT 2 COMMENT 'EAV entity type ID',
+    `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
     `customer_id` INTEGER NULL COMMENT 'Customer ID',
+    `is_default` BOOLEAN DEFAULT 0 COMMENT 'Is default address',
     `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
@@ -1101,7 +1142,7 @@ INSERT INTO `product_type` VALUES (NULL,'simple','Simple Product'),(NULL,'virtua
 
 CREATE TABLE IF NOT EXISTS `product_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product ID',
-    `type_id` INTEGER NOT NULL COMMENT 'EAV entity type ID',
+    `type_id` INTEGER NOT NULL DEFAULT 3 COMMENT 'EAV entity type ID',
     `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `sku` VARCHAR(255) NOT NULL COMMENT 'Stock keeping unit',
     `product_type_id` INTEGER NOT NULL COMMENT 'Product type',
@@ -1336,7 +1377,7 @@ INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'General', CURRENT_TIMESTAMP,
 
 CREATE TABLE IF NOT EXISTS `category_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `type_id` INTEGER NOT NULL COMMENT 'EAV entity type ID',
+    `type_id` INTEGER NOT NULL DEFAULT 4 COMMENT 'EAV entity type ID',
     `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent entity ID',
     `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',

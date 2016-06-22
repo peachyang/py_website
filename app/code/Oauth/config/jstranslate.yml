@@ -1,0 +1,10 @@
+---
+admin_oauth_consumer_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_oauth_consumer_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_oauth_token_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

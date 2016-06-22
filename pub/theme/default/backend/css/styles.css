@@ -1,7 +1,8 @@
-html{height:100%;font:16px/1.25 "Microsoft Yahei",SimHei,"WenQuanYi Zen Hei",STHeiti,sans-serif}
+html{height:100%;font:16px/1.25 "Microsoft Yahei",SimHei,STHeiti,sans-serif}
 [lang|=en]{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
 body{height:100%;position:relative}
 *,*:before,*:after{box-sizing:border-box}
+[hidden],.hidden,template{display:none!important}
 a{color:inherit;text-decoration:none}
 a:focus,a:hover{text-decoration:underline}
 h1,h2,h3,h4,h5,h6{margin:0;font-weight:normal}
@@ -130,7 +131,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
 .btn:focus{outline:none}
 .btn-submit,.btn-reset,.btn-delete,.btn-theme{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
-.btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus,.btn-theme:hover,.btn-theme:focus{background:#028ccc}
+.btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus,.btn-theme:hover,.btn-theme:focus{background:#028ccc;text-decoration:none}
 .admin-login{background:#9c9d9d}
 .admin-login .page-title{font-size:18px;line-height:126px;text-indent:45px;text-indent:2.8125rem;color:#000}
 .admin-login .page-title [lang|=en]{font-size:27px}
@@ -216,6 +217,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table{font-size:12px;padding:20px}
 .admin .grid .table-striped>tbody>tr:nth-child(even){background-color:#f3fbfe}
 .admin .grid .table tbody .control-label{display:none}
+.admin .grid .table [data-href]{cursor:pointer}
 .admin .grid .table tfoot{color:#02a0e9}
 .admin .grid .table tfoot .mess-action a{margin-right:4px}
 .admin .grid .table tfoot .pager{display:inline}
@@ -243,7 +245,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
-.admin .edit .buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
+.admin .edit .page-content~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
 .admin .resourceimagea{min-width:105px; min-height:115px; border:2px dotted #ddd; border-radius:5px;-moz-border-radius:5px; margin: 5px;display:inline-block;vertical-align:middle; text-align:center; padding:0;}
 .admin .resourceimagea img{max-height:100px; max-width:100px;}
 .admin .resourceimagea i{margin:5px;}
@@ -265,9 +267,19 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard .chart .filter select,.admin .dashboard .chart .filter .date{background:#fff;border:1px solid #ccc;height:26px;font-size:12px;line-height:1;padding:3px 6px;margin:2px 0}
 .admin .dashboard .chart .filter .btn{float:right;border:none;border-radius:3px;background:#00BA35;color:#fff;padding:0 18px;font-size:12px;line-height:30px;vertical-align:top}
 .admin .dashboard .chart #filter~*{display:none}
+.admin .dashboard .event{margin-top:30px;border:1px solid #ccc}
+.admin .dashboard .event .title{border-bottom:1px solid #ccc;padding:5px 20px}
+.admin .dashboard .event .content{padding:20px}
+.admin .dashboard .event .time:before{content:'['}
+.admin .dashboard .event .time:after{content:'] '}
+.admin #address-book>.btn{display:block;margin:0 15px 10px;padding:0}
+.admin #address-book .address-book{display:inline-block;padding:0 15px 10px;margin-right:20px;border:1px solid transparent}
+.admin #address-book .address-book.active{border-color:#666}
+.admin #address-book .address-book .buttons-set{text-align:right;visibility:hidden;margin-bottom:5px}
+.admin #address-book .address-book:hover{box-shadow:0 0 7px #666}
+.admin #address-book .address-book:hover .buttons-set{visibility:visible}
 .admin>.footer{position:fixed;bottom:10px;left:0;width:51px;filter:alpha(Opacity=0);opacity:0;z-index:9;overflow:hidden;pointer-events:none}
 .admin>.footer .copyright{width:100%;color:#7c7c7c;font-size:10px;line-height:1.929;white-space:nowrap;padding-left:9px}
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}
 .admin .nav-container.active~.footer{opacity:1;width:180px;transition:opacity .6s .6s}
 @media (max-height:480px){.admin>.footer{display:none}}
-

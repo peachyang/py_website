@@ -36,6 +36,11 @@ final class Cache implements ArrayAccess, Singleton
     private $unhitPrefix = [];
 
     /**
+     * @var array
+     */
+    private $persistentPrefix = [];
+
+    /**
      * @param array|Container $config
      * @throws \UnexpectedValueException
      */
@@ -50,6 +55,9 @@ final class Cache implements ArrayAccess, Singleton
             $config = isset($adapterObject['cache']) ? $adapterObject['cache'] : [];
         }
         $this->pool = Factory::getCachePool($config);
+        if (isset($config['persistent'])) {
+            $this->persistentPrefix = (array) $config['persistent'];
+        }
     }
 
     /**
@@ -97,6 +105,9 @@ final class Cache implements ArrayAccess, Singleton
     public function delete($id, $prefix = '')
     {
         if ($prefix) {
+            if (in_array($prefix, $this->persistentPrefix)) {
+                return false;
+            }
             $list = $this->pool->fetch('CACHE_LIST_' . $prefix);
             if ($list) {
                 $list = unserialize(gzdecode($list));

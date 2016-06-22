@@ -1,0 +1,37 @@
+---
+admin_customer_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_group_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_group_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_level_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_level_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_attribute_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_attribute_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_attribute_set_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_customer_attribute_set_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_address_attribute_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_address_attribute_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

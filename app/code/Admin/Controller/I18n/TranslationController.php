@@ -29,7 +29,7 @@ class TranslationController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\I18n\\Model\\Translation', ':ADMIN/i18n_translation/', ['locale','string']);
+        return $this->doSave('\\Seahinet\\I18n\\Model\\Translation', ':ADMIN/i18n_translation/', ['locale', 'string']);
     }
 
     public function deleteAction()

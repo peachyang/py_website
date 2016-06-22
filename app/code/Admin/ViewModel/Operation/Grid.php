@@ -7,13 +7,14 @@ use Seahinet\Admin\Model\Collection\Operation as Collection;
 
 class Grid extends PGrid
 {
+
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
 
     public function getEditAction($item)
     {
-        if($item['is_system']){
+        if ($item['is_system']) {
             return '';
         }
         return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
@@ -23,7 +24,7 @@ class Grid extends PGrid
 
     public function getDeleteAction($item)
     {
-        if($item['is_system']){
+        if ($item['is_system']) {
             return '';
         }
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .

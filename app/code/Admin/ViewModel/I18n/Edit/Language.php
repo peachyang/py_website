@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\I18n\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Model\Collection\Language as Collection;
 use Seahinet\Lib\Source\Merchant;
 use Seahinet\I18n\Source\Locale;
 
@@ -18,7 +19,11 @@ class Language extends PEdit
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('i18n_language/delete/');
+            $collection = new Collection;
+            $collection->columns(['id'])
+                    ->where(['merchant_id' => $model->offsetGet('merchant_id')])
+                    ->where('id <> ' . $model->getId());
+            return $collection->count() ? $this->getAdminUrl('i18n_language/delete/') : false;
         }
         return false;
     }

@@ -59,18 +59,18 @@ class Consumer extends PEdit
             ],
             'key' => [
                 'type' => 'text',
-                'label' => 'Username',
+                'label' => 'Client Key',
                 'required' => 'required',
-                'attr' => [
+                'attrs' => [
                     'readonly' => 'readonly'
                 ],
                 'value' => $key
             ],
             'secret' => [
                 'type' => 'text',
-                'label' => 'Password',
+                'label' => 'Client Secret',
                 'required' => 'required',
-                'attr' => [
+                'attrs' => [
                     'readonly' => 'readonly'
                 ],
                 'value' => $secret

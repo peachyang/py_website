@@ -51,10 +51,10 @@ class Consumer extends PGrid
                 'label' => 'Name'
             ],
             'key' => [
-                'label' => 'Username'
+                'label' => 'Client Key'
             ],
             'secret' => [
-                'label' => 'Password'
+                'label' => 'Client Secret'
             ],
             'callback_url' => [
                 'label' => 'Callback Url',

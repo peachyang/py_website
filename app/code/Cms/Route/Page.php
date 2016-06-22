@@ -4,6 +4,7 @@ namespace Seahinet\Cms\Route;
 
 use Seahinet\Cms\Model\Collection\Page as Collection;
 use Seahinet\Cms\Model;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Route\Route;
 use Seahinet\Lib\Route\RouteMatch;
@@ -14,7 +15,7 @@ class Page extends Route
     public function match(Request $request)
     {
         $path = trim($request->getUri()->getPath(), '/');
-        $languageId = \Seahinet\Lib\Bootstrap::getLanguage()->getId();
+        $languageId = Bootstrap::getLanguage()->getId();
         $collection = new Collection;
         $collection->join('cms_page_language', 'cms_page.id=cms_page_language.page_id', ['page_id'], 'left');
         if ($path === '') {

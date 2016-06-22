@@ -29,7 +29,7 @@ class Attribute extends AbstractModel
                 $select->where(['language_id' => $languageId]);
             }
             $result = $tableGateway->selectWith($select)->toArray();
-            $options = ['order' => []];
+            $options = $language ? [] : ['order' => []];
             foreach ($result as $item) {
                 if ($language === false) {
                     if (!isset($options[$item['id']])) {
@@ -43,7 +43,7 @@ class Attribute extends AbstractModel
             }
             return $options;
         }
-        return ['order' => []];
+        return $language ? [] : ['order' => []];
     }
 
     public function getLabel($language = false)

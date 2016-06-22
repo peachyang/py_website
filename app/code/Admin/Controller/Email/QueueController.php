@@ -20,7 +20,7 @@ class QueueController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, $data['rcpt'] ? ['template_id','emails', 'datetime'] : ['template_id','datetime']);
+            $result = $this->validateForm($data, $data['rcpt'] ? ['template_id', 'emails', 'datetime'] : ['template_id', 'datetime']);
             if (!$result['error']) {
                 try {
                     if ($data['rcpt']) {
@@ -38,7 +38,7 @@ class QueueController extends AuthActionController
                             'template_id' => $data['template_id'],
                             'from' => $from,
                             'to' => $email,
-                            'scheduled_at' => date('Y-m-d h:i:s',strtotime($data['datetime']))
+                            'scheduled_at' => date('Y-m-d h:i:s', strtotime($data['datetime']))
                         ])->save();
                     }
                     $result['message'][] = ['message' => $this->translate('Scheduled successfully.'), 'level' => 'success'];

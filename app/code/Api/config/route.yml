@@ -1,0 +1,5 @@
+---
+api:
+    method: [GET,PUT,DELETE]
+    route: /api/{controller}/[{action}[/]]
+    namespace: Seahinet\Api\Controller

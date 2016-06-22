@@ -1,7 +1,7 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
-$id = preg_replace('/\W+/', '-', $key);
+$id = trim(preg_replace('/\W+/', '-', $key),'-');
 $parent = $this->getVariable('parent');
 ?>
 <div class="input-box">
@@ -18,7 +18,7 @@ $parent = $this->getVariable('parent');
                        if (isset($item['class'])) {
                            echo $item['class'];
                        }
-                       ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && $value == $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
+                       ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && (string) $value === $item['value']): ?> checked="checked"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
             <label for="<?php echo $id, '-', $value ?>"><?php echo $label ?></label>
         <?php endforeach ?>
         <?php if (isset($item['comment'])): ?>

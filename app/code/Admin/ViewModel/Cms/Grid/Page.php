@@ -90,5 +90,5 @@ class Page extends PGrid
         }
         return parent::prepareCollection($collection);
     }
-    
+
 }

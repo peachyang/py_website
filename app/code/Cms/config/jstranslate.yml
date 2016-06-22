@@ -1,0 +1,19 @@
+---
+admin_cms_page_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_cms_page_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_cms_block_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_cms_block_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_cms_category_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_cms_category_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

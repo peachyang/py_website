@@ -1,0 +1,7 @@
+---
+admin_message_template_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_message_template_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

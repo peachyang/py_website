@@ -2,8 +2,9 @@
 
 namespace Seahinet\Lib\Model;
 
+use Exception;
 use Seahinet\Lib\Model\Collection;
-use Zend\Db\Sql\Predicate\Operator;
+use Zend\Db\Sql\Where;
 
 class Merchant extends AbstractModel
 {
@@ -37,21 +38,47 @@ class Merchant extends AbstractModel
         return count($lang) ? new Language($lang[0]) : null;
     }
 
+    protected function beforeSave()
+    {
+        $this->beginTransaction();
+        parent::beforeSave();
+    }
+
     protected function afterSave()
     {
         if ($this->storage['is_default']) {
-            $collection = new Collection\Merchant;
-            $collection->where(['is_default' => 1])
-                    ->where(new Operator('id', Operator::OPERATOR_NOT_EQUAL_TO, $this->getId()));
-            foreach ($collection as $item) {
-                $model = new static;
-                $model->setData([
-                    'id' => $item['id'],
-                    'is_default' => 0
-                ])->save();
-            }
+            $where = new Where;
+            $where->equalTo('is_default', 1)
+                    ->equalTo('id', $this->getId());
+            $this->update(['is_default' => 0], $where);
         }
         parent::afterSave();
+        $this->commit();
+    }
+
+    protected function beforeRemove()
+    {
+        $this->beginTransaction();
+        $this->load($this->getId());
+        if ($this->storage['is_default']) {
+            $select = $this->tableGateway->getSql()->select();
+            $select->columns(['id'])->limit(1)
+            ->where->notEqualTo('id', $this->getId());
+            $result = $this->tableGateway->selectWith($select)->toArray();
+            if (count($result)) {
+                $this->update(['is_default' => 1], ['id' => $result[0]['id']]);
+            } else {
+                $this->rollback();
+                throw new Exception('There must be one merchant record at least.');
+            }
+        }
+        parent::beforeRemove();
+    }
+
+    protected function afterRemove()
+    {
+        parent::afterRemove();
+        $this->commit();
     }
 
 }

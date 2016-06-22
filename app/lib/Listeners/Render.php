@@ -21,8 +21,15 @@ class Render implements ListenerInterface
                 $response = $this->getContainer()->get('response');
                 $response->getBody()->write($data);
             } else if (is_array($response)) {
+                $callback = $this->getContainer()->get('request')->getQuery('callback');
                 $response = $this->getContainer()->get('response');
-                $response->withHeader('Content-Type', 'application/json; charset=UTF-8')->getBody()->write(json_encode($data));
+                if ($callback) {
+                    $response->withHeader('Content-Type', 'application/javascript; charset=UTF-8')
+                            ->getBody()->write($callback . '(' . json_encode($data) . ');');
+                } else {
+                    $response->withHeader('Content-Type', 'application/json; charset=UTF-8')
+                            ->getBody()->write(json_encode($data));
+                }
             }
         } else if ($response instanceof AbstractViewModel) {
             $rendered = $response->render();

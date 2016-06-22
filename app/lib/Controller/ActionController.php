@@ -7,7 +7,7 @@ use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Session\Segment;
 
 /**
- * Controller for normal pages
+ * Controller for normal request
  */
 abstract class ActionController extends AbstractController
 {

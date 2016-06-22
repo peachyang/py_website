@@ -1,4 +1,12 @@
 ---
+oauth_login:
+    update: default
+    root:
+        children:
+            content:
+                children:
+                    form:
+                        type: Seahinet\Oauth\ViewModel\Login
 admin_oauth_consumer_list:
     update: grid
     root:
@@ -54,4 +62,3 @@ admin_oauth_token_list:
                                 params: [{link:':ADMIN/api_oauth_token/',label:'Authorized OAuth Tokens'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Api\Grid\Token
-    

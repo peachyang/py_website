@@ -60,7 +60,6 @@ class Attribute extends PGrid
                     'int' => 'Integer',
                     'decimal' => 'Decimal',
                     'text' => 'Text',
-                    'blob' => 'Binary',
                     'datetime' => 'Date/Time'
                 ]
             ],

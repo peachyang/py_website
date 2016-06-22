@@ -9,7 +9,7 @@ class Item extends ArrayObject
 
     public function __construct($input = [])
     {
-        $this->fromArray($input);
+        $this->storage = $input;
     }
     
     public function getName($locale = null)

@@ -1,0 +1,11 @@
+---
+permissions:
+    children:
+        -
+            link: api_oauth_consumer/
+            title: REST - OAuth Consumer
+            priority: 75
+        -
+            link: api_oauth_token/
+            title: REST - OAuth Authorized Token
+            priority: 76

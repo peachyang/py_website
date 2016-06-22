@@ -1,0 +1,5 @@
+---
+oauth:
+    method: [GET,POST]
+    route: /oauth/auth/[{action}[/]]
+    controller: Seahinet\Oauth\Controller\AuthController

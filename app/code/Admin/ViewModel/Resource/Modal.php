@@ -19,9 +19,9 @@ class Modal extends AbstractViewModel
     {
         $segment = new Segment('admin');
         $store = $segment->get('user')->getStore();
-        if($store){
+        if ($store) {
             return $store->getId();
-        }else{
+        } else {
             return (new Store)->getSourceArray();
         }
     }

@@ -174,7 +174,9 @@ abstract class Entity extends AbstractModel
                 $attributes = $this->prepareAttributes();
                 $tableGateway = $this->getTableGateway($this->getEntityTable());
                 if ($isUpdate) {
-                    $tableGateway->update($columns, ['id' => $this->getId()]);
+                    if ($columns) {
+                        $tableGateway->update($columns, ['id' => $this->getId()]);
+                    }
                 } else {
                     $tableGateway->insert($columns);
                     $this->setId($tableGateway->getLastInsertValue());
@@ -219,7 +221,7 @@ abstract class Entity extends AbstractModel
                 }
                 foreach ($languages as $language) {
                     if ($isUpdate) {
-                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + isset($index[$language['id']]) ? $index[$language['id']] : [], [$this->primaryKey => $this->getId()]);
+                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []), [$this->primaryKey => $this->getId()]);
                     } else {
                         $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));
                     }

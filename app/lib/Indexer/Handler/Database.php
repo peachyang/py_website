@@ -50,14 +50,13 @@ class Database extends AbstractHandler
             $ddl->addColumn(new Ddl\Column\Integer('id', false, 0))
                     ->addColumn(new Ddl\Column\Integer('attribute_set_id', false, 0))
                     ->addColumn(new Ddl\Column\Integer('store_id', false, 0))
-                    ->addColumn(new Ddl\Column\Varchar('increment_id', 255, true, ''))
                     ->addColumn(new Ddl\Column\Boolean('status', true, 1))
                     ->addColumn(new Ddl\Column\Timestamp('created_at', true))
                     ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_' . strtoupper($entityTable) . '_ID', 'id', $entityTable, 'id', 'CASCADE', 'CASCADE'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'));
             foreach (array_diff($keys, [
-                'id', 'store_id', 'increment_id', 'status', 'created_at',
+                'id', 'store_id', 'status', 'created_at',
                 'updated_at', 'type_id', 'attribute_set_id', 'attr', 'type',
                 'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
                 'value_table_prefix', 'is_form'
@@ -74,8 +73,6 @@ class Database extends AbstractHandler
                         $column = new Ddl\Column\Timestamp($attr['attr'], true, $attr['default_value']);
                     } else if ($attr['type'] === 'decimal') {
                         $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, $attr['default_value']);
-                    } else if ($attr['type'] === 'blob') {
-                        $column = new Ddl\Column\Blob($attr['attr'], 65535, true, $attr['default_value']);
                     } else {
                         $column = new Ddl\Column\Text($attr['attr'], 65535, true, $attr['default_value']);
                     }

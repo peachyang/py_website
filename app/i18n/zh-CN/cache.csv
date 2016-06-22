@@ -3,6 +3,7 @@
 "DATA","数据缓存"
 "I18N","国际化"
 "LAYOUT_RENDERED","布局缓存"
+"OAUTH","OAuth"
 "RBAC_ROLE","权限结构"
 "ROUTE_CACHE","路由缓存"
 "STAT","统计数据"

@@ -88,7 +88,7 @@ class Category extends PGrid
             ]
         ];
     }
-    
+
     protected function prepareCollection($collection = null)
     {
         $user = (new Segment('admin'))->get('user');

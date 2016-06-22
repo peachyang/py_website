@@ -10,10 +10,37 @@ class Locate
 
     use \Seahinet\Lib\Traits\Container;
 
-    public function load($part, $id = '')
+    public function getLabel($part, $id = '')
     {
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . $id, 'I18N_');
+        if (!$result) {
+            $tableGateway = new TableGateway('i18n_' . $part, $this->getContainer()->get('dbAdapter'));
+            $select = $tableGateway->getSql()->select();
+            $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
+            if ($id) {
+                $select->where(['id' => $id]);
+            }
+            $resultSet = $tableGateway->selectWith($select)->toArray();
+            $result = [];
+            foreach ($resultSet as $item) {
+                if (isset($result[$item['id']])) {
+                    $result[$item['id']]['name'][$item['locale']] = $item['name'];
+                } else {
+                    $result[$item['id']] = new Locate\Item($item);
+                    $result[$item['id']]['name'] = [$item['locale'] => $item['name']];
+                    unset($result[$item['id']]['locale']);
+                }
+            }
+            $cache->save($part . $id, $result, 'I18N_');
+        }
+        return $result;
+    }
+
+    public function load($part, $id = '')
+    {
+        $cache = $this->getContainer()->get('cache');
+        $result = $cache->fetch($part . 'c' . $id, 'I18N_');
         if (!$result) {
             $tableGateway = new TableGateway('i18n_' . $part, $this->getContainer()->get('dbAdapter'));
             $select = $tableGateway->getSql()->select();
@@ -32,7 +59,7 @@ class Locate
                     unset($result[$item['id']]['locale']);
                 }
             }
-            $cache->save($part . $id, $result, 'I18N_');
+            $cache->save($part . 'c' . $id, $result, 'I18N_');
         }
         return $result;
     }

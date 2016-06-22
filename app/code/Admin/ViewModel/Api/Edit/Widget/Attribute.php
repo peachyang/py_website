@@ -1,0 +1,34 @@
+<?php
+
+namespace Seahinet\Admin\ViewModel\Api\Edit\Widget;
+
+use Seahinet\Api\Model\Collection\Rest\Attribute as PrivilegeCollection;
+use Seahinet\Lib\Bootstrap;
+use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
+
+class Attribute extends Template
+{
+
+    public function getAttributes()
+    {
+        $collection = new AttributeCollection;
+        $collection->withLabel(Bootstrap::getLanguage()->getId())
+                ->columns(['id'])
+                ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', ['entity_type' => 'code'], 'left')
+                ->order('eav_entity_type.code ASC, eav_attribute.id ASC');
+        return $collection;
+    }
+
+    public function getPrivileges()
+    {
+        $collection = new PrivilegeCollection;
+        $collection->where(['api_rest_attribute.role_id' => $this->getQuery('id')]);
+        $result = [];
+        foreach ($collection as $item) {
+            $result[$item['attribute_id']] = $item;
+        }
+        return $result;
+    }
+
+}

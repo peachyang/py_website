@@ -18,13 +18,13 @@ class IndexerController extends AuthActionController
         $code = $this->getRequest()->getQuery('id');
         $result = ['message' => [], 'error' => 0];
         if (!$code) {
-            $code = new Type;
+            $code = (new Type)->toArray();
         }
         $manager = $this->getContainer()->get('indexer');
         $count = 0;
         touch(BP . 'maintence');
         try {
-            foreach ($code as $indexer) {
+            foreach ((array) $code as $indexer) {
                 $manager->reindex(is_string($indexer) ? $indexer : $indexer['code']);
                 $count ++;
             }

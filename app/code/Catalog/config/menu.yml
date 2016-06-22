@@ -1,7 +1,7 @@
 ---
-product:
-    icon: sitemap
-    title: Product Management
+catalog:
+    icon: tags
+    title: Catalog
     priority: 15
     children:
         -
@@ -15,6 +15,6 @@ product:
 system:
     children:
         -
-            link: config/product/
-            title: Product Configuration
+            link: config/catalog/
+            title: Catalog Configuration
             priority: 45

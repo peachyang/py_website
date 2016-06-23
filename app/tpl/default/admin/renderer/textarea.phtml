@@ -1,7 +1,7 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
-$id = trim(preg_replace('/\W+/', '-', $key),'-');
+$id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
 ?>
 <div class="input-box">
@@ -17,7 +17,11 @@ $parent = $this->getVariable('parent');
                       if (isset($item['class'])) {
                           echo $item['class'];
                       }
-                      ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
+                      ?>"<?php endif ?> <?php
+                  if (isset($item['attrs'])) {
+                      echo $parent->getAttrs($item['attrs']);
+                  }
+                  ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
                   <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

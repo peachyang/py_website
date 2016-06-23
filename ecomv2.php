@@ -995,8 +995,9 @@ INSERT INTO `eav_attribute` VALUES
 (7,2,'city','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
 (8,2,'county','varchar','select','',1,'',0,0,0,0,0,NULL,NULL),
 (9,2,'address','text','text','',1,'',0,0,0,0,0,NULL,NULL),
-(10,2,'tel','varchar','tel','',1,'',0,0,0,0,0,NULL,NULL),
-(11,2,'email','varchar','email','',0,'',0,0,0,0,0,NULL,NULL);
+(10,2,'postcode','varchar','tel','',0,'',0,0,0,0,0,NULL,NULL),
+(11,2,'tel','varchar','tel','',1,'',0,0,0,0,0,NULL,NULL),
+(12,2,'email','varchar','email','',0,'',0,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (2, 2, 4, 0),
 (2, 2, 5, 0),
@@ -1005,7 +1006,8 @@ INSERT INTO `eav_entity_attribute` VALUES
 (2, 2, 8, 0),
 (2, 2, 9, 0),
 (2, 2, 10, 0),
-(2, 2, 11, 0);
+(2, 2, 11, 0),
+(2, 2, 12, 0);
 INSERT INTO `eav_attribute_label` VALUES
 (4, 1, 'Name'),
 (5, 1, 'Country'),
@@ -1013,8 +1015,9 @@ INSERT INTO `eav_attribute_label` VALUES
 (7, 1, 'City'),
 (8, 1, 'County'),
 (9, 1, 'Address'),
-(10, 1, 'Telephone'),
-(11, 1, 'Email');
+(10, 1, 'Postcode'),
+(11, 1, 'Telephone'),
+(12, 1, 'Email');
 
 CREATE TABLE IF NOT EXISTS `address_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Address ID',

@@ -11,18 +11,18 @@ $parent = $this->getVariable('parent');
         </label>
     <?php endif ?>
     <div class="cell">
-        <input type="tel" name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
+        <textarea name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
         if (!isset($item['attrs']['class'])):
-            ?> class="form-control digits<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                   if (isset($item['class'])) {
-                       echo $item['class'];
-                   }
-                   ?>"<?php endif ?> value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php
-               if (isset($item['attrs'])) {
-                   echo $parent->getAttrs($item['attrs']);
-               }
-               ?>/>
-               <?php if (isset($item['comment'])): ?>
+            ?> class="form-control htmleditor fullbar<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                      if (isset($item['class'])) {
+                          echo $item['class'];
+                      }
+                      ?>"<?php endif ?> <?php
+                  if (isset($item['attrs'])) {
+                      echo $parent->getAttrs($item['attrs']);
+                  }
+                  ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
+                  <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>
             </div>

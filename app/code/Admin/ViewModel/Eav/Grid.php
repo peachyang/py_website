@@ -12,7 +12,7 @@ use Seahinet\Lib\Source\Store;
 abstract class Grid extends PGrid
 {
 
-    protected function prepareColumns()
+    protected function prepareColumns($columns = [])
     {
         $attributes = new Attribute;
         $languageId = Bootstrap::getLanguage()->getId();
@@ -22,21 +22,23 @@ abstract class Grid extends PGrid
                 ->where(['eav_entity_type.code' => $collection::ENTITY_TYPE])
                 ->where('(filterable=1 OR sortable=1)');
         $user = (new Segment('admin'))->get('user');
-        $columns = [
-            'id' => [
-                'label' => 'ID',
-            ],
-            'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId(),
-                'use4sort' => false,
-                'use4filter' => false
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store'
-                    ])
-        ];
+        if (empty($columns)){
+            $columns = [
+                'id' => [
+                    'label' => 'ID',
+                ],
+                'store_id' => ($user->getStore() ? [
+                    'type' => 'hidden',
+                    'value' => $user->getStore()->getId(),
+                    'use4sort' => false,
+                    'use4filter' => false
+                        ] : [
+                    'type' => 'select',
+                    'options' => (new Store)->getSourceArray(),
+                    'label' => 'Store'
+                        ])
+            ];
+        }
         foreach ($attributes as $attribute) {
             $columns[$attribute['code']] = [
                 'label' => $attribute['label'],

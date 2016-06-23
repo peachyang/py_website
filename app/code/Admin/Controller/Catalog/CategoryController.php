@@ -1,36 +1,41 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Customer;
+namespace Seahinet\Admin\Controller\Catalog;
 
 use Exception;
-use Seahinet\Admin\ViewModel\Customer\Edit\Address;
-use Seahinet\Customer\Model\Customer as Model;
+use Seahinet\Catalog\Model\Category as Model;
+use Seahinet\Lib\Bootstrap;
+use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Session\Segment;
 
-class ManageController extends AuthActionController
+class CategoryController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_customer_list');
+        $root = $this->getLayout('admin_catalog_category_list');
         return $root;
     }
 
     public function editAction()
     {
         $query = $this->getRequest()->getQuery();
-        $root = $this->getLayout(!isset($query['id']) && !isset($query['attribute_set']) ? 'admin_customer_beforeedit' : 'admin_customer_edit');
+        $root = $this->getLayout('admin_catalog_category_edit');
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root->getChild('head')->setTitle('Edit Customer / Customer Management');
-            $root->getChild('tabs', true)->addTab('address-book', 'Address Book', 10)->addChild('address-book', (new Address)->setTemplate('admin/customer/addressList'));
-            $root->getChild('extra')->addChild('address-form', (new Address)->setTemplate('admin/customer/addressForm'));
+            $root->getChild('head')->setTitle('Edit Category / Category Management');
         } else {
-            $root->getChild('head')->setTitle('Add New Customer / Customer Management');
+            $model->setData('attribute_set_id', function() {
+                $set = new Set;
+                $set->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
+                        ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+                return $set->load()[0]['id'];
+            });
+            $root->getChild('head')->setTitle('Add New Category / Category Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
@@ -38,7 +43,7 @@ class ManageController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Customer\\Model\\Customer', ':ADMIN/customer_manage/');
+        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Category', ':ADMIN/catalog_category/');
     }
 
     public function saveAction()
@@ -48,27 +53,38 @@ class ManageController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
             $attributes->withSet()->where([
-                        'is_required' => 1,
-                        'attribute_set_id' => $data['attribute_set_id']
+                        'is_required' => 1
                     ])->columns(['code'])
-                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id AND eav_entity_type.id=eav_attribute_set.type_id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
-            $required = ['store_id', 'language_id', 'attribute_set_id'];
-            $attributes->walk(function ($attribute) use (&$required) {
+            $required = ['store_id'];
+            $setId = 0;
+            $attributes->walk(function ($attribute) use (&$required, &$setId) {
                 $required[] = $attribute['code'];
+                if (!$setId) {
+                    $setId = $attribute['attribute_set_id'];
+                }
             });
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
-                $model = new Model($data['language_id'], $data);
+                $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }
                 $type = new Type;
                 $type->load(Model::ENTITY_TYPE, 'code');
-                $model->setData('type_id', $type->getId());
+                $model->setData([
+                    'type_id' => $type->getId(),
+                    'attribute_set_id' => $setId
+                ]);
                 $user = (new Segment('admin'))->get('user');
                 if ($user->getStore()) {
                     $model->setData('store_id', $user->getStore()->getId());
+                }
+                if (empty($data['parent_id'])) {
+                    $model->setData('parent_id', null);
+                } else if (empty($data['uri_key'])) {
+                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', $data['name']))), '-');
                 }
                 try {
                     $model->save();
@@ -80,7 +96,7 @@ class ManageController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/customer_manage/');
+        return $this->response($result, ':ADMIN/catalog_category/');
     }
 
 }

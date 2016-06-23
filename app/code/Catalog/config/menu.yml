@@ -5,11 +5,11 @@ catalog:
     priority: 15
     children:
         -
-            link: product_manage/
+            link: catalog_product/
             title: Product Management
             priority: 0
         -
-            link: category_manage/
+            link: catalog_category/
             title: Category Management
             priority: 10
 system:

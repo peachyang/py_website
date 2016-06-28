@@ -75,3 +75,79 @@ admin_rest_attribute_edit:
                             attribute:
                                 type: Seahinet\Admin\ViewModel\Api\Edit\Widget\Attribute
                                 template: admin/api/attribute
+admin_soap_user_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: SOAP User
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_user/',label:'SOAP User'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/api_soap_user/edit/',label:'Add New SOAP User'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Api\Grid\SoapUser
+                        
+admin_soap_user_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_user/',label:'SOAP User'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_user/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Api\Edit\SoapUser
+                        
+admin_soap_role_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: SOAP Role
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_role/',label:'SOAP Role'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/api_soap_role/edit/',label:'Add New SOAP Role'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Api\Grid\SoapRole
+admin_soap_role_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_role/',label:'SOAP Role'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/api_soap_role/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Api\Edit\SoapRole

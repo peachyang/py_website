@@ -4,12 +4,8 @@ namespace Seahinet\Admin\ViewModel\Api\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Api\Model\Collection\Soap\Role as Collection;
-/**
- * Description of SoapRole
- *
- * @author lenovo
- */
-class SoapRole extends Collection {
+
+class SoapRole extends PGrid {
     
     protected $editUrl = '';
     protected $deleteUrl = '';
@@ -37,7 +33,7 @@ class SoapRole extends Collection {
 
     public function getDeleteUrl() {
         if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':/ADMIN/api_soap_role/delete/');
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/api_soap_role/delete/');
         }
         return $this->deleteUrl;
     }

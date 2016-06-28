@@ -47,7 +47,7 @@ class SoapUser extends PGrid {
                 'label' => 'Email'
             ],
             'key' => [
-                'label' => 'Keyword'
+                'label' => 'Keywords'
             ]
         ];
     }

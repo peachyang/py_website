@@ -15,16 +15,6 @@ abstract class Edit extends PEdit
 
     protected $group = false;
     protected $tabs = null;
-    protected $hasUploadingFile = false;
-
-    public function hasUploadingFile($hasUploadingFile = null)
-    {
-        if (is_bool($hasUploadingFile)) {
-            $this->hasUploadingFile = $hasUploadingFile;
-            return $this;
-        }
-        return $this->hasUploadingFile;
-    }
 
     public function setGroup($group)
     {
@@ -110,6 +100,7 @@ abstract class Edit extends PEdit
                 $columns[$attribute['code']] = [
                     'label' => $attribute['label'],
                     'type' => $attribute['input'],
+                    'view_model' => $attribute['view_model'],
                     'class' => $attribute['validation']
                 ];
                 if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {

@@ -1,13 +1,12 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Customer\Grid\Attribute;
+namespace Seahinet\Admin\ViewModel\Catalog\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
-use Seahinet\Customer\Model\Address as Model;
-use Seahinet\Lib\Bootstrap;
+use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as Collection;
 
-class Address extends PGrid
+class Attribute extends PGrid
 {
 
     protected $editUrl = '';
@@ -33,7 +32,7 @@ class Address extends PGrid
     public function getEditUrl()
     {
         if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/edit/');
+            $this->editUrl = $this->getAdminUrl(':ADMIN/catalog_attribute/edit/');
         }
         return $this->editUrl;
     }
@@ -41,7 +40,7 @@ class Address extends PGrid
     public function getDeleteUrl()
     {
         if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/delete/');
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/catalog_attribute/delete/');
         }
         return $this->deleteUrl;
     }
@@ -53,9 +52,6 @@ class Address extends PGrid
                 'label' => 'Code',
                 'sortby' => 'eav_attribute:code'
             ],
-            'label' => [
-                'label' => 'Label'
-            ],
             'type' => [
                 'label' => 'Type',
                 'type' => 'select',
@@ -66,6 +62,38 @@ class Address extends PGrid
                     'text' => 'Text',
                     'datetime' => 'Date/Time'
                 ]
+            ],
+            'searchable' => [
+                'label' => 'Searchable',
+                'type' => 'select',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
+            ],
+            'filterable' => [
+                'label' => 'Filterable',
+                'type' => 'select',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
+            ],
+            'sortable' => [
+                'label' => 'Sortable',
+                'type' => 'select',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
+            ],
+            'comparable' => [
+                'label' => 'Comparable',
+                'type' => 'select',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
             ]
         ];
     }
@@ -73,9 +101,8 @@ class Address extends PGrid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->withLabel(Bootstrap::getLanguage()->getId())
-                ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+        $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+                ->where(['eav_entity_type.code' => Product::ENTITY_TYPE]);
         return parent::prepareCollection($collection);
     }
 

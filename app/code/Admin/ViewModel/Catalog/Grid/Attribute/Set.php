@@ -1,13 +1,12 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Customer\Grid\Attribute;
+namespace Seahinet\Admin\ViewModel\Catalog\Grid\Attribute;
 
-use Seahinet\Admin\ViewModel\Grid as PGrid;
-use Seahinet\Customer\Model\Address as Model;
-use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\Collection\Eav\Attribute as Collection;
+use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Catalog\Model\Product;
+use Seahinet\Lib\Model\Collection\Eav\Attribute\Set as Collection;
 
-class Address extends PGrid
+class Set extends Grid
 {
 
     protected $editUrl = '';
@@ -33,7 +32,7 @@ class Address extends PGrid
     public function getEditUrl()
     {
         if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/edit/');
+            $this->editUrl = $this->getAdminUrl(':ADMIN/catalog_attribute_set/edit/');
         }
         return $this->editUrl;
     }
@@ -41,7 +40,7 @@ class Address extends PGrid
     public function getDeleteUrl()
     {
         if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/delete/');
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/catalog_attribute_set/delete/');
         }
         return $this->deleteUrl;
     }
@@ -49,23 +48,8 @@ class Address extends PGrid
     protected function prepareColumns()
     {
         return [
-            'code' => [
-                'label' => 'Code',
-                'sortby' => 'eav_attribute:code'
-            ],
-            'label' => [
-                'label' => 'Label'
-            ],
-            'type' => [
-                'label' => 'Type',
-                'type' => 'select',
-                'options' => [
-                    'varchar' => 'Charector',
-                    'int' => 'Integer',
-                    'decimal' => 'Decimal',
-                    'text' => 'Text',
-                    'datetime' => 'Date/Time'
-                ]
+            'name' => [
+                'label' => 'Name'
             ]
         ];
     }
@@ -73,9 +57,8 @@ class Address extends PGrid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->withLabel(Bootstrap::getLanguage()->getId())
-                ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+        $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
+                ->where(['eav_entity_type.code' => Product::ENTITY_TYPE]);
         return parent::prepareCollection($collection);
     }
 

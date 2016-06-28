@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Customer\Edit\Attribute;
+namespace Seahinet\Admin\ViewModel\Eav;
 
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\ViewModel\Template;

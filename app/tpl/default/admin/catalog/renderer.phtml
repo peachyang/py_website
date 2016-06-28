@@ -4,6 +4,7 @@ $item = $this->getVariable('category');
 ?>
 <li data-id="<?php echo $item['id'] ?>">
     <input type="hidden" name="order[]" value="<?php echo (int) $item['parent_id'] ?>" />
+    <input type="hidden" name="id[]" value="<?php echo $item['id'] ?>" />
     <span class="title"><?php echo $item['name'] ?></span>
     <span class="action">
         <?php

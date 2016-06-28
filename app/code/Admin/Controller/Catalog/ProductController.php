@@ -2,34 +2,27 @@
 
 namespace Seahinet\Admin\Controller\Catalog;
 
-use Exception;
-use Seahinet\Catalog\Model\Category as Model;
-use Seahinet\Lib\Bootstrap;
+use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Lib\Model\Collection\Eav\Attribute;
-use Seahinet\Lib\Model\Eav\Type;
-use Seahinet\Lib\Session\Segment;
 
-class CategoryController extends AuthActionController
+class ProductController extends AuthActionController
 {
-
-    use \Seahinet\Lib\Traits\DB;
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_catalog_category_list');
+        $root = $this->getLayout('admin_catalog_product_list');
         return $root;
     }
 
     public function editAction()
     {
         $query = $this->getRequest()->getQuery();
-        $root = $this->getLayout('admin_catalog_category_edit');
+        $root = $this->getLayout(!isset($query['id']) && !isset($query['attribute_set']) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit');
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root->getChild('head')->setTitle('Edit Category / Category Management');
+            $root->getChild('head')->setTitle('Edit Product / Product Management');
         } else {
             $model->setData('attribute_set_id', function() {
                 $set = new Set;
@@ -37,34 +30,15 @@ class CategoryController extends AuthActionController
                         ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
                 return $set->load()[0]['id'];
             });
-            $root->getChild('head')->setTitle('Add New Category / Category Management');
+            $root->getChild('head')->setTitle('Add New Product / Product Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;
     }
 
-    public function orderAction()
-    {
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $languageId = Bootstrap::getLanguage()->getId();
-            $model = new Model($languageId);
-            $model->setTransaction(true);
-            $this->beginTransaction();
-            foreach ($data['id'] as $order => $id) {
-                $model = clone $model;
-                $model->load($id)->setData([
-                    'sort_order' => $order,
-                    'parent_id' => $data['order'][$order]? : null
-                ])->save();
-            }
-            $this->commit();
-        }
-    }
-
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Category', ':ADMIN/catalog_category/');
+        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Product', ':ADMIN/catalog_product/');
     }
 
     public function saveAction()
@@ -117,7 +91,7 @@ class CategoryController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/catalog_category/');
+        return $this->response($result, ':ADMIN/catalog_product/');
     }
 
 }

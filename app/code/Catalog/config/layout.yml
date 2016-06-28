@@ -40,11 +40,6 @@ admin_catalog_category_edit:
     update: edit
     root:
         children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Category Management
             content:
                 children:
                     breadcrumb:
@@ -64,3 +59,198 @@ admin_catalog_category_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
+admin_catalog_product_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Product Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product/edit/',label:'Add New Product'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
+admin_catalog_product_beforeedit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Catalog\BeforeEdit
+                        template: admin/eav/beforeEdit
+admin_catalog_product_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+admin_catalog_attribute_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Product Attribute / Catalog Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute/',label:'Product Attribute'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/catalog_attribute/edit/',label:'Add New Attribute'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Attribute
+admin_catalog_attribute_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/eav.js
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute/',label:'Product Attribute'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params: [label,'Label / Options']
+                                children:
+                                    label:
+                                        type: Seahinet\Admin\ViewModel\Eav\Label
+                                        template: admin/eav/label
+admin_catalog_attribute_set_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Product Attribute Set / Catalog Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Product Attribute Set'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/catalog_attribute_set/edit/',label:'Add New Attribute Set'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Attribute\Set
+admin_catalog_attribute_set_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/eav.js
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_manage/',label:'Catalog Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Catalog Attribute Set'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_attribute_set/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Set
+                        children:
+                            apply:
+                                type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Group
+                                template: admin/eav/set
+            extra:
+                children:
+                    new-group:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Group
+                        template: admin/eav/group

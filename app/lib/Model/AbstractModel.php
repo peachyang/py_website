@@ -31,6 +31,11 @@ abstract class AbstractModel extends ArrayObject
         $this->construct();
     }
 
+    public function __clone()
+    {
+        $this->isLoaded = false;
+    }
+    
     /**
      * Overwrite normal method instead of magic method
      */

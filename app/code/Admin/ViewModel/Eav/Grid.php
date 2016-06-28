@@ -22,7 +22,7 @@ abstract class Grid extends PGrid
                 ->where(['eav_entity_type.code' => $collection::ENTITY_TYPE])
                 ->where('(filterable=1 OR sortable=1)');
         $user = (new Segment('admin'))->get('user');
-        if (empty($columns)){
+        if (empty($columns)) {
             $columns = [
                 'id' => [
                     'label' => 'ID',
@@ -44,10 +44,13 @@ abstract class Grid extends PGrid
                 'label' => $attribute['label'],
                 'type' => $attribute['input'],
                 'class' => $attribute['validation'],
-                'options' => (new AttributeModel($attribute))->getOptions($languageId),
+                'view_model' => $attribute['view_model'],
                 'use4sort' => $attribute['sortable'],
                 'use4filter' => $attribute['filterable']
             ];
+            if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
+            }
         }
         $columns['status'] = [
             'type' => 'select',

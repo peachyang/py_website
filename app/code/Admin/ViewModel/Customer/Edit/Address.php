@@ -20,7 +20,8 @@ class Address extends AbstractViewModel
         if (empty($item['type'])) {
             return '';
         }
-        $box = new Template;
+        $class = empty($item['view_model']) ? '\\Seahinet\\Lib\\ViewModel\\Template' : $item['view_model'];
+        $box = new $class;
         $box->setVariables([
             'key' => $key,
             'item' => $item,

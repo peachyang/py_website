@@ -13,3 +13,5 @@ class Template extends AbstractViewModel
         if($config && isset($config[$handler])) {
             return $config[$handler];
         }
+    }
+}

@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Stdlib;
 
 use ArrayAccess;
 use ArrayIterator;
+use Closure;
 use Countable;
 use IteratorAggregate;
 use Serializable;
@@ -99,7 +100,7 @@ class ArrayObject implements ArrayAccess, Countable, Serializable, IteratorAggre
      */
     public function offsetSet($key, $value)
     {
-        $this->storage[$key] = $value;
+        $this->storage[$key] = $value instanceof Closure ? $value() : $value;
     }
 
     /**

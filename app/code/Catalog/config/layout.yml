@@ -1,0 +1,66 @@
+---
+admin_catalog_category_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/category.js
+                    -
+                        method: setTitle
+                        params: Category Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Category
+                            template: admin/catalog/category
+admin_catalog_category_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Category Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/catalog_category/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Category
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General

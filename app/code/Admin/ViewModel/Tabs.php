@@ -18,7 +18,14 @@ class Tabs extends AbstractViewModel
 
     public function getTabs()
     {
-        return $this->tabs;
+        uasort($this->tabs, function($a, $b) {
+            return $a['priority'] === $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+        });
+        $tab = [];
+        foreach ($this->tabs as $id => $item) {
+            $tab[$id] = $item['content'];
+        }
+        return $tab;
     }
 
     public function setTabs($tabs)
@@ -32,9 +39,10 @@ class Tabs extends AbstractViewModel
         return isset($this->tabs[$id]);
     }
 
-    public function addTab($id, $tab)
+    public function addTab($id, $tab, $priority = 0)
     {
-        return $this->tabs[$id] = $tab;
+        $this->tabs[$id] = ['content' => $tab, 'priority' => $priority];
+        return $this;
     }
 
     public function getMainTabLabel()

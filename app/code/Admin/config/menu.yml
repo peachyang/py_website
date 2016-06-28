@@ -1,6 +1,6 @@
 ---
 dashboard:
-    icon: tachometer
+    icon: line-chart
     link: dashboard/
     title: Dashboard
     priority: 0

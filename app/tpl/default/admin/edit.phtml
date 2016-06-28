@@ -1,28 +1,37 @@
 <?php
 $elements = $this->getVariable('elements');
-?>
-<div class="edit">
-    <h2 class="page-title"><?php echo $this->translate($this->getVariable('title')) ?></h2>
-    <form action="<?php echo $this->getSaveUrl() ?>" method="post">
-        <?php echo $this->getChild('tabs') ?>
-        <div class="page-content table tab-pane fade active in" id="main-tab">
-            <?php
+if ($this->hasTitle()):
+    ?>
+    <div class="edit">
+        <h2 class="page-title"><?php echo $this->translate($this->getVariable('title')) ?></h2>
+        <form action="<?php echo $this->getSaveUrl() ?>" method="post"<?php if ($this->hasUploadingFile()): ?> enctype="multipart/form-data"<?php endif ?>>
+            <?php echo $this->getChild('tabs') ?>
+            <div class="page-content table tab-pane fade active in" id="main-tab">
+                <?php
+            endif;
             foreach ($elements as $key => $item) {
                 echo $this->getInputBox($key, $item);
             }
-            ?>
-        </div>
-        <div class="buttons-set">
-            <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
-            <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
-            <?php if ($this->getDeleteUrl()): ?>
-                <a href="<?php echo $this->getDeleteUrl() ?>" class="btn btn-delete" data-method="delete" data-params="id=<?php echo $this->getVariable('model')->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>&success_url=<?php echo rawurlencode($this->getRequest()->getHeader('HTTP_REFERER')) ?>">
-                    <span><?php echo $this->translate('Delete') ?></span>
-                </a>
-                <?php
-            endif;
-            echo $this->getAdditionalButtons();
-            ?>
-        </div>
-    </form>
-</div>
+            if ($this->hasTitle()):
+                ?>
+            </div>
+            <div class="buttons-set">
+                <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
+                <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
+                <?php if ($this->getDeleteUrl()): ?>
+                    <a href="<?php echo $this->getDeleteUrl() ?>" class="btn btn-delete" data-method="delete" data-params="id=<?php echo $this->getVariable('model')->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>&success_url=<?php echo rawurlencode($this->getRequest()->getHeader('HTTP_REFERER')) ?>">
+                        <span><?php echo $this->translate('Delete') ?></span>
+                    </a>
+                    <?php
+                endif;
+                echo $this->getAdditionalButtons();
+                ?>
+            </div>
+        </form>
+    </div>
+    <?php
+
+
+
+
+ endif ?>

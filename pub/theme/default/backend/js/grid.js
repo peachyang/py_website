@@ -42,7 +42,7 @@
             if ($(t).find('.action').length) {
                 $(t).on('contextmenu', function (e) {
                     var m = $('<menu class="context"></menu>');
-                    $(this).find('.action').children('a').each(function () {
+                    $(this).children('.action').children('a').each(function () {
                         var oa = $('<a href="' + this.href + '">' + $(this).html() + '</a>');
                         if ($(this).is('[data-method]')) {
                             $(oa).attr('data-method', $(this).data('method'));

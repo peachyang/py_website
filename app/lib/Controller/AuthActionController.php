@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Controller;
 
 use Closure;
 use Exception;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Segment;
 
@@ -90,7 +91,11 @@ class AuthActionController extends ActionController
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
-                $model = new $modelName($data);
+                if (is_subclass_of($modelName, '\\Seahinet\\Lib\\Model\\Eav\\Entity')) {
+                    $model = new $modelName(isset($data['language_id']) ? $data['language_id'] : Bootstrap::getLanguage()->getId(), $data);
+                } else {
+                    $model = new $modelName($data);
+                }
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }

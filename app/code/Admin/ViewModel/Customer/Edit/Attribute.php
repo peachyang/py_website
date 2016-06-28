@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Source\Eav\Attribute\Input;
 
 class Attribute extends PEdit
 {
@@ -49,7 +50,6 @@ class Attribute extends PEdit
                     'int' => 'Integer',
                     'decimal' => 'Decimal',
                     'text' => 'Text',
-                    'blob' => 'Binary',
                     'datetime' => 'Date/Time'
                 ]
             ],
@@ -57,32 +57,7 @@ class Attribute extends PEdit
                 'label' => 'Input Widget',
                 'type' => 'select',
                 'required' => 'required',
-                'options' => [
-                    'Text' => [
-                        'text' => 'Text',
-                        'url' => 'Url',
-                        'tel' => 'Tel',
-                        'number' => 'Number',
-                        'email' => 'Email',
-                        'color' => 'Color',
-                        'password' => 'Password',
-                        'textarea' => 'Textarea',
-                    ],
-                    'File' => [
-                        'file' => 'File',
-                    ],
-                    'Select' => [
-                        'select' => 'Dropdown',
-                        'radio' => 'Radio',
-                        'checkbox' => 'CheckBox',
-                        'multiselect' => 'Multi-Select',
-                    ],
-                    'Date/Time' => [
-                        'date' => 'Date',
-                        'time' => 'Time',
-                        'datetime' => 'Date&amp;Time'
-                    ]
-                ],
+                'options' => (new Input)->getSourceArray(),
             ],
             'validation' => [
                 'label' => 'Validation',

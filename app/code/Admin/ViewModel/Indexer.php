@@ -13,8 +13,7 @@ class Indexer extends Grid
 
     public function getReindexAction($item)
     {
-        return '<a href="' . $this->getRebuildUrl() . '" data-method="delete" data-params="id=' . $item['code'] .
-                '" title="' . $this->translate('Rebuild') .
+        return '<a href="' . $this->getRebuildUrl() . '?id=' . $item['code'] . '" title="' . $this->translate('Rebuild') .
                 '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Rebuild') . '</span></a>';
     }

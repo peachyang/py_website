@@ -64,7 +64,6 @@ class Address extends PGrid
                     'int' => 'Integer',
                     'decimal' => 'Decimal',
                     'text' => 'Text',
-                    'blob' => 'Binary',
                     'datetime' => 'Date/Time'
                 ]
             ]

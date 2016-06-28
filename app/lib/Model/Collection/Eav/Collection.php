@@ -23,6 +23,11 @@ abstract class Collection extends AbstractCollection
         $this->init();
     }
 
+    protected function construct()
+    {
+        
+    }
+    
     protected function init($null = null)
     {
         $this->tableName = static::ENTITY_TYPE . '_' . $this->languageId . '_index';

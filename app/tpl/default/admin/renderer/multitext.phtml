@@ -22,7 +22,11 @@ $parent = $this->getVariable('parent');
                                if (isset($item['class'])) {
                                    echo $item['class'];
                                }
-                               ?>"<?php endif ?><?php if(isset($item['base'])): ?> data-base="{'<?php echo $item['base'] ?>':'<?php echo $id ?>'}"<?php endif ?> value="<?php echo isset($item['value'][$id]) ? $item['value'][$id] : '' ?>" <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>/>
+                               ?>"<?php endif ?><?php if (isset($item['base'])): ?> data-base="{'<?php echo $item['base'] ?>':'<?php echo $id ?>'}"<?php endif ?> value="<?php echo isset($item['value'][$id]) ? $item['value'][$id] : '' ?>" <?php
+                           if (isset($item['attrs'])) {
+                               echo $parent->getAttrs($item['attrs']);
+                           }
+                           ?>/>
                 </div>
             </div>
         <?php endforeach ?>

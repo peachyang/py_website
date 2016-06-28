@@ -9,9 +9,4 @@ class Customer extends Collection
 
     const ENTITY_TYPE = 'customer';
 
-    protected function construct()
-    {
-        $this->init('customer');
-    }
-
 }

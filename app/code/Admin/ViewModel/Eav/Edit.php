@@ -15,6 +15,16 @@ abstract class Edit extends PEdit
 
     protected $group = false;
     protected $tabs = null;
+    protected $hasUploadingFile = false;
+
+    public function hasUploadingFile($hasUploadingFile = null)
+    {
+        if (is_bool($hasUploadingFile)) {
+            $this->hasUploadingFile = $hasUploadingFile;
+            return $this;
+        }
+        return $this->hasUploadingFile;
+    }
 
     public function setGroup($group)
     {
@@ -43,7 +53,7 @@ abstract class Edit extends PEdit
                 ->where(['eav_entity_type.code' => $model::ENTITY_TYPE, 'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])]);
         if ($this->group) {
             $columns = [];
-            $attributes->where(['eav_attribute_group.name' => $this->group]);
+            $attributes->where(['eav_attribute_group.id' => $this->group]);
         } else if (empty($columns)) {
             $user = (new Segment('admin'))->get('user');
             $columns = [
@@ -93,19 +103,21 @@ abstract class Edit extends PEdit
         foreach ($attributes as $attribute) {
             if (!$this->group && !in_array($attribute['attribute_group_id'], $groups)) {
                 $this->getTabs()->addTab('attribute_group_' . $attribute['attribute_group_id'], $attribute['attribute_group']);
-                $this->addChild('attribute_group_' . $attribute['attribute_group_id'], (new static())->setGroup($attribute['attribute_group']));
+                $this->getTabs()->addChild('attribute_group_' . $attribute['attribute_group_id'], (new static)->setVariable('model', $model)->hasTitle(false)->setGroup($attribute['attribute_group_id']));
                 $groups[] = $attribute['attribute_group_id'];
             }
-            $columns[$attribute['code']] = [
-                'label' => $attribute['label'],
-                'type' => $attribute['input'],
-                'class' => $attribute['validation']
-            ];
-            if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
-                $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
-            }
-            if ($attribute['is_required']) {
-                $columns[$attribute['code']]['required'] = 'required';
+            if ($this->group && $attribute['attribute_group_id'] == $this->group) {
+                $columns[$attribute['code']] = [
+                    'label' => $attribute['label'],
+                    'type' => $attribute['input'],
+                    'class' => $attribute['validation']
+                ];
+                if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                    $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
+                }
+                if ($attribute['is_required']) {
+                    $columns[$attribute['code']]['required'] = 'required';
+                }
             }
         }
         return parent::prepareElements($columns);

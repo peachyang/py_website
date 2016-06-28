@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Customer\Grid;
 
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
+use Seahinet\Lib\Session\Segment;
 
 class Manage extends PGrid
 {

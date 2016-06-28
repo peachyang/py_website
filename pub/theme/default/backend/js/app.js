@@ -132,6 +132,65 @@
                 $(this).find('#sendmail-template_id').val($(e.relatedTarget).data('id'));
             }
         });
+        $('#modal-edit-address form').on('afterajax.seahinet', function (e, json) {
+            if (json.error == 0) {
+                var target = $('#address-book [data-id=' + json.data.id + ']');
+                if (target.length) {
+                    $('#address-book [data-id=' + json.data.id + '] .content').html(json.address);
+                    $('#address-book [data-id=' + json.data.id + '] [data-info]').attr('data-info', JSON.stringify(json.data));
+                } else if ($('#address-book .address-book').length) {
+                    $('#address-book').append(
+                            function () {
+                                var set = $('#address-book .address-book .buttons-set').first().clone(false);
+                                $(set).find('[data-params]').attr('data-params', function () {
+                                    return $(this).data('params').replace(/id=[^\&]+/, 'id=' + json.data.id);
+                                });
+                                $(set).find('[data-info]').attr('data-info', JSON.stringify(json.data));
+                                var odiv = document.createElement('div');
+                                $(odiv).attr({class: 'address-book', 'data-id': json.data.id})
+                                        .html('<div class="content">' + json.address + '</div>')
+                                        .prepend(set);
+                                return odiv;
+                            });
+                } else {
+                    location.reload();
+                }
+                if (json.data.is_default == 1) {
+                    $('#address-book .active').removeClass('active');
+                    $('#address-book [data-id=' + json.data.id + ']').addClass('active');
+                }
+            }
+        });
+        $('.modal').on({
+            'show.bs.modal': function (e) {
+                if ($(e.relatedTarget).is('[data-info]')) {
+                    var info = $(e.relatedTarget).data('info');
+                    if (typeof info === 'string') {
+                        info = eval('(' + info + ')');
+                    }
+                    $(this).find('form').trigger('reset');
+                    if (info.id) {
+                        for (var i in info) {
+                            var t = $(this).find('[name="' + i + '"]');
+                            if (t.length) {
+                                $(t).each(function () {
+                                    if ($(this).is('[type=radio],[type=checkbox]')) {
+                                        if ($(this).val() == info[i]) {
+                                            this.checked = true;
+                                        }
+                                    } else {
+                                        if ($(this).is('select')) {
+                                            $(this).attr('data-default-value', info[i]);
+                                        }
+                                        $(this).val(info[i]).trigger('change.seahinet');
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
         if ($('.message-box>.alert').length) {
             addMessages();
         }

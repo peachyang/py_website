@@ -10,7 +10,7 @@ class Locate
 
     use \Seahinet\Lib\Traits\Container;
 
-    public function getLabel($part, $id = '')
+    public function getLabel($part, $id = '', $pid = '')
     {
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . $id, 'I18N_');
@@ -20,6 +20,9 @@ class Locate
             $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
             if ($id) {
                 $select->where(['id' => $id]);
+            }
+            if ($pid) {
+                $select->where(['parent_id' => $pid]);
             }
             $resultSet = $tableGateway->selectWith($select)->toArray();
             $result = [];

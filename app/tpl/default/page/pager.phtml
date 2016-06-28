@@ -7,7 +7,7 @@ if ($this->getCollection()):
         $total = min($current * $limit, $this->getCount());
         echo $this->translate('Display %d - %d of %d record(s).', [min($total, ($current - 1) * $limit + 1), $total, $this->getCount()], 'pager');
     }
-    ?>
+  ?>
     <ol class="pager">
         <?php if ($current > 1): ?>
             <li class="first">

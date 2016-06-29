@@ -95,8 +95,13 @@
             if (v) {
                 var param = 'region=' + v;
                 o.loadData('region', param);
-                $(o.objects.city).html('');
-                $(o.objects.county).html('');
+            } else {
+                $(o.objects['region-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['region']).attr({hidden: 'hidden', disabled: 'disabled'});
+                $(o.objects['city-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['city']).attr({hidden: 'hidden', disabled: 'disabled'});
+                $(o.objects['county-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['county']).attr({hidden: 'hidden', disabled: 'disabled'});
             }
         });
         $(o.objects.region).on('change.seahinet', function () {
@@ -104,7 +109,11 @@
             if (v) {
                 var param = 'city=' + v;
                 o.loadData('city', param);
-                $(o.objects.county).html('');
+            } else {
+                $(o.objects['city-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['city']).attr({hidden: 'hidden', disabled: 'disabled'});
+                $(o.objects['county-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['county']).attr({hidden: 'hidden', disabled: 'disabled'});
             }
         });
         $(o.objects.city).on('change.seahinet', function () {
@@ -112,6 +121,9 @@
             if (v) {
                 var param = 'county=' + v;
                 o.loadData('county', param);
+            } else {
+                $(o.objects['county-text']).removeAttr('hidden').removeAttr('disabled');
+                $(o.objects['county']).attr({hidden: 'hidden', disabled: 'disabled'});
             }
         });
     };

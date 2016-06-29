@@ -9,9 +9,4 @@ class Address extends Collection
 
     const ENTITY_TYPE = 'address';
 
-    protected function construct()
-    {
-        $this->init('address');
-    }
-
 }

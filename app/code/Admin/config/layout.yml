@@ -78,6 +78,7 @@ admin:
             params: admin
         children:
             head:
+                template: admin/head
                 action:
                     -
                         method: addLink

@@ -27,7 +27,7 @@ class ManageController extends AuthActionController
         if (isset($query['id'])) {
             $model->load($query['id']);
             $root->getChild('head')->setTitle('Edit Customer / Customer Management');
-            $root->getChild('tabs',true)->addTab('address-book','Address Book',10)->addChild('address-book',(new Address)->setTemplate('admin/customer/addressList'));
+            $root->getChild('tabs', true)->addTab('address-book', 'Address Book', 10)->addChild('address-book', (new Address)->setTemplate('admin/customer/addressList'));
             $root->getChild('extra')->addChild('address-form', (new Address)->setTemplate('admin/customer/addressForm'));
         } else {
             $root->getChild('head')->setTitle('Add New Customer / Customer Management');

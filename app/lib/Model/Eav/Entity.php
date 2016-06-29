@@ -20,6 +20,7 @@ abstract class Entity extends AbstractModel
     protected $valueTablePrefix = '';
     protected $languageId = 0;
     protected $attributes = [];
+    protected $outerTransaction = true;
 
     public function __construct($languageId = 0, $input = array())
     {
@@ -168,7 +169,10 @@ abstract class Entity extends AbstractModel
         $isUpdate = !$insertForce && $this->getId();
         try {
             if ($isUpdate || $this->isNew) {
-                $this->beginTransaction();
+                if (!$this->transaction) {
+                    $this->beginTransaction();
+                    $this->outerTransaction = false;
+                }
                 $this->beforeSave();
                 $columns = $this->prepareColumns();
                 $attributes = $this->prepareAttributes();
@@ -227,7 +231,9 @@ abstract class Entity extends AbstractModel
                     }
                 }
                 $this->afterSave();
-                $this->commit();
+                if (!$this->outerTransaction) {
+                    $this->commit();
+                }
                 if ($isUpdate) {
                     $this->flushRow($this->languageId . '-' . $this->getId(), null, $this->getCacheKey());
                 }

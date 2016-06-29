@@ -43,7 +43,7 @@ abstract class Edit extends PEdit
                 ->where(['eav_entity_type.code' => $model::ENTITY_TYPE, 'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])]);
         if ($this->group) {
             $columns = [];
-            $attributes->where(['eav_attribute_group.name' => $this->group]);
+            $attributes->where(['eav_attribute_group.id' => $this->group]);
         } else if (empty($columns)) {
             $user = (new Segment('admin'))->get('user');
             $columns = [
@@ -93,13 +93,14 @@ abstract class Edit extends PEdit
         foreach ($attributes as $attribute) {
             if (!$this->group && !in_array($attribute['attribute_group_id'], $groups)) {
                 $this->getTabs()->addTab('attribute_group_' . $attribute['attribute_group_id'], $attribute['attribute_group']);
-                $this->getTabs()->addChild('attribute_group_' . $attribute['attribute_group_id'], (new static)->setVariable('model', $model)->hasTitle(false)->setGroup($attribute['attribute_group']));
+                $this->getTabs()->addChild('attribute_group_' . $attribute['attribute_group_id'], (new static)->setVariable('model', $model)->hasTitle(false)->setGroup($attribute['attribute_group_id']));
                 $groups[] = $attribute['attribute_group_id'];
             }
-            if ($this->group && $attribute['attribute_group'] == $this->group) {
+            if ($this->group && $attribute['attribute_group_id'] == $this->group) {
                 $columns[$attribute['code']] = [
                     'label' => $attribute['label'],
                     'type' => $attribute['input'],
+                    'view_model' => $attribute['view_model'],
                     'class' => $attribute['validation']
                 ];
                 if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {

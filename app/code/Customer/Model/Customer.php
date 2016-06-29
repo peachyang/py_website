@@ -2,7 +2,6 @@
 
 namespace Seahinet\Customer\Model;
 
-use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;

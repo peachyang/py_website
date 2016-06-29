@@ -3,16 +3,32 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\ViewModel\AbstractViewModel;
-use Seahinet\Lib\ViewModel\Template;
 
 class Edit extends AbstractViewModel
 {
 
     protected $hasTitle = true;
+    protected $hasUploadingFile = false;
 
     public function __construct()
     {
         $this->setTemplate('admin/edit');
+    }
+
+    /**
+     * Whether there is uploading file or not
+     * To change enctype attribute of form element
+     * 
+     * @param bool $hasUploadingFile
+     * @return Edit
+     */
+    public function hasUploadingFile($hasUploadingFile = null)
+    {
+        if (is_bool($hasUploadingFile)) {
+            $this->hasUploadingFile = $hasUploadingFile;
+            return $this;
+        }
+        return $this->hasUploadingFile;
     }
 
     /**
@@ -136,7 +152,8 @@ class Edit extends AbstractViewModel
         if (empty($item['type'])) {
             return '';
         }
-        $box = new Template;
+        $class = empty($item['view_model']) ? '\\Seahinet\\Lib\\ViewModel\\Template' : $item['view_model'];
+        $box = new $class;
         $box->setVariables([
             'key' => $key,
             'item' => $item,

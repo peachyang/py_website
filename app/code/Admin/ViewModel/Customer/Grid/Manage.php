@@ -47,13 +47,7 @@ class Manage extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        $segment = new Segment('admin');
-        $store = $segment->user->getStore();
-        if ($store) {
-            $collection->where(['store_id' => $store->getId()]);
-        }
-        return parent::prepareCollection($collection);
+        return parent::prepareCollection(new Collection);
     }
 
 }

@@ -60,9 +60,12 @@ $query = $this->getQuery();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->getVariable('collection')->toArray() as $item): ?>
-                <tr<?php if (!$this->getMessAction() && is_callable([$this, 'getRowLink'])): ?> data-href="<?php echo $this->getRowLink($item) ?>"<?php endif;if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                    <?php if ($this->getMessAction()): ?>
+            <?php foreach ($this->getVariable('collection') as $item): ?>
+                <tr<?php if (!$this->getMessAction() && is_callable([$this, 'getRowLink'])): ?> data-href="<?php echo $this->getRowLink($item) ?>"<?php
+                endif;
+                if (isset($item['id'])):
+                    ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                                                                                                    <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
                     <?php endif ?>
                     <?php foreach ($attributes as $attr => $name): ?>
@@ -112,7 +115,11 @@ $query = $this->getQuery();
                     </td>
                 <?php endif ?>
                 <td colspan="<?php echo $count + 1 ?>" class="text-right">
-                    <?php echo $this->getChild('pager')->setCollection($this->getVariable('collection')) ?>
+                    <?php
+                    if (is_object($this->getVariable('collection'))) {
+                        echo $this->getChild('pager')->setCollection($this->getVariable('collection'));
+                    }
+                    ?>
                 </td>
             </tr>
         </tfoot>

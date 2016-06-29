@@ -126,6 +126,15 @@ trait DB
     }
 
     /**
+     * @param bool $transaction
+     */
+    public function setTransaction($transaction)
+    {
+        $this->transaction = $transaction;
+        return $this;
+    }
+
+    /**
      * Begin transaction
      */
     protected function beginTransaction()

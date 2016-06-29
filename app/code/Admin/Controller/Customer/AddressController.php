@@ -25,15 +25,21 @@ class AddressController extends AuthActionController
         foreach ($collection as $item) {
             $required[] = $item['code'];
         }
-        return $this->doSave('\\Seahinet\\Customer\\Model\\Address', null, $required, function($model, $data) {
-                    $set = new Set;
-                    $set->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
-                            ->where(['eav_entity_type.code' => Address::ENTITY_TYPE]);
-                    $model->setData([
-                        'attribute_set_id' => $set->toArray()[0]['id'],
-                        'store_id' => Bootstrap::getStore()->getId()
-                    ]);
-                });
+        $response = $this->doSave('\\Seahinet\\Customer\\Model\\Address', null, $required, function($model, $data) {
+            $set = new Set;
+            $set->columns(['id', 'type_id'])
+                    ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
+                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE]);
+            $model->setData([
+                'type_id' => $set->toArray()[0]['type_id'],
+                'attribute_set_id' => $set->toArray()[0]['id'],
+                'store_id' => Bootstrap::getStore()->getId()
+            ]);
+        });
+        if (isset($response['data'])) {
+            $response['address'] = nl2br((new Address(Bootstrap::getLanguage()->getId(), $response['data']))->display(false));
+        }
+        return $response;
     }
 
 }

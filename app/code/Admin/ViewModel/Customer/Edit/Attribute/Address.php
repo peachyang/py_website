@@ -3,20 +3,21 @@
 namespace Seahinet\Admin\ViewModel\Customer\Edit\Attribute;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Source\Eav\Attribute\Input;
 
 class Address extends PEdit
 {
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('customer_address/save/');
+        return $this->getAdminUrl('customer_attribute_address/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('customer_address/delete/');
+            return $this->getAdminUrl('customer_attribute_address/delete/');
         }
         return false;
     }
@@ -56,32 +57,7 @@ class Address extends PEdit
                 'label' => 'Input Widget',
                 'type' => 'select',
                 'required' => 'required',
-                'options' => [
-                    'Text' => [
-                        'text' => 'Text',
-                        'url' => 'Url',
-                        'tel' => 'Tel',
-                        'number' => 'Number',
-                        'email' => 'Email',
-                        'color' => 'Color',
-                        'password' => 'Password',
-                        'textarea' => 'Textarea',
-                    ],
-                    'File' => [
-                        'file' => 'File',
-                    ],
-                    'Select' => [
-                        'select' => 'Dropdown',
-                        'radio' => 'Radio',
-                        'checkbox' => 'CheckBox',
-                        'multiselect' => 'Multi-Select',
-                    ],
-                    'Date/Time' => [
-                        'date' => 'Date',
-                        'time' => 'Time',
-                        'datetime' => 'Date&amp;Time'
-                    ]
-                ],
+                'options' => array_merge_recursive((new Input)->getSourceArray(), ['Select' => ['address' => 'Address']])
             ],
             'validation' => [
                 'label' => 'Validation',

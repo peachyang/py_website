@@ -20,7 +20,8 @@ class Address extends AbstractViewModel
         if (empty($item['type'])) {
             return '';
         }
-        $box = new Template;
+        $class = empty($item['view_model']) ? '\\Seahinet\\Lib\\ViewModel\\Template' : $item['view_model'];
+        $box = new $class;
         $box->setVariables([
             'key' => $key,
             'item' => $item,
@@ -81,6 +82,15 @@ class Address extends AbstractViewModel
                 }
             }
         }
+        $columns['is_default'] = [
+            'type' => 'radio',
+            'label' => 'As Default Address',
+            'required' => 'required',
+            'options' => [
+                1 => 'Yes',
+                0 => 'No'
+            ]
+        ];
         return $columns;
     }
 

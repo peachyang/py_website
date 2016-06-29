@@ -1,0 +1,28 @@
+---
+catalog:
+    icon: tags
+    title: Catalog Management
+    priority: 15
+    children:
+        -
+            link: catalog_product/
+            title: Product Management
+            priority: 0
+        -
+            link: catalog_category/
+            title: Category Management
+            priority: 10
+        -
+            link: catalog_attribute/
+            title: Attribute Management
+            priority: 20
+        -
+            link: catalog_attribute_set/
+            title: Attribute Set Management
+            priority: 25
+system:
+    children:
+        -
+            link: config/catalog/
+            title: Catalog Configuration
+            priority: 45

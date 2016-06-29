@@ -33,7 +33,7 @@ class Address extends PGrid
     public function getEditUrl()
     {
         if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_address/edit/');
+            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/edit/');
         }
         return $this->editUrl;
     }
@@ -41,7 +41,7 @@ class Address extends PGrid
     public function getDeleteUrl()
     {
         if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_address/delete/');
+            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_attribute_address/delete/');
         }
         return $this->deleteUrl;
     }

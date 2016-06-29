@@ -1,7 +1,7 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
-$id = trim(preg_replace('/\W+/', '-', $key),'-');
+$id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
 ?>
 <div class="input-box">
@@ -11,14 +11,18 @@ $parent = $this->getVariable('parent');
         </label>
     <?php endif ?>
     <div class="cell">
-        <select name="<?php echo $key ?>" multiple="multiple" id="<?php echo $id ?>"<?php if(isset($item['value'])): ?> data-default-value="<?php echo json_encode($item['value']) ?>"<?php
+        <select name="<?php echo $key ?>" multiple="multiple" id="<?php echo $id ?>"<?php if (!empty($item['value'])): ?> data-default-value="<?php echo json_encode($item['value']) ?>"<?php
         endif;
         if (!isset($item['attrs']['class'])):
             ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                     if (isset($item['class'])) {
                         echo $item['class'];
                     }
-                    ?>"<?php endif ?> <?php if (isset($item['attrs'])) echo $parent->getAttrs($item['attrs']) ?>>
+                    ?>"<?php endif ?> <?php
+                if (isset($item['attrs'])) {
+                    echo $parent->getAttrs($item['attrs']);
+                }
+                ?>>
                     <?php
                     foreach ($item['options'] as $value => $label):
                         if (is_array($label)):

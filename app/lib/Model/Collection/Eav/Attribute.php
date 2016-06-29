@@ -19,7 +19,7 @@ class Attribute extends AbstractCollection
     {
         $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
         $this->select->join('eav_attribute_label', 'eav_attribute.id=eav_attribute_label.attribute_id', ['label'], 'left')
-                ->where('(eav_attribute_label.language_id IS NULL OR eav_attribute_label.language_id=' . $languageId . ')');
+                ->where(['eav_attribute_label.language_id' => $languageId]);
         return $this;
     }
 

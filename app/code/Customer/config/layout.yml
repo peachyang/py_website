@@ -260,7 +260,7 @@ admin_customer_attribute_edit:
                                         params: [label,'Label / Options']
                                 children:
                                     label:
-                                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Label
+                                        type: Seahinet\Admin\ViewModel\Eav\Label
                                         template: admin/eav/label
 admin_customer_attribute_set_list:
     update: grid
@@ -394,5 +394,5 @@ admin_address_attribute_edit:
                                         params: [label,'Label / Options']
                                 children:
                                     label:
-                                        type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Label
+                                        type: Seahinet\Admin\ViewModel\Eav\Label
                                         template: admin/eav/label

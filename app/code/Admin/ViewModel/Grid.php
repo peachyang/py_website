@@ -4,7 +4,6 @@ namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\ViewModel\AbstractViewModel;
-use Seahinet\Lib\ViewModel\Template;
 use Zend\Db\Sql\Predicate\Like;
 
 class Grid extends AbstractViewModel
@@ -116,7 +115,7 @@ class Grid extends AbstractViewModel
     protected function prepareCollection($collection = null)
     {
         if (is_null($collection)) {
-            return null;
+            return [];
         }
         $condition = $this->getQuery();
         $limit = isset($condition['limit']) ? $condition['limit'] : 20;
@@ -194,7 +193,8 @@ class Grid extends AbstractViewModel
         if (empty($item['type'])) {
             return '';
         }
-        $box = new Template;
+        $class = empty($item['view_model']) ? '\\Seahinet\\Lib\\ViewModel\\Template' : $item['view_model'];
+        $box = new $class;
         $box->setVariables([
             'key' => $key,
             'item' => $item,

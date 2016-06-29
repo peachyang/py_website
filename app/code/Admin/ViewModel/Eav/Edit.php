@@ -92,7 +92,7 @@ abstract class Edit extends PEdit
         $groups = [];
         foreach ($attributes as $attribute) {
             if (!$this->group && !in_array($attribute['attribute_group_id'], $groups)) {
-                $this->getTabs()->addTab('attribute_group_' . $attribute['attribute_group_id'], $attribute['attribute_group']);
+                $this->getTabs()->addTab('attribute_group_' . $attribute['attribute_group_id'], $attribute['attribute_group'], $attribute['attribute_group_id']);
                 $this->getTabs()->addChild('attribute_group_' . $attribute['attribute_group_id'], (new static)->setVariable('model', $model)->hasTitle(false)->setGroup($attribute['attribute_group_id']));
                 $groups[] = $attribute['attribute_group_id'];
             }

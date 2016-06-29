@@ -18,7 +18,7 @@ class ProductController extends AuthActionController
     public function editAction()
     {
         $query = $this->getRequest()->getQuery();
-        $root = $this->getLayout(!isset($query['id']) && !isset($query['attribute_set']) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit');
+        $root = $this->getLayout(!isset($query['id']) && (!isset($query['attribute_set']) || !isset($query['product_type'])) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit_' . $query['product_type']);
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
@@ -53,12 +53,8 @@ class ProductController extends AuthActionController
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id AND eav_entity_type.id=eav_attribute_set.type_id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
             $required = ['store_id'];
-            $setId = 0;
-            $attributes->walk(function ($attribute) use (&$required, &$setId) {
+            $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];
-                if (!$setId) {
-                    $setId = $attribute['attribute_set_id'];
-                }
             });
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
@@ -69,8 +65,7 @@ class ProductController extends AuthActionController
                 $type = new Type;
                 $type->load(Model::ENTITY_TYPE, 'code');
                 $model->setData([
-                    'type_id' => $type->getId(),
-                    'attribute_set_id' => $setId
+                    'type_id' => $type->getId()
                 ]);
                 $user = (new Segment('admin'))->get('user');
                 if ($user->getStore()) {

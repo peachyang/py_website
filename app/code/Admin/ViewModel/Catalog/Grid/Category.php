@@ -115,7 +115,7 @@ class Category extends PGrid
     public function renderCategory($category, $level = 1)
     {
         $child = clone $this;
-        $child->setTemplate('admin/catalog/renderer')
+        $child->setTemplate('admin/catalog/category/renderer')
                 ->setVariable('category', $category)
                 ->setVariable('children', $this->getChildrenCategories($category['id']))
                 ->setVariable('level', $level);

@@ -35,7 +35,7 @@ admin_catalog_category_list:
                                     params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
                         grid:
                             type: Seahinet\Admin\ViewModel\Catalog\Grid\Category
-                            template: admin/catalog/category
+                            template: admin/catalog/category/tree
 admin_catalog_category_edit:
     update: edit
     root:
@@ -101,6 +101,32 @@ admin_catalog_product_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/config.js
+                    -
+                        method: addLink
+                        params: backend/css/jquery-ui.min.css
             content:
                 children:
                     breadcrumb:
@@ -120,6 +146,75 @@ admin_catalog_product_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - images
+                                            - Images
+                                            - 100
+                                    -
+                                        method: addTab
+                                        params:
+                                            - category
+                                            - Category
+                                            - 110
+                                    -
+                                        method: addTab
+                                        params:
+                                            - inventory
+                                            - Inventory
+                                            - 120
+                                    -
+                                        method: addTab
+                                        params:
+                                            - related_products
+                                            - Related Products
+                                            - 130
+                                    -
+                                        method: addTab
+                                        params:
+                                            - up_sells
+                                            - Up-sells
+                                            - 140
+                                    -
+                                        method: addTab
+                                        params:
+                                            - cross_sells
+                                            - Cross-sells
+                                            - 150
+                                    -
+                                        method: addTab
+                                        params:
+                                            - custom_options
+                                            - Custom Options
+                                            - 160
+                                children:
+                                    images:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Tab
+                                        template: admin/catalog/product/images
+                                    category:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Category
+                                        template: admin/catalog/product/category
+                                    inventory:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Inventory
+                                        template: admin/catalog/product/inventory
+                                    related_product:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        template: admin/catalog/product/related
+                                    up_sells:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        template: admin/catalog/product/upsells
+                                    cross_sells:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        template: admin/catalog/product/crosssells
+                                    custom_options:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Options
+                                        template: admin/catalog/product/options
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/modal
 admin_catalog_attribute_list:
     update: grid
     root:
@@ -254,3 +349,7 @@ admin_catalog_attribute_set_edit:
                     new-group:
                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Group
                         template: admin/eav/group
+admin_catalog_product_edit_1:
+    update: admin_catalog_product_edit
+admin_catalog_product_edit_2:
+    update: admin_catalog_product_edit

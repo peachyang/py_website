@@ -11,7 +11,7 @@ class ResizeController extends ActionController
 
     public function indexAction()
     {
-        $file = BP . 'pub/resource/image/' . $this->getOption('file');
+        $file = BP . 'pub/resource/image/' . rawurldecode($this->getOption('file'));
         if (!file_exists($file)) {
             return $this->notFoundAction();
         }

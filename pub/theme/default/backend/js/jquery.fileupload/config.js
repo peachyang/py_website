@@ -14,7 +14,7 @@
             init: function () {
                 if ($('.widget-upload').length) {
                     $('.widget-upload').on('click', '.delete', function () {
-                        var p = $(this).parent('.inline-box');
+                        var p = $(this).parents('.inline-box');
                         if ($(p).siblings('.inline-box').length === 0) {
                             $(p).children('[type=hidden]').val('');
                             $(p).find('img').attr('src', GLOBAL.PUB_URL + 'backend/images/placeholder.png');
@@ -23,12 +23,12 @@
                         }
                         return false;
                     }).on('click', '.add', function () {
-                        var o = $(this).prev('.inline-box');
-                        var odiv = $('<div class="inline-box"></div>');
+                        var o = $('.widget-upload .inline-box').last();
+                        var odiv = $('<' + o[0].tagName + ' class="inline-box"></' + o[0].tagName + '>');
                         $(odiv).html($(o).html());
-                        $(odiv).children('[type=hidden]').val('');
+                        $(odiv).children('input').val('');
                         $(odiv).find('img').attr('src', GLOBAL.PUB_URL + 'backend/images/placeholder.png');
-                        $(this).before(odiv);
+                        $(o).after(odiv);
                         return false;
                     }).on('resource.selected', '.inline-box .btn', function () {
                         var a = $('#resource-list .active img');

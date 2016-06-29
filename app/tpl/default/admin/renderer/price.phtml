@@ -11,22 +11,24 @@ $parent = $this->getVariable('parent');
         </label>
     <?php endif ?>
     <div class="cell">
-        <span class="input-group-addon"><?php echo $this->getConfig('i18n/currency/base') ?></span>
-        <input type="number" name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
-        if (!isset($item['attrs']['class'])):
-            ?> class="form-control number<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                   if (isset($item['class'])) {
-                       echo $item['class'];
+        <div class="input-group">
+            <span class="input-group-addon"><?php echo $this->getConfig()['i18n/currency/base'] ?></span>
+            <input type="number" name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
+            if (!isset($item['attrs']['class'])):
+                ?> class="form-control number<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                       if (isset($item['class'])) {
+                           echo $item['class'];
+                       }
+                       ?>"<?php endif ?> min="0" value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php
+                   if (isset($item['attrs'])) {
+                       echo $parent->getAttrs($item['attrs']);
                    }
-                   ?>"<?php endif ?> value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php
-               if (isset($item['attrs'])) {
-                   echo $parent->getAttrs($item['attrs']);
-               }
-               ?>/>
-               <?php if (isset($item['comment'])): ?>
-            <div class="comment">
-                <?php echo nl2br($this->translate($item['comment'])) ?>
-            </div>
-        <?php endif ?>
+                   ?>/>
+                   <?php if (isset($item['comment'])): ?>
+                <div class="comment">
+                    <?php echo nl2br($this->translate($item['comment'])) ?>
+                </div>
+            <?php endif ?>
+        </div>
     </div>
 </div>

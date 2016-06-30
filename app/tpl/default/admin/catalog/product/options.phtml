@@ -1,8 +1,116 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$options = $this->getProduct()->getOptions();
+?>
+<div class="clearfix" id="custom-options">
+    <div class="option">
+        <button type="button" class="btn btn-delete delete-option"><span><?php echo $this->translate('Delete Option') ?></span></button>
+        <div class="input-box">
+            <label class="control-label"><?php echo $this->translate('Label') ?></label>
+            <div class="cell">
+                <input type="text" class="form-control" name="options[label][]" />
+            </div>
+        </div>
+        <div class="input-box input">
+            <label class="control-label"><?php echo $this->translate('Input Widget') ?></label>
+            <div class="cell">
+                <select class="form-control" name="options[input][]">
+                    <?php foreach ($this->getInputOptions() as $group => $pairs): ?>
+                        <optgroup label="<?php echo $this->translate($group) ?>">
+                            <?php foreach ($pairs as $value => $label): ?>
+                                <option value="<?php echo $value ?>"><?php echo $this->translate($label) ?></option>
+                            <?php endforeach ?>
+                        </optgroup>
+                    <?php endforeach ?>
+                </select>
+            </div>
+        </div>
+        <div class="input-box">
+            <label class="control-label"><?php echo $this->translate('Is Required') ?></label>
+            <div class="cell">
+                <select class="form-control" name="options[is_required][]">
+                    <option value="0"><?php echo $this->translate('No') ?></option>
+                    <option value="1"><?php echo $this->translate('Yes') ?></option>
+                </select>
+            </div>
+        </div>
+        <div class="input-box">
+            <label class="control-label"><?php echo $this->translate('Sort Order') ?></label>
+            <div class="cell">
+                <input type="tel" class="form-control digits" name="options[sort_order][]" />
+            </div>
+        </div>
+        <div class="input-box sku">
+            <label class="control-label"><?php echo $this->translate('SKU') ?></label>
+            <div class="cell">
+                <input type="text" class="form-control" name="options[sku][]" />
+            </div>
+        </div>
+        <div class="input-box price">
+            <label class="control-label"><?php echo $this->translate('Price') ?></label>
+            <div class="cell">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                    </span>
+                    <input type="number" class="form-control number" name="options[price][]" />
+                </div>
+            </div>
+        </div>
+        <div class="input-box price-type">
+            <label class="control-label"><?php echo $this->translate('Price Type') ?></label>
+            <div class="cell">
+                <select name="option[is_fixed][]" class="form-control">
+                    <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                    <option value="0"><?php echo $this->translate('Percent') ?></option>
+                </select>
+            </div>
+        </div>
+        <div class="value">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><?php echo $this->translate('Label') ?></th>
+                        <th><?php echo $this->translate('Price') ?></th>
+                        <th><?php echo $this->translate('Price Type') ?></th>
+                        <th><?php echo $this->translate('SKU') ?></th>
+                        <th><?php echo $this->translate('Delete') ?></th>
+                    </tr>
+                </thead>
+                <tbody class="sortable">
+                    <tr>
+                        <td><input type="text" class="form-control" name="options[value][][label][]" /></td>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                                </span>
+                                <input type="number" class="form-control number" name="options[value][][price][]" />
+                            </div>
+                        </td>
+                        <td>
+                            <select name="option[value][][is_fixed][]" class="form-control">
+                                <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                                <option value="0"><?php echo $this->translate('Percent') ?></option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control" name="options[value][][sku][]" /></td>
+                        <td>
+                            <button type="button" class="btn btn-delete delete-row" title="<?php echo $this->translate('Delete') ?>">
+                                <span class="fa fa-remove" aria-hidden="true"></span>
+                                <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-right">
+                            <button type="button" class="btn btn-add add-row"><span><?php echo $this->translate('Add New Row') ?></span></button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <button type="button" class="btn btn-add add-option"><span><?php echo $this->translate('Add New Option') ?></span></button>
+</div>

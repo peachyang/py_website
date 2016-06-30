@@ -3,8 +3,12 @@
 namespace Seahinet\Admin\Controller\Catalog;
 
 use Seahinet\Catalog\Model\Product as Model;
+use Seahinet\Lib\Bootstrap;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
+use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 
 class ProductController extends AuthActionController
 {
@@ -15,13 +19,19 @@ class ProductController extends AuthActionController
         return $root;
     }
 
+    public function listAction()
+    {
+        $root = $this->getLayout('admin_catalog_product_simple_list');
+        return $root;
+    }
+
     public function editAction()
     {
         $query = $this->getRequest()->getQuery();
-        $root = $this->getLayout(!isset($query['id']) && (!isset($query['attribute_set']) || !isset($query['product_type'])) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit_' . $query['product_type']);
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
+            $root = $this->getLayout('admin_catalog_product_edit_' . $model['product_type_id']);
             $root->getChild('head')->setTitle('Edit Product / Product Management');
         } else {
             $model->setData('attribute_set_id', function() {
@@ -30,6 +40,7 @@ class ProductController extends AuthActionController
                         ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
                 return $set->load()[0]['id'];
             });
+            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit_' . $query['product_type']);
             $root->getChild('head')->setTitle('Add New Product / Product Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
@@ -61,6 +72,9 @@ class ProductController extends AuthActionController
                 $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
+                }
+                if (!isset($data['uri_key']) || !$data['uri_key']) {
+                    $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
                 }
                 $type = new Type;
                 $type->load(Model::ENTITY_TYPE, 'code');

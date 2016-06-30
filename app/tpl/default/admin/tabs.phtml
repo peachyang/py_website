@@ -18,7 +18,7 @@ if (count($tabs)):
                 $flag = true;
             }
             ?>>
-                <a href="#<?php echo $id ?>" aria-controls="<?php echo $id ?>" role="tab" data-toggle="tab">
+                <a href="#tab-<?php echo $id ?>" aria-controls="<?php echo $id ?>" role="tab" data-toggle="tab">
                     <?php echo $this->translate($tab) ?>
                 </a>
             </li>
@@ -29,7 +29,7 @@ if (count($tabs)):
         foreach ($this->getTabs() as $id => $tab):
             if ($this->hasTab($id)):
                 ?>
-                <div role="tabpanel" class="tab-pane table fade" id="<?php echo $id ?>">
+                <div role="tabpanel" class="tab-pane table fade" id="tab-<?php echo $id ?>">
                     <?php echo $this->$id ?>
                 </div>
                 <?php

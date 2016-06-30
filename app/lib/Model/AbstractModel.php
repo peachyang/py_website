@@ -35,7 +35,7 @@ abstract class AbstractModel extends ArrayObject
     {
         $this->isLoaded = false;
     }
-    
+
     /**
      * Overwrite normal method instead of magic method
      */
@@ -271,7 +271,7 @@ abstract class AbstractModel extends ArrayObject
         $pairs = [];
         foreach ($this->storage as $key => $value) {
             if (in_array($key, $columns) && ($this->isNew || in_array($key, $this->updatedColumns))) {
-                $pairs[$key] = $value;
+                $pairs[$key] = $value === '' ? null : $value;
             }
         }
         return $pairs;

@@ -80,6 +80,18 @@ admin_catalog_product_list:
                                     params: [{link:':ADMIN/catalog_product/edit/',label:'Add New Product'}]
                         grid:
                             type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
+admin_catalog_product_simple_list:
+    update: default
+    root:
+        template: page/empty
+        children:
+            content:
+                children:
+                    link:
+                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 admin_catalog_product_beforeedit:
     update: edit
     root:
@@ -124,6 +136,9 @@ admin_catalog_product_edit:
                     -
                         method: addScript
                         params: backend/js/jquery.fileupload/config.js
+                    -
+                        method: addScript
+                        params: backend/js/product.js
                     -
                         method: addLink
                         params: backend/css/jquery-ui.min.css
@@ -198,15 +213,33 @@ admin_catalog_product_edit:
                                     inventory:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Inventory
                                         template: admin/catalog/product/inventory
-                                    related_product:
+                                    related_products:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
-                                        template: admin/catalog/product/related
+                                        action:
+                                            -
+                                                method: setType
+                                                params: related
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
                                     up_sells:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
-                                        template: admin/catalog/product/upsells
+                                        action:
+                                            -
+                                                method: setType
+                                                params: upsells
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
                                     cross_sells:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
-                                        template: admin/catalog/product/crosssells
+                                        action:
+                                            -
+                                                method: setType
+                                                params: crosssells
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
                                     custom_options:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Options
                                         template: admin/catalog/product/options

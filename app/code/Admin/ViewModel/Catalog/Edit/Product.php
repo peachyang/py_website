@@ -4,30 +4,31 @@ namespace Seahinet\Admin\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
 use Seahinet\Catalog\Source\Set;
-use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
 
 class Product extends PEdit
 {
 
+    protected $hasUploadingFile = true;
+
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('customer_manage/save/');
+        return $this->getAdminUrl('catalog_product/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('customer_manage/delete/');
+            return $this->getAdminUrl('catalog_product/delete/');
         }
         return false;
     }
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Customer' : 'Add New Customer';
+        return $this->getQuery('id') ? 'Edit Product' : 'Add New Product';
     }
 
     protected function prepareElements($columns = [])
@@ -40,6 +41,10 @@ class Product extends PEdit
             ],
             'csrf' => [
                 'type' => 'csrf'
+            ],
+            'product_type_id' => [
+                'type' => 'hidden',
+                'value' => $this->getQuery('product_type', $model['product_type_id']),
             ],
             'attribute_set_id' => [
                 'type' => 'select',

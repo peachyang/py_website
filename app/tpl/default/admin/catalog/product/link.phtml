@@ -60,7 +60,7 @@ $query = $this->getQuery();
                 if (isset($item['id'])):
                     ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                     <td class="text-center checkbox">
-                        <input type="checkbox" name="product_link[<?php echo $this->getType() ?>][]" value="<?php echo $item['id'] ?>" />
+                        <input type="checkbox" name="product_link[<?php echo $this->getType() ?>][]" value="<?php echo $item['id'] ?>"<?php if (in_array($item['id'], $this->getActiveIds())): ?> checked="checked"<?php endif ?> />
                     </td>
                     <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>

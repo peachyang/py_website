@@ -31,21 +31,38 @@
                 $(p).html($(fg).find('.grid').html());
             });
             return false;
+        }).on('click', '[type=checkbox]', function () {
+            var flag = this.checked;
+            var parent = $(this).parents('.table').last();
+            if ($(this).is('.selectall')) {
+                $(parent).find('[type=checkbox]').not(this).each(function () {
+                    this.checked = flag;
+                });
+            } else if (flag && !$(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                $(parent).find('.selectall').each(function () {
+                    this.checked = flag;
+                });
+            } else if (!flag && $(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                $(parent).find('.selectall').each(function () {
+                    this.checked = flag;
+                });
+            }
         });
         $('#custom-options').on('click', '.add-option', function () {
-            var odiv = $('<div class="option"></div>');
-            $(odiv).html($('#custom-options .option').last().html());
-            $(odiv).find('input,select').val('');
-            $(this).before(odiv);
+            var id = -1000;
+            $(this).prevAll('.option').each(function () {
+                if ($(this).data('id') > id) {
+                    id = $(this).data('id');
+                }
+            });
+            $(this).before($('#custom-options #tmpl-option').html().replace(/\{\$id\}/g, id + 1));
+            $(this).prev('.option').find('.sortable').sortable({
+                item: 'tr'
+            });
         }).on('click', '.delete-option', function () {
-            var p = $(this).parent('.option');
-            if ($(p).siblings('.option').length) {
-                $(this).remove();
-            } else {
-                $(p).find('input,select').val('');
-            }
+            $(this).parents('.option').remove();
         }).on('click', '.add-row', function () {
-            var p = $(this).parents('.table').last();
+            var p = $(this).parents('.table').first();
             var otr = $('<tr></tr>');
             $(otr).html($(p).find('tbody tr').html());
             $(otr).find('input,select').val('');
@@ -56,6 +73,15 @@
                 $(this).remove();
             } else {
                 $(p).find('input,select').val('');
+            }
+        }).on('change', 'select[name^="options[input]"]', function () {
+            var p = $(this).parents('tr');
+            if ($.inArray($(this).val(), ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
+                $(p).siblings('.value').hide();
+                $(p).siblings('.non-value').show();
+            } else {
+                $(p).siblings('.value').show();
+                $(p).siblings('.non-value').hide();
             }
         });
         $('.sortable').sortable({

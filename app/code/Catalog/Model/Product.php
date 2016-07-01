@@ -2,10 +2,14 @@
 
 namespace Seahinet\Catalog\Model;
 
-use Seahinet\Catalog\Model\Collection\Product\Option;
+use Seahinet\Catalog\Model\Collection\Category;
+use Seahinet\Catalog\Model\Collection\Product as Collection;
+use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
+use Seahinet\Catalog\Model\Product\Option as OptionModel;
 use Seahinet\Catalog\Model\Warehouse;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Predicate\In;
 
 class Product extends Entity
 {
@@ -19,11 +23,69 @@ class Product extends Entity
 
     public function getOptions()
     {
-        $options = new Option;
-        $options->withLabel()
-                ->withPrice()
-                ->where(['product_id' => $this->getId()]);
-        return $options;
+        if ($this->getId()) {
+            $options = new OptionCollection;
+            $options->withLabel()
+                    ->withPrice()
+                    ->where(['product_id' => $this->getId()]);
+            return $options;
+        }
+        return [];
+    }
+
+    public function getCategories()
+    {
+        if ($this->getId()) {
+            $category = new Category($this->languageId);
+            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $result = $tableGateway->select(['product_id' => $this->getId()])->toArray();
+            $valueSet = [];
+            array_walk($result, function($item) use (&$valueSet) {
+                $valueSet[] = $item['category_id'];
+            });
+            if (count($valueSet)) {
+                $category->where(new In('id', $valueSet));
+            } else {
+                return [];
+            }
+            return $category;
+        }
+        return [];
+    }
+
+    public function getLinkedProducts($type)
+    {
+        if ($this->getId()) {
+            $products = new Collection($this->languageId);
+            $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
+            $result = $tableGateway->select(['product_id' => $this->getId(), 'type' => substr($type, 0, 1)])->toArray();
+            $valueSet = [];
+            array_walk($result, function($item) use (&$valueSet) {
+                $valueSet[] = $item['linked_product_id'];
+            });
+            if (count($valueSet)) {
+                $products->where(new In('id', $valueSet));
+            } else {
+                return [];
+            }
+            return $products;
+        }
+        return [];
+    }
+
+    public function getRelatedProducts()
+    {
+        return $this->getLinkedProducts('r');
+    }
+
+    public function getUpSells()
+    {
+        return $this->getLinkedProducts('u');
+    }
+
+    public function getCrossSells()
+    {
+        return $this->getLinkedProducts('c');
     }
 
     protected function afterSave()
@@ -38,19 +100,19 @@ class Product extends Entity
         }
         if (!empty($this->storage['inventory'])) {
             $warehouse = new Warehouse;
-            foreach ($this->storage['inventory']['qty'] as $warehouse => $qty) {
+            foreach ($this->storage['inventory']['qty'] as $warehouseId => $qty) {
                 $warehouse->setInventory([
-                    'warehouse_id' => $warehouse,
+                    'warehouse_id' => $warehouseId,
                     'product_id' => $this->getId(),
                     'sku' => '',
                     'qty' => $qty,
-                    'reserve_qty' => $this->storage['inventory']['reserve_qty'][$warehouse],
-                    'min_qty' => $this->storage['inventory']['min_qty'][$warehouse],
-                    'max_qty' => $this->storage['inventory']['max_qty'][$warehouse],
-                    'is_decimal' => $this->storage['inventory']['is_decimal'][$warehouse],
-                    'backorders' => $this->storage['inventory']['backorders'][$warehouse],
-                    'increment' => $this->storage['inventory']['increment'][$warehouse],
-                    'status' => $this->storage['inventory']['status'][$warehouse]
+                    'reserve_qty' => $this->storage['inventory']['reserve_qty'][$warehouseId],
+                    'min_qty' => $this->storage['inventory']['min_qty'][$warehouseId],
+                    'max_qty' => $this->storage['inventory']['max_qty'][$warehouseId],
+                    'is_decimal' => $this->storage['inventory']['is_decimal'][$warehouseId],
+                    'backorders' => $this->storage['inventory']['backorders'][$warehouseId],
+                    'increment' => $this->storage['inventory']['increment'][$warehouseId],
+                    'status' => $this->storage['inventory']['status'][$warehouseId]
                 ]);
             }
         }
@@ -62,10 +124,27 @@ class Product extends Entity
                     $tableGateway->insert([
                         'product_id' => $this->getId(),
                         'linked_product_id' => $id,
-                        'type' => $type,
+                        'type' => substr($type, 0, 1),
                         'sort_order' => $order
                     ]);
                 }
+            }
+        }
+        if (!empty($this->storage['options'])) {
+            $option = new OptionModel;
+            foreach ($this->storage['options']['label'] as $id => $label) {
+                $option->setData([
+                    'id' => $id < 1 ? null : $id,
+                    'product_id' => $this->getId(),
+                    'label' => $label,
+                    'input' => $this->storage['options']['input'][$id],
+                    'is_required' => $this->storage['options']['is_required'][$id],
+                    'sort_order' => $this->storage['options']['sort_order'][$id],
+                    'price' => $this->storage['options']['price'][$id],
+                    'is_fixed' => $this->storage['options']['is_fixed'][$id],
+                    'sku' => $this->storage['options']['sku'][$id],
+                    'value' => $this->storage['options']['value'][$id]
+                ])->save();
             }
         }
         parent::afterSave();

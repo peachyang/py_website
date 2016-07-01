@@ -127,7 +127,7 @@ class MongoDB extends AbstractHandler
                 $value = $predicate[1];
                 $parts[$i] = [array_shift($value) => [
                         '$' . strtolower(str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['gte', 'lte', 'ne', 'ne', 'gt', 'lt', 'eq'], $expression))
-                        => count($value) > 1 ? array_values($value) : $predicate[1][1]
+                        => count($value) > 1 ? array_values($value) : ($expression === 'IN' ? (array) $predicate[1][1] : $predicate[1][1])
                 ]];
             }
         }

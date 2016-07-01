@@ -95,7 +95,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .nav-tabs>li{float:left;margin-bottom:-1px}
 .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus{color:#555;cursor:default;background-color:#fff;border:1px solid #CCE0E9;border-bottom-color:transparent}
-.nav-tabs~.tab-pane{display:none;}
+.nav-tabs~.tab-pane{display:none}
 .nav-tabs~.tab-pane.active{display:block}
 .breadcrumb li{display:inline}
 .breadcrumb li:not(.label)+li:before{content:">";margin:0 4px}
@@ -129,8 +129,8 @@ textarea.form-control,select[multiple].form-control{min-height:4.25em;padding-to
 .form-inline .control-label,.form-inline .cell{display:inline-block;width:auto;vertical-align:top;margin-right:2px}
 .form-control.captcha~.captcha{vertical-align:top;margin-left:4px;cursor:pointer}
 .form-control.invalid{border-color:red}
-.input-group{display:table;max-width:320px}
-.input-group .input-group-addon{display:table-cell;white-space:nowrap;width:0.1%;padding:0 6px;border:1px solid #8b8c8c;line-height:24px}
+.input-group{display:table;max-width:320px;border-spacing:0}
+.input-group .input-group-addon{display:table-cell;vertical-align:bottom;white-space:nowrap;width:0.1%;padding:0 6px;border:1px solid #8b8c8c;line-height:24px}
 .input-group .input-group-addon:first-child{border-right:none}
 .input-group .input-group-addon:last-child{border-left:none}
 .input-group .input-group-addon .form-control{padding:0;border:none;width:100%;height:24px}
@@ -142,7 +142,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .form-control[type=checkbox],.form-control[type=radio]{width:auto;height:auto;padding:0;background:none;border:none;vertical-align:top;display:inline-block;margin-top:5px}
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
 .btn:focus{outline:none}
-.btn-submit,.btn-reset,.btn-delete,.btn-theme{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
+.btn-submit,.btn-reset,.btn-delete,.btn-theme,.btn-add{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
 .btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus,.btn-theme:hover,.btn-theme:focus{background:#028ccc;text-decoration:none}
 .admin-login{background:#9c9d9d}
 .admin-login .page-title{font-size:18px;line-height:126px;text-indent:45px;text-indent:2.8125rem;color:#000}
@@ -265,10 +265,9 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .page-content~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
-.admin .resourceimagea{min-width:105px; min-height:115px; border:2px dotted #ddd; border-radius:5px;-moz-border-radius:5px; margin: 5px;display:inline-block;vertical-align:middle; text-align:center; padding:0;}
-.admin .resourceimagea img{max-height:100px; max-width:100px;}
-.admin .resourceimagea i{margin:5px;}
-.admin .resourceimageaplusi{font-size:40px; color:#aaa;}
+.admin #custom-options .option caption{text-align:left;padding:10px 0}
+.admin #custom-options .option th{white-space:nowrap}
+.admin #custom-options .option td{width:320px}
 .admin .dashboard{padding:30px 0 30px 30px}
 .admin .dashboard .table{border:1px solid #ccc}
 .admin .dashboard .table .caption{border-bottom:1px solid #ccc;text-indent:30px}

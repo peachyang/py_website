@@ -56,12 +56,14 @@ class Product extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        $user = (new Segment('admin'))->get('user');
-        if ($user->getStore()) {
-            $collection->where(['store_id' => $user->getStore()->getId()]);
+        if (is_null($collection)) {
+            $collection = new Collection;
+            $user = (new Segment('admin'))->get('user');
+            if ($user->getStore()) {
+                $collection->where(['store_id' => $user->getStore()->getId()]);
+            }
         }
-        return $collection;
+        return parent::prepareCollection($collection);
     }
 
 }

@@ -20,7 +20,7 @@ class Indexer extends Grid
 
     public function getMessReindexAction()
     {
-        return '<a href="' . $this->getRebuildUrl() . '" data-method="delete" data-serialize=".grid .table" title="' . $this->translate('Rebuild') .
+        return '<a href="' . $this->getRebuildUrl() . '" data-method="get" data-serialize=".grid .table" title="' . $this->translate('Rebuild') .
                 '"><span>' . $this->translate('Rebuild') . '</span></a>';
     }
 

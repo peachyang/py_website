@@ -20,11 +20,14 @@ abstract class AbstractHandler
         $tableGateway = new TableGateway('eav_entity_type', $adapter);
         $select = $tableGateway->getSql()->select();
         $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
-                ->where(['eav_entity_type.code' => $this->entityType])
-                ->columns(['entity_table', 'value_table_prefix']);
+                ->where(is_numeric($this->entityType) ? ['eav_entity_type.id' => $this->entityType] : ['eav_entity_type.code' => $this->entityType])
+                ->columns(['entity_table', 'value_table_prefix', 'entity_type' => 'code']);
         $result = $tableGateway->selectWith($select)->toArray();
         if (count($result) === 0) {
             throw new InvalidArgumentException('Invalid entity type code: ' . $this->entityType);
+        }
+        if (is_numeric($this->entityType)) {
+            $this->entityType = $result[0]['entity_type'];
         }
         $keys = array_keys($tableGateway->selectWith($select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left'))->toArray()[0]);
         $this->buildStructure($result, $keys);
@@ -56,7 +59,7 @@ abstract class AbstractHandler
                 foreach (array_diff($keys, [
                     'updated_at', 'type_id', 'attr', 'type',
                     'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
-                    'value_table_prefix', 'is_form'
+                    'value_table_prefix', 'is_form', 'entity_type'
                 ]) as $key) {
                     $items[$languageId][$record['id']][$key] = $record[$key];
                 }

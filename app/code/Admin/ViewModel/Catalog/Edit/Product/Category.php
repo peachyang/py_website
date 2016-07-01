@@ -8,6 +8,7 @@ class Category extends Tab
 {
 
     protected $categories = null;
+    protected $activeIds = null;
 
     public function getCategories()
     {
@@ -25,6 +26,20 @@ class Category extends Tab
         return $this->categories;
     }
 
+    public function getActiveIds()
+    {
+        if (is_null($this->activeIds)) {
+            $collection = $this->getProduct()->getCategories();
+            $this->activeIds = [];
+            if (count($collection)) {
+                foreach ($collection->toArray() as $item) {
+                    $this->activeIds[] = $item['id'];
+                }
+            }
+        }
+        return $this->activeIds;
+    }
+
     public function renderCategory($level = 0)
     {
         $html = '';
@@ -32,7 +47,8 @@ class Category extends Tab
             foreach ($this->getCategories()[$level] as $category) {
                 $html = '<li><input type="checkbox" name="category[]" id="category-' .
                         $category['id'] . '" class="form-control" value="' .
-                        $category['id'] . '" /><label for="category-' .
+                        $category['id'] . '"' . (in_array($category['id'], $this->getActiveIds()) ?
+                                ' checked="checked"' : '') . ' /><label for="category-' .
                         $category['id'] . '" class="control-label">' . $category['name'] .
                         '</label>' . (isset($this->getCategories()[$category['id']]) ?
                                 '<ul>' . $this->renderCategory($category['id']) . '</ul>' : ''

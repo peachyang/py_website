@@ -13,7 +13,8 @@ class Inventory extends Tab
         $collection->columns(['id', 'name']);
         if ($id = $this->getProduct()->getId()) {
             $collection->join('warehouse_inventory', 'warehouse_inventory.warehouse_id=warehouse.id')
-                    ->where(['product_id' => $id]);
+                    ->where(['product_id' => $id])
+                    ->order('sku ASC');
         }
         return $collection->toArray();
     }

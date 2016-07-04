@@ -14,9 +14,23 @@ class Option extends AbstractModel
         $this->init('product_option', 'id', ['id', 'product_id', 'input', 'is_required', 'sku', 'price', 'is_fixed', 'sort_order']);
     }
 
+    protected function isUpdate($constraint = array(), $insertForce = false)
+    {
+        if (!$this->isLoaded && $this->getId()) {
+            $obj = (new static)->load($this->getId());
+        } else {
+            $obj = $this;
+        }
+        if ($this->offsetGet('product_id') == $obj->offsetGet('product_id')) {
+            return true;
+        } else {
+            $this->setId(null);
+            return false;
+        }
+    }
+
     protected function afterSave()
     {
-        parent::afterSave();
         $adapter = $this->getContainer()->get('dbAdapter');
         $languageId = Bootstrap::getLanguage()->getId();
         if ($this->storage['label']) {
@@ -51,6 +65,7 @@ class Option extends AbstractModel
                 }
             }
         }
+        parent::afterSave();
     }
 
 }

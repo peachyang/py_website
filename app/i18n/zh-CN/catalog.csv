@@ -6,6 +6,8 @@
 "Allow Qty Below 0","允许数量低于0"
 "Append","追加"
 "Backorders","缺货订单"
+"Barcode","条形码"
+"Branch %s","%s仓库"
 "Delete Row","删除行"
 "Delete Option","删除属性"
 "Edit Product Attribute","编辑产品属性"

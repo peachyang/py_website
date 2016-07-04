@@ -62,18 +62,10 @@
         }).on('click', '.delete-option', function () {
             $(this).parents('.option').remove();
         }).on('click', '.add-row', function () {
-            var p = $(this).parents('.table').first();
-            var otr = $('<tr></tr>');
-            $(otr).html($(p).find('tbody tr').html());
-            $(otr).find('input,select').val('');
-            $(p).find('tbody').append(otr);
+            $(this).parents('.table').first().find('tbody')
+                    .append($('#custom-options #tmpl-option-value').html().replace(/\{\$id\}/g, $(this).data('id')));
         }).on('click', '.delete-row', function () {
-            var p = $(this).parents('tr');
-            if ($(p).siblings('tr').length) {
-                $(this).remove();
-            } else {
-                $(p).find('input,select').val('');
-            }
+            $(this).parents('tr').first().remove();
         }).on('change', 'select[name^="options[input]"]', function () {
             var p = $(this).parents('tr');
             if ($.inArray($(this).val(), ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
@@ -86,6 +78,56 @@
         });
         $('.sortable').sortable({
             item: 'tr'
+        });
+        $('[href="#tab-inventory"]').on('show.bs.tab', function () {
+            var result = [];
+            $('#custom-options .option').each(function () {
+                var input = $(this).find('[name^="options[input]"]').val();
+                if ($.inArray(input, ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
+                    var sku = $(this).find('[name^="options[sku]"]').val();
+                    var title = $(this).find('[name$="[label][]"]').val();
+                    if (sku) {
+                        if (result.length) {
+                            for (var i = 0; i < result.length; i++) {
+                                result[i].sku += '-' + sku;
+                                result[i].title += '-' + title;
+                            }
+                        } else {
+                            result.push({sku: $('#sku').val() + '-' + sku, title: title});
+                        }
+                    }
+                } else {
+                    var tmp = [];
+                    $(this).find('.value tr').each(function () {
+                        var sku = $(this).find('[name$="[sku][]"]').val();
+                        var title = $(this).find('[name$="[label][]"]').val();
+                        if (sku) {
+                            if (result.length) {
+                                for (var i = 0; i < result.length; i++) {
+                                    tmp.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
+                                }
+                            } else {
+                                tmp.push({sku: $('#sku').val() + '-' + sku, title: title});
+                            }
+                        }
+                    });
+                    result = tmp;
+                }
+            });
+            if (result.length) {
+                $('#tab-inventory .branch').each(function () {
+                    var fg = document.createDocumentFragment();
+                    var tmpl = $(this).next('.tmpl-inventory-branch');
+                    var inventory = $(tmpl).data('inventory');
+                    $(result).each(function () {
+                        $(fg).append($(tmpl).html().replace(/\{\$title\}/g, this.title)
+                                .replace(/\{\$sku\}/g, this.sku)
+                                .replace(/\{\$qty\}/g, inventory[this.sku].qty ? inventory[this.sku].qty : 0)
+                                .replace(/\{\$barcode\}/g, inventory[this.sku].barcode ? inventory[this.sku].barcode : ''));
+                    });
+                    $(this).show().find('tbody').html(fg);
+                });
+            }
         });
     });
 }));

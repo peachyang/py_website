@@ -12,7 +12,7 @@ $options = $this->getProduct()->getOptions();
                     <label class="control-label"><?php echo $this->translate('Label') ?></label>
                 </th>
                 <td>
-                    <input type="text" class="form-control" name="options[label][<?php echo $option['id'] ?>]" value="<?php echo $option['label'] ?>" />
+                    <input type="text" class="form-control" name="options[label][<?php echo $option['id'] ?>]" value="<?php echo $option['title'] ?>" />
                 </td>
                 <th>
                     <label class="control-label"><?php echo $this->translate('Input Widget') ?></label>
@@ -44,7 +44,7 @@ $options = $this->getProduct()->getOptions();
                     <input type="tel" class="form-control digits" name="options[sort_order][<?php echo $option['id'] ?>]" value="<?php echo $option['sort_order'] ?>" />
                 </td>
             </tr>
-            <tr class="non-value">
+            <tr class="non-value"<?php if (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect'])): ?> style="display:none"<?php endif ?>>
                 <th><label class="control-label"><?php echo $this->translate('SKU') ?></label></th>
                 <td><input type="text" class="form-control" name="options[sku][<?php echo $option['id'] ?>]" value="<?php echo $option['sku'] ?>" /></td>
                 <th><label class="control-label"><?php echo $this->translate('Price') ?></label></th>
@@ -66,7 +66,7 @@ $options = $this->getProduct()->getOptions();
                 <th></th>
                 <td></td>
             </tr>
-            <tr class="value" style="display:none">
+            <tr class="value"<?php if (!in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect'])): ?> style="display:none"<?php endif ?>>
                 <td colspan="8">
                     <table class="table table-striped">
                         <thead>
@@ -83,7 +83,7 @@ $options = $this->getProduct()->getOptions();
                                 <tr>
                                     <td>
                                         <input type="hidden" name="options[value][<?php echo $option['id'] ?>][id][]" value="<?php echo $value['id'] ?>" />
-                                        <input type="text" class="form-control" name="options[value][<?php echo $option['id'] ?>][label][]" value="<?php echo $value['label'] ?>" />
+                                        <input type="text" class="form-control" name="options[value][<?php echo $option['id'] ?>][label][]" value="<?php echo $value['title'] ?>" />
                                     </td>
                                     <td>
                                         <div class="input-group">
@@ -112,7 +112,7 @@ $options = $this->getProduct()->getOptions();
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <button type="button" class="btn btn-add add-row"><span><?php echo $this->translate('Add New Row') ?></span></button>
+                                    <button type="button" class="btn btn-add add-row" data-id="<?php echo $option['id'] ?>"><span><?php echo $this->translate('Add New Row') ?></span></button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -198,39 +198,11 @@ $options = $this->getProduct()->getOptions();
                                 <th><?php echo $this->translate('Delete') ?></th>
                             </tr>
                         </thead>
-                        <tbody class="sortable">
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="options[value][{$id}][id][]" />
-                                    <input type="text" class="form-control" name="options[value][{$id}][label][]" />
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <?php echo $this->getConfig()['i18n/currency/base'] ?>
-                                        </span>
-                                        <input type="number" class="form-control number" name="options[value][{$id}][price][]" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <select name="option[value][{$id}][is_fixed][]" class="form-control">
-                                        <option value="0"><?php echo $this->translate('Percent') ?></option>
-                                        <option value="1"><?php echo $this->translate('Fixed') ?></option>
-                                    </select>
-                                </td>
-                                <td><input type="text" class="form-control" name="options[value][{$id}][sku][]" /></td>
-                                <td>
-                                    <button type="button" class="btn btn-delete delete-row" title="<?php echo $this->translate('Delete') ?>">
-                                        <span class="fa fa-remove" aria-hidden="true"></span>
-                                        <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody class="sortable"></tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <button type="button" class="btn btn-add add-row"><span><?php echo $this->translate('Add New Row') ?></span></button>
+                                    <button type="button" class="btn btn-add add-row" data-id="{$id}"><span><?php echo $this->translate('Add New Row') ?></span></button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -238,5 +210,34 @@ $options = $this->getProduct()->getOptions();
                 </td>
             </tr>
         </table>
+    </template>
+    <template id="tmpl-option-value">
+        <tr>
+            <td>
+                <input type="hidden" name="options[value][{$id}][id][]" />
+                <input type="text" class="form-control" name="options[value][{$id}][label][]" />
+            </td>
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                    </span>
+                    <input type="number" class="form-control number" name="options[value][{$id}][price][]" />
+                </div>
+            </td>
+            <td>
+                <select name="options[value][{$id}][is_fixed][]" class="form-control">
+                    <option value="0"><?php echo $this->translate('Percent') ?></option>
+                    <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                </select>
+            </td>
+            <td><input type="text" class="form-control" name="options[value][{$id}][sku][]" /></td>
+            <td>
+                <button type="button" class="btn btn-delete delete-row" title="<?php echo $this->translate('Delete') ?>">
+                    <span class="fa fa-remove" aria-hidden="true"></span>
+                    <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                </button>
+            </td>
+        </tr>
     </template>
 </div>

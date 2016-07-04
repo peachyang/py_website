@@ -4,9 +4,12 @@ namespace Seahinet\Catalog\Model\Collection\Product;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
+use Zend\Db\TableGateway\TableGateway;
 
 class Option extends AbstractCollection
 {
+
+    protected $languageId;
 
     protected function construct()
     {
@@ -16,25 +19,34 @@ class Option extends AbstractCollection
     public function withLabel($languageId = null)
     {
         if (is_null($languageId)) {
-            $languageId = Bootstrap::getLanguage()->getId();
+            $this->languageId = Bootstrap::getLanguage()->getId();
         } else if (is_object($languageId)) {
-            $languageId = $languageId['id'];
+            $this->languageId = $languageId['id'];
+        } else {
+            $this->languageId = $languageId;
         }
         $this->select->join('product_option_title', 'product_option_title.option_id=product_option.id', ['title'], 'left')
-                ->where(['language_id' => $languageId]);
+                ->where(['product_option_title.language_id' => $this->languageId]);
         return $this;
     }
 
-    public function withPrice($storeId = null)
+    public function afterLoad($result)
     {
-        if (is_null($storeId)) {
-            $storeId = Bootstrap::getStore()->getId();
-        } else if (is_object($storeId)) {
-            $storeId = $storeId['id'];
+        $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
+        foreach ($result as &$item) {
+            if (in_array($item['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                $select = $tableGateway->getSql()->select();
+                $select->where(['option_id' => $item['id']]);
+                if ($this->languageId) {
+                    $select->join('product_option_value_title', 'product_option_value.id=product_option_value_title.value_id', ['title'], 'left')
+                            ->where(['product_option_value_title.language_id' => $this->languageId]);
+                }
+                $item['value'] = $tableGateway->selectWith($select)->toArray();
+            } else {
+                $item['value'] = [];
+            }
         }
-        $this->select->join('product_option_price', 'product_option_price.option_id=product_option.id', ['price', 'is_fixed'], 'left')
-                ->where(['store_id' => $storeId]);
-        return $this;
+        parent::afterLoad($result);
     }
-    
+
 }

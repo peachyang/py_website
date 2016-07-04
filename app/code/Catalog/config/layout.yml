@@ -176,32 +176,32 @@ admin_catalog_product_edit:
                                     -
                                         method: addTab
                                         params:
+                                            - custom_options
+                                            - Custom Options
+                                            - 120
+                                    -
+                                        method: addTab
+                                        params:
                                             - inventory
                                             - Inventory
-                                            - 120
+                                            - 130
                                     -
                                         method: addTab
                                         params:
                                             - related_products
                                             - Related Products
-                                            - 130
+                                            - 140
                                     -
                                         method: addTab
                                         params:
                                             - up_sells
                                             - Up-sells
-                                            - 140
+                                            - 150
                                     -
                                         method: addTab
                                         params:
                                             - cross_sells
                                             - Cross-sells
-                                            - 150
-                                    -
-                                        method: addTab
-                                        params:
-                                            - custom_options
-                                            - Custom Options
                                             - 160
                                 children:
                                     images:

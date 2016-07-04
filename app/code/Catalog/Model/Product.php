@@ -26,7 +26,6 @@ class Product extends Entity
         if ($this->getId()) {
             $options = new OptionCollection;
             $options->withLabel()
-                    ->withPrice()
                     ->where(['product_id' => $this->getId()]);
             return $options;
         }
@@ -100,20 +99,23 @@ class Product extends Entity
         }
         if (!empty($this->storage['inventory'])) {
             $warehouse = new Warehouse;
-            foreach ($this->storage['inventory']['qty'] as $warehouseId => $qty) {
-                $warehouse->setInventory([
-                    'warehouse_id' => $warehouseId,
-                    'product_id' => $this->getId(),
-                    'sku' => '',
-                    'qty' => $qty,
-                    'reserve_qty' => $this->storage['inventory']['reserve_qty'][$warehouseId],
-                    'min_qty' => $this->storage['inventory']['min_qty'][$warehouseId],
-                    'max_qty' => $this->storage['inventory']['max_qty'][$warehouseId],
-                    'is_decimal' => $this->storage['inventory']['is_decimal'][$warehouseId],
-                    'backorders' => $this->storage['inventory']['backorders'][$warehouseId],
-                    'increment' => $this->storage['inventory']['increment'][$warehouseId],
-                    'status' => $this->storage['inventory']['status'][$warehouseId]
-                ]);
+            foreach ($this->storage['inventory'] as $warehouseId => $inventory) {
+                foreach ($inventory['qty'] as $order => $qty) {
+                    $warehouse->setInventory([
+                        'warehouse_id' => $warehouseId,
+                        'product_id' => $this->getId(),
+                        'sku' => $inventory['sku'][$order],
+                        'barcode' => isset($inventory['barcode'][$order]) ? $inventory['barcode'][$order] : '',
+                        'qty' => $qty,
+                        'reserve_qty' => $inventory['reserve_qty'][$order],
+                        'min_qty' => $inventory['min_qty'][$order],
+                        'max_qty' => $inventory['max_qty'][$order],
+                        'is_decimal' => $inventory['is_decimal'][$order],
+                        'backorders' => $inventory['backorders'][$order],
+                        'increment' => $inventory['increment'][$order],
+                        'status' => $inventory['status'][$order]
+                    ]);
+                }
             }
         }
         if (!empty($this->storage['product_link'])) {

@@ -525,6 +525,7 @@ CREATE TABLE IF NOT EXISTS `eav_attribute_group` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'EAV attribute group ID',
     `type_id` INTEGER NOT NULL COMMENT 'EAV entity type ID',
     `name` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute set name',
+    `is_hidden` BOOLEAN DEFAULT 0 COMMENT 'Is Hidden',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
     PRIMARY KEY (`id`),
@@ -719,7 +720,7 @@ CREATE TRIGGER `TGR_UPDATE_EAV_VALUE_TEXT` BEFORE UPDATE ON `eav_value_text` FOR
 
 INSERT INTO `eav_entity_type` VALUES (1, 'customer', 'customer_entity', 'customer_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (1, 1, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (1, 1, 'Account Information', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (1, 1, 'Account Information', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (1,1,'username','varchar','text','',1,'',1,NULL,NULL,1,1,1,1,NULL,NULL),
 (2,1,'password','varchar','password','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -989,7 +990,7 @@ CREATE TRIGGER `TGR_UPDATE_API_SOAP_USER` BEFORE UPDATE ON `api_soap_user` FOR E
 
 INSERT INTO `eav_entity_type` VALUES (2, 'address', 'address_entity', 'address_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 2, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (4,2,'name','varchar','text','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (5,2,'country','varchar','select','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -1133,8 +1134,8 @@ CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_TEXT` BEFORE UPDATE ON `address_value_t
 
 INSERT INTO `eav_entity_type` VALUES (3, 'category', 'category_entity', 'category_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 3, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Infomation', CURRENT_TIMESTAMP, NULL),
-(NULL, 3, 'Display Settings', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 3, 'Display Settings', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (13,3,'name','varchar','text','',1,'',0,NULL,NULL,0,1,0,0,NULL,NULL),
 (14,3,'description','text','wysiwyg','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -1294,9 +1295,10 @@ INSERT INTO `category_value_varchar` VALUES (13,1,1,'Default Category',NULL);
 
 INSERT INTO `eav_entity_type` VALUES (4, 'product', 'product_entity', 'product_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 4, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Infomation', CURRENT_TIMESTAMP, NULL),
-(NULL, 4, 'Price', CURRENT_TIMESTAMP, NULL),
-(NULL, 4, 'Meta Infomation', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Price', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Meta Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Images', 1, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (26,4,'name','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
 (27,4,'uri_key','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -1314,9 +1316,9 @@ INSERT INTO `eav_attribute` VALUES
 (39,4,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (40,4,'meta_description','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (41,4,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(42,4,'images','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(43,4,'default_image','integer','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(44,4,'thumbnail','integer','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
+(42,4,'images','varchar','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(43,4,'default_image','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (4, 5, 26, 0),
 (4, 5, 27, 0),
@@ -1333,7 +1335,10 @@ INSERT INTO `eav_entity_attribute` VALUES
 (4, 6, 38, 0),
 (4, 7, 39, 0),
 (4, 7, 40, 0),
-(4, 7, 41, 0);
+(4, 7, 41, 0),
+(4, 8, 42, 0),
+(4, 8, 43, 0),
+(4, 8, 44, 0);
 INSERT INTO `eav_attribute_label` VALUES
 (26, 1, 'Name'),
 (27, 1, 'Uri Key'),
@@ -1485,7 +1490,7 @@ CREATE TABLE IF NOT EXISTS `product_option` (
     `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
     `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option price',
     `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
+    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_PRODUCT_ID (`product_id`),
     INDEX IDX_PRODUCT_OPTION_SORT_ORDER (`sort_order`),
@@ -1508,7 +1513,7 @@ CREATE TABLE IF NOT EXISTS `product_option_value` (
     `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
     `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option value price',
     `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
+    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_OPTION_ID (`option_id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_SORT_ORDER (`sort_order`),

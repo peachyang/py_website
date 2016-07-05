@@ -85,16 +85,15 @@
                 var input = $(this).find('[name^="options[input]"]').val();
                 if ($.inArray(input, ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
                     var sku = $(this).find('[name^="options[sku]"]').val();
-                    var title = $(this).find('[name$="[label][]"]').val();
+                    var title = $(this).find('[name^="options[label]"]').val();
                     if (sku) {
-                        if (result.length) {
-                            for (var i = 0; i < result.length; i++) {
-                                result[i].sku += '-' + sku;
-                                result[i].title += '-' + title;
+                        var l = result.length;
+                        if (l) {
+                            for (var i = 0; i < l; i++) {
+                                result.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
                             }
-                        } else {
-                            result.push({sku: $('#sku').val() + '-' + sku, title: title});
                         }
+                        result.push({sku: $('#sku').val() + '-' + sku, title: title});
                     }
                 } else {
                     var tmp = [];
@@ -122,8 +121,8 @@
                     $(result).each(function () {
                         $(fg).append($(tmpl).html().replace(/\{\$title\}/g, this.title)
                                 .replace(/\{\$sku\}/g, this.sku)
-                                .replace(/\{\$qty\}/g, inventory[this.sku].qty ? inventory[this.sku].qty : 0)
-                                .replace(/\{\$barcode\}/g, inventory[this.sku].barcode ? inventory[this.sku].barcode : ''));
+                                .replace(/\{\$qty\}/g, inventory[this.sku] && inventory[this.sku].qty ? inventory[this.sku].qty : 0)
+                                .replace(/\{\$barcode\}/g, inventory[this.sku] && inventory[this.sku].barcode ? inventory[this.sku].barcode : ''));
                     });
                     $(this).show().find('tbody').html(fg);
                 });

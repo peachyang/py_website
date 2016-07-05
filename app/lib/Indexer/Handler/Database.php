@@ -74,7 +74,7 @@ class Database extends AbstractHandler
                     } else if ($attr['type'] === 'decimal') {
                         $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, (float) $attr['default_value']);
                     } else {
-                        $column = new Ddl\Column\Text($attr['attr'], 65535, true, $attr['default_value']);
+                        $column = new Ddl\Column\Text($attr['attr'], 65535, true);
                     }
                     $ddl->addColumn($column);
                     if ($attr['is_unique']) {

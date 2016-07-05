@@ -240,6 +240,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table .action a+a{margin-left:4px}
 .admin .grid .table.category ul{padding-left:2em;clear:both}
 .admin .grid .table.category li{min-height:30px}
+.admin .grid .table.category li:hover{background:#f5f5f5}
 .admin .grid .table.category .sortable.moving{height:15px}
 .admin .grid .table.category .sortable li{cursor:move}
 .admin .grid .table.category .sortable .placeholder{background:#f5f5f5;border:1px dashed #aaa}

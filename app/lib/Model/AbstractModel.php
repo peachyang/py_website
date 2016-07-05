@@ -35,7 +35,7 @@ abstract class AbstractModel extends ArrayObject
     {
         $this->isLoaded = false;
     }
-    
+
     /**
      * Overwrite normal method instead of magic method
      */
@@ -168,16 +168,29 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
+     * Is update or insert
+     * 
+     * @param array $constraint
+     * @param bool $insertForce
+     * @return bool
+     */
+    protected function isUpdate($constraint = [], $insertForce = false)
+    {
+        return !$insertForce && (!empty($constraint) || $this->getId());
+    }
+
+    /**
      * Insert/Update data
      * 
-     * @param array $constraint     Update query constraint
+     * @param array $constraint
+     * @param bool $insertForce
      * @return AbstractModel
      * @throws InvalidQueryException
      */
     public function save($constraint = [], $insertForce = false)
     {
         try {
-            if (!$insertForce && (!empty($constraint) || $this->getId())) {
+            if ($this->isUpdate($constraint, $insertForce)) {
                 if (empty($constraint)) {
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
@@ -271,7 +284,7 @@ abstract class AbstractModel extends ArrayObject
         $pairs = [];
         foreach ($this->storage as $key => $value) {
             if (in_array($key, $columns) && ($this->isNew || in_array($key, $this->updatedColumns))) {
-                $pairs[$key] = $value;
+                $pairs[$key] = $value === '' ? null : $value;
             }
         }
         return $pairs;

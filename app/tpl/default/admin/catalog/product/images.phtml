@@ -1,0 +1,53 @@
+<?php
+$product = $this->getProduct();
+$images = json_decode($product['images']);
+$thumbnail = $product['thumbnail'];
+$default = $product['default_image'];
+?>
+<table class="table widget-upload">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('Image') ?></th>
+            <th><?php echo $this->translate('Label') ?></th>
+            <th><?php echo $this->translate('Group') ?></th>
+            <th><?php echo $this->translate('Default Image') ?></th>
+            <th><?php echo $this->translate('Thumbnail') ?></th>
+            <th><?php echo $this->translate('Remove') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $i = 0;
+        do {
+            ?>
+            <tr class="inline-box">
+                <td>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="<?php echo $this->translate('Select Resource') ?>">
+                        <img src="<?php echo $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
+                    </button>
+                    <input type="hidden" name="images[]" value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" />
+                </td>
+                <td><input type="text" name="images-label[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['label'] : '' ?>" /></td>
+                <td><input type="text" name="images-group[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['group'] : '' ?>" /></td>
+                <td><input type="radio" name="default-image" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $thumbnail): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
+                <td><input type="radio" name="thumbnail" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $default): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
+                <td>
+                    <a href="javascript:void(0);" class="delete">
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
+                        <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                    </a>
+                </td>
+            </tr>
+        <?php } while (isset($images[++$i])) ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan = "6">
+                <a href = "javascript:void(0);" class = "add">
+                    <span class = "fa fa-plus-square" aria-hidden = "true"></span>
+                    <span class = "sr-only"><?php echo $this->translate('Add') ?></span>
+                </a>
+            </td>
+        </tr>
+    </tfoot>
+</table>

@@ -59,7 +59,7 @@ class Database extends AbstractHandler
                 'id', 'store_id', 'status', 'created_at',
                 'updated_at', 'type_id', 'attribute_set_id', 'attr', 'type',
                 'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
-                'value_table_prefix', 'is_form'
+                'value_table_prefix', 'is_form', 'entity_type'
             ]) as $key) {
                 $ddl->addColumn(new Ddl\Column\Varchar($key, 255, true, ''));
             }

@@ -1180,7 +1180,7 @@ INSERT INTO `eav_attribute_label` VALUES
 
 CREATE TABLE IF NOT EXISTS `category_entity` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `type_id` INTEGER NOT NULL DEFAULT 4 COMMENT 'EAV entity type ID',
+    `type_id` INTEGER NOT NULL DEFAULT 3 COMMENT 'EAV entity type ID',
     `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent entity ID',
     `attribute_set_id` INTEGER NOT NULL COMMENT 'EAV attribute set ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
@@ -1289,10 +1289,14 @@ CREATE TABLE IF NOT EXISTS `category_value_text` (
 
 CREATE TRIGGER `TGR_UPDATE_CATEGORY_VALUE_TEXT` BEFORE UPDATE ON `category_value_text` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
+INSERT INTO `category_entity` VALUES (NULL,3,NULL,3,1,0,1,NULL,NULL);
+INSERT INTO `category_value_varchar` VALUES (13,1,1,'Default Category',NULL);
+
 INSERT INTO `eav_entity_type` VALUES (4, 'product', 'product_entity', 'product_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 4, 'Default', CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Infomation', CURRENT_TIMESTAMP, NULL),
-(NULL, 4, 'Price', CURRENT_TIMESTAMP, NULL);
+(NULL, 4, 'Price', CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Meta Infomation', CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (26,4,'name','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
 (27,4,'uri_key','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -1300,12 +1304,19 @@ INSERT INTO `eav_attribute` VALUES
 (29,4,'short_description','text','wysiwyg','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (30,4,'sku','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
 (31,4,'weight','decimal','number','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(32,4,'new_start','datetime','datetime','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(33,4,'new_end','datetime','datetime','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(32,4,'new_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(33,4,'new_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (34,4,'price','decimal','price','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (35,4,'special_price','decimal','price','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(36,4,'special_price_start','datetime','datetime','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(37,4,'special_price_end','datetime','datetime','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
+(36,4,'special_price_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(37,4,'special_price_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(38,4,'taxable','varchar','select','',0,'',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
+(39,4,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(40,4,'meta_description','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(41,4,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(42,4,'images','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(43,4,'default_image','integer','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(44,4,'thumbnail','integer','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (4, 5, 26, 0),
 (4, 5, 27, 0),
@@ -1318,7 +1329,11 @@ INSERT INTO `eav_entity_attribute` VALUES
 (4, 6, 34, 0),
 (4, 6, 35, 0),
 (4, 6, 36, 0),
-(4, 6, 37, 0);
+(4, 6, 37, 0),
+(4, 6, 38, 0),
+(4, 7, 39, 0),
+(4, 7, 40, 0),
+(4, 7, 41, 0);
 INSERT INTO `eav_attribute_label` VALUES
 (26, 1, 'Name'),
 (27, 1, 'Uri Key'),
@@ -1330,8 +1345,15 @@ INSERT INTO `eav_attribute_label` VALUES
 (33, 1, 'Set Product as New to Date'),
 (34, 1, 'Price'),
 (35, 1, 'Special Price'),
-(36, 1, 'Special Price From Date'),
-(37, 1, 'Special Price To Date');
+(36, 1, 'Special Price from Date'),
+(37, 1, 'Special Price to Date'),
+(38, 1, 'Taxable'),
+(39, 1, 'Meta Title'),
+(40, 1, 'Meta Description'),
+(41, 1, 'Meta Keywords'),
+(42, 1, 'Images'),
+(43, 1, 'Default Image'),
+(44, 1, 'Thumbnail');
 
 CREATE TABLE IF NOT EXISTS `product_type` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product type ID',
@@ -1461,6 +1483,8 @@ CREATE TABLE IF NOT EXISTS `product_option` (
     `input` VARCHAR(10) NOT NULL COMMENT 'EAV attribute form element',
     `is_required` BOOLEAN DEFAULT 0 COMMENT 'Is attribute required',
     `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
+    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option price',
+    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
     `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_PRODUCT_ID (`product_id`),
@@ -1478,21 +1502,12 @@ CREATE TABLE IF NOT EXISTS `product_option_title` (
     CONSTRAINT FK_PRODUCT_OPTION_TITLE_OPTION_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `product_option_price` (
-    `option_id` INTEGER NOT NULL COMMENT 'Option ID',
-    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
-    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option price',
-    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    PRIMARY KEY (`option_id`,`store_id`),
-    INDEX IDX_PRODUCT_OPTION_PRICE_STORE_ID (`store_id`),
-    CONSTRAINT FK_PRODUCT_OPTION_PRICE_OPTION_ID_PRODUCT_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `product_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_PRODUCT_OPTION_PRICE_OPTION_ID_PRODUCT_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS `product_option_value` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product option value',
     `option_id` INTEGER NOT NULL COMMENT 'Option ID',
     `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
+    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option value price',
+    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
     `sort_order` INTEGER NOT NULL COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_OPTION_ID (`option_id`),
@@ -1510,17 +1525,6 @@ CREATE TABLE IF NOT EXISTS `product_option_value_title` (
     CONSTRAINT FK_PRODUCT_OPTION_VALUE_TITLE_OPTION_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `product_option_value_price` (
-    `value_id` INTEGER NOT NULL COMMENT 'Value ID',
-    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
-    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option value price',
-    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    PRIMARY KEY (`value_id`,`store_id`),
-    INDEX IDX_PRODUCT_OPTION_VALUE_PRICE_STORE_ID (`store_id`),
-    CONSTRAINT FK_PRODUCT_OPTION_VALUE_PRICE_OPTION_ID_PRODUCT_VALUE_ID FOREIGN KEY (`value_id`) REFERENCES `product_option_value`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_PRODUCT_OPTION_VALUE_PRICE_OPTION_ID_PRODUCT_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS `product_in_store` (
     `product_id` INTEGER NOT NULL COMMENT 'Product ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
@@ -1530,10 +1534,22 @@ CREATE TABLE IF NOT EXISTS `product_in_store` (
     CONSTRAINT FK_PRODUCT_IN_STORE_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `product_link` (
+    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `linked_product_id` INTEGER NOT NULL COMMENT 'Linked Product ID',
+    `type` CHAR(1) NOT NULL COMMENT 'Link type',
+    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    PRIMARY KEY (`product_id`,`linked_product_id`,`type`),
+    INDEX IDX_PRODUCT_LINK_LINKED_PRODUCT_ID (`linked_product_id`),
+    INDEX IDX_PRODUCT_LINK_SORT_ORDER (`sort_order`),
+    CONSTRAINT FK_PRODUCT_LINK_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PRODUCT_LINK_LINKED_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`linked_product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `warehouse` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Warehouse ID',
     `name` VARCHAR(255) DEFAULT '' COMMENT 'Warehouse Name',
-    `country` VARCHAR(3) NOT NULL COMMENT 'Country ISO code',
+    `country` VARCHAR(3) DEFAULT '' COMMENT 'Country ISO code',
     `region` VARCHAR(50) DEFAULT '' COMMENT 'Region name',
     `city` VARCHAR(50) DEFAULT '' COMMENT 'City name',
     `address` VARCHAR(255) DEFAULT '' COMMENT 'Address',
@@ -1549,6 +1565,8 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
     INDEX IDX_WAREHOUSE_OPEN_AT_CLOSE_AT (`open_at`,`close_at`),
     INDEX IDX_WAREHOUSE_STATUS (`status`)
 );
+
+INSERT INTO `warehouse`(`name`) VALUES ('Default');
 
 CREATE TRIGGER `TGR_UPDATE_WAREHOUSE` BEFORE UPDATE ON `warehouse` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
@@ -1585,6 +1603,40 @@ CREATE TABLE IF NOT EXISTS `product_in_category` (
     INDEX IDX_PRODUCT_IN_CATEGORY_SORT_ORDER (`sort_order`),
     CONSTRAINT FK_PRODUCT_IN_CATEGORY_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_PRODUCT_IN_CATEGORY_PRODUCT_ID_CATEGORY_ENTITY_ID FOREIGN KEY (`category_id`) REFERENCES `category_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `review` (
+    `id` INTEGER NOT NULL COMMENT 'Review ID',
+    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `customer_id` INTEGER NULL DEFAULT NULL COMMENT 'Customer ID',
+    `order_id` INTEGER NULL DEFAULT NULL COMMENT 'Order ID',
+    `language_id` INTEGER NULL DEFAULT NULL COMMENT 'Language ID',
+    `subject` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Review subject',
+    `content` BLOB COMMENT 'Review content',
+    `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
+    PRIMARY KEY (`id`),
+    INDEX IDX_REVIEW_PRODUCT_ID (`product_id`),
+    INDEX IDX_REVIEW_CUSTOMER_ID (`customer_id`),
+    INDEX IDX_REVIEW_ORDER_ID (`order_id`),
+    INDEX IDX_REVIEW_LANGUAGE_ID (`language_id`),
+    INDEX IDX_REVIEW_STATUS (`status`),
+    CONSTRAINT FK_REVIEW_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_REVIEW_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_REVIEW_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `rating` (
+    `id` INTEGER NOT NULL COMMENT 'Rating ID',
+    `type` BOOLEAN NOT NULL COMMENT 'Rating for product or order',
+    `title` VARCHAR(255) NOT NULL COMMENT 'Rating name',
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `review_rating` (
+    `review_id` INTEGER NOT NULL COMMENT 'Review ID',
+    `rating_id` INTEGER NOT NULL COMMENT 'Rating ID',
+    `value` DECIMAL(3,1) NOT NULL COMMENT 'Rating value',
+    PRIMARY KEY (`review_id`, `rating_id`)
 );
 
 SET FOREIGN_KEY_CHECKS = 1;

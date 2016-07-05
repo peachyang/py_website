@@ -210,23 +210,27 @@ abstract class Entity extends AbstractModel
                             }
                         }
                     } else {
-                        foreach ($languages as $language) {
-                            if (!isset($index[$language['id']])) {
-                                $index[$language['id']] = [];
+                        if ($isUpdate) {
+                            if (!isset($index[$this->languageId])) {
+                                $index[$this->languageId] = [];
                             }
-                            $index[$language['id']][$attr['code']] = $attributes[$attr['code']];
-                            if ($isUpdate) {
-                                $this->upsert(['value' => $attributes[$attr['code']]], ['language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
-                            } else {
+                            $index[$this->languageId][$attr['code']] = $attributes[$attr['code']];
+                            $this->upsert(['value' => $attributes[$attr['code']]], ['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                        } else {
+                            foreach ($languages as $language) {
+                                if (!isset($index[$language['id']])) {
+                                    $index[$language['id']] = [];
+                                }
+                                $index[$language['id']][$attr['code']] = $attributes[$attr['code']];
                                 $this->insert(['value' => $attributes[$attr['code']], 'language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
                             }
                         }
                     }
                 }
-                foreach ($languages as $language) {
-                    if ($isUpdate) {
-                        $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $language['id'], $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []), [$this->primaryKey => $this->getId()]);
-                    } else {
+                if ($isUpdate) {
+                    $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, $columns + (isset($index[$this->languageId]) ? $index[$this->languageId] : []), [$this->primaryKey => $this->getId()]);
+                } else {
+                    foreach ($languages as $language) {
                         $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));
                     }
                 }
@@ -296,7 +300,7 @@ abstract class Entity extends AbstractModel
         $pairs = [];
         foreach ($this->storage as $key => $value) {
             if (in_array($key, $attrs) && ($this->isNew || in_array($key, $this->updatedColumns))) {
-                $pairs[$key] = $value;
+                $pairs[$key] = $value === '' ? null : $value;
             }
         }
         return $pairs;

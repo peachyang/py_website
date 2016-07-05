@@ -16,8 +16,7 @@ class Product extends PGrid
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '&pid=' .
-                $item['parent_id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
@@ -57,12 +56,14 @@ class Product extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        $user = (new Segment('admin'))->get('user');
-        if ($user->getStore()) {
-            $collection->where(['store_id' => $user->getStore()->getId()]);
+        if (is_null($collection)) {
+            $collection = new Collection;
+            $user = (new Segment('admin'))->get('user');
+            if ($user->getStore()) {
+                $collection->where(['store_id' => $user->getStore()->getId()]);
+            }
         }
-        return $collection;
+        return parent::prepareCollection($collection);
     }
 
 }

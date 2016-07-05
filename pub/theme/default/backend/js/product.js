@@ -129,5 +129,8 @@
                 });
             }
         });
+        $('.widget-upload').on('resource.selected', '.btn[data-toggle=modal]', function () {
+            $(this).parents('.inline-box').find('[type=radio]').val($(this).siblings('input').val());
+        });
     });
 }));

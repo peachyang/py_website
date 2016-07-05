@@ -46,7 +46,7 @@ class Group extends Template
     public function getDeleteUrl()
     {
         if (!$this->deleteUrl) {
-            $this->deleteUrl = $this->getAdminUrl('customer_attribute_group/delete/');
+            $this->deleteUrl = $this->getAdminUrl('catalog_attribute_group/delete/');
         }
         return $this->deleteUrl;
     }
@@ -54,7 +54,7 @@ class Group extends Template
     public function getSaveUrl()
     {
         if (!$this->saveUrl) {
-            $this->saveUrl = $this->getAdminUrl('customer_attribute_group/save/');
+            $this->saveUrl = $this->getAdminUrl('catalog_attribute_group/save/');
         }
         return $this->saveUrl;
     }

@@ -29,7 +29,7 @@ class Attribute extends AbstractCollection
             $this->select->join('eav_entity_attribute', 'eav_entity_attribute.attribute_id=eav_attribute.id', ['sort_order'], 'left');
             $this->hasSortOrder = true;
         }
-        $this->select->join('eav_attribute_group', 'eav_entity_attribute.attribute_group_id=eav_attribute_group.id', ['attribute_group' => 'name', 'attribute_group_id' => 'id'], 'left');
+        $this->select->join('eav_attribute_group', 'eav_entity_attribute.attribute_group_id=eav_attribute_group.id', ['attribute_group' => 'name', 'attribute_group_id' => 'id', 'attribute_group_is_hidden' => 'is_hidden'], 'left');
         return $this;
     }
 

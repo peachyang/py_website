@@ -7,6 +7,7 @@ use Seahinet\Catalog\Model\Collection\Product as Collection;
 use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
 use Seahinet\Catalog\Model\Product\Option as OptionModel;
 use Seahinet\Catalog\Model\Warehouse;
+use Seahinet\Resource\Model\Resource;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
@@ -85,6 +86,33 @@ class Product extends Entity
     public function getCrossSells()
     {
         return $this->getLinkedProducts('c');
+    }
+
+    protected function afterLoad($result = array())
+    {
+        if (!empty($result['images'])) {
+            $result['images'] = json_decode($result['images'], true);
+            foreach ($result['images'] as &$item) {
+                $item['src'] = (new Resource)->load($item['id'])['real_name'];
+            }
+        }
+        parent::afterLoad($result);
+    }
+
+    protected function beforeSave()
+    {
+        if (is_array($this->storage['images'])) {
+            $images = [];
+            foreach ($this->storage['images'] as $order => $id) {
+                $images[] = [
+                    'id' => $id,
+                    'label' => $this->storage['images-label'][$order],
+                    'group' => $this->storage['images-group'][$order]
+                ];
+            }
+            $this->storage['images'] = json_encode($images);
+        }
+        parent::beforeSave();
     }
 
     protected function afterSave()

@@ -16,7 +16,7 @@
                     $('.widget-upload').on('click', '.delete', function () {
                         var p = $(this).parents('.inline-box');
                         if ($(p).siblings('.inline-box').length === 0) {
-                            $(p).children('[type=hidden]').val('');
+                            $(p).children('input,select,textarea').not('[type=radio],[type=checkbox]').val('');
                             $(p).find('img').attr('src', GLOBAL.PUB_URL + 'backend/images/placeholder.png');
                         } else {
                             $(p).remove();

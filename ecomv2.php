@@ -1611,7 +1611,7 @@ CREATE TABLE IF NOT EXISTS `product_in_category` (
 );
 
 CREATE TABLE IF NOT EXISTS `review` (
-    `id` INTEGER NOT NULL COMMENT 'Review ID',
+    `id` INTEGER NOT AUTO_INCREMENT NULL COMMENT 'Review ID',
     `product_id` INTEGER NOT NULL COMMENT 'Product ID',
     `customer_id` INTEGER NULL DEFAULT NULL COMMENT 'Customer ID',
     `order_id` INTEGER NULL DEFAULT NULL COMMENT 'Order ID',
@@ -1631,7 +1631,7 @@ CREATE TABLE IF NOT EXISTS `review` (
 );
 
 CREATE TABLE IF NOT EXISTS `rating` (
-    `id` INTEGER NOT NULL COMMENT 'Rating ID',
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Rating ID',
     `type` BOOLEAN NOT NULL COMMENT 'Rating for product or order',
     `title` VARCHAR(255) NOT NULL COMMENT 'Rating name',
     PRIMARY KEY (`id`)

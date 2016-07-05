@@ -79,7 +79,7 @@ class Database extends AbstractHandler
                     $ddl->addColumn($column);
                     if ($attr['is_unique']) {
                         #$ddl->addConstraint(new Ddl\Constraint\UniqueKey($attr['attr'], 'UNQ_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
-                        $ddl->addConstraint(Ddl\Index\Index($attr['attr'], 'IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
+                        $ddl->addConstraint(new Ddl\Index\Index($attr['attr'], 'IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
                     }
                 }
             }

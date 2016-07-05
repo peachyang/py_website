@@ -19,7 +19,7 @@ class Product extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'sku', 'product_type_id', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'product_type_id', 'status']);
     }
 
     public function getOptions()

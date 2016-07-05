@@ -66,13 +66,13 @@ class Database extends AbstractHandler
             foreach ($columns as $attr) {
                 if ($attr['attr']) {
                     if ($attr['type'] === 'int') {
-                        $column = new Ddl\Column\Integer($attr['attr'], true, $attr['default_value']);
+                        $column = new Ddl\Column\Integer($attr['attr'], true, (int) $attr['default_value']);
                     } else if ($attr['type'] === 'varchar') {
                         $column = new Ddl\Column\Varchar($attr['attr'], 255, true, $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {
-                        $column = new Ddl\Column\Timestamp($attr['attr'], true, $attr['default_value']);
+                        $column = new Ddl\Column\Timestamp($attr['attr'], true, $attr['default_value']? : null);
                     } else if ($attr['type'] === 'decimal') {
-                        $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, $attr['default_value']);
+                        $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, (float) $attr['default_value']);
                     } else {
                         $column = new Ddl\Column\Text($attr['attr'], 65535, true, $attr['default_value']);
                     }

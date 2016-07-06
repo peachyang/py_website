@@ -75,7 +75,7 @@ class Category extends PEdit
                 'type' => 'multitext',
                 'label' => 'Name',
                 'required' => 'required',
-                'base' => '#language_id--',
+                'base' => '#language_id',
                 'options' => $languages
             ]
         ];

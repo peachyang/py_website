@@ -12,6 +12,14 @@ customer_account_login:
                     -
                         method: setTitle
                         params: Customer Login
+            header:
+                children:
+                    block:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: header-mini
             content:
                 children:
                     form:

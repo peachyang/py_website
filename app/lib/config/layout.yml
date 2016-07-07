@@ -31,3 +31,66 @@ default:
                 type: Seahinet\Lib\ViewModel\Wrapper
             afterContent:
                 type: Seahinet\Lib\ViewModel\Wrapper
+frontend:
+    update: default
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addLink
+                        params: frontend/css/bootstrap.css
+                    -
+                        method: addLink
+                        params: frontend/css/styles.css
+                    -
+                        method: addLink
+                        params: [frontend/css/styles-ie.css,stylesheet,lt IE 9]
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.js
+                    -
+                        method: addScript
+                        params: frontend/js/translate.js
+                    -
+                        method: addScript
+                        params: frontend/js/validate/jquery.validate.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/validate/config.js
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/modernizr.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/bootstrap.js',defer:'defer',async:'async'}]
+                    -    
+                        method: addScript
+                        params: [{src:'frontend/js/app.js',defer:'defer'}]
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/selectivizr.js',defer:'defer'},lt IE 9]
+            header:
+                children:
+                    block:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: header
+                        children:
+                            welcome:
+                                type: Seahinet\Customer\ViewModel\Welcome
+                            links:
+                                type: Seahinet\Lib\ViewModel\Links
+                            category:
+                                type: Seahinet\Catalog\ViewModel\Navigation
+                            navigation:
+                                type: Seahinet\Cms\ViewModel\Navigation
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: showHome
+                                params: true

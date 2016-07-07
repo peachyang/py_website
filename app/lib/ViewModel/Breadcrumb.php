@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib\ViewModel;
 
-class Breadcrumb extends AbstractViewModel
+class Breadcrumb extends Template
 {
 
     protected $crumbs = [];

@@ -1,11 +1,26 @@
 ---
 catalog_category:
-    update: default
+    update: frontend
     root:
         children:
             content:
                 children:
-                    
+                    toolbar:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        children:
+                            filter:
+                                type: Seahinet\Catalog\ViewModel\Category\Filter
+                            sortby:
+                                type: Seahinet\Catalog\ViewModel\Category\SortBy
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                    list:
+                        type: Seahinet\Catalog\ViewModel\Category\ProductList
+                    toolbar-bottom:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 admin_catalog_category_list:
     update: grid
     root:
@@ -116,7 +131,7 @@ admin_catalog_product_list:
                         grid:
                             type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
 admin_catalog_product_simple_list:
-    update: default
+    update: admin
     root:
         template: page/empty
         children:

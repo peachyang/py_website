@@ -7,7 +7,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 /**
  * Global notice view model
  */
-final class GlobalNotice extends AbstractViewModel implements Singleton
+final class GlobalNotice extends Template implements Singleton
 {
 
     protected static $instance = null;

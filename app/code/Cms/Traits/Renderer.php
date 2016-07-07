@@ -46,25 +46,19 @@ trait Renderer
      * @param string $param
      * @return string
      */
-    protected function replaceBlock($param = '')
+    protected function replaceBlock($param)
     {
-        if ($param) {
-            preg_match_all('#\s+(?P<key>[^\=]+)\=([\'\"])(?P<value>[^\2]+?)\2#', $param, $matches);
-            $params = array_combine($matches['key'], $matches['value']);
-            if ((!isset($params['type']) || trim($params['type'], '\\') === 'Seahinet\\Cms\\ViewModel\\Block') && isset($params['id'])) {
-                $block = new Block;
-                $block->setBlockId($params['id']);
-//        } else if (isset($params['type'])) {
-//            $block = new $params['type'];
-//            if (isset($params['template'])) {
-//                $block->setTemplate($params['template']);
-//            }
-            } else {
-                return '';
-            }
-            return $block->__toString();
+        preg_match_all('#\s+(?P<key>[^\=]+)\=([\'\"])(?P<value>[^\2]+?)\2#', $param, $matches);
+        $params = array_combine($matches['key'], $matches['value']);
+        if ((!isset($params['type']) || trim($params['type'], '\\') === 'Seahinet\\Cms\\ViewModel\\Block') && isset($params['id'])) {
+            $block = new Block;
+            $block->setBlockId($params['id']);
+        } else if (isset($params['name'])) {
+            $block = $this->{$params['name']};
+        } else {
+            return '';
         }
-        return '';
+        return $block->__toString();
     }
 
 }

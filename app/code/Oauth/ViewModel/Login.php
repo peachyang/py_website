@@ -2,10 +2,10 @@
 
 namespace Seahinet\Oauth\ViewModel;
 
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Oauth\Model\Consumer;
 
-class Login extends AbstractViewModel
+class Login extends Template
 {
 
     protected $consumer = null;

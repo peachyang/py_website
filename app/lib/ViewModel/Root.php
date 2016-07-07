@@ -7,7 +7,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 /**
  * Root view model
  */
-final class Root extends AbstractViewModel implements Singleton
+final class Root extends Template implements Singleton
 {
 
     protected static $instance = null;

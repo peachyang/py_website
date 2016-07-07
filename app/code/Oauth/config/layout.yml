@@ -1,6 +1,6 @@
 ---
 oauth_login:
-    update: default
+    update: frontend
     root:
         children:
             content:

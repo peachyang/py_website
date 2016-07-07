@@ -1,4 +1,4 @@
 ---
 catalog:
     route: Seahinet\Catalog\Route\Router
-    priority: 90
+    priority: 40

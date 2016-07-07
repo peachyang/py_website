@@ -5,7 +5,7 @@ namespace Seahinet\Lib\ViewModel;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Language as LanguageCollection;
 
-class Language extends AbstractViewModel
+class Language extends Template
 {
 
     protected $showEdit = false;

@@ -2,9 +2,9 @@
 
 namespace Seahinet\Admin\ViewModel;
 
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
-class Edit extends AbstractViewModel
+class Edit extends Template
 {
 
     protected $hasTitle = true;

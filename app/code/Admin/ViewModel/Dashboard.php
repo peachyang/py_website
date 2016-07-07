@@ -2,9 +2,9 @@
 
 namespace Seahinet\Admin\ViewModel;
 
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
-class Dashboard extends AbstractViewModel
+class Dashboard extends Template
 {
 
     public function getStat()

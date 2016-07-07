@@ -5,9 +5,9 @@ namespace Seahinet\Admin\ViewModel\Resource;
 use Seahinet\Resource\Source\Category;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Store;
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
-class Modal extends AbstractViewModel
+class Modal extends Template
 {
 
     public function getCategorySource()

@@ -7,7 +7,7 @@ use Seahinet\Lib\Model\AbstractCollection;
 /**
  * Pager of collection
  */
-class Pager extends AbstractViewModel
+class Pager extends Template
 {
 
     /**

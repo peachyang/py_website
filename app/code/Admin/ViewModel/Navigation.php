@@ -2,10 +2,10 @@
 
 namespace Seahinet\Admin\ViewModel;
 
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
 
-class Navigation extends AbstractViewModel
+class Navigation extends Template
 {
 
     protected $items = [];

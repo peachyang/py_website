@@ -66,11 +66,13 @@ class Url implements Provider
                 ];
             }
             foreach ($categories as $category) {
-                $data[$language['id']][$category['id']] = [
-                    'page_id' => null,
-                    'category_id' => $category['id'],
-                    'path' => $this->getPath($category, $tree)
-                ];
+                if ($path = $this->getPath($category, $tree)) {
+                    $data[$language['id']][$category['id']] = [
+                        'page_id' => null,
+                        'category_id' => $category['id'],
+                        'path' => $this->getPath($category, $tree)
+                    ];
+                }
             }
             $pages = new Page;
             $pages->where(['status' => 1]);

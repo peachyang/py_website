@@ -54,6 +54,7 @@ class Url implements Provider
         $languages = new Language;
         $languages->columns(['id']);
         $categories = new Category;
+        $categories->where(['status' => 1]);
         $categories->load(false);
         foreach ($languages as $language) {
             $data[$language['id']] = [];
@@ -72,6 +73,7 @@ class Url implements Provider
                 ];
             }
             $pages = new Page;
+            $pages->where(['status' => 1]);
             $pages->load(false);
             foreach ($pages as $page) {
                 $page = new PageModel($page);

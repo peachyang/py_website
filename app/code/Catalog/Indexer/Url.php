@@ -55,6 +55,7 @@ class Url implements Provider
         $languages->columns(['id']);
         foreach ($languages as $language) {
             $categories = new Category($language['id']);
+            $categories->where(['status' => 1]);
             $categories->load(false);
             $data[$language['id']] = [];
             $tree = [];
@@ -72,6 +73,7 @@ class Url implements Provider
                 ];
             }
             $products = new Product($language['id']);
+            $products->where(['status' => 1]);
             $products->load(false);
             foreach ($products as $product) {
                 $product = new ProductModel($language['id'], $product);

@@ -24,9 +24,9 @@ class Router extends Route
         }
         if ($result = $this->getContainer()->get('indexer')->select('catalog_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
             if ($result[0]['product_id']) {
-                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\ProductController', 'product_id' => $result[0]['product_id']], $request);
+                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\ProductController', 'action' => 'index', 'product_id' => $result[0]['product_id']], $request);
             } else {
-                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\CategoryController', 'category_id' => $result[0]['category_id']], $request);
+                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\CategoryController', 'action' => 'index', 'category_id' => $result[0]['category_id']], $request);
             }
         }
         return false;

@@ -1,4 +1,11 @@
 ---
+catalog_category:
+    update: default
+    root:
+        children:
+            content:
+                children:
+                    
 admin_catalog_category_list:
     update: grid
     root:

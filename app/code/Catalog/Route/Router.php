@@ -22,12 +22,11 @@ class Router extends Route
         } else {
             return false;
         }
-        $indexer = $this->getContainer()->get('indexer');
-        if ($result = $indexer->select('catalog_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
+        if ($result = $this->getContainer()->get('indexer')->select('catalog_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
             if ($result[0]['product_id']) {
-                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\Product', 'product_id' => $result[0]['product_id']], $request);
+                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\ProductController', 'product_id' => $result[0]['product_id']], $request);
             } else {
-                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\Category', 'category_id' => $result[0]['category_id']], $request);
+                return new RouteMatch(['controller' => 'Seahinet\\Catalog\\Controller\\CategoryController', 'category_id' => $result[0]['category_id']], $request);
             }
         }
         return false;

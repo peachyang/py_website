@@ -1,0 +1,13 @@
+<?php
+$sorters = $this->getSorters();
+$current = $this->getCurrentSorter();
+?>
+<div class="sort-by">
+    <ul class="list-inline">
+        <?php foreach ($sorters as $key => $label): ?>
+            <li<?php if ($this->getCurrentSorter() == $key): ?> class="<?php echo ($this->isAscending() ? 'asc' : 'desc') ?>"<?php endif ?>>
+                <a href="<?php echo $this->getSorterUrl($key) ?>"><?php echo $label ?></a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

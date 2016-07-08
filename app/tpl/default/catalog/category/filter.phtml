@@ -1,0 +1,38 @@
+<?php
+$filters = $this->getFilters();
+?>
+<div class="current">
+    <ul class="list-inline">
+        <li class="reset-all">
+            <a href="<?php echo $this->getInitFilterUrl() ?>"><?php echo $this->translate('Reset All') ?></a>
+        </li>
+        <?php foreach ($this->getCurrentFilters() as $key => $value): ?>
+            <li>
+                <a href="<?php echo $this->getInitFilterUrl($key) ?>">
+                    <?php echo $filters[$key]['label'], ':', $filters[$key]['values'][$value]['label'] ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>
+<table class="filters">
+    <?php foreach ($filters as $key => $filter): ?>
+        <tr>
+            <th><?php echo $filter['label'] ?></th>
+            <td>
+                <ul class="list-inline">
+                    <?php foreach ($filter['values'] as $value => $values): ?>
+                        <li>
+                            <a href="<?php echo $this->getFilterUrl($key, $value) ?>">
+                                <span><?php echo $values['label'] ?></span>
+                                <?php if ($this->showCount()): ?>
+                                    <span class="count"><?php echo $values['count'] ?></span>
+                                <?php endif ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>

@@ -7,17 +7,19 @@ catalog_category:
                 children:
                     toolbar:
                         type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        template: catalog/category/toolbar
                         children:
                             filter:
                                 type: Seahinet\Catalog\ViewModel\Category\Filter
+                                template: catalog/category/filter
                             sortby:
                                 type: Seahinet\Catalog\ViewModel\Category\SortBy
-                            pager:
-                                type: Seahinet\Lib\ViewModel\Pager
+                                template: catalog/category/sortby
                     list:
                         type: Seahinet\Catalog\ViewModel\Category\ProductList
-                    toolbar-bottom:
+                    toolbar_bottom:
                         type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        template: catalog/category/toolbar
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager

@@ -10,9 +10,30 @@ customer_account_login:
             head:
                 action:
                     -
+                        method: addScript
+                        params: backend/js/modernizr.js                    
+                    -
                         method: setTitle
-                        params: Customer Login
+                        params: Customer Login                   
+                    -
+                        method: addLink
+                        params: frontend/js/bootstrap.js
+                    -
+                        method: addLink
+                        params: frontend/css/bootstrap.css
+                    -   
+                        method: addLink
+                        params: frontend/css/style.css
+            header:
+                children:
+                    title:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: header-login
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
@@ -24,9 +45,31 @@ customer_account_create:
             head:
                 action:
                     -
+                        method: addScript
+                        params: backend/js/modernizr.js
+                    -
                         method: setTitle
                         params: Create New Customer Account
+                        
+                    -
+                        method: addLink
+                        params: frontend/js/bootstrap.js
+                    -
+                        method: addLink
+                        params: frontend/css/bootstrap.css
+                    -   
+                        method: addLink
+                        params: frontend/css/style.css
+            header:
+                children:
+                    title:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: header-create
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template

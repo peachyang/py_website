@@ -105,5 +105,4 @@ class Attribute extends PGrid
                 ->where(['eav_entity_type.code' => Product::ENTITY_TYPE]);
         return parent::prepareCollection($collection);
     }
-
 }

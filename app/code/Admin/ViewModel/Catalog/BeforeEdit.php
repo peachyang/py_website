@@ -26,5 +26,4 @@ class BeforeEdit extends PBeforeEdit
             ]
         ];
     }
-
 }

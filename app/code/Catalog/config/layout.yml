@@ -438,3 +438,87 @@ admin_catalog_product_edit_1:
     update: admin_catalog_product_edit
 admin_catalog_product_edit_2:
     update: admin_catalog_product_edit
+admin_catalog_product_review_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Review Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Add New Review'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Review
+admin_catalog_product_review_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Review Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Edit'}]
+                        edit:
+                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Review                            
+admin_catalog_product_rating_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Rating Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Add New Rating'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Rating
+admin_catalog_product_rating_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Rating Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Edit'}]
+                        edit:
+                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Rating

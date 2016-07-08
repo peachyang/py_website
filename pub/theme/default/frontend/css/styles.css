@@ -27,7 +27,7 @@ body{min-width:320px}
 hr{margin-top:0px;height:1px;border:none;background-color:rgb(208,224,232)}
 .container-create{margin-top:100px}
 .create{border-right:1px solid #f2f2f2;text-align:center;}
-.create2{display:inline-block;text-align:left;max-width:320px;width:100%}
+.create2{display:inline-block;text-align:left;width:320px;}
 .input-create{height:50px;border:1px solid rgb(225,235,254);border-left-style:none;}
 .input-bottom-30{margin-bottom:30px;}
 .input-addon-create{background-color:white;border:1px solid rgb(225,235,254);}

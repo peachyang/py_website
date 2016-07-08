@@ -3,9 +3,9 @@
 namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
 
 use Seahinet\Catalog\Model\Product;
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
-class Tab extends AbstractViewModel
+class Tab extends Template
 {
 
     private static $product;

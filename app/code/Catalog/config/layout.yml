@@ -1,4 +1,26 @@
 ---
+catalog_category:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    toolbar:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        children:
+                            filter:
+                                type: Seahinet\Catalog\ViewModel\Category\Filter
+                            sortby:
+                                type: Seahinet\Catalog\ViewModel\Category\SortBy
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                    list:
+                        type: Seahinet\Catalog\ViewModel\Category\ProductList
+                    toolbar-bottom:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 admin_catalog_category_list:
     update: grid
     root:
@@ -40,6 +62,29 @@ admin_catalog_category_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/config.js
             content:
                 children:
                     breadcrumb:
@@ -59,6 +104,11 @@ admin_catalog_category_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/modal
 admin_catalog_product_list:
     update: grid
     root:
@@ -81,7 +131,7 @@ admin_catalog_product_list:
                         grid:
                             type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
 admin_catalog_product_simple_list:
-    update: default
+    update: admin
     root:
         template: page/empty
         children:

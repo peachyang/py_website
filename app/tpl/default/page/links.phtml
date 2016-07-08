@@ -1,0 +1,10 @@
+<?php
+$links = $this->getLinks();
+if (count($links)):
+    ?>
+    <ul class="links<?php echo $this->getClass() ?>">
+        <?php foreach ($links as $link): ?>
+            <li><a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl($link['link']) : $this->getBaseUrl($link['link']) ?>" title="<?php echo $this->translate($link['label']) ?>"><?php echo $this->translate($link['label']) ?></a></li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>

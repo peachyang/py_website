@@ -185,6 +185,7 @@ abstract class Entity extends AbstractModel
                     $tableGateway->insert($columns);
                     $this->setId($tableGateway->getLastInsertValue());
                 }
+                $columns = array_diff_key($columns, ['type_id' => 1]);
                 $adapter = $this->getContainer()->get('dbAdapter');
                 $tableGateways = [];
                 $languages = new Language;

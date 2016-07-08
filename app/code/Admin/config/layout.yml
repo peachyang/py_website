@@ -149,6 +149,7 @@ admin:
             content:
                 children:
                     breadcrumb:
+                        template: admin/breadcrumb
                         action:
                             -
                                 method: showLabel

@@ -3,10 +3,10 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 use Zend\Db\Sql\Predicate\Like;
 
-class Grid extends AbstractViewModel
+class Grid extends Template
 {
 
     protected $count = null;

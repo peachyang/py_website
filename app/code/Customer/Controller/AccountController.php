@@ -174,7 +174,7 @@ class AccountController extends ActionController
             $data = $this->getRequest()->getPost();
             $config = $this->getContainer()->get('config');
             $segment = new Segment('customer');
-            $result = $this->validateForm($data, ['username', 'password'], (in_array('login', explode(',', $config['customer/captcha/form'])) && ($config['customer/captcha/mode'] == 0 || $config['customer/captcha/attempt'] <= $segment->get('fail2login'))) ? 'customer' : false);
+            $result = $this->validateForm($data, ['username', 'password'], (in_array('login', $config['customer/captcha/form']) && ($config['customer/captcha/mode'] == 0 || $config['customer/captcha/attempt'] <= $segment->get('fail2login'))) ? 'customer' : false);
             if ($result['error'] == 0) {
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {

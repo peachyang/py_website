@@ -1,37 +1,18 @@
 ---
 customer_account:
-    update: default
+    update: frontend
 customer_account_dashboard:
     update: customer_account
 customer_account_login:
-    update: default
+    update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
-                    -
-                        method: addScript
-                        params: backend/js/modernizr.js                    
+                action:                 
                     -
                         method: setTitle
-                        params: Customer Login                   
-                    -
-                        method: addLink
-                        params: frontend/js/bootstrap.js
-                    -
-                        method: addLink
-                        params: frontend/css/bootstrap.css
-                    -   
-                        method: addLink
-                        params: frontend/css/style.css
-            header:
-                children:
-                    title:
-                        type: Seahinet\Cms\ViewModel\Block
-                        action:
-                            -
-                                method: setBlockId
-                                params: header-login
+                        params: Customer Login
             content:
                 unset: [breadcrumb]
                 children:
@@ -39,35 +20,15 @@ customer_account_login:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/login
 customer_account_create:
-    update: default
+    update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
-                    -
-                        method: addScript
-                        params: backend/js/modernizr.js
+                action:                    
                     -
                         method: setTitle
-                        params: Create New Customer Account
-                        
-                    -
-                        method: addLink
-                        params: frontend/js/bootstrap.js
-                    -
-                        method: addLink
-                        params: frontend/css/bootstrap.css
-                    -   
-                        method: addLink
-                        params: frontend/css/style.css
-            header:
-                children:
-                    title:
-                        type: Seahinet\Cms\ViewModel\Block
-                        action:
-                            -
-                                method: setBlockId
-                                params: header-create
+                        params: Create New Customer Account             
             content:
                 unset: [breadcrumb]
                 children:
@@ -75,7 +36,7 @@ customer_account_create:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/create
 customer_account_forgotpwd:
-    update: default
+    update: frontend
     root:
         children:
             head:

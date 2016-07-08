@@ -1,3 +1,17 @@
+<div class="container logo">
+    <h1>
+        <a href="">
+            <!--[if (gte IE 9)|(!IE)]><!-->
+            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="">
+            <!--<![endif]-->
+            <!--[if lt IE 9]>
+            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="" />
+            <![endif]-->
+        </a> 
+        <span class="text-logo">欢迎注册</span>
+    </h1>
+</div>
+<hr />
 <div class="container-fluid container-create">
 	<div class="row">
 		<div class="col-xs-4 col-lg-3 create" >
@@ -8,6 +22,7 @@
                         <div class="input-group-addon input-addon-create">用户名 </div>
                         <input type="text" name="username" id="reg:username" class="form-control required input-create" spellcheck="false" />
                     </div>
+                    
                 </div>
                 <div class="input-box input-bottom-30">
                     <div class="input-group">

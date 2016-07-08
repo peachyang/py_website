@@ -2,7 +2,7 @@
 
 namespace Seahinet\Catalog\Model;
 
-use Seahinet\Catalog\Model\Collection\Category;
+use Seahinet\Catalog\Model\Collection\Category as Categories;
 use Seahinet\Catalog\Model\Collection\Product as Collection;
 use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
 use Seahinet\Catalog\Model\Product\Option as OptionModel;
@@ -36,7 +36,7 @@ class Product extends Entity
     public function getCategories()
     {
         if ($this->getId()) {
-            $category = new Category($this->languageId);
+            $category = new Categories($this->languageId);
             $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
             $result = $tableGateway->select(['product_id' => $this->getId()])->toArray();
             $valueSet = [];

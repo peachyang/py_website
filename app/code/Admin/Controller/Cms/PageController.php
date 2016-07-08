@@ -36,7 +36,7 @@ class PageController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Cms\\Model\\Page', ':ADMIN/cms_page/', ['language_id', 'uri_key', 'title'], function($model, $data) {
+        $response = $this->doSave('\\Seahinet\\Cms\\Model\\Page', ':ADMIN/cms_page/', ['language_id', 'uri_key', 'title'], function($model, $data) {
                     $user = (new Segment('admin'))->get('user');
                     if ($user->getStore()) {
                         $model->setData('store_id', $user->getStore()->getId());
@@ -45,6 +45,8 @@ class PageController extends AuthActionController
                     }
                 }
         );
+        $this->getContainer()->get('indexer')->reindex('cms_url');
+        return $response;
     }
 
 }

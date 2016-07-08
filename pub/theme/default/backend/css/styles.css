@@ -265,7 +265,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .table td{vertical-align:middle}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
-.admin .edit .page-content~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
+.admin .edit .tab-pane~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
 .admin #custom-options .option caption{text-align:left;padding:10px 0}
 .admin #custom-options .option th{white-space:nowrap}
 .admin #custom-options .option td{width:320px}

@@ -98,6 +98,8 @@ class ProductController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
+                $this->getContainer()->get('indexer')->reindex('catalog_url');
+                $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
         return $this->response($result, ':ADMIN/catalog_product/');

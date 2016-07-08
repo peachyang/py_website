@@ -81,12 +81,27 @@ frontend:
                         children:
                             welcome:
                                 type: Seahinet\Customer\ViewModel\Welcome
-                            links:
-                                type: Seahinet\Lib\ViewModel\Links
                             category:
                                 type: Seahinet\Catalog\ViewModel\Navigation
                             navigation:
                                 type: Seahinet\Cms\ViewModel\Navigation
+                            links:
+                                type: Seahinet\Lib\ViewModel\Links
+                                action: 
+                                    -
+                                        method: setClass
+                                        params: text-right
+                                    -
+                                        method: addLink
+                                        params: 
+                                            - {link:'',label:'Home'}
+                                    -
+                                        method: addLink
+                                        params:
+                                            -
+                                                link: #
+                                                label: Customer Service
+                                                children: [{link:'',label:'Live Chat'}]
             content:
                 children:
                     breadcrumb:

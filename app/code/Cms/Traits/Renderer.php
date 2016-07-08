@@ -54,7 +54,7 @@ trait Renderer
             $block = new Block;
             $block->setBlockId($params['id']);
         } else if (isset($params['name'])) {
-            $block = $this->{$params['name']};
+            $block = $this->getChild($params['name']);
         } else {
             return '';
         }

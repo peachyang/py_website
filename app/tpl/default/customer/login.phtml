@@ -19,7 +19,7 @@
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         		<label class="text-login"> 账户登录  </label>
         		<div class="login-create margin-top-15">
-        			<a href="" class="login-create-a"> 注册新账号  </a> 
+        			<a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>" class="login-create-a"> 注册新账号  </a> 
         		</div>        		       		
         		<div class="input-box margin-top-10">
                     <label class="sr-only control-label required" for="login:username"><?php echo $this->translate('Username') ?></label>

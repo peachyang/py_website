@@ -76,13 +76,11 @@ class Template extends AbstractModel
     {
         if ($this->offsetExists('content')) {
             $message->setSubject($this->offsetGet('subject'));
-            $content = $this->offsetGet('content');
-            $vars += [
+            $content = $this->replace($this->offsetGet('content'), $vars + [
                 'base_url' => $this->getBaseUrl(),
                 'pub_url' => $this->getPubUrl(),
                 'res_url' => $this->getResourceUrl()
-            ];
-            $content = $this->replace($content, $vars);
+            ]);
             if ($content) {
                 $css = $this->offsetGet('css');
                 $message->setBody(

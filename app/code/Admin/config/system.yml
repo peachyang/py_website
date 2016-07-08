@@ -120,9 +120,22 @@ theme:
                     options: ['Disabled','Enabled']
         frontend:
             label: Frontend
-            scope: merchant
+            scope: [merchant,store]
             priority: 10
             children:
+                welcome:
+                    type: text
+                    label: Welcome Text
+                    priority: 0
+                    scope: [merchant,store]
+                    default: 'Welcome '
+                welcome_loggedin:
+                    type: text
+                    label: Welcome Text (Logged In)
+                    priority: 0
+                    scope: [merchant,store]
+                    comment: 'Use %%s instead of the username'
+                    default: 'Welcome %s'
                 template:
                     type: text
                     required: required

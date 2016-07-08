@@ -57,19 +57,22 @@ class Block extends AbstractViewModel
             $cache = $this->getContainer()->get('cache');
             $key = $lang . '_CMS_BLOCK_' . $this->getBlockModel()['code'];
             $rendered = $cache->fetch($key, 'VIEWMODEL_RENDERED_');
-            if ($rendered) {
-                return $rendered;
+            if (!$rendered) {
+//            $content = $this->replace($this->getBlockModel()['content'], [
+//                'base_url' => $this->getBaseUrl(),
+//                'pub_url' => $this->getPubUrl(),
+//                'res_url' => $this->getResourceUrl()
+//            ]);
+                $rendered = $this->getBlockModel()['store_id'] ?
+                        $this->getContainer()->get('htmlpurifier')
+                                ->purify($this->getBlockModel()['content']) : $this->getBlockModel()['content'];
+                $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
             }
-            $content = $this->replace($this->getBlockModel()['content'], [
-                'base_url' => $this->getBaseUrl(),
-                'pub_url' => $this->getPubUrl(),
-                'res_url' => $this->getResourceUrl()
+            return $this->replace($rendered, [
+                        'base_url' => $this->getBaseUrl(),
+                        'pub_url' => $this->getPubUrl(),
+                        'res_url' => $this->getResourceUrl()
             ]);
-            $rendered = $this->getBlockModel()['store_id'] ?
-                    $this->getContainer()->get('htmlpurifier')
-                            ->purify($content) : $content;
-            $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
-            return $rendered;
         }
         return '';
     }

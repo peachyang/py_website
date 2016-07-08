@@ -8,7 +8,7 @@
                 <input type="text" name="username" id="login:username" class="form-control required" spellcheck="false" />
             </div>
         </div>
-        <?php if (in_array('forgotpwd', explode(',', $this->getConfig()['customer/captcha/form']))): ?>
+        <?php if (in_array('forgotpwd', $this->getConfig()['customer/captcha/form'])): ?>
             <div class="input-box">
                 <label for="login:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
                 <div class="cell">

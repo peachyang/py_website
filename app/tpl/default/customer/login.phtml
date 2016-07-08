@@ -15,7 +15,7 @@
             </div>
         </div>
         <?php
-        if (in_array('login', explode(',', $this->getConfig()['customer/captcha/form'])) && ($this->getConfig()['customer/captcha/mode'] == 0 || $this->getConfig()['customer/captcha/attempt'] <= (new \Seahinet\Lib\Session\Segment('customer'))->get('fail2login'))):
+        if (in_array('login', $this->getConfig()['customer/captcha/form']) && ($this->getConfig()['customer/captcha/mode'] == 0 || $this->getConfig()['customer/captcha/attempt'] <= (new \Seahinet\Lib\Session\Segment('customer'))->get('fail2login'))):
             ?>
             <div class="input-box">
                 <label for="login:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>

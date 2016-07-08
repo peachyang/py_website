@@ -93,7 +93,7 @@ class AccountController extends ActionController
                     $unique[] = $attribute['code'];
                 }
             }
-            $result = $this->validateForm($data, $required, in_array('register', explode(',', $config['customer/captcha/form'])) ? 'customer' : false);
+            $result = $this->validateForm($data, $required, in_array('register', $config['customer/captcha/form']) ? 'customer' : false);
             if ($data['password'] !== $data['cpassword']) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('The comfirmed password is not equal to the password.'), 'level' => 'danger'];
@@ -153,7 +153,7 @@ class AccountController extends ActionController
                     if (count($collection)) {
                         $mailer = $this->getContainer()->get('mailer');
                         $mailer->send((new TemplateModel($collection[0]))
-                                        ->getMessage(['{{username}}' => $data['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
+                                        ->getMessage(['username' => $data['username'], 'confirm' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
                                         ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
                                         ->addTo($data['email'], $data['username']));
                     }
@@ -174,7 +174,7 @@ class AccountController extends ActionController
             $data = $this->getRequest()->getPost();
             $config = $this->getContainer()->get('config');
             $segment = new Segment('customer');
-            $result = $this->validateForm($data, ['username', 'password'], (in_array('login', explode(',', $config['customer/captcha/form'])) && ($config['customer/captcha/mode'] == 0 || $config['customer/captcha/attempt'] <= $segment->get('fail2login'))) ? 'customer' : false);
+            $result = $this->validateForm($data, ['username', 'password'], (in_array('login', $config['customer/captcha/form']) && ($config['customer/captcha/mode'] == 0 || $config['customer/captcha/attempt'] <= $segment->get('fail2login'))) ? 'customer' : false);
             if ($result['error'] == 0) {
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {
@@ -202,7 +202,7 @@ class AccountController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['username'], in_array('forgotpwd', explode(',', $this->getContainer()->get('config')['customer/captcha/form'])) ? 'customer' : false);
+            $result = $this->validateForm($data, ['username'], in_array('forgotpwd', $this->getContainer()->get('config')['customer/captcha/form']) ? 'customer' : false);
             if ($result['error'] === 0) {
                 $customer = new Model;
                 $customer->load($data['username'], 'username');
@@ -218,7 +218,7 @@ class AccountController extends ActionController
                     if (count($collection)) {
                         $mailer = $this->getContainer()->get('mailer');
                         $mailer->send((new TemplateModel($collection[0]))
-                                        ->getMessage(['{{username}}' => $data['username'], '{{password}}' => $password])
+                                        ->getMessage(['username' => $data['username'], 'password' => $password])
                                         ->addFrom($config['email/customer/sender_email'], $config['email/customer/sender_name'])
                                         ->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
                         $customer->setData('password', $password)->save();

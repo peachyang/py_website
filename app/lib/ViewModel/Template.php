@@ -65,6 +65,7 @@ class Template extends AbstractViewModel
             include $template;
             return ob_get_clean();
         } catch (Error $e) {
+            $this->getContainer()->get('log')->logError($e);
             ob_clean();
             return '';
         }

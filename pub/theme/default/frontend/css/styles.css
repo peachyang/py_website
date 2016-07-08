@@ -7,7 +7,7 @@ body{min-width:320px}
 .header .welcome p{font-size:12px;line-height:30px;color:#fff;display:inline}
 .header .welcome ul{display:inline}
 .header .welcome li+li{margin-left:14px}
-.header .welcome a,.header .links a{font-size:12px;line-height:30px;color:#fff}
+.header .welcome a,.header .links>li>a{font-size:12px;line-height:30px;color:#fff}
 .header .welcome .register a{color:#fdbb30}
 .header .links>li>a{padding:0 12px}
 .header .links>li:last-child>a{padding-right:0}

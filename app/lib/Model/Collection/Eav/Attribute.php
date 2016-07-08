@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Model\Collection\Eav;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Model\AbstractCollection;
 
@@ -15,9 +16,13 @@ class Attribute extends AbstractCollection
         $this->init('eav_attribute');
     }
 
-    public function withLabel($language)
+    public function withLabel($languageId = null)
     {
-        $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
+        if (is_null($languageId)) {
+            $languageId = Bootstrap::getLanguage()->getId();
+        } else if (is_array($languageId) || $languageId instanceof Language) {
+            $languageId = $languageId['id'];
+        }
         $this->select->join('eav_attribute_label', 'eav_attribute.id=eav_attribute_label.attribute_id', ['label'], 'left')
                 ->where(['eav_attribute_label.language_id' => $languageId]);
         return $this;

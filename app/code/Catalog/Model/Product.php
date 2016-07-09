@@ -104,11 +104,13 @@ class Product extends Entity
         if (is_array($this->storage['images'])) {
             $images = [];
             foreach ($this->storage['images'] as $order => $id) {
-                $images[] = [
-                    'id' => $id,
-                    'label' => $this->storage['images-label'][$order],
-                    'group' => $this->storage['images-group'][$order]
-                ];
+                if ($id) {
+                    $images[] = [
+                        'id' => $id,
+                        'label' => $this->storage['images-label'][$order],
+                        'group' => $this->storage['images-group'][$order]
+                    ];
+                }
             }
             $this->storage['images'] = json_encode($images);
         }

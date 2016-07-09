@@ -1148,8 +1148,8 @@ INSERT INTO `eav_attribute` VALUES
 (21,3,'include_in_menu','varchar','select','',1,'1',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
 (22,3,'display_mode','varchar','select','',1,'0',0,'\\Seahinet\\Catalog\\Source\\DisplayMode',NULL,0,0,0,0,NULL,NULL),
 (23,3,'block','varchar','select','',0,'',0,'\\Seahinet\\Cms\\Source\\Block',NULL,0,0,0,0,NULL,NULL),
-(24,3,'sortable','varchar','multiselect','',0,'',0,'\\Seahinet\\Catalog\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL),
-(25,3,'default_sortable','varchar','select','',0,'',0,'\\Seahinet\\Catalog\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL);
+(24,3,'sortable','varchar','multiselect','',1,'',0,'\\Seahinet\\Catalog\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL),
+(25,3,'default_sortable','varchar','select','',1,'',0,'\\Seahinet\\Catalog\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (3, 3, 13, 0),
 (3, 3, 14, 0),

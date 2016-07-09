@@ -1,42 +1,92 @@
-<form action="<?php echo $this->getBaseUrl('customer/account/createpost/') ?>" method="post">
-    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-    <fieldset>
-        <legend><?php echo $this->translate('Create New Customer Account') ?></legend>
-        <div class="input-box">
-            <label class="control-label required" for="reg:username"><?php echo $this->translate('Username') ?></label>
-            <div class="cell">
-                <input type="text" name="username" id="reg:username" class="form-control required" spellcheck="false" />
-            </div>
-        </div>
-        <div class="input-box">
-            <label class="control-label required" for="reg:email"><?php echo $this->translate('Email') ?></label>
-            <div class="cell">
-                <input type="email" name="email" id="reg:email" class="form-control required email" />
-            </div>
-        </div>
-        <div class="input-box">
-            <label class="control-label required" for="reg:password"><?php echo $this->translate('Password') ?></label>
-            <div class="cell">
-                <input type="password" name="password" id="reg:password" class="form-control required" minlength="6" />
-            </div>
-        </div>
-        <div class="input-box">
-            <label class="control-label required" for="reg:cpassword"><?php echo $this->translate('Confirm Password') ?></label>
-            <div class="cell">
-                <input type="password" name="cpassword" id="reg:cpassword" class="form-control required" data-rule-equalto="#reg\:password" />
-            </div>
-        </div>
-        <?php if (in_array('register', $this->getConfig()['customer/captcha/form'])): ?>
-            <div class="input-box">
-                <label for="reg:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
-                <div class="cell">
-                    <input type="text" name="captcha" class="form-control required captcha" maxlength="5" autocomplete="off" spellcheck="false" id="reg:captcha" />
-                    <img src="<?php echo $this->getBaseUrl('customer/account/captcha/') ?>" alt="" class="captcha" height="26" width="70" />
+<div class="container logo">
+    <h1>
+        <a href="">
+            <!--[if (gte IE 9)|(!IE)]><!-->
+            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="">
+            <!--<![endif]-->
+            <!--[if lt IE 9]>
+            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="" />
+            <![endif]-->
+        </a> 
+        <span class="text-logo">欢迎注册</span>
+    </h1>
+</div>
+<hr />
+<div class="container container-create">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 create">
+			<form action="<?php echo $this->getBaseUrl('customer/account/createpost/') ?>" method="post">
+                <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                
+                <div class="create2"> 
+                	<div class="visible-xs ckb-create2">
+            			<span class="text-create-login">已有账号</span>
+            			<span>&nbsp;<a href="<?php echo $this->getBaseUrl('customer/account/login/') ?>" class="create-login-a">请登录</a></span>            			
+    		    	</div>              
+                    <div class="input-box input-bottom-30">
+                        <div class="input-group">
+                            <div class="input-group-addon input-addon-create">用户名 </div>
+                            <input type="text" name="username" id="reg:username" class="form-control required input-create" spellcheck="false" />
+                        </div>                
+                    </div>
+                    <div class="input-box input-bottom-30">
+                        <div class="input-group">
+                        	<div class="input-group-addon input-addon-create"> 设置密码 </div>
+                            <input type="email" name="email" id="reg:email" class="form-control required email input-create " />
+                        </div>
+                    </div>
+                    <div class="input-box input-bottom-30">
+                        <div class="input-group">
+                        	<div class="input-group-addon input-addon-create"> 确认密码  </div>
+                            <input type="password" name="password" id="reg:password" class="form-control required input-create" minlength="6" />
+                        </div>
+                    </div>
+                    <div class="input-box input-bottom-30">
+                        <div class="input-group">
+                        	<div class="input-group-addon input-addon-create"> 常用邮箱 </div>
+                            <input type="password" name="cpassword" id="reg:cpassword" class="form-control required input-create" data-rule-equalto="#reg:password" />
+                        </div>
+                    </div>
+                    
+                    <div class="ckb-create">
+                		<input type="checkbox">
+                		<span class="create-agree1">我已阅读并同意</span><span class="create-agree2"><a href="">《蓝海用户注册协议》</a></span>                 	
+                    </div>               
+                    
+                    <?php if (in_array('register', $this->getConfig()['customer/captcha/form'])): ?>
+                        <div class="input-box">
+                            <label for="reg:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
+                            <div class="cell">
+                                <input type="text" name="captcha" class="form-control required captcha" maxlength="5" autocomplete="off" spellcheck="false" id="reg:captcha" />
+                                <img src="<?php echo $this->getBaseUrl('customer/account/captcha/') ?>" alt="" class="captcha" height="26" width="70" />
+                            </div>
+                        </div>
+                    <?php endif ?>
+                    <div class="buttons-set">
+                        <button type="submit" class="btn btn-submit submit-create"><span><?php echo $this->translate('立即注册') ?></span></button>
+                    </div>
                 </div>
-            </div>
-        <?php endif ?>
-        <div class="buttons-set">
-            <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Submit') ?></span></button>
-        </div>
-    </fieldset>
-</form>
+            </form>		
+		</div>
+		
+		<div class="create-login hidden-xs col-sm-6">
+			<div class="create-login2">
+    			<span class="text-create-login">已有账号</span>
+    			<span>&nbsp;<a href="<?php echo $this->getBaseUrl('customer/account/login/') ?>" class="create-login-a">请登录</a></span>
+    			<div class="create-img">
+    				<img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/create.png') ?>" />
+    		    </div>
+		    </div>
+		</div>
+		
+	</div>
+	
+</div>
+
+
+
+
+
+
+
+

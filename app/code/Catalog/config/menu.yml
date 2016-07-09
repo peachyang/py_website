@@ -20,6 +20,14 @@ catalog:
             link: catalog_attribute_set/
             title: Attribute Set Management
             priority: 25
+        -
+            link: catalog_product_review/
+            title: Review Management
+            priority: 30
+        -
+            link: catalog_product_rating/
+            title: Rating Management
+            priority: 35
 system:
     children:
         -

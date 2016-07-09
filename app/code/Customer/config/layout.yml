@@ -6,21 +6,15 @@ customer_account_dashboard:
 customer_account_login:
     update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
+                action:                 
                     -
                         method: setTitle
                         params: Customer Login
-            header:
-                children:
-                    block:
-                        type: Seahinet\Cms\ViewModel\Block
-                        action:
-                            -
-                                method: setBlockId
-                                params: header-mini
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
@@ -28,13 +22,15 @@ customer_account_login:
 customer_account_create:
     update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
+                action:                    
                     -
                         method: setTitle
-                        params: Create New Customer Account
+                        params: Create New Customer Account             
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template

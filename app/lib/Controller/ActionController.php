@@ -20,6 +20,11 @@ abstract class ActionController extends AbstractController
      */
     protected $csrf = null;
 
+    /**
+     * @var array
+     */
+    protected $responseData = [];
+
     public function notFoundAction()
     {
         return $this->getResponse()->withStatus(404);
@@ -135,6 +140,7 @@ abstract class ActionController extends AbstractController
      */
     protected function response($result, $url, $segment = 'admin')
     {
+        $this->responseData = $result;
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($result['error'] && isset($result['error_url'])) {
                 $result['redirect'] = $result['error_url'];

@@ -18,7 +18,7 @@
         $ids = [];
         $json = [];
         foreach ($this->getWarehouses() as $warehouse):
-            if ($warehouse['sku']) {
+            if (!empty($warehouse['sku'])) {
                 $json[$warehouse['sku']] = [
                     'barcode' => $warehouse['barcode'],
                     'qty' => (float) $warehouse['qty']
@@ -65,7 +65,7 @@
 <?php
 $ids = [];
 foreach ($this->getWarehouses() as $warehouse):
-    if (!$warehouse['sku']):
+    if (empty($warehouse['sku'])):
         ?>
         <table class="table table-hover branch" style="display:none">
             <caption><?php echo $this->translate('Branch %s', [$warehouse['name']]) ?></caption>

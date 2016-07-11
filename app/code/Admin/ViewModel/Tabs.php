@@ -2,9 +2,9 @@
 
 namespace Seahinet\Admin\ViewModel;
 
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 
-class Tabs extends AbstractViewModel
+class Tabs extends Template
 {
 
     protected $tabs = [];

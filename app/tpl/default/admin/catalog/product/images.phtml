@@ -1,6 +1,6 @@
 <?php
 $product = $this->getProduct();
-$images = json_decode($product['images']);
+$images = $product['images'];
 $thumbnail = $product['thumbnail'];
 $default = $product['default_image'];
 ?>
@@ -23,14 +23,14 @@ $default = $product['default_image'];
             <tr class="inline-box">
                 <td>
                     <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="<?php echo $this->translate('Select Resource') ?>">
-                        <img src="<?php echo $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
+                        <img src="<?php echo isset($images[$i]) ? $this->getBaseUrl('pub/resource/image/resized/100x100/' . $images[$i]['src']) : $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
                     </button>
                     <input type="hidden" name="images[]" value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" />
                 </td>
                 <td><input type="text" name="images-label[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['label'] : '' ?>" /></td>
                 <td><input type="text" name="images-group[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['group'] : '' ?>" /></td>
-                <td><input type="radio" name="default-image" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $thumbnail): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
-                <td><input type="radio" name="thumbnail" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $default): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
+                <td><input type="radio" name="default_image" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $default): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
+                <td><input type="radio" name="thumbnail" class="form-control"<?php if (isset($images[$i]) && $images[$i]['id'] == $thumbnail): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
                 <td>
                     <a href="javascript:void(0);" class="delete">
                         <span class="fa fa-trash-o" aria-hidden="true"></span>

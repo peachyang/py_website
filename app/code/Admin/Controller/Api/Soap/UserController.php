@@ -17,9 +17,9 @@ class UserController extends AuthActionController
         return $this->getLayout('admin_soap_user_list');
     }
 
-    public function editAction() {
+    public function editAction() 
+    {
         $root = $this->getLayout('admin_soap_user_edit');
-        
         if($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
@@ -32,7 +32,8 @@ class UserController extends AuthActionController
         return $root;
     }
     
-    public function deleteAction() {
+    public function deleteAction() 
+    {
         return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\SoapUser', ':ADMIN/api_soap_user/list/');
     }
     
@@ -42,15 +43,15 @@ class UserController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $segment = new Segment('admin');
             $user = $segment->get('user');
-             $result = $this->validateForm($data, ['name','email']);
-             if (empty($data['name']) || empty($data['email']) || empty($data['key'])) {
+            $result = $this->validateForm($data, ['name','email']);
+            if (empty($data['name']) || empty($data['email']) || empty($data['key'])) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
-             }
-             else if(!$user->valid($user['username'],$data['crpassword'])) {
+            }
+            else if(!$user->valid($user['username'],$data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error']= 1;      
-             }else if($result['error'] === 0) {
+            }else if($result['error'] === 0) {
                  $model = new Model($data);
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);

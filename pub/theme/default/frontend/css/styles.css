@@ -1,0 +1,44 @@
+html{font-size:32px}
+body{min-width:320px}
+[lang|=zh],[lang|=zh] body{font-family:"Microsoft Yahei",SimHei,STHeiti,sans-serif}
+.cookies .global-notice .no-cookie{display:none}
+.header{background:#007dc6}
+.header .welcome{font-size:0;padding:0 8px;letter-spacing:1px}
+.header .welcome p{font-size:12px;line-height:30px;color:#fff;display:inline}
+.header .welcome ul{display:inline}
+.header .welcome li+li{margin-left:14px}
+.header .welcome a,.header .links>li>a{font-size:12px;line-height:30px;color:#fff}
+.header .welcome .register a{color:#fdbb30}
+.header .links>li>a{padding:0 12px}
+.header .links>li:last-child>a{padding-right:0}
+.breadcrumb .clearfix{display:none}
+.container-login{height:450px; background: url(../images/login.png) no-repeat center center #2ABAF8;}
+.login{background-color: rgba(167,217,248,0.8);padding:25px 30px 30px 25px;margin-top:40px;height:370px;width:330px;border-radius: 6px;border:1px solid white}
+.text-logo{display:inline-block;font-size:18px;line-height:50px;padding-left:20px;border-left:2px solid #f2f2f2;}
+.logo{padding-top:5px;height:100px;}
+.text-login{font-size:21px}
+.login-create{text-align: right;margin-top:15px;}
+.login-create-a{font-size:12px;color:rgb(0,0,0)}
+.margin-top-10{margin-top:10px}
+.margin-top-25{margin-top:25px}
+.margin-top-50{margin-top:50px}
+.input-login{height:45px}
+.submit-login{width:100%;background-color:rgb(242,148,53);height:42px;font-size:20px;color:#ffffff}
+hr{margin-top:0px;height:1px;border:none;background-color:rgb(208,224,232)}
+.container-create{margin-top:100px}
+.create{border-right:1px solid #f2f2f2;text-align:center;}
+.create2{display:inline-block;text-align:left;width:320px;}
+.input-create{height:50px;border:1px solid rgb(225,235,254);border-left-style:none;}
+.input-bottom-30{margin-bottom:30px;}
+.input-addon-create{background-color:white;border:1px solid rgb(225,235,254);}
+.ckb-create{margin-top:70px;margin-bottom:30px;}
+.ckb-create2{margin-bottom:20px;}
+.submit-create{width:100%;height:50px;background-color:rgb(71,159,227);font-size:18px;color:#ffffff }
+.create-login{text-align:center;}
+.create-login2{width: 350px;display:inline-block;text-align:left}
+.text-create-login{font-size:17px;}
+.create-login-a{font-size:17px;color:rgb(71,159,227);}
+.create-img{margin-top:35px;}
+.create-agree1{font-size:12px}
+.create-agree2{font-size:12px;color:rgb(71,159,227)}
+

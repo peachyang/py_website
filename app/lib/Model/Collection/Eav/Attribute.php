@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Model\Collection\Eav;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Model\AbstractCollection;
 
@@ -15,9 +16,13 @@ class Attribute extends AbstractCollection
         $this->init('eav_attribute');
     }
 
-    public function withLabel($language)
+    public function withLabel($languageId = null)
     {
-        $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
+        if (is_null($languageId)) {
+            $languageId = Bootstrap::getLanguage()->getId();
+        } else if (is_array($languageId) || $languageId instanceof Language) {
+            $languageId = $languageId['id'];
+        }
         $this->select->join('eav_attribute_label', 'eav_attribute.id=eav_attribute_label.attribute_id', ['label'], 'left')
                 ->where(['eav_attribute_label.language_id' => $languageId]);
         return $this;
@@ -29,7 +34,7 @@ class Attribute extends AbstractCollection
             $this->select->join('eav_entity_attribute', 'eav_entity_attribute.attribute_id=eav_attribute.id', ['sort_order'], 'left');
             $this->hasSortOrder = true;
         }
-        $this->select->join('eav_attribute_group', 'eav_entity_attribute.attribute_group_id=eav_attribute_group.id', ['attribute_group' => 'name', 'attribute_group_id' => 'id'], 'left');
+        $this->select->join('eav_attribute_group', 'eav_entity_attribute.attribute_group_id=eav_attribute_group.id', ['attribute_group' => 'name', 'attribute_group_id' => 'id', 'attribute_group_is_hidden' => 'is_hidden'], 'left');
         return $this;
     }
 

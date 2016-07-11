@@ -13,12 +13,21 @@ class Block extends AbstractViewModel
     use \Seahinet\Cms\Traits\Renderer;
 
     /**
+     * @var int
+     */
+    protected $blockId = null;
+
+    /**
      * @var BlockModel
      */
     protected $blockModel = null;
 
     public function getBlockModel()
     {
+        if (is_null($this->blockModel) && !is_null($this->blockId)) {
+            $this->blockModel = new BlockModel;
+            $this->blockModel->load($this->blockId, 'code');
+        }
         return $this->blockModel;
     }
 
@@ -34,6 +43,7 @@ class Block extends AbstractViewModel
         $collection = new BlockCollection;
         $collection->where(['cms_block.code' => $id, 'language_id' => Bootstrap::getLanguage()->getId()]);
         if (count($collection)) {
+            $this->blockId = $id;
             $this->blockModel = new BlockModel($collection[0]);
             $this->cacheKey = $id;
         }
@@ -42,24 +52,27 @@ class Block extends AbstractViewModel
 
     public function render()
     {
-        if (!is_null($this->blockModel)) {
+        if (!is_null($this->getBlockModel()) && $this->getBlockModel()->getId()) {
             $lang = Bootstrap::getLanguage()['code'];
             $cache = $this->getContainer()->get('cache');
-            $key = $lang . '_CMS_BLOCK_' . $this->blockModel['code'];
+            $key = $lang . '_CMS_BLOCK_' . $this->getBlockModel()['code'];
             $rendered = $cache->fetch($key, 'VIEWMODEL_RENDERED_');
-            if ($rendered) {
-                return $rendered;
+            if (!$rendered) {
+//            $content = $this->replace($this->getBlockModel()['content'], [
+//                'base_url' => $this->getBaseUrl(),
+//                'pub_url' => $this->getPubUrl(),
+//                'res_url' => $this->getResourceUrl()
+//            ]);
+                $rendered = $this->getBlockModel()['store_id'] ?
+                        $this->getContainer()->get('htmlpurifier')
+                                ->purify($this->getBlockModel()['content']) : $this->getBlockModel()['content'];
+                $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
             }
-            $content = $this->replace($this->blockModel['content'], [
-                'base_url' => $this->getBaseUrl(),
-                'pub_url' => $this->getPubUrl(),
-                'res_url' => $this->getResourceUrl()
+            return $this->replace($rendered, [
+                        'base_url' => $this->getBaseUrl(),
+                        'pub_url' => $this->getPubUrl(),
+                        'res_url' => $this->getResourceUrl()
             ]);
-            $rendered = $this->blockModel['store_id'] ?
-                    $this->getContainer()->get('htmlpurifier')
-                            ->purify($content) : $content;
-            $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
-            return $rendered;
         }
         return '';
     }

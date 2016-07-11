@@ -77,7 +77,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 #upload-list .upload-move{width:10%}
 #upload-resource .buttons-set{padding:20px 0;background:#F7F8FA;border-top:1px solid #cce0e9}
 #resource-list .grid .title{display:block;line-height:1.5;word-break:break-all}
-#unapplied-attribute,#attribute-groups{float:left;width:45%;max-width:320px;height:300px;border:1px solid #8b8c8c;padding:0 5px}
+#unapplied-attribute,#attribute-groups{float:left;width:45%;max-width:320px;height:300px;border:1px solid #8b8c8c;padding:0 5px;overflow:auto}
 #unapplied-attribute{margin-left:20px}
 #unapplied-attribute .item,#attribute-groups .item{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:move;line-height:2}
 #unapplied-attribute .item:hover,#attribute-groups .item:hover{background:#f5f5f5}
@@ -240,6 +240,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .grid .table .action a+a{margin-left:4px}
 .admin .grid .table.category ul{padding-left:2em;clear:both}
 .admin .grid .table.category li{min-height:30px}
+.admin .grid .table.category li:hover{background:#f5f5f5}
 .admin .grid .table.category .sortable.moving{height:15px}
 .admin .grid .table.category .sortable li{cursor:move}
 .admin .grid .table.category .sortable .placeholder{background:#f5f5f5;border:1px dashed #aaa}
@@ -264,7 +265,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .table td{vertical-align:middle}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
-.admin .edit .page-content~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
+.admin .edit .tab-pane~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}
 .admin #custom-options .option caption{text-align:left;padding:10px 0}
 .admin #custom-options .option th{white-space:nowrap}
 .admin #custom-options .option td{width:320px}

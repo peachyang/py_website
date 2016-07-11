@@ -5,7 +5,7 @@ namespace Seahinet\Lib\ViewModel;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Stdlib\Singleton;
 
-class Message extends AbstractViewModel implements Singleton
+class Message extends Template implements Singleton
 {
 
     protected static $instance = null;

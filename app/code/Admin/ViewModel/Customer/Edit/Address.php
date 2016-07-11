@@ -7,10 +7,10 @@ use Seahinet\Customer\Model\Collection\Address as Collection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Eav\Attribute as AttributeModel;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
-use Seahinet\Lib\ViewModel\AbstractViewModel;
+use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\ViewModel\Template;
 
-class Address extends AbstractViewModel
+class Address extends Template
 {
 
     protected $collection = null;

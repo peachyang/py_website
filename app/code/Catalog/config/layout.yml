@@ -1,4 +1,28 @@
 ---
+catalog_category:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    toolbar:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        template: catalog/category/toolbar
+                        children:
+                            filter:
+                                type: Seahinet\Catalog\ViewModel\Category\Filter
+                                template: catalog/category/filter
+                            sortby:
+                                type: Seahinet\Catalog\ViewModel\Category\SortBy
+                                template: catalog/category/sortby
+                    list:
+                        type: Seahinet\Catalog\ViewModel\Category\ProductList
+                    toolbar_bottom:
+                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
+                        template: catalog/category/toolbar
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 admin_catalog_category_list:
     update: grid
     root:
@@ -40,6 +64,29 @@ admin_catalog_category_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/sortable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/config.js
             content:
                 children:
                     breadcrumb:
@@ -59,6 +106,11 @@ admin_catalog_category_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/modal
 admin_catalog_product_list:
     update: grid
     root:
@@ -81,7 +133,7 @@ admin_catalog_product_list:
                         grid:
                             type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
 admin_catalog_product_simple_list:
-    update: default
+    update: admin
     root:
         template: page/empty
         children:
@@ -386,3 +438,87 @@ admin_catalog_product_edit_1:
     update: admin_catalog_product_edit
 admin_catalog_product_edit_2:
     update: admin_catalog_product_edit
+admin_catalog_product_review_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Review Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Add New Review'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Review
+admin_catalog_product_review_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Review Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Edit'}]
+                        edit:
+                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Review                            
+admin_catalog_product_rating_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Rating Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Add New Rating'}]
+                        grid:
+                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Rating
+admin_catalog_product_rating_edit:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Rating Management
+            content:
+                    children:
+                        breadcrumb:
+                            action:
+                                -
+                                    method: addCrumb
+                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                -
+                                    method: addAdditional
+                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Edit'}]
+                        edit:
+                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Rating

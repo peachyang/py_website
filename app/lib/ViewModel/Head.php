@@ -12,7 +12,7 @@ use Seahinet\Lib\Stdlib\Singleton;
 /**
  * Head view model
  */
-final class Head extends AbstractViewModel implements Singleton
+final class Head extends Template implements Singleton
 {
 
     protected static $instance = null;

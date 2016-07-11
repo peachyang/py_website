@@ -1,0 +1,37 @@
+---
+admin_catalog_category_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_category_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_catalog_product_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_product_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_catalog_attribute_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_attribute_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_catalog_attribute_set_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_attribute_set_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_product_review_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_product_review_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_product_rating_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_catalog_product_rating_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

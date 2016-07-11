@@ -125,10 +125,23 @@ class MongoDB extends AbstractHandler
             if (is_array($predicate)) {
                 $expression = preg_replace('#^(?:\s*\%s\s+)([^\s]+).+$#', '$1', $predicate[0]);
                 $value = $predicate[1];
-                $parts[$i] = [array_shift($value) => [
-                        '$' . strtolower(str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['gte', 'lte', 'ne', 'ne', 'gt', 'lt', 'eq'], $expression))
-                        => count($value) > 1 ? array_values($value) : ($expression === 'IN' ? (array) $predicate[1][1] : $predicate[1][1])
-                ]];
+                if ($expression === 'LIKE') {
+                    $v = str_replace('%', '.+', $predicate[1][1]);
+                    if (substr($predicate[1][1], 0, 1) !== '%') {
+                        $v = '^' . $v;
+                    }
+                    if (substr($predicate[1][1], -1) !== '%') {
+                        $v .= '$';
+                    }
+                    $parts[$i] = [array_shift($value) => [
+                            '$regex' => $v
+                    ]];
+                } else {
+                    $parts[$i] = [array_shift($value) => [
+                            '$' . strtolower(str_replace(['>=', '<=', '<>', '!=', '>', '<', '='], ['gte', 'lte', 'ne', 'ne', 'gt', 'lt', 'eq'], $expression))
+                            => count($value) > 1 ? array_values($value) : ($expression === 'IN' ? (array) $predicate[1][1] : $predicate[1][1])
+                    ]];
+                }
             }
         }
         $handleAnd = function($a, $b) {
@@ -216,7 +229,7 @@ class MongoDB extends AbstractHandler
     /**
      * {@inhertdoc}
      */
-    protected function buildData($data)
+    public function buildData($data)
     {
         foreach ($data as $languageId => $values) {
             $sets = [];
@@ -231,19 +244,28 @@ class MongoDB extends AbstractHandler
     /**
      * {@inhertdoc}
      */
-    protected function buildStructure($columns, $keys)
+    public function buildStructure($columns, $keys = null, $extra = null)
     {
         $languages = new Language;
         foreach ($languages as $language) {
             $this->getCollection($language['id'])->drop();
             $indexes = [
-                ['key' => ['id' => 1]],
-                ['key' => ['store_id' => 1]],
-                ['key' => ['increment_id' => 1]],
+                ['key' => ['id' => 1]]
             ];
+            if (!is_null($keys)) {
+                $indexes[] = ['key' => ['store_id' => 1]];
+                $indexes[] = ['key' => ['increment_id' => 1]];
+            }
             foreach ($columns as $column) {
-                if ($column['is_unique']) {
-                    $indexes[] = ['key' => [$column['attr'] => 1]]; #, 'unique' => true];
+                $index = [];
+                if (!empty($column['is_unique'])) {
+                    $index['key'] = [$column['attr'] => 1]; #, 'unique' => true];
+                }
+                if (isset($column['fulltext'])) {
+                    $index['key'] = [$column['attr'] => 'text'];
+                }
+                if (!empty($index)) {
+                    $indexes[] = $index;
                 }
             }
             $this->getCollection($language['id'])->createIndexes($indexes);

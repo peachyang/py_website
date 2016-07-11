@@ -1,38 +1,42 @@
 ---
 customer_account:
-    update: default
+    update: frontend
 customer_account_dashboard:
     update: customer_account
 customer_account_login:
-    update: default
+    update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
+                action:                 
                     -
                         method: setTitle
                         params: Customer Login
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/login
 customer_account_create:
-    update: default
+    update: frontend
     root:
+        template: page/empty
         children:
             head:
-                action:
+                action:                    
                     -
                         method: setTitle
-                        params: Create New Customer Account
+                        params: Create New Customer Account             
             content:
+                unset: [breadcrumb]
                 children:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/create
 customer_account_forgotpwd:
-    update: default
+    update: frontend
     root:
         children:
             head:

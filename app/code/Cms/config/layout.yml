@@ -1,6 +1,6 @@
 ---
 cms_page:
-    update: default
+    update: frontend
     root:
         children:
             content:

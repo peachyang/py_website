@@ -20,7 +20,7 @@ class Review extends AbstractCollection
                 $item['content'] = $content;
             }
         }
-        parent::afterLoad($result);
+        return parent::afterLoad($result);
     }
 
 }

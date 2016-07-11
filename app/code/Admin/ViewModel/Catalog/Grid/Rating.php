@@ -57,8 +57,11 @@ class Rating extends PGrid
             'type' => [
                 'label' => 'Type',
                 'type' => 'select',
-                'option' => (new Product)->getSourceArray()
-            ],
+                #'option' => (new Product)->getSourceArray()
+                'options' =>[
+                    'Product', 'Order'
+                    ]
+                ],
             'title' => [
                 'type' => 'text',
                 'label' => 'Title'

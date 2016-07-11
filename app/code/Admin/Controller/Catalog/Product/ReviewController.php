@@ -38,8 +38,8 @@ class ReviewController extends AuthActionController
     public function saveAction()
     {
         return $this->doSave('\\Seahinet\\Catalog\\Model\\Product\\Review', ':ADMIN/catalog_product_review/', ['product_id'], function($model, $data) {
-                    if ($data['customer'] === '') {
-                        $model['customer'] = null;
+                    if ($data['customer_id'] === '') {
+                        $model['customer_id'] = null;
                     }
                     if (!isset($data['id']) || !$data['id']) {
                         $data['id'] = null;

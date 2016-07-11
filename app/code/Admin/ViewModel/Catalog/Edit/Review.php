@@ -6,7 +6,7 @@ use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Catalog\Source\Product;
 use Seahinet\Customer\Source\Customer;
 use Seahinet\Lib\Source\Language;
-
+use Seahinet\Lib\Session\Segment;
 class Review extends PEdit
 {
 
@@ -28,7 +28,6 @@ class Review extends PEdit
     {
         return $this->getQuery('id') ? 'Edit Review' : 'Add New Review';
 
-        //exit();
     }
 
     protected function prepareElements($columns = [])
@@ -61,9 +60,9 @@ class Review extends PEdit
                 'type' => 'text',
                 'label' => 'Subject'
             ],
-            'content' => [
-                'type' => 'textarea',
-                'label' => 'Content'
+            'order_id' => [
+                'type' => 'text',
+                'label' => 'Order'
             ]
         ];
         return parent::prepareElements($columns);

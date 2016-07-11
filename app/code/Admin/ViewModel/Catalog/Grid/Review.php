@@ -74,9 +74,9 @@ class Review extends PGrid
                 'type' => 'text',
                 'label' => 'Subject'
             ],
-            'content' => [
+            'order_id' => [
                 'type' => 'text',
-                'label' => 'Content'
+                'label' => 'Order'
             ],
             'status' => [
                 'label' => 'Status',

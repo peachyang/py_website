@@ -73,6 +73,8 @@ final class Cache implements ArrayAccess, Singleton
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
     }
+    
+    
 
     /**
      * @param array $config

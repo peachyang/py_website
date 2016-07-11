@@ -28,6 +28,7 @@ window.onload = function ()
                     {name: 'tools'},
                     {name: 'others'},
                     {name: 'about'}],
+                
                 disableNativeSpellChecker: false,
                 scayt_autoStartup: false
             });
@@ -49,3 +50,5 @@ window.onload = function ()
         }
     });
 };
+
+

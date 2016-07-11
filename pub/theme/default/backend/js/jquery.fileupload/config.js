@@ -64,6 +64,7 @@
                 });
                 $('#resource-modal').on({
                     'show.bs.modal': function (e) {
+                    	console.debug(e.relatedTarget);
                         widgetUpload.target = e.relatedTarget;
                         widgetUpload.loadImagesList();
                         if ($(widgetUpload.target).data('upload')) {
@@ -74,7 +75,7 @@
                         var a = $('#resource-list .active');
                         if (a.length) {
                             $(widgetUpload.target).trigger('resource.selected');
-                        }
+                        }                  
                         if ($(widgetUpload.target).is('[data-reload]')) {
                             location.reload();
                         }

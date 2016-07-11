@@ -74,7 +74,7 @@ class Block extends PEdit
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content',
-                'class' => 'htmleditor fullbar'
+                'class' => 'htmleditor'
             ]
         ];
         return parent::prepareElements($columns);

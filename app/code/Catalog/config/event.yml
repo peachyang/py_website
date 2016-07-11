@@ -1,0 +1,8 @@
+---
+product.price.calc:
+    -
+        listener: [\Seahinet\Catalog\Listeners\Price\Regular, calc]
+        priority: 0
+    -
+        listener: [\Seahinet\Catalog\Listeners\Price\Special, calc]
+        priority: 10

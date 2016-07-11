@@ -39,6 +39,11 @@ frontend:
                 action:
                     -
                         method: addLink
+                        params:
+                            - frontend/favicon.ico
+                            - shortcut icon
+                    -
+                        method: addLink
                         params: frontend/css/bootstrap.css
                     -
                         method: addLink
@@ -102,6 +107,25 @@ frontend:
                                                 link: #
                                                 label: Customer Service
                                                 children: [{link:'',label:'Live Chat'}]
+                                    -
+                                        method: addLink
+                                        params: language
+                                    -
+                                        method: addLink
+                                        params: currency
+                                children:
+                                    language:
+                                        type: Seahinet\Lib\ViewModel\Language
+                                        action:
+                                            -
+                                                method: setWrapper
+                                                params: li
+                                    currency:
+                                        type: Seahinet\I18n\ViewModel\Currency
+                                        action:
+                                            -
+                                                method: setWrapper
+                                                params: li
             content:
                 children:
                     breadcrumb:

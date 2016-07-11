@@ -1,7 +1,11 @@
 <div class="container">
     <?php
     foreach ($this->getChild() as $child) {
-        echo $child->setCollection($this->getCollection())->setVariable('category', $this->getCategory());
+        $child->setCollection($this->getCollection());
+        if ($this->getCategory()) {
+            $child->setVariable('category', $this->getCategory());
+        }
+        echo $child->__toString();
     }
     ?>
 </div>

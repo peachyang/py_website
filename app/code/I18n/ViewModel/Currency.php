@@ -1,0 +1,43 @@
+<?php
+
+namespace Seahinet\I18n\ViewModel;
+
+use Seahinet\Lib\ViewModel\Template;
+
+class Currency extends Template
+{
+
+    protected $wrapper = 'div';
+
+    public function __construct()
+    {
+        $this->setTemplate('i18n/currency');
+    }
+
+    public function getCurrency()
+    {
+        return explode(',', $this->getConfig()['i18n/currency/enabled']);
+    }
+
+    public function getCurrentCurrency()
+    {
+        return $this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']);
+    }
+
+    public function getUrl($currency)
+    {
+        return $this->getBaseUrl('i18n/currency/?currency=' . $currency);
+    }
+
+    public function getWrapper()
+    {
+        return $this->wrapper;
+    }
+
+    public function setWrapper($wrapper)
+    {
+        $this->wrapper = $wrapper;
+        return $this;
+    }
+
+}

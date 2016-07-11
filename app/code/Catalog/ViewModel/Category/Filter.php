@@ -22,7 +22,7 @@ class Filter extends Toolbar
     public function getCurrentFilters()
     {
         $query = $this->getQuery();
-        return array_diff_key($query, ['desc' => 1, 'asc' => 1, 'page' => 1, 'limit' => 1]);
+        return array_diff_key($query, ['desc' => 1, 'asc' => 1, 'page' => 1, 'limit' => 1, 'q' => 1]);
     }
 
     public function getFilters()
@@ -30,28 +30,32 @@ class Filter extends Toolbar
         $result = [];
         if ($this->getCollection()->count()) {
             $languageId = Bootstrap::getLanguage()->getId();
-            $ids = [];
-            foreach ($this->getVariable('category')->getChildrenCategories() as $category) {
-                $ids[] = $category['id'];
+            if ($this->getVariable('category')) {
+                $ids = [];
+                foreach ($this->getVariable('category')->getChildrenCategories() as $category) {
+                    $ids[] = $category['id'];
+                }
             }
             $attributes = new Attribute;
             $attributes->withLabel()
                     ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
                     ->where(['filterable' => 1, 'eav_entity_type.code' => Product::ENTITY_TYPE]);
             foreach ($this->getCollection() as $product) {
-                $product = new Product($languageId, $product);
-                foreach ($product->getCategories() as $category) {
-                    if (in_array($category['id'], $ids)) {
-                        if (!isset($result['category'])) {
-                            $result['category'] = [
-                                'label' => 'Category',
-                                'values' => []
-                            ];
-                        }
-                        if (!isset($result['category']['values'][$category['id']])) {
-                            $result['category']['values'][$category['id']] = ['label' => $category['name'], 'count' => 1];
-                        } else {
-                            $result['category']['values'][$category['id']]['count'] ++;
+                if (!empty($ids)) {
+                    $product = new Product($languageId, $product);
+                    foreach ($product->getCategories() as $category) {
+                        if (in_array($category['id'], $ids)) {
+                            if (!isset($result['category'])) {
+                                $result['category'] = [
+                                    'label' => 'Category',
+                                    'values' => []
+                                ];
+                            }
+                            if (!isset($result['category']['values'][$category['id']])) {
+                                $result['category']['values'][$category['id']] = ['label' => $category['name'], 'count' => 1];
+                            } else {
+                                $result['category']['values'][$category['id']]['count'] ++;
+                            }
                         }
                     }
                 }
@@ -82,13 +86,13 @@ class Filter extends Toolbar
 
     public function getInitFilterUrl($key = null)
     {
-        $query = $this->getCurrentUri()->getQuery();
+        $query = $this->getRequest()->getQuery();
         if (is_null($key)) {
-            return $this->getCurrentUri()->withQuery(array_intersect_key($query, ['desc' => 1, 'asc' => 1, 'page' => 1, 'limit' => 1]));
+            return $this->getCurrentUri()->withQuery(http_build_query(array_intersect_key($query, ['desc' => 1, 'asc' => 1, 'page' => 1, 'limit' => 1])));
         } else {
             unset($query[$key]);
         }
-        return $this->getCurrentUri()->withQuery($query);
+        return $this->getCurrentUri()->withQuery(http_build_query($query));
     }
 
 }

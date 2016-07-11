@@ -15,6 +15,8 @@ use Zend\Db\Sql\Predicate\In;
 class Product extends Entity
 {
 
+    use \Seahinet\Lib\Traits\Url;
+
     const ENTITY_TYPE = 'product';
 
     protected function construct()
@@ -86,6 +88,50 @@ class Product extends Entity
     public function getCrossSells()
     {
         return $this->getLinkedProducts('c');
+    }
+
+    public function getUrl($category = null)
+    {
+        $constraint = ['product_id' => $this->getId()];
+        if (is_object($category) || is_array($category)) {
+            $constraint['category_id'] = $category['id'];
+        }
+        if (is_null($category) && isset($this->storage['path'][0])) {
+            return $this->getBaseUrl($this->storage['path'][0]);
+        } else if (isset($constraint['category_id']) && isset($this->storage['path'][$constraint['category_id']])) {
+            return $this->getBaseUrl($this->storage['path'][$constraint['category_id']]);
+        }
+        $result = $this->getContainer()->get('indexer')->select('catalog_url', $this->languageId, $constraint);
+        if (is_null($category)) {
+            $this->storage['path'][0] = $result[0]['path'] . '.html';
+        } else if (isset($constraint['category_id'])) {
+            $this->storage['path'][$constraint['category_id']] = $result[0]['path'] . '.html';
+        } else {
+            $this->storage['path'][$result[0]['category_id']] = $result[0]['path'] . '.html';
+        }
+        return $this->getBaseUrl($result[0]['path'] . '.html');
+    }
+
+    public function getThumbnail()
+    {
+        if ($this->storage['thumbnail']) {
+            $resource = new Resource;
+            $resource->load($this->storage['thumbnail']);
+            return $this->getBaseUrl('pub/resource/images/' . $resource['real_name']);
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
+    }
+
+    public function getFinalPrice()
+    {
+        if (empty($this->storage['final_price'])) {
+            if (empty($this->storage['prices'])) {
+                $this->storage['prices'] = [];
+                $this->getEventDispatcher()->trigger('product.price.calc', ['product' => $this]);
+            }
+            $this->storage['final_price'] = min($this->storage['prices']);
+        }
+        return $this->storage['final_price'];
     }
 
     protected function afterLoad($result = array())

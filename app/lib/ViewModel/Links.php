@@ -41,10 +41,10 @@ class Links extends Template
     /**
      * Add a link to the list
      * 
-     * @param array $links
+     * @param array|string $links
      * @return Links
      */
-    public function addLink(array $links)
+    public function addLink($links)
     {
         $this->links[] = $links;
         return $this;

@@ -5,12 +5,13 @@ if (count($links)):
     <ul class="links list-inline<?php echo $this->getClass() ?>">
         <?php
         foreach ($links as $link):
-            if (isset($link['children'])):
+            if (is_string($link)):
+                echo $this->getChild($link)->__toString();
+            elseif (isset($link['children'])):
                 ?>
                 <li class="dropdown">
                     <a href="javascript:void(0);" title="<?php echo $this->translate($link['label']) ?>" data-toggle="dropdown" class="dropdown-toggle">
                         <?php echo $this->translate($link['label']) ?>
-                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <?php foreach ($link['children'] as $child): ?>

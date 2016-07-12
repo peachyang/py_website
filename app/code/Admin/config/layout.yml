@@ -185,6 +185,15 @@ edit:
                     -
                         method: addScript
                         params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/ckeditor/ckeditor.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor/adapters/jquery.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor.js
 admin_dashboard:
     update: admin
     root:

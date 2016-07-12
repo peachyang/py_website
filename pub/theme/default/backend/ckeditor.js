@@ -28,6 +28,7 @@ window.onload = function ()
                     {name: 'tools'},
                     {name: 'others'},
                     {name: 'about'}],
+                removeButtons:'Image',
                 disableNativeSpellChecker: false,
                 scayt_autoStartup: false
             });
@@ -44,7 +45,9 @@ window.onload = function ()
                     {"name": "insert", "groups": ["insert"]},
                     {"name": "styles", "groups": ["styles"]}
                 ],
-                removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,about'
+                removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,about,Image',
+                disableNativeSpellChecker: false,
+                scayt_autoStartup: false
             });
         }
     });

@@ -68,17 +68,32 @@ class Review extends PEdit
                 'type' => 'textarea',
                 'label' => 'Content'
             ],
-            'type' => [
-                'label' => 'Type',
+
+            'packaging' => [
                 'type' => 'select',
-                'required' => 'required',
-                'options' => [
-                    'Product', 'Order'
-                ]
+                'label' => 'Commodity packing',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
             ],
-            'title' => [
+            'delivery' => [
                 'type' => 'select',
-                'label' => 'Title',
+                'label' => 'Delivery speed',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
+            ],
+             'service' => [
+                'type' => 'select',
+                'label' => 'Service attitude',
                'options' => [
                     1 => '1',
                     2 => '2',

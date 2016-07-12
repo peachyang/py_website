@@ -93,10 +93,6 @@ class Review extends PGrid
     {
         if (is_null($collection)) {
             $collection = new Collection;
-            $user = (new Segment('admin'))->get('user');
-            if ($user->getStore()) {
-                $collection->where(['store_id' => $user->getStore()->getId()]);
-            }
         }
         return parent::prepareCollection($collection);
     }

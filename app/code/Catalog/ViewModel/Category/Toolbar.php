@@ -14,7 +14,7 @@ class Toolbar extends Template
 
     public function getCategory()
     {
-        return $this->variables['category'];
+        return $this->getVariable('category');
     }
 
     public function setCategory(Category $category)

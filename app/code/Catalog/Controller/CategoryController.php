@@ -3,6 +3,7 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
+use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Controller\ActionController;
 
 class CategoryController extends ActionController
@@ -23,16 +24,17 @@ class CategoryController extends ActionController
             $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
             $products = $this->prepareCollection($category->getProducts(), $category);
             $content->getChild('toolbar')->setCategory($category)->setCollection($products);
-            $content->getChild('list')->setProducts($products);
+            $content->getChild('list')->setCategory($category)->setProducts($products);
             $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($products);
             return $root;
         }
         return $this->notFoundAction();
     }
 
-    protected function prepareCollection($collection, $category)
+    protected function prepareCollection($collection, $category = null)
     {
         $condition = $this->getRequest()->getQuery();
+        unset($condition['q']);
         $limit = isset($condition['limit']) ? $condition['limit'] : 20;
         if (isset($condition['page'])) {
             $collection->offset(($condition['page'] - 1) * $limit);
@@ -50,8 +52,10 @@ class CategoryController extends ActionController
                             str_replace(':', '.', $condition['desc']) :
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
-        } else {
-            $collection->order($category['default_sortable']);
+        } else if ($category && $category['default_sortable']) {
+            $attribute = new Attribute;
+            $attribute->load($category['default_sortable']);
+            $collection->order($attribute['code']);
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {

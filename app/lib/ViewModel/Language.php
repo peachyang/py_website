@@ -10,6 +10,7 @@ class Language extends Template
 
     protected $showEdit = false;
     protected $editUrl = null;
+    protected $wrapper = 'div';
 
     public function __construct()
     {
@@ -82,6 +83,17 @@ class Language extends Template
     public function setEditUrl($editUrl)
     {
         $this->editUrl = $editUrl;
+        return $this;
+    }
+
+    public function getWrapper()
+    {
+        return $this->wrapper;
+    }
+
+    public function setWrapper($wrapper)
+    {
+        $this->wrapper = $wrapper;
         return $this;
     }
 

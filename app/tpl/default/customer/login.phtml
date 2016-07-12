@@ -8,31 +8,31 @@
             <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="" />
             <![endif]-->
         </a> 
-        <span class="text-logo">欢迎登录</span>
+        <span class="text-logo"><?php echo $this->translate('Welcome - Login') ?></span>
     </h1>
 </div>
 <div class="container-fluid container-login">
 	<div class="row" >
 		<div class="col-sm-8"> </div>
 		<div class="col-sm-3 login">
-			<form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
+			<form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post" id="login">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        		<label class="text-login"> 账户登录  </label>
+        		<label class="text-login"> <?php echo $this->translate('Sign in to your account') ?> </label>
         		<div class="login-create margin-top-15">
-        			<a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>" class="login-create-a"> 注册新账号  </a> 
+        			<a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>" class="login-create-a"><?php echo $this->translate('Sign Up') ?></a> 
         		</div>        		       		
         		<div class="input-box margin-top-10">
                     <label class="sr-only control-label required" for="login:username"><?php echo $this->translate('Username') ?></label>
                     <div class="input-group">
                     	<div class="input-group-addon">$</div>
-                        <input type="text" name="username" id="login:username" class="form-control required input-login" spellcheck="false" placeholder="用户名  手机  邮箱" />
+                        <input type="text" name="username" id="login:username" class="form-control required input-login" spellcheck="false" placeholder="<?php echo $this->translate('Username/Email/Mobile') ?>" />
                     </div>
                 </div>
                 <div class="input-box margin-top-25">
                     <label class="sr-only control-label required" for="login:password"><?php echo $this->translate('Password') ?></label>
                     <div class="input-group">
                     	<div class="input-group-addon">$</div>
-                        <input type="password" name="password" id="login:password" class="form-control required input-login" minlength="6" />
+                        <input type="password" name="password" id="login:password" class="form-control required input-login" minlength="6" placeholder="<?php echo $this->translate('Password') ?>" />
                     </div>
                 </div>
                 <?php
@@ -47,7 +47,7 @@
                     </div>
                 <?php endif ?>
                 <div class="buttons-set margin-top-50">
-                    <button type="submit" class="btn btn-submit submit-login" <span><?php echo $this->translate('登入') ?></span></button>
+                    <button type="submit" class="btn btn-submit submit-login" <span><?php echo $this->translate('Sign In') ?></span></button>
                 </div>
             </form>
 		</div>

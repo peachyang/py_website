@@ -6,7 +6,7 @@ use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Catalog\Source\Product;
 use Seahinet\Customer\Source\Customer;
 use Seahinet\Lib\Source\Language;
-
+use Seahinet\Lib\Session\Segment;
 class Review extends PEdit
 {
 
@@ -28,7 +28,6 @@ class Review extends PEdit
     {
         return $this->getQuery('id') ? 'Edit Review' : 'Add New Review';
 
-        //exit();
     }
 
     protected function prepareElements($columns = [])
@@ -57,6 +56,10 @@ class Review extends PEdit
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
             ],
+            'order_id' => [
+                'type' => 'text',
+                'label' => 'Order'
+            ],
             'subject' => [
                 'type' => 'text',
                 'label' => 'Subject'
@@ -64,9 +67,51 @@ class Review extends PEdit
             'content' => [
                 'type' => 'textarea',
                 'label' => 'Content'
+            ],
+
+            'packaging' => [
+                'type' => 'select',
+                'label' => 'Commodity packing',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
+            ],
+            'delivery' => [
+                'type' => 'select',
+                'label' => 'Delivery speed',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
+            ],
+             'service' => [
+                'type' => 'select',
+                'label' => 'Service attitude',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
+            ],
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'required' => 'required',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
             ]
         ];
         return parent::prepareElements($columns);
     }
-
 }

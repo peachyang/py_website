@@ -82,6 +82,11 @@ admin:
                 action:
                     -
                         method: addLink
+                        params:
+                            - backend/favicon.ico
+                            - shortcut icon
+                    -
+                        method: addLink
                         params: backend/css/normalize.css
                     -
                         method: addLink

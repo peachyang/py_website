@@ -1,20 +1,23 @@
 <?php
 $filters = $this->getFilters();
-?>
-<div class="current">
-    <ul class="list-inline">
-        <li class="reset-all">
-            <a href="<?php echo $this->getInitFilterUrl() ?>"><?php echo $this->translate('Reset All') ?></a>
-        </li>
-        <?php foreach ($this->getCurrentFilters() as $key => $value): ?>
-            <li>
-                <a href="<?php echo $this->getInitFilterUrl($key) ?>">
-                    <?php echo $filters[$key]['label'], ':', $filters[$key]['values'][$value]['label'] ?>
-                </a>
+$current = $this->getCurrentFilters();
+if (count($current)):
+    ?>
+    <div class="current">
+        <ul class="list-inline">
+            <li class="reset-all">
+                <a href="<?php echo $this->getInitFilterUrl() ?>"><?php echo $this->translate('Reset All') ?></a>
             </li>
-        <?php endforeach ?>
-    </ul>
-</div>
+            <?php foreach ($this->getCurrentFilters() as $key => $value): ?>
+                <li>
+                    <a href="<?php echo $this->getInitFilterUrl($key) ?>">
+                        <?php echo $filters[$key]['label'], ':', $filters[$key]['values'][$value]['label'] ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+<?php endif ?>
 <table class="filters">
     <?php foreach ($filters as $key => $filter): ?>
         <tr>

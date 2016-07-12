@@ -64,7 +64,7 @@ class Request extends Message implements RequestInterface
         $method = $server['REQUEST_METHOD'];
         $uri = Uri::createFromEnvironment($server);
         $headers = Headers::createFromEnvironment($server);
-        $cookies = Cookies::parseHeader($headers->offsetGet('Cookie'));
+        $cookies = Cookies::parseHeader($headers->offsetGet('HTTP_COOKIE'));
         $body = new RequestBody();
         $uploadedFiles = UploadedFile::createFromEnvironment();
         $this->withMethod($method)

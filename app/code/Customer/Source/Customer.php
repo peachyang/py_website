@@ -13,8 +13,14 @@ class Customer implements SourceInterface
         $collection = new Collection;
         $result = [];
         foreach ($collection as $item) {
-            $result[$item['id']] = $item['name'];
+            $result[$item['id']] = $item['username'];
         }
         return $result;
     }
 }
+
+
+
+
+
+

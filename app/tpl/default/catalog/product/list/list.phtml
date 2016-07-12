@@ -1,0 +1,22 @@
+<?php
+$products = $this->getProducts();
+?>
+<div class="container">
+    <ul class="products-list">
+        <?php foreach ($products as $product): ?>
+            <li class="item clearfix">
+                <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                    <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
+                </a>
+                <h3 class="product-name pull-right col-xs-8 col-sm-9 col-md-10 col-lg-11">
+                    <a href="<?php echo $product->getUrl($this->getCategory()) ?>">
+                        <?php echo $product['name'] ?>
+                    </a>
+                </h3>
+                <div class="price-box pull-right col-xs-8 col-sm-9 col-md-10 col-lg-11">
+                    <?php echo $this->getPriceBox($product) ?>
+                </div>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

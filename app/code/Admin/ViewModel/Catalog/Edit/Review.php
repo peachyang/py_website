@@ -68,9 +68,29 @@ class Review extends PEdit
                 'type' => 'textarea',
                 'label' => 'Content'
             ],
+            'type' => [
+                'label' => 'Type',
+                'type' => 'select',
+                'required' => 'required',
+                'options' => [
+                    'Product', 'Order'
+                ]
+            ],
+            'title' => [
+                'type' => 'select',
+                'label' => 'Title',
+               'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                 ]
+            ],
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',
+                'required' => 'required',
                 'options' => [
                     1 => 'Enabled',
                     0 => 'Disabled'
@@ -79,5 +99,4 @@ class Review extends PEdit
         ];
         return parent::prepareElements($columns);
     }
-
 }

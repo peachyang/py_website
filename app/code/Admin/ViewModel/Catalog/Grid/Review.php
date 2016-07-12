@@ -82,8 +82,8 @@ class Review extends PGrid
                 'label' => 'Status',
                 'type' => 'select',
                 'options' => [
-                    1 => 'Disabled',
-                    0 => 'Enabled'
+                    1 => 'Enabled',
+                    0 => 'Disabled'
                 ]
             ]
         ];

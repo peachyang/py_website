@@ -52,12 +52,10 @@ class Rating extends PGrid
             'id' => [
                 'label' => 'ID',
                 'type' => 'hidden'
-            #'option' => (new Product)->getSourceArray()
             ],
             'type' => [
                 'label' => 'Type',
                 'type' => 'select',
-                #'option' => (new Product)->getSourceArray()
                 'options' =>[
                     'Product', 'Order'
                     ]
@@ -72,7 +70,8 @@ class Rating extends PGrid
                 'options' => [
                     1 => 'Enabled',
                     0 => 'Disabled'
-                ]
+                ],
+               
             ]
         ];
     }

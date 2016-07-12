@@ -33,8 +33,6 @@ class Rating extends PEdit
             'id' => [
                 'label' => 'ID',
                 'type' => 'hidden'
-            #'required' => 'required',
-            #'option' => (new Product)->getSourceArray()
             ],
             'csrf' => [
                 'type' => 'csrf'
@@ -58,7 +56,8 @@ class Rating extends PEdit
                 'options' => [
                     1 => 'Enabled',
                     0 => 'Disabled'
-                ]
+                ],
+                'required' => 'required'
             ]
         ];
         return parent::prepareElements($columns);

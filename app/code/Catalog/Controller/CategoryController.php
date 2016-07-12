@@ -3,6 +3,7 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
+use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Controller\ActionController;
 
 class CategoryController extends ActionController
@@ -52,7 +53,9 @@ class CategoryController extends ActionController
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
         } else if ($category && $category['default_sortable']) {
-            $collection->order($category['default_sortable']);
+            $attribute = new Attribute;
+            $attribute->load($category['default_sortable']);
+            $collection->order($attribute['code']);
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {

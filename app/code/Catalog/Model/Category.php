@@ -30,8 +30,6 @@ class Category extends Entity
             });
             if (count($valueSet)) {
                 $products->where(new In('id', $valueSet));
-            } else {
-                return [];
             }
             return $products;
         }

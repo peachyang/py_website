@@ -44,15 +44,15 @@ class SortBy extends Toolbar
 
     public function getSorterUrl($key)
     {
-        $query = $this->getCurrentUri()->getQuery();
-        if ($key === $query[$this->isAscending() ? 'asc' : 'desc']) {
+        $query = $this->getRequest()->getQuery();
+        if (isset($query[$this->isAscending() ? 'asc' : 'desc'])&&$key === $query[$this->isAscending() ? 'asc' : 'desc']) {
             $query[$this->isAscending() ? 'desc' : 'asc'] = $key;
             unset($query[$this->isAscending() ? 'asc' : 'desc']);
         } else {
             $query['asc'] = $key;
             unset($query['desc']);
         }
-        return $this->getCurrentUri()->withQuery($query);
+        return $this->getCurrentUri()->withQuery(http_build_query($query));
     }
 
 }

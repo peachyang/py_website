@@ -64,7 +64,6 @@
                 });
                 $('#resource-modal').on({
                     'show.bs.modal': function (e) {
-                    	console.debug(e.relatedTarget);
                         widgetUpload.target = e.relatedTarget;
                         widgetUpload.loadImagesList();
                         if ($(widgetUpload.target).data('upload')) {

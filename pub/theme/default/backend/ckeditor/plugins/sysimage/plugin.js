@@ -1,27 +1,37 @@
-//(function () {
-//      Section 1 : 按下自定义按钮时执行的代码
-//      var a = {
-//          exec: function (editor) {
-//              alert('upload image!!!');
-//          }
-//      },
-//      b = 'sysimage';
-//      CKEDITOR.plugins.add('sysimage', {
-//    	 icons:'sysimage',
-//         init: function (editor) {
-//             editor.addCommand('sysimage', function (editor) {
-//                 alert('upload image!!!');
-//             });
-//             editor.ui.addButton('sysimage', {
-//                 label: '管理图片',
-//                 icon: this.path + 'sysimage.png',
-//                 command: 'sysimage'
-//             });
-//         };
-//         editor.ui.addButton( 'sysimage', {
-//             label: 'Insert sysimage',
-//             command: 'sysimage',
-//             toolbar: 'insert'
-//         });
-//     });
-// })();
+(function () {
+     
+      CKEDITOR.plugins.add('sysimage', {
+    	 icons:'sysimage',
+         init: function (editor) {
+             editor.addCommand('sysimage', CKEDITOR.plugins.sysimage.commands.sysimage);
+        	 editor.ui.addButton('SysImage', {
+                 label: 'SysImage',
+                 icon: this.path+'images/sysimage.png',
+                 command: 'sysimage'
+                	 
+             });
+             CKEDITOR.dialog.add("sysimage", this.path + "dialogs/sysimage.js")
+         }
+         
+     });
+CKEDITOR.plugins.sysimage = {
+    	        commands: {  
+    	        	sysimage: {
+    	                exec: function(editor) {
+    	                $('#resource-modal').modal('show',editor);   	               
+    	                $(editor).one('resource.selected',function(editor){
+    	                	//console.log($('#resource-list .active img').attr('src'));
+    	                	//alert('===================');
+    	                	//editor.setData(html);
+    	                	//console.log($(editor));
+    	                	CKEDITOR.instances.content.insertHtml("<img src='"+$('#resource-list .active img').attr('src').replace(/resized\/\d+x\d*\//,'')+"'>");
+    	                });
+   
+    	                }  
+    	            }  
+    	        }  
+    	    };      
+ })();
+
+
+

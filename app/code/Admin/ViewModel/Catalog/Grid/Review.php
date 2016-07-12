@@ -70,13 +70,13 @@ class Review extends PGrid
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
             ],
-            'subject' => [
-                'type' => 'text',
-                'label' => 'Subject'
-            ],
             'order_id' => [
                 'type' => 'text',
                 'label' => 'Order'
+            ],
+            'subject' => [
+                'type' => 'text',
+                'label' => 'Subject'
             ],
             'status' => [
                 'label' => 'Status',

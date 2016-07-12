@@ -65,6 +65,14 @@ class Rating extends PGrid
             'title' => [
                 'type' => 'text',
                 'label' => 'Title'
+            ],
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
             ]
         ];
     }

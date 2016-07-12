@@ -52,6 +52,14 @@ class Rating extends PEdit
                 'label' => 'Title',
                 'required' => 'required'
             ],
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
+            ]
         ];
         return parent::prepareElements($columns);
     }

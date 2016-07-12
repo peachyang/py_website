@@ -56,13 +56,25 @@ class Review extends PEdit
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
             ],
+            'order_id' => [
+                'type' => 'text',
+                'label' => 'Order'
+            ],
             'subject' => [
                 'type' => 'text',
                 'label' => 'Subject'
             ],
-            'order_id' => [
-                'type' => 'text',
-                'label' => 'Order'
+            'content' => [
+                'type' => 'textarea',
+                'label' => 'Content'
+            ],
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
             ]
         ];
         return parent::prepareElements($columns);

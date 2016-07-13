@@ -1,1 +1,26 @@
 ---
+sales:
+    icon: money
+    title: Sales
+    priority: 40
+    children:
+        -
+            link: 'sales_abandonedcart/'
+            title: Abandoned Cart
+            priority: 10
+        -
+            link: 'sales_orders/'
+            title: Orders
+            priority: 20
+        -
+            link: 'sales_invoice/'
+            title: Invoices
+            priority: 30
+        -
+            link: 'sales_shipment/'
+            title: Shipments
+            priority: 40
+        -
+            link: 'sales_creditmemo/'
+            title: Credit Memos
+            priority: 50

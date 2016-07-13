@@ -3,6 +3,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
-    RewriteCond %{REQUEST_FILENAME} pub/resource/image/resized/(?:\d+x\d*)/.+\.(?:jpe?g|png|gif|w?bmp|xbm)$
+    RewriteCond %{REQUEST_FILENAME} image/resized/(?:\d+x\d*)/.+\.(?:jpe?g|png|gif|w?bmp|xbm)$
     RewriteRule .* ../../index.php [L]
 </IfModule>

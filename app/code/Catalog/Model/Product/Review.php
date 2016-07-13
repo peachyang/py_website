@@ -3,6 +3,7 @@
 namespace Seahinet\Catalog\Model\Product;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Zend\Db\TableGateway\TableGateway;
 
 class Review extends AbstractModel
 {
@@ -14,6 +15,7 @@ class Review extends AbstractModel
 
     protected function beforeSave()
     {
+        $this->beginTransaction();
         $this->storage['content'] = gzencode($this->storage['content']);
         parent::beforeSave();
     }
@@ -21,14 +23,15 @@ class Review extends AbstractModel
     protected function afterSave()
     {
         $adapter = $this->getContainer()->get('dbAdapter');
-        if (!empty($this->storage['category'])) {
-            $tableGateway = new TableGateway('review', $adapter);
-            $tableGateway->delete(['product_id' => $this->getId()]);
-            foreach ((array) $this->storage['category'] as $category) {
-                $tableGateway->insert(['product_id' => $this->getId(), 'customer_id' => $category]);
+        if (!empty($this->storage['rating'])) {
+            $tableGateway = new TableGateway('review_rating', $adapter);
+            foreach ((array) $this->storage['rating'] as $id => $value) {
+                $this->upsert(['value' => $value], ['review_id' => $this->getId(), 'rating_id' => $id], $tableGateway);
             }
+            $this->flushList('rating');
         }
         parent::afterSave();
+        $this->commit();
     }
 
     protected function afterLoad($result = array())
@@ -39,4 +42,5 @@ class Review extends AbstractModel
         }
         parent::afterLoad($result);
     }
+
 }

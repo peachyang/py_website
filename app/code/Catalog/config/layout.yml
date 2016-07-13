@@ -476,7 +476,7 @@ admin_catalog_product_review_edit:
                                     method: addCrumb
                                     params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
                                 -
-                                    method: addAdditional
+                                    method: addCrumb
                                     params: [{link:':ADMIN/catalog_product_review/edit/',label:'Edit'}]
                         edit:
                             type: Seahinet\Admin\ViewModel\Catalog\Edit\Review                            
@@ -518,7 +518,7 @@ admin_catalog_product_rating_edit:
                                     method: addCrumb
                                     params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
                                 -
-                                    method: addAdditional
+                                    method: addCrumb
                                     params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Edit'}]
                         edit:
                             type: Seahinet\Admin\ViewModel\Catalog\Edit\Rating

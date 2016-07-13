@@ -24,7 +24,7 @@ body{min-width:320px}
 .margin-top-50{margin-top:50px}
 .input-login{height:45px}
 .submit-login{width:100%;background-color:rgb(242,148,53);height:42px;font-size:20px;color:#ffffff}
-hr{margin-top:0px;height:1px;border:none;background-color:rgb(208,224,232)}
+.create-hr{margin-top:0px;height:1px;border:none;background-color:rgb(208,224,232)}
 .container-create{margin-top:100px}
 .create{border-right:1px solid #f2f2f2;text-align:center;}
 .create2{display:inline-block;text-align:left;width:320px;}
@@ -54,6 +54,11 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .list-type-btn{border:none;padding:0;background-color:#f1f1f1}
 .text-list-shopcart{color:#646363;}
 .list-shopcart a:hover{text-decoration:none;}
-
-
+.goods-filter{border:1px solid #e1e3ea;margin-bottom:10px;} 
+.goods-filter-th{width:80px;text-align:center;vertical-align£ºmiddle;font-weight:normal;font-size:12px;}
+.goods-filter-tr{border-bottom:1px solid #e2e4ea;}
+.goods-filter-td{}
+.goods-filter-li{margin-left:50px;}
+.goods-filter-ul{margin-top:20px;margin-bottom:20px;border-left:1px solid #e1e4ea;font-size:12px;}
+.goods-filter a{color:#575656}
 

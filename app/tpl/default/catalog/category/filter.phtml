@@ -18,14 +18,14 @@ if (count($current)):
         </ul>
     </div>
 <?php endif ?>
-<table class="filters">
+<table class="filters goods-filter col-sm-12">
     <?php foreach ($filters as $key => $filter): ?>
-        <tr>
-            <th><?php echo $filter['label'] ?></th>
-            <td>
-                <ul class="list-inline">
+        <tr class="goods-filter-tr">
+            <th class="goods-filter-th"><?php echo $filter['label'] ?></th>
+            <td class="goods-filter-td">
+                <ul class="list-inline goods-filter-ul">
                     <?php foreach ($filter['values'] as $value => $values): ?>
-                        <li>
+                        <li class="goods-filter-li">
                             <a href="<?php echo $this->getFilterUrl($key, $value) ?>">
                                 <span><?php echo $values['label'] ?></span>
                                 <?php if ($this->showCount()): ?>
@@ -36,6 +36,8 @@ if (count($current)):
                     <?php endforeach ?>
                 </ul>
             </td>
+             
         </tr>
+       
     <?php endforeach ?>
 </table>

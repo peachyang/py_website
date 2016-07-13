@@ -1,8 +1,8 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(["jquery"], factory);
+        define(["jquery","jquery.validate"], factory);
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory(require(["jquery"]));
+        module.exports = factory(require(["jquery","jquery.validate"]));
     } else {
         factory(jQuery);
     }
@@ -130,6 +130,13 @@
         });
         $('.widget-upload').on('resource.selected', '.btn[data-toggle=modal]', function () {
             $(this).parents('.inline-box').find('[type=radio]').val($(this).siblings('input').val());
+        });
+        $('.edit form').on('submit', function () {
+            if ($(this).valid()) {
+                $(this).find('.grid .filters input,.grid .filters select').each(function () {
+                    this.disabled = true;
+                });
+            }
         });
     });
 }));

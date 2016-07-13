@@ -70,20 +70,20 @@ class Review extends PGrid
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
             ],
-            'subject' => [
-                'type' => 'text',
-                'label' => 'Subject'
-            ],
             'order_id' => [
                 'type' => 'text',
                 'label' => 'Order'
+            ],
+            'subject' => [
+                'type' => 'text',
+                'label' => 'Subject'
             ],
             'status' => [
                 'label' => 'Status',
                 'type' => 'select',
                 'options' => [
-                    1 => 'Disabled',
-                    0 => 'Enabled'
+                    1 => 'Enabled',
+                    0 => 'Disabled'
                 ]
             ]
         ];
@@ -93,10 +93,6 @@ class Review extends PGrid
     {
         if (is_null($collection)) {
             $collection = new Collection;
-            $user = (new Segment('admin'))->get('user');
-            if ($user->getStore()) {
-                $collection->where(['store_id' => $user->getStore()->getId()]);
-            }
         }
         return parent::prepareCollection($collection);
     }

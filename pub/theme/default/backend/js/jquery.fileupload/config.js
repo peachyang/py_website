@@ -74,7 +74,7 @@
                         var a = $('#resource-list .active');
                         if (a.length) {
                             $(widgetUpload.target).trigger('resource.selected');
-                        }
+                        }                  
                         if ($(widgetUpload.target).is('[data-reload]')) {
                             location.reload();
                         }

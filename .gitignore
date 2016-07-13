@@ -2,7 +2,7 @@
 /vendor/
 /composer.lock
 /var/
-/pub/Resource/
+/pub/resource/
 /app/config/adapter.yml
 cache/
 resized/

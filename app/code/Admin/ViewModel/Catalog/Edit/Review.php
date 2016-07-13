@@ -3,10 +3,11 @@
 namespace Seahinet\Admin\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Catalog\Model\Collection\Product\Rating;
 use Seahinet\Catalog\Source\Product;
 use Seahinet\Customer\Source\Customer;
 use Seahinet\Lib\Source\Language;
-use Seahinet\Lib\Session\Segment;
+
 class Review extends PEdit
 {
 
@@ -27,7 +28,6 @@ class Review extends PEdit
     public function getTitle()
     {
         return $this->getQuery('id') ? 'Edit Review' : 'Add New Review';
-
     }
 
     protected function prepareElements($columns = [])
@@ -56,13 +56,51 @@ class Review extends PEdit
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
             ],
+            'order_id' => [
+                'type' => 'text',
+                'label' => 'Order'
+            ]
+        ];
+        $collection = new Rating;
+        $model = $this->getVariable('model');
+        if ($model && $model->getId()) {
+            $collection->join('review_rating', 'review_rating.rating_id=rating.id', ['value'], 'left')
+                    ->where(['review_rating.review_id' => $model->getId()]);
+        }
+        foreach ($collection as $item) {
+            $column = [
+                'type' => 'radio',
+                'label' => $item['title'],
+                'options' => [
+                    1 => '1',
+                    2 => '2',
+                    3 => '3',
+                    4 => '4',
+                    5 => '5'
+                ]
+            ];
+            if (isset($item['value'])) {
+                $column['value'] = (string) (float) $item['value'];
+            }
+            $columns['rating[' . $item['id'] . ']'] = $column;
+        }
+        $columns += [
             'subject' => [
                 'type' => 'text',
                 'label' => 'Subject'
             ],
-            'order_id' => [
-                'type' => 'text',
-                'label' => 'Order'
+            'content' => [
+                'type' => 'textarea',
+                'label' => 'Content'
+            ],
+            'status' => [
+                'type' => 'select',
+                'label' => 'Status',
+                'required' => 'required',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
             ]
         ];
         return parent::prepareElements($columns);

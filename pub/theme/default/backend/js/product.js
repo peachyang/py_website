@@ -131,5 +131,12 @@
         $('.widget-upload').on('resource.selected', '.btn[data-toggle=modal]', function () {
             $(this).parents('.inline-box').find('[type=radio]').val($(this).siblings('input').val());
         });
+        $('.edit form').on('submit', function () {
+            if ($(this).valid()) {
+                $(this).find('.grid .filters input,.grid .filters select').each(function () {
+                    this.disabled = true;
+                });
+            }
+        });
     });
 }));

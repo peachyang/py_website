@@ -34,11 +34,13 @@ class Review extends AbstractModel
         $this->commit();
     }
 
-    protected function afterLoad($result = array())
+    protected function afterLoad(&$result)
     {
-        $data = @gzdecode($result['content']);
-        if ($data !== false) {
-            $result['content'] = $data;
+        if (isset($result[0])) {
+            $data = @gzdecode($result[0]['content']);
+            if ($data !== false) {
+                $result[0]['content'] = $data;
+            }
         }
         parent::afterLoad($result);
     }

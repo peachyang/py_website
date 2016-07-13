@@ -2,12 +2,12 @@
 
 namespace Seahinet\Catalog\Listeners\Price;
 
-class Regular implements PriceInterface
+class Regular extends AbstractPrice
 {
 
     public function calc($event)
     {
-        $event['product']['prices'][] = (float) $event['product']['price'];
+        $event['product']['prices']['regular'] = $this->getCurrency()->convert($event['product']['price']);
     }
 
 }

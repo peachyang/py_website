@@ -28,12 +28,11 @@ class Role extends AbstractCollection
         return $this;
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($this->storage[0]['operation']) || isset($this->storage[0]['child_id'])) {
+        if (isset($result[0]['operation']) || isset($result[0]['child_id'])) {
             $storage = [];
-            foreach ($this->storage as $item) {
+            foreach ($result as $item) {
                 if (isset($storage[$item['id']])) {
                     if (isset($item['operation'])) {
                         $storage[$item['id']]['operation'][] = $item['operation'];
@@ -63,8 +62,9 @@ class Role extends AbstractCollection
                 }
                 $item['children'] = $children;
             }
-            $this->storage = array_values($storage);
+            $result = array_values($storage);
         }
+        parent::afterLoad($result);
     }
 
 }

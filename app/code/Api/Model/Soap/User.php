@@ -1,39 +1,41 @@
 <?php
+
 namespace Seahinet\Api\Model\Soap;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
-/**
- * Description of SoapUser
- *
- * @author lenovo
- */
-class SoapUser extends AbstractModel{
+
+class User extends AbstractModel
+{
+
     protected $role = null;
     protected $store = null;
-    public function construct() {
-        
-        $this->init('api_soap_user','id', ['id', 'role_id', 'name', 'email', 'key']);
+
+    public function construct()
+    {
+
+        $this->init('api_soap_user', 'id', ['id', 'role_id', 'name', 'email', 'key']);
     }
-    
-    public function _clone() {
+
+    public function _clone()
+    {
         $storage = [
             'id' => $this->storage['id'],
             'role_id' => $this->storage['role_id'],
             'name' => $this->storage['name'],
             'email' => $this->storage['email'],
-            'key' =>  $this->storage['key']
+            'key' => $this->storage['key']
         ];
-        
-        $this->storage = $storage ;
-        
+
+        $this->storage = $storage;
+
         $this->isLoaded = FALSE;
     }
-    
-    public function login($username,$password) {
-        if($this->valid($username,$password)){
+
+    public function login($username, $password)
+    {
+        if ($this->valid($username, $password)) {
             $segment = new Segment('admin');
             $segment->set('isLoggedin', TRUE)
                     ->set('user', clone $this);
@@ -41,6 +43,7 @@ class SoapUser extends AbstractModel{
         }
         return FALSE;
     }
+
     public function valid($username, $password)
     {
         if (!$this->isLoaded) {
@@ -51,8 +54,9 @@ class SoapUser extends AbstractModel{
         }
         return $this->offsetGet('status') && (new Bcrypt)->verify($password, $this->offsetGet('password'));
     }
-    
-    public function getRole() {
+
+    public function getRole()
+    {
         if (is_null($this->role) && $this->offsetGet('role_id')) {
             $role = new Role;
             $role->load($this->offsetGet('role_id'));
@@ -62,6 +66,7 @@ class SoapUser extends AbstractModel{
         }
         return $this->role;
     }
+
     protected function beforeSave()
     {
         if (isset($this->storage['password']) && strpos($this->storage['password'], '$2y$') !== 0) {
@@ -69,4 +74,5 @@ class SoapUser extends AbstractModel{
         }
         parent::beforeSave();
     }
+
 }

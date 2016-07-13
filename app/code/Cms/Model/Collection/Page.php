@@ -16,12 +16,14 @@ class Page extends AbstractCollection
         $this->init('cms_page');
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
         $ids = [];
         $data = [];
-        foreach ($this->storage as $item) {
+        foreach ($result as $key => $item) {
+            if (isset($item['id']) && isset($data[$item['id']])) {
+                continue;
+            }
             $content = @gzdecode($item['content']);
             if (isset($item['id'])) {
                 $ids[] = $item['id'];
@@ -32,7 +34,7 @@ class Page extends AbstractCollection
                     $data[$item['id']]['content'] = $content;
                 }
             } else if ($content !== false) {
-                $this->storage[$key]['content'] = $content;
+                $result[$key]['content'] = $content;
             }
         }
         if (!empty($ids)) {
@@ -57,8 +59,9 @@ class Page extends AbstractCollection
                     $data[$item['page_id']]['category'][$item['category_id']] = $item['name'];
                 }
             }
-            $this->storage = array_values($data);
+            $result = array_values($data);
         }
+        parent::afterLoad($result);
     }
 
 }

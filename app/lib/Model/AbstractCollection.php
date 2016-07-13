@@ -170,7 +170,7 @@ abstract class AbstractCollection extends ArrayObject
     /**
      * Event after load cache
      */
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
         $this->isLoaded = true;
         $this->storage = $result;

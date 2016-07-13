@@ -12,7 +12,7 @@ class Review extends AbstractCollection
         $this->init('review');
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
         foreach ($result as &$item) {
             $content = @gzdecode($item['content']);

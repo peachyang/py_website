@@ -2,7 +2,7 @@
 
 namespace Seahinet\Catalog\Listeners\Price;
 
-class Special implements PriceInterface
+class Special extends AbstractPrice
 {
 
     public function calc($event)
@@ -10,7 +10,7 @@ class Special implements PriceInterface
         $product = $event['product'];
         $now = time();
         if ($now >= strtotime($product['special_price_start']) && $now <= strtotime($product['special_price_end'])) {
-            $product['prices'][] = (float) $event['product']['special_price'];
+            $product['prices']['special'] = $this->getCurrency()->convert($event['product']['special_price']);
         }
     }
 

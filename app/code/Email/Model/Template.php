@@ -47,25 +47,25 @@ class Template extends AbstractModel
         parent::beforeLoad($select);
     }
 
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
         if (isset($result[0])) {
             $language = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
             }
-            $this->storage['language'] = $language;
-            $this->storage['language_id'] = array_keys($language);
+            $result[0]['language'] = $language;
+            $result[0]['language_id'] = array_keys($language);
+            $content = @gzdecode($result[0]['content']);
+            if ($content !== false) {
+                $result[0]['content'] = $content;
+            }
+            $css = @gzdecode($result[0]['css']);
+            if ($css !== false) {
+                $result[0]['css'] = $css;
+            }
         }
-        $content = @gzdecode($this->storage['content']);
-        if ($content !== false) {
-            $this->storage['content'] = $content;
-        }
-        $css = @gzdecode($this->storage['css']);
-        if ($css !== false) {
-            $this->storage['css'] = $css;
-        }
+        parent::afterLoad($result);
     }
 
     /**

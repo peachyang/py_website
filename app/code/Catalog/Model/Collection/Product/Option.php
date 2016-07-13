@@ -30,7 +30,7 @@ class Option extends AbstractCollection
         return $this;
     }
 
-    public function afterLoad($result)
+    public function afterLoad(&$result)
     {
         $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
         foreach ($result as &$item) {

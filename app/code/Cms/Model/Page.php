@@ -51,25 +51,25 @@ class Page extends AbstractModel
         parent::beforeLoad($select);
     }
 
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($result[0])) {
+        if (isset($result[0]['id'])) {
             $language = [];
             $category = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
                 $category[$item['category_id']] = $item['category'];
             }
-            $this->storage['language'] = $language;
-            $this->storage['language_id'] = array_keys($language);
-            $this->storage['category'] = $category;
-            $this->storage['category_id'] = array_keys($category);
+            $result[0]['language'] = $language;
+            $result[0]['language_id'] = array_keys($language);
+            $result[0]['category'] = $category;
+            $result[0]['category_id'] = array_keys($category);
+            $data = @gzdecode($result[0]['content']);
+            if ($data !== false) {
+                $result[0]['content'] = $data;
+            }
         }
-        $data = @gzdecode($this->storage['content']);
-        if ($data !== false) {
-            $this->storage['content'] = $data;
-        }
+        parent::afterLoad($result);
     }
 
     public function getImage()

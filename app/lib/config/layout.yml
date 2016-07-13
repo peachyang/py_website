@@ -47,6 +47,9 @@ frontend:
                         params: frontend/css/bootstrap.css
                     -
                         method: addLink
+                        params: frontend/css/font-awesome.css
+                    -
+                        method: addLink
                         params: frontend/css/styles.css
                     -
                         method: addLink

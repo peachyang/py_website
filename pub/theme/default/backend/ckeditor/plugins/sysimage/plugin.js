@@ -18,13 +18,15 @@ CKEDITOR.plugins.sysimage = {
     	        commands: {  
     	        	sysimage: {
     	                exec: function(editor) {
-    	                $('#resource-modal').modal('show',editor);   	               
+    	                $('#resource-modal').modal('show',editor);
+    	                //console.log($(editor).prop('id'));
+    	                var cname=$(editor).prop('name');
     	                $(editor).one('resource.selected',function(editor){
     	                	//console.log($('#resource-list .active img').attr('src'));
     	                	//alert('===================');
     	                	//editor.setData(html);
-    	                	//console.log($(editor));
-    	                	CKEDITOR.instances.content.insertHtml("<img src='"+$('#resource-list .active img').attr('src').replace(/resized\/\d+x\d*\//,'')+"'>");
+    	                	//console.log($(editor).prop('icnamed'));
+    	                	CKEDITOR.instances[cname].insertHtml("<img src='"+$('#resource-list .active img').attr('src').replace(/resized\/\d+x\d*\//,'')+"'>");
     	                });
    
     	                }  

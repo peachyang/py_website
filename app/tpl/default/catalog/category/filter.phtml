@@ -1,29 +1,19 @@
 <?php
 $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
-if (count($current)):
-    ?>
-    <div class="current">
-        <ul class="list-inline">
-            <li class="reset-all">
-                <a href="<?php echo $this->getInitFilterUrl() ?>"><?php echo $this->translate('Reset All') ?></a>
-            </li>
-            <?php foreach ($this->getCurrentFilters() as $key => $value): ?>
-                <li>
-                    <a href="<?php echo $this->getInitFilterUrl($key) ?>">
-                        <?php echo $filters[$key]['label'], ':', $filters[$key]['values'][$value]['label'] ?>
-                    </a>
-                </li>
-            <?php endforeach ?>
-        </ul>
-    </div>
-<?php endif ?>
+?>
+ 	
 <table class="filters goods-filter col-sm-12">
     <?php foreach ($filters as $key => $filter): ?>
         <tr class="goods-filter-tr">
             <th class="goods-filter-th"><?php echo $filter['label'] ?></th>
-            <td class="goods-filter-td">
+            <td class="goods-filter-td">            
                 <ul class="list-inline goods-filter-ul">
+                    <li class="goods-li-all">
+                        <a href="<?php echo $this->getInitFilterUrl($key) ?>">
+                        	<?php echo $this->translate('All')?>
+                   		</a>
+                    </li>
                     <?php foreach ($filter['values'] as $value => $values): ?>
                         <li class="goods-filter-li">
                             <a href="<?php echo $this->getFilterUrl($key, $value) ?>">
@@ -33,11 +23,14 @@ if (count($current)):
                                 <?php endif ?>
                             </a>
                         </li>
-                    <?php endforeach ?>
+                    <?php endforeach ?>                    
                 </ul>
             </td>
-             
+            <td class="goods-filter-more">
+                <a href="javascript:;">
+                	<?php echo $this->translate('More')?>
+           		</a>
+            </td>
         </tr>
-       
     <?php endforeach ?>
 </table>

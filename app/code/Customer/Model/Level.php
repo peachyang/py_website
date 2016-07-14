@@ -38,20 +38,20 @@ class Level extends AbstractModel
         parent::beforeLoad($select);
     }
 
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($result[0])) {
+        if (isset($result[0]['id'])) {
             $language = [];
             $name = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
                 $name[$item['language_id']] = $item['name'];
             }
-            $this->storage['language'] = $language;
-            $this->storage['language_id'] = array_keys($language);
-            $this->storage['name'] = $name;
+            $result[0]['language'] = $language;
+            $result[0]['language_id'] = array_keys($language);
+            $result[0]['name'] = $name;
         }
+        parent::afterLoad($result);
     }
 
 }

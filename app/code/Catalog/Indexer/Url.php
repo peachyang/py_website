@@ -84,7 +84,9 @@ class Url implements Provider
                     $data[$language['id']][] = [
                         'product_id' => $product['id'],
                         'category_id' => $category['id'],
-                        'path' => $data[$language['id']][$category['id']]['path'] . '/' . $product['uri_key']
+                        'path' => (isset($data[$language['id']][$category['id']]['path']) ?
+                                ($data[$language['id']][$category['id']]['path'] . '/') : '') .
+                        $product['uri_key']
                     ];
                 }
             }

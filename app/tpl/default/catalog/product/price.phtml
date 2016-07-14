@@ -4,9 +4,9 @@ $currency = $this->getCurrency();
 $format = $currency['format'];
 $symbol = $currency['symbol'];
 ?>
-<?php if ($product['price'] == $product->getFinalPrice()): ?>
-    <span class="regular-price"><?php printf($format, $symbol, $product['price']) ?></span>
+<?php if ($product->getFinalPrice() == $product['prices']['regular']): ?>
+    <span class="regular-price"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>
 <?php else: ?>
-    <span class="old-price"><?php printf($format, $symbol, $product['price']) ?></span>
+    <span class="old-price"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>
     <span class="special-price"><?php printf($format, $symbol, $product->getFinalPrice()) ?></span>
 <?php endif; ?>

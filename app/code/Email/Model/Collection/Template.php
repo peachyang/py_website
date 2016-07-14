@@ -14,12 +14,14 @@ class Template extends AbstractCollection
         $this->init('email_template');
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
         $ids = [];
         $data = [];
-        foreach ($this->storage as $key => $item) {
+        foreach ($result as $key => $item) {
+            if (isset($item['id']) && isset($data[$item['id']])) {
+                continue;
+            }
             $content = @gzdecode($item['content']);
             $css = @gzdecode($item['css']);
             if (isset($item['id'])) {
@@ -34,10 +36,10 @@ class Template extends AbstractCollection
                 }
             } else {
                 if ($content !== false) {
-                    $this->storage[$key]['content'] = $content;
+                    $result[$key]['content'] = $content;
                 }
                 if ($css !== false) {
-                    $this->storage[$key]['css'] = $css;
+                    $result[$key]['css'] = $css;
                 }
             }
         }
@@ -52,8 +54,9 @@ class Template extends AbstractCollection
                     $data[$item['template_id']]['language'][$item['language_id']] = $item['language'];
                 }
             }
-            $this->storage = array_values($data);
+            $result = array_values($data);
         }
+        parent::afterLoad($result);
     }
 
 }

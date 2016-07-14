@@ -334,7 +334,7 @@ abstract class AbstractModel extends ArrayObject
      * 
      * @param array $result
      */
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
         $this->isNew = false;
         $this->isLoaded = true;

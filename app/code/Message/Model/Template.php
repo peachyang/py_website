@@ -40,20 +40,20 @@ class Template extends AbstractModel
         parent::beforeLoad($select);
     }
 
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($result[0])) {
+        if (isset($result[0]['id'])) {
             $language = [];
             foreach ($result as $item) {
                 $language[$item['language_id']] = $item['language'];
             }
-            $this->storage['language'] = $language;
+            $result[0]['language'] = $language;
+            $data = @gzdecode($result[0]['content']);
+            if ($data !== false) {
+                $result[0]['content'] = $data;
+            }
         }
-        $data = @gzdecode($this->storage['content']);
-        if ($data !== false) {
-            $this->storage['content'] = $data;
-        }
+        parent::afterLoad($result);
     }
 
 }

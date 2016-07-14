@@ -3,9 +3,7 @@
 namespace Seahinet\Admin\Controller\Catalog\Product;
 
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Catalog\Model\Product\Review;
-use Seahinet\Lib\Session\Segment;
-use Seahinet\Lib\Model\Eav\Review as Model;
+use Seahinet\Catalog\Model\Product\Review as Model;
 
 class ReviewController extends AuthActionController
 {

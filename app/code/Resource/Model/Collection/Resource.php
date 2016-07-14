@@ -17,13 +17,12 @@ class Resource extends AbstractCollection
         $this->init('resource');
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($this->storage[0]['id'])) {
+        if (isset($result[0]['id'])) {
             $ids = [];
             $data = [];
-            foreach ($this->storage as $item) {
+            foreach ($result as $item) {
                 $ids[] = $item['id'];
                 $data[$item['id']] = $item;
             }
@@ -37,8 +36,9 @@ class Resource extends AbstractCollection
                     $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
                 }
             }
-            $this->storage = array_values($data);
+            $result = array_values($data);
         }
+        parent::afterLoad($result);
     }
 
 }

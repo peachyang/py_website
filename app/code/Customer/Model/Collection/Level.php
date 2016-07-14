@@ -14,13 +14,12 @@ class Level extends AbstractCollection
         $this->init('customer_level');
     }
 
-    protected function afterLoad($result)
+    protected function afterLoad(&$result)
     {
-        parent::afterLoad($result);
-        if (isset($this->storage[0]['id'])) {
+        if (isset($result[0]['id'])) {
             $ids = [];
             $data = [];
-            foreach ($this->storage as $item) {
+            foreach ($result as $item) {
                 $ids[] = $item['id'];
                 $data[$item['id']] = $item;
                 $data[$item['id']]['language'] = [];
@@ -37,8 +36,9 @@ class Level extends AbstractCollection
                     $data[$item['level_id']]['name'][$item['language_id']] = $item['name'];
                 }
             }
-            $this->storage = array_values($data);
+            $result = array_values($data);
         }
+        parent::afterLoad($result);
     }
 
 }

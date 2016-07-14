@@ -81,7 +81,7 @@ class Filter extends Toolbar
     {
         $query = $this->getCurrentUri()->getQuery();
         $query[$key] = $value;
-        return $this->getCurrentUri()->withQuery($query);
+        return $this->getCurrentUri()->withQuery(http_build_query($query));
     }
 
     public function getInitFilterUrl($key = null)

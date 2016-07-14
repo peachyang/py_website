@@ -22,7 +22,7 @@ class Role extends AbstractModel
         return !is_null($this->role) && $this->role->hasPermission('ALL') || $this->role->hasPermission($name);
     }
 
-    protected function afterLoad($result = [])
+    protected function afterLoad(&$result)
     {
         parent::afterLoad($result);
         $cache = $this->getContainer()->get('cache');

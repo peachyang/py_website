@@ -16,7 +16,9 @@ class Option extends AbstractModel
 
     protected function isUpdate($constraint = array(), $insertForce = false)
     {
-        if (!$this->isLoaded && $this->getId()) {
+        if (!$this->getId()) {
+            return false;
+        } else if (!$this->isLoaded) {
             $obj = (new static)->load($this->getId());
         } else {
             $obj = $this;
@@ -28,7 +30,7 @@ class Option extends AbstractModel
             return false;
         }
     }
-    
+
     protected function afterSave()
     {
         $adapter = $this->getContainer()->get('dbAdapter');
@@ -45,7 +47,7 @@ class Option extends AbstractModel
                     if ($this->storage['value']['id'][$order]) {
                         $tableGateway->update([
                             'sku' => $sku,
-                            'price' => $this->storage['value']['price'][$order],
+                            'price' => (float) $this->storage['value']['price'][$order],
                             'is_fixed' => $this->storage['value']['is_fixed'][$order],
                             'sort_order' => $order,
                             'option_id' => $this->getId()
@@ -54,7 +56,7 @@ class Option extends AbstractModel
                     } else {
                         $tableGateway->insert([
                             'sku' => $sku,
-                            'price' => $this->storage['value']['price'][$order],
+                            'price' => (float) $this->storage['value']['price'][$order],
                             'is_fixed' => $this->storage['value']['is_fixed'][$order],
                             'sort_order' => $order,
                             'option_id' => $this->getId()

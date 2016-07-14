@@ -184,7 +184,7 @@ class Product extends Entity
                     $warehouse->setInventory([
                         'warehouse_id' => $warehouseId,
                         'product_id' => $this->getId(),
-                        'sku' => isset($inventory['sku'][$order]) ? $inventory['sku'][$order] : $this->storage['sku'],
+                        'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
                         'barcode' => isset($inventory['barcode'][$order]) ? $inventory['barcode'][$order] : '',
                         'qty' => $qty,
                         'reserve_qty' => isset($inventory['reserve_qty'][$order]) ? $inventory['reserve_qty'][$order] : null,
@@ -222,7 +222,7 @@ class Product extends Entity
                     'input' => $this->storage['options']['input'][$id],
                     'is_required' => $this->storage['options']['is_required'][$id],
                     'sort_order' => $this->storage['options']['sort_order'][$id],
-                    'price' => $this->storage['options']['price'][$id],
+                    'price' => (float) $this->storage['options']['price'][$id],
                     'is_fixed' => $this->storage['options']['is_fixed'][$id],
                     'sku' => $this->storage['options']['sku'][$id],
                     'value' => isset($this->storage['options']['value'][$id]) ? $this->storage['options']['value'][$id] : null

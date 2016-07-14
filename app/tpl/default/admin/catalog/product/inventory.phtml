@@ -64,8 +64,9 @@
 </table>
 <?php
 $ids = [];
+$sku = $this->getProduct()['sku'];
 foreach ($this->getWarehouses() as $warehouse):
-    if (empty($warehouse['sku'])):
+    if ($warehouse['sku'] === $sku):
         ?>
         <table class="table table-hover branch" style="display:none">
             <caption><?php echo $this->translate('Branch %s', [$warehouse['name']]) ?></caption>

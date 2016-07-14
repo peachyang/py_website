@@ -37,9 +37,7 @@ if ($this->getCollection()):
         <?php if ($current < $pages): ?>
             <li class="next">
                 <a href="<?php echo $this->getPagerUrl($current + 1) ?>">
-                <?php endif; ?>           	
-                <span><?php echo $this->translate('Next', [], 'pager') ?></span>
-                <?php if ($current < $pages): ?>            	
+                    <span><?php echo $this->translate('Next', [], 'pager') ?></span>
                 </a>
             </li>
             <li class="last"> 

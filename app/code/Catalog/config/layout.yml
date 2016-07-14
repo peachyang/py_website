@@ -23,6 +23,10 @@ catalog_category:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: showLabel
+                                        params: false
 admin_catalog_category_list:
     update: grid
     root:

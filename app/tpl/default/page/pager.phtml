@@ -3,25 +3,22 @@ if ($this->getCollection()):
     $current = $this->getCurrentPage();
     $pages = $this->getAllPages();
     $limit = $this->getLimit();
-//     if ($this->showLabel()) {
-//         $total = min($current * $limit, $this->getCount());
-//         echo $this->translate('Display %d - %d of %d record(s).', [min($total, ($current - 1) * $limit + 1), $total, $this->getCount()], 'pager');
-//     }
-  ?>
+    if ($this->showLabel()) {
+        $total = min($current * $limit, $this->getCount());
+        echo $this->translate('Display %d - %d of %d record(s).', [min($total, ($current - 1) * $limit + 1), $total, $this->getCount()], 'pager');
+    }
+    ?>
     <ol class="pager">
-        
-<!--         <li class="first"> -->
-<!--           <a href="<?php echo $this->getPagerUrl(1) ?>"><?php echo $this->translate('First', [], 'pager') ?></a> -->
-<!--         </li> -->
-        <li class="prev">
-        	<?php if ($current > 1): ?>
-            	<a href="<?php echo $this->getPagerUrl($current - 1) ?>">
-            <?php endif ?>
-            <span><?php echo $this->translate('Previous', [], 'pager') ?></span>
-            <?php if ($current > 1): ?>
-            	</a>
-            <?php endif ?>
-        </li>
+        <?php if ($current > 1): ?>
+            <li class="first"> 
+                <a href="<?php echo $this->getPagerUrl(1) ?>"><?php echo $this->translate('First', [], 'pager') ?></a> 
+            </li> 
+            <li class="prev">
+                <a href="<?php echo $this->getPagerUrl($current - 1) ?>">
+                    <span><?php echo $this->translate('Previous', [], 'pager') ?></span>
+                </a>
+            </li>
+        <?php endif ?>
         <?php for ($p = 1; $p <= $pages; $p++): ?>
             <li>
                 <?php if ($current === $p): ?>
@@ -37,34 +34,28 @@ if ($this->getCollection()):
                 <?php endif ?>
             </li>
         <?php endfor ?>
-        
-        
-        <li class="next">
-        	<?php if ($current < $pages): ?>
-            	<a href="<?php echo $this->getPagerUrl($current + 1) ?>">
-            <?php endif; ?>           	
-            <span><?php echo $this->translate('Next', [], 'pager') ?></span>
-            <?php if ($current < $pages): ?>            	
-            	</a>
-            <?php endif; ?>  
+        <?php if ($current < $pages): ?>
+            <li class="next">
+                <a href="<?php echo $this->getPagerUrl($current + 1) ?>">
+                <?php endif; ?>           	
+                <span><?php echo $this->translate('Next', [], 'pager') ?></span>
+                <?php if ($current < $pages): ?>            	
+                </a>
+            </li>
+            <li class="last"> 
+                <a href="<?php echo $this->getPagerUrl($pages) ?>"><?php echo $this->translate('Last', [], 'pager') ?></a>
+            </li> 
+        <?php endif; ?>
+        <li class="total">
+            <?php echo $this->translate('total ' . $pages . '  pages') ?>
         </li>
-<!--             <li class="last"> -->
-   <!--             <a href="<?php echo $this->getPagerUrl($pages) ?>"><?php echo $this->translate('Last', [], 'pager') ?></a>-->
-<!--             </li> -->
-
-		<li class="total">
-		  &nbsp;
-		  <?php echo $this->translate('total '.$pages.'  pages') ?>
-		</li>
-		
-		<li class="pageto">
-		   &nbsp;
-		   <?php echo $this->translate('to') ?>
-		   <input type="text" name="whichpage" id="whichpage" />
-		   <?php echo $this->translate('page') ?>
-		   &nbsp;&nbsp;
-		   <button type="button">Confirm</button>
-		   
-		</li>
+        <li class="pageto">
+            &nbsp;
+            <?php echo $this->translate('to') ?>
+            <input type="number" max="<?php echo $pages ?>" min="1" value="<?php echo $current ?>" name="whichpage" id="whichpage" />
+            <?php echo $this->translate('page') ?>
+            &nbsp;&nbsp;
+            <button type="button">Confirm</button>
+        </li>
     </ol>
 <?php endif; ?>

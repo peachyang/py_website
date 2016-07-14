@@ -15,6 +15,7 @@ class CurrencyController extends ActionController
         $currency->load($code, 'code');
         if ($currency->getId()) {
             $this->getResponse()->withCookie('currency', ['value' => $code, 'path' => '/']);
+            $this->getContainer()->get('eventDispatcher')->trigger('currency.switch', ['code' => $code]);
         }
         if ($this->getRequest()->isXmlHttpRequest()) {
             return ['redirect' => $this->getRequest()->getHeader('HTTP_REFERER')];

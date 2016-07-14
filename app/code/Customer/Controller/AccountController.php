@@ -247,6 +247,7 @@ class AccountController extends ActionController
             'message' => $this->translate('You have logged out successfully.'),
             'level' => 'success'
         ]]];
+        $this->getContainer()->get('eventDispatcher')->trigger('customer.logout.after');
         return $this->response($result, 'customer/account/login/', 'customer');
     }
 

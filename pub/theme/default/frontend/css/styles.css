@@ -11,6 +11,8 @@ body{min-width:320px}
 .header .welcome .register a{color:#fdbb30}
 .header .links>li>a{padding:0 12px}
 .header .links>li:last-child>a{padding-right:0}
+.header .links .dropdown-toggle>.fa{display:none}
+.header .links .dropdown-toggle:after{content:' ';display:inline-block;width:0;height:0;border:4.04145188px solid transparent;border-bottom:none;border-top:7px solid #fdbb30}
 .breadcrumb .clearfix{display:none} 
 .container-login{height:450px; background: url(../images/login.png) no-repeat center center #2ABAF8;}
 .container-login .login{background-color: rgba(167,217,248,0.8);padding:25px 30px 30px 25px;margin-top:40px;height:370px;width:330px;border-radius: 6px;border:1px solid white}
@@ -55,7 +57,7 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .text-list-shopcart{color:#646363;}
 .list-shopcart a:hover{text-decoration:none;}
 .goods-filter{border:1px solid #e1e3ea;margin-bottom:10px;} 
-.goods-filter-th{width:80px;text-align:center;vertical-align£ºmiddle;font-weight:normal;font-size:12px;}
+.goods-filter-th{width:80px;text-align:center;vertical-align:middle;font-weight:normal;font-size:12px;}
 .goods-filter-tr{border-bottom:1px solid #e2e4ea;}
 .goods-filter-td{}
 .goods-filter-li{margin-left:50px;}

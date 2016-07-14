@@ -122,16 +122,15 @@ class Product extends Entity
         return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
-    public function getFinalPrice()
+    public function getFinalPrice($qty = 1)
     {
-        if (empty($this->storage['final_price'])) {
-            if (empty($this->storage['prices'])) {
-                $this->storage['prices'] = [];
-                $this->getEventDispatcher()->trigger('product.price.calc', ['product' => $this]);
-            }
-            $this->storage['final_price'] = min($this->storage['prices']);
+        if (empty($this->storage['prices'])) {
+            $this->storage['prices'] = [];
+            $this->getEventDispatcher()->trigger('product.price.calc', [
+                'product' => $this, 'qty' => $qty
+            ]);
         }
-        return $this->storage['final_price'];
+        return min($this->storage['prices']);
     }
 
     protected function afterLoad(&$result)
@@ -185,16 +184,16 @@ class Product extends Entity
                     $warehouse->setInventory([
                         'warehouse_id' => $warehouseId,
                         'product_id' => $this->getId(),
-                        'sku' => $inventory['sku'][$order],
+                        'sku' => isset($inventory['sku'][$order]) ? $inventory['sku'][$order] : $this->storage['sku'],
                         'barcode' => isset($inventory['barcode'][$order]) ? $inventory['barcode'][$order] : '',
                         'qty' => $qty,
-                        'reserve_qty' => $inventory['reserve_qty'][$order],
-                        'min_qty' => $inventory['min_qty'][$order],
-                        'max_qty' => $inventory['max_qty'][$order],
-                        'is_decimal' => $inventory['is_decimal'][$order],
-                        'backorders' => $inventory['backorders'][$order],
-                        'increment' => $inventory['increment'][$order],
-                        'status' => $inventory['status'][$order]
+                        'reserve_qty' => isset($inventory['reserve_qty'][$order]) ? $inventory['reserve_qty'][$order] : null,
+                        'min_qty' => isset($inventory['min_qty'][$order]) ? $inventory['min_qty'][$order] : null,
+                        'max_qty' => isset($inventory['max_qty'][$order]) ? $inventory['max_qty'][$order] : null,
+                        'is_decimal' => isset($inventory['is_decimal'][$order]) ? $inventory['is_decimal'][$order] : null,
+                        'backorders' => isset($inventory['backorders'][$order]) ? $inventory['backorders'][$order] : null,
+                        'increment' => isset($inventory['increment'][$order]) ? $inventory['increment'][$order] : null,
+                        'status' => isset($inventory['status'][$order]) ? $inventory['status'][$order] : null
                     ]);
                 }
             }
@@ -226,7 +225,7 @@ class Product extends Entity
                     'price' => $this->storage['options']['price'][$id],
                     'is_fixed' => $this->storage['options']['is_fixed'][$id],
                     'sku' => $this->storage['options']['sku'][$id],
-                    'value' => $this->storage['options']['value'][$id]
+                    'value' => isset($this->storage['options']['value'][$id]) ? $this->storage['options']['value'][$id] : null
                 ])->save();
             }
         }

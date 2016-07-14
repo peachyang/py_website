@@ -1,0 +1,13 @@
+---
+currency.switch:
+    -
+        listener: [\Seahinet\Sales\Listeners\Cart, afterCurrencySwitch]
+        priority: 0
+customer.login.after:
+    -
+        listener: [\Seahinet\Sales\Listeners\Cart, afterLoggedIn]
+        priority: 0
+customer.logout.after:
+    -
+        listener: [\Seahinet\Sales\Listeners\Cart, afterLoggedOut]
+        priority: 0

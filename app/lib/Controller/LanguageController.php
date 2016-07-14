@@ -17,6 +17,7 @@ class LanguageController extends ActionController
             $segment = new Session\Segment('core');
             $segment->set('language', $code);
             $this->getResponse()->withCookie('language', ['value' => $code, 'path' => '/']);
+            $this->getContainer()->get('eventDispatcher')->trigger('language.switch', ['code' => $code]);
         }
         if ($this->getRequest()->isXmlHttpRequest()) {
             return ['redirect' => $this->getRequest()->getHeader('HTTP_REFERER')];

@@ -20,7 +20,8 @@ trait Renderer
     protected function replace($content, array $vars = [])
     {
         if ($content) {
-            preg_match_all('#{{\s*(?P<type>[^\s\}\'\"]+)(?P<param>(?:\s+[^\s\}]+)*)}}#', str_replace('&quot;', '"', $content), $matches);
+            $content = str_replace(['&quot;', '&#39;'], ['"', '\''], $content);
+            preg_match_all('#{{\s*(?P<type>[^\s\}\'\"]+)(?P<param>(?:\s+[^\s\}]+)*)}}#', $content, $matches);
             $replace = [];
             if (count($matches[0])) {
                 foreach ($matches[0] as $key => $src) {

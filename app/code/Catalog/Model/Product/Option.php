@@ -28,7 +28,7 @@ class Option extends AbstractModel
             return false;
         }
     }
-
+    
     protected function afterSave()
     {
         $adapter = $this->getContainer()->get('dbAdapter');

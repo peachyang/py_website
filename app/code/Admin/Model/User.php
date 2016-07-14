@@ -40,6 +40,7 @@ class User extends AbstractModel
             $segment = new Segment('admin');
             $segment->set('isLoggedin', true)
                     ->set('user', clone $this);
+            $this->getEventDispatcher()->trigger('admin.user.login.after', ['model' => $this]);
             return true;
         }
         return false;

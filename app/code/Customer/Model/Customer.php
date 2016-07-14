@@ -56,6 +56,7 @@ class Customer extends Entity
             $segment = new Segment('customer');
             $segment->set('isLoggedin', true)
                     ->set('customer', clone $this);
+            $this->getEventDispatcher()->trigger('customer.login.after', ['model' => $this]);
             return true;
         }
         return false;

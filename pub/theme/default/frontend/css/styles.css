@@ -48,11 +48,12 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .list-logo{float:left;margin-top:30px;}
 .lsit-search{height:40px;float:left;margin-top:35px;border:2px solid #fdbb30;border-radius:2px;}
 .list-shopcart{margin-top:38px;height:36px;background-color:#f7f7f7;text-align:center;line-height:36px;color:#fdbb30;float:right;margin-right:10px;padding:0 10px;}
-.input-addon-list{border:none;border-radius:0px;background-color:#f1f1f1}
+.input-addon-list{border:none;border-radius:0px;background-color:#f1f1f1;}
 .input-list-search{height:36px}
 .list-search-btn{border:none;border-radius:0px;background-color:#fdbb30}
 .submit-list-search{background-color:#fdbb30;padding:0;}
 .list-search-dropdown{border:none;border-radius:0px;background-color:#f1f1f1;padding:0;}
+.search-list-option{background-color:#f1f1f1;border:none;}
 .list-type-btn{border:none;padding:0;background-color:#f1f1f1}
 .text-list-shopcart{color:#646363;}
 .list-shopcart a:hover{text-decoration:none;}
@@ -60,7 +61,21 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .goods-filter-th{width:80px;text-align:center;vertical-align:middle;font-weight:normal;font-size:12px;}
 .goods-filter-tr{border-bottom:1px solid #e2e4ea;}
 .goods-filter-td{}
-.goods-filter-li{margin-left:50px;}
-.goods-filter-ul{margin-top:20px;margin-bottom:20px;border-left:1px solid #e1e4ea;font-size:12px;}
+.goods-filter-li{margin-left:50px;height:50px}
+.goods-li-all{margin-left:20px;}
+.goods-filter-ul{border-left:1px solid #e1e4ea;font-size:12px;height:50px;line-height:50px;overflow:hidden}
 .goods-filter a{color:#575656}
+.goods-filter-more{width:110px;padding-left:50px;}
+.gird-pro-a{word-wrap:break-word;color:#757474;font-size:14px}
+.grid-pro-name{margin:0}
+.grid-pro-price{font-size:16px;color:#fd9030;font-weight:bold;}
+.pager li>.current, .total{border:none;color:#a5a5a6}
+.pager li>span, .pager li>a{border-radius:1px;color:#a5a5a6}
+.pager .next>a, .pager .next>span{float:none;} 
+.pager{text-align:left}
+.pager .prev>span, .pager .next>span{color:#d6d7d8}
+.pageto{color:#a5a5a6}
+.pageto>input{width:30px;height:30px;border:1px solid #e4e2e2;border-radius:1px;text-align:center;}
+.pageto>button{height:30px;border:1px solid #e4e2e2;border-radius:1px;background-color:#f7f7f7;;border-radius:1px;}
+.sort-by{border:1px solid black;margin-top:180px}
 

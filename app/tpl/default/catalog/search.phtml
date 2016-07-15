@@ -1,0 +1,18 @@
+<?php
+$type = $this->getQuery('type');
+$query = $this->getQuery('q');
+?>
+<form action="<?php echo $this->getBaseUrl('catalog/search/') ?>" method="get">
+    <div class="input-group">
+        <div class="input-group-addon">
+            <select name="type" class="form-control">
+                <option value="0"<?php if ($type !== '1'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Product') ?></option>
+                <option value="1"<?php if ($type === '1'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Store') ?></option>
+            </select>
+        </div>
+        <input type="search" class="form-control required" name="q" value="<?php echo $query ?>" />
+        <div class="input-group-addon">
+            <button class="btn btn-submit" type="submit">Search</button>
+        </div>
+    </div>
+</form>

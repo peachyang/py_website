@@ -9,11 +9,11 @@ $products = $this->getProducts();
                     <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
                 </a>
                 
-                <div class="price-box grid-pro-price">
+                <div class="price-box">
                     <?php echo $this->getPriceBox($product) ?>
                 </div>
                 
-                <h3 class="product-name grid-pro-name">
+                <h3 class="product-name">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" class="gird-pro-a">
                         <?php echo $product['name'] ?>
                     </a>

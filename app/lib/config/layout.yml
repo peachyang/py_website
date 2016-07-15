@@ -129,6 +129,15 @@ frontend:
                                             -
                                                 method: setWrapper
                                                 params: li
+            footer:
+                children:
+                    block:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer                        
+            
             content:
                 children:
                     breadcrumb:

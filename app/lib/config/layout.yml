@@ -93,6 +93,9 @@ frontend:
                                 type: Seahinet\Catalog\ViewModel\Navigation
                             navigation:
                                 type: Seahinet\Cms\ViewModel\Navigation
+                            quick-search:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: catalog/search
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
                                 action: 

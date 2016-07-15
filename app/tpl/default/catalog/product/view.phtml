@@ -1,8 +1,12 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$product = $this->getProduct();
+?>
+<form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+    <input type="hidden" name="product" value="<?php echo $product->getId() ?>" />
+    <div class="product-detail clearfix">
+        <div class="product-media">
+            <?php echo $this->getChild('media')->setVariable('product', $product) ?>
+        </div>
+    </div>
+</form>

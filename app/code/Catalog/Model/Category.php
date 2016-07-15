@@ -46,4 +46,20 @@ class Category extends Entity
         return [];
     }
 
+    public function beforeSave()
+    {
+        if (!empty($this->storage['sortable']) && is_array($this->storage['sortable'])) {
+            $this->storage['sortable'] = implode(',', $this->storage['sortable']);
+        }
+        parent::beforeSave();
+    }
+
+    public function afterLoad(&$result)
+    {
+        if (!empty($result['sortable'])) {
+            $result['sortable'] = explode(',', $result['sortable']);
+        }
+        parent::afterLoad($result);
+    }
+
 }

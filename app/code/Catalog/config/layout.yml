@@ -36,6 +36,10 @@ catalog_product:
                     product:
                         type: Seahinet\Catalog\ViewModel\Product\View
                         template: catalog/product/view
+                        children:
+                            media:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: catalog/product/media
 admin_catalog_category_list:
     update: grid
     root:

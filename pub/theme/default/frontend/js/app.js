@@ -9,6 +9,8 @@
 }(function ($) {
     $(function () {
         "use strict";
-        
+        $('.pager .btn').click(function () {
+            location.href = $(this).data('url') + $(this).siblings('input').val();
+        });
     });
 }));

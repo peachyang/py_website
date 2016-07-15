@@ -13,7 +13,7 @@ menu.context a{display:block;font-size:12px;line-height:2;padding:0 1em 0 0.5em;
 menu.context a:hover{background:#3980cb;color:#fff;text-decoration:none}
 menu.context .fa{margin-right:4px}
 address{font-style:normal}
-input[type=number]{-moz-appearance:textfield}
+input[type=number]{appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 button,html input[type="button"],input[type="reset"],input[type="submit"],label[for]{cursor:pointer}
 .cookies .global-notice .no-cookie{display:none}

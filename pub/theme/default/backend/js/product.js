@@ -133,7 +133,7 @@
         });
         $('.edit form').on('submit', function () {
             if ($(this).valid()) {
-                $(this).find('.grid .filters input,.grid .filters select').each(function () {
+                $(this).find('.grid .filters input,.grid .filters select,.grid .pager input').each(function () {
                     this.disabled = true;
                 });
             }

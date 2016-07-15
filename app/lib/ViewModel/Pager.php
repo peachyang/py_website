@@ -19,7 +19,7 @@ class Pager extends Template
      * @var bool
      */
     protected $showLabel = true;
-    
+
     /**
      * @var int
      */
@@ -119,10 +119,14 @@ class Pager extends Template
      * @param int $pager
      * @return string
      */
-    public function getPagerUrl($pager = 1)
+    public function getPagerUrl($pager = null)
     {
         $query = $this->getQuery();
-        $query['page'] = $pager;
+        if (is_null($pager)) {
+            unset($query['page']);
+        } else {
+            $query['page'] = $pager;
+        }
         return $this->getUri()->withQuery(http_build_query($query))->__toString();
     }
 

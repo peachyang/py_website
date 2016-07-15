@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Order\Item;
 
 class Order extends AbstractModel
 {
@@ -18,6 +19,20 @@ class Order extends AbstractModel
             'base_discount', 'discount', 'base_tax', 'tax', 'base_total', 'total',
             'base_total_paid', 'total_paid', 'additional', 'customer_note'
         ]);
+    }
+
+    public function place($warehouseId, $storeId)
+    {
+        $cart = Cart::instance();
+        $this->setData($cart->toArray())
+                ->setData([
+                    'warehouse_id' => $warehouseId,
+                    'store_id' => $storeId
+        ])->collateTotals()->save();
+        $cart->getItems(true)->walk(function($item){
+            $item = new Item($item);
+            $item->setId(null)->save();
+        });
     }
 
 }

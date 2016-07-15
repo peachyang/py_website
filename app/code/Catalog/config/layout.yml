@@ -27,6 +27,15 @@ catalog_category:
                                     -
                                         method: showLabel
                                         params: false
+catalog_product:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    product:
+                        type: Seahinet\Catalog\ViewModel\Product\View
+                        template: catalog/product/view
 admin_catalog_category_list:
     update: grid
     root:

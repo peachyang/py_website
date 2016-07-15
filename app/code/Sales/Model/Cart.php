@@ -21,9 +21,8 @@ final class Cart extends AbstractModel implements Singleton
     protected function construct()
     {
         $this->init('sales_cart', 'id', [
-            'id', 'customer_id', 'status', 'additional', 'customer_note',
-            'billing_address_id', 'shipping_address_id', 'warehouse_id',
-            'store_id', 'billing_address', 'shipping_address', 'coupon',
+            'id', 'customer_id', 'status', 'additional', 'customer_note', 'discount_detail',
+            'billing_address_id', 'shipping_address_id', 'billing_address', 'shipping_address',
             'is_virtual', 'free_shipping', 'base_currency', 'currency',
             'shipping_method', 'payment_method', 'base_shipping', 'shipping',
             'base_discount', 'discount', 'base_tax', 'tax', 'base_total', 'total'
@@ -124,11 +123,14 @@ final class Cart extends AbstractModel implements Singleton
         return $cart;
     }
 
-    public function getItems()
+    public function getItems($force = false)
     {
-        if (is_null($this->items)) {
+        if ($force || is_null($this->items)) {
             $items = new ItemCollection();
             $items->where(['cart_id' => $this->getId()]);
+            if ($force) {
+                return $items;
+            }
             $result = [];
             $items->walk(function($item) use (&$result) {
                 $result[$item['id']] = $item;
@@ -146,18 +148,12 @@ final class Cart extends AbstractModel implements Singleton
             $sku = $product['sku'];
         }
         ksort($options);
-        $this->getEventDispatcher()->trigger('cart.add.before', [
-            'product_id' => $productId,
-            'qty' => $qty,
-            'warehouse_id' => $warehouseId,
-            'sku' => $sku,
-            'options' => $options
-        ]);
         $items = new ItemCollection();
         $items->where([
             'cart_id' => $this->getId(),
             'product_id' => $productId,
             'warehouse_id' => $warehouseId,
+            'store_id' => $product['store_id'],
             'sku' => $sku,
             'options' => json_encode($options)
         ]);
@@ -170,12 +166,12 @@ final class Cart extends AbstractModel implements Singleton
                         'qty' => $newQty,
                         'price' => $price
                     ])->collateTotals()->save();
-            $this->items[$items[0]['id']]['qty'] = $newQty;
         } else {
             $price = $product->getFinalPrice($qty);
             $item->setData([
                 'product_id' => $productId,
                 'product_name' => $product['name'],
+                'store_id' => $product['store_id'],
                 'qty' => $qty,
                 'options' => json_encode($options),
                 'sku' => $sku,
@@ -184,16 +180,23 @@ final class Cart extends AbstractModel implements Singleton
                 'weight' => $product['weight'],
                 'price' => $price
             ])->collateTotals()->save();
-            $this->items[$item->getId()] = $item->toArray();
         }
-        $this->getEventDispatcher()->trigger('cart.add.after', [
-            'product_id' => $productId,
-            'qty' => $qty,
-            'warehouse_id' => $warehouseId,
-            'sku' => $sku,
-            'options' => $options
-        ]);
+        $this->items[$item->getId()] = $item->toArray();
+        $this->collateTotals()->save();
         return $this;
+    }
+
+    public function changeQty($item, $qty)
+    {
+        if (is_numeric($item)) {
+            $item = new Item;
+            $item->load($item);
+        }
+        if ($item['qty'] > $qty && $item['min_qty'] <= $qty || $item['qty'] < $qty && $item['max_qty'] >= $qty) {
+            $item->setData('qty', $qty)->collateTotals()->save();
+            $this->items[$item->getId()]['qty'] = $item->toArray();
+        }
+        $this->collateTotals()->save();
     }
 
     public function removeItem($item)
@@ -205,13 +208,17 @@ final class Cart extends AbstractModel implements Singleton
         } else {
             unset($this->items[$item['id']]);
         }
-        $this->getEventDispatcher()->trigger('cart.remove.after', [
-            'product_id' => $item['product_id'],
-            'qty' => $item['qty'],
-            'warehouse_id' => $item['warehouse_id'],
-            'sku' => $item['sku']
-        ]);
         $item->remove();
+        return $this;
+    }
+
+    public function removeAllItems()
+    {
+        foreach ($this->getItems() as $item) {
+            $item = new Item;
+            $item->setId($item['id'])->remove();
+        }
+        $this->items = [];
         return $this;
     }
 
@@ -265,6 +272,17 @@ final class Cart extends AbstractModel implements Singleton
             $this->rollback();
             $this->getContainer()->get('log')->logException($e);
         }
+    }
+
+    public function collateTotals()
+    {
+        $baseTotal = 0;
+        $total = 0;
+        foreach ($this->getItems(true) as $item) {
+            $baseTotal += $item['base_total'];
+            $total += $item['total'];
+        }
+        $this->setData(['base_total' => $baseTotal, 'total' => $baseTotal]);
     }
 
 }

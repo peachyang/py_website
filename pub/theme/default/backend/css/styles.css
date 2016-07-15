@@ -119,7 +119,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 label,.label{vertical-align:top}
 .control-label{display:block;width:100%;font-size:13px;line-height:26px;color:#000;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .control-label.required:before{content:"*";color:#f00}
-.form-control{display:block;width:100%;height:26px;padding:0 .75em;font-size:12px;line-height:26px;color:#555;background-color:#fff;background-image:none;border:1px solid #8b8c8c;transition:border-color ease-in-out .15s}
+.form-control{display:block;width:100%;height:26px;padding:0 .75em;font-size:12px;line-height:24px;color:#555;background-color:#fff;background-image:none;border:1px solid #8b8c8c;transition:border-color ease-in-out .15s}
 .form-control:focus{border-color:#009fe9;outline:none}
 .form-control::-moz-placeholder,.form-control:-ms-input-placeholder,.form-control::-webkit-input-placeholder{color:#999}
 select.form-control{padding:0 .42em}

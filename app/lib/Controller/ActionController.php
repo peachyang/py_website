@@ -2,6 +2,8 @@
 
 namespace Seahinet\Lib\Controller;
 
+use Seahinet\Cms\Model\Page;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Http\Response;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Session\Segment;
@@ -27,7 +29,21 @@ abstract class ActionController extends AbstractController
 
     public function notFoundAction()
     {
-        return $this->getResponse()->withStatus(404);
+        $this->getResponse()->withStatus(404);
+        $index = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => 'not-found']);
+        if (count($index)) {
+            $page = new Page;
+            $page->load($index[0]['page_id']);
+            $root = $this->getLayout('cms_page');
+            $root->addBodyClass('page-not-found');
+            $head = $root->getChild('head');
+            $head->setTitle($page['title'])
+                    ->setKeywords($page['keywords'])
+                    ->setDescription($page['description']);
+            $root->getChild('page', true)->setPageModel($page);
+            return $root;
+        }
+        return $this->getResponse();
     }
 
     /**

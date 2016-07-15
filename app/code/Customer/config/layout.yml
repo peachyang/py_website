@@ -356,10 +356,10 @@ admin_address_attribute_list:
                                 params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/customer_address/',label:'Address Attribute'}]
+                                params: [{link:':ADMIN/customer_attribute_address/',label:'Address Attribute'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/customer_address/edit/',label:'Add New Attribute'}]
+                                params: [{link:':ADMIN/customer_attribute_address/edit/',label:'Add New Attribute'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Customer\Grid\Attribute\Address
 admin_address_attribute_edit:
@@ -380,10 +380,10 @@ admin_address_attribute_edit:
                                 params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/customer_address/',label:'Address Attribute'}]
+                                params: [{link:':ADMIN/customer_attribute_address/',label:'Address Attribute'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/customer_address/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/customer_attribute_address/edit/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Customer\Edit\Attribute\Address
                         children:

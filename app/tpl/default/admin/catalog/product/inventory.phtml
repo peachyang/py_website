@@ -64,32 +64,33 @@
 </table>
 <?php
 $ids = [];
-$sku = $this->getProduct()['sku'];
 foreach ($this->getWarehouses() as $warehouse):
-    if ($warehouse['sku'] === $sku):
-        ?>
-        <table class="table table-hover branch" style="display:none">
-            <caption><?php echo $this->translate('Branch %s', [$warehouse['name']]) ?></caption>
-            <thead>
-                <tr>
-                    <th><?php echo $this->translate('Title') ?></th>
-                    <th><?php echo $this->translate('SKU') ?></th>
-                    <th><?php echo $this->translate('Barcode') ?></th>
-                    <th><?php echo $this->translate('Qty') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <template class="tmpl-inventory-branch" data-inventory='<?php echo json_encode($json) ?>'>
+    if (in_array($warehouse['id'], $ids)) {
+        continue;
+    }
+    $ids[] = $warehouse['id'];
+    ?>
+    <table class="table table-hover branch" style="display:none">
+        <caption><?php echo $this->translate('Branch %s', [$warehouse['name']]) ?></caption>
+        <thead>
             <tr>
-                <td>{$title}</td>
-                <td><input type="hidden" name="inventory[<?php echo $warehouse['id'] ?>][sku][]" value="{$sku}" />{$sku}</td>
-                <td><input type="text" name="inventory[<?php echo $warehouse['id'] ?>][barcode][]" class="form-control" value="{$barcode}" /></td>
-                <td><input type="number" name="inventory[<?php echo $warehouse['id'] ?>][qty][]" class="form-control required" min="0" value="{$qty}" /></td>
+                <th><?php echo $this->translate('Title') ?></th>
+                <th><?php echo $this->translate('SKU') ?></th>
+                <th><?php echo $this->translate('Barcode') ?></th>
+                <th><?php echo $this->translate('Qty') ?></th>
             </tr>
-        </template>
-        <?php
-    endif;
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <template class="tmpl-inventory-branch" data-inventory='<?php echo json_encode($json) ?>'>
+        <tr>
+            <td>{$title}</td>
+            <td><input type="hidden" name="inventory[<?php echo $warehouse['id'] ?>][sku][]" value="{$sku}" />{$sku}</td>
+            <td><input type="text" name="inventory[<?php echo $warehouse['id'] ?>][barcode][]" class="form-control" value="{$barcode}" /></td>
+            <td><input type="number" name="inventory[<?php echo $warehouse['id'] ?>][qty][]" class="form-control required" min="0" value="{$qty}" /></td>
+        </tr>
+    </template>
+    <?php
 endforeach;
 ?>

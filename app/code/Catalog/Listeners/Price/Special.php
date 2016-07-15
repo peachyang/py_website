@@ -11,8 +11,9 @@ class Special extends AbstractPrice
         $now = time();
         $start = strtotime($product['special_price_start']);
         $end = strtotime($product['special_price_end']);
-        if ((!$start || $now >= $start) && (!$end || $now <= $end)) {
-            $product['prices']['special'] = $this->getCurrency()->convert($event['product']['special_price']);
+        $price = (float) $event['product']['special_price'];
+        if ($price && (!$start || $now >= $start) && (!$end || $now <= $end)) {
+            $product['prices']['special'] = $this->getCurrency()->convert($price);
         }
     }
 

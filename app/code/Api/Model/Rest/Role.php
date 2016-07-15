@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Oauth\Model;
+namespace Seahinet\Api\Model\Rest;
 
 use Seahinet\Lib\Model\AbstractModel;
 

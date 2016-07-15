@@ -136,12 +136,16 @@ class Product extends Entity
     protected function afterLoad(&$result)
     {
         if (isset($result[0]) && !empty($result[0]['images'])) {
-            $result[0]['images'] = json_decode($result[0]['images'], true);
+            if (!is_array($result[0]['images'])) {
+                $result[0]['images'] = json_decode($result[0]['images'], true);
+            }
             foreach ($result[0]['images'] as &$item) {
                 $item['src'] = (new Resource)->load($item['id'])['real_name'];
             }
         } else if (!empty($result['images'])) {
-            $result['images'] = json_decode($result['images'], true);
+            if (!is_array($result['images'])) {
+                $result['images'] = json_decode($result['images'], true);
+            }
             foreach ($result['images'] as &$item) {
                 $item['src'] = (new Resource)->load($item['id'])['real_name'];
             }

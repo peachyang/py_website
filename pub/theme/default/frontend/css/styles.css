@@ -86,6 +86,7 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .pageto>input{width:30px;height:30px;border:1px solid #e4e2e2;border-radius:1px;text-align:center;}
 .pageto>button{height:30px;border:1px solid #e4e2e2;border-radius:1px;background-color:#f7f7f7;;border-radius:1px;}
 
+
 .sort-by{border-bottom:1px solid #fdcb60;background-color:#f5f6f9;margin-top:-5px;height:41px;}
 .sort-by ul{font-size:14px;line-height:40px;}
 .sort-by ul li{border-right:1px solid #cfd0d4;width:75px;text-align:center;}
@@ -104,3 +105,13 @@ label.invalid{position: absolute;color: Red;font-size: 12px;white-space: nowrap;
 .footer .foot-info .foot-con{padding-top:9px}
 .footer .foot-info .foot-con :first-child{padding-left:0px}
 .footer .foot-info .foot-con :last-child{border:none}
+
+/*peach_add*/
+.main-container .message{width:1202px;overflow:hidden;margin:0 auto}
+.main-container .message-img{float:left}
+.main-container .message-img img{margin:70px 0 79px 78px;padding-right:85px;border-right:2px #f2f2f2 solid}
+.main-container .message-waring{height:312px;float:left;text-indent:111px;margin:70px 0 79px 0}
+.main-container .message-waring h2{line-height:50px;margin-top:100px}
+.main-container .message-waring p{float:left;color:#a2a3a3}
+.main-container .message-waring span{float:left;text-align:left;color:#a2a3a3}
+

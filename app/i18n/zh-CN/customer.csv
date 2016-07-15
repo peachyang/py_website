@@ -46,6 +46,7 @@
 "If 0 is specified, CAPTCHA on the Login form will be always available.","如果设置为0，登录验证码将总是显示。"
 "Level","等级"
 "Log in","登录"
+"Log out","登出"
 "New Address","新建地址"
 "Number of Symbols","字符数"
 "Number of Unsuccessful Attempts to Login","尝试登录失败次数"

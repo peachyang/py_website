@@ -56,7 +56,7 @@ class Category extends Entity
 
     public function afterLoad(&$result)
     {
-        if (!empty($this->storage['sortable'])) {
+        if (!empty($result['sortable'])) {
             $result['sortable'] = explode(',', $result['sortable']);
         }
         parent::afterLoad($result);

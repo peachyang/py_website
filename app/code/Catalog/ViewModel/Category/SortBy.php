@@ -22,7 +22,7 @@ class SortBy extends Toolbar
         $result = [];
         $category = $this->getVariable('category');
         if ($category && $category['sortable']) {
-            foreach ((array) $category['sortable'] as $key) {
+            foreach (explode(',', $category['sortable']) as $key) {
                 $result[$key] = $this->getAttributes()[$key];
             }
         }
@@ -45,7 +45,7 @@ class SortBy extends Toolbar
     public function getSorterUrl($key)
     {
         $query = $this->getRequest()->getQuery();
-        if (isset($query[$this->isAscending() ? 'asc' : 'desc'])&&$key === $query[$this->isAscending() ? 'asc' : 'desc']) {
+        if (isset($query[$this->isAscending() ? 'asc' : 'desc']) && $key === $query[$this->isAscending() ? 'asc' : 'desc']) {
             $query[$this->isAscending() ? 'desc' : 'asc'] = $key;
             unset($query[$this->isAscending() ? 'asc' : 'desc']);
         } else {

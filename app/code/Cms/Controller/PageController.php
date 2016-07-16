@@ -14,7 +14,7 @@ class PageController extends ActionController
             return $this->notFoundAction();
         }
         $root = $this->getLayout('cms_page');
-        $root->addBodyClass('page-' . $page['code']);
+        $root->addBodyClass('page-' . $page['uri_key']);
         $head = $root->getChild('head');
         $head->setTitle($page['title'])
                 ->setKeywords($page['keywords'])

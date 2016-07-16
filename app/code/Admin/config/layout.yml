@@ -322,8 +322,10 @@ admin_role_edit:
                                 type: Seahinet\Admin\ViewModel\Role\Tabs
                                 action:
                                     -
-                                        method: setTabs
-                                        params: [{operation:'Operation'}]
+                                        method: addTab
+                                        params: 
+                                            - operation
+                                            - Operation
                                 children:
                                     operation:
                                         type: Seahinet\Admin\ViewModel\Role\Tabs\Operation

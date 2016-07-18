@@ -40,13 +40,10 @@ class WishlistController extends AuthActionController
             
             $data['wishlist_id'] = $wishlist->getId();
                     print_r($data);
-            die();
+            //die();
             $wishlist->getId();
             $wishlist->addItem($data);
             $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];
-        } catch (\Exception $e) {
-            $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
-            $this->getContainer()->get('log')->logException($e);
         }
 //        }
         return $this->redirect('customer/wishlist/');

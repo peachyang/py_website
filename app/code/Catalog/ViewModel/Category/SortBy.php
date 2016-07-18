@@ -22,7 +22,7 @@ class SortBy extends Toolbar
         $result = [];
         $category = $this->getVariable('category');
         if ($category && $category['sortable']) {
-            foreach (explode(',', $category['sortable']) as $key) {
+            foreach ((array) $category['sortable'] as $key) {
                 $result[$key] = $this->getAttributes()[$key];
             }
         }
@@ -39,18 +39,22 @@ class SortBy extends Toolbar
 
     public function isAscending()
     {
-        return (bool) $this->getQuery('desc', true);
+        return !$this->getQuery('desc');
     }
 
-    public function getSorterUrl($key)
+    public function getSorterUrl($key, $value = null)
     {
         $query = $this->getRequest()->getQuery();
-        if (isset($query[$this->isAscending() ? 'asc' : 'desc']) && $key === $query[$this->isAscending() ? 'asc' : 'desc']) {
-            $query[$this->isAscending() ? 'desc' : 'asc'] = $key;
-            unset($query[$this->isAscending() ? 'asc' : 'desc']);
+        if (is_null($value)) {
+            if (isset($query[$this->isAscending() ? 'asc' : 'desc']) && $key === $query[$this->isAscending() ? 'asc' : 'desc']) {
+                $query[$this->isAscending() ? 'desc' : 'asc'] = $key;
+                unset($query[$this->isAscending() ? 'asc' : 'desc']);
+            } else {
+                $query['asc'] = $key;
+                unset($query['desc']);
+            }
         } else {
-            $query['asc'] = $key;
-            unset($query['desc']);
+            $query[$key] = $value;
         }
         return $this->getCurrentUri()->withQuery(http_build_query($query));
     }

@@ -54,4 +54,12 @@ class Category extends Entity
         parent::beforeSave();
     }
 
+    protected function afterLoad(&$result)
+    {
+        if (strpos($result['sortable'], ',')) {
+            $result['sortable'] = explode(',', $result['sortable']);
+        }
+        parent::afterLoad($result);
+    }
+
 }

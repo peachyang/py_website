@@ -1,8 +1,27 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$collection = $this->getVariable('collection');
+?>
+<form action="<?php echo $this->getBaseUrl('customer/wisthlist/commit/') ?>">
+<table width="60%" align="center" border="1">
+    <?php
+    foreach ($collection as $item):
+        $product = new \Seahinet\Catalog\Model\Product;
+        $product->load($item['product_id']);
+    ?>
+        <tr align="center">
+            <td width="10%"><?php echo $product['id']?></td>
+            <td width="30%">
+                <h3><?php echo $product['name'] ?></h3>
+            </td>
+            <td width="30%"><?php echo $product['description']?></td>
+            <td width="20%">
+                <a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='),$item['id'] ?>" title="<?php echo $this->translate('Delete') ?>">&times;</a>
+            </td>
+        </tr>
+    <?php endforeach ?>
+        <tr>
+            <td colspan="4"><button type="submit" class="btn btn-submit submit-login"><?php echo $this->translate('Submit')?></button>
+            
+            </td>
+        </tr>
+</table>

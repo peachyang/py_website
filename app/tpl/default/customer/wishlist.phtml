@@ -1,8 +1,26 @@
 <?php
+$collection = $this->getVariable('collection');
+//print_r($collection->toArray());
+?>
+<form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post"	>
+	<?php
+    foreach ($collection as $item):
+        $product = new \Seahinet\Catalog\Model\Product;
+        $product->load($item['product_id']);
+    ?>
+            <?php echo $product['id']?>
+            <?php echo $product['name'] ?>
+            <input type="hidden" name="id" value="<?php echo $item['id'] ?>" />
+            <input type="text" name="des" value="<?php echo $item['description'] ?>" />
+            <button type="submit">submit</button>
+            	
+            <a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='),$item['id'] ?>" title="<?php echo $this->translate('Delete') ?>">&times;</a>
+            
+    <?php endforeach ?>
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+</form>
+
+
+
+
 

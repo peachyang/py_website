@@ -23,6 +23,12 @@ class Wishlist extends AbstractModel {
 
     public function addItem($item) {
         $item = new Model($item);
+//         $product = new Product;
+//         $product->load();
+//         $item->setData([
+//                 'store_id' => $product['store_id'],
+//                 'product_name' => $product['name']
+//         ]);
         $item->save();
     }
 

@@ -1,12 +1,82 @@
 <?php
+$collection = $this->getVariable('collection');
 $product = $this->getProduct();
 ?>
 <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <input type="hidden" name="product" value="<?php echo $product->getId() ?>" />
     <div class="product-detail clearfix">
+        <h1 class="goods-title"><span itemprop="name"><?php echo $product['name'];?></span></h1>
+            <div class="goods-prowrap goods-main">
+            <div class="clearfix main-box">
+                <dl class="clearfix property-box">
+                    <dt class="property-type property-type-origin"><?php echo $this->translate('Price');?>：</dt>
+                        <dd class="property-cont property-cont-origin">
+                            <span id="J_OriginPrice" class="price"><?php echo $this->$product['price'];?></span>
+                        </dd>
+                </dl>
+            </div>
+            </div>        
+            <div class="content">
+            <div class="box">
+                <dl class="clearfix">
+                    <dt><?php $this->translate('Decimals'); ?>：</dt>
+                    <dd class="num clearfix">
+                        <div data-stock="26" id="J_GoodsNum" class="goods-num fl">
+                            <span class="num-reduce num-disable"></span>
+                                <input class="num-input" value="1" type="text">
+                                <span class="num-add "></span>
+                        </div>
+                        <div class="J_GoodsStock goods-stock fl">库存26件</div>
+                            <div class="J_GoodsStockTip goods-stock-tip fl">您所填写的商品数量超过库存！</div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="pannel-action">
+                <a href="javascript:;" class="J_PannelOK pannel-ok">确认</a>
+            </div>
+            </div>
+            <div class="goods-buy clearfix">
+                <a href="javascript:;" id="J_BuyNow" class="fl mr10 buy-btn buy-now">立刻购买</a>
+                <input value="nodapei" id="dapeiShow" type="hidden">
+                <a href="javascript:;" id="J_BuyCart" class="fl mr10 buy-cart buy-btn">加入购物车</a>
+            </div>
+            </div>        
+            <div class="goods-social clearfix">
+            <div class="share item">
+            <b></b>
+            分享
+            <div class="share-w clearfix">
+                        <a target="_blank" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.mogujie.com%2Fcps%2Fopen%2Ftrack%3Fchannel%3D19%26uid%3D128yxgi%26target%3Dhttp%253A%252F%252Fshop.mogujie.com%252Fdetail%252F1jypcai&amp;title=韩版925银云朵项链，白色的云朵，给人一种清纯干净的气质。装饰可爱的雨伞，俏皮时尚，夏季一定要买的一款哦。&amp;pics=http://s2.mogucdn.com/p1/160705/140501390_ie4wmmzsha4tsmbzhezdambqgqyde_720x1080.jpg_468x468.jpg" class="forqzone" title="关注QQ空间" rel="nofollow"></a>
+                        <a target="_blank" href="http://widget.renren.com/dialog/share?resourceUrl=http%3A%2F%2Fwww.mogujie.com%2Fcps%2Fopen%2Ftrack%3Fchannel%3D19%26uid%3D128yxgi%26target%3Dhttp%253A%252F%252Fshop.mogujie.com%252Fdetail%252F1jypcai&amp;title=韩版925银云朵项链，白色的云朵，给人一种清纯干净的气质。装饰可爱的雨伞，俏皮时尚，夏季一定要买的一款哦。&amp;thumbnail_url=http://s2.mogucdn.com/p1/160705/140501390_ie4wmmzsha4tsmbzhezdambqgqyde_720x1080.jpg_468x468.jpg" class="forrenren" title="关注人人" rel="nofollow"></a>
+                        <a target="_blank" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.mogujie.com%2Fcps%2Fopen%2Ftrack%3Fchannel%3D19%26uid%3D128yxgi%26target%3Dhttp%253A%252F%252Fshop.mogujie.com%252Fdetail%252F1jypcai&amp;title=韩版925银云朵项链，白色的云朵，给人一种清纯干净的气质。装饰可爱的雨伞，俏皮时尚，夏季一定要买的一款哦。&amp;pic=http://s2.mogucdn.com/p1/160705/140501390_ie4wmmzsha4tsmbzhezdambqgqyde_720x1080.jpg_468x468.jpg" class="forsina" title="关注sina" rel="nofollow"></a>
+                        <a target="_blank" href="http://www.mogujie.com/group/topic/1grvy/" class="forweixin" title="关注微信" rel="nofollow"></a>
+            </div>
+           </div>
+        </div>
         <div class="product-media">
             <?php echo $this->getChild('media')->setVariable('product', $product) ?>
+            <div class="product-image">
+                <div class="bigimage">    
+                <button class="middel">
+                    <img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_detail_pics.jpg');?>" height="449" alt="<?php echo $product['name']?>">
+                </button>
+                </div>
+                <div class="smallimage">
+                    <div class="box">
+                        <div class="list">
+                            <ul class="clearfix carousel">
+                                <li><img src=""><i></i></li>
+                                <li class=""><img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_relevant');?>"><i></i></li>
+                                <li class="c"><img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_relevant');?>"><i></i></li>
+                                <li class=""><img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_relevant');?>"><i></i></li>
+                                <li class=""><img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_relevant');?>"><i></i></li>
+                                <li><img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/images/images/product_relevant');?>"><i></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </form>

@@ -2,7 +2,7 @@
 $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
 ?>
- 	
+
 <table class="filters goods-filter table">
     <?php foreach ($filters as $key => $filter): ?>
         <tr class="goods-filter-tr">
@@ -10,13 +10,13 @@ $current = $this->getCurrentFilters();
             <td class="goods-filter-td">            
                 <ul class="list-inline goods-filter-ul">
                     <li class="goods-li-all">
-                        <a href="<?php echo $this->getInitFilterUrl($key) ?>">
-                        	<?php echo $this->translate('All')?>
-                   		</a>
+                        <a href="<?php echo $this->getInitFilterUrl($key) ?>" rel="nofollow">
+                            <?php echo $this->translate('All') ?>
+                        </a>
                     </li>
                     <?php foreach ($filter['values'] as $value => $values): ?>
                         <li class="goods-filter-li">
-                            <a href="<?php echo $this->getFilterUrl($key, $value) ?>">
+                            <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
                                 <span><?php echo $values['label'] ?></span>
                                 <?php if ($this->showCount()): ?>
                                     <span class="count"><?php echo $values['count'] ?></span>
@@ -27,9 +27,9 @@ $current = $this->getCurrentFilters();
                 </ul>
             </td>
             <td class="goods-filter-more">
-                <a href="javascript:;">
-                	<?php echo $this->translate('More')?>
-           		</a>
+                <a href="javascript:void(0);">
+                    <?php echo $this->translate('More') ?>
+                </a>
             </td>
         </tr>
     <?php endforeach ?>

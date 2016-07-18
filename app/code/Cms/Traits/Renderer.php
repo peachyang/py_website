@@ -59,7 +59,7 @@ trait Renderer
         } else {
             return '';
         }
-        return $block->__toString();
+        return $block ? $block->__toString() : '';
     }
 
 }

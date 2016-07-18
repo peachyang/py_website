@@ -48,15 +48,14 @@ class CategoryController extends ActionController
                             str_replace(':', '.', $condition['asc']) :
                             $condition['asc']) . ' ASC');
             unset($condition['asc']);
+            unset($condition['desc']);
         } else if (isset($condition['desc'])) {
             $collection->order((strpos($condition['desc'], ':') ?
                             str_replace(':', '.', $condition['desc']) :
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
         } else if ($category && $category['default_sortable']) {
-            $attribute = new Attribute;
-            $attribute->load($category['default_sortable']);
-            $collection->order($attribute['code']);
+            $collection->order($category['default_sortable']);
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {

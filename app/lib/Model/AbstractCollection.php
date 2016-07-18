@@ -173,6 +173,18 @@ abstract class AbstractCollection extends ArrayObject
     protected function afterLoad(&$result)
     {
         $this->isLoaded = true;
+        $className = str_replace('\\Collection', '', get_class($this));
+        if (class_exists($className)) {
+            foreach ($result as &$item) {
+                if (is_array($item)) {
+                    $object = new $className;
+                    $object->setData($item);
+                    $item = $object;
+                } else {
+                    break;
+                }
+            }
+        }
         $this->storage = $result;
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
     }

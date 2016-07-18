@@ -23,11 +23,10 @@ class WishlistController extends AuthActionController
 
     public function addAction()
     {
-<<<<<<< HEAD
-       
         $data = $this->getRequest()->getQuery();
 //        $result = $this->validateForm($data, ['name']);
 //        if ($result['error'] === 0) {
+        
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         
@@ -36,24 +35,10 @@ class WishlistController extends AuthActionController
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
                 $wishlist->setData(['customer_id' => $customerId, 'id' => null])->save();
-=======
-        $data = $this->getRequest()->getPost();
-        $result = $this->validateForm($data, ['name']);
-        if ($result['error'] === 0) {
-            $segment = new Segment('customer');
-            $customerId = $segment->get('customer')->getId();
-            try {
-                $wishlist = new Model;
-                $wishlist->load($customerId, 'customer_id');
-                $wishlist->addItem($data);
-                $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];
-            } catch (\Exception $e) {
-                $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
-                $this->getContainer()->get('log')->logException($e);
->>>>>>> branch 'master' of ssh://gitadmin@192.168.1.88:22/ecomv2admin.git
             }
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->addItem($data);
+            print_r($data);     
             $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];
         } catch (\Exception $e) {
             $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
@@ -66,12 +51,15 @@ class WishlistController extends AuthActionController
 
     public function commitAction()
     {
-        $data = $this->getRequest()->getPost();
-        $item = new Item;
-        $item->load($data['id'], 'id');
-        $item->setData('description', $data['des'])->save();
+        $data = $this->getRequest()->getPost()['description'];
+        foreach ($data as $id=>$value) 
+        {
+            $item = new Item;
+            $item->load($id,'id');
+            $item->setData('description', $value)->save();
+            
+        }
         return $this->redirect('customer/wishlist/');
-        //die();
     }
 
     public function deleteAction()

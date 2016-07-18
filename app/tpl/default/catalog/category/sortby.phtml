@@ -3,9 +3,40 @@ $sorters = $this->getSorters();
 $current = $this->getCurrentSorter();
 ?>
 <div class="sort-by">
+    <div class="limit dropdown">
+        <a href="javascript:void(0);" data-toggle="dropdown">
+            <?php echo $this->getQuery('limit', 20) ?>
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="<?php echo $this->getSorterUrl('limit', '12') ?>">12</a>
+            </li>
+            <li>
+                <a href="<?php echo $this->getSorterUrl('limit', '24') ?>">24</a>
+            </li>
+            <li>
+                <a href="<?php echo $this->getSorterUrl('limit', '36') ?>">36</a>
+            </li>
+        </ul>
+    </div>
+    <ul class="list-inline mode">
+        <li>
+            <a href="<?php echo $this->getSorterUrl('mode', 'grid') ?>">
+                <span class="fa fa-th-large" aria-hidden="true"></span>
+                <span class="sr-only"><?php echo $this->translate('Grid') ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo $this->getSorterUrl('mode', 'list') ?>">
+                <span class="fa fa-th-list" aria-hidden="true"></span>
+                <span class="sr-only"><?php echo $this->translate('List') ?></span>
+            </a>
+        </li>
+    </ul>
     <ul class="list-inline">
         <?php foreach ($sorters as $key => $label): ?>
-            <li<?php if ($this->getCurrentSorter() == $key): ?> class="<?php echo ($this->isAscending() ? 'asc' : 'desc') ?>"<?php endif ?>>
+            <li<?php if ($this->getCurrentSorter() == $key): ?> class="active <?php echo ($this->isAscending() ? 'asc' : 'desc') ?>"<?php endif ?>>
                 <a href="<?php echo $this->getSorterUrl($key) ?>"><?php echo $label ?></a>
             </li>
         <?php endforeach ?>

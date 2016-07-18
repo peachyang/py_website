@@ -6,9 +6,11 @@ use Seahinet\Customer\Model\Collection\Wishlist as Collection;
 use Seahinet\Customer\Model\Wishlist as Model;
 use Seahinet\Lib\Session\Segment;
 
-class WishlistController extends AuthActionController {
+class WishlistController extends AuthActionController
+{
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         $collection = new Collection;
@@ -18,7 +20,8 @@ class WishlistController extends AuthActionController {
         return $root;
     }
 
-    public function addAction() {
+    public function addAction()
+    {
         $data = $this->getRequest()->getPost();
         $result = $this->validateForm($data, ['name']);
         if ($result['error'] === 0) {

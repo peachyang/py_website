@@ -35,6 +35,7 @@ class CategoryController extends ActionController
     {
         $condition = $this->getRequest()->getQuery();
         unset($condition['q']);
+        unset($condition['mode']);
         $limit = isset($condition['limit']) ? $condition['limit'] : 20;
         if (isset($condition['page'])) {
             $collection->offset(($condition['page'] - 1) * $limit);

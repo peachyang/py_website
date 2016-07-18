@@ -15,10 +15,10 @@ class ProductList extends Template
     protected $products = null;
     protected $urls = [];
     protected $indexer = null;
-
-    public function __construct()
+    
+    public function getTemplate()
     {
-        $this->setTemplate('catalog/product/list/' . $this->getQuery('mode', 'grid'));
+        return 'catalog/product/list/' . $this->getQuery('mode', 'grid');
     }
 
     public function getCategory()

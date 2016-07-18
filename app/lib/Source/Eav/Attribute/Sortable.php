@@ -14,7 +14,7 @@ class Sortable implements SourceInterface
     public function getSourceArray()
     {
         $collection = new Collection;
-        $collection->columns(['id']);
+        $collection->columns(['code']);
         if ($this->entityType) {
             $collection->withLabel(Bootstrap::getLanguage()->getId())
                     ->join('eav_entity_type', 'eav_entity_type.id=type_id', [], 'right')
@@ -22,7 +22,7 @@ class Sortable implements SourceInterface
         }
         $result = [];
         foreach ($collection as $item) {
-            $result[$item['id']] = $item['label'];
+            $result[$item['code']] = $item['label'];
         }
         return $result;
     }

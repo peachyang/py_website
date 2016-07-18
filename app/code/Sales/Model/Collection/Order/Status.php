@@ -4,7 +4,7 @@ namespace Seahinet\Sales\Model\Collection\Order;
 
 use Seahinet\Lib\Model\AbstractCollection;
 
-class Item extends AbstractCollection
+class Status extends AbstractCollection
 {
 
     protected function construct()

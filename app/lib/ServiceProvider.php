@@ -94,6 +94,23 @@ class ServiceProvider implements ServiceProviderInterface
                 }
             };
         }
+        if (!$container->has('geoip')) {
+            $container['geoip'] = function($container) {
+                $config = $container->get('config');
+                if (isset($config['adapter']['geoip'])) {
+                    $db = BP . 'var/geoip/' . $config['adapter']['geoip'];
+                    if (file_exists($db)) {
+                        return new \MaxMind\Db\Reader($db);
+                    }
+                }
+                $finder = new \Symfony\Component\Finder\Finder;
+                $finder->files()->in(BP . 'var/geoip/')->name('*.mmdb');
+                foreach ($finder as $file) {
+                    return new \MaxMind\Db\Reader($file->getRealPath());
+                }
+                throw new Exception('Cannot find GeoIP2 database file.');
+            };
+        }
         if (!$container->has('htmlpurifier')) {
             $container['htmlpurifier'] = function($container) {
                 $config = \HTMLPurifier_Config::create([

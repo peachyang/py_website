@@ -1,0 +1,5 @@
+---
+checkout:
+    method: [GET,POST]
+    route: /checkout/{controller}/[{action}[/]]
+    namespace: Seahinet\Checkout\Controller

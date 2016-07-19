@@ -28,7 +28,7 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .header .nav-main{background:#fff}
 .header .nav-main .nav>li>a{background:none;font-size:16px;line-height:36px;color:#000;padding:0 18px}
 .header .nav-main .dropdown>.dropdown-toggle:after{content:" ";display:inline-block;border:5px solid transparent;border-bottom:none;border-top:8px solid #007dc6;margin-left:8px}
-.header .nav-main .dropdown:hover>.dropdown-menu{display:block}
+.header .nav-main .dropdown:hover>.dropdown-menu{display:block;border-radius:0;border-top:none}
 .list-inline>li{text-align:right}
 .breadcrumb .clearfix{display:none} 
 .container-login{height:450px; background: url(../images/login.png) no-repeat center center #2ABAF8;}

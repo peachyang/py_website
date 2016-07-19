@@ -81,7 +81,7 @@ admin_resource_list:
 admin_popup_images_list:
     update: grid
     root:
-        template: page/empty
+        template: page/ajax
         unset: [head]
         children:
             content:

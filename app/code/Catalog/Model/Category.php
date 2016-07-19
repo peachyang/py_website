@@ -40,11 +40,14 @@ class Category extends Entity
         return [];
     }
 
-    public function getChildrenCategories()
+    public function getChildrenCategories($shownInMenu = null)
     {
         if ($this->getId()) {
             $category = new Collection($this->languageId);
             $category->where(['parent_id' => $this->getId()]);
+            if (!is_null($shownInMenu)) {
+                $category->where(['include_in_menu' => $shownInMenu]);
+            }
             return $category;
         }
         return [];

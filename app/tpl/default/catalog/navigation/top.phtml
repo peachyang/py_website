@@ -3,12 +3,33 @@ $root = $this->getRootCategory();
 ?>
 <ul class="dropdown-menu">
     <?php
-    foreach ($root->getChildrenCategories() as $category):
-        if ($category['include_in_menu']):
-            ?>
-            <li><a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a></li>
-            <?php
-        endif;
-    endforeach;
-    ?>
+    foreach ($root->getChildrenCategories(1) as $category):
+        $children = $category->getChildrenCategories(1);
+        $count = $children->count();
+        ?>
+        <li<?php if ($count): ?> class="dropdown"<?php endif ?>>
+            <a href="<?php echo $category->getUrl() ?>"<?php if ($count): ?> class="dropdown-toggle"<?php endif ?>><?php echo $category['name'] ?></a>
+            <?php if ($count): ?>
+                <dl class="dropdown-menu">
+                    <?php
+                    foreach ($children as $child):
+                        $grandChildren = $child->getChildrenCategories(1);
+                        ?>
+                        <dt><a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a></dt>
+                        <?php if ($grandChildren->count()): ?>
+                            <dd>
+                                <ul>
+                                    <?php foreach ($grandChildren as $grandChild): ?>
+                                        <li><a href="<?php echo $grandChild->getUrl() ?>"><?php echo $grandChild['name'] ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </dd>
+                            <?php
+                        endif;
+                    endforeach;
+                    ?>
+                </dl>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
 </ul>

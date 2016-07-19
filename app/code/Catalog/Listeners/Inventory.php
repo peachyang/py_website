@@ -15,7 +15,7 @@ class Inventory implements ListenerInterface
         $warehouse->load($event['warehouse_id']);
         $inventory = $warehouse->getInventory($event['product_id'], $event['sku']);
         $left = $inventory['qty'] - $inventory['reserve_qty'];
-        if ($event['qty'] > $left) {
+        if (!$inventory['status'] || $event['qty'] > $left) {
             throw new OutOfStock('There are only ' . $left .
             ' left in stock. (Product SKU: ' . $event['sku'] . ')');
         }

@@ -3,7 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Catalog\Model\Collection\Product\Rating;
+use Seahinet\Catalog\Model\Collection\Product\Rating as RatingCollection;
 use Seahinet\Catalog\Source\Product;
 use Seahinet\Customer\Source\Customer;
 use Seahinet\Lib\Source\Language;
@@ -61,7 +61,7 @@ class Review extends PEdit
                 'label' => 'Order'
             ]
         ];
-        $collection = new Rating;
+        $collection = new RatingCollection;
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
             $collection->join('review_rating', 'review_rating.rating_id=rating.id', ['value'], 'left')

@@ -1,0 +1,14 @@
+<?php
+$root = $this->getRootCategory();
+?>
+<ul class="dropdown-menu">
+    <?php
+    foreach ($root->getChildrenCategories() as $category):
+        if ($category['include_in_menu']):
+            ?>
+            <li><a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a></li>
+            <?php
+        endif;
+    endforeach;
+    ?>
+</ul>

@@ -71,15 +71,26 @@ class IndexController extends ActionController
     public function captchaAction()
     {
         $config = $this->getContainer()->get('config');
-        $builder = new CaptchaBuilder(null, new PhraseBuilder($config['customer/captcha/number'], $config['customer/captcha/symbol']));
-        $builder->setBackgroundColor(0xff, 0xff, 0xff);
-        $builder->build(70, 26);
+        $phrase = Rand::getString($config['customer/captcha/number'], $config['customer/captcha/symbol']);
+        $file = BP . 'var/captcha/' . md5($phrase) . '.jpg';
+        if (file_exists($file)) {
+            $result = file_get_contents($file);
+        } else {
+            if (!is_dir(BP . 'var/captcha')) {
+                mkdir(BP . 'var/captcha', 0777);
+            }
+            $builder = new CaptchaBuilder($phrase);
+            $builder->setBackgroundColor(0xff, 0xff, 0xff);
+            $builder->build(70, 26);
+            $builder->save($file);
+            $result = $builder->get();
+        }
         $segment = new Segment('admin');
-        $segment->set('captcha', strtoupper($builder->getPhrase()));
+        $segment->set('captcha', strtoupper($phrase));
         $this->getResponse()
                 ->withHeader('Content-type', 'image/jpeg')
                 ->withHeader('Cache-Control', 'no-store');
-        return $builder->get();
+        return $result;
     }
 
     public function forgotAction()

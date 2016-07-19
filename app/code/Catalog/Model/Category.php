@@ -11,6 +11,8 @@ use Zend\Db\TableGateway\TableGateway;
 class Category extends Entity
 {
 
+    use \Seahinet\Lib\Traits\Url;
+
     const ENTITY_TYPE = 'category';
 
     protected function construct()
@@ -46,6 +48,17 @@ class Category extends Entity
         return [];
     }
 
+    public function getUrl()
+    {
+        if (isset($this->storage['path'])) {
+            return $this->getBaseUrl($this->storage['path']);
+        }
+        $constraint = ['product_id' => null, 'category_id' => $this->getId()];
+        $result = $this->getContainer()->get('indexer')->select('catalog_url', $this->languageId, $constraint);
+        $this->storage['path'] = $result[0]['path'] . '.html';
+        return $this->getBaseUrl($result[0]['path'] . '.html');
+    }
+
     public function beforeSave()
     {
         if (!empty($this->storage['sortable']) && is_array($this->storage['sortable'])) {
@@ -56,8 +69,10 @@ class Category extends Entity
 
     protected function afterLoad(&$result)
     {
-        if (strpos($result['sortable'], ',')) {
+        if (isset($result['sortable']) && is_string($result['sortable']) && strpos($result['sortable'], ',')) {
             $result['sortable'] = explode(',', $result['sortable']);
+        } else if (isset($result[0]['sortable']) && is_string($result[0]['sortable']) && strpos($result[0]['sortable'], ',')) {
+            $result[0]['sortable'] = explode(',', $result[0]['sortable']);
         }
         parent::afterLoad($result);
     }

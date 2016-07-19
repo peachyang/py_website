@@ -1,7 +1,7 @@
 <?php
 $messages = $this->getMessages();
 ?>
-<div class="message-box">
+<div class="message-box container">
     <?php foreach ($messages as $message): ?>
         <div class="alert alert-<?php echo $message['level'] ?>"><?php echo $message['message'] ?></div>
     <?php endforeach ?>

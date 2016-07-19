@@ -55,7 +55,7 @@
             }
         });
         $('img.captcha').click(function () {
-            $(this).attr('src', $(this).attr('src') + '?' + (new Date().getTime()));
+            $(this).attr('src', $(this).attr('src').replace(/\?.+$/,'') + '?' + (new Date().getTime()));
         });
         window.addMessages = function (messages) {
             var html = '';

@@ -91,6 +91,7 @@ frontend:
                                 type: Seahinet\Customer\ViewModel\Welcome
                             category:
                                 type: Seahinet\Catalog\ViewModel\Navigation
+                                template: catalog/navigation/top
                             navigation:
                                 type: Seahinet\Cms\ViewModel\Navigation
                             quick-search:
@@ -139,8 +140,7 @@ frontend:
                         action:
                             -
                                 method: setBlockId
-                                params: footer                        
-            
+                                params: footer
             content:
                 children:
                     breadcrumb:

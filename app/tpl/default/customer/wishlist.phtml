@@ -13,12 +13,12 @@ $collection = $this->getVariable('collection');
         ?>
         <tr>
             <td>
-            	<a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" >
+            	<a href="" title="<?php echo $product['name'] ?>" >
             		<img src="<?php echo $product['thumbnail']?$this->getBaseUrl('pub/resource/image/'.$product['thumbnail']):$this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
             	</a>
             </td>
             <td>
-                <?php echo $product['name'] ?>
+                <?php echo $item['product_name'] ?>
                 <textarea name="description[<?php echo $item['id']?>]" class="form-control"><?php echo $item['description'] ?></textarea>
             </td>
             <td>        	

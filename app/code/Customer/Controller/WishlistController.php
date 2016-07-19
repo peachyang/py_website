@@ -26,10 +26,8 @@ class WishlistController extends AuthActionController
         $data = $this->getRequest()->getQuery();
 //        $result = $this->validateForm($data, ['name']);
 //        if ($result['error'] === 0) {
-        
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
-        
         try {
             $wishlist = new Model;
             $wishlist->load($customerId, 'customer_id');
@@ -67,6 +65,7 @@ class WishlistController extends AuthActionController
         $item = new Item;
         $data = $this->getRequest()->getQuery();
         $item->setData('id', $data['id'])->remove();
+        return $this->redirect('customer/wishlist/');
     }
 
 }

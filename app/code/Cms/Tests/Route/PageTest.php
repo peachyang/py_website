@@ -1,10 +1,10 @@
 <?php
 
-namespace Seahinet\Cms\Testers\Unit\Route\Page;
+namespace Seahinet\Cms\Tests\Route;
 
 use Curl\Curl;
 
-class PageTester extends \PHPUnit_Framework_TestCase
+class PageTest extends \PHPUnit_Framework_TestCase
 {
 
     use \Seahinet\Lib\Traits\Container;

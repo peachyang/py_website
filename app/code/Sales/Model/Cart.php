@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model;
 
 use Exception;
+use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
@@ -11,6 +12,8 @@ use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Sales\Model\Cart\Item;
 use Seahinet\Sales\Model\Collection\Cart as Collection;
 use Seahinet\Sales\Model\Collection\Cart\Item as ItemCollection;
+use Zend\Db\Sql\Predicate\In;
+use Zend\Db\TableGateway\TableGateway;
 
 final class Cart extends AbstractModel implements Singleton
 {
@@ -123,6 +126,20 @@ final class Cart extends AbstractModel implements Singleton
         return $cart;
     }
 
+    public function getItem($id)
+    {
+        if (isset($this->items[$id])) {
+            return $this->items[$id];
+        } else {
+            $items = new ItemCollection();
+            $items->where(['cart_id' => $this->getId(), 'id' => $id])->order('store_id, warehouse_id');
+            if ($items->count()) {
+                return $items[0];
+            }
+        }
+        return null;
+    }
+
     public function getItems($force = false)
     {
         if ($force || is_null($this->items)) {
@@ -148,6 +165,13 @@ final class Cart extends AbstractModel implements Singleton
             $sku = $product['sku'];
         }
         ksort($options);
+        $this->getEventDispatcher()->trigger('cart.add.before', [
+            'product_id' => $productId,
+            'qty' => $qty,
+            'warehouse_id' => $warehouseId,
+            'sku' => $sku,
+            'options' => $options
+        ]);
         $items = new ItemCollection();
         $items->where([
             'cart_id' => $this->getId(),
@@ -193,6 +217,13 @@ final class Cart extends AbstractModel implements Singleton
             $item->load($item);
         }
         if ($item['qty'] > $qty && $item['min_qty'] <= $qty || $item['qty'] < $qty && $item['max_qty'] >= $qty) {
+            $this->getEventDispatcher()->trigger('cart.add.before', [
+                'product_id' => $item['product_id'],
+                'qty' => $qty,
+                'warehouse_id' => $item['warehouse_id'],
+                'sku' => $item['sku'],
+                'options' => $item['options']
+            ]);
             $item->setData('qty', $qty)->collateTotals()->save();
             $this->items[$item->getId()]['qty'] = $item->toArray();
         }

@@ -3,7 +3,6 @@
 namespace Seahinet\Admin\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Catalog\Source\Product;
 
 class Rating extends PEdit
 {

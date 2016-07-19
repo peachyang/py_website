@@ -2,7 +2,7 @@
 
 namespace Seahinet\Catalog\Model;
 
-use Seahinet\Catalog\Model\Collection\Product;
+use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
 use Seahinet\Catalog\Model\Collection\Category as Collection;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\Sql\Predicate\In;
@@ -23,7 +23,7 @@ class Category extends Entity
     public function getProducts()
     {
         if ($this->getId()) {
-            $products = new Product($this->languageId);
+            $products = new ProductCollection($this->languageId);
             $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
             $result = $tableGateway->select(['category_id' => $this->getId()])->toArray();
             $valueSet = [];
@@ -32,6 +32,8 @@ class Category extends Entity
             });
             if (count($valueSet)) {
                 $products->where(new In('id', $valueSet));
+            } else {
+                $products->where(['id' => null]);
             }
             return $products;
         }

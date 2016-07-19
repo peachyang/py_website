@@ -2,23 +2,27 @@
 $products = $this->getProducts();
 ?>
 <div class="container">
-    <ul class="products-grid clearfix">
-        <?php foreach ($products as $product): ?>
-            <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                    <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
-                </a>
-                
-                <div class="price-box">
-                    <?php echo $this->getPriceBox($product) ?>
-                </div>
-                
-                <h3 class="product-name">
-                    <a href="<?php echo $product->getUrl($this->getCategory()) ?>" class="gird-pro-a">
-                        <?php echo $product['name'] ?>
+    <?php if (count($products)): ?>
+        <ul class="products-grid clearfix">
+            <?php foreach ($products as $product): ?>
+                <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                    <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
+                        <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
                     </a>
-                </h3>
-            </li>
-        <?php endforeach ?>
-    </ul>
+
+                    <div class="price-box">
+                        <?php echo $this->getPriceBox($product) ?>
+                    </div>
+
+                    <h3 class="product-name">
+                        <a href="<?php echo $product->getUrl($this->getCategory()) ?>" class="gird-pro-a">
+                            <?php echo $product['name'] ?>
+                        </a>
+                    </h3>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else: ?>
+        <p class="no-product"><?php echo $this->translate('There are no products matching the selection.') ?></p>
+    <?php endif ?>
 </div>

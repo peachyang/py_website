@@ -15,21 +15,26 @@ use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
 use Zend\Math\Rand;
 
-class AccountController extends AuthActionController {
+class AccountController extends AuthActionController
+{
 
-    public function createAction() {
+    public function createAction()
+    {
         return $this->getLayout('customer_account_create');
     }
 
-    public function loginAction() {
+    public function loginAction()
+    {
         return $this->getLayout('customer_account_login');
     }
 
-    public function forgotPwdAction() {
+    public function forgotPwdAction()
+    {
         return $this->getLayout('customer_account_forgotpwd');
     }
 
-    public function captchaAction() {
+    public function captchaAction()
+    {
         $config = $this->getContainer()->get('config');
         $builder = new CaptchaBuilder(null, new PhraseBuilder($config['customer/captcha/number'], $config['customer/captcha/symbol']));
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
@@ -42,7 +47,8 @@ class AccountController extends AuthActionController {
         return $builder->get();
     }
 
-    public function createPostAction() {
+    public function createPostAction()
+    {
         $config = $this->getContainer()->get('config');
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -63,7 +69,7 @@ class AccountController extends AuthActionController {
                 }
             }
             $result = $this->validateForm($data, $required, in_array('register', $config['customer/captcha/form']) ? 'customer' : false);
-            if ($data['password'] !== $data['cpassword']) {
+            if (!isset($data['cpassword']) || $data['password'] !== $data['cpassword']) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('The comfirmed password is not equal to the password.'), 'level' => 'danger'];
             }
@@ -137,7 +143,8 @@ class AccountController extends AuthActionController {
         return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : '/customer/account/create/', 'customer');
     }
 
-    public function loginPostAction() {
+    public function loginPostAction()
+    {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $config = $this->getContainer()->get('config');
@@ -166,7 +173,8 @@ class AccountController extends AuthActionController {
         return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : 'customer/account/login/', 'customer');
     }
 
-    public function forgotPwdPostAction() {
+    public function forgotPwdPostAction()
+    {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['username'], in_array('forgotpwd', $this->getContainer()->get('config')['customer/captcha/form']) ? 'customer' : false);
@@ -205,7 +213,8 @@ class AccountController extends AuthActionController {
         return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
     }
 
-    public function logoutAction() {
+    public function logoutAction()
+    {
         $segment = new Segment('customer');
         $segment->offsetUnset('customer');
         $segment->set('isLoggedin', false);
@@ -217,7 +226,8 @@ class AccountController extends AuthActionController {
         return $this->response($result, 'customer/account/login/', 'customer');
     }
 
-    public function confirmAction() {
+    public function confirmAction()
+    {
         if ($token = $this->getRequest()->getQuery('token')) {
             try {
                 $customer = new Model;
@@ -283,7 +293,8 @@ class AccountController extends AuthActionController {
         return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->getLayout('customer_account_dashboard');
     }
 

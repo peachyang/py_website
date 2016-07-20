@@ -12,6 +12,7 @@ class Cart extends Template
 
     protected static $cart = null;
     protected static $currency = null;
+    protected static $qty = null;
 
     public function getCart()
     {
@@ -28,6 +29,17 @@ class Cart extends Template
             static::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
         }
         return static::$currency;
+    }
+
+    public function getQty()
+    {
+        if (is_null(static::$qty)) {
+            static::$qty = 0;
+            foreach ($this->getItems() as $item) {
+                static::$qty += $item['qty'];
+            }
+        }
+        return static::$qty;
     }
 
     public function getItems()

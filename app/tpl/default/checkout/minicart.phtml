@@ -1,0 +1,52 @@
+<?php
+$csrf = $this->getCsrfKey();
+?>
+<div class="minicart dropdown">
+    <a href="javascript:void(0);" class="dropdown-toggle">
+        <span class="fa fa-shopping-cart" aria-hidden="true"></span>
+        <span><?php echo $this->translate('Shopping Cart', [], 'checkout') ?></span>
+        <span class="badge"><?php echo $this->getQty() ?></span>
+    </a>
+    <table class="table dropdown-menu dropdown-menu-right">
+        <?php foreach ($this->getItems() as $item): ?>
+            <tr data-id="<?php echo $item['product_id'] ?>">
+                <td>
+                    <a href="<?php echo $item['product']->getUrl() ?>"><img src="{$thumbnail}" alt="{$name}" /></a>
+                </td>
+                <td>
+                    <h3><a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a></h3>
+                    <div class="price"><?php echo $item['product']->getFinalPrice($item['qty']), ' x ', $item['qty'] ?></div>
+                </td>
+                <td>
+                    <?php echo $item['total'] ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                        <span class="fa fa-remove" aria-hidden="true"></span>
+                        <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+    <template id="tmpl-minicart">
+        <tr data-id="{$id}">
+            <td>
+                <a href="{$url}"><img src="{$thumbnail}" alt="{$name}" /></a>
+            </td>
+            <td>
+                <h3><a href="{$url}">{$name}</a></h3>
+                <div class="price">{$price} x {$qty}</div>
+            </td>
+            <td>
+                {$subtotal}
+            </td>
+            <td>
+                <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id={$id}&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                    <span class="fa fa-remove" aria-hidden="true"></span>
+                    <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                </a>
+            </td>
+        </tr>
+    </template>
+</div>

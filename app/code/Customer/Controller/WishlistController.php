@@ -61,7 +61,6 @@ class WishlistController extends AuthActionController
         $data = $this->getRequest()->getQuery();
         $item->setData('id', $data['id'])->remove();
         return $this->redirect('customer/wishlist/');
-        
     }
 
 }

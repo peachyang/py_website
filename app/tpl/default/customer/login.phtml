@@ -1,38 +1,38 @@
-<div class="container header-logo">
-    <h1>
-        <a href="">
-            <!--[if (gte IE 9)|(!IE)]><!-->
-            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.svg') ?>" height="50" alt="">
-            <!--<![endif]-->
-            <!--[if lt IE 9]>
-            <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/logo.png') ?>" height="50" alt="" />
-            <![endif]-->
-        </a> 
-        <strong class="sr-only">Seahinet</strong>
-        <span class="text-logo"><?php echo $this->translate('Welcome - Login') ?></span>
-    </h1>
-</div>
-<div class="container-fluid container-login">
-	<div class="row" >
-		<div class="col-sm-8"> </div>
-		<div class="col-sm-3 login">
-			<form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post" id="login">
-                <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        		<label class="text-login"> <?php echo $this->translate('Sign in to your account') ?> </label>
-        		<div class="login-create margin-top-15">
-        			<a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>" class="login-create-a"><?php echo $this->translate('Sign Up') ?></a> 
-        		</div>        		       		
-        		<div class="input-box margin-top-10">
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="<?php echo $this->getBaseUrl() ?>">
+                <!--[if (gte IE 9)|(!IE)]><!-->
+                <img src="<?php echo $this->getPubUrl('frontend/images/logo.svg') ?>" height="50" alt="">
+                <!--<![endif]-->
+                <!--[if lt IE 9]>
+                <img src="<?php echo $this->getPubUrl('frontend/images/logo.png') ?>" height="50" alt="" />
+                <![endif]-->
+            </a> 
+            <strong><?php echo $this->translate('Welcome - Login') ?></strong>
+        </h1>
+    </div>
+</header>
+<div class="main-container">
+    <main class="col-main container">
+        <form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <div class="fieldset col-xs-12 pull-right">
+                <h2 class="legend"><?php echo $this->translate('Log in to your account') ?></h2>
+                <div class="register">
+                    <a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>"><?php echo $this->translate('Create an Account') ?></a> 
+                </div>        		       		
+                <div class="input-box">
                     <label class="sr-only control-label required" for="login:username"><?php echo $this->translate('Username') ?></label>
                     <div class="input-group">
-                    	<div class="input-group-addon">$</div>
-                        <input type="text" name="username" id="login:username" class="form-control required input-login" spellcheck="false" placeholder="<?php echo $this->translate('Username/Email/Mobile') ?>" />
+                        <div class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></div>
+                        <input type="text" name="username" id="login:username" class="form-control required input-login" spellcheck="false" placeholder="<?php echo $this->translate('Username/Email') ?>" />
                     </div>
                 </div>
-                <div class="input-box margin-top-25">
+                <div class="input-box">
                     <label class="sr-only control-label required" for="login:password"><?php echo $this->translate('Password') ?></label>
                     <div class="input-group">
-                    	<div class="input-group-addon">$</div>
+                        <div class="input-group-addon"><span class="fa fa-lock" aria-hidden="true"></span></div>
                         <input type="password" name="password" id="login:password" class="form-control required input-login" minlength="6" placeholder="<?php echo $this->translate('Password') ?>" />
                     </div>
                 </div>
@@ -47,14 +47,14 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <div class="buttons-set margin-top-50">
-                    <button type="submit" class="btn btn-submit submit-login" <span><?php echo $this->translate('Sign In') ?></span></button>
+                <div class="additional clearfix">
+                    <a href="<?php echo $this->getBaseUrl('customer/account/forgotpwd/') ?>" class="pull-right"><?php echo $this->translate('Forgot Your Password?') ?></a>
                 </div>
-            </form>
-		</div>
-	</div>
+                <div class="buttons-set">
+                    <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Log in') ?></span></button>
+                </div>
+                <?php echo $this->getChild('oauth') ?>
+            </div>
+        </form>
+    </main>
 </div>
-
-
-
-

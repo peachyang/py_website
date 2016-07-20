@@ -236,4 +236,10 @@ class Product extends Entity
         parent::afterSave();
     }
 
+    public function serialize()
+    {
+        unset($this->storage['prices']);
+        return parent::serialize();
+    }
+    
 }

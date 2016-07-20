@@ -116,6 +116,7 @@ class ServiceProvider implements ServiceProviderInterface
                 $config = \HTMLPurifier_Config::create([
                             'Attr.AllowedRel' => 'nofollow',
                             'Attr.EnableID' => true,
+                            'Attr.ID.HTML5' => true,
                             'Attr.IDPrefix' => 'user-',
                             'AutoFormat.RemoveEmpty' => true,
                             'CSS.AllowImportant' => true,

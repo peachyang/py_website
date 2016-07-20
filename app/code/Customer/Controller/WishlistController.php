@@ -34,7 +34,11 @@ class WishlistController extends AuthActionController
             if (!$wishlist->getId()) {
                 $wishlist->setData(['customer_id' => $customerId, 'id' => null])->save();
             }
+            
             $data['wishlist_id'] = $wishlist->getId();
+                    print_r($data);
+            die();
+            $wishlist->getId();
             $wishlist->addItem($data);
             $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];
         } catch (\Exception $e) {
@@ -48,20 +52,11 @@ class WishlistController extends AuthActionController
 
     public function commitAction()
     {
-        $data = $this->getRequest()->getPost()['description'];
-        foreach ($data as $id=>$value) 
-        {
-            $item = new Item;
-            $item->load($id,'id');
-            $item->setData('description', $value)->save();
-            
-        }
-        return $this->redirect('customer/wishlist/');
+        $data = $this->getRequest()->getPost();
     }
 
     public function deleteAction()
     {
-        
         $item = new Item;
         $data = $this->getRequest()->getQuery();
         $item->setData('id', $data['id'])->remove();

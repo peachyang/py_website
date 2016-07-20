@@ -3,7 +3,6 @@
 namespace Seahinet\Sales\Model;
 
 use Exception;
-use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
@@ -12,8 +11,6 @@ use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Sales\Model\Cart\Item;
 use Seahinet\Sales\Model\Collection\Cart as Collection;
 use Seahinet\Sales\Model\Collection\Cart\Item as ItemCollection;
-use Zend\Db\Sql\Predicate\In;
-use Zend\Db\TableGateway\TableGateway;
 
 final class Cart extends AbstractModel implements Singleton
 {
@@ -36,7 +33,7 @@ final class Cart extends AbstractModel implements Singleton
     {
         parent::init($table, $primaryKey, $columns);
         $segment = new Segment('customer');
-        $baseCurrency = $this->getContainer()->get('config')['i18n/currency/default'];
+        $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
         $currency = $this->getContainer()->get('request')->getCookie('currency', $baseCurrency);
         if ($segment->get('cart')) {
             $this->load($segment->get('cart'));
@@ -104,7 +101,7 @@ final class Cart extends AbstractModel implements Singleton
     {
         $segment = new Segment('customer');
         if (is_null($baseCurrency)) {
-            $baseCurrency = $this->getContainer()->get('config')['i18n/currency/default'];
+            $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
         }
         if (is_null($currency)) {
             $currency = $this->getContainer()->get('request')->getCookie('currency', $baseCurrency);
@@ -151,6 +148,8 @@ final class Cart extends AbstractModel implements Singleton
             $result = [];
             $items->walk(function($item) use (&$result) {
                 $result[$item['id']] = $item;
+                $result[$item['id']]['product'] = new Product;
+                $result[$item['id']]['product']->load($item['product_id']);
             });
             $this->items = $result;
         }
@@ -258,11 +257,7 @@ final class Cart extends AbstractModel implements Singleton
         try {
             $this->beginTransaction();
             if (is_string($currency)) {
-                $currency = new Currency;
-                $currency->load($currency, 'code');
-            }
-            foreach (['shipping', 'tax', 'discount', 'total'] as $attr) {
-                $this->storage[$attr] = $currency->convert($this->storage[$attr]);
+                $currency = (new Currency)->load($currency, 'code');
             }
             foreach ($this->getItems() as $item) {
                 $item = new Item($item);
@@ -271,6 +266,9 @@ final class Cart extends AbstractModel implements Singleton
                 }
                 $item->save();
             };
+            foreach (['shipping', 'tax', 'discount', 'total'] as $attr) {
+                $this->storage[$attr] = $currency->convert($this->storage[$attr]);
+            }
             $this->storage['currency'] = $currency->offsetGet('code');
             $this->commit();
         } catch (Exception $e) {

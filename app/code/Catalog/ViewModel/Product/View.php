@@ -20,4 +20,11 @@ class View extends Template
         return $this;
     }
 
+    public function getPriceBox()
+    {
+        $box = new Price;
+        $box->setVariable('product', $this->product);
+        return $box;
+    }
+
 }

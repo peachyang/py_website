@@ -12,7 +12,7 @@ $query = $this->getQuery('q');
         </div>
         <input type="search" class="form-control required" name="q" value="<?php echo $query ?>" />
         <div class="input-group-addon">
-            <button class="btn btn-submit" type="submit">Search</button>
+            <button class="btn btn-submit" type="submit"><?php echo $this->translate('Search') ?></button>
         </div>
     </div>
 </form>

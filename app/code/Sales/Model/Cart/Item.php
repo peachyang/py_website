@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Model\Cart;
 
+use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Model\AbstractModel;
 
 class Item extends AbstractModel
@@ -15,6 +16,16 @@ class Item extends AbstractModel
             'base_discount', 'discount', 'base_tax', 'tax', 'base_total',
             'total', 'weight', 'status', 'warehouse_id'
         ]);
+    }
+
+    public function &offsetGet($key)
+    {
+        $result = parent::offsetGet($key);
+        if (!$result && $key === 'product') {
+            $result = new Product;
+            $result->load($this->storage['product_id']);
+        }
+        return $result;
     }
 
     public function collateTotals()

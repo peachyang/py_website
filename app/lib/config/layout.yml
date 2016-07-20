@@ -97,6 +97,9 @@ frontend:
                             quick-search:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: catalog/search
+                            minicart:
+                                type: Seahinet\Checkout\ViewModel\Cart
+                                template: checkout/minicart
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
                                 action: 

@@ -1,0 +1,27 @@
+<tr>
+    <td colspan="3"></td>
+    <td colspan="4">
+        <dl>
+            <?php
+            if ($this->getCart()['discount']):
+                foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
+                    ?>
+                    <dt><?php echo $this->translate('Discount(%s)', [$type]) ?></dt>
+                    <dd><?php echo $this->getCurrency()->format($discount) ?></dd>
+                    <?php
+                endforeach;
+            endif;
+            ?>
+            <?php
+            if ($this->getCart()['shipping']):
+                ?>
+                <dt><?php echo $this->translate('Shipping') ?></dt>
+                <dd><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></dd>
+                <?php
+            endif;
+            ?>
+            <dt><?php echo $this->translate('Total') ?></dt>
+            <dd><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></dd>
+        </dl>
+    </td>
+</tr>

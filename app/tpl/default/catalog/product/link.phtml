@@ -1,0 +1,29 @@
+<?php
+$products = $this->getProducts();
+if (count($products)):
+    ?>
+    <div class="product-link">
+        <ul class="products-grid clearfix">
+            <?php foreach ($products as $product): ?>
+                <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                    <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
+                        <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
+                    </a>
+                    <h3 class="product-name">
+                        <a href="<?php echo $product->getUrl() ?>" class="gird-pro-a">
+                            <?php echo $product['name'] ?>
+                        </a>
+                    </h3>
+                    <div class="price-box">
+                        <?php echo $this->getPriceBox($product) ?>
+                    </div>
+                    <div class="action">
+                        <a href="<?php echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] . '&qty=1&csrf=' . $this->getCsrfKey()) ?>" class="add2cart">
+                            <span><?php echo $this->translate('Add to Cart') ?></span>
+                        </a>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+<?php endif; ?>

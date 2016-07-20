@@ -108,7 +108,7 @@
                 if (data) {
                     p = p ? (p + '&' + data) : data;
                 }
-                $("#resource-list").load(GLOBAL.BASE_URL + GLOBAL.ADMIN_PATH + '/resource_resource/popup/ .grid', p);
+                $("#resource-list").load(GLOBAL.BASE_URL + GLOBAL.ADMIN_PATH + '/resource_resource/popup/', p);
             }
         };
         widgetUpload.init();

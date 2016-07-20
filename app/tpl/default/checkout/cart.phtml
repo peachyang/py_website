@@ -1,0 +1,51 @@
+<?php
+if (count($this->getItems())):
+    ?>
+    <table class="table cart">
+        <colgroup>
+            <col width="1" />
+            <col width="1" />
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="2">
+                    <input type="checkbox" class="selectall">
+                </th>
+                <th class="text-left">
+                    <?php echo $this->translate('Product') ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('Price') ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('Qty') ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('Subtotal') ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('Action') ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->getItems() as $item) {
+                echo $this->getRow($item);
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <?php echo $this->getChild('total'), $this->getChild('method') ?>
+        </tfoot>
+    </table>
+    <?php echo $this->getChild('crosssell') ?>
+<?php else: ?>
+    <h2><?php echo $this->translate('SHOPPING CART IS EMPTY') ?></h2>
+    <p><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
+<?php endif; ?>

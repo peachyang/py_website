@@ -5,6 +5,7 @@ namespace Seahinet\Customer\Model;
 use Seahinet\Customer\Model\Collection\Wishlist\Item as Collection;
 use Seahinet\Customer\Model\Wishlist\Item as Model;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Catalog\Model\Product;
 
 class Wishlist extends AbstractModel {
 
@@ -23,12 +24,13 @@ class Wishlist extends AbstractModel {
 
     public function addItem($item) {
         $item = new Model($item);
-//         $product = new Product;
-//         $product->load();
-//         $item->setData([
-//                 'store_id' => $product['store_id'],
-//                 'product_name' => $product['name']
-//         ]);
+        $product = new Product;
+        $product->load($item['product_id'],'id');
+      
+        $item->setData([
+                'store_id' => $product['store_id'],
+                'product_name' => $product['name']
+        ]);
         $item->save();
     }
 

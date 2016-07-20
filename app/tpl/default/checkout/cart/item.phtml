@@ -1,0 +1,22 @@
+<tr>
+    <td><input type="checkbox" name="item[]" value="<?php echo $item['id'] ?>"></td>
+    <td>
+        <a href="<?php echo '#' ?>">
+            <img src="" alt="" />
+        </a>
+    </td>
+    <td>
+        <a href="<?php echo '#' ?>">
+            <?php echo $item['product_name'] ?>
+        </a>
+    </td>
+    <td>
+        <?php echo $this->getCurrency()->format($item['price']) ?>
+    </td>
+    <td>
+        <input type="number" name="qty" class="form-control required" value="<?php echo $item['qty'] ?>" />
+    </td>
+    <td>
+        <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>
+    </td>
+</tr>

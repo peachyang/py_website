@@ -1,0 +1,32 @@
+---
+checkout_cart:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    cart:
+                        type: Seahinet\Checkout\ViewModel\Cart
+                        template: checkout/cart
+                        children:
+                            total:
+                                type: Seahinet\Checkout\ViewModel\Cart
+                                template: checkout/cart/total
+                            method:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: checkout/cart/method
+                            crosssell:
+                                type: Seahinet\Checkout\ViewModel\Cart\Crosssell
+                                template: catalog/product/link
+checkout_cart_mini:
+    update: frontend
+    root:
+        template: page/ajax
+        children:
+            content:
+                children:
+                    cart:
+                        type: Seahinet\Checkout\ViewModel\Cart
+                        template: checkout/cart/mini
+                
+            

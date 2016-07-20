@@ -124,3 +124,44 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .page-not-found .main-container .notice dt{display:inline;color:#a2a3a3}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
+.customer-account-dashboard .main-container .me{border:1px solid #dfe1e8;margin-bottom:20px;margin-top:15px}
+.customer-account-dashboard .main-container .me .title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
+.customer-account-dashboard .main-container .me .fa-user{color:#007dc6}
+.customer-account-dashboard .main-container .me .fa{height:15px;width:15px;margin-right:5px}
+.customer-account-dashboard .main-container .me dl{margin-top:20px;margin-bottom:10px}
+.customer-account-dashboard .main-container .me dt{padding-left:35px;font-size:14px;color:#000000;font-weight:bold;}
+.customer-account-dashboard .main-container .me dd{padding-left:55px;font-size:14px;color:#8b8a8a;font-weight:bold;}
+.customer-account-dashboard .main-container .info{padding-left:40px;margin-top:16px}
+.customer-account-dashboard .main-container .info .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
+.customer-account-dashboard .main-container .info .ad-text{color:#e26932} 
+.customer-account-dashboard .main-container .info .ad-a{color:#608fdc}
+.customer-account-dashboard .main-container .info .ad>a{float:right;margin-right:5px;color:#e26932}
+.customer-account-dashboard .main-container .info .myinfo{border:1px solid #dfe1e8;margin-top:20px;padding-left:50px;padding-top:30px;padding-bottom:30px}
+.customer-account-dashboard .main-container .info .infodetail{display:inline-block;height:100px;vertical-align:top}
+.customer-account-dashboard .main-container .info .wel{font-size:14px}
+.customer-account-dashboard .main-container .info .wel-name{font-size:20px}
+.customer-account-dashboard .main-container .info .fa-star{color:#007dc6}
+.customer-account-dashboard .main-container .info .fa-star-o{color:#bcbcbc} 
+.customer-account-dashboard .main-container .info .start{display:inline-block;background-color:#007dc6;color:#ffffff;width:22px;text-align:center}
+.customer-account-dashboard .main-container .info .start-v{font-size:17px}
+.customer-account-dashboard .main-container .info .start-num{font-size:12px}
+.customer-account-dashboard .main-container .info .bal-text{font-size:12px;color:#9e9e9e} 
+.customer-account-dashboard .main-container .info .bal-num{font-size:13px;color:#007dc6;font-weight:bold}
+.customer-account-dashboard .main-container .info .tran-num{font-size:13px;color:#007dc6} 
+.customer-account-dashboard .main-container .info .checkin{display:inline-block;margin-right:35px;margin-top:20px;float:right;width:160px;height:40px;}
+.customer-account-dashboard .main-container .info .check-button{background-color:#007dc6;color:#ffffff;font-size:17px;text-align:center;line-height:40px;font-weight:bold}
+.customer-account-dashboard .main-container .info .checked{color:#aeaeae;font-size:14px}
+.customer-account-dashboard .main-container .info .order{margin-top:20px}
+.customer-account-dashboard .main-container .info .table tr{border:1px solid #dbdee5}
+.customer-account-dashboard .main-container .info .table th{background-color:#f5f6f9;height:49px;vertical-align:middle}
+.customer-account-dashboard .main-container .info .table td{height:140px;vertical-align:middle}
+.customer-account-dashboard .main-container .info .table .des{display:inline-block;width:200px;vertical-align:middle;font-size:12px;color:#757474}
+.customer-account-dashboard .main-container .info .table .status{font-size:13px;color:#608fdc} 
+.customer-account-dashboard .main-container .info .table .fa-jpy{width:10px;height:12px;color:#ababab}
+.customer-account-dashboard .main-container .info .table .price{font-size:16px;color:#ababab}
+.customer-account-dashboard .main-container .info .table .old-price{font-size:12px;color:#ababab}
+.customer-account-dashboard .main-container .info .table .old-price-num{font-size:12px;color:#ababab;text-decoration:line-through} 
+.customer-account-dashboard .main-container .info .table .order-time{font-size:14px;color:#ababab;} 
+.customer-account-dashboard .main-container .info .table .confirm{height:35px;line-height:35px;padding:0 10px;background-color:#ffffff;border:1px solid #e2e4ea;font-size:13px;color:#608fdc}
+.customer-account-dashboard .main-container .info .myorder{border-bottom:1px solid #dbdee5;margin-top:25px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
+.customer-account-dashboard .main-container .info .myorder-text{border-bottom:1px solid #007dc6;height:55px;line-height:55px;width:150px;text-align:center}

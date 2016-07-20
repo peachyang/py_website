@@ -3,6 +3,18 @@ customer_account:
     update: frontend
 customer_account_dashboard:
     update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Account
+            content:
+                children:
+                    form:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer\account
 wishlist:
     update: customer_account
     root:

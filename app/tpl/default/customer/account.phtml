@@ -1,0 +1,165 @@
+<div class="container">
+    <div class="col-xs-3 col-sm-3 col-md-2 me">
+    	<div class="title">
+    	    <span class="fa fa-user" aria-hidden="true">&nbsp;</span>
+    		<?php echo $this->translate('My Account') ?>
+    	</div>
+    	<div class="content">    		
+            <dl>
+               <dt>
+                   <span class="fa fa-calendar-check-o" aria-hidden="true"></span><span><?php echo $this->translate('My Order') ?></span>
+               </dt>
+               <dd><a href=""><?php echo $this->translate('Purchased') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Shopping Cart') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Evaluation') ?></a></dd> 
+               <dd><a href=""><?php echo $this->translate('Refund') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Bougnt Store') ?></a></dd>
+            </dl>
+            <dl>
+               <dt>
+                   <span class="fa fa-money" aria-hidden="true"></span><span><?php echo $this->translate('Asset') ?></span>
+               </dt>
+               <dd><a href=""><?php echo $this->translate('Balance') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Privilege') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Integral') ?></a></dd> 
+            </dl>
+            <dl> 
+               <dt>
+                   <span class="fa fa-star" aria-hidden="true"></span><span><?php echo $this->translate('Follow') ?></span>
+               </dt>
+               <dd><a href=""><?php echo $this->translate('Followed Goods') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Followed Store') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Wishlist') ?></a></dd> 
+               <dd><a href=""><?php echo $this->translate('Track') ?></a></dd> 
+            </dl>
+            <dl> 
+               <dt>
+                   <span class="fa fa-th-list" aria-hidden="true"></span><span><?php echo $this->translate('Account Info') ?></span>
+               </dt>
+               <dd><a href=""><?php echo $this->translate('Personal Info') ?></a></dd>
+               <dd><a href=""><?php echo $this->translate('Account Password') ?></a></dd> 
+               <dd><a href=""><?php echo $this->translate('Address') ?></a></dd> 
+               <dd><a href=""><?php echo $this->translate('My Card') ?></a></dd>
+               
+            </dl>
+            
+    	</div>
+    </div>    
+    
+    <div class="col-xs-9 col-sm-9 col-md-10 info">
+    	<div class="ad">
+    		<span class="ad-text">
+    			<?php echo $this->translate('【Free】&nbsp;Propagandize your information,') ?>    			
+    		</span>
+    		<span class="ad-a">
+    			<a href=""><?php echo $this->translate('Publish now>>') ?></a>
+    		</span>    	    
+    	    <a href="javascript:;"><span class="fa fa-times" aria-hidden="true"></span></a>    	    
+    	</div>
+    	<div class="myinfo">
+    		<img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>"  height="100" width="100" >
+    		<div class="infodetail">
+    			<div>
+    				<span class="wel">
+    				   <?php echo $this->translate('Welcome,') ?>
+    				</span>
+    				<span class="wel-name">
+    				   <?php echo $this->translate('Denny') ?>
+    				</span>
+    			</div>
+    			<div>
+    			   <span class="fa fa-star" aria-hidden="true"></span>
+    			   <span class="fa fa-star-o" aria-hidden="true"></span>
+    			   <span class="fa fa-star-o" aria-hidden="true"></span>
+    			   <span class="fa fa-star-o" aria-hidden="true"></span>
+    			   <span class="fa fa-star-o" aria-hidden="true"></span>
+    			   <div class="start">
+    			   		<span class="start-v"><?php echo $this->translate('V') ?></span><span class="start-num"><?php echo $this->translate('%d',[0]) ?></span>
+    			   </div>
+    			</div>
+    			<div>
+    				<span class="bal-text"><?php echo $this->translate('My Account:&nbsp;balance&nbsp;') ?></span>
+    				<span class="bal-num"><?php echo $this->translate('%.1f',[8.0]) ?></span>
+    				<span class="bal-text"><?php echo $this->translate('yuan') ?></span>
+    				<a href=""><span class="bal-num"><?php echo $this->translate('&nbsp;Top-up') ?></span></a>
+    			</div>
+    			<div>
+    				<span class="bal-text"><?php echo $this->translate('Transaction:&nbsp;Non-payment') ?></span>
+    				<span class="tran-num"><?php echo $this->translate('(').$this->translate('%d',[0]).$this->translate(')') ?></span>
+    				<span class="bal-text"><?php echo $this->translate('&nbsp;&nbsp;Transaction:&nbsp;Non-receiving') ?></span>
+    				<span class="tran-num"><?php echo $this->translate('(').$this->translate('%d',[0]).$this->translate(')') ?></span>
+    				<span class="bal-text"><?php echo $this->translate('&nbsp;&nbsp;Transaction:&nbsp;Non-evaluation') ?></span>
+    				<span class="tran-num"><?php echo $this->translate('(').$this->translate('%d',[0]).$this->translate(')') ?></span>
+    			</div>
+    		</div>
+    		<div class="checkin">
+    			<div class="check-button"><?php echo $this->translate('check in') ?></div> 
+    			<div class="checked"><?php echo $this->translate('totally checked in 0 days') ?></div>
+    		</div>     		
+    	</div>
+    	
+    	<div class="myorder">
+    		<div class="myorder-text"><?php echo $this->translate('My Recent Orders') ?></div>
+    	</div>
+    	
+    	<div class="order">
+    		<table class="table">
+    			<tr>
+    				<th class="col-xs-5 col-sm-5 col-md-5"><?php echo $this->translate('Information') ?></th>
+        			<th class="col-xs-2 col-sm-2 col-md-3"><?php echo $this->translate('Status') ?></th>
+        			<th class="col-xs-2 col-sm-2 col-md-2"><?php echo $this->translate('Operation') ?></th>        			
+    			 </tr>
+    			 <tr>
+    				<td>
+						<img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>"  height="100" width="100" >
+						<div class="des">
+    						<div>
+    							<?php echo $this->translate('Eagle Energy Eagle Energy Eagle Energy')?>
+    						</div>
+    						<a href="">xxxxxshop</a>
+						</div>
+
+					</td>
+    				<td>
+    					<div class="status"><?php echo $this->translate('Delivered') ?></div>
+    					<div>
+    						<span class="fa fa-jpy" aria-hidden="true"></span><span class="price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
+    						<span class="old-price"><?php echo $this->translate('&nbsp;old price') ?></span>
+    						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
+    					</div>
+    					
+    					<div class="order-time"><?php echo $this->translate('Order time:&nbsp;2015-05-23&nbsp;13:50') ?></div>
+    				</td>
+        			<td><button class="confirm"><?php echo $this->translate('Confirm Receiving') ?></button></td>
+    			 </tr>
+    			 
+    			 <tr>
+    				<td>
+						<img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>"  height="100" width="100" >
+						<div class="des">
+    						<div>
+    							<?php echo $this->translate('Eagle Energy Eagle Energy Eagle Energy')?>
+    						</div>
+    						<a href="">xxxxxshop</a>
+						</div>
+
+					</td>
+    				<td>
+    					<div class="status"><?php echo $this->translate('Delivered') ?></div>
+    					<div>
+    						<span class="fa fa-jpy" aria-hidden="true"></span><span class="price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
+    						<span class="old-price"><?php echo $this->translate('&nbsp;old price') ?></span>
+    						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
+    					</div>
+    					
+    					<div class="order-time"><?php echo $this->translate('Order time:&nbsp;2015-05-23&nbsp;13:50') ?></div>
+    				</td>
+        			<td><button class="confirm"><?php echo $this->translate('Confirm Receiving') ?></button></td>
+    			 </tr>
+    			 
+    		</table>
+    	</div>
+    	
+    </div>
+
+</div>

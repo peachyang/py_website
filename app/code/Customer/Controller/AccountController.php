@@ -295,7 +295,17 @@ class AccountController extends AuthActionController
 
     public function indexAction()
     {
-        return $this->getLayout('customer_account_dashboard');
+        
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $customer = new Model;
+        $customer->load($customerId);
+        
+        $root = $this->getLayout('customer_account_dashboard');
+        $root->getChild('form', true)->setVariable('customer', $customer);
+        return $root;
+                
+        
     }
 
 }

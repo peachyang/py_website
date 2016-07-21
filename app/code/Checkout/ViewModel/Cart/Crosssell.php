@@ -15,16 +15,19 @@ class Crosssell extends Link
     {
         $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
         $select = $tableGateway->getSql()->select();
-        $select->columns(['linked_product_id'])->where->equalTo('type', 'c')->in('product_id', array_keys(Cart::instance()->getItems()));
+        $select->columns(['linked_product_id'])->where
+                ->equalTo('type', 'c')
+                ->in('product_id', array_keys(Cart::instance()->getItems()));
         $result = $tableGateway->selectWith($select);
         $ids = [];
         foreach ($result as $item) {
             $ids[$item['linked_product_id']] = 1;
         }
         $products = new Product;
-        $products->where(new In('id', array_keys($ids)));
-        if ($this->getLimit()) {
-            $products->limit($this->getLimit());
+        if (count($ids)) {
+            $products->where(new In('id', array_keys($ids)));
+        } else {
+            return [];
         }
         return $products;
     }

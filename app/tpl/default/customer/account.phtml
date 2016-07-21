@@ -1,3 +1,9 @@
+<?php 
+$customer = $this->getVariable('customer');
+
+
+?>
+
 <div class="container">
     <div class="col-xs-3 col-sm-3 col-md-2 me">
     	<div class="title">
@@ -64,7 +70,7 @@
     				   <?php echo $this->translate('Welcome,') ?>
     				</span>
     				<span class="wel-name">
-    				   <?php echo $this->translate('Denny') ?>
+    				   <?php echo $this->translate(ucwords($customer->username)) ?>
     				</span>
     			</div>
     			<div>
@@ -105,9 +111,19 @@
     	<div class="order">
     		<table class="table">
     			<tr>
-    				<th class="col-xs-5 col-sm-5 col-md-5"><?php echo $this->translate('Information') ?></th>
-        			<th class="col-xs-2 col-sm-2 col-md-3"><?php echo $this->translate('Status') ?></th>
-        			<th class="col-xs-2 col-sm-2 col-md-2"><?php echo $this->translate('Operation') ?></th>        			
+    				<th class="col-xs-6 col-sm-6 col-md-6 th-shop">
+    					<span><a href=""><?php echo $this->translate('Eagle Energy Flagship Store') ?></a><span>
+    					&nbsp;
+    					<a href=""><span class="fa fa-commenting" aria-hidden="true"></span></a>
+    					&nbsp;
+    					<a href=""><div class="order-coupon"><?php echo $this->translate('Coupon') ?></div></a>
+    					
+    				</th>
+        			<th class="col-xs-3 col-sm-3 col-md-4 th-num">
+        				<span><?php echo $this->translate('Order Number: 24651321651') ?></span>
+        				&nbsp;&nbsp;
+        				<span><?php echo $this->translate('2016-10-12') ?></span>
+        			</th>
     			 </tr>
     			 <tr>
     				<td>
@@ -115,48 +131,194 @@
 						<div class="des">
     						<div>
     							<?php echo $this->translate('Eagle Energy Eagle Energy Eagle Energy')?>
-    						</div>
-    						<a href="">xxxxxshop</a>
+    						</div>    						
 						</div>
+						<div class="order-div">
+							<div>
+        						<span class="old-price"><?php echo $this->translate('&nbsp;Old Price:') ?></span>
+        						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
+    						</div>
+    						<div>
+    							<span class="fa fa-jpy jpy1" aria-hidden="true"></span><span class="now-price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
+    						</div>    						
+    					</div>
+    					<div class="order-div">
+    						<div>&nbsp;</div>
+    						<div><?php echo $this->translate('1 ') ?></div>
+    					</div>
+    					<div class="order-div logistics">
+    						<div>
+    							<?php echo $this->translate('Delivered') ?>
+    						</div>
+    						<div>
+    							<?php echo $this->translate('Refund') ?>
+    							<?php echo $this->translate('/') ?>
+    							<?php echo $this->translate('Return') ?>
+    						</div>
+    					</div>
 
 					</td>
-    				<td>
-    					<div class="status"><?php echo $this->translate('Delivered') ?></div>
-    					<div>
-    						<span class="fa fa-jpy" aria-hidden="true"></span><span class="price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
-    						<span class="old-price"><?php echo $this->translate('&nbsp;old price') ?></span>
-    						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
+    				<td rowspan="2">
+    					<div class="order-div">
+    						<span class="fa fa-jpy jpy2" aria-hidden="true"></span>
+    						<span class="total-price"><?php echo $this->translate('%.2f',[238.0]) ?></span>
+    					<div class="order-div">
+    						<div class="logistics"><?php echo $this->translate('Received') ?></div>
+    						<a href=""><div class="logistics"><?php echo $this->translate('Order Detail') ?></div></a>
+    						<a href=""><div class="logistics"><?php echo $this->translate('Check Logistics') ?></div></a>
     					</div>
-    					
-    					<div class="order-time"><?php echo $this->translate('Order time:&nbsp;2015-05-23&nbsp;13:50') ?></div>
+    					<div class="order-div">
+    						<button class="confirm"><?php echo $this->translate('Confirm Receiving') ?></button>
+    					</div>
+    									
     				</td>
-        			<td><button class="confirm"><?php echo $this->translate('Confirm Receiving') ?></button></td>
     			 </tr>
-    			 
     			 <tr>
     				<td>
 						<img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>"  height="100" width="100" >
 						<div class="des">
     						<div>
     							<?php echo $this->translate('Eagle Energy Eagle Energy Eagle Energy')?>
-    						</div>
-    						<a href="">xxxxxshop</a>
+    						</div>    						
 						</div>
+						<div class="order-div">
+							<div>
+        						<span class="old-price"><?php echo $this->translate('&nbsp;Old Price:') ?></span>
+        						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
+    						</div>
+    						<div>
+    							<span class="fa fa-jpy jpy1" aria-hidden="true"></span><span class="now-price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
+    						</div>    						
+    					</div>
+    					<div class="order-div">
+    						<div>&nbsp;</div>
+    						<div><?php echo $this->translate('1 ') ?></div>
+    					</div>
+    					<div class="order-div logistics">
+    						<div>
+    							<?php echo $this->translate('Delivered') ?>
+    						</div>
+    						<div>
+    							<?php echo $this->translate('Refund') ?>
+    							<?php echo $this->translate('/') ?>
+    							<?php echo $this->translate('Return') ?>
+    						</div>
+    					</div>
 
 					</td>
-    				<td>
-    					<div class="status"><?php echo $this->translate('Delivered') ?></div>
-    					<div>
-    						<span class="fa fa-jpy" aria-hidden="true"></span><span class="price"><?php echo $this->translate('%.2f',[119.0]) ?></span>
-    						<span class="old-price"><?php echo $this->translate('&nbsp;old price') ?></span>
-    						<span class="old-price-num"><?php echo $this->translate('%.2f',[219.0]) ?></span>
-    					</div>
-    					
-    					<div class="order-time"><?php echo $this->translate('Order time:&nbsp;2015-05-23&nbsp;13:50') ?></div>
-    				</td>
-        			<td><button class="confirm"><?php echo $this->translate('Confirm Receiving') ?></button></td>
+    				
     			 </tr>
     			 
+    			 
+    			 
+    		</table>
+    	</div>
+    	
+    	<div class="coupon-title">
+    		<div class="myorder-text"><?php echo $this->translate('My Recent Orders') ?></div>
+    	</div>
+    	<div class="coupon">
+    		<table class="table" cellpadding="10">
+    			<tr>
+    				<td>
+    					<a href=""><img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/left.png')?>" ></a>
+    				</td>
+    				<td>
+        				<div class="coupon-info">
+        				 	<div>
+        				 		<div class="price-title">
+            				 		<span class="fa fa-jpy" aria-hidden="true"></span>
+            				   	</div>
+            				   	<div class="coupon-price">
+            				 		<span ><?php echo $this->translate('%d', [500]) ?></span>
+        				 		</div>
+        				 		<div class="obtain">
+            				 		<a href=""><div><span class="now"><?php echo $this->translate('Obtain Now') ?></span> </div></a>
+            				 		<div><span><?php echo $this->translate('Store General') ?></span> </div>
+        				 		</div>
+        				 	</div>
+        				 	<div>
+        				 	    <span><?php echo $this->translate('Issued Store: ') ?></span>
+        				 	    <span><?php echo $this->translate('Eagle Energy') ?></span>
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Service Conditions: Single up to 600') ?></span>
+        				 	    
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Valid Time:') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.01') ?></span>
+        				 		<span><?php echo $this->translate('to') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.31') ?></span>
+        				 	</div>
+        				</div>
+    				</td>
+    				<td>
+        				<div class="coupon-info">
+        				 	<div>
+        				 		<div class="price-title">
+            				 		<span class="fa fa-jpy" aria-hidden="true"></span>
+            				   	</div>
+            				   	<div class="coupon-price">
+            				 		<span ><?php echo $this->translate('%d', [50]) ?></span>
+        				 		</div>
+        				 		<div class="obtain">
+            				 		<a href=""><div><span class="now"><?php echo $this->translate('Obtain Now') ?></span> </div></a>
+            				 		<div><span><?php echo $this->translate('Store General') ?></span> </div>
+        				 		</div>
+        				 	</div>
+        				 	<div>
+        				 	    <span><?php echo $this->translate('Issued Store: ') ?></span>
+        				 	    <span><?php echo $this->translate('Eagle Energy') ?></span>
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Service Conditions: Single up to 600') ?></span>
+        				 	    
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Valid Time:') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.01') ?></span>
+        				 		<span><?php echo $this->translate('to') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.31') ?></span>
+        				 	</div>
+        				</div>
+    				</td>
+    				<td>
+        				<div class="coupon-info">
+        				 	<div>
+        				 		<div class="price-title">
+            				 		<span class="fa fa-jpy" aria-hidden="true"></span>
+            				   	</div>
+            				   	<div class="coupon-price">
+            				 		<span ><?php echo $this->translate('%d', [500]) ?></span>
+        				 		</div>
+        				 		<div class="obtain">
+            				 		<a href=""><div><span class="now"><?php echo $this->translate('Obtain Now') ?></span> </div></a>
+            				 		<div><span><?php echo $this->translate('Store General') ?></span> </div>
+        				 		</div>
+        				 	</div>
+        				 	<div>
+        				 	    <span><?php echo $this->translate('Issued Store: ') ?></span>
+        				 	    <span><?php echo $this->translate('Eagle Energy') ?></span>
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Service Conditions: Single up to 600') ?></span>
+        				 	    
+        				 	</div>
+        				 	<div>
+        				 		<span><?php echo $this->translate('Valid Time:') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.01') ?></span>
+        				 		<span><?php echo $this->translate('to') ?></span>
+        				 		<span><?php echo $this->translate('2016.07.31') ?></span>
+        				 	</div>
+        				</div>
+    				</td>
+    				<td>
+    				 	<a href=""><img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/right.png')?>" ></a>
+    				</td>
+    			
+    			</tr>
+    		
     		</table>
     	</div>
     	

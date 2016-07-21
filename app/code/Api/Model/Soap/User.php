@@ -37,7 +37,7 @@ class User extends AbstractModel
     {
         if ($this->valid($username, $password)) {
             $segment = new Segment('admin');
-            $segment->set('isLoggedin', TRUE)
+            $segment->set('hasLoggedIn', TRUE)
                     ->set('user', clone $this);
             return true;
         }

@@ -16,7 +16,7 @@ class Welcome extends Template
     public function getCustomer()
     {
         $segment = new Segment('customer');
-        if ($segment->get('isLoggedin')) {
+        if ($segment->get('hasLoggedIn')) {
             return $segment->get('customer');
         }
         return false;

@@ -8,26 +8,40 @@ $csrf = $this->getCsrfKey();
         <span class="badge"><?php echo $this->getQty() ?></span>
     </a>
     <table class="table dropdown-menu dropdown-menu-right">
-        <?php foreach ($this->getItems() as $item): ?>
-            <tr data-id="<?php echo $item['product_id'] ?>">
-                <td>
-                    <a href="<?php echo $item['product']->getUrl() ?>"><img src="{$thumbnail}" alt="{$name}" /></a>
+        <tbody><?php
+            foreach ($this->getItems() as $item):
+                $thumbnail = $item['product']->getThumbnail();
+                ?>
+                <tr data-id="<?php echo $item['product_id'] ?>">
+                    <td>
+                        <a href="<?php echo $item['product']->getUrl() ?>">
+                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" />
+                        </a>
+                    </td>
+                    <td>
+                        <h3><a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a></h3>
+                    </td>
+                    <td>
+                        <div class="price"><?php echo $item['product']->getFinalPrice($item['qty'], true), ' x ', (float) $item['qty'] ?></div>
+                        <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                            <span class="fa fa-remove" aria-hidden="true"></span>
+                            <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach ?></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <?php echo $this->getChild('total')->setVariable('simplify', 1) ?>
                 </td>
                 <td>
-                    <h3><a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a></h3>
-                    <div class="price"><?php echo $item['product']->getFinalPrice($item['qty']), ' x ', $item['qty'] ?></div>
-                </td>
-                <td>
-                    <?php echo $item['total'] ?>
-                </td>
-                <td>
-                    <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
-                        <span class="fa fa-remove" aria-hidden="true"></span>
-                        <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                    <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>" class="btn btn-checkout">
+                        <span><?php echo $this->translate('View Shopping Cart') ?></span>
                     </a>
                 </td>
             </tr>
-        <?php endforeach ?>
+        </tfoot>
     </table>
     <template id="tmpl-minicart">
         <tr data-id="{$id}">

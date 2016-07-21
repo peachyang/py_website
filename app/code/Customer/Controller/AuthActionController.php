@@ -21,9 +21,9 @@ abstract class AuthActionController extends ActionController {
         $options = $routeMatch->getOptions();
         $action = isset($options['action']) ? strtolower($options['action']) : 'index';
         $session = new Segment('customer');
-        if (!in_array($action, $this->allowedAction) && !$session->get('isLoggedin')) {
+        if (!in_array($action, $this->allowedAction) && !$session->get('hasLoggedIn')) {
             return $this->redirect('customer/account/login/');
-        } else if (in_array($action, $this->allowedAction) && $session->get('isLoggedin')) {
+        } else if (in_array($action, $this->allowedAction) && $session->get('hasLoggedIn')) {
             return $this->redirect('customer/account/');
         }
         return parent::dispatch($request, $routeMatch);

@@ -37,7 +37,7 @@ final class Cart extends AbstractModel implements Singleton
         $currency = $this->getContainer()->get('request')->getCookie('currency', $baseCurrency);
         if ($segment->get('cart')) {
             $this->load($segment->get('cart'));
-        } else if ($segment->get('isLoggedin')) {
+        } else if ($segment->get('hasLoggedIn')) {
             $collection = new Collection;
             $collection->where([
                 'customer_id' => $segment->get('customer')->getId(),
@@ -113,7 +113,7 @@ final class Cart extends AbstractModel implements Singleton
             'base_currency' => $baseCurrency,
             'currency' => $currency
         ]);
-        if ($segment->get('isLoggedin')) {
+        if ($segment->get('hasLoggedIn')) {
             $cart->setData([
                 'currency' => $currency
             ]);
@@ -187,11 +187,13 @@ final class Cart extends AbstractModel implements Singleton
             $item->setData($items[0])
                     ->setData([
                         'qty' => $newQty,
+                        'base_price' => $price,
                         'price' => $price
                     ])->collateTotals()->save();
         } else {
             $price = $product->getFinalPrice($qty);
             $item->setData([
+                'cart_id' => $this->getId(),
                 'product_id' => $productId,
                 'product_name' => $product['name'],
                 'store_id' => $product['store_id'],
@@ -201,6 +203,7 @@ final class Cart extends AbstractModel implements Singleton
                 'is_virtual' => $product['product_type_id'] == 2 ? 1 : 0,
                 'warehouse_id' => $warehouseId,
                 'weight' => $product['weight'],
+                'base_price' => $price,
                 'price' => $price
             ])->collateTotals()->save();
         }
@@ -233,12 +236,29 @@ final class Cart extends AbstractModel implements Singleton
     {
         if (is_numeric($item)) {
             unset($this->items[$item]);
-            $item = new Item;
-            $item->load($item);
+            $item = (new Item)->setData('id', $item);
         } else {
             unset($this->items[$item['id']]);
         }
         $item->remove();
+        $this->collateTotals()->save();
+        return $this;
+    }
+
+    public function removeItems($items)
+    {
+        if (is_array($items) || $items instanceof \Traversable) {
+            foreach ($items as $item) {
+                if (is_numeric($item)) {
+                    unset($this->items[$item]);
+                    $item = (new Item)->load($item);
+                } else {
+                    unset($this->items[$item['id']]);
+                }
+                $item->remove();
+            }
+            $this->collateTotals()->save();
+        }
         return $this;
     }
 
@@ -249,6 +269,7 @@ final class Cart extends AbstractModel implements Singleton
             $item->setId($item['id'])->remove();
         }
         $this->items = [];
+        $this->collateTotals()->save();
         return $this;
     }
 
@@ -312,6 +333,7 @@ final class Cart extends AbstractModel implements Singleton
             $total += $item['total'];
         }
         $this->setData(['base_total' => $baseTotal, 'total' => $baseTotal]);
+        return $this;
     }
 
 }

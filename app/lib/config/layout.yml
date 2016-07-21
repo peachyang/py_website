@@ -19,6 +19,10 @@ default:
                         type: Seahinet\Lib\ViewModel\Breadcrumb
                     messages:
                         type: Seahinet\Lib\ViewModel\Message
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: core
             extra:
                 type: Seahinet\Lib\ViewModel\Wrapper
             header:
@@ -100,6 +104,10 @@ frontend:
                             minicart:
                                 type: Seahinet\Checkout\ViewModel\Cart
                                 template: checkout/minicart
+                                children:
+                                    total:
+                                        type: Seahinet\Checkout\ViewModel\Cart
+                                        template: checkout/cart/total
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
                                 action: 

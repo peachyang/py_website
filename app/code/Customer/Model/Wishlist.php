@@ -7,13 +7,16 @@ use Seahinet\Customer\Model\Wishlist\Item as Model;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Catalog\Model\Product;
 
-class Wishlist extends AbstractModel {
+class Wishlist extends AbstractModel
+{
 
-    protected function construct() {
+    protected function construct()
+    {
         $this->init('wishlist', 'id', ['id', 'customer_id']);
     }
 
-    public function getItems() {
+    public function getItems()
+    {
         if ($this->getId()) {
             $items = new Collection;
             $items->where(['wishlist_id' => $this->getId()]);
@@ -22,16 +25,22 @@ class Wishlist extends AbstractModel {
         return [];
     }
 
-    public function addItem($item) {
+    public function addItem($item)
+    {
         $item = new Model($item);
-        $product = new Product;
-        $product->load($item['product_id'],'id');
-      
+        if (isset($item['product'])) {
+            $product = $item['product'];
+        } else {
+            $product = new Product;
+            $product->load($item['product_id'], 'id');
+        }
         $item->setData([
-                'store_id' => $product['store_id'],
-                'product_name' => $product['name']
+            'wishlist_id' => $this->getId(),
+            'store_id' => $product['store_id'],
+            'product_name' => $product['name']
         ]);
         $item->save();
+        return $this;
     }
 
 }

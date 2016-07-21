@@ -29,7 +29,7 @@ class IndexController extends ActionController
     protected function redirectLoggedin()
     {
         $segment = new Segment('admin');
-        if ($segment->get('isLoggedin')) {
+        if ($segment->get('hasLoggedIn')) {
             if ($segment->get('user')->getRole()->hasPermission('Admin\\Dashboard::index')) {
                 return $this->redirect(':ADMIN/dashboard/');
             } else {

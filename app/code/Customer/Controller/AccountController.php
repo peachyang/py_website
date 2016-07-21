@@ -217,7 +217,7 @@ class AccountController extends AuthActionController
     {
         $segment = new Segment('customer');
         $segment->offsetUnset('customer');
-        $segment->set('isLoggedin', false);
+        $segment->set('hasLoggedIn', false);
         $result = ['error' => 0, 'message' => [[
             'message' => $this->translate('You have logged out successfully.'),
             'level' => 'success'

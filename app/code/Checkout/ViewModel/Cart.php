@@ -50,6 +50,7 @@ class Cart extends Template
     public function getRow($item)
     {
         $row = new Item;
+        $row->setTemplate('checkout/cart/item');
         $row->setVariable('item', $item);
         return $row;
     }

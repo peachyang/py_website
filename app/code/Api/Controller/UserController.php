@@ -22,7 +22,7 @@ class UserController extends AuthActionController {
     public function logoutAction()
     {
         $segment = new Segment('admin');
-        $segment->set('isLoggedin', false);
+        $segment->set('hasLoggedIn', false);
         $segment->offsetUnset('user');
         return $this->redirect(':ADMIN');
     }

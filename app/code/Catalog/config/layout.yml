@@ -5,6 +5,17 @@ catalog_category:
         children:
             content:
                 children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: catalog
+                            -
+                                method: addHandledSegment
+                                params: customer
+                            -
+                                method: addHandledSegment
+                                params: checkout
                     toolbar:
                         type: Seahinet\Catalog\ViewModel\Category\Toolbar
                         template: catalog/category/toolbar
@@ -33,6 +44,17 @@ catalog_product:
         children:
             content:
                 children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: catalog
+                            -
+                                method: addHandledSegment
+                                params: customer
+                            -
+                                method: addHandledSegment
+                                params: checkout
                     product:
                         type: Seahinet\Catalog\ViewModel\Product\View
                         template: catalog/product/view

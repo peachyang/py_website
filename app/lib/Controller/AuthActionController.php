@@ -27,7 +27,7 @@ class AuthActionController extends ActionController
             $this->options = $routeMatch->getOptions();
             $segment = new Segment('admin');
             $permission = str_replace('Seahinet\\', '', preg_replace('/Controller(?:\\\\)?/', '', get_class($this))) . '::' . str_replace('Action', '', $method);
-            if (!$segment->get('isLoggedin') || !$segment->get('user')->getRole()->hasPermission($permission)) {
+            if (!$segment->get('hasLoggedIn') || !$segment->get('user')->getRole()->hasPermission($permission)) {
                 return $this->notFoundAction();
             }
             if (!is_callable([$this, $method])) {

@@ -26,6 +26,9 @@ class Warehouse extends AbstractModel
                             'product_id' => $productId,
                             'sku' => $sku
                         ])->toArray();
+                if(count($result)){
+                    $result = $result[0];
+                }
                 $cache->save($key, $result, 'INVENTORY_');
             }
             return $result;

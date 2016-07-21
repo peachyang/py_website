@@ -5,6 +5,11 @@ checkout_cart:
         children:
             content:
                 children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: checkout
                     cart:
                         type: Seahinet\Checkout\ViewModel\Cart
                         template: checkout/cart

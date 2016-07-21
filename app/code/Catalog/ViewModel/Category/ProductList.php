@@ -15,7 +15,10 @@ class ProductList extends Template
 
     public function getTemplate()
     {
-        return 'catalog/product/list/' . $this->getQuery('mode', 'grid');
+        if (!$this->template) {
+            return 'catalog/product/list/' . $this->getQuery('mode', 'grid');
+        }
+        return parent::getTemplate();
     }
 
     public function getCategory()
@@ -38,6 +41,13 @@ class ProductList extends Template
     {
         $this->products = $products;
         return $this;
+    }
+
+    public function getProductColor()
+    {
+        $color = new Color;
+        $color->setVariable('product', $product);
+        return $color;
     }
 
     public function getPriceBox($product)

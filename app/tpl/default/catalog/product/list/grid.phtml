@@ -4,16 +4,18 @@ $products = $this->getProducts();
 <div class="container">
     <?php if (count($products)): ?>
         <ul class="products-grid clearfix">
-            <?php foreach ($products as $product): ?>
+            <?php
+            foreach ($products as $product):
+                $thumbnail = $product->getThumbnail();
+                ?>
                 <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                        <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product['name'] ?>" />
+                        <img src="<?php echo strpos($thumbnail, 'http') === false ? $this->getBaseUrl('pub/resource/image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                     </a>
 
                     <div class="price-box">
                         <?php echo $this->getPriceBox($product) ?>
                     </div>
-
                     <h3 class="product-name">
                         <a href="<?php echo $product->getUrl($this->getCategory()) ?>" class="gird-pro-a">
                             <?php echo $product['name'] ?>

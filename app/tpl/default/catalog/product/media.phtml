@@ -2,6 +2,7 @@
 $product = $this->getVariable('product');
 $images = $product->offsetGet('images');
 $default = (int) $product->offsetGet('default_image');
+//$colors = $product->offsetGet('');
 ?>
 <div id="product-media" class="carousel slide" data-ride="carousel" data-interval="false">
     <?php if (count($images)): ?>
@@ -21,6 +22,7 @@ $default = (int) $product->offsetGet('default_image');
         </div>
         <ol class="carousel-indicators">
             <?php
+            
             foreach ($images as $key => $image):
                 ?>
                 <li data-target="#product-media" data-slide-to="<?php echo $key ?>"

@@ -40,6 +40,12 @@ catalog_product:
                             media:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: catalog/product/media
+                            related:
+                                type: Seahinet\Catalog\ViewModel\Product\Related
+                                template: catalog/product/link
+                            upsells:
+                                type: Seahinet\Catalog\ViewModel\Product\Upsells
+                                template: catalog/product/link
 admin_catalog_category_list:
     update: grid
     root:

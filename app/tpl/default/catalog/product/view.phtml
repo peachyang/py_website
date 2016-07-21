@@ -2,6 +2,7 @@
 $collection = $this->getVariable('collection');
 $product = $this->getProduct();
 $images = $product->offsetGet('images');
+
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -12,9 +13,15 @@ $images = $product->offsetGet('images');
                 <?php echo $this->getChild('media')->setVariable('product', $product) ?>
                 <div class="clearfix wishlist">
                     <ul>
-                        <li><span class="fa fa-star"></span><a href="#"><?php echo $this->translate('Wish baby');?></a></li>
+                        <li><span class="fa fa-star"></span><a href="<?php echo $this->getBaseUrl('customer/wishlist/')?>"><?php echo $this->translate('Wish baby'); ?></a></li>
                         <li>|</li>
-                        <li><span class="fa fa-share-alt" aria-hidden="true"></span><a href="#"><?php echo $this->translate('Share');?></a></li>
+                        <li><span class="fa fa-share-alt" aria-hidden="true"></span><a href="#"><?php echo $this->translate('Share'); ?></a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
                     </ul>
                 </div>
             </div>
@@ -22,21 +29,23 @@ $images = $product->offsetGet('images');
                 <h3><?php echo $product['name'] ?></h3>
                 <div class="clearfix main-box">
                     <div class="price-box">
-                        <span class="price-text"><?php echo $this->translate('Price');?></span>
+                        <p>
+                        <span class="price-text"><?php echo $this->translate('Price'); ?></span>
                         <?php echo $this->getPriceBox() ?>
+                        <p>
                     </div>
                     <div class="product-review">
-                        <?php echo $this->product['']; ?>
+                        <span><?php echo count($this->product['review_id']); ?></span>
                         <span><?php echo $this->translate('Product review'); ?></span>
                     </div>
                     <div class="sale-decimals">
-                        <?php echo $this->product['']; ?>
+                        <span><?php echo count($this->product['order_id']); ?></span>
                         <span><?php echo $this->translate('Sale decimals'); ?></span>
                     </div>
                 </div>
                 <div class=" clearfix product-distribution">
                     <p>
-                        <?php echo $this->translate('Distribution'); ?>&nbsp;
+                        <span><?php echo $this->translate('Distribution'); ?></span>
                         <span><?php echo $this->translate('Shandongqingdao'); ?></span>
                         <select name="address">
                             <option name="1">address</option>
@@ -47,59 +56,35 @@ $images = $product->offsetGet('images');
                     </p>
                 </div>
                 <div class="clearfix product-color">
-                    <p><?php echo $this->translate('Product color');?><span>red</span></p>
+                    <p><?php echo $this->translate('Product color'); ?><span><?php echo $this->$product[''];?></span></p>
                 </div>
                 <div class="clearfix product-decimal">
-                    <p><?php echo $this->translate('Product decimal');?>
+                    <p><?php echo $this->translate('Product decimal'); ?>
                         <span class="tb-stock" id="J_Stock">
                             <a href="#"></a>
                             <input class="tb-text" value="1" maxlength="8" title="Please enter the purchase quantity" type="text">
-                            <a href="#"></a>pices
+                            <a href="#"></a>pcs
                         </span>
-                        <em>(Reserved Qty<span id="J_SpanStock" class="tb-count">5</span>pices)</em></p>
+                        (Reserved Qty<span id="J_SpanStock" class="tb-count">5</span>pcs)</p>
                 </div>
                 <div class="clearfix product-action">
                     <div class="product-sale">
-                        <button type="submit" class="btn btn-sm"><?php echo $this->translate('Buy it now');?></button>
-                        &nbsp;&nbsp;
+                        <button type="submit" class="btn btn-sm"><?php echo $this->translate('Buy it now'); ?></button>
                         <span class="fa fa-shopping-cart" aria-hidden="true"></span>
                         <button type="submit" class="btn btn-add">
-                                <?php echo $this->translate('Join a shopping cart');?>
+                            <?php echo $this->translate('Join a shopping cart'); ?>
                         </button>
                     </div>
                 </div> 
             </div>
             <div class="col-lg-2">
-                <ul>
-                    <?php foreach($images as $key => $image):
-                        if($image['id'] == $product->offsetGet('default_image')) {
-                            $default = $image;
-                        }
-                    ?>
-                    <li><a href="<?php ?>">
-                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x170/'),
-                                    $default['src'] ?>" width="131" height="170" 
-                                    alt="<?php echo $product->offsetGet('name') ?>">
-                        </a>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
+                <div class="upsells">
+                    <?php echo $this->getChild('upsells')->setVariable('product', $product)->setLimit(3) ?>
+                </div>
             </div>
             <div class="clearfix product-recommend">
-                <h2><?php echo $this->translate('Red hot');?></h2>
-                <ul>
-                    <?php foreach ($images as $key => $image):
-                        if($image['id'] == $product->offsetGet('default_image')) {
-                            $default = $image;
-                        }
-                    ?>
-                    <li><a href="#">
-                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/135x175'),
-                            $default['src'] ?>" width="135" alt="">
-                        </a>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
+                <h2><span><?php echo $this->translate('Red hot'); ?></span></h2>
+                <?php echo $this->getChild('related')->setVariable('product', $product)->setLimit(7) ?>
             </div>
         </div>        
     </form>

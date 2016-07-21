@@ -7,6 +7,7 @@ $symbol = $currency['symbol'];
 <?php if ($product->getFinalPrice() == $product['prices']['regular']): ?>
     <span class="regular-price"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>
 <?php else: ?>
+    <span class="special-price"><?php printf($format, $symbol, $product->getFinalPrice()) ?></span><br />
+    <span class="price-text"><?php echo $this->translate('Special price'); ?></span>
     <span class="old-price"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>
-    <span class="special-price"><?php printf($format, $symbol, $product->getFinalPrice()) ?></span>
 <?php endif; ?>

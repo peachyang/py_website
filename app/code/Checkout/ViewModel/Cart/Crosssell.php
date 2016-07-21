@@ -3,12 +3,12 @@
 namespace Seahinet\Checkout\ViewModel\Cart;
 
 use Seahinet\Catalog\Model\Collection\Product;
-use Seahinet\Catalog\ViewModel\Category\ProductList;
+use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
 use Zend\Db\TableGateway\TableGateway;
 
-class Crosssell extends ProductList
+class Crosssell extends Link
 {
 
     public function getProducts()
@@ -23,6 +23,9 @@ class Crosssell extends ProductList
         }
         $products = new Product;
         $products->where(new In('id', array_keys($ids)));
+        if ($this->getLimit()) {
+            $products->limit($this->getLimit());
+        }
         return $products;
     }
 

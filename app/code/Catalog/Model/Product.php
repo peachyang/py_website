@@ -117,7 +117,7 @@ class Product extends Entity
         if ($this->storage['thumbnail']) {
             $resource = new Resource;
             $resource->load($this->storage['thumbnail']);
-            return $this->getBaseUrl('pub/resource/images/' . $resource['real_name']);
+            return $resource['real_name'];
         }
         return $this->getPubUrl('frontend/images/placeholder.png');
     }

@@ -55,6 +55,17 @@ class Product extends Entity
         return [];
     }
 
+    public function getInventory($warehouse, $sku = null)
+    {
+        if (is_null($sku)) {
+            $sku = $this->storage['sku'];
+        }
+        if (is_numeric($warehouse)) {
+            $warehouse = (new Warehouse)->setId($warehouse);
+        }
+        return $warehouse->getInventory($this->getId(), $sku);
+    }
+
     public function getLinkedProducts($type)
     {
         if ($this->getId()) {
@@ -241,5 +252,5 @@ class Product extends Entity
         unset($this->storage['prices']);
         return parent::serialize();
     }
-    
+
 }

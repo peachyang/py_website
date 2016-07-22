@@ -63,7 +63,7 @@ customer_account:
                                 params: [{link:'customer/account',label:'Personal Info',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/editpwd',label:'Account Password',group:'Account Info'}]
+                                params: [{link:'customer/account/editPassword',label:'Account Password',group:'Account Info'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'Address',group:'Account Info'}]
@@ -83,7 +83,7 @@ customer_account_dashboard:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: customer\dashboard
+                        template: customer/dashboard
 customer_account_navigation_editpwd:
     update: customer_account
     root:
@@ -92,12 +92,12 @@ customer_account_navigation_editpwd:
                 action:
                     -
                         method: setTitle
-                        params: Account
+                        params: Edit Password
             content:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: customer\editpwd
+                        template: customer/editpwd
 wishlist:
     update: customer_account
     root:

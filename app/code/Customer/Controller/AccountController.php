@@ -308,9 +308,9 @@ class AccountController extends AuthActionController
         
     }
     
-    public function editpwd()
+    public function editPasswordAction()
     {
-        
+        return $this->getLayout('customer_account_navigation_editpwd');
     }
 
 }

@@ -132,7 +132,7 @@ class Product extends Entity
         }
         return min($this->storage['prices']);
     }
-
+    
     protected function afterLoad(&$result)
     {
         if (isset($result[0]) && !empty($result[0]['images'])) {

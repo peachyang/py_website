@@ -2,7 +2,9 @@
 $collection = $this->getVariable('collection');
 $product = $this->getProduct();
 $images = $product->offsetGet('images');
-
+$warehouse = new Seahinet\Catalog\Model\Warehouse;
+$warehouse->load(1);
+$inventory = $warehouse->getInventory($product->getId(), $product['sku']);
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -14,7 +16,7 @@ $images = $product->offsetGet('images');
                 <?php echo $this->getChild('media')->setVariable('product', $product) ?>
                 <div class="clearfix wishlist">
                     <ul>
-                        <li><span class="fa fa-star"></span><a href="<?php echo $this->getBaseUrl('customer/wishlist/')?>"><?php echo $this->translate('Wish baby'); ?></a></li>
+                        <li><span class="fa fa-star"></span><a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo $this->translate('Wish baby'); ?></a></li>
                         <li>|</li>
                         <li><span class="fa fa-share-alt" aria-hidden="true"></span><a href="#"><?php echo $this->translate('Share'); ?></a></li>
                     </ul>
@@ -31,8 +33,8 @@ $images = $product->offsetGet('images');
                 <div class="clearfix main-box">
                     <div class="price-box">
                         <p>
-                        <span class="price-text"><?php echo $this->translate('Price'); ?></span>
-                        <?php echo $this->getPriceBox() ?>
+                            <span class="price-text"><?php echo $this->translate('Price'); ?></span>
+                            <?php echo $this->getPriceBox() ?>
                         <p>
                     </div>
                     <div class="product-review">
@@ -57,23 +59,24 @@ $images = $product->offsetGet('images');
                     </p>
                 </div>
                 <div class="clearfix product-color">
-                    <p><?php echo $this->translate('Product color'); ?><span><?php echo $this->$product[''];?></span></p>
+                    <p><?php echo $this->translate('Product color'); ?><span><?php echo $this->$product['']; ?></span></p>
                 </div>
                 <div class="clearfix product-decimal">
-                    <p><?php echo $this->translate('Product decimal'); ?>
-                        <span class="tb-stock" id="J_Stock">
-                            <a href="#"></a>
-                            <input class="tb-text" value="1" name="qty" type="number">
-                            <a href="#"></a>pices
+                    <p>
+                        <span class="tb-decimal"><?php echo $this->translate('Product decimal'); ?></span>
+                        <span class="tb-stock">
+                            <label for="qty" class="spin minus">-</label>
+                            <input id="qty" class="tb-text" value="1" min="<?php echo (float) $inventory['min_qty'] ?>" max="<?php echo min((float) $inventory['max_qty'],(float) $inventory['qty']) ?>" step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
+                            <label for="qty" class="spin plus">+</label>
                         </span>
-                        (Reserved Qty<span id="J_SpanStock" class="tb-count">5</span>pcs)</p>
+                    </p>
                 </div>
                 <div class="clearfix product-action">
                     <div class="product-sale">
-                        <button type="submit" class="btn btn-sm"><?php echo $this->translate('Buy it now'); ?></button>
+                        <button type="submit" class="btn btn-sm"><?php echo $this->translate('Buy Now'); ?></button>
                         <span class="fa fa-shopping-cart" aria-hidden="true"></span>
                         <button type="submit" class="btn btn-add">
-                            <?php echo $this->translate('Join a shopping cart'); ?>
+                            <?php echo $this->translate('Add to Cart'); ?>
                         </button>
                     </div>
                 </div> 

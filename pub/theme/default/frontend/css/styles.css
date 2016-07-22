@@ -196,7 +196,12 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .product-detail .col-lg-6 .main-box .sale-decimals span{line-height:40px;display:block;}
 .product-detail .col-lg-6 .product-distribution p{clear:both;width:100%;line-height:40px;margin-left:15px}
 .product-detail .col-lg-6 .product-distribution p span{height:40px;line-height:40px;display:block;float:left}
-.product-detail .col-lg-6 .product-decimal p{clear:both;width:100%;line-height:40px;margin-left:15px}
+.product-detail .product-info .product-decimal p{clear:both;line-height:40px;margin-left:15px}
+.prodcut-detail .product-info .product-decimal .tb-stock{width:110px}
+.tb-stock label{width:30px;border:1px solid #d2d2d2;height:30px;display:block;float:left;line-height:30px;text-align:center}
+.tb-text{width:60px;height:30px;text-align:center;border:2px solid #d2d2d2;float:left}
+.product-detail .product-info .prodcut-decimal .tb-stock .tb-text{width:30px;}
+.product-detail .product-info .product-decimal .tb-decimal{float:left;line-height:30px;margin-right:15px}
 .product-detail .col-lg-6 .product-color p{margin-left:15px}
 .product-detail .col-lg-6 .product-color p span{margin:0 10px}
 .product-detail .col-lg-6 .product-action{clear:both;width:100%;height:100px;line-height:100px;text-align:center}
@@ -213,4 +218,5 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .product-detail .product-recommend h2 span{display:block;width:130px;height:44px;background-color:#fd9030;
                      color:#ffffff;font-size:16px;line-height:44px;text-align:center}
 .product-detail .product-recommend .products-grid .item{float:left;text-align:center;width:167px}
+
 

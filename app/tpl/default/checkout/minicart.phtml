@@ -15,14 +15,14 @@ $csrf = $this->getCsrfKey();
                 <tr data-id="<?php echo $item['product_id'] ?>">
                     <td>
                         <a href="<?php echo $item['product']->getUrl() ?>">
-                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" />
+                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/45x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" />
                         </a>
                     </td>
                     <td>
                         <h3><a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a></h3>
                     </td>
                     <td>
-                        <div class="price"><?php echo $item['product']->getFinalPrice($item['qty'], true), ' x ', (float) $item['qty'] ?></div>
+                        <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), ' x ', (float) $item['qty'] ?></div>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
                             <span class="fa fa-remove" aria-hidden="true"></span>
                             <span class="sr-only"><?php echo $this->translate('Delete') ?></span>

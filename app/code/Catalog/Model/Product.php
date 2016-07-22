@@ -133,15 +133,16 @@ class Product extends Entity
         return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
-    public function getFinalPrice($qty = 1)
+    public function getFinalPrice($qty = 1, $convert = true)
     {
         if (empty($this->storage['prices'])) {
             $this->storage['prices'] = [];
+            $this->storage['base_prices'] = [];
             $this->getEventDispatcher()->trigger('product.price.calc', [
                 'product' => $this, 'qty' => $qty
             ]);
         }
-        return min($this->storage['prices']);
+        return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
     }
 
     protected function afterLoad(&$result)

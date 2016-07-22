@@ -1,0 +1,39 @@
+<?php
+$addresses = $this->getAddress();
+$attributes = $this->getAddressAttribute();
+?>
+<section>
+    <h4><?php echo $this->translate('Shipping Address') ?></h4>
+    <?php if ($addresses): ?>
+        <ul>
+            <?php foreach ($addresses as $address): ?>
+                <li>
+                    <input type="radio" name="shipping_address" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>" />
+                    <label for="shipping-address-<?php echo $address->getId() ?>">
+                        <?php echo $address->display() ?>
+                    </label>
+                    <a href="#"><?php echo $this->translate('Edit') ?></a>
+                    <a href="#"><?php echo $this->translate('Delete') ?></a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php endif ?>
+    <button type="button" class="btn"><?php echo $this->translate('Add New Address') ?></button>
+    <form action="#" method="post" data-ajax="true">
+        <?php
+        foreach ($attributes as $attribute) {
+            $item = [
+                'type' => $attribute['input'],
+                'label' => $attribute['label']
+            ];
+            if ($attribute['is_required']) {
+                $item['required'] = 'required';
+            }
+            if ($attribute['code'] === 'country') {
+                $item['options'] = $this->getCountries();
+            }
+            echo $this->getInputBox($attribute['code'], $item);
+        }
+        ?>
+    </form>
+</section>

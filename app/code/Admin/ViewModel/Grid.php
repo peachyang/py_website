@@ -200,7 +200,7 @@ class Grid extends Template
             'item' => $item,
             'parent' => $this
         ]);
-        $box->setTemplate('admin/renderer/' . $item['type']);
+        $box->setTemplate('page/renderer/' . $item['type']);
         return $box;
     }
 

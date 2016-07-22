@@ -4,6 +4,7 @@ namespace Seahinet\Sales\Model\Cart;
 
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\Store;
 
 class Item extends AbstractModel
 {
@@ -14,7 +15,7 @@ class Item extends AbstractModel
             'id', 'cart_id', 'product_id', 'product_name', 'options', 'qty',
             'sku', 'is_virtual', 'free_shipping', 'base_price', 'price',
             'base_discount', 'discount', 'base_tax', 'tax', 'base_total',
-            'total', 'weight', 'status', 'warehouse_id'
+            'total', 'weight', 'status', 'warehouse_id', 'store_id'
         ]);
     }
 
@@ -24,6 +25,9 @@ class Item extends AbstractModel
         if (!$result && $key === 'product') {
             $result = new Product;
             $result->load($this->storage['product_id']);
+        } else if ($key === 'store') {
+            $result = new Store;
+            $result->load($this->storage['store_id']);
         }
         return $result;
     }

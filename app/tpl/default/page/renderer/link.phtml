@@ -1,0 +1,13 @@
+<?php
+$item = $this->getVariable('item');
+?>
+<div class="input-box">
+    <?php if (isset($item['label'])): ?>
+        <label class="control-label">
+            <?php echo $this->translate($item['label']) ?>
+        </label>
+    <?php endif ?>
+    <div class="cell">
+        <a href="<?php echo $this->getAdminUrl($item['link']) ?>"><?php echo $this->translate($item['content']) ?></a>
+    </div>
+</div>

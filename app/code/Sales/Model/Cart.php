@@ -183,15 +183,13 @@ final class Cart extends AbstractModel implements Singleton
         $item = new Item;
         if ($items->count()) {
             $newQty = $items[0]['qty'] + $qty;
-            $price = $product->getFinalPrice($newQty);
-            $item->setData($items[0])
+            $item->setData($items[0]->toArray())
                     ->setData([
                         'qty' => $newQty,
-                        'base_price' => $price,
-                        'price' => $price
+                        'base_price' => $product->getFinalPrice($newQty, false),
+                        'price' => $product->getFinalPrice($newQty)
                     ])->collateTotals()->save();
         } else {
-            $price = $product->getFinalPrice($qty);
             $item->setData([
                 'cart_id' => $this->getId(),
                 'product_id' => $productId,
@@ -203,8 +201,8 @@ final class Cart extends AbstractModel implements Singleton
                 'is_virtual' => $product['product_type_id'] == 2 ? 1 : 0,
                 'warehouse_id' => $warehouseId,
                 'weight' => $product['weight'],
-                'base_price' => $price,
-                'price' => $price
+                'base_price' => $product->getFinalPrice($qty, false),
+                'price' => $product->getFinalPrice($qty)
             ])->collateTotals()->save();
         }
         $this->items[$item->getId()] = $item->toArray();

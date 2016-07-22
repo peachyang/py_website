@@ -1,6 +1,19 @@
 ---
 customer_account:
     update: frontend
+    root:
+        children:
+            content:
+                children:
+                    nav:
+                        type: Seahinet\Customer\ViewModel\Navigation
+                        action:
+                            -
+                                method: addGroup
+                                params: [{label:'Infomation',priority:0,icon:'th-list'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Dashboard',group:'Infomation'}]
 customer_account_dashboard:
     update: customer_account
     root:

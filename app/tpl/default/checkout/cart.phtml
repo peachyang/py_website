@@ -36,7 +36,23 @@
             </thead>
             <tbody>
                 <?php
+                $stores = [];
                 foreach ($this->getItems() as $item) {
+                    if (!isset($stores[$item['store_id']])):
+                        ?>
+                        <tr class="store">
+                            <th>
+                                <input type="checkbox" class="selectall">
+                            </th>
+                            <th colspan="6">
+                                <?php echo $item['store']['name'] ?>
+                            </th>
+                        </tr>
+                        <?php
+                        $stores[$item['store_id']] = 1;
+                    else:
+                        $stores[$item['store_id']] ++;
+                    endif;
                     echo $this->getRow($item);
                 }
                 ?>

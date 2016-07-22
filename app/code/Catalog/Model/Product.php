@@ -55,6 +55,17 @@ class Product extends Entity
         return [];
     }
 
+    public function getInventory($warehouse, $sku = null)
+    {
+        if (is_null($sku)) {
+            $sku = $this->storage['sku'];
+        }
+        if (is_numeric($warehouse)) {
+            $warehouse = (new Warehouse)->setId($warehouse);
+        }
+        return $warehouse->getInventory($this->getId(), $sku);
+    }
+
     public function getLinkedProducts($type)
     {
         if ($this->getId()) {
@@ -122,15 +133,16 @@ class Product extends Entity
         return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
-    public function getFinalPrice($qty = 1)
+    public function getFinalPrice($qty = 1, $convert = true)
     {
         if (empty($this->storage['prices'])) {
             $this->storage['prices'] = [];
+            $this->storage['base_prices'] = [];
             $this->getEventDispatcher()->trigger('product.price.calc', [
                 'product' => $this, 'qty' => $qty
             ]);
         }
-        return min($this->storage['prices']);
+        return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
     }
     
     protected function afterLoad(&$result)
@@ -241,5 +253,5 @@ class Product extends Entity
         unset($this->storage['prices']);
         return parent::serialize();
     }
-    
+
 }

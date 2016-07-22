@@ -5,6 +5,8 @@ $images = $product->offsetGet('images');
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
+$options = $product->getOptions();
+
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -58,15 +60,28 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                         </select>
                     </p>
                 </div>
-                <div class="clearfix product-color">
-                    <p><?php echo $this->translate('Product color'); ?><span></span></p>
+                <div class="clearfix custom-options">
+                    <dl>
+                        <?php foreach ($options as $option): ?>
+                            <dt><?php echo $option['title'] ?></dt>
+                            
+                            <dd>
+                                <?php foreach ($option['value'] as $value): ?>
+                                <span><?php echo $value['title'] ?></span>
+                                <?php endforeach ?>
+                            </dd>
+                        <?php endforeach ?>
+                    </dl>
                 </div>
                 <div class="clearfix product-decimal">
                     <p>
                         <span class="tb-decimal"><?php echo $this->translate('Product decimal'); ?></span>
                         <span class="tb-stock">
                             <label for="qty" class="spin minus">-</label>
-                            <input id="qty" class="tb-text" value="1" min="<?php echo (float) $inventory['min_qty'] ?>" max="<?php echo min((float) $inventory['max_qty'],(float) $inventory['qty']) ?>" step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
+                            <input id="qty" class="tb-text" value="1" 
+                                   min="<?php echo (float) $inventory['min_qty'] ?>" 
+                                   max="<?php echo min((float) $inventory['max_qty'],(float) $inventory['qty']) ?>" 
+                                   step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
                             <label for="qty" class="spin plus">+</label>
                         </span>
                     </p>

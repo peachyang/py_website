@@ -19,12 +19,15 @@ class View extends Template
         $this->product = $product;
         return $this;
     }
-    
-    public function getProductColor()
+
+    public function getOptions()
     {
-        $color = new Color;
-        $color->setVariable('product', $this->product);
-        return $color;
+        return $this->product;
+    }
+
+    public function setOptions(){
+    $this->product = $option;
+    return $this->product;
     }
 
     public function getPriceBox()

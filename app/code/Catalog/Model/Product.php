@@ -144,7 +144,7 @@ class Product extends Entity
         }
         return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
     }
-
+    
     protected function afterLoad(&$result)
     {
         if (isset($result[0]) && !empty($result[0]['images'])) {

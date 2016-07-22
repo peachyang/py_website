@@ -40,8 +40,11 @@
                 foreach ($this->getItems() as $item) {
                     if (!isset($stores[$item['store_id']])):
                         ?>
-                        <tr>
-                            <th colspan="7">
+                        <tr class="store">
+                            <th>
+                                <input type="checkbox" class="selectall">
+                            </th>
+                            <th colspan="6">
                                 <?php echo $item['store']['name'] ?>
                             </th>
                         </tr>

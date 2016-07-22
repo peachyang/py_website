@@ -26,6 +26,7 @@ checkout_cart:
 checkout_cart_mini:
     update: frontend
     root:
+        unset: [head]
         template: page/ajax
         children:
             content:
@@ -33,5 +34,60 @@ checkout_cart_mini:
                     cart:
                         type: Seahinet\Checkout\ViewModel\Cart
                         template: checkout/cart/mini
-                
-            
+                        children:
+                            total:
+                                type: Seahinet\Checkout\ViewModel\Cart
+                                template: checkout/cart/total
+checkout_order:
+    update: frontend
+    root:
+        children:
+            content:
+                type: Seahinet\Lib\ViewModel\Template
+                template: checkout/order
+                children:
+                    address:
+                        type: Seahinet\Checkout\ViewModel\Order\Address
+                        template: checkout/order/address
+                    shipping:
+                        type: Seahinet\Checkout\ViewModel\Order\Shipping
+                        template: checkout/order/address
+                    payment:
+                        type: Seahinet\Checkout\ViewModel\Order\Payment
+                        template: checkout/order/payment
+                    review:
+                        type: Seahinet\Checkout\ViewModel\Order\Review
+                        template: checkout/order/review
+checkout_order_shipping:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                children:
+                    shipping:
+                        type: Seahinet\Checkout\ViewModel\Order\Shipping
+                        template: checkout/order/address
+checkout_order_payment:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                children:
+                    payment:
+                        type: Seahinet\Checkout\ViewModel\Order\Payment
+                        template: checkout/order/payment
+checkout_order_review:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                children:
+                    review:
+                        type: Seahinet\Checkout\ViewModel\Order\Review
+                        template: checkout/order/review

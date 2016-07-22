@@ -4,16 +4,72 @@ customer_account:
     root:
         children:
             content:
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/account
                 children:
                     nav:
                         type: Seahinet\Customer\ViewModel\Navigation
                         action:
                             -
                                 method: addGroup
-                                params: [{label:'Infomation',priority:0,icon:'th-list'}]
+                                params: [{label:'Account Info',priority:0,icon:'th-list'}]
+                            -
+                                method: addGroup
+                                params: [{label:'My Orders',priority:10,icon:'calendar-check-o'}]
+                            -
+                                method: addGroup
+                                params: [{label:'Asset',priority:20,icon:'money'}]
+                            -
+                                method: addGroup
+                                params: [{label:'Follow',priority:30,icon:'star'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Dashboard',group:'Infomation'}]
+                                params: [{link:'customer/account/',label:'Purchased',group:'My Orders'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Shopping Cart',group:'My Orders'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Evaluation',group:'My Orders'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Refund',group:'My Orders'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Bougnt Store',group:'My Orders'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Balance',group:'Asset'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Privilege',group:'Asset'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Integral',group:'Asset'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Followed Goods',group:'Follow'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Followed Store',group:'Follow'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Wishlist',group:'Follow'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Track',group:'Follow'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Personal Info',group:'Account Info'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account/editpwd',label:'Account Password',group:'Account Info'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'Address',group:'Account Info'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account',label:'My Card',group:'Account Info'}]
 customer_account_dashboard:
     update: customer_account
     root:
@@ -25,9 +81,23 @@ customer_account_dashboard:
                         params: Account
             content:
                 children:
-                    form:
+                    main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: customer\account
+                        template: customer\dashboard
+customer_account_navigation_editpwd:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Account
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer\editpwd
 wishlist:
     update: customer_account
     root:

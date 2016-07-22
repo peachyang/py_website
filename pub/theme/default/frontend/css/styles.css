@@ -125,7 +125,7 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
 .customer-account-dashboard .main-container .me{border:1px solid #dfe1e8;margin-bottom:20px;margin-top:15px}
-.customer-account-dashboard .main-container .me .title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
+.customer-account-dashboard .main-container .me .nav{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
 .customer-account-dashboard .main-container .me .fa-user{color:#007dc6;font-size:18px}
 .customer-account-dashboard .main-container .me .fa{height:15px;width:15px;margin-right:5px}
 .customer-account-dashboard .main-container .me dl{margin-top:20px;margin-bottom:10px}

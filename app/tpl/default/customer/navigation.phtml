@@ -1,14 +1,20 @@
-<nav>
-    <dl class="nav" role="menu">
-        <?php foreach ($this->getLinks() as $link): ?>
-            <dt>
-                <?php echo $link['group'] ?>
-            </dt>
-            <dd class="item" role="presentation">
-                <a href="<?php echo $this->getBaseUrl($link['link']) ?>" role="menuitem">
-                    <span><?php echo $link['label'] ?></span>
-                </a>
-            </dd>
-        <?php endforeach ?>
-    </dl>
-</nav>
+<div class="col-xs-3 col-sm-3 col-md-2 me">
+	<div class="nav">
+	    <span class="fa fa-user" aria-hidden="true">&nbsp;</span>
+		<?php echo $this->translate('My Account') ?>
+	</div>
+	<div class="content">    		
+        <dl>
+           <?php foreach ($this->getGroups() as $group): ?>
+           	   <dt>
+                   <span class="fa fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span><span><?php echo $group['label'] ?></span>
+               </dt>
+               <?php foreach ($this->getLinks() as $link): ?>
+                   <?php if($link['group'] == $group['label']): ?>
+                       <dd><a href="<?php echo $this->getBaseUrl($link['link']) ?>"><span><?php echo $link['label'] ?></span></a></dd>
+                   <?php endif ?>
+               <?php endforeach ?>                
+           <?php endforeach; ?>              
+        </dl>
+	</div>
+</div>

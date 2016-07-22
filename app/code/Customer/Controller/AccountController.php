@@ -302,9 +302,14 @@ class AccountController extends AuthActionController
         $customer->load($customerId);
         
         $root = $this->getLayout('customer_account_dashboard');
-        $root->getChild('form', true)->setVariable('customer', $customer);
+        $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
                 
+        
+    }
+    
+    public function editpwd()
+    {
         
     }
 

@@ -1,0 +1,78 @@
+<?php 
+$address = $this->getVariable('address');
+?>
+
+<div class="col-xs-9 col-sm-9 col-md-10 address">
+
+	<button type="button"><span>Add a New Address</span></button>
+    <form action="" method="post">
+        <div class="fieldset" style="display:none"> 
+        	<div>
+                <label><?php echo $this->translate('Name:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('Country:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('Region:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('City:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('County:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('Address:') ?></label>
+                <input type="text" />
+            </div>
+            
+            <div>
+                <label><?php echo $this->translate('Postcode:') ?></label>
+                <input type="text" />
+            </div>
+            
+            <div>
+                <label><?php echo $this->translate('Telephone:') ?></label>
+                <input type="text" />
+            </div>
+            <div>
+                <label><?php echo $this->translate('Email:') ?></label>
+                <input type="text" />
+            </div>
+            <button type="submit"><?php echo $this->translate('Submit') ?></button>
+        </div>
+    </form>
+    
+    
+    
+    
+    <div>
+    	<?php foreach ($address as $add): ?>
+    		<div  class="add-div">
+        		<div>
+        		    <?php echo nl2br($add->display(false)); ?>    		    
+        		</div>
+        		<div>
+        		    <button type="button"><?php echo $this->translate('Edit') ?></button>
+        		    <button type="button"><?php echo $this->translate('Delete') ?></button>
+        		</div>
+    		</div>
+    	
+    	<?php endforeach ?>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+
+</div>

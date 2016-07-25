@@ -14,6 +14,7 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
 use Zend\Math\Rand;
+use Seahinet\Customer\Model\Collection\Address;
 
 class AccountController extends AuthActionController
 {
@@ -304,13 +305,43 @@ class AccountController extends AuthActionController
         $root = $this->getLayout('customer_account_dashboard');
         $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
-                
-        
     }
     
-    public function editPasswordAction()
+    public function personalInfoAction()
     {
-        return $this->getLayout('customer_account_navigation_editpwd');
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $customer = new Model;
+        $customer->load($customerId);
+        
+        $root = $this->getLayout('customer_account_personalinfo');
+        $root->getChild('main',true)->setVariable('customer', $customer);
+        return $root;
+    }
+    
+    public function editPersonalInfoAction()
+    {
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $customer = new Model;
+        $customer->load($customerId);
+        
+        $data = $this->getRequest()->getPost();
+        $customer->setData('email', $data['email'])->save();
+        return $this->redirect('customer/account/');
+    }
+    
+    public function addressAction()
+    {
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $address = new Address;
+        $address->where(['customer_id' => $customerId]);
+        
+        $root = $this->getLayout('customer_account_address');
+        $root->getChild('main',true)->setVariable('address',$address);
+               
+        return $root;
     }
 
 }

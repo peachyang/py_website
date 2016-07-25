@@ -60,13 +60,13 @@ customer_account:
                                 params: [{link:'customer/account',label:'Track',group:'Follow'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Personal Info',group:'Account Info'}]
+                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/editPassword',label:'Account Password',group:'Account Info'}]
+                                params: [{link:'customer/account/',label:'Account Password',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Address',group:'Account Info'}]
+                                params: [{link:'customer/account/address',label:'Address',group:'Account Info'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'My Card',group:'Account Info'}]
@@ -84,7 +84,7 @@ customer_account_dashboard:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/dashboard
-customer_account_navigation_editpwd:
+customer_account_personalinfo:
     update: customer_account
     root:
         children:
@@ -92,12 +92,26 @@ customer_account_navigation_editpwd:
                 action:
                     -
                         method: setTitle
-                        params: Edit Password
+                        params: Personal Info
             content:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: customer/editpwd
+                        template: customer/personalInfo
+customer_account_address:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Address
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: customer/address  
 wishlist:
     update: customer_account
     root:

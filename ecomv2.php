@@ -994,9 +994,9 @@ INSERT INTO `eav_attribute_group` VALUES (NULL, 2, 'General', 0, CURRENT_TIMESTA
 INSERT INTO `eav_attribute` VALUES 
 (4,2,'name','varchar','text','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (5,2,'country','varchar','select','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(6,2,'region','varchar','select','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(7,2,'city','varchar','select','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(8,2,'county','varchar','select','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(6,2,'region','varchar','locate','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(7,2,'city','varchar','locate','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(8,2,'county','varchar','locate','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (9,2,'address','text','text','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (10,2,'postcode','varchar','tel','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (11,2,'tel','varchar','tel','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),

@@ -3,6 +3,7 @@
 namespace Seahinet\I18n\Controller;
 
 use Seahinet\I18n\Model\Locate;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\ActionController;
 
 class LocateController extends ActionController
@@ -12,7 +13,7 @@ class LocateController extends ActionController
     {
         $data = $this->getRequest()->getQuery();
         $locate = new Locate;
-        $locale = \Seahinet\Lib\Bootstrap::getLanguage()->offsetGet('code');
+        $locale = Bootstrap::getLanguage()->offsetGet('code');
         $result = [];
         if ($data) {
             foreach ($data as $part => $id) {
@@ -25,11 +26,12 @@ class LocateController extends ActionController
         foreach ($resultSet as $id => $item) {
             $result[] = [
                 'value' => $id,
+                'code' => isset($item['iso2_code']) ? $item['iso2_code'] : $item['code'],
                 'label' => $item->getName($locale)
             ];
         }
         uasort($result, function($a, $b) {
-            $result = strcmp($a['label'], $b['label']);
+            $result = strnatcmp($a['code'], $b['code']);
             return $result > 0 ? 1 : ($result < 0 ? -1 : 0);
         });
         return array_values($result);

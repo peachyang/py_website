@@ -58,6 +58,11 @@ class Address extends Entity
                             if (count($label)) {
                                 $target = $label[$this->storage[$src]]->getName($language->offsetGet('code'));
                             }
+                        } else if ($src === 'country') {
+                            $label = $locate->getLabel('country', $this->storage['country']);
+                            if (count($label)) {
+                                $target = $label[$this->storage['country']]->getName($language->offsetGet('code'));
+                            }
                         }
                     }
                 } else {

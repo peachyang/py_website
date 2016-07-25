@@ -1,13 +1,15 @@
-<dl class="total">
-    <dt><?php echo $this->translate('Qty') ?></dt>
-    <dd><?php echo $this->getQty() ?></dd>
+
+    <?php echo $this->translate('Select Qty') ?>
+    <span class="checkout-num"><?php echo $this->getQty() ?></span>
+    <?php echo $this->translate('Unit') ?>
+    &nbsp;&nbsp;
     <?php
     if (!$this->getVariable('simplify')):
         if ((float) $this->getCart()['discount']):
             foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
                 ?>
-                <dt><?php echo $this->translate('Discount(%s)', [$type]) ?></dt>
-                <dd><?php echo $this->getCurrency()->format($discount) ?></dd>
+                <?php echo $this->translate('Discount(%s)', [$type]) ?>
+                <?php echo $this->getCurrency()->format($discount) ?>
                 <?php
             endforeach;
         endif;
@@ -15,12 +17,12 @@
         <?php
         if ($this->getCart()['shipping']):
             ?>
-            <dt><?php echo $this->translate('Shipping') ?></dt>
-            <dd><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></dd>
+            <?php //echo $this->translate('Shipping') ?>
+            <?php //echo $this->getCurrency()->format($this->getCart()['shipping']) ?>
             <?php
         endif;
     endif;
     ?>
-    <dt><?php echo $this->translate('Total') ?></dt>
-    <dd><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></dd>
-</dl>
+    &nbsp;&nbsp;
+    <?php echo $this->translate('Total') ?>:
+    <span class="checkout-num"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>

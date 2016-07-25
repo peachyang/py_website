@@ -42,10 +42,20 @@ checkout_order:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/locate.js
             content:
                 type: Seahinet\Lib\ViewModel\Template
                 template: checkout/order
                 children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: checkout
                     address:
                         type: Seahinet\Checkout\ViewModel\Order\Address
                         template: checkout/order/address

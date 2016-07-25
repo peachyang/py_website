@@ -3,10 +3,11 @@ $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
 ?>
-<tr>
-    <td><input type="checkbox" name="item[]" value="<?php echo $item['id'] ?>"></td>
+<tr class="product-list">
+    <td></td>
     <td>
-        <a href="<?php echo $item['product']->getUrl() ?>">
+    	<input type="checkbox" class="float-left" name="item[]" value="<?php echo $item['id'] ?>">
+        <a  class="float-left" href="<?php echo $item['product']->getUrl() ?>">
             <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
         </a>
     </td>
@@ -18,11 +19,13 @@ $thumbnail = $product->getThumbnail();
     <td>
         <?php echo $this->getCurrency()->format($item['price']) ?>
     </td>
-    <td>
+    <td class="tb-stock">
+    	<label class="spin minus" for="qty">-</label>
         <input type="number" name="qty[<?php echo $item['id'] ?>]" class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
+        <label class="spin plus" for="qty">+</label>
     </td>
     <td>
-        <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>
+        <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
     </td>
     <td>
         <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/?csrf='), $this->getCsrfKey(), '&id=', $item['id'] ?>">

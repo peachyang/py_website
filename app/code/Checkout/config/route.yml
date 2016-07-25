@@ -1,5 +1,5 @@
 ---
 checkout:
-    method: [GET,POST]
+    method: [GET,POST,DELETE]
     route: /checkout/{controller}/[{action}[/]]
     namespace: Seahinet\Checkout\Controller

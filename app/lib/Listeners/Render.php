@@ -17,7 +17,7 @@ class Render implements ListenerInterface
         $response = $event['response'];
         if (!is_object($response)) {
             $data = $response;
-            if (is_string($response)) {
+            if (is_scalar($response)) {
                 $response = $this->getContainer()->get('response');
                 $response->getBody()->write($data);
             } else if (is_array($response)) {

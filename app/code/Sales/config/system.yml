@@ -1,0 +1,85 @@
+---
+shipping:
+    label: Shipping Method
+    children:
+        free_shipping:
+            label: Free Shipping
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+        flat_rate:
+            label: Flat Rate
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+payment:
+    label: Payment Method
+    children:
+        bank_transfer:
+            label: Bank Transfer
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+        check_money_order:
+            label: Check / Money Order
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+        cash_on_delivery:
+            label: Cash On Delivery
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+        saved_cc:
+            label: Saved CC
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0

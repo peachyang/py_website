@@ -4,6 +4,7 @@ body{min-width:320px}
 label[for]{cursor:pointer}
 input[type=number]{-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+.hidden,[hidden]{display:none!important}
 .cookies .global-notice .no-cookie{display:none}
 a{color:inherit}
 a:hover,a:focus{color:inherit;text-decoration:none}
@@ -215,8 +216,7 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .product-detail .upsells .products-grid .price-box{position:relative;top:-22px;background:#333;background:rgba(0,0,0,0.75)} 
 .product-detail .product-recommend{clear:both;width:100%;height:auto;}
 .product-detail .product-recommend h2{width:100%;height:44px;border-bottom:2px solid #fd9030;margin-bottom:3px}
-.product-detail .product-recommend h2 span{display:block;width:130px;height:44px;background-color:#fd9030;
-                     color:#ffffff;font-size:16px;line-height:44px;text-align:center}
+.product-detail .product-recommend h2 span{display:block;width:130px;height:44px;background-color:#fd9030;color:#ffffff;font-size:16px;line-height:44px;text-align:center}
 .product-detail .product-recommend .products-grid .item{float:left;text-align:center;width:167px}
 .main-container .editpwd{padding-left:40px;margin-top:16px} 
 

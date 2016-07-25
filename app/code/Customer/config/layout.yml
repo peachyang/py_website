@@ -227,14 +227,6 @@ admin_customer_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
-                                    -
-                                        method: addTab
-                                        params:
-                                            - wishlist
-                                children:
-                                    wishlist:
-                                        type: Seahinet\Lib\ViewModel\Template
-                                        template: admin/customter/
 admin_customer_group_list:
     update: grid
     root:

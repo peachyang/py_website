@@ -4,8 +4,6 @@ namespace Seahinet\Checkout\ViewModel\Order;
 
 use Seahinet\Customer\Model\Address as Model;
 use Seahinet\Customer\Model\Collection\Address as Collection;
-use Seahinet\I18n\Model\Locate;
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
@@ -13,6 +11,17 @@ use Seahinet\Sales\Model\Cart;
 
 class Address extends Template
 {
+
+    protected $hasLoggedIn = null;
+
+    public function hasLoggedIn()
+    {
+        if (is_null($this->hasLoggedIn)) {
+            $segment = new Segment('customer');
+            $this->hasLoggedIn = $segment->get('hasLoggedIn');
+        }
+        return $this->hasLoggedIn;
+    }
 
     public function getAddressAttribute()
     {
@@ -26,9 +35,9 @@ class Address extends Template
 
     public function getAddress()
     {
-        $segment = new Segment('customer');
-        if ($segment->get('hasLoggedIn')) {
+        if ($this->hasLoggedIn()) {
             $address = new Collection;
+            $segment = new Segment('customer');
             $address->where(['customer_id' => $segment->get('customer')['id']]);
             if ($address->count()) {
                 return $address;
@@ -39,6 +48,11 @@ class Address extends Template
             return [$address];
         }
         return null;
+    }
+
+    public function getCurrenctAddress()
+    {
+        return Cart::instance()['shipping_address_id'];
     }
 
     public function getInputBox($key, $item)
@@ -55,17 +69,6 @@ class Address extends Template
         ]);
         $box->setTemplate('page/renderer/' . $item['type']);
         return $box;
-    }
-
-    public function getCountries()
-    {
-        $countries = (new Locate)->load('country');
-        $result = [];
-        $language = Bootstrap::getLanguage()['code'];
-        foreach($countries as $country){
-            $result[$country['id']] = $country['name'][$language];
-        }
-        return $result;
     }
 
 }

@@ -333,4 +333,16 @@ abstract class Entity extends AbstractModel
         parent::beforeSave();
     }
 
+    protected function afterLoad(&$result)
+    {
+        $attributes = new AttributeCollection;
+        $attributes->withSet()->columns(['code'])->where(['eav_attribute_set.id' => $result['attribute_set_id']])->where(new In('input', ['multiselect', 'checkbox']));
+        foreach ($attributes as $attribute) {
+            if (is_string($result[$attribute['code']])) {
+                $result[$attribute['code']] = explode(',', $result[$attribute['code']]);
+            }
+        }
+        parent::afterLoad($result);
+    }
+
 }

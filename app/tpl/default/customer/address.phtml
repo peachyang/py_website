@@ -1,73 +1,69 @@
 <?php 
-$address = $this->getVariable('address');
+$addresses = $this->getVariable('addresses');
+$attributes = $this->getAddressAttribute();
+
 ?>
 
 <div class="col-xs-9 col-sm-9 col-md-10 address">
 
-	<button type="button"><span>Add a New Address</span></button>
-    <form action="" method="post">
-        <div class="fieldset" style="display:none"> 
-        	<div>
-                <label><?php echo $this->translate('Name:') ?></label>
-                <input type="text" />
+    <button type="button" class="btn" data-info="{}" data-toggle="modal" data-target="#modal-navigation-address" data-type="add">
+        <span>Add a New Address</span>
+    </button> 
+    
+    <div class="modal fade" id="modal-navigation-address">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?php echo $this->getBaseUrl('customer/account/addAddress') ?>" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Address Infomation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                        <input type="hidden" name="id" id="addid" />
+                        <?php
+                        foreach ($attributes as $attribute) {
+                            $item = [
+                                'type' => $attribute['input'],
+                                'label' => $attribute['label']
+                            ];
+                            if ($attribute['is_required']) {
+                                $item['required'] = 'required';
+                            }
+                            echo $this->getInputBox($attribute['code'], $item);
+                        }
+                        ?>
+                        <script>
+                            new Locate();
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal"><?php echo $this->translate('Close') ?></button>
+                        <button type="submit" class="btn btn-save"><?php echo $this->translate('Save') ?></button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label><?php echo $this->translate('Country:') ?></label>
-                <input type="text" />
-            </div>
-            <div>
-                <label><?php echo $this->translate('Region:') ?></label>
-                <input type="text" />
-            </div>
-            <div>
-                <label><?php echo $this->translate('City:') ?></label>
-                <input type="text" />
-            </div>
-            <div>
-                <label><?php echo $this->translate('County:') ?></label>
-                <input type="text" />
-            </div>
-            <div>
-                <label><?php echo $this->translate('Address:') ?></label>
-                <input type="text" />
-            </div>
-            
-            <div>
-                <label><?php echo $this->translate('Postcode:') ?></label>
-                <input type="text" />
-            </div>
-            
-            <div>
-                <label><?php echo $this->translate('Telephone:') ?></label>
-                <input type="text" />
-            </div>
-            <div>
-                <label><?php echo $this->translate('Email:') ?></label>
-                <input type="text" />
-            </div>
-            <button type="submit"><?php echo $this->translate('Submit') ?></button>
         </div>
-    </form>
-    
-    
-    
+    </div>
     
     <div>
-    	<?php foreach ($address as $add): ?>
+    	<?php foreach ($addresses as $address): ?>
     		<div  class="add-div">
         		<div>
-        		    <?php echo nl2br($add->display(false)); ?>    		    
+        		    <?php echo nl2br($address->display(false)); ?>    		    
         		</div>
         		<div>
-        		    <button type="button"><?php echo $this->translate('Edit') ?></button>
-        		    <button type="button"><?php echo $this->translate('Delete') ?></button>
+        		    <button type="button" data-info='<?php echo json_encode($address->toArray()) ?>' class="btn" data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
+                        <?php echo $this->translate('Edit') ?>
+                    </button>
+        		    <a href="<?php echo $this->getBaseUrl('customer/account/delAddress/?id='),$address->getId() ?>" class="btn">
+        		    	<?php echo $this->translate('Delete') ?>
+        		    </a>
         		</div>
     		</div>
     	
     	<?php endforeach ?>
-    
     </div>
-    
     
     
     

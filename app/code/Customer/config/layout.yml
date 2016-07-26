@@ -107,10 +107,13 @@ customer_account_address:
                     -
                         method: setTitle
                         params: Address
+                    -
+                        method: addScript
+                        params: frontend/js/locate.js
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Customer\ViewModel\Address
                         template: customer/address  
 wishlist:
     update: customer_account

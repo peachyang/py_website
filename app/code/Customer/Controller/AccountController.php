@@ -14,7 +14,8 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
 use Zend\Math\Rand;
-use Seahinet\Customer\Model\Collection\Address;
+use Seahinet\Customer\Model\Collection\Address as Addresses;
+use Seahinet\Customer\Model\Address;
 
 class AccountController extends AuthActionController
 {
@@ -335,13 +336,70 @@ class AccountController extends AuthActionController
     {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
-        $address = new Address;
-        $address->where(['customer_id' => $customerId]);
+        $addresses = new Addresses;
+        $addresses->where(['customer_id' => $customerId]);
         
         $root = $this->getLayout('customer_account_address');
-        $root->getChild('main',true)->setVariable('address',$address);
-               
+        $root->getChild('main',true)->setVariable('addresses',$addresses);
+        
         return $root;
+    }
+    
+    public function delAddressAction()
+    {
+        $address = new Address;
+        $data = $this->getRequest()->getQuery();
+        $address->load($data['id'])->remove();
+        
+        return $this->redirect('customer/account/address/');
+        
+        
+    }
+    
+    public function addAddressAction()
+    {
+        $result = ['error' => 1, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $attribute = new Attribute;
+            $attribute->withSet()
+                    ->columns(['code'])
+                    ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [])
+                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE, 'is_required' => 1]);
+            $required = [];
+            $setId = $attribute[0]['attribute_set_id'];
+            $attribute->walk(function($item) use (&$required) {
+                $required[] = $item['code'];
+            });
+            $result = $this->validateForm($data, $required);
+            if ($result['error'] === 0) {
+                $address = new Address;
+                unset($data['customer_id']);
+                unset($data['store_id']);
+                unset($data['attribute_set_id']);
+                try {
+                    $segment = new Segment('customer');
+                    $address->setData($data + [
+                        'attribute_set_id' => $setId,
+                        'store_id' => Bootstrap::getStore()->getId(),
+                        'customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null
+                    ])->save();
+                    $result['data'] = ['id' => $address->getId(), 'content' => $address->display()];
+                    
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->redirect('customer/account/address');       
+    
+    }
+    
+    public function editAddressAction()
+    {
+        
+    
     }
 
 }

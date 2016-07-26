@@ -2,9 +2,17 @@
 
 namespace Seahinet\Checkout\ViewModel\Order;
 
-use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Checkout\ViewModel\Cart;
 
-class Review extends Template
+class Review extends Cart
 {
-    
+
+    public function getRow($item, $rowspan = 0)
+    {
+        $row = $this->getChild('item');
+        $row->setVariable('item', $item)
+                ->setVariable('rowspan', $rowspan);
+        return $row;
+    }
+
 }

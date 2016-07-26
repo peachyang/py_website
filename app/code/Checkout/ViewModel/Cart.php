@@ -16,30 +16,30 @@ class Cart extends Template
 
     public function getCart()
     {
-        if (is_null(static::$cart)) {
-            static::$cart = CartSingleton::instance();
+        if (is_null(self::$cart)) {
+            self::$cart = CartSingleton::instance();
         }
-        return static::$cart;
+        return self::$cart;
     }
 
     public function getCurrency()
     {
-        if (is_null(static::$currency)) {
-            static::$currency = new Currency;
-            static::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
+        if (is_null(self::$currency)) {
+            self::$currency = new Currency;
+            self::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
         }
-        return static::$currency;
+        return self::$currency;
     }
 
     public function getQty()
     {
-        if (is_null(static::$qty)) {
-            static::$qty = 0;
+        if (is_null(self::$qty)) {
+            self::$qty = 0;
             foreach ($this->getItems() as $item) {
-                static::$qty += $item['qty'];
+                self::$qty += $item['qty'];
             }
         }
-        return static::$qty;
+        return self::$qty;
     }
 
     public function getItems()
@@ -47,10 +47,9 @@ class Cart extends Template
         return $this->getCart()->getItems();
     }
 
-    public function getRow($item)
+    public function getRow($item, $rowspan = 0)
     {
-        $row = new Item;
-        $row->setTemplate('checkout/cart/item');
+        $row = $this->getChild('item');
         $row->setVariable('item', $item);
         return $row;
     }

@@ -1,6 +1,56 @@
-<?php
-
-?>
-<section class="review">
-    
+<?php ?>
+<section class="section review">
+    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
+    <table class="table">
+        <colgroup>
+            <col width="1" />
+            <col />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="2" class="text-left text-nowrap">
+                    <?php echo $this->translate('Product Information') ?>
+                </th>
+                <th class="text-nowrap">
+                    <?php echo $this->translate('Price', [], 'checkout') ?>
+                </th>
+                <th class="text-nowrap">
+                    <?php echo $this->translate('Qty') ?>
+                </th>
+                <th class="text-nowrap">
+                    <?php echo $this->translate('Subtotal') ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $stores = [];
+            foreach ($this->getItems() as $item) {
+                if (!isset($stores[$item['store_id']])):
+                    ?>
+                    <tr class="store">
+                        <th colspan="5">
+                            <?php echo $item['store']['name'] ?>
+                        </th>
+                    </tr>
+                    <?php
+                    $stores[$item['store_id']] = 1;
+                else:
+                    $stores[$item['store_id']] ++;
+                endif;
+                echo $this->getRow($item);
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" align='right'>
+                    <?php echo $this->getChild('total') ?>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </section>

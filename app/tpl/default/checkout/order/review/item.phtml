@@ -1,0 +1,22 @@
+<?php
+$item = $this->getVariable('item');
+$product = $item['product'];
+$thumbnail = $product->getThumbnail();
+?>
+<tr class="product-list">
+    <td>
+        <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
+    </td>
+    <td>
+        <?php echo $item['product_name'] ?>
+    </td>
+    <td>
+        <?php echo $this->getCurrency()->format($item['price']) ?>
+    </td>
+    <td class="tb-stock">
+        <?php echo (float) $item['qty'] ?>
+    </td>
+    <td>
+        <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
+    </td>
+</tr>

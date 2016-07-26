@@ -12,11 +12,11 @@ class Item extends Template
 
     public function getCurrency()
     {
-        if (is_null(static::$currency)) {
-            static::$currency = new Currency;
-            static::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
+        if (is_null(self::$currency)) {
+            self::$currency = new Currency;
+            self::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
         }
-        return static::$currency;
+        return self::$currency;
     }
 
 }

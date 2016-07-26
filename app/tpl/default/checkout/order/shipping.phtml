@@ -1,6 +1,20 @@
 <?php
-
+$methods = $this->getShippingMethods();
 ?>
-<section class="shipping">
-    
+<section class="section shipping">
+    <h4 class="title"><?php echo $this->translate('Shipping Method') ?></h4>
+    <?php if ($methods): ?>
+        <ul class="list list-inline">
+            <?php foreach ($methods as $code => $label): ?>
+                <li>
+                    <input type="radio" name="shipping_method" id="shipping-method-<?php echo $code ?>" value="<?php echo $code ?>" />
+                    <label for="shipping-method-<?php echo $code ?>">
+                        <?php echo $this->translate($label) ?>
+                    </label>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else: ?>
+        <p><?php echo $this->translate('Sorry, no shipping methods are available for this order at this time.') ?></p>
+    <?php endif ?>
 </section>

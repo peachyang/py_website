@@ -61,7 +61,7 @@ checkout_order:
                         template: checkout/order/address
                     shipping:
                         type: Seahinet\Checkout\ViewModel\Order\Shipping
-                        template: checkout/order/address
+                        template: checkout/order/shipping
                     payment:
                         type: Seahinet\Checkout\ViewModel\Order\Payment
                         template: checkout/order/payment

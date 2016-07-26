@@ -232,7 +232,7 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .checkout-flow .item.active{background:#f1f2f4;color:#007dc6}
 .checkout-flow .item.active:after{content:" ";display:block;width:0;height:0;position:absolute;top:0;left:100%;z-index:-1;border:20px solid transparent;border-left:34.64101615px solid #f1f2f4}
 .checkout-cart .main-container .table thead{background:#f1f2f4}
-.checkout-cart .main-container .table thead tr .operation{width:88px}
+.checkout-cart .main-container .table thead tr .operation{width:87px}
 .checkout-cart .main-container .table thead tr .th-width{width:15%}
 .checkout-cart .main-container .table tbody tr td{vertical-align:middle !important;padding:8px 0}
 .checkout-cart .main-container .table tbody tr td:nth-child(2){width:113px}

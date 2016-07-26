@@ -1,6 +1,6 @@
 
     <?php echo $this->translate('Select Qty') ?>
-    <span class="checkout-num"><?php echo $this->getQty() ?></span>
+    <span class="checkout-num select-qyt"><?php //echo $this->getQty() ?>0</span>
     <?php echo $this->translate('Unit') ?>
     &nbsp;&nbsp;
     <?php
@@ -17,12 +17,12 @@
         <?php
         if ($this->getCart()['shipping']):
             ?>
-            <?php //echo $this->translate('Shipping') ?>
-            <?php //echo $this->getCurrency()->format($this->getCart()['shipping']) ?>
+            <?php echo $this->translate('Shipping') ?>
+            <span class="checkout-num"><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></span>
             <?php
         endif;
     endif;
     ?>
     &nbsp;&nbsp;
     <?php echo $this->translate('Total') ?>:
-    <span class="checkout-num"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+    <span class="checkout-num total-pirce"><?php echo substr($this->getCurrency()->format($this->getCart()['total']), 0,1) ?>0.00</span>

@@ -91,4 +91,107 @@
             return false;
         });
     });
+    $(".selectall").click(function(){
+    	var this_value = $(this).val();
+    	var this_status = this.checked;;
+    	$(".checkbox-"+this_value).prop("checked",this_status);
+    	if(this_value == "on"){
+    		$("input[type='checkbox']").prop("checked",this_status);
+    	}
+    });
+    $(".plus").click(function(){
+    	var this_input = $(this).prev();
+    	this_input.val(Number(this_input.val())+1);
+    	qty_change(this_input);
+    });
+    $(".minus").click(function(){
+    	var this_input = $(this).next();
+    	if(Number(this_input.val()) !== 1){
+    		this_input.val(Number(this_input.val())-1);
+    		qty_change(this_input);
+    	}
+    });
+    $(".product-list .tb-stock .required").on('input',function(){qty_change($(this))});
+    function qty_change(e){
+  	   var num = e.val();
+  	   var price = e.parent().prev().html().replace(/[^0-9]/ig,"")/100;
+  	   var subtotal = $.trim(e.parent().prev().html()).substr(0,1) + num * price + '.00';
+  	   var qty_change = $("#qty-change").val();
+  	   if(num == 0){
+  		 e.val(1);
+  		 //qty_change(e)；
+  	   }
+  	   if(qty_change == 0){
+  		   $("#qty-change").val(1);
+  	   }
+  	   e.parent().next().find("span").html(subtotal);
+  	   total_change();
+     };
+     function total_change(){
+    	 var total_num = 0;
+    	 $("tbody").find("input.required").each(function(){
+    		 if($(this).parent().parent().find("td:eq(1)").find("input").is(':checked')){
+    			 total_num += Number($(this).val());
+    		 }
+    	 });
+    	 $('.select-qyt').html(total_num);
+    	 var total_price = 0;
+    	 $("tbody .product-list").find("td:eq(5)").find("span.checkout-num").each(function(){
+    		 if($(this).parent().parent().find("td:eq(1)").find("input").is(':checked')){
+    			 total_price += $(this).html().replace(/[^0-9]/ig,"")/100;
+    		 }
+    	 });
+    	 $('.total-pirce').html($.trim($("#cart tbody").find("tr:eq(1)").find("td:eq(3)").html()).substr(0,1) + total_price + '.00');
+     };
+	 $("input:checkbox").change(function() {
+		 total_change();
+	 }); 
 }));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

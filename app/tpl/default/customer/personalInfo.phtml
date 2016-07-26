@@ -12,6 +12,12 @@ $customer = $this->getVariable('customer');
         	<label for="edit:email" class="control-label"><?php echo $this->translate('Email:') ?></label> 
         	<input type="email" name="email" id="edit:email" class="required email" value="<?php echo $this->translate($customer->email) ?>"/>
     	</div>
+    	
+    	<div>
+        	<label for="edit:password" class="control-label"><?php echo $this->translate('Password:') ?></label> 
+        	<input type="password" name="password" id="edit:password" class="required password" />
+    	</div>
+    	
     	<div>
     		<button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>
     	</div>

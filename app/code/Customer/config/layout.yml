@@ -63,9 +63,6 @@ customer_account:
                                 params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/',label:'Account Password',group:'Account Info'}]
-                            -
-                                method: addLink
                                 params: [{link:'customer/account/address',label:'Address',group:'Account Info'}]
                             -
                                 method: addLink

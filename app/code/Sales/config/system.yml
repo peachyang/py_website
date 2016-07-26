@@ -15,6 +15,16 @@ shipping:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Free Shipping
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Shipping\Model\FreeShipping
         flat_rate:
             label: Flat Rate
             scope: [merchant,store]
@@ -28,6 +38,16 @@ shipping:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Flat Rate
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Shipping\Model\FlatRate
 payment:
     label: Payment Method
     children:
@@ -44,6 +64,16 @@ payment:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Bank Transfer
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\BankTransfer
         check_money_order:
             label: Check / Money Order
             scope: [merchant,store]
@@ -57,6 +87,16 @@ payment:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Check / Money Order
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\CheckMoneyOrder
         cash_on_delivery:
             label: Cash On Delivery
             scope: [merchant,store]
@@ -70,6 +110,16 @@ payment:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Cash on Delivery
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\CashOnDelivery
         saved_cc:
             label: Saved CC
             scope: [merchant,store]
@@ -83,3 +133,13 @@ payment:
                         - Disabled
                         - Enabled
                     default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Saved CC
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\SavedCc

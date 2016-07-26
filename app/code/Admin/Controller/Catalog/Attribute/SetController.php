@@ -37,12 +37,14 @@ class SetController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute\\Set', ':ADMIN/catalog_attribute_set/', ['name'], function($model, $data) {
+        $response = $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute\\Set', ':ADMIN/catalog_attribute_set/', ['name'], function($model, $data) {
                     $type = new Type;
                     $type->load(Product::ENTITY_TYPE, 'code');
                     $model->setData('type_id', $type->getId());
                 }
         );
+        $this->getContainer()->get('indexer')->reindex('product');
+        return $response;
     }
 
 }

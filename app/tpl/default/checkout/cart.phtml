@@ -2,15 +2,13 @@
     <?php
     if (count($this->getItems())):
         ?>
-        <div class="cart-head">
-        	<h4>
-            	<div class="cart-status-1 cart-active"><?php echo $this->translate('Shopping Cart') ?></div>
-            	<div class="cart-status-2"><?php echo $this->translate('Order Info') ?></div>
-            	<div class="cart-status-3"><?php echo $this->translate('Complate') ?></div>
-        	</h4>
+        <div class="checkout-flow hidden-xs clearfix">
+            <div class="item col-sm-4 active"><?php echo $this->translate('Shopping Cart') ?></div>
+            <div class="item col-sm-4"><?php echo $this->translate('Order Info') ?></div>
+            <div class="item col-sm-4"><?php echo $this->translate('Complate') ?></div>
         </div>
         <div>
-        	<a href="" class="menu-all"><?php echo $this->translate('All Products') ?></a>
+            <a href="" class="menu-all"><?php echo $this->translate('All Products') ?></a>
         </div>
         <table class="table" id="cart">
             <colgroup>
@@ -26,15 +24,15 @@
                 <tr>
                     <th colspan="2">
                         <label>
-                        	<input type="checkbox" class="selectall">
-                        	<?php echo $this->translate('Check All')?>
+                            <input type="checkbox" class="selectall">
+                            <?php echo $this->translate('Check All') ?>
                         </label>
                     </th>
                     <th class="text-left text-nowrap">
                         <?php echo $this->translate('Product Information') ?>
                     </th>
                     <th class="text-nowrap th-width">
-                        <?php echo $this->translate('Price',[],'checkout') ?>
+                        <?php echo $this->translate('Price', [], 'checkout') ?>
                     </th>
                     <th class="text-nowrap th-width">
                         <?php echo $this->translate('Qty') ?>
@@ -74,8 +72,8 @@
                 <tr>
                     <td colspan="3">
                         <label>
-                        	<input type="checkbox" class="selectall">
-                        	<?php echo $this->translate('Check All')?>
+                            <input type="checkbox" class="selectall">
+                            <?php echo $this->translate('Check All') ?>
                         </label>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-serialize="#cart input[name]"><?php echo $this->translate('Delete Selected Item(s)') ?></a>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-serialize="#cart input[name]"><?php echo $this->translate('Move to Wishlist') ?></a>

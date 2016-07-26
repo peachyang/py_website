@@ -47,7 +47,7 @@ class Address extends Template
             $address->load(Cart::instance()['shipping_address_id']);
             return [$address];
         }
-        return null;
+        return [];
     }
 
     public function getCurrenctAddress()

@@ -5,8 +5,6 @@ $images = $product->offsetGet('images');
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
-$options = $product->getOptions();
-
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -16,84 +14,60 @@ $options = $product->getOptions();
         <div class="product-detail clearfix">
             <div class="col-lg-4">
                 <?php echo $this->getChild('media')->setVariable('product', $product) ?>
-                <div class="clearfix wishlist">
-                    <ul>
-                        <li><span class="fa fa-star"></span><a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo $this->translate('Wish baby'); ?></a></li>
-                        <li>|</li>
-                        <li><span class="fa fa-share-alt" aria-hidden="true"></span><a href="#"><?php echo $this->translate('Share'); ?></a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </div>
+                <ul class="links list-inline">
+                    <li>
+                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>">
+                            <span class="fa fa-star" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('Add to Wishlist'); ?></span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="fa fa-share-alt" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('Share'); ?></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="col-lg-6 product-info">
-                <h3><?php echo $product['name'] ?></h3>
-                <div class="clearfix main-box">
-                    <div class="price-box">
-                        <p>
-                            <span class="price-text"><?php echo $this->translate('Price'); ?></span>
-                            <?php echo $this->getPriceBox() ?>
-                        <p>
+                <h2 class="product-name"><?php echo $product['name'] ?></h2>
+                <div class="clearfix price-box">
+                    <div class="col-xs-12 col-sm-8">
+                        <?php echo $this->getPriceBox() ?>
                     </div>
-                    <div class="product-review">
-                        <span><?php echo count($this->product['review_id']); ?></span>
-                        <span><?php echo $this->translate('Product review'); ?></span>
+                    <div class="hidden-xs col-sm-2 review">
+                        <span class="count">0</span>
+                        <span><?php echo $this->translate('Review(s)', [], 'catalog'); ?></span>
                     </div>
-                    <div class="sale-decimals">
-                        <span><?php echo count($this->product['order_id']); ?></span>
-                        <span><?php echo $this->translate('Sale decimals'); ?></span>
+                    <div class="hidden-xs col-sm-2 order">
+                        <span class="count">0</span>
+                        <span><?php echo $this->translate('Order(s)', [], 'catalog'); ?></span>
                     </div>
                 </div>
-                <div class=" clearfix product-distribution">
-                    <p>
-                        <span><?php echo $this->translate('Distribution'); ?></span>
-                        <span><?php echo $this->translate('Shandongqingdao'); ?></span>
-                        <select name="address">
-                            <option name="1">address</option>
-                        </select>
-                        <select name="express">
-                            <option name="1">Express</option>
-                        </select>
-                    </p>
-                </div>
-                <div class="clearfix custom-options">
-                    <dl>
-                        <?php foreach ($options as $option): ?>
-                            <dt><?php echo $option['title'] ?></dt>
-                            
-                            <dd>
-                                <?php foreach ($option['value'] as $value): ?>
-                                <span><?php echo $value['title'] ?></span>
-                                <?php endforeach ?>
-                            </dd>
-                        <?php endforeach ?>
-                    </dl>
-                </div>
-                <div class="clearfix product-decimal">
-                    <p>
-                        <span class="tb-decimal"><?php echo $this->translate('Product decimal'); ?></span>
-                        <span class="tb-stock">
+                <div class="options">
+                    <?php echo $this->getChild('option') ?>
+                    <div class="input-box">
+                        <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
+                        <div class="cell">
                             <label for="qty" class="spin minus">-</label>
-                            <input id="qty" class="tb-text" value="1" 
+                            <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
                                    min="<?php echo (float) $inventory['min_qty'] ?>" 
-                                   max="<?php echo min((float) $inventory['max_qty'],(float) $inventory['qty']) ?>" 
+                                   max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>" 
                                    step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
                             <label for="qty" class="spin plus">+</label>
-                        </span>
-                    </p>
-                </div>
-                <div class="clearfix product-action">
-                    <div class="product-sale">
-                        <button type="submit" class="btn btn-sm"><?php echo $this->translate('Buy Now'); ?></button>
-                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>
-                        <button type="submit" class="btn btn-add">
-                            <?php echo $this->translate('Add to Cart'); ?>
-                        </button>
+                        </div>
                     </div>
+                </div>
+                <div class="clearfix action">
+                    <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
+                    <button type="submit" class="btn btn-checkout">
+                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>
+                        <span><?php echo $this->translate('Add to Cart') ?></span>
+                    </button>
                 </div> 
             </div>
             <div class="col-lg-2">
@@ -101,9 +75,8 @@ $options = $product->getOptions();
                     <?php echo $this->getChild('upsells')->setVariable('product', $product)->setLimit(3) ?>
                 </div>
             </div>
-            <div class="clearfix product-recommend">
-                <h2><span><?php echo $this->translate('Red hot'); ?></span></h2>
-                <?php echo $this->getChild('related')->setVariable('product', $product)->setLimit(7) ?>
+            <div class="related">
+                <?php echo $this->getChild('related')->setVariable('product', $product)->setVariable('title', 'Featured Products')->setLimit(7) ?>
             </div>
         </div>        
     </form>

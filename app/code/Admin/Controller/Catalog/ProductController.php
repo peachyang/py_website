@@ -89,7 +89,9 @@ class ProductController extends AuthActionController
                 if (empty($data['parent_id'])) {
                     $model->setData('parent_id', null);
                 } else if (empty($data['uri_key'])) {
-                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', $data['name']))), '-');
+                    $model->setData('uri_key', trim(preg_replace('/\s+/', '-', $data['name'])), '-');
+                } else {
+                    $model->setData('uri_key', rawurlencode(trim(preg_replace('/\s+/', '-', $data['uri_key']), '-')));
                 }
                 try {
                     $model->save();

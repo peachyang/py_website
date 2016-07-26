@@ -47,10 +47,9 @@ class Cart extends Template
         return $this->getCart()->getItems();
     }
 
-    public function getRow($item)
+    public function getRow($item, $rowspan = 0)
     {
-        $row = new Item;
-        $row->setTemplate('checkout/cart/item');
+        $row = $this->getChild('item');
         $row->setVariable('item', $item);
         return $row;
     }

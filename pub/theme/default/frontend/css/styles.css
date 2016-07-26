@@ -88,8 +88,9 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .products-grid .item img{width:100%}
 .products-grid .item{padding:10px;border:1px solid transparent;transition:border .2s ease-in-out}
 .products-grid .item:hover{border-color:#d9d9d9}
-.price-box .old-price{text-decoration:line-through}
-.price-box .special-price,.price-box .regular-price{font-size:16px;color:#fd9030;font-weight:bold}
+.price-box .old-price .price{text-decoration:line-through;color:#9b9a9a}
+.price-box .special-price .price,.price-box .regular-price .price{font-size:16px;color:#fd9030;font-weight:bold}
+.price-box .label{display:none}
 .pager{text-align:left}
 .price-box .old-price{text-decoration:line-through}
 .pager li>.current{border:none;color:#a5a5a6}
@@ -181,46 +182,39 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .customer-account-dashboard .main-container .coupon .now{background-color:white;color:#007dc6;padding:2px 6px;border-radius:2px} 
 .customer-account-dashboard .main-container .coupon .condition{font-size:12px;line-height:18px}
 .customer-account-dashboard .main-container .coupon .change{width:4%;display:inline-block;vertical-align:top;text-align:center;margin-top:60px}
-.product-detail #product-media{padding:0 30px}
+.product-detail{padding-top:10px}
+.product-detail #product-media{padding:0 20px 0 25px}
 .product-detail #product-media .item{text-align:center}
 .product-detail #product-media .carousel-indicators{position:static;margin:15px 0 0;font-size:0;width:100%;text-align:left}
 .product-detail #product-media .carousel-indicators>li{text-indent:0;width:auto;height:auto;border:none;margin:0 8px 0 0}
 .product-detail #product-media .carousel-indicators>li>img{vertical-align:top}
-.product-detail .wishlist ul{width:100%;height:50px;margin:15px 0 40px 0}
-.product-detail .wishlist li{float:left;height:50px;line-height:50px;color:#aaa9a9;margin:0 10px}
-.product-detail .wishlist li .fa-star{font-size:16px;color:#fd9030;padding-right:10px}
-.product-detail .wishlist li .fa-share-alt{font-size:16px;color:#fd9030;padding-right:10px}
-.product-detail .col-lg-6 h3{line-height:40px}
-.product-detail .col-lg-6 .main-box{width:550px;height:85px;line-height:40px;background-color:#f4f4f4}
-.product-detail .col-lg-6 .main-box .price-box{width:350px;float:left;padding-left:15px}
-.product-detail .col-lg-6 .main-box .price-box p span{height:40px;line-height:40px;display:block;float:left;width:40px;}
-.product-detail .col-lg-6 .main-box .product-review{width:100px;height:85px;float:left;text-align:center}
-.product-detail .col-lg-6 .main-box .product-review span{line-height:40px;display:block}
-.product-detail .col-lg-6 .main-box .sale-decimals{width: 100px;height:85px;float:left;text-align:center}
-.product-detail .col-lg-6 .main-box .sale-decimals span{line-height:40px;display:block;}
-.product-detail .col-lg-6 .product-distribution p{clear:both;width:100%;line-height:40px;margin-left:15px}
-.product-detail .col-lg-6 .product-distribution p span{height:40px;line-height:40px;display:block;float:left}
+.product-detail .links{font-size:12px;line-height:16px;color:#9b9a9a;margin:26px 0 0;padding-left:15px}
+.product-detail .links li+li{border-left:1px solid;margin-left:16px}
+.product-detail .links .fa{font-size:16px;color:#fd9030;margin:0 12px 0 16px}
+.product-detail .product-info{padding:0 0 0 10px}
+.product-detail .product-info .product-name{font-size:19px;line-height:33px;color:#000;margin:7px 0 22px}
+.product-detail .product-info .price-box{background:#f4f4f4;font-size:0;color:#9b9a9a}
+.product-detail .product-info .price-box .label{display:inline-block;padding:15px 16px 12px 15px;font-size:13px;vertical-align:middle}
+.product-detail .product-info .price-box .price{font-size:27px;line-height:42px;vertical-align:middle}
+.product-detail .product-info .price-box .old-price{display:block}
+.product-detail .product-info .price-box .old-price .price{font-size:19px}
+.product-detail .product-info .price-box .count{display:block;font-size:24px;line-height:32px;text-align:center}
+.product-detail .product-info .price-box .count+span{display:block;font-size:12px;text-align:center}
+.product-detail .product-info .price-box .order{border-left:1px solid #fff;margin-top:18px}
+.product-detail .product-info .price-box .review{margin-top:18px}
 .product-detail .product-info .product-decimal p{clear:both;line-height:40px;margin-left:15px}
 .prodcut-detail .product-info .product-decimal .tb-stock{width:110px}
-.tb-stock label{width:30px;border:2px solid #d2d2d2;height:30px;display:block;float:left;line-height:24px;text-align:center;background-color:#ededed}
-.tb-text{width:50px;height:30px;text-align:center;border:2px solid #d2d2d2;float:left}
-.product-detail .product-info .prodcut-decimal .tb-stock .tb-text{width:30px;}
-.product-detail .product-info .product-decimal .tb-decimal{float:left;line-height:30px;margin-right:15px}
-.product-detail .col-lg-6 .product-color p{margin-left:15px}
-.product-detail .col-lg-6 .product-color p span{margin:0 10px}
-.product-detail .col-lg-6 .product-action{clear:both;width:100%;height:100px;line-height:100px;text-align:center}
-.product-detail .col-lg-6 .product-action button{width: 150px;height:40px;background-color:#fbe5d2;border-color:#fd9233;color:#fd9030;font-weight:bold}
-.product-detail .col-lg-6 .product-action .btn-add{color:#ffffff;background-color:#fd9030;font-indent:5px}
-.product-detail .col-lg-6 .product-action button:hover{color:#ffffff;background-color:#fd9030}
-.product-detail .col-lg-6 .product-action span{font-size:30px;position:relative;left:38px;top:5px;color:#ffffff}
-.product-detail .col-lg-2 .upsells{margin:0 34px;width:131px}
-.product-detail .col-lg-2 .upsells .product-link .products-grid .item{padding:0}
-.product-detail .col-lg-2 ul li{text-align:center;clear:both;width:131px}
-.product-detail .upsells .products-grid .price-box{position:relative;top:-22px;background:#333;background:rgba(0,0,0,0.75)} 
-.product-detail .product-recommend{clear:both;width:100%;height:auto;}
-.product-detail .product-recommend h2{width:100%;height:44px;border-bottom:2px solid #fd9030;margin-bottom:3px}
-.product-detail .product-recommend h2 span{display:block;width:130px;height:44px;background-color:#fd9030;color:#ffffff;font-size:16px;line-height:44px;text-align:center}
-.product-detail .product-recommend .products-grid .item{float:left;text-align:center;width:167px}
+.product-detail .product-info .action{clear:both;width:100%;height:100px;line-height:100px;text-align:center}
+.product-detail .product-info .action .btn{width:150px;height:40px;background-color:#fbe5d2;border-color:#fd9233;color:#fd9030;font-weight:bold}
+.product-detail .product-info .action .btn-checkout{color:#ffffff;background-color:#fd9030;font-indent:5px}
+.product-detail .product-info .action .btn:hover{color:#ffffff;background-color:#fd9030}
+.product-detail .product-info .upsells{margin:0 34px;width:131px}
+.product-detail .product-info .upsells .product-link .products-grid .item{padding:0}
+.product-detail .product-info .upsells .price-box{position:relative;top:-22px;background:#333;background:rgba(0,0,0,0.75)} 
+.product-detail .product-info .related{clear:both;width:100%;height:auto;}
+.product-detail .product-info .related .title{width:100%;height:44px;border-bottom:2px solid #fd9030;margin-bottom:3px}
+.product-detail .product-info .related .title span{display:block;width:130px;height:44px;background-color:#fd9030;color:#ffffff;font-size:16px;line-height:44px;text-align:center}
+.product-detail .product-info .related .item{float:left;text-align:center;width:14.29%}
 .main-container .personinfo{padding-left:40px;margin-top:16px} 
 .main-container .personinfo div{margin-bottom:20px}
 .main-container .personinfo label{width:80px}

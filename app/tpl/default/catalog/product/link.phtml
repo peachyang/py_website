@@ -1,8 +1,13 @@
 <?php
 $products = $this->getProducts();
 if (count($products)):
-?>
+    ?>
     <div class="product-link">
+        <?php if ($this->getVariable('title')): ?>
+            <h4 class="title">
+                <span><?php echo $this->getVariable('title') ?></span>
+            </h4>
+        <?php endif ?>
         <ul class="products-grid clearfix">
             <?php
             foreach ($products as $product):
@@ -10,17 +15,19 @@ if (count($products)):
                 ?>
                 <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                        <img src="<?php echo strpos($thumbnail, 'http') === false ? $this->
-                                getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) : $thumbnail ?>" 
-                                alt="<?php echo $product['name'] ?>" />
+                        <img src="<?php
+                        echo strpos($thumbnail, 'http') === false ? $this->
+                                        getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) : $thumbnail
+                        ?>" alt="<?php echo $product['name'] ?>" />
                     </a>
-                    
                     <div class="price-box">
                         <?php echo $this->getPriceBox($product) ?>
                     </div>
                     <div class="action">
-                        <a href="<?php echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] . 
-                                '&qty=1&csrf=' . $this->getCsrfKey()) ?>" class="add2cart">
+                        <a href="<?php
+                        echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
+                                '&qty=1&csrf=' . $this->getCsrfKey())
+                        ?>" class="add2cart">
                         </a>
                     </div>
                 </li>

@@ -19,4 +19,12 @@ $thumbnail = $product->getThumbnail();
     <td>
         <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
     </td>
+    <?php if ($this->getVariable('rowspan')): ?>
+        <td rowspan="<?php echo $this->getVariable('rowspan') ?>">
+            <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
+        </td>
+        <td rowspan="<?php echo $this->getVariable('rowspan') ?>">
+            <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
+        </td>
+    <?php endif ?>
 </tr>

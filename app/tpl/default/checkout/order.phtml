@@ -1,3 +1,6 @@
 <div class="container">
-    <?php echo $this->getChild('messages'), $this->getChild('address'), $this->getChild('shipping'), $this->getChild('payment'), $this->getChild('review') ?>
+    <?php echo $this->getChild('messages') ?>
+    <div class="checkout-steps">
+        <?php echo $this->getChild('address'), $this->getChild('shipping'), $this->getChild('payment'), $this->getChild('review') ?>
+    </div>
 </div>

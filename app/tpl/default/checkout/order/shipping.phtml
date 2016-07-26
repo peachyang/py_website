@@ -1,20 +1,15 @@
 <?php
 $methods = $this->getShippingMethods();
+$storeId = $this->getVariable('store_id');
 ?>
-<section class="section shipping">
-    <h4 class="title"><?php echo $this->translate('Shipping Method') ?></h4>
+<div class="shipping">
     <?php if ($methods): ?>
-        <ul class="list list-inline">
+        <select name="shipping_method[<?php echo $storeId ?>]" id="shipping-method-<?php echo $storeId ?>">
             <?php foreach ($methods as $code => $label): ?>
-                <li>
-                    <input type="radio" name="shipping_method" id="shipping-method-<?php echo $code ?>" value="<?php echo $code ?>" />
-                    <label for="shipping-method-<?php echo $code ?>">
-                        <?php echo $this->translate($label) ?>
-                    </label>
-                </li>
+                <option value="<?php echo $code ?>"><?php echo $label ?></option>
             <?php endforeach ?>
-        </ul>
+        </select>
     <?php else: ?>
         <p><?php echo $this->translate('Sorry, no shipping methods are available for this order at this time.') ?></p>
-    <?php endif ?>
-</section>
+    <?php endif; ?>
+</div>

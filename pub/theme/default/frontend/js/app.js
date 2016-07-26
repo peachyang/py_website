@@ -91,6 +91,7 @@
             return false;
         });
     });
+
     $(".selectall").click(function(){
     	var this_value = $(this).val();
     	var this_status = this.checked;;
@@ -193,5 +194,8 @@
 
 
 
+=======
+}));
+>>>>>>> branch 'master' of ssh://gitadmin@192.168.1.88/ecomv2admin.git
 
 

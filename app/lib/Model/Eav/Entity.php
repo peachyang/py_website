@@ -343,6 +343,14 @@ abstract class Entity extends AbstractModel
                     $result[$attribute['code']] = explode(',', $result[$attribute['code']]);
                 }
             }
+        } else if (isset($result[0]['attribute_set_id'])) {
+            $attributes = new AttributeCollection;
+            $attributes->withSet()->columns(['code'])->where(['eav_attribute_set.id' => $result[0]['attribute_set_id']])->where(new In('input', ['multiselect', 'checkbox']));
+            foreach ($attributes as $attribute) {
+                if (is_string($result[0][$attribute['code']])) {
+                    $result[0][$attribute['code']] = explode(',', $result[0][$attribute['code']]);
+                }
+            }
         }
         parent::afterLoad($result);
     }

@@ -10,6 +10,7 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Predicate\In;
 
 abstract class Entity extends AbstractModel
 {
@@ -318,6 +319,18 @@ abstract class Entity extends AbstractModel
             }
         }
         return $pairs;
+    }
+
+    protected function beforeSave()
+    {
+        $attributes = new AttributeCollection;
+        $attributes->withSet()->columns(['code'])->where(['eav_attribute_set.id' => $this->storage['attribute_set_id']])->where(new In('input', ['multiselect', 'checkbox']));
+        foreach ($attributes as $attribute) {
+            if (is_array($this->storage[$attribute['code']])) {
+                $this->storage[$attribute['code']] = implode(',', $this->storage[$attribute['code']]);
+            }
+        }
+        parent::beforeSave();
     }
 
 }

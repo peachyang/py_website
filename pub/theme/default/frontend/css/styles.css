@@ -250,4 +250,4 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .checkout-cart .main-container .checkout-num{color:#007dc6;font-size:18px}
 .checkout-cart .menu-all{color:#007dc6;font-size:18px;padding:0 10px;border-style:solid;border-width:0 0 1px;font-weight:900}
 .checkout-cart .product-list{border-width:0px 1px; border-style:solid;border-color:#f1f2f4}
-.checkout-cart .product-list .tb-stock .required{border-width:0px 1px; border-style:solid;border-color:#f1f2f4}
+.checkout-cart .product-list .tb-stock .required{border-width:0px 1px; border-style:solid;border-color:#f1f2f4;float:left;border:2px solid #d2d2d2;height:30px;width:50px;border-radius:0}

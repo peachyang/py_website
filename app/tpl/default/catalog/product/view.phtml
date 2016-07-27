@@ -49,10 +49,10 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </div>
                 </div>
                 <div class="options">
-                    <?php echo $this->getChild('option') ?>
+                    <?php echo $this->getChild('option')->setVariable('product', $product) ?>
                     <div class="input-box">
                         <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
-                        <div class="cell">
+                        <div class="cell qty">
                             <label for="qty" class="spin minus">-</label>
                             <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
                                    min="<?php echo (float) $inventory['min_qty'] ?>" 

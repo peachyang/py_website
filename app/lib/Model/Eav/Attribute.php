@@ -15,6 +15,32 @@ class Attribute extends AbstractModel
         $this->init('eav_attribute', 'id', ['id', 'type_id', 'code', 'type', 'input', 'validation', 'is_required', 'default_value', 'is_unique', 'searchable', 'filterable', 'comparable', 'sortable']);
     }
 
+    public function getOption($option, $language = false)
+    {
+        if ($this->getId() && isset($this->storage['input']) && in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+            $tableGateway = new TableGateway('eav_attribute_option', $this->getContainer()->get('dbAdapter'));
+            $select = $tableGateway->getSql()->select();
+            $select->join('eav_attribute_option_label', 'eav_attribute_option_label.option_id=eav_attribute_option.id', ['label'], 'left')
+                    ->order('sort_order')
+                    ->columns(['id', 'sort_order'])
+                    ->where([
+                        'attribute_id' => $this->getId(),
+                        'eav_attribute_option.id' => is_array($option) ? $option['id'] : $option
+            ]);
+            if (!$language) {
+                $languageId = \Seahinet\Lib\Bootstrap::getLanguage()->getId();
+            } else {
+                $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
+            }
+            $select->where(['language_id' => $languageId]);
+            $result = $tableGateway->selectWith($select)->toArray();
+            if (count($result)) {
+                return $result[0]['label'];
+            }
+        }
+        return '';
+    }
+
     public function getOptions($language = false)
     {
         if ($this->getId() && isset($this->storage['input']) && in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {

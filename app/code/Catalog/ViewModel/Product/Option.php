@@ -4,14 +4,17 @@ namespace Seahinet\Catalog\ViewModel\Product;
 
 use Seahinet\Lib\ViewModel\Template;
 
-class Price extends Template
+class Option extends Template
 {
 
-    public function __construct()
+    public function getOptions()
     {
-        $this->setTemplate('catalog/product/price');
+        if ($product = $this->getVariable('product')) {
+            return $product->getOptions();
+        }
+        return [];
     }
-    
+
     public function getCurrency()
     {
         return $this->getContainer()->get('currency');

@@ -42,7 +42,6 @@ class Filter extends Toolbar
                     ->where(['filterable' => 1, 'eav_entity_type.code' => Product::ENTITY_TYPE]);
             foreach ($this->getCollection() as $product) {
                 if (!empty($ids)) {
-                    $product = new Product($languageId, $product);
                     foreach ($product->getCategories() as $category) {
                         if (in_array($category['id'], $ids)) {
                             if (!isset($result['category'])) {
@@ -66,15 +65,36 @@ class Filter extends Toolbar
                             'values' => []
                         ];
                     }
-                    if (!isset($result[$attribute['code']]['values'][$product[$attribute['code']]])) {
-                        $result[$attribute['code']]['values'][$product[$attribute['code']]] = ['label' => $product[$attribute['code']], 'count' => 1];
-                    } else {
-                        $result[$attribute['code']]['values'][$product[$attribute['code']]]['count'] ++;
-                    }
+                    $this->statAttributeValue($result[$attribute['code']]['values'], $product[$attribute['code']], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                 }
             }
         }
         return $result;
+    }
+
+    protected function statAttributeValue(&$array, $value, $attribute = false)
+    {
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                if (!isset($array[$v])) {
+                    $array[$v] = [
+                        'label' => $attribute ? $attribute->getOption($v) : $v,
+                        'count' => 1
+                    ];
+                } else {
+                    $array[$v]['count'] ++;
+                }
+            }
+        } else if (!is_null($value)) {
+            if (!isset($array[$value])) {
+                $array[$value] = [
+                    'label' => $attribute ? $attribute->getOption($value) : $value,
+                    'count' => 1
+                ];
+            } else {
+                $array[$value]['count'] ++;
+            }
+        }
     }
 
     public function getFilterUrl($key, $value)

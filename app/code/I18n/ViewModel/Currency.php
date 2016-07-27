@@ -17,7 +17,7 @@ class Currency extends Template
     public function getCurrency()
     {
         $currency = $this->getConfig()['i18n/currency/enabled'];
-        return is_array($currency)?$currency:explode(',', $currency);
+        return is_array($currency) ? $currency : explode(',', $currency);
     }
 
     public function getCurrentCurrency()

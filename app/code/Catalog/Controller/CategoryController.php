@@ -5,6 +5,7 @@ namespace Seahinet\Catalog\Controller;
 use Seahinet\Catalog\Model\Category;
 use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Controller\ActionController;
+use Zend\Db\Sql\Predicate\Like;
 
 class CategoryController extends ActionController
 {
@@ -71,6 +72,13 @@ class CategoryController extends ActionController
                 } else if (strpos($value, '%') !== false) {
                     $collection->where(new Like($key, $value));
                     unset($condition[$key]);
+                } else {
+                    $attribute = new Attribute;
+                    $attribute->load($key, 'code');
+                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
+                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
+                        unset($condition[$key]);
+                    }
                 }
             }
             $collection->where($condition);

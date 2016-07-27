@@ -2,8 +2,6 @@
 
 namespace Seahinet\Checkout\ViewModel;
 
-use Seahinet\Checkout\ViewModel\Cart\Item;
-use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Cart as CartSingleton;
 
@@ -24,11 +22,7 @@ class Cart extends Template
 
     public function getCurrency()
     {
-        if (is_null(self::$currency)) {
-            self::$currency = new Currency;
-            self::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
-        }
-        return self::$currency;
+        return $this->getContainer()->get('currency');
     }
 
     public function getQty()

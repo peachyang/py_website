@@ -3,6 +3,8 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\Model\Collection\Eav\Collection;
+use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\ViewModel\Template;
 use Zend\Db\Sql\Predicate\Like;
 
@@ -150,6 +152,13 @@ class Grid extends Template
                 } else if (strpos($value, '%') !== false) {
                     $collection->where(new Like($key, $value));
                     unset($condition[$key]);
+                } else if($collection instanceof Collection){
+                    $attribute = new Attribute;
+                    $attribute->load($key, 'code');
+                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
+                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
+                        unset($condition[$key]);
+                    }
                 }
             }
             $collection->where($condition);
@@ -200,7 +209,7 @@ class Grid extends Template
             'item' => $item,
             'parent' => $this
         ]);
-        $box->setTemplate('page/renderer/' . $item['type']);
+        $box->setTemplate('page/renderer/' . in_array($item['type'], ['multiselect', 'checkbox']) ? 'select' : $item['type']);
         return $box;
     }
 

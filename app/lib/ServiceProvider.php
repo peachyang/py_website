@@ -57,6 +57,13 @@ class ServiceProvider implements ServiceProviderInterface
         if (!$container->has('session')) {
             $container['session'] = Session::instance(isset($config['adapter']['session']) ? $config['adapter']['session'] : $container);
         }
+        if (!$container->has('currency')) {
+            $container['currency'] = function($container) {
+                $currency = new \Seahinet\I18n\Model\Currency;
+                $currency->load($container->get('request')->getCookie('currency', $container->get('config')['i18n/currency/base']), 'code');
+                return $currency;
+            };
+        }
         if (!$container->has('translator')) {
             $container['translator'] = Translator::instance($config['locale']? : $container);
         }

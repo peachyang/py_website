@@ -79,7 +79,7 @@ class Filter extends Toolbar
 
     public function getFilterUrl($key, $value)
     {
-        $query = $this->getCurrentUri()->getQuery();
+        $query = $this->getRequest()->getQuery();
         $query[$key] = $value;
         return $this->getCurrentUri()->withQuery(http_build_query($query));
     }

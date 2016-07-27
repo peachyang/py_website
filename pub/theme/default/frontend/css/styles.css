@@ -77,7 +77,7 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .goods-filter-th{width:80px;text-align:center;font-weight:normal;font-size:12px}
 .goods-filter-tr{border-bottom:1px solid #e2e4ea;}
 .goods-filter{margin-bottom:15px}
-.goods-filter-li{margin-left:50px;height:50px}
+.goods-filter-li{margin-left:50px}
 .goods-li-all{margin-left:20px;}
 .goods-filter-ul{border-left:1px solid #e1e4ea;font-size:12px;height:50px;line-height:50px;overflow:hidden}
 .goods-filter a{color:#575656}

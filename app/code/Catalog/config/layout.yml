@@ -3,6 +3,11 @@ catalog_category:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/bttrlazyloading.js
             content:
                 children:
                     messages:
@@ -42,6 +47,11 @@ catalog_product:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/bttrlazyloading.js
             content:
                 children:
                     messages:
@@ -59,6 +69,12 @@ catalog_product:
                         type: Seahinet\Catalog\ViewModel\Product\View
                         template: catalog/product/view
                         children:
+                            attribute:
+                                type: Seahinet\Catalog\ViewModel\Product\View
+                                template: catalog/product/attribute
+                            option:
+                                type: Seahinet\Catalog\ViewModel\Product\Option
+                                template: catalog/product/option
                             media:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: catalog/product/media

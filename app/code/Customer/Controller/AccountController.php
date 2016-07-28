@@ -328,7 +328,9 @@ class AccountController extends AuthActionController
         $customer->load($customerId);
         
         $data = $this->getRequest()->getPost();
-        $customer->setData('email', $data['email'])->save();
+        $customer->setData('email', $data['email']);
+        $customer->setData('password', $data['password']) ->save();
+       
         return $this->redirect('customer/account/');
     }
     

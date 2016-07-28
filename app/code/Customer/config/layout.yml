@@ -63,9 +63,6 @@ customer_account:
                                 params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/',label:'Account Password',group:'Account Info'}]
-                            -
-                                method: addLink
                                 params: [{link:'customer/account/address',label:'Address',group:'Account Info'}]
                             -
                                 method: addLink
@@ -145,6 +142,13 @@ customer_account_login:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/login
+                        children:
+                            footer:
+                                type: Seahinet\Cms\ViewModel\Block
+                                action:
+                                    -
+                                        method: setBlockId
+                                        params: footer
 customer_account_create:
     update: frontend
     root:
@@ -161,6 +165,13 @@ customer_account_create:
                     form:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/create
+                        children:
+                            footer:
+                                type: Seahinet\Cms\ViewModel\Block
+                                action:
+                                    -
+                                        method: setBlockId
+                                        params: footer
 customer_account_forgotpwd:
     update: frontend
     root:

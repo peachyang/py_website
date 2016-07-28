@@ -14,14 +14,23 @@ $default = (int) $product->offsetGet('default_image');
                     $default = true;
                 endif;
                 ?>">
-                    <img src="<?php
+                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php
                     echo $this->getBaseUrl('pub/resource/image/resized/345x/'),
                     $image['src']
-                    ?>" width="345" alt="<?php echo $product->offsetGet('name') ?>">
+                    ?>" data-bttrlazyloading-md-src="<?php
+                    echo $this->getBaseUrl('pub/resource/image/resized/278x/'),
+                    $image['src']
+                    ?>" data-bttrlazyloading-sm-src="<?php
+                    echo $this->getBaseUrl('pub/resource/image/resized/205x/'),
+                    $image['src']
+                    ?>" data-bttrlazyloading-xs-src="<?php
+                    echo $this->getBaseUrl('pub/resource/image/resized/704x/'),
+                    $image['src']
+                    ?>" alt="<?php echo $product->offsetGet('name') ?>">
                 </div>
             <?php endforeach ?>
         </div>
-        <ol class="carousel-indicators">
+        <ol class="carousel-indicators hidden-xs">
             <?php
             foreach ($images as $key => $image):
                 ?>

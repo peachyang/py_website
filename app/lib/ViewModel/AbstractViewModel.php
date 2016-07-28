@@ -144,11 +144,12 @@ abstract class AbstractViewModel implements Serializable
      * Returns the variable at the specified key
      * 
      * @param string $key
+     * @param mixed $default
      * @return mixed
      */
-    public function getVariable($key)
+    public function getVariable($key, $default = '')
     {
-        return isset($this->variables[$key]) ? $this->variables[$key] : '';
+        return isset($this->variables[$key]) ? $this->variables[$key] : $default;
     }
 
     /**

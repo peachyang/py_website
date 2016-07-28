@@ -40,7 +40,7 @@ checkout_cart_mini:
                         children:
                             total:
                                 type: Seahinet\Checkout\ViewModel\Cart
-                                template: checkout/cart/total
+                                template: checkout/minicart/total
 checkout_order:
     update: frontend
     root:

@@ -11,10 +11,10 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="product_id" value="<?php echo $product->getId() ?>" />
         <input type="hidden" name="warehouse_id" value="<?php echo 1 ?>" />
-        <div class="product-detail clearfix">
-            <div class="col-lg-4">
+        <div class="product-essential clearfix">
+            <div class="col-xs-12 col-sm-4">
                 <?php echo $this->getChild('media')->setVariable('product', $product) ?>
-                <ul class="links list-inline">
+                <ul class="hidden-xs links list-inline">
                     <li>
                         <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>">
                             <span class="fa fa-star" aria-hidden="true"></span>
@@ -33,7 +33,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </li>
                 </ul>
             </div>
-            <div class="col-lg-6 product-info">
+            <div class="col-xs-12 col-sm-6 product-info">
                 <h2 class="product-name"><?php echo $product['name'] ?></h2>
                 <div class="clearfix price-box">
                     <div class="col-xs-12 col-sm-8">
@@ -49,10 +49,10 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </div>
                 </div>
                 <div class="options">
-                    <?php echo $this->getChild('option') ?>
+                    <?php echo $this->getChild('option')->setVariable('product', $product) ?>
                     <div class="input-box">
                         <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
-                        <div class="cell">
+                        <div class="cell qty">
                             <label for="qty" class="spin minus">-</label>
                             <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
                                    min="<?php echo (float) $inventory['min_qty'] ?>" 
@@ -70,14 +70,48 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </button>
                 </div> 
             </div>
-            <div class="col-lg-2">
-                <div class="upsells">
-                    <?php echo $this->getChild('upsells')->setVariable('product', $product)->setLimit(3) ?>
-                </div>
+            <div class="col-xs-12 col-sm-2 upsells">
+                <?php
+                echo $this->getChild('upsells')
+                        ->setVariable('product', $product)
+                        ->setLimit(3)
+                        ->setVariable('class', 'col-xs-4 col-sm-12')
+                        ->setVariable('width', [
+                            'xs' => '219',
+                            'sm' => '67',
+                            'md' => '104',
+                            'lg' => '137',
+                        ])
+                ?>
             </div>
             <div class="related">
-                <?php echo $this->getChild('related')->setVariable('product', $product)->setVariable('title', 'Featured Products')->setLimit(7) ?>
+                <?php
+                echo $this->getChild('related')
+                        ->setVariable('product', $product)
+                        ->setVariable('title', 'Featured Products')
+                        ->setLimit(6)
+                        ->setVariable('width', [
+                            'xs' => '362',
+                            'sm' => '228',
+                            'md' => '221',
+                            'lg' => '173',
+                        ])
+                ?>
             </div>
         </div>        
     </form>
+    <div class="product-detail">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
+            <li role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="description">
+                <?php echo $this->getChild('attribute'), $product->offsetGet('description') ?>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="review">
+                <?php echo $this->getChild('review') ?>
+            </div>
+        </div>
+    </div>
 </div>

@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model\Cart;
 
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Catalog\Model\Warehouse;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Store;
 
@@ -30,6 +31,12 @@ class Item extends AbstractModel
             $result->load($this->storage['store_id']);
         }
         return $result;
+    }
+
+    public function getInventory()
+    {
+        $warehouse = new Warehouse;
+        return $warehouse->setId($this->storage['warehouse_id'])->getInventory($this->storage['product_id'], $this->storage['sku']);
     }
 
     public function collateTotals()

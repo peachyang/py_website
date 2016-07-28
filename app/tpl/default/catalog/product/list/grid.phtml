@@ -10,14 +10,17 @@ $products = $this->getProducts();
                 ?>
                 <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                        <img src="<?php echo strpos($thumbnail, 'http') === false ? $this->getBaseUrl('pub/resource/image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php if(strpos($thumbnail, 'http') === false): ?>
+                        <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/173x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/221x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/362x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php else: ?>
+                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php endif ?>
                     </a>
-
                     <div class="price-box">
                         <?php echo $this->getPriceBox($product) ?>
                     </div>
                     <h3 class="product-name">
-                        <a href="<?php echo $product->getUrl($this->getCategory()) ?>" class="gird-pro-a">
+                        <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>">
                             <?php echo $product['name'] ?>
                         </a>
                     </h3>

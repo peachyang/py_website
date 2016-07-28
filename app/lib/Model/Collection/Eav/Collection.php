@@ -4,7 +4,9 @@ namespace Seahinet\Lib\Model\Collection\Eav;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
+use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Predicate\In;
 
 abstract class Collection extends AbstractCollection
 {
@@ -27,7 +29,7 @@ abstract class Collection extends AbstractCollection
     {
         
     }
-    
+
     protected function init($null = null)
     {
         $this->tableName = static::ENTITY_TYPE . '_' . $this->languageId . '_index';
@@ -135,6 +137,28 @@ abstract class Collection extends AbstractCollection
             }
         }
         return array_values($items);
+    }
+
+    protected function afterLoad(&$result)
+    {
+        $attributes = [];
+        foreach ($result as &$item) {
+            if (isset($item['attribute_set_id'])) {
+                if (!isset($attributes[$item['attribute_set_id']])) {
+                    $attributes[$item['attribute_set_id']] = new AttributeCollection;
+                    $attributes[$item['attribute_set_id']]->withSet()
+                            ->columns(['code'])
+                            ->where(['eav_attribute_set.id' => $item['attribute_set_id']])
+                            ->where(new In('input', ['multiselect', 'checkbox']));
+                }
+                foreach ($attributes[$item['attribute_set_id']] as $attribute) {
+                    if (is_string($item[$attribute['code']])) {
+                        $item[$attribute['code']] = explode(',', $item[$attribute['code']]);
+                    }
+                }
+            }
+        }
+        parent::afterLoad($result);
     }
 
 }

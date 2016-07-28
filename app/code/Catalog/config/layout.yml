@@ -69,6 +69,9 @@ catalog_product:
                         type: Seahinet\Catalog\ViewModel\Product\View
                         template: catalog/product/view
                         children:
+                            attribute:
+                                type: Seahinet\Catalog\ViewModel\Product\View
+                                template: catalog/product/attribute
                             option:
                                 type: Seahinet\Catalog\ViewModel\Product\Option
                                 template: catalog/product/option

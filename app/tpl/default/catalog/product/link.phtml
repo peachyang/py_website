@@ -10,15 +10,22 @@ if (count($products)):
         <?php endif ?>
         <ul class="products-grid clearfix">
             <?php
+            $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
+            $width = $this->getVariable('width');
             foreach ($products as $product):
                 $thumbnail = $product->getThumbnail();
                 ?>
-                <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                <li class="item <?php echo $class ?>">
                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                        <img src="<?php
-                        echo strpos($thumbnail, 'http') === false ? $this->
-                                        getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) : $thumbnail
-                        ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php
+                        if (strpos($thumbnail, 'http') !== false):
+                            ?>
+                            <img src="<?php echo $thumbnail ?> alt="<?php echo $product['name'] ?>" />
+                        <?php elseif ($width): ?>
+                            <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
+                        <?php else: ?>
+                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php endif ?>
                     </a>
                     <div class="price-box">
                         <?php echo $this->getPriceBox($product) ?>

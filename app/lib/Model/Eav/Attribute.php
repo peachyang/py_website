@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Model\Eav;
 
 use Exception;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Language;
 use Zend\Db\TableGateway\TableGateway;
@@ -28,7 +29,7 @@ class Attribute extends AbstractModel
                         'eav_attribute_option.id' => is_array($option) ? $option['id'] : $option
             ]);
             if (!$language) {
-                $languageId = \Seahinet\Lib\Bootstrap::getLanguage()->getId();
+                $languageId = Bootstrap::getLanguage()->getId();
             } else {
                 $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
             }

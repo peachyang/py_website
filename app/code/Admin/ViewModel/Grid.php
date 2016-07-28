@@ -209,7 +209,7 @@ class Grid extends Template
             'item' => $item,
             'parent' => $this
         ]);
-        $box->setTemplate('page/renderer/' . in_array($item['type'], ['multiselect', 'checkbox']) ? 'select' : $item['type']);
+        $box->setTemplate('page/renderer/' . (in_array($item['type'], ['multiselect', 'checkbox']) ? 'select' : $item['type']));
         return $box;
     }
 

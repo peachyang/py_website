@@ -1,5 +1,6 @@
 <?php
 $attributes = $this->getAttributes();
+$ids = [];
 ?>
 <div id="applying-attribute" class="clearfix">
     <div id="attribute-groups">
@@ -12,6 +13,7 @@ $attributes = $this->getAttributes();
                     <?php
                     if (!empty($attributes[$group['id']])):
                         foreach ($attributes[$group['id']] as $attribute):
+                            $ids[] = $attribute['id'];
                             ?>
                             <div class="item clearfix">
                                 <input type="hidden" name="attributes[<?php echo $group['id'] ?>][]" value="<?php echo $attribute['id'] ?>" />
@@ -31,13 +33,15 @@ $attributes = $this->getAttributes();
         <?php
         if (!empty($attributes[0])):
             foreach ($attributes[0] as $attribute):
-                ?>
-                <div class="item clearfix">
-                    <input type="hidden" name="attributes[]" disabled="disabled" value="<?php echo $attribute['id'] ?>" />
-                    <h5 class="attribute"><?php echo $attribute['label'] ?></h5>
-                    <a href="javascript:void(0);" class="remove"><span class="fa fa-remove" aria-hidden></span><span class="sr-only"><?php echo $this->translate('Delete') ?></span></a>
-                </div>
-                <?php
+                if (!in_array($attribute['id'], $ids)):
+                    ?>
+                    <div class="item clearfix">
+                        <input type="hidden" name="attributes[]" disabled="disabled" value="<?php echo $attribute['id'] ?>" />
+                        <h5 class="attribute"><?php echo $attribute['label'] ?></h5>
+                        <a href="javascript:void(0);" class="remove"><span class="fa fa-remove" aria-hidden></span><span class="sr-only"><?php echo $this->translate('Delete') ?></span></a>
+                    </div>
+                    <?php
+                endif;
             endforeach;
         endif;
         ?>

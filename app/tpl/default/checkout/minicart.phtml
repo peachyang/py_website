@@ -1,5 +1,6 @@
 <?php
 $csrf = $this->getCsrfKey();
+$items = $this->getItems();
 ?>
 <div class="minicart dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle">
@@ -7,60 +8,62 @@ $csrf = $this->getCsrfKey();
         <span><?php echo $this->translate('Shopping Cart', [], 'checkout') ?></span>
         <span class="badge"><?php echo $this->getQty() ?></span>
     </a>
-    <table class="table dropdown-menu dropdown-menu-right">
-        <tbody><?php
-            foreach ($this->getItems() as $item):
-                $thumbnail = $item['product']->getThumbnail();
+    <div class="dropdown-menu dropdown-menu-right">
+        <ul class="items"><?php
+            if ($items):
                 ?>
-                <tr data-id="<?php echo $item['product_id'] ?>">
-                    <td>
-                        <a href="<?php echo $item['product']->getUrl() ?>">
-                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/45x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" />
+                <li class="title"><?php echo $this->translate('Recently Added Products') ?></li>
+                <?php
+                foreach ($this->getItems() as $item):
+                    $thumbnail = $item['product']->getThumbnail();
+                    ?>
+                    <li data-id="<?php echo $item['product_id'] ?>" class="clearfix">
+                        <a href="<?php echo $item['product']->getUrl() ?>" class="product-image col-xs-2">
+                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/45x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" class="img-responsive" />
                         </a>
-                    </td>
-                    <td>
-                        <h3><a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a></h3>
-                    </td>
-                    <td>
-                        <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), ' x ', (float) $item['qty'] ?></div>
-                        <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
-                            <span class="fa fa-remove" aria-hidden="true"></span>
-                            <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach ?></tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2">
-                    <?php echo $this->getChild('total')->setVariable('simplify', 1) ?>
-                </td>
-                <td>
-                    <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>" class="btn btn-checkout">
-                        <span><?php echo $this->translate('View Shopping Cart') ?></span>
-                    </a>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-    <template id="tmpl-minicart">
-        <tr data-id="{$id}">
-            <td>
-                <a href="{$url}"><img src="{$thumbnail}" alt="{$name}" /></a>
-            </td>
-            <td>
-                <h3><a href="{$url}">{$name}</a></h3>
-                <div class="price">{$price} x {$qty}</div>
-            </td>
-            <td>
-                {$subtotal}
-            </td>
-            <td>
-                <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id={$id}&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
-                    <span class="fa fa-remove" aria-hidden="true"></span>
-                    <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                        <h3 class="product-name col-xs-7">
+                            <a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a>
+                        </h3>
+                        <div class="col-xs-3 action">
+                            <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), 'x', (float) $item['qty'] ?></div>
+                            <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['product_id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                                <span><?php echo $this->translate('Delete') ?></span>
+                            </a>
+                        </div>
+                    </li>
+                    <?php
+                endforeach;
+            endif;
+            ?></ul>
+        <div class="total">
+            <div class="col-xs-8">
+                <?php echo $this->getChild('total') ?>
+            </div>
+            <div class="col-xs-4">
+                <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>" class="btn btn-checkout">
+                    <span><?php echo $this->translate('View Cart') ?></span>
                 </a>
-            </td>
-        </tr>
+            </div>
+        </div>
+        <div class="empty">
+            <div class="fa fa-shopping-basket col-xs-4" aria-hidden="true"></div>
+            <div class="col-xs-7"><?php echo $this->translate('You have no items in your shopping cart.') ?></div>
+        </div>
+    </div>
+    <template id="tmpl-minicart">
+        <li data-id="{$id}" class="clearfix">
+            <a href="{$url}" class="product-image col-xs-2">
+                <img src="{$thumbnail}" alt="{$name}" />
+            </a>
+            <h3 class="product-name col-xs-7">
+                <a href="{$url}">{$name}</a>
+            </h3>
+            <div class="col-xs-3 action">
+                <div class="price">{$price}x{$qty}</div>
+                <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id={$id}&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                    <span><?php echo $this->translate('Delete') ?></span>
+                </a>
+            </div>
+        </li>
     </template>
 </div>

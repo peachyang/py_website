@@ -107,7 +107,7 @@ frontend:
                                 children:
                                     total:
                                         type: Seahinet\Checkout\ViewModel\Cart
-                                        template: checkout/cart/total
+                                        template: checkout/minicart/total
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
                                 action: 

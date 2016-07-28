@@ -76,6 +76,8 @@ $query = $this->getQuery();
                                     echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
                                 } else if (isset($name['type']) && $name['type'] === 'image') {
                                     echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
+                                } else if (isset($name['type']) && $name['type'] === 'icon') {
+                                    echo '<i class="fa fa-' . $item[$attr] . '" ></i>';
                                 } else {
                                     echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]], [], $this->getTranslateDomain()) : $item[$attr]);
                                 }

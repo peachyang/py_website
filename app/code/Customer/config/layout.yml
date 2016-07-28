@@ -526,3 +526,50 @@ admin_address_attribute_edit:
                                     label:
                                         type: Seahinet\Admin\ViewModel\Eav\Label
                                         template: admin/eav/label
+admin_media_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Customer Media / Customer Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/',label:'Customer Media'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/customer_media/edit/',label:'Add New Customer Media'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Customer\Grid\Media
+admin_media_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/',label:'Customer Media'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Customer\Edit\Media
+                        children:
+                            icon:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: admin/customer/icon

@@ -28,6 +28,10 @@ customer:
             link: customer_attribute_address/
             title: Address Attribute Management
             priority: 40
+        -
+            link: customer_media/
+            title: Social Media Management
+            priority: 41
 system:
     children:
         -

@@ -304,3 +304,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin>.footer .copyright strong{display:block;margin-bottom:6px}
 .admin .nav-container.active~.footer{opacity:1;width:180px;transition:opacity .6s .6s}
 @media (max-height:480px){.admin>.footer{display:none}}
+.admin-media-edit .select-icon{float:left;border:1px solid #8b8c8c;width:320px;padding:5px}
+.admin-media-edit .select-icon label{padding:2px 0;font-size:25px;border:2px solid #fff}
+.admin-media-edit .select-icon input{display:none}
+.admin-media-edit .select-icon input:checked+label{border:2px solid #8b8c8c}
+.admin-media-list .grid td i {font-size:25px;}

@@ -50,6 +50,9 @@ checkout_order:
                     -
                         method: addScript
                         params: frontend/js/locate.js
+                    -
+                        method: addScript
+                        params: frontend/js/checkout.js
             content:
                 type: Seahinet\Lib\ViewModel\Template
                 template: checkout/order

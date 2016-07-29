@@ -9,7 +9,6 @@ use Seahinet\Customer\Model\Wishlist;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Cart;
-use Seahinet\Lib\Traits\Translate;
 
 class CartController extends ActionController
 {

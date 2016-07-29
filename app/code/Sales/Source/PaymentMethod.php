@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Source;
 
 use Seahinet\Lib\Source\SourceInterface;
+use Seahinet\Payment\Model\AbstractMethod;
 
 class PaymentMethod implements SourceInterface
 {
@@ -14,7 +15,9 @@ class PaymentMethod implements SourceInterface
         $config = $this->getContainer()->get('config');
         $result = [];
         foreach ($config['system']['payment']['children'] as $code => $info) {
-            if ($config['payment/' . $code . '/enable']) {
+            $className = $config['payment/' . $code . '/model'];
+            $model = new $className;
+            if ($model instanceof AbstractMethod && $model->isValid()) {
                 $result[$code] = $config['payment/' . $code . '/label'];
             }
         }

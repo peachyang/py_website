@@ -5,39 +5,54 @@ $attributes = $this->getAddressAttribute();
 <section class="section address">
     <h4 class="title"><?php echo $this->translate('Shipping Address') ?></h4>
     <ul class="list"><?php foreach ($addresses as $address): ?><li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'>
-                <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address->getId() === $this->getCurrenctAddress()): ?> checked="checked"<?php endif ?> />
+                <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address->getId() === $this->getCurrenctAddress() || count($addresses) === 1): ?> checked="checked"<?php endif ?> />
                 <label for="shipping-address-<?php echo $address->getId() ?>">
                     <?php echo $address->display() ?>
                 </label>
-                <a href="javascript:void(0);"><?php echo $this->translate('Edit') ?></a>
-                <a href="<?php echo $this->getBaseUrl('checkout/order/deleteaddress/') ?>" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&id=<?php echo $address->getId() ?>"><?php echo $this->translate('Delete') ?></a>
+                <a href="javascript:void(0);" class="edit"><?php echo $this->translate('Edit') ?></a>
+                <a href="<?php echo $this->getBaseUrl('checkout/order/deleteaddress/') ?>" class="delete" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&id=<?php echo $address->getId() ?>"><?php echo $this->translate('Delete') ?></a>
             </li><?php endforeach ?></ul>
+    <template id="tmpl-address-list">
+        <li data-id="{id}" data-json='{json}'>
+            <input type="radio" name="shipping_address_id" id="shipping-address-{id}" value="{id}" />
+            <label for="shipping-address-{id}">
+                {content}
+            </label>
+            <a href="javascript:void(0);" class="edit"><?php echo $this->translate('Edit') ?></a>
+            <a href="<?php echo $this->getBaseUrl('checkout/order/deleteaddress/') ?>" class="delete" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&id={id}"><?php echo $this->translate('Delete') ?></a>
+        </li>
+    </template>
     <?php if ($this->hasLoggedIn()): ?>
-        <button type="button" class="btn"><?php echo $this->translate('Add New Address') ?></button>
+        <button type="button" class="btn btn-add"><?php echo $this->translate('Add New Address') ?></button>
     <?php endif ?>
-    <form action="<?php echo $this->getBaseUrl('checkout/order/saveaddress/') ?>" method="post" data-ajax="true"<?php if ($addresses): ?> style="display:none"<?php endif ?>>
-        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        <input type="hidden" name="id" value="" />
-        <input type="hidden" name="is_billing" value="0" />
-        <?php
-        foreach ($attributes as $attribute) {
-            $item = [
-                'type' => $attribute['input'],
-                'label' => $attribute['label']
-            ];
-            if ($attribute['is_required']) {
-                $item['required'] = 'required';
+    <div class="form-edit-address"<?php if ($addresses): ?> style="display:none"<?php endif ?>>
+        <form action="<?php echo $this->getBaseUrl('checkout/order/saveaddress/') ?>" method="post" data-ajax="true">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <input type="hidden" name="id" value="" />
+            <input type="hidden" name="is_billing" value="0" />
+            <?php
+            foreach ($attributes as $attribute) {
+                $item = [
+                    'type' => $attribute['input'],
+                    'label' => $attribute['label']
+                ];
+                if ($attribute['is_required']) {
+                    $item['required'] = 'required';
+                }
+                echo $this->getInputBox($attribute['code'], $item);
             }
-            echo $this->getInputBox($attribute['code'], $item);
-        }
-        ?>
-        <div class="buttons-set">
-            <button type="submit" class="btn btn-save">
-                <span><?php echo $this->translate('Save') ?></span>
-            </button>
-        </div>
-    </form>
-    <script>
-        new Locate();
-    </script>
+            ?>
+            <div class="buttons-set">
+                <button type="submit" class="btn btn-save">
+                    <span><?php echo $this->translate('Save') ?></span>
+                </button>
+                <button type="reset" class="btn btn-cancel">
+                    <span><?php echo $this->translate('Cancel') ?></span>
+                </button>
+            </div>
+        </form>
+        <script>
+            new Locate();
+        </script>
+    </div>
 </section>

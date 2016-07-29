@@ -19,15 +19,17 @@
             }
             $('.message-box').append(html);
         };
-        var responseHandler = function (json) {
+        window.responseHandler = function (json) {
             var o = this;
             if (typeof json === 'string') {
                 json = eval('(' + json + ')');
             }
             if (json.redirect) {
                 location.href = json.redirect;
+                return;
             } else if (json.reload) {
                 location.reload();
+                return;
             } else if (json.message.length) {
                 addMessages(json.message);
             }
@@ -66,6 +68,7 @@
                     type: $(o).data('method'),
                     data: data,
                     success: function (xhr) {
+                        GLOBAL.AJAX[$(o).attr('href')] = null;
                         responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
                     }
                 });
@@ -82,6 +85,7 @@
                 type: $(o).attr('method'),
                 data: $(this).serialize(),
                 success: function (xhr) {
+                    GLOBAL.AJAX[$(o).attr('action')] = null;
                     responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
                     if ($(o).parents('.modal').length) {
                         $(o).parents('.modal').modal('hide');

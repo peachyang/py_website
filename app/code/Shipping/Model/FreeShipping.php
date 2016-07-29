@@ -2,12 +2,19 @@
 
 namespace Seahinet\Shipping\Model;
 
-class FreeShipping implements MethodInterface
+class FreeShipping extends AbstractMethod
 {
+    
+    const METHOD_CODE = 'free_shipping';
 
     public function getShippingRate()
     {
-        return 0;
+        
+    }
+
+    public function isValid()
+    {
+        return $this->getContainer()->get('config')['shipping/' . self::METHOD_CODE . '/enable'];
     }
 
 }

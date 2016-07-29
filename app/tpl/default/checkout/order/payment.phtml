@@ -1,5 +1,6 @@
 <?php
 $methods = $this->getPaymentMethods();
+$current = $this->getCurrentMethod();
 ?>
 <section class="section payment">
     <h4 class="title"><?php echo $this->translate('Payment Method') ?></h4>
@@ -7,7 +8,7 @@ $methods = $this->getPaymentMethods();
         <ul class="list list-inline">
             <?php foreach ($methods as $code => $label): ?>
                 <li>
-                    <input type="radio" name="payment_method" id="payment-method-<?php echo $code ?>" value="<?php echo $code ?>" />
+                    <input type="radio" name="payment_method" id="payment-method-<?php echo $code ?>" value="<?php echo $code ?>"<?php if ($code === $current || count($methods) === 1): ?> checked="checked"<?php endif ?> />
                     <label for="payment-method-<?php echo $code ?>">
                         <?php echo $this->translate($label) ?>
                     </label>

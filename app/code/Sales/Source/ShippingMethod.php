@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Source;
 
 use Seahinet\Lib\Source\SourceInterface;
+use Seahinet\Shipping\Model\AbstractMethod;
 
 class ShippingMethod implements SourceInterface
 {
@@ -14,7 +15,9 @@ class ShippingMethod implements SourceInterface
         $config = $this->getContainer()->get('config');
         $result = [];
         foreach ($config['system']['shipping']['children'] as $code => $info) {
-            if ($config['shipping/' . $code . '/enable']) {
+            $className = $config['shipping/' . $code . '/model'];
+            $model = new $className;
+            if ($model instanceof AbstractMethod && $model->isValid()) {
                 $result[$code] = $config['shipping/' . $code . '/label'];
             }
         }

@@ -13,25 +13,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
         <input type="hidden" name="warehouse_id" value="<?php echo 1 ?>" />
         <div class="product-essential clearfix">
             <div class="col-xs-12 col-sm-4">
-                <?php echo $this->getChild('media')->setVariable('product', $product) ?>
-                <ul class="hidden-xs links list-inline">
-                    <li>
-                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>">
-                            <span class="fa fa-star" aria-hidden="true"></span>
-                            <span><?php echo $this->translate('Add to Wishlist'); ?></span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="fa fa-share-alt" aria-hidden="true"></span>
-                            <span><?php echo $this->translate('Share'); ?></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <?php echo $this->getChild('media')->setVariable('product', $product), $this->getChild('share') ?>
             </div>
             <div class="col-xs-12 col-sm-6 product-info">
                 <h2 class="product-name"><?php echo $product['name'] ?></h2>

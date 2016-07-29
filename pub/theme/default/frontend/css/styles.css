@@ -38,17 +38,17 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .header .minicart .dropdown-toggle .fa{color:#fdbb30;font-size:16px;margin-right:4px}
 .header .minicart .dropdown-toggle .badge{position:absolute;display:block;top:-3px;right:25px;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
 .header .minicart .dropdown-toggle .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
-.header .minicart .dropdown-menu{right:10px;border-top-right-radius:0;border:none;background:#f7f7f7;width:100%}
+.header .minicart .dropdown-menu{right:10px;border-radius:0;padding:0;border:none;background:#f7f7f7;width:100%}
 .header .minicart .dropdown-menu .product-image{display:block}
-.header .minicart .dropdown-menu .product-name{font-size:12px;line-height:15px;color:#757474;height:30px;overflow:hidden;padding:0 6px}
+.header .minicart .dropdown-menu .product-name{font-size:12px;line-height:15px;color:#757474;height:30px;overflow:hidden;padding:6px}
 .header .minicart .dropdown-menu .price{white-space:nowrap}
 .header .minicart .dropdown-menu .action{font-size:12px;color:#757474;text-align:right}
 .header .minicart .dropdown-menu li+li{border-top:1px dashed #e6e7ed}
-.header .minicart .dropdown-menu .total{border-top:1px dashed #e6e7ed;padding:10px 12px 0;font-size:12px;line-height:35px}
+.header .minicart .dropdown-menu .total{border-top:1px dashed #e6e7ed;padding:10px 12px 5px;font-size:12px;line-height:35px;background:#fff}
 .header .minicart .dropdown-menu .total .btn-checkout{border:1px solid #007dc6;color:#000;border-radius:0;min-width:100%;padding:0;font-size:12px;line-height:2}
 .header .minicart .dropdown-menu .total .btn-checkout:hover{color:#fff;background:#007dc6}
-.header .minicart .dropdown-menu .items{padding:0 12px}
-.header .minicart .dropdown-menu .items .title{font-size:12px;line-height:22px;color:#000}
+.header .minicart .dropdown-menu .items>li{padding:9px 12px 5px}
+.header .minicart .dropdown-menu .items .title{font-size:12px;line-height:27px;color:#000;padding:0 12px}
 .header .minicart .dropdown-menu .items:empty{display:none}
 .header .minicart .dropdown-menu .items:empty+.total{display:none}
 .header .minicart .dropdown-menu .empty{display:none;text-align:center}
@@ -215,27 +215,29 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .product-essential .links{font-size:12px;line-height:16px;color:#9b9a9a;margin:0 0 60px;padding-left:15px}
 .product-essential .links li+li{border-left:1px solid;margin-left:16px}
 .product-essential .links .fa{font-size:16px;color:#fd9030;margin:0 12px 0 16px}
+.product-essential .links .dropdown-menu a{color:#000}
+.product-essential .links .dropdown-menu .fa{margin:0;color:#000}
 .product-essential .product-info{padding:0 30px 0 10px}
-.product-essential .product-info .product-name{font-size:19px;line-height:33px;color:#000;margin:7px 0 22px}
+.product-essential .product-info .product-name{font-size:16px;line-height:33px;color:#000;margin:7px 0 22px}
 .product-essential .product-info .price-box{background:#f4f4f4;font-size:0;color:#9b9a9a}
 .product-essential .product-info .price-box .label{display:inline-block;padding:15px 16px 12px 15px;font-size:13px;vertical-align:middle}
-.product-essential .product-info .price-box .price{font-size:27px;line-height:42px;vertical-align:middle}
+.product-essential .product-info .price-box .price{font-size:25px;line-height:42px;vertical-align:middle}
 .product-essential .product-info .price-box .old-price{display:block}
-.product-essential .product-info .price-box .old-price .price{font-size:19px}
+.product-essential .product-info .price-box .old-price .price{font-size:16px}
 .product-essential .product-info .price-box .regular-price .price,.product-essential .product-info .price-box .regular-price .label{line-height:55px}
-.product-essential .product-info .price-box .count{display:block;font-size:24px;line-height:32px;text-align:center}
+.product-essential .product-info .price-box .count{display:block;font-size:18px;line-height:32px;text-align:center}
 .product-essential .product-info .price-box .count+span{display:block;font-size:12px;text-align:center}
 .product-essential .product-info .price-box .order{border-left:1px solid #fff;margin-top:18px}
 .product-essential .product-info .price-box .review{margin-top:18px}
 .product-essential .product-info .options{display:table;width:100%;margin-top:15px}
 .product-essential .product-info .options .input-box{display:table-row}
-.product-essential .product-info .options .control-label{display:table-cell;vertical-align:top;padding:0 10px 0 16px;line-height:28px;width:1%;white-space:nowrap}
+.product-essential .product-info .options .control-label{display:table-cell;vertical-align:top;padding:0 10px 0 16px;font-size:12px;line-height:28px;width:1%;white-space:nowrap}
 .product-essential .product-info .options .cell{display:table-cell;padding-bottom:15px}
 .product-essential .product-info .options .cell [type=radio]+label,.product-essential .product-info .options .cell [type=checkbox]+label{margin-right:20px}
 .product-essential .product-info .action{clear:both;width:100%;padding:20px 0 20px 16px;text-align:left}
-.product-essential .product-info .action .btn{min-width:150px;height:40px;background-color:#fbe5d2;border-color:#fd9233;color:#fd9030;border-radius:0;margin-right:12px;font-size:18px;padding:0 25px}
+.product-essential .product-info .action .btn{min-width:150px;height:40px;background-color:#fbe5d2;border-color:#fd9233;color:#fd9030;border-radius:0;margin-right:12px;font-size:16px;padding:0 25px}
 .product-essential .product-info .action .btn-checkout,.product-essential .product-info .action .btn:hover{color:#fff;background-color:#fd9030}
-.product-essential .product-info .action .btn-checkout .fa{font-size:28px;vertical-align:-4px;margin-right:8px}
+.product-essential .product-info .action .btn-checkout .fa{font-size:25px;vertical-align:-4px;margin-right:8px}
 .product-essential .upsells .product-link{border:1px solid #efefef;padding:15px}
 .product-essential .upsells .product-link .item{padding:0 13px;position:relative;border:none}
 .product-essential .upsells .price-box{position:absolute;bottom:0;background:#fff;background:rgba(255,255,255,.63);width:100%;pointer-events:none}

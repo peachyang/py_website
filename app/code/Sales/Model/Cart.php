@@ -73,7 +73,7 @@ final class Cart extends AbstractModel implements Singleton
     public function abandon()
     {
         static::$instance->setData('status', 0)->save();
-        static::$instance = $this->regenerate();
+        static::$instance = null;
     }
 
     public function combine($cart)

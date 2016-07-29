@@ -4,6 +4,7 @@ namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Controller\ActionController;
 
 class ProductController extends ActionController
@@ -27,6 +28,13 @@ class ProductController extends ActionController
                 $breadcrumb->addCrumb([
                     'label' => $product->offsetGet('name')
                 ]);
+                if(!$this->getRequest()->getHeader('DNT')){
+                    //$this->getResponse()->withCookie('currency', ['value' => $code, 'path' => '/']);
+                }
+                $segment = new Segment('customer');
+                if ($segment->get('hasLoggedIn')){
+                    
+                }
                 return $root;
             }
         }

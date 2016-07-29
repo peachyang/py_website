@@ -175,7 +175,7 @@
         }
     });
     $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
-        qty_change(this);
+        qty_change($(this));
     });
     function qty_change(e) {
         var num = e.val();
@@ -206,8 +206,25 @@
             }
         });
         $('.total-pirce').html($.trim($("#cart tbody").find("tr:eq(1)").find("td:eq(3)").html()).substr(0, 1) + total_price + '.00');
+        var checked_total = 0;
+        $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
+        	if ($(this).is(':checked')) {
+        		checked_total++;
+            }
+        });
+        if(checked_total > 0){
+        	$(".btn-checkout").css("background","#fabb39");
+        	$(".btn-checkout").attr("href",GLOBAL.BASE_URL+"/checkout/order/");
+        }else{
+        	$(".btn-checkout").css("background","none");
+        	$(".btn-checkout").attr("href","javascript:viod(0)");
+        }
     }
     $("input:checkbox").change(function () {
         total_change();
     });
+   $("#related-menu a").click(function(){
+       $(this).addClass("selected-menu").siblings().removeClass("selected-menu");
+       $('#related-content .related-box:eq(' + $(this).index() + ')').show().siblings().hide();
+   });
 }));

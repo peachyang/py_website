@@ -269,20 +269,41 @@ h1,h2,h3,h4,h5,h6{margin:0}
 .checkout-flow .item.active{background:#f1f2f4;color:#007dc6}
 .checkout-flow .item.active:after{content:" ";display:block;width:0;height:0;position:absolute;top:0;left:100%;z-index:-1;border:20px solid transparent;border-left:34.64101615px solid #f1f2f4}
 .checkout-cart .main-container .table thead{background:#f1f2f4}
-.checkout-cart .main-container .table thead tr .operation{width:87px}
+.checkout-cart .main-container .table thead tr .operation{width:70px}
 .checkout-cart .main-container .table thead tr .th-width{width:15%}
 .checkout-cart .main-container .table tbody tr td{vertical-align:middle !important;padding:8px 0}
-.checkout-cart .main-container .table tbody tr td:nth-child(2){width:113px}
+.checkout-cart .main-container .table tbody tr td:nth-child(2){width:125px}
 .checkout-cart .product-list .float-left{float:left}
-.checkout-cart .main-container .table tbody tr td:nth-child(2) input{margin-top:11px}
-.checkout-cart .main-container .table tbody tr td:nth-child(3){vertical-align:top !important}
+.checkout-cart .main-container .table tbody tr td:nth-child(2) input{margin:11px 11px 0 0}
+.checkout-cart .main-container .table tbody tr td:nth-child(3){vertical-align:top !important;line-height:22px}
 .checkout-cart .main-container .table tbody tr td:nth-child(5) input{width:50px;text-align:center}
-.checkout-cart .main-container .table tfoot tr td .btn-checkout{background:#fabb39;padding:15px 25px;margin-left:10px}
+.checkout-cart .main-container .table tbody tr td:nth-child(7){line-height:22px}
+.checkout-cart .main-container .table tfoot tr td .btn-checkout{padding:15px 25px;margin-left:10px}
 .checkout-cart .main-container .table tfoot tr td{background:#f1f2f4;padding:0}
 .checkout-cart .main-container .table tfoot tr td:nth-child(1){vertical-align:middle !important;padding-left:8px;}
 .checkout-cart .main-container .table tfoot tr td:nth-child(2){align:right}
 .checkout-cart .main-container .table tfoot tr td:nth-child(1) a{margin-left:30px}
-.checkout-cart .main-container .checkout-num{color:#007dc6;font-size:18px}
-.checkout-cart .menu-all{color:#007dc6;font-size:18px;padding:0 10px;border-style:solid;border-width:0 0 1px;font-weight:900}
+.checkout-cart .main-container .checkout-num{color:#007dc6;font-size:16px}
+.checkout-cart .menu-all{color:#007dc6;font-size:18px;padding:0 10px;border-style:solid;border-width:0 0 1px}
 .checkout-cart .product-list{border-width:0px 1px; border-style:solid;border-color:#f1f2f4}
-.checkout-cart .product-list .tb-stock .required{border-width:0px 1px; border-style:solid;border-color:#f1f2f4;float:left;border:2px solid #d2d2d2;height:30px;width:50px;border-radius:0}
+.checkout-cart .product-list .tb-stock .required{float:left;border:2px solid #d2d2d2;height:30px;width:50px;border-radius:0}
+.checkout-cart .related-products{font-size:12px;color:#7a7a7b;border:1px solid #f1f2f4;margin:52px 0 135px;height:370px}
+.checkout-cart .related-products .selected-menu{color:#007dc6}
+.checkout-cart #related-menu{background:#f1f2f4;padding:8px}
+.checkout-cart #related-menu a{margin-right:30px}
+.checkout-cart #related-content{overflow:hidden;padding:17px 12px;line-height:18px;letter-spacing:1px}
+.checkout-cart #related-content .related-box{height:311px;width:99.65034965%;margin:0 auto;overflow:hidden;display:none}
+.checkout-cart #related-content .related-product{height:311px;width:174px;margin:0 8px;overflow:hidden;float:left}
+.checkout-cart #related-content .related-product a p:nth-child(2){margin-bottom:5px}
+.checkout-cart #related-content .related-product a p:nth-child(3){margin:0 0 8px;height:70px;overflow:hidden}
+.checkout-cart #related-content .related-product .sale-price{color:#fd9030;font-size:16px}
+.checkout-cart #related-content .related-product .old-price{text-decoration:line-through;margin-left:10px}
+.checkout-cart #related-content .selected-box{display:block}
+.checkout-cart #related-content img{height:173px;width:173px;margin-bottom:5px}
+.checkout-cart #related-content .success-num{float:right;color:#aaa9a9}
+#cart{color:#696868;font-size:12px}
+#cart .store th{padding-top:25px}
+#cart .store th input{margin-top:0}
+#cart .store th,#cart thead th{font-weight:normal}
+#cart .product-list td:nth-child(3){color:#000;font-size:13px}
+#cart .product-list td:nth-child(4){color:#000;font-size:16px}

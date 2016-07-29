@@ -67,3 +67,6 @@ local.properties
 *.exe
 *.rpm
 *.so
+/.project
+/deployment.xml
+/deployment.properties

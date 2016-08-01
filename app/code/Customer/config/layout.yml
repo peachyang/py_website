@@ -152,16 +152,21 @@ customer_account_login:
                 template: customer/login
                 children:
                     footer:
-                                type: Seahinet\Cms\ViewModel\Block
-                                action:
-                                    -
-                                        method: setBlockId
-                                        params: footer
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
                     messages:
                         action:
                             -
                                 method: addHandledSegment
                                 params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 customer_account_create:
     update: frontend
     root:
@@ -178,16 +183,21 @@ customer_account_create:
                 template: customer/create
                 children:
                     footer:
-                                type: Seahinet\Cms\ViewModel\Block
-                                action:
-                                    -
-                                        method: setBlockId
-                                        params: footer
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
                     messages:
                         action:
                             -
                                 method: addHandledSegment
                                 params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 customer_account_forgotpwd:
     update: frontend
     root:
@@ -204,16 +214,21 @@ customer_account_forgotpwd:
                 template: customer/forgotPwd
                 children:
                     footer:
-                                type: Seahinet\Cms\ViewModel\Block
-                                action:
-                                    -
-                                        method: setBlockId
-                                        params: footer
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
                     messages:
                         action:
                             -
                                 method: addHandledSegment
                                 params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 admin_customer_list:
     update: grid
     root:

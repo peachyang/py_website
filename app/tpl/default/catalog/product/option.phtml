@@ -19,7 +19,7 @@ foreach ($options as $option):
                 case 'multiselect':
                     ?>
                     <select name="options[<?php echo $option->getId() ?>]" class="form-control<?php if ($option->offsetGet('is_required')): ?> required<?php endif ?>"<?php if ($option->offsetGet('input') === 'multiselect'): ?> multiple="multiple"<?php endif ?>>
-                        <?php if (!$option->offsetGet('is_required')): ?>
+                        <?php if (!$option->offsetGet('is_required') && $option->offsetGet('input') !== 'multiselect'): ?>
                             <option value=""></option>
                         <?php endif ?>
                         <?php foreach ($option->offsetGet('value') as $value): ?>

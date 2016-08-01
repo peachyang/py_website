@@ -28,11 +28,16 @@ class Order extends AbstractModel
                 ->setData([
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId
-        ])->collateTotals()->save();
-        $cart->getItems(true)->walk(function($item){
-            $item = new Item($item);
-            $item->setId(null)->save();
+                ])->collateTotals()->save();
+        $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId) {
+            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId) {
+                if (is_array($item)) {
+                    $item = new Item($item);
+                }
+                $item->setId(null)->save();
+            }
         });
+        return $this;
     }
 
 }

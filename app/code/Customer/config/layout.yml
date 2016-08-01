@@ -67,6 +67,11 @@ customer_account:
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'My Card',group:'Account Info'}]
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 customer_account_dashboard:
     update: customer_account
     root:
@@ -81,6 +86,11 @@ customer_account_dashboard:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/dashboard
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 customer_account_personalinfo:
     update: customer_account
     root:
@@ -138,17 +148,25 @@ customer_account_login:
                         params: Customer Login
             content:
                 unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/login
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/login
-                        children:
-                            footer:
-                                type: Seahinet\Cms\ViewModel\Block
-                                action:
-                                    -
-                                        method: setBlockId
-                                        params: footer
+                    footer:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 customer_account_create:
     update: frontend
     root:
@@ -161,20 +179,29 @@ customer_account_create:
                         params: Create New Customer Account             
             content:
                 unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/create
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/create
-                        children:
-                            footer:
-                                type: Seahinet\Cms\ViewModel\Block
-                                action:
-                                    -
-                                        method: setBlockId
-                                        params: footer
+                    footer:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 customer_account_forgotpwd:
     update: frontend
     root:
+        template: page/empty
         children:
             head:
                 action:
@@ -182,10 +209,26 @@ customer_account_forgotpwd:
                         method: setTitle
                         params: Forgot Password
             content:
+                unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/forgotPwd
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/forgotPwd
+                    footer:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - true
 admin_customer_list:
     update: grid
     root:

@@ -72,7 +72,10 @@ final class Cart extends AbstractModel implements Singleton
 
     public function abandon()
     {
-        static::$instance->setData('status', 0)->save();
+        if ($this->storage['status']) {
+            $this->storage['status'] = 0;
+            $this->save();
+        }
         static::$instance = null;
     }
 

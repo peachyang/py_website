@@ -73,7 +73,14 @@ class OrderController extends ActionController
                                     ] : [
                                 'billing_address_id' => $data['shipping_address_id'],
                                 'billing_address' => $shippingAddress->display(false)
-                    ])->save();
+                    ]);
+                    $items = $cart->getItems(true);
+                    $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id, store_id');
+                    $orders = [];
+                    $items->walk(function($item) use (&$orders) {
+                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id']);
+                    });
+                    $cart->abandon();
                     
                 } catch (Exception $e) {
                     $result['error'] = 1;
@@ -215,7 +222,7 @@ class OrderController extends ActionController
                                     ] : [
                                 'billing_address_id' => $data['shipping_address_id'],
                                 'billing_address' => $shippingAddress->display(false)
-                    ])->save();
+                            ])->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

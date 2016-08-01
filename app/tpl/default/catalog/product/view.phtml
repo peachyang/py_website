@@ -35,52 +35,52 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     <div class="input-box">
                         <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
                         <div class="cell qty">
-                                        <label for="qty" class="spin minus">-</label>
-                                        <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
-                                               min="<?php echo (float) $inventory['min_qty'] ?>" 
-                                               max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>" 
-                                               step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
-                                        <label for="qty" class="spin plus">+</label>
-                            </div>
+                            <label for="qty" class="spin minus">-</label>
+                            <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
+                                   min="<?php echo (float) $inventory['min_qty'] ?>" 
+                                   max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>" 
+                                   step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
+                            <label for="qty" class="spin plus">+</label>
                         </div>
                     </div>
-                    <div class="clearfix action">
-                        <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
-                        <button type="submit" class="btn btn-checkout">
-                            <span class="fa fa-shopping-cart" aria-hidden="true"></span>
-                            <span><?php echo $this->translate('Add to Cart') ?></span>
-                        </button>
-                    </div> 
                 </div>
-                <div class="col-xs-12 col-sm-2 upsells">
-                    <?php
-                    echo $this->getChild('upsells')
-                            ->setVariable('product', $product)
-                            ->setLimit(3)
-                            ->setVariable('class', 'col-xs-4 col-sm-12')
-                            ->setVariable('width', [
-                                'xs' => '219',
-                                'sm' => '67',
-                                'md' => '104',
-                                'lg' => '137',
-                            ])
-                    ?>
-                </div>
-                <div class="related">
-                    <?php
-                    echo $this->getChild('related')
-                            ->setVariable('product', $product)
-                            ->setVariable('title', 'Featured Products')
-                            ->setLimit(6)
-                            ->setVariable('width', [
-                                'xs' => '362',
-                                'sm' => '228',
-                                'md' => '221',
-                                'lg' => '173',
-                            ])
-                    ?>
-                </div>
-            </div>        
+                <div class="clearfix action">
+                    <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
+                    <button type="submit" class="btn btn-checkout">
+                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>
+                        <span><?php echo $this->translate('Add to Cart') ?></span>
+                    </button>
+                </div> 
+            </div>
+            <div class="col-xs-12 col-sm-2 upsells">
+                <?php
+                echo $this->getChild('upsells')
+                        ->setVariable('product', $product)
+                        ->setLimit(3)
+                        ->setVariable('class', 'col-xs-4 col-sm-12')
+                        ->setVariable('width', [
+                            'xs' => '219',
+                            'sm' => '67',
+                            'md' => '104',
+                            'lg' => '137',
+                        ])
+                ?>
+            </div>
+            <div class="related">
+                <?php
+                echo $this->getChild('related')
+                        ->setVariable('product', $product)
+                        ->setVariable('title', 'Featured Products')
+                        ->setLimit(6)
+                        ->setVariable('width', [
+                            'xs' => '362',
+                            'sm' => '228',
+                            'md' => '221',
+                            'lg' => '173',
+                        ])
+                ?>
+            </div>
+        </div>        
     </form>
     <div class="product-detail">
         <ul class="nav nav-tabs" role="tablist">

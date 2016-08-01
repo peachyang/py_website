@@ -14,6 +14,8 @@ use Seahinet\Sales\Model\Order;
 class OrderController extends ActionController
 {
 
+    use \Seahinet\Lib\Traits\DB;
+    
     public function indexAction()
     {
         if (count(Cart::instance()->getItems())) {
@@ -65,8 +67,8 @@ class OrderController extends ActionController
                         'shipping_address_id' => $data['shipping_address_id'],
                         'shipping_address' => $shippingAddress->display(false),
                         'payment_method' => $data['payment_method'],
-                        'shipping_method' => $data['shipping_method'],
-                        'comment' => isset($data['customer_note']) ? $data['comment'] : ''
+                        'shipping_method' => json_encode($data['shipping_method']),
+                        'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
                     ])->setData($billingAddress ? [
                                 'billing_address_id' => $data['billing_address_id'],
                                 'billing_address' => $billingAddress->display(false)
@@ -74,17 +76,19 @@ class OrderController extends ActionController
                                 'billing_address_id' => $data['shipping_address_id'],
                                 'billing_address' => $shippingAddress->display(false)
                     ]);
+                    $this->beginTransaction();
                     $items = $cart->getItems(true);
-                    $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id, store_id');
+                    $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
                     $orders = [];
                     $items->walk(function($item) use (&$orders) {
                         $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id']);
                     });
                     $cart->abandon();
-                    
+                    $this->commit();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $this->rollback();
                 }
             }
         }

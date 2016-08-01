@@ -102,7 +102,7 @@
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
-                data: $('.checkout-steps select,.checkout-steps textarea,.checkout-steps input:not([type=radio],[type=checkbox]),.checkout-steps [type=radio]:checked,.checkout-steps [type=checkbox]:checked)').serialize() + '&csrf=' + csrf,
+                data: $('.checkout-steps select,.checkout-steps textarea,.checkout-steps input:not([type=radio],[type=checkbox]),.checkout-steps [type=radio]:checked,.checkout-steps [type=checkbox]:checked').serialize(),
                 success: function (xhr) {
                     GLOBAL.AJAX[url] = null;
                     responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);

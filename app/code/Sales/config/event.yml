@@ -11,3 +11,7 @@ customer.logout.after:
     -
         listener: [\Seahinet\Sales\Listeners\Cart, afterLoggedOut]
         priority: 0
+Seahinet\Sales\Model\Order.model.save.before:
+    -
+        listener: [\Seahinet\Sales\Listeners\Increment, generate]
+        priority: 10

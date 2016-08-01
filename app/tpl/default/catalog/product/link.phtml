@@ -5,7 +5,7 @@ if (count($products)):
     <div class="product-link">
         <?php if ($this->getVariable('title')): ?>
             <h4 class="title">
-                <span><?php echo $this->getVariable('title') ?></span>
+                <span><?php echo $this->translate($this->getVariable('title')) ?></span>
             </h4>
         <?php endif ?>
         <ul class="products-grid clearfix">

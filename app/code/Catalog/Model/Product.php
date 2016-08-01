@@ -8,9 +8,11 @@ use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
 use Seahinet\Catalog\Model\Product\Option as OptionModel;
 use Seahinet\Catalog\Model\Warehouse;
 use Seahinet\Resource\Model\Resource;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
+use Zend\Db\Sql\Predicate\NotIn;
 
 class Product extends Entity
 {
@@ -53,6 +55,35 @@ class Product extends Entity
             return $category;
         }
         return [];
+    }
+
+    public function getAttributes()
+    {
+        $result = [];
+        if ($this->getId()) {
+            $attributes = new Attribute;
+            $attributes->withLabel()->withSet()->columns(['id', 'code', 'input'])->where([
+                'eav_attribute_set.id' => $this->storage['attribute_set_id']
+            ])->where->notIn('code', [
+                'images', 'default_image', 'thumbnail', 'uri_key',
+                'description', 'short_description', 'taxable'
+            ])->notLike('code', '%price%')->notLike('code', 'meta%')->notEqualTo('type', 'datetime');
+            $getValue = function ($attribute, $value) {
+                return in_array($attribute['input'], ['select', 'radio', 'checked', 'multiselect']) ? $attribute->getOption($value) : $value;
+            };
+            foreach ($attributes as $attribute) {
+                if (is_array($this->storage[$attribute->offsetGet('code')])) {
+                    $result[$attribute->offsetGet('label')] = '';
+                    foreach ($this->storage[$attribute->offsetGet('code')] as $value) {
+                        $result[$attribute->offsetGet('label')] .= $getValue($attribute, $value) . ',';
+                    }
+                    $result[$attribute->offsetGet('label')] = trim($result[$attribute->offsetGet('label')], ',');
+                } else {
+                    $result[$attribute->offsetGet('label')] = $getValue($attribute, $this->storage[$attribute->offsetGet('code')]);
+                }
+            }
+        }
+        return $result;
     }
 
     public function getInventory($warehouse, $sku = null)
@@ -144,7 +175,7 @@ class Product extends Entity
         }
         return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
     }
-    
+
     protected function afterLoad(&$result)
     {
         if (isset($result[0]) && !empty($result[0]['images'])) {

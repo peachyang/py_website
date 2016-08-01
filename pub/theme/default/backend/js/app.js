@@ -104,7 +104,12 @@
                 } else {
                     var data = '';
                 }
-                $.ajax($(o).attr('href'), {
+                if (!GLOBAL.AJAX) {
+                    GLOBAL.AJAX = {};
+                } else if (GLOBAL.AJAX[$(o).attr('href')]) {
+                    GLOBAL.AJAX[$(o).attr('href')].abort();
+                }
+                GLOBAL.AJAX[$(o).attr('href')] = $.ajax($(o).attr('href'), {
                     type: $(o).data('method'),
                     data: data,
                     success: function (xhr) {
@@ -115,7 +120,12 @@
             return false;
         }).on('submit.seahinet.ajax', 'form[data-ajax]', function () {
             var o = this;
-            $.ajax($(o).attr('action'), {
+            if (!GLOBAL.AJAX) {
+                GLOBAL.AJAX = {};
+            } else if (GLOBAL.AJAX[$(o).attr('action')]) {
+                GLOBAL.AJAX[$(o).attr('action')].abort();
+            }
+            GLOBAL.AJAX[$(o).attr('action')] = $.ajax($(o).attr('action'), {
                 type: $(o).attr('method'),
                 data: $(this).serialize(),
                 success: function (xhr) {

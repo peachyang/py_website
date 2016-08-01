@@ -24,32 +24,42 @@
                             <?php echo $this->translate('Already Registered,') ?> 
                             <a href="<?php echo $this->getBaseUrl('customer/account/login/') ?>"><?php echo $this->translate('Login Now') ?></a>
                         </p>
-                    </div>              
-                    <div class="input-box">
-                        <label for="reg:username" class="control-label required"><?php echo $this->translate('Username') ?></label>
-                        <input type="text" name="username" id="reg:username" class="form-control required" spellcheck="false" />  
-                    </div>
-                    <div class="input-box">
-                        <label for="reg:password" class="control-label required"><?php echo $this->translate('Password') ?></label>
-                        <input type="password" name="password" id="reg:password" class="form-control required" minlength="6" />
-                    </div>
-                    <div class="input-box">
-                        <label for="reg:cpassword" class="control-label required"><?php echo $this->translate('Confirm Password') ?></label>
-                        <input type="password" name="cpassword" id="reg:cpassword" class="form-control required" data-rule-equalto="#reg\:password" />
-                    </div>
-                    <div class="input-box">
-                        <label for="reg:email" class="control-label required"><?php echo $this->translate('Email') ?></label>
-                        <input type="email" name="email" id="reg:email" class="form-control required email" />
-                    </div>
-                    <?php if (in_array('register', $this->getConfig()['customer/captcha/form'])): ?>
+                    </div>        
+                    <div class="table">
                         <div class="input-box">
-                            <label for="reg:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
+                            <label for="reg:username" class="control-label required"><?php echo $this->translate('Username') ?></label>
                             <div class="cell">
-                                <input type="text" name="captcha" class="form-control required captcha" maxlength="5" autocomplete="off" spellcheck="false" id="reg:captcha" />
-                                <img src="<?php echo $this->getBaseUrl('customer/account/captcha/') ?>" alt="" class="captcha" height="26" width="70" />
+                                <input type="text" name="username" id="reg:username" class="form-control required" spellcheck="false" />  
                             </div>
                         </div>
-                    <?php endif ?>
+                        <div class="input-box">
+                            <label for="reg:password" class="control-label required"><?php echo $this->translate('Password') ?></label>
+                            <div class="cell">
+                                <input type="password" name="password" id="reg:password" class="form-control required" minlength="6" />
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <label for="reg:cpassword" class="control-label required"><?php echo $this->translate('Confirm Password') ?></label>
+                            <div class="cell">
+                                <input type="password" name="cpassword" id="reg:cpassword" class="form-control required" data-rule-equalto="#reg\:password" />
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <label for="reg:email" class="control-label required"><?php echo $this->translate('Email') ?></label>
+                            <div class="cell">
+                                <input type="email" name="email" id="reg:email" class="form-control required email" />
+                            </div>
+                        </div>
+                        <?php if (in_array('register', $this->getConfig()['customer/captcha/form'])): ?>
+                            <div class="input-box">
+                                <label for="reg:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
+                                <div class="cell">
+                                    <input type="text" name="captcha" class="form-control required captcha" maxlength="5" autocomplete="off" spellcheck="false" id="reg:captcha" />
+                                    <img src="<?php echo $this->getBaseUrl('customer/account/captcha/') ?>" alt="" class="captcha" height="26" width="70" />
+                                </div>
+                            </div>
+                        <?php endif ?>
+                    </div>
                     <div class="additional">
                         <div class="input-box">
                             <input type="checkbox" id="reg:agreement" name="agreement" class="required" value="1">
@@ -81,4 +91,7 @@
             </div>
         </div>
     </div>
+</div>
+<div class="footer">
+    <?php echo $this->getChild('footer') ?>
 </div>

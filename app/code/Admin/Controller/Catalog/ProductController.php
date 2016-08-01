@@ -59,11 +59,12 @@ class ProductController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
             $attributes->withSet()->where([
-                        'is_required' => 1
+                        'is_required' => 1,
+                        'eav_attribute_set.id' => $data['attribute_set_id'],
                     ])->columns(['code'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id AND eav_entity_type.id=eav_attribute_set.type_id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
-            $required = ['store_id'];
+            $required = ['store_id', 'attribute_set_id'];
             $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];
             });
@@ -88,7 +89,9 @@ class ProductController extends AuthActionController
                 if (empty($data['parent_id'])) {
                     $model->setData('parent_id', null);
                 } else if (empty($data['uri_key'])) {
-                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', $data['name']))), '-');
+                    $model->setData('uri_key', trim(preg_replace('/\s+/', '-', $data['name'])), '-');
+                } else {
+                    $model->setData('uri_key', rawurlencode(trim(preg_replace('/\s+/', '-', $data['uri_key']), '-')));
                 }
                 try {
                     $model->save();

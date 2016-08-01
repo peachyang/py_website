@@ -21,7 +21,8 @@
                 <h2 class="legend"><?php echo $this->translate('Log in to your account') ?></h2>
                 <div class="register">
                     <a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>"><?php echo $this->translate('Create an Account') ?></a> 
-                </div>        		       		
+                </div>
+                <?php echo $this->getChild('messages') ?>
                 <div class="input-box">
                     <label class="sr-only control-label required" for="login:username"><?php echo $this->translate('Username') ?></label>
                     <div class="input-group">
@@ -57,4 +58,7 @@
             </div>
         </form>
     </main>
+</div>
+<div class="footer">
+    <?php echo $this->getChild('footer') ?>
 </div>

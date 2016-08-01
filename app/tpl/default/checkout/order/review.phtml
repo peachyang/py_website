@@ -1,8 +1,67 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+<section class="section review">
+    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
+    <table class="table">
+        <colgroup>
+            <col width="1" />
+            <col />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+        </colgroup>
+        <tbody>
+            <?php
+            $stores = [];
+            foreach ($this->getItems() as $item) {
+                if (!isset($stores[$item['store_id']])) {
+                    $stores[$item['store_id']] = 1;
+                } else {
+                    $stores[$item['store_id']] ++;
+                }
+            }
+            $current = 0;
+            foreach ($this->getItems() as $item) {
+                if ($current !== $item['store_id']):
+                    ?>
+                    <tr class="store">
+                        <th colspan="2" class="text-left text-nowrap">
+                            <?php echo $item['store']['name'] ?>
+                        </th>
+                        <th class="text-nowrap">
+                            <?php echo $this->translate('Price', [], 'checkout') ?>
+                        </th>
+                        <th class="text-nowrap">
+                            <?php echo $this->translate('Qty') ?>
+                        </th>
+                        <th class="text-nowrap">
+                            <?php echo $this->translate('Subtotal') ?>
+                        </th>
+                        <th class="text-nowrap">
+                            <?php echo $this->translate('Shipping Method') ?>
+                        </th>
+                        <th class="text-nowrap">
+                            <?php echo $this->translate('Comment') ?>
+                        </th>
+                    </tr>
+                    <?php
+                    $current = $item['store_id'];
+                    echo $this->getRow($item, $stores[$item['store_id']]);
+                else:
+                    echo $this->getRow($item);
+                endif;
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="text-right">
+                    <?php echo $this->getChild('total') ?>
+                    <button type="button" class="btn btn-checkout">
+                        <span><?php echo $this->translate('Place Order') ?></span>
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</section>

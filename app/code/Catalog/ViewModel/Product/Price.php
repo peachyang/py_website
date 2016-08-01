@@ -2,13 +2,10 @@
 
 namespace Seahinet\Catalog\ViewModel\Product;
 
-use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\ViewModel\Template;
 
 class Price extends Template
 {
-
-    protected static $currency = null;
 
     public function __construct()
     {
@@ -17,11 +14,7 @@ class Price extends Template
     
     public function getCurrency()
     {
-        if (is_null(static::$currency)) {
-            static::$currency = new Currency;
-            static::$currency->load($this->getRequest()->getCookie('currency', $this->getConfig()['i18n/currency/base']), 'code');
-        }
-        return static::$currency;
+        return $this->getContainer()->get('currency');
     }
 
 }

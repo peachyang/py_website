@@ -60,16 +60,18 @@ customer_account:
                                 params: [{link:'customer/account',label:'Track',group:'Follow'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Personal Info',group:'Account Info'}]
+                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Account Info'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/editPassword',label:'Account Password',group:'Account Info'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'Address',group:'Account Info'}]
+                                params: [{link:'customer/account/address',label:'Address',group:'Account Info'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'My Card',group:'Account Info'}]
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 customer_account_dashboard:
     update: customer_account
     root:
@@ -84,7 +86,12 @@ customer_account_dashboard:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/dashboard
-customer_account_navigation_editpwd:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
+customer_account_personalinfo:
     update: customer_account
     root:
         children:
@@ -92,12 +99,29 @@ customer_account_navigation_editpwd:
                 action:
                     -
                         method: setTitle
-                        params: Edit Password
+                        params: Personal Info
             content:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: customer/editpwd
+                        template: customer/personalInfo
+customer_account_address:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Address
+                    -
+                        method: addScript
+                        params: frontend/js/locate.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Customer\ViewModel\Address
+                        template: customer/address  
 wishlist:
     update: customer_account
     root:
@@ -124,10 +148,20 @@ customer_account_login:
                         params: Customer Login
             content:
                 unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/login
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/login
+                    footer:
+                                type: Seahinet\Cms\ViewModel\Block
+                                action:
+                                    -
+                                        method: setBlockId
+                                        params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 customer_account_create:
     update: frontend
     root:
@@ -140,13 +174,24 @@ customer_account_create:
                         params: Create New Customer Account             
             content:
                 unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/create
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/create
+                    footer:
+                                type: Seahinet\Cms\ViewModel\Block
+                                action:
+                                    -
+                                        method: setBlockId
+                                        params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 customer_account_forgotpwd:
     update: frontend
     root:
+        template: page/empty
         children:
             head:
                 action:
@@ -154,10 +199,21 @@ customer_account_forgotpwd:
                         method: setTitle
                         params: Forgot Password
             content:
+                unset: [breadcrumb]
+                type: Seahinet\Lib\ViewModel\Template
+                template: customer/forgotPwd
                 children:
-                    form:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/forgotPwd
+                    footer:
+                                type: Seahinet\Cms\ViewModel\Block
+                                action:
+                                    -
+                                        method: setBlockId
+                                        params: footer
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 admin_customer_list:
     update: grid
     root:
@@ -227,14 +283,6 @@ admin_customer_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
-                                    -
-                                        method: addTab
-                                        params:
-                                            - wishlist
-                                children:
-                                    wishlist:
-                                        type: Seahinet\Lib\ViewModel\Template
-                                        template: admin/customter/
 admin_customer_group_list:
     update: grid
     root:
@@ -517,3 +565,50 @@ admin_address_attribute_edit:
                                     label:
                                         type: Seahinet\Admin\ViewModel\Eav\Label
                                         template: admin/eav/label
+admin_media_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Customer Media / Customer Management
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/',label:'Customer Media'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/customer_media/edit/',label:'Add New Customer Media'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Customer\Grid\Media
+admin_media_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_manage/',label:'Customer Management'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/',label:'Customer Media'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/customer_media/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Customer\Edit\Media
+                        children:
+                            icon:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: admin/customer/icon

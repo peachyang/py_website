@@ -14,6 +14,9 @@ checkout_cart:
                         type: Seahinet\Checkout\ViewModel\Cart
                         template: checkout/cart
                         children:
+                            item:
+                                type: Seahinet\Checkout\ViewModel\Cart\Item
+                                template: checkout/cart/item
                             total:
                                 type: Seahinet\Checkout\ViewModel\Cart
                                 template: checkout/cart/total
@@ -37,20 +40,30 @@ checkout_cart_mini:
                         children:
                             total:
                                 type: Seahinet\Checkout\ViewModel\Cart
-                                template: checkout/cart/total
+                                template: checkout/minicart/total
 checkout_order:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/locate.js
+                    -
+                        method: addScript
+                        params: frontend/js/checkout.js
             content:
                 type: Seahinet\Lib\ViewModel\Template
                 template: checkout/order
                 children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: checkout
                     address:
                         type: Seahinet\Checkout\ViewModel\Order\Address
-                        template: checkout/order/address
-                    shipping:
-                        type: Seahinet\Checkout\ViewModel\Order\Shipping
                         template: checkout/order/address
                     payment:
                         type: Seahinet\Checkout\ViewModel\Order\Payment
@@ -58,6 +71,17 @@ checkout_order:
                     review:
                         type: Seahinet\Checkout\ViewModel\Order\Review
                         template: checkout/order/review
+                        children:
+                            item:
+                                type: Seahinet\Checkout\ViewModel\Cart\Item
+                                template: checkout/order/review/item
+                                children:
+                                    shipping:
+                                        type: Seahinet\Checkout\ViewModel\Order\Shipping
+                                        template: checkout/order/shipping
+                            total:
+                                type: Seahinet\Checkout\ViewModel\Cart
+                                template: checkout/cart/total
 checkout_order_shipping:
     update: frontend
     root:

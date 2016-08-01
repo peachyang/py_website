@@ -1,8 +1,14 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$methods = $this->getShippingMethods();
+$storeId = $this->getVariable('store_id');
+$current = $this->getCurrentMethod();
+if ($methods):
+    ?>
+    <select name="shipping_method[<?php echo $storeId ?>]" id="shipping-method-<?php echo $storeId ?>">
+        <?php foreach ($methods as $code => $label): ?>
+            <option value="<?php echo $code ?>"<?php if (isset($current[$storeId]) && $current[$storeId] === $code): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
+        <?php endforeach ?>
+    </select>
+<?php else: ?>
+    <p><?php echo $this->translate('Sorry, no shipping methods are available for this order at this time.') ?></p>
+<?php endif; ?>

@@ -2,6 +2,14 @@
     <?php
     if (count($this->getItems())):
         ?>
+        <div class="checkout-flow hidden-xs clearfix">
+            <div class="item col-sm-4 active"><?php echo $this->translate('Shopping Cart') ?></div>
+            <div class="item col-sm-4"><?php echo $this->translate('Order Info') ?></div>
+            <div class="item col-sm-4"><?php echo $this->translate('Complate') ?></div>
+        </div>
+        <div>
+            <a href="" class="menu-all"><?php echo $this->translate('All Products') ?></a>
+        </div>
         <table class="table" id="cart">
             <colgroup>
                 <col width="1" />
@@ -15,21 +23,24 @@
             <thead>
                 <tr>
                     <th colspan="2">
-                        <input type="checkbox" class="selectall">
+                        <label>
+                            <input type="checkbox" class="selectall">
+                            <?php echo $this->translate('Check All') ?>
+                        </label>
                     </th>
-                    <th class="text-left">
-                        <?php echo $this->translate('Product') ?>
+                    <th class="text-left text-nowrap">
+                        <?php echo $this->translate('Product Information') ?>
                     </th>
-                    <th class="text-nowrap">
-                        <?php echo $this->translate('Price') ?>
+                    <th class="text-nowrap th-width">
+                        <?php echo $this->translate('Price', [], 'checkout') ?>
                     </th>
-                    <th class="text-nowrap">
+                    <th class="text-nowrap th-width">
                         <?php echo $this->translate('Qty') ?>
                     </th>
-                    <th class="text-nowrap">
+                    <th class="text-nowrap th-width">
                         <?php echo $this->translate('Subtotal') ?>
                     </th>
-                    <th class="text-nowrap">
+                    <th class="text-nowrap operation">
                         <?php echo $this->translate('Action') ?>
                     </th>
                 </tr>
@@ -42,7 +53,7 @@
                         ?>
                         <tr class="store">
                             <th>
-                                <input type="checkbox" class="selectall">
+                                <input type="checkbox" class="selectall" value="<?php echo $item['store']['id'] ?>">
                             </th>
                             <th colspan="6">
                                 <?php echo $item['store']['name'] ?>
@@ -59,14 +70,16 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td>
-                        <input type="checkbox" class="selectall">
-                    </td>
-                    <td colspan="2">
+                    <td colspan="3">
+                        <label>
+                			<input type="hidden" id="qty-change" value="0" >
+                            <input type="checkbox" class="selectall">
+                            <?php echo $this->translate('Check All') ?>
+                        </label>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-serialize="#cart input[name]"><?php echo $this->translate('Delete Selected Item(s)') ?></a>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-serialize="#cart input[name]"><?php echo $this->translate('Move to Wishlist') ?></a>
                     </td>
-                    <td colspan="4">
+                    <td colspan="4" class="text-right">
                         <?php echo $this->getChild('total'), $this->getChild('method') ?>
                     </td>
                 </tr>
@@ -77,4 +90,107 @@
         <h2><?php echo $this->translate('Shopping Cart Is Empty') ?></h2>
         <p><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
     <?php endif; ?>
+    <div class="related-products">
+    	<div id="related-menu">
+    		<a class="selected-menu" href="javascript:viod(0);">猜你喜欢</a>
+    		<a href="javascript:viod(0);">我的关注</a>
+    		<a href="javascript:viod(0);">最近浏览</a>
+    	</div>
+    	<div id="related-content">
+    		<div class="related-box selected-box">
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    		</div>
+    		<div class="related-box">
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    		</div>
+    		<div class="related-box">
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    			<div class="related-product">
+    				<a href="">
+    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
+    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
+    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				</a>
+    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 </div>

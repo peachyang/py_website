@@ -20,7 +20,10 @@ class AddressController extends AuthActionController
     {
         $collection = new Attribute;
         $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                ->where(['is_required' => 1, 'eav_entity_type.code' => Address::ENTITY_TYPE]);
+                ->where([
+                    'is_required' => 1,
+                    'eav_entity_type.code' => Address::ENTITY_TYPE
+        ]);
         $required = [];
         foreach ($collection as $item) {
             $required[] = $item['code'];

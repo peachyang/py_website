@@ -1,8 +1,21 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+$methods = $this->getPaymentMethods();
+$current = $this->getCurrentMethod();
+?>
+<section class="section payment">
+    <h4 class="title"><?php echo $this->translate('Payment Method') ?></h4>
+    <?php if ($methods): ?>
+        <ul class="list list-inline">
+            <?php foreach ($methods as $code => $label): ?>
+                <li>
+                    <input type="radio" name="payment_method" id="payment-method-<?php echo $code ?>" value="<?php echo $code ?>"<?php if ($code === $current || count($methods) === 1): ?> checked="checked"<?php endif ?> />
+                    <label for="payment-method-<?php echo $code ?>">
+                        <?php echo $this->translate($label) ?>
+                    </label>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else: ?>
+        <p><?php echo $this->translate('Sorry, no payment methods are available for this order at this time.') ?></p>
+    <?php endif ?>
+</section>

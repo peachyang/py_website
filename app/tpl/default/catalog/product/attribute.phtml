@@ -1,0 +1,13 @@
+<?php
+$attributes = $this->getProduct()->getAttributes();
+if ($attributes):
+    ?>
+    <ul class="product-attributes clearfix">
+        <?php foreach ($attributes as $key => $value): ?>
+            <li class="col-xs-4">
+                <span class="label"><?php echo $key ?></span>
+                <span class="value" title="<?php echo $value ?>"><?php echo $value ?></span>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>

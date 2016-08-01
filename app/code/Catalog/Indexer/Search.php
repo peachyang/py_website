@@ -70,7 +70,7 @@ class Search implements Provider
             foreach ($collection as $product) {
                 $text = '|';
                 foreach ($attributes as $attribute) {
-                    $text .= $product[$attribute['code']] . '|';
+                    $text .= $this->getOption($product, $attribute['code'], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                 }
                 $data[$language['id']][] = [
                     'id' => $product['id'],
@@ -81,6 +81,19 @@ class Search implements Provider
         }
         $handler->buildData($data);
         return true;
+    }
+
+    private function getOption($product, $code, $attribute = false)
+    {
+        $text = '';
+        if (is_array($product[$code])) {
+            foreach ($product[$code] as $value) {
+                $text .= ($attribute ? $attribute->getOption($value) : $value ) . '|';
+            }
+        } else {
+            $text .= ($attribute ? $attribute->getOption($product[$code]) : $product[$code]) . '|';
+        }
+        return $text;
     }
 
 }

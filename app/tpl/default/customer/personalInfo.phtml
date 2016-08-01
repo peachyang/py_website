@@ -1,0 +1,26 @@
+<?php 
+$customer = $this->getVariable('customer');
+?>
+<div class="col-xs-9 col-sm-9 col-md-10 personinfo">
+    <form action="<?php echo $this->getBaseUrl('customer/account/editPersonalInfo/') ?>" method="post" >
+    <div class="fieldset"> 
+    	<div>
+            <label><?php echo $this->translate('User Name:') ?></label>
+        	<span><?php echo $this->translate(ucwords($customer->username)) ?></span>
+    	</div>
+    	<div>
+        	<label for="edit:email" class="control-label"><?php echo $this->translate('Email:') ?></label> 
+        	<input type="email" name="email" id="edit:email" class="required email" value="<?php echo $this->translate($customer->email) ?>"/>
+    	</div>
+    	
+    	<div>
+        	<label for="edit:password" class="control-label"><?php echo $this->translate('Password:') ?></label> 
+        	<input type="password" name="password" id="edit:password" class="required password" />
+    	</div>
+    	
+    	<div>
+    		<button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>
+    	</div>
+    </div>	
+    </form>		
+</div>

@@ -27,7 +27,7 @@ class Group extends Template
         $attributes = new Attribute;
         $attributes->withLabel(Bootstrap::getLanguage()->getId())
                 ->join('eav_entity_attribute', 'eav_entity_attribute.attribute_id=eav_attribute.id', ['attribute_set_id', 'attribute_group_id', 'sort_order'], 'left')
-                ->order('attribute_group_id')
+                ->order('attribute_group_id, sort_order')
                 ->columns(['id'])
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
                 ->where(['eav_entity_type.code' => Customer::ENTITY_TYPE]);

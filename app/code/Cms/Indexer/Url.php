@@ -53,16 +53,16 @@ class Url implements Provider
         $data = [];
         $languages = new Language;
         $languages->columns(['id']);
-        $categories = new Category;
-        $categories->where(['status' => 1]);
-        $categories->load(false);
         foreach ($languages as $language) {
             $data[$language['id']] = [];
             $tree = [];
+            $categories = new Category($language['id']);
+            $categories->where(['status' => 1]);
+            $categories->load(false);
             foreach ($categories as $category) {
                 $tree[$category['id']] = [
                     'object' => $category,
-                    'pid' => (int) $category['parent_id']
+                    'pid' => (int) isset($category['parent_id']) ? $category['parent_id'] : 0
                 ];
             }
             foreach ($categories as $category) {

@@ -59,6 +59,15 @@ class Category extends PEdit
                 'label' => 'Uri Key',
                 'required' => 'required'
             ],
+            'show_navication' => [
+                'label' => 'Show navication',
+                'type' => 'select',
+                'required' => 'required',
+                'options' => [
+                    1 => 'Yes',
+                    0 => 'No'
+                ]
+            ],
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

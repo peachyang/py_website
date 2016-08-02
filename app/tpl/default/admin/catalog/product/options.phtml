@@ -59,8 +59,8 @@ $options = $this->getProduct()->getOptions();
                 <th><label class="control-label"><?php echo $this->translate('Price Type') ?></label></th>
                 <td>
                     <select name="options[is_fixed][<?php echo $option['id'] ?>]" class="form-control">
-                        <option value="0"><?php echo $this->translate('Percent') ?></option>
-                        <option value="1"<?php if ($option['is_fixed']): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Fixed') ?></option>
+                        <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                        <option value="0"<?php if ($option['is_fixed'] === '0'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Percent') ?></option>
                     </select>
                 </td>
                 <th></th>
@@ -95,8 +95,8 @@ $options = $this->getProduct()->getOptions();
                                     </td>
                                     <td>
                                         <select name="options[value][<?php echo $option['id'] ?>][is_fixed][]" class="form-control">
-                                            <option value="0"><?php echo $this->translate('Percent') ?></option>
-                                            <option value="1"<?php if ($value['is_fixed']): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Fixed') ?></option>
+                                            <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                                            <option value="0"<?php if ($option['is_fixed'] === '0'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Percent') ?></option>
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" name="options[value][<?php echo $option['id'] ?>][sku][]" value="<?php echo $value['sku'] ?>" /></td>
@@ -179,8 +179,8 @@ $options = $this->getProduct()->getOptions();
                 <th><label class="control-label"><?php echo $this->translate('Price Type') ?></label></th>
                 <td>
                     <select name="options[is_fixed][{$id}]" class="form-control">
-                        <option value="0"><?php echo $this->translate('Percent') ?></option>
                         <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                        <option value="0"><?php echo $this->translate('Percent') ?></option>
                     </select>
                 </td>
                 <th></th>
@@ -227,8 +227,8 @@ $options = $this->getProduct()->getOptions();
             </td>
             <td>
                 <select name="options[value][{$id}][is_fixed][]" class="form-control">
-                    <option value="0"><?php echo $this->translate('Percent') ?></option>
                     <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                    <option value="0"><?php echo $this->translate('Percent') ?></option>
                 </select>
             </td>
             <td><input type="text" class="form-control" name="options[value][{$id}][sku][]" /></td>

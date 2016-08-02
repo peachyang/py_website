@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS `sales_cart` (
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `shipping_method` VARCHAR(255) DEFAULT NULL COMMENT 'Shipping method',
     `payment_method` VARCHAR(255) DEFAULT NULL COMMENT 'Payment method',
+    `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
+    `subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Subtotal',
     `base_shipping` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base shipping fee',
     `shipping` DECIMAL(12,4) DEFAULT 0 COMMENT 'Shipping fee',
     `base_discount` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base discount',
@@ -130,6 +132,8 @@ CREATE TABLE IF NOT EXISTS `sales_order` (
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `shipping_method` VARCHAR(255) DEFAULT NULL COMMENT 'Shipping method',
     `payment_method` VARCHAR(255) DEFAULT NULL COMMENT 'Payment method',
+    `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
+    `subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Subtotal',
     `base_shipping` DECIMAL(12,4) NOT NULL COMMENT 'Base shipping fee',
     `shipping` DECIMAL(12,4) NOT NULL COMMENT 'Shipping fee',
     `base_discount` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base discount',
@@ -430,23 +434,38 @@ CREATE TABLE IF NOT EXISTS `wishlist_item` (
 );
 
 CREATE TABLE IF NOT EXISTS `social_media` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Social Media ID' ,
-    `label` VARCHAR(255) NOT NULL COMMENT 'Social Media Name' ,
-    `link` VARCHAR(255) NOT NULL COMMENT 'Social Media Link' ,
-    `icon` VARCHAR(20) NOT NULL COMMENT 'Social Media Icon Name' ,
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Social Media ID',
+    `label` VARCHAR(255) NOT NULL COMMENT 'Social Media Name',
+    `link` VARCHAR(255) NOT NULL COMMENT 'Social Media Link',
+    `icon` VARCHAR(20) NOT NULL COMMENT 'Social Media Icon Name',
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `social_media_share` (
-    `media_id` INTEGER NOT NULL COMMENT 'Social Media ID' ,
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID' ,
-    `product_id` INTEGER NOT NULL COMMENT 'Product ID' ,
+    `media_id` INTEGER NOT NULL COMMENT 'Social Media ID',
+    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`media_id`,`customer_id`,`product_id`),
-    INDEX `IDX_SOCIAL_MEDIA_SHARE_CUSTOMER_ID` (`customer_id`),
-    INDEX `IDX_SOCIAL_MEDIA_SHARE_PRODUCT_ID` (`product_id`),
+    INDEX IDX_SOCIAL_MEDIA_SHARE_CUSTOMER_ID (`customer_id`),
+    INDEX IDX_SOCIAL_MEDIA_SHARE_PRODUCT_ID (`product_id`),
     CONSTRAINT FK_SOCIAL_MEDIA_SHARE_MEDIA_ID_SOCIAL_MEDIA_ID FOREIGN KEY (`media_id`) REFERENCES `social_media` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_SOCIAL_MEDIA_SHARE_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_SOCIAL_MEDIA_SHARE_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS `log_view` (
+    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
+    `updated_at` DATETIME NULL DEFAULT NULL COMMENT 'Updated at',
+    PRIMARY KEY (`customer_id`,`product_id`),
+    INDEX IDX_LOG_VIEW_CUSTOMER_ID (`customer_id`),
+    INDEX IDX_LOG_VIEW_PRODUCT_ID (`product_id`),
+    CONSTRAINT FK_LOG_VIEW_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_LOG_VIEW_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TRIGGER `TGR_UPDATE_LOG_VIEW` BEFORE UPDATE ON `log_view` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 SET FOREIGN_KEY_CHECKS=1;

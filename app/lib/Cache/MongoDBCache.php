@@ -44,7 +44,7 @@ class MongoDBCache extends CacheProvider
             return false;
         }
 
-        return unserialize($document[self::DATA_FIELD]->getData());
+        return is_object($document[self::DATA_FIELD]) ? $document[self::DATA_FIELD]->getData() : $document[self::DATA_FIELD];
     }
 
     /**
@@ -75,7 +75,7 @@ class MongoDBCache extends CacheProvider
             $result = $this->collection->updateOne(
                     ['_id' => $id], ['$set' => [
                     self::EXPIRATION_FIELD => ($lifeTime > 0 ? new UTCDateTime((time() + $lifeTime) * 1000) : null),
-                    self::DATA_FIELD => new Binary(serialize($data), Binary::TYPE_OLD_BINARY),
+                    self::DATA_FIELD => strlen($data) > 2048 ? new Binary($data, Binary::TYPE_OLD_BINARY) : $data,
                 ]], array('upsert' => true)
             );
         } catch (Exception $e) {

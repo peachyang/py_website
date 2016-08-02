@@ -92,104 +92,31 @@
     <?php endif; ?>
     <div class="related-products">
     	<div id="related-menu">
-    		<a class="selected-menu" href="javascript:viod(0);">猜你喜欢</a>
-    		<a href="javascript:viod(0);">我的关注</a>
-    		<a href="javascript:viod(0);">最近浏览</a>
+    		<a class="selected-menu" href="javascript:viod(0);"><?php echo $this->translate('Guess you like') ?></a>
+    		<a href="javascript:viod(0);"><?php echo $this->translate('My concern') ?></a>
+    		<a href="javascript:viod(0);"><?php echo $this->translate('Recent browse') ?></a>
     	</div>
     	<div id="related-content">
     		<div class="related-box selected-box">
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡雄鹰能量棒Eagle Energy吸入式咖啡因能量榛提脑醒神的口袋咖啡</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
+    			
     		</div>
     		<div class="related-box">
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
+    			
     		</div>
     		<div class="related-box">
+    		<?php 
+    		      $logView = $this->getLogView();
+    		      foreach ($logView as $item){
+    		          $thumbnail = $item->getThumbnail();
+    		?>
     			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
+    				<a href="<?php echo $item->getUrl() ?>">
+    					<img alt="" src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/173x173/' . $thumbnail) : $thumbnail ?>">
+    					<p><span class="sale-price"><?php echo $item['special_price']?></span><span class="old-price"><?php echo $item['price']?></span></p>
+    					<p><span><?php echo $item['name']?></span></p>
     				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
     			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
-    			<div class="related-product">
-    				<a href="">
-    					<img alt="" src="../../pub/theme/default/frontend/images/placeholder.png">
-    					<p><span class="sale-price">$119.00</span><span class="old-price">$200.00</span></p>
-    					<p><span>雄鹰能量棒Eagle Energy雄鹰能量棒Eagle Energy</span></p>
-    				</a>
-    					<p class="related-store"><span>蓝海互联旗舰店</span><span class="success-num">1999人付款</span></p>
-    			</div>
+    		<?php }?>
     		</div>
     	</div>
     </div>

@@ -107,12 +107,10 @@ class Translator implements Singleton
     {
         if (!isset($this->storage[$locale])) {
             $cache = $this->getContainer()->get('cache');
-            if ($cache) {
-                $result = $cache->fetch($locale, static::CACHE_KEY);
-                if ($result) {
-                    $this->storage[$locale] = $result;
-                    return $this->storage[$locale];
-                }
+            $result = $cache->fetch($locale, static::CACHE_KEY);
+            if ($result) {
+                $this->storage[$locale] = $result;
+                return $this->storage[$locale];
             }
             $this->storage[$locale] = [];
             $collection = new Translation;
@@ -131,9 +129,7 @@ class Translator implements Singleton
                     $this->storage[$locale][static::DEFAULT_DOMAIN]->merge($this->storage[$locale][$domain]);
                 }
             }
-            if ($cache) {
-                $cache->save($locale, $this->storage[$locale], static::CACHE_KEY);
-            }
+            $cache->save($locale, $this->storage[$locale], static::CACHE_KEY);
         }
         return $this->storage[$locale];
     }
@@ -149,9 +145,11 @@ class Translator implements Singleton
         $file = new SplFileObject($path, 'rb');
         $file->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY);
 
-        foreach ($file as $data) {
+        while (!$file->eof()) {
+            $line = trim($file->fgets());
+            $data = str_getcsv($line);
             if ('#' !== substr($data[0], 0, 1) && isset($data[1]) && 2 === count($data)) {
-                $messages->offsetSet($data[0], $data[1]);
+                $messages->offsetSet($data[0], rtrim($data[1], '"'));
             }
         }
 

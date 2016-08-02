@@ -28,10 +28,7 @@ class Cart extends Template
     public function getQty()
     {
         if (is_null(self::$qty)) {
-            self::$qty = 0;
-            foreach ($this->getItems() as $item) {
-                self::$qty += $item['qty'];
-            }
+            self::$qty = $this->getCart()->getQty();
         }
         return self::$qty;
     }
@@ -46,6 +43,18 @@ class Cart extends Template
         $row = $this->getChild('item');
         $row->setVariable('item', $item);
         return $row;
+    }
+
+    public function getLogView()
+    {
+        $cookies = $this->getRequest()->getCookie('log_view');
+        $logView = [];
+        foreach (explode(',',$cookies) as $item){
+            if ($item){
+                $logView[] = $this->getCart()->getLogView($item);
+            }
+        }
+        return $logView;
     }
 
 }

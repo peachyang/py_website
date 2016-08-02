@@ -46,7 +46,7 @@ class Category extends Tab
         if (!empty($this->getCategories()[$level])) {
             foreach ($this->getCategories()[$level] as $category) {
                 $html .= '<li><input type="checkbox" name="category[]" id="category-' .
-                        $category['id'] . '" class="form-control" value="' .
+                        $category['id'] . '" class="form-control required" value="' .
                         $category['id'] . '"' . (in_array($category['id'], $this->getActiveIds()) ?
                                 ' checked="checked"' : '') . ' /><label for="category-' .
                         $category['id'] . '" class="control-label">' . $category['name'] .

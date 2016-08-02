@@ -15,7 +15,7 @@ class OrderController extends ActionController
 {
 
     use \Seahinet\Lib\Traits\DB;
-    
+
     public function indexAction()
     {
         if (count(Cart::instance()->getItems())) {
@@ -80,8 +80,12 @@ class OrderController extends ActionController
                     $items = $cart->getItems(true);
                     $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
                     $orders = [];
-                    $items->walk(function($item) use (&$orders) {
-                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id']);
+                    if (isset($data['payment'])) {
+                        $paymentMethod->saveData($data['payment']);
+                    }
+                    $result['redirect'] = $paymentMethod->preparePayment();
+                    $items->walk(function($item) use (&$orders, $paymentMethod) {
+                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getStatusBeforePayment()->getId());
                     });
                     $cart->abandon();
                     $this->commit();
@@ -243,7 +247,7 @@ class OrderController extends ActionController
         }
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        if (!$method->isValid()) {
+        if (!$method->available()) {
             throw new Exception('Invalid payment method');
         }
         return $method;
@@ -284,7 +288,7 @@ class OrderController extends ActionController
             if (!isset($result[$item['store_id']])) {
                 $className = $this->getContainer()->get('config')['shipping/' . $data['shipping_method'][$item['store_id']] . '/model'];
                 $result[$item['store_id']] = new $className;
-                if (!$result[$item['store_id']]->isValid()) {
+                if (!$result[$item['store_id']]->available()) {
                     throw new Exception('Invalid shipping method');
                 }
             }

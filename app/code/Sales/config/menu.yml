@@ -24,13 +24,3 @@ sales:
             link: 'sales_creditmemo/'
             title: Credit Memos
             priority: 50
-system:
-    children:
-        -
-            link: 'config/shipping/'
-            title: 'Shipping Method'
-            priority: 100
-        -
-            link: 'config/payment/'
-            title: 'Payment Method'
-            priority: 110

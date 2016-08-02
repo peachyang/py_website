@@ -4,11 +4,24 @@ namespace Seahinet\Shipping\Model;
 
 abstract class AbstractMethod
 {
-    
+
     use \Seahinet\Lib\Traits\Container;
 
-    abstract public function isValid();
-    
-    abstract public function getShippingRate();
+    protected $label;
+
+    abstract public function available();
+
+    abstract public function getShippingRate($storeId);
+
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        return $this;
+    }
 
 }

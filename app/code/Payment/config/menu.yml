@@ -1,0 +1,7 @@
+---
+system:
+    children:
+        -
+            link: 'config/payment/'
+            title: 'Payment Method'
+            priority: 110

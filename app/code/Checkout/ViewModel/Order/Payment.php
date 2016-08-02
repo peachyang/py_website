@@ -11,7 +11,7 @@ class Payment extends Template
 
     public function getPaymentMethods()
     {
-        return (new PaymentMethod)->getSourceArray();
+        return (new PaymentMethod)->getSourceArray(true);
     }
 
     public function getCurrentMethod()

@@ -46,4 +46,17 @@ class Item extends AbstractModel
         return $this;
     }
 
+    public function getOptions()
+    {
+        if ($this->storage['product_id']) {
+            $options = json_decode($this->storage['options']);
+            $result = [];
+            foreach($options as $id => $value){
+                $option = new Product\Option;
+                $option->load($id);
+                $result[$option->getLabel()] = $option->getValue($value);
+            }
+        }
+    }
+
 }

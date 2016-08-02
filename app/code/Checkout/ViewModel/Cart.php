@@ -28,10 +28,7 @@ class Cart extends Template
     public function getQty()
     {
         if (is_null(self::$qty)) {
-            self::$qty = 0;
-            foreach ($this->getItems() as $item) {
-                self::$qty += $item['qty'];
-            }
+            self::$qty = $this->getCart()->getQty();
         }
         return self::$qty;
     }

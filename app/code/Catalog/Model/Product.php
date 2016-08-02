@@ -12,7 +12,6 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\Sql\Predicate\NotIn;
 
 class Product extends Entity
 {
@@ -26,12 +25,12 @@ class Product extends Entity
         $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'product_type_id', 'status']);
     }
 
-    public function getOptions()
+    public function getOptions($constraint = [])
     {
         if ($this->getId()) {
             $options = new OptionCollection;
             $options->withLabel()
-                    ->where(['product_id' => $this->getId()]);
+                    ->where(['product_id' => $this->getId()] + $constraint);
             return $options;
         }
         return [];

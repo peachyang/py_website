@@ -1,0 +1,7 @@
+---
+system:
+    children:
+        -
+            link: 'config/shipping/'
+            title: 'Shipping Method'
+            priority: 100

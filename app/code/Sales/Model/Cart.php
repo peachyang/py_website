@@ -335,5 +335,11 @@ final class Cart extends AbstractModel implements Singleton
         $this->setData(['base_total' => $baseTotal, 'total' => $baseTotal]);
         return $this;
     }
+    
+    public function getLogView($id)
+    {
+        $model = new Product();
+        return $model->load($id);
+    }
 
 }

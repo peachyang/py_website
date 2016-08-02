@@ -4,6 +4,8 @@ namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Catalog\Model\Collection\Logview;
+use Seahinet\Catalog\Model\Logview as LogviewModel;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Controller\ActionController;
 
@@ -29,11 +31,25 @@ class ProductController extends ActionController
                     'label' => $product->offsetGet('name')
                 ]);
                 if(!$this->getRequest()->getHeader('DNT')){
-                    //$this->getResponse()->withCookie('currency', ['value' => $code, 'path' => '/']);
+                    $log_view = $this->getRequest()->getCookie('log_view');
+                    if (!in_array($this->getOption('product_id'), explode(',',$log_view))){
+                        $this->getResponse()->withCookie('log_view', ['value' => $this->getOption('product_id').','.$log_view, 'path' => '/', 'expires' => time()+3600*24*365*5]);
+                    }else {
+                        $newLogView = str_replace(','.$this->getOption('product_id').',', ',', $this->getOption('product_id').','.$log_view);
+                        $this->getResponse()->withCookie('log_view', ['value' => $newLogView, 'path' => '/', 'expires' => time()+3600*24*365*5]);
+                    }
                 }
                 $segment = new Segment('customer');
                 if ($segment->get('hasLoggedIn')){
-                    
+                    $logView = new Logview();
+                    $logView->where(['product_id'=>$this->getOption('product_id'),'customer_id'=>$segment->get('customer')->getId()]);
+                    if (!$logView[0]){
+                        $logViewModel = new LogviewModel();
+                        $logViewModel->setData([
+                            'customer_id'=> $segment->get('customer')->getId(),
+                            'product_id' => $this->getOption('product_id'),
+                        ])->save();
+                    }
                 }
                 return $root;
             }

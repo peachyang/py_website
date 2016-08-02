@@ -9,9 +9,9 @@ use Seahinet\Sales\Source\ShippingMethod;
 class Shipping extends Template
 {
 
-    public function getShippingMethods()
+    public function getShippingMethods($storeId)
     {
-        return (new ShippingMethod)->getSourceArray();
+        return (new ShippingMethod)->getSourceArray($storeId);
     }
 
     public function getCurrentMethod()

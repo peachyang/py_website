@@ -23,10 +23,11 @@ class Product extends PGrid
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return $item['status'] ? '' :
+                ('<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
-                $this->translate('Delete') . '</span></a>';
+                $this->translate('Delete') . '</span></a>');
     }
 
     public function getEditUrl()

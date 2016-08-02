@@ -1,56 +1,21 @@
 ---
-shipping:
-    label: Shipping Method
-    children:
-        free_shipping:
-            label: Free Shipping
-            scope: [merchant,store]
-            children:
-                enable:
-                    type: select
-                    label: Enable
-                    required: required
-                    priority: 0
-                    options:
-                        - Disabled
-                        - Enabled
-                    default: 0
-                label:
-                    type: text
-                    label: Label
-                    required: required
-                    priority: 1
-                    default: Free Shipping
-                model:
-                    type: hidden
-                    scope: merchant
-                    default: Seahinet\Shipping\Model\FreeShipping
-        flat_rate:
-            label: Flat Rate
-            scope: [merchant,store]
-            children:
-                enable:
-                    type: select
-                    label: Enable
-                    required: required
-                    priority: 0
-                    options:
-                        - Disabled
-                        - Enabled
-                    default: 0
-                label:
-                    type: text
-                    label: Label
-                    required: required
-                    priority: 1
-                    default: Flat Rate
-                model:
-                    type: hidden
-                    scope: merchant
-                    default: Seahinet\Shipping\Model\FlatRate
 payment:
     label: Payment Method
     children:
+        payment_free:
+            label: No Payment Information Required
+            scope: [merchant]
+            children:
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: No Payment Information Required
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\Free
         bank_transfer:
             label: Bank Transfer
             scope: [merchant,store]
@@ -74,6 +39,26 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\BankTransfer
+                description:
+                    type: textarea
+                    label: Description
+                    priority: 10
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51
         check_money_order:
             label: Check / Money Order
             scope: [merchant,store]
@@ -97,6 +82,26 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\CheckMoneyOrder
+                description:
+                    type: textarea
+                    label: Description
+                    priority: 10
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51
         cash_on_delivery:
             label: Cash On Delivery
             scope: [merchant,store]
@@ -120,6 +125,26 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\CashOnDelivery
+                description:
+                    type: textarea
+                    label: Description
+                    priority: 10
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51
         saved_cc:
             label: Saved CC
             scope: [merchant,store]
@@ -143,3 +168,19 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\SavedCc
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51

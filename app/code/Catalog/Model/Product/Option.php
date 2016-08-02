@@ -38,7 +38,7 @@ class Option extends AbstractModel
 
     public function getValues()
     {
-        if($this->storage['id']) {
+        if ($this->storage['id']) {
             if (!isset($this->storage['value'])) {
                 if (in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                     $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
@@ -54,6 +54,26 @@ class Option extends AbstractModel
             return $this->storage['value'];
         }
         return [];
+    }
+
+    public function getValue($value)
+    {
+        if ($this->storage['id']) {
+            if (in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
+                $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
+                $select = $tableGateway->getSql()->select();
+                $select->where(['option_id' => $this->getId(), 'product_option_value.id' => $value]);
+                $select->join('product_option_value_title', 'product_option_value.id=product_option_value_title.value_id', ['title'], 'left')
+                        ->where(['product_option_value_title.language_id' => $this->getLanguageId()]);
+                $result = $tableGateway->selectWith($select)->toArray();
+                if ($result) {
+                    return $result[0]['title'];
+                }
+            } else {
+                return $value;
+            }
+        }
+        return '';
     }
 
     protected function isUpdate($constraint = array(), $insertForce = false)

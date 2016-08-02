@@ -4,6 +4,7 @@ namespace Seahinet\Sales\Model;
 
 use Exception;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Session\Segment;
@@ -23,8 +24,8 @@ final class Cart extends AbstractModel implements Singleton
         $this->init('sales_cart', 'id', [
             'id', 'customer_id', 'status', 'additional', 'customer_note', 'discount_detail',
             'billing_address_id', 'shipping_address_id', 'billing_address', 'shipping_address',
-            'is_virtual', 'free_shipping', 'base_currency', 'currency',
-            'shipping_method', 'payment_method', 'base_shipping', 'shipping',
+            'is_virtual', 'free_shipping', 'base_currency', 'currency', 'base_subtotal',
+            'shipping_method', 'payment_method', 'base_shipping', 'shipping', 'subtotal',
             'base_discount', 'discount', 'base_tax', 'tax', 'base_total', 'total'
         ]);
     }
@@ -75,6 +76,8 @@ final class Cart extends AbstractModel implements Singleton
         if ($this->storage['status']) {
             $this->setData('status', 0)->save();
         }
+        $segment = new Segment('customer');
+        $segment->offsetUnset('cart');
         static::$instance = null;
     }
 
@@ -334,6 +337,53 @@ final class Cart extends AbstractModel implements Singleton
         }
         $this->setData(['base_total' => $baseTotal, 'total' => $baseTotal]);
         return $this;
+    }
+
+    public function getShippingAddress()
+    {
+        if (isset($this->storage['shipping_address_id'])) {
+            $address = (new Address)->load($this->storage['shipping_address_id']);
+            return $address->getId() ? $address : null;
+        }
+        return null;
+    }
+
+    public function getBillingAddress()
+    {
+        if (isset($this->storage['billing_address_id'])) {
+            $address = (new Address)->load($this->storage['billing_address_id']);
+            return $address->getId() ? $address : null;
+        }
+        return null;
+    }
+
+    public function getQty($storeId = null)
+    {
+        $qty = 0;
+        foreach ($this->getItems() as $item) {
+            if (is_null($storeId) || $item->offsetGet('store_id') == $storeId) {
+                $qty += $item['qty'];
+            }
+        }
+        return $qty;
+    }
+
+    public function getShippingMethod($storeId)
+    {
+        if (isset($this->storage['shipping_method'][$storeId])) {
+            $className = $this->getContainer()->get('config')['shipping/' . $this->storage['shipping_method'][$storeId] . '/model'];
+            return new $className;
+        }
+        return null;
+    }
+
+    public function getPaymentMethod()
+    {
+        if (isset($this->storage['payment_method'])) {
+            $className = $this->getContainer()->get('config')['payment/' . $this->storage['payment_method'] . '/model'];
+            return new $className;
+        }
+        return null;
     }
 
 }

@@ -18,9 +18,19 @@ class CartController extends ActionController
         $data = $this->getRequest()->isGet() ? $this->getRequest()->getQuery() : $this->getRequest()->getPost();
         $result = $this->validateForm($data, ['product_id', 'qty', 'warehouse_id']);
         if ($result['error'] === 0) {
-            $cart = Cart::instance();
             try {
-                $cart->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], isset($data['options']) ? $data['options'] : [], isset($data['sku']) ? $data['sku'] : '' );
+                $product = new Product;
+                $options = $product->load($data['product_id'])->getOptions(['is_required' => 1]);
+                foreach ($options as $option) {
+                    if (!isset($data['options'][$option->getId()])) {
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => sprintf($this->translate('The %%s field is required and cannot be empty.'), $option->offsetGet('title')), 'level' => 'danger'];
+                    }
+                }
+                if ($result['error'] === 1) {
+                    return $this->response($result, $product->getUrl(), 'checkout');
+                }
+                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], isset($data['options']) ? $data['options'] : [], isset($data['sku']) ? $data['sku'] : '' );
                 $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
             } catch (OutOfStock $e) {
                 $result['error'] = 1;

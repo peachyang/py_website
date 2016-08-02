@@ -215,7 +215,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-essential #product-media .carousel-indicators>li{text-indent:0;width:auto;height:auto;border:none;margin:0 8px 0 0}
 .product-essential #product-media .carousel-indicators>li>img{vertical-align:top}
 .product-essential .links{font-size:12px;line-height:16px;color:#9b9a9a;margin:0 0 60px;padding-left:15px}
-.product-essential .links li+li{border-left:1px solid;margin-left:16px}
+.product-essential .links>li+li{border-left:1px solid;margin-left:16px}
 .product-essential .links .fa{font-size:16px;color:#fd9030;margin:0 12px 0 16px}
 .product-essential .links .dropdown-menu a{color:#000}
 .product-essential .links .dropdown-menu .fa{margin:0;color:#000}
@@ -305,6 +305,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-cart #related-content .selected-box{display:block}
 .checkout-cart #related-content img{height:173px;width:173px;margin-bottom:5px}
 .checkout-cart #related-content .success-num{float:right;color:#aaa9a9}
+.checkout-order .payment-description{display:none;margin:0}
+.checkout-order [type=radio]:checked~.payment-description{display:block}
 #cart{color:#696868;font-size:12px}
 #cart .store th{padding-top:25px}
 #cart .store th input{margin-top:0}

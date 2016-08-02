@@ -20,7 +20,7 @@ class Product extends PEdit
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
-        if ($model && $model->getId()) {
+        if ($model && $model->getId() && !$model->offsetGet('status')) {
             return $this->getAdminUrl('catalog_product/delete/');
         }
         return false;

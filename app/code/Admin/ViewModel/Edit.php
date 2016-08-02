@@ -113,6 +113,8 @@ class Edit extends Template
                 foreach ($columns as $key => $column) {
                     if (!isset($columns[$key]['value'])) {
                         $columns[$key]['value'] = isset($values[$key]) ? $values[$key] : '';
+                    } else if (strpos($key, '[]') && isset($values[substr($key, 0, -2)])) {
+                        $columns[$key]['value'] = $values[substr($key, 0, -2)];
                     }
                 }
                 if (!empty($values['language']) && isset($columns['language_id[]'])) {

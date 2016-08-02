@@ -9,7 +9,7 @@ $customer = $this->getCustomer();
             <li class="register"><a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>"><?php echo $this->translate('Sign up') ?></a></li>
         </ul>
     <?php else: ?>
-        <p><?php echo $this->translate($this->getConfig()['theme/frontend/welcome_loggedin'], [$customer['username']]) ?></p>
+        <p><?php echo $this->translate($this->getConfig()['theme/frontend/welcome_loggedin'], ['<a href="' . $this->getBaseUrl('customer/account/') . '">' . $customer['username'] . '</a>']) ?></p>
         <ul class="list-inline">
             <li class="logout"><a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out') ?></a></li>
         </ul>

@@ -3,6 +3,11 @@ checkout_cart:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/bttrlazyloading.js
             content:
                 children:
                     messages:
@@ -25,6 +30,12 @@ checkout_cart:
                                 template: checkout/cart/method
                             crosssell:
                                 type: Seahinet\Checkout\ViewModel\Cart\Crosssell
+                                template: catalog/product/link
+                            logview:
+                                type: Seahinet\Checkout\ViewModel\Cart\logview
+                                template: catalog/product/link
+                            concern:
+                                type: Seahinet\Checkout\ViewModel\Cart\concern
                                 template: catalog/product/link
 checkout_cart_mini:
     update: frontend
@@ -89,10 +100,11 @@ checkout_order_shipping:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     shipping:
                         type: Seahinet\Checkout\ViewModel\Order\Shipping
-                        template: checkout/order/address
+                        template: checkout/order/shipping
 checkout_order_payment:
     update: frontend
     root:
@@ -100,6 +112,7 @@ checkout_order_payment:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     payment:
                         type: Seahinet\Checkout\ViewModel\Order\Payment
@@ -111,7 +124,8 @@ checkout_order_review:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     review:
-                        type: Seahinet\Checkout\ViewModel\Order\Review
-                        template: checkout/order/review
+                        type: Seahinet\Checkout\ViewModel\Cart
+                        template: checkout/cart/total

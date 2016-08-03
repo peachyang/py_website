@@ -21,7 +21,10 @@ $group = [];
                     <th></th>
                     <th></th>
                 </tr><tr>
-                <?php endif ?>
+                    <?php
+                    $group[] = $attribute['entity_type'];
+                endif;
+                ?>
                 <td><?php echo $attribute['label'] ?></td>
                 <td><input type="checkbox" name="attribute_id[<?php echo $attribute['id'] ?>][readable]"<?php if (isset($privileges[$attribute['id']]) && $privileges[$attribute['id']]['readable']): ?> checked="checked"<?php endif ?> value="1" /></td>
                 <td><input type="checkbox" name="attribute_id[<?php echo $attribute['id'] ?>][writeable]"<?php if (isset($privileges[$attribute['id']]) && $privileges[$attribute['id']]['writeable']): ?> checked="checked"<?php endif ?> value="1" /></td>

@@ -2,8 +2,6 @@
 
 namespace Seahinet\Payment\Model;
 
-use Seahinet\Sales\Model\Order\Phase;
-
 abstract class AbstractMethod
 {
 
@@ -15,7 +13,10 @@ abstract class AbstractMethod
     /**
      * @return bool
      */
-    abstract public function available();
+    public function available()
+    {
+        return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/enable'];
+    }
 
     /**
      * @param array $orders
@@ -29,11 +30,9 @@ abstract class AbstractMethod
     /**
      * @return int
      */
-    public function getStatusBeforePayment()
+    public function getNewOrderStatus()
     {
-        $phase = new Phase;
-        $phase->load('pending', 'code');
-        return $phase->getDefaultStatus();
+        return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/new_status'];
     }
 
     /**
@@ -41,7 +40,8 @@ abstract class AbstractMethod
      */
     public function getDescription()
     {
-        return '';
+        $description = $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/description'];
+        return $description ? nl2br($description) : '';
     }
 
     public function getLabel()

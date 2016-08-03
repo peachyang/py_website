@@ -16,7 +16,7 @@ class Shipping extends Template
 
     public function getCurrentMethod()
     {
-        if ($method = json_decode(Cart::instance()->offsetGet('payment_method'))) {
+        if ($method = json_decode(Cart::instance()->offsetGet('shipping_method'), true)) {
             return $method;
         }
         return [];

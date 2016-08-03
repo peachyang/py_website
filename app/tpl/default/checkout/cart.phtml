@@ -85,39 +85,43 @@
                 </tr>
             </tfoot>
         </table>
-        <?php echo $this->getChild('crosssell') ?>
     <?php else: ?>
         <h2><?php echo $this->translate('Shopping Cart Is Empty') ?></h2>
         <p><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
     <?php endif; ?>
+    <span id="span-info-none">
+        <?php echo $this->getChild('logview'),
+                   $this->getChild('crosssell')->setLimit(6)->setVariable('width', ['xs' => '362','sm' => '228','md' => '221','lg' => '173']),
+                   $this->getChild('concern');
+              $crosssell = $this->getChild('crosssell')->baseUrl;
+              $logview = $this->getChild('logview')->baseUrl;
+              $concern = $this->getChild('concern')->baseUrl;
+        ?>
+    </span>
+    <?php if ($this->getChild('crosssell')->baseUrl || $this->getChild('concern')->baseUrl || $this->getChild('logview')->baseUrl){?>
     <div class="related-products">
-    	<div id="related-menu">
-    		<a class="selected-menu" href="javascript:viod(0);"><?php echo $this->translate('Guess you like') ?></a>
-    		<a href="javascript:viod(0);"><?php echo $this->translate('My concern') ?></a>
-    		<a href="javascript:viod(0);"><?php echo $this->translate('Recent browse') ?></a>
-    	</div>
-    	<div id="related-content">
-    		<div class="related-box selected-box">
-    			
-    		</div>
-    		<div class="related-box">
-    			
-    		</div>
-    		<div class="related-box">
-    		<?php 
-    		      $logView = $this->getLogView();
-    		      foreach ($logView as $item){
-    		          $thumbnail = $item->getThumbnail();
-    		?>
-    			<div class="related-product">
-    				<a href="<?php echo $item->getUrl() ?>">
-    					<img alt="" src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/173x173/' . $thumbnail) : $thumbnail ?>">
-    					<p><span class="sale-price"><?php echo $item['special_price']?></span><span class="old-price"><?php echo $item['price']?></span></p>
-    					<p><span><?php echo $item['name']?></span></p>
-    				</a>
-    			</div>
-    		<?php }?>
-    		</div>
-    	</div>
+        <ul class="nav nav-tabs" role="tablist">
+            <?php if ($crosssell){?>
+            	<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $this->translate('Guess you like') ?></a></li>
+            <?php }?>
+            <?php if ($concern){?>
+            	<li role="presentation" class="<?php echo !$crosssell?'active':'';?>"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><?php echo $this->translate('My concern') ?></a></li>
+            <?php }?>
+            <?php if ($logview){?>
+            	<li role="presentation" class="<?php echo !$crosssell && !$concern?'active':'';?>"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo $this->translate('Recent browse') ?></a></li>
+            <?php }?>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <?php echo $this->getChild('crosssell')->setLimit(6)->setVariable('width', ['xs' => '362','sm' => '228','md' => '221','lg' => '173'])?>
+			</div>
+            <div role="tabpanel" class="tab-pane <?php echo !$crosssell?'active':'';?>" id="profile">
+                <?php echo $this->getChild('concern') ?>
+			</div>
+            <div role="tabpanel" class="tab-pane <?php echo !$crosssell && !$concern?'active':'';?>" id="messages">
+                <?php echo $this->getChild('logview') ?>
+			</div>
+        </div>
     </div>
+    <?php }?>
 </div>

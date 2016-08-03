@@ -211,7 +211,7 @@ final class Cart extends AbstractModel implements Singleton
             ])->collateTotals()->save();
         }
         $this->items[$item->getId()] = $item->toArray();
-        $this->collateTotals()->save();
+        $this->collateTotals();
         return $this;
     }
 
@@ -232,7 +232,7 @@ final class Cart extends AbstractModel implements Singleton
             $item->setData('qty', $qty)->collateTotals()->save();
             $this->items[$item->getId()]['qty'] = $item->toArray();
         }
-        $this->collateTotals()->save();
+        $this->collateTotals();
     }
 
     public function removeItem($item)
@@ -244,7 +244,7 @@ final class Cart extends AbstractModel implements Singleton
             unset($this->items[$item['id']]);
         }
         $item->remove();
-        $this->collateTotals()->save();
+        $this->collateTotals();
         return $this;
     }
 
@@ -260,7 +260,7 @@ final class Cart extends AbstractModel implements Singleton
                 }
                 $item->remove();
             }
-            $this->collateTotals()->save();
+            $this->collateTotals();
         }
         return $this;
     }
@@ -272,7 +272,7 @@ final class Cart extends AbstractModel implements Singleton
             $item->setId($item['id'])->remove();
         }
         $this->items = [];
-        $this->collateTotals()->save();
+        $this->collateTotals();
         return $this;
     }
 
@@ -291,9 +291,9 @@ final class Cart extends AbstractModel implements Singleton
                 $item->save();
             };
             foreach (['shipping', 'tax', 'discount', 'total'] as $attr) {
-                $this->storage[$attr] = $currency->convert($this->storage[$attr]);
+                $this->offsetSet($attr, $currency->convert($this->storage[$attr]));
             }
-            $this->storage['currency'] = $currency->offsetGet('code');
+            $this->offsetSet('currency', $currency->offsetGet('code'));
             $this->commit();
         } catch (Exception $e) {
             $this->rollback();
@@ -310,7 +310,7 @@ final class Cart extends AbstractModel implements Singleton
                 $currency->load($currency, 'code');
             }
             foreach (['base_shipping', 'base_tax', 'base_discount', 'base_total'] as $attr) {
-                $this->storage[$attr] = $currency->convert($this->storage[$attr]);
+                $this->offsetSet($attr, $currency->convert($this->storage[$attr]));
             }
             foreach ($this->getItems() as $item) {
                 $item = new Item($item);
@@ -319,7 +319,7 @@ final class Cart extends AbstractModel implements Singleton
                 }
                 $item->save();
             };
-            $this->storage['base_currency'] = $currency->offsetGet('code');
+            $this->offsetSet('base_currency', $currency->offsetGet('code'));
             $this->commit();
         } catch (Exception $e) {
             $this->rollback();
@@ -329,16 +329,48 @@ final class Cart extends AbstractModel implements Singleton
 
     public function collateTotals()
     {
-        $baseTotal = 0;
-        $total = 0;
-        foreach ($this->getItems(true) as $item) {
-            $baseTotal += $item['base_total'];
-            $total += $item['total'];
+        $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
+        $currency = (new Currency)->load($this->getContainer()->get('request')->getCookie('currency', $baseCurrency));
+
+        $items = $this->getItems(true);
+        $baseSubtotal = 0;
+        $storeId = [];
+        foreach ($items as $item) {
+            $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
+            if (!isset($storeId[$item['store_id']])) {
+                $storeId[$item['store_id']] = [];
+            }
+            $storeId[$item['store_id']][] = $item;
         }
-        $this->setData(['base_total' => $baseTotal, 'total' => $baseTotal]);
+        $shipping = 0;
+        foreach ($storeId as $id => $i) {
+            if ($method = $this->getShippingMethod($id)) {
+                $shipping += $method->getShippingRate($i);
+            }
+        }
+        $this->setData([
+            'base_subtotal' => $baseSubtotal,
+            'base_shipping' => $shipping,
+        ])->setData([
+            'subtotal' => $currency->convert($this->storage['base_subtotal']),
+            'shipping' => $currency->convert($shipping),
+        ]);
+        $this->getEventDispatcher()->trigger('tax.calc', ['model' => $this]);
+        $this->getEventDispatcher()->trigger('promotion.calc', ['model' => $this]);
+        $this->setData([
+            'base_total' => $this->storage['base_subtotal'] +
+            $this->storage['base_shipping'] +
+            $this->storage['base_tax'] +
+            $this->storage['base_discount'],
+            'total' => $this->storage['subtotal'] +
+            $this->storage['shipping'] +
+            $this->storage['tax'] +
+            $this->storage['discount']
+        ]);
+        $this->save();
         return $this;
     }
-    
+
     public function getLogView($id)
     {
         $model = new Product();
@@ -376,8 +408,8 @@ final class Cart extends AbstractModel implements Singleton
 
     public function getShippingMethod($storeId)
     {
-        if (isset($this->storage['shipping_method'][$storeId])) {
-            $className = $this->getContainer()->get('config')['shipping/' . $this->storage['shipping_method'][$storeId] . '/model'];
+        if (isset($this->storage['shipping_method'])) {
+            $className = $this->getContainer()->get('config')['shipping/' . json_decode($this->storage['shipping_method'], true)[$storeId] . '/model'];
             return new $className;
         }
         return null;

@@ -1,12 +1,14 @@
 <?php
-$methods = $this->getShippingMethods();
-$storeId = $this->getVariable('store_id');
+$storeId = $this->getVariable('store_id', $this->getQuery('store'));
+$methods = $this->getShippingMethods($storeId);
 $current = $this->getCurrentMethod();
 if ($methods):
     ?>
     <select name="shipping_method[<?php echo $storeId ?>]" id="shipping-method-<?php echo $storeId ?>">
         <?php foreach ($methods as $code => $label): ?>
-            <option value="<?php echo $code ?>"<?php if (isset($current[$storeId]) && $current[$storeId] === $code): ?> selected="selected"<?php endif ?>><?php echo $label ?></option>
+            <option value="<?php echo $code ?>"<?php if (isset($current[$storeId]) && $current[$storeId] === $code): ?> selected="selected"<?php endif ?>>
+                <?php echo $this->translate($label) ?>
+            </option>
         <?php endforeach ?>
     </select>
 <?php else: ?>

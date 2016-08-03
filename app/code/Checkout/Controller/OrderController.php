@@ -58,6 +58,7 @@ class OrderController extends ActionController
                 $result['error'] = 1;
             } else {
                 try {
+                    $this->beginTransaction();
                     $shippingAddress = $this->validShippingAddress($data);
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
@@ -76,7 +77,6 @@ class OrderController extends ActionController
                                 'billing_address_id' => $data['shipping_address_id'],
                                 'billing_address' => $shippingAddress->display(false)
                     ]);
-                    $this->beginTransaction();
                     $items = $cart->getItems(true);
                     $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
                     $orders = [];
@@ -85,7 +85,7 @@ class OrderController extends ActionController
                     }
                     $result['redirect'] = $paymentMethod->preparePayment();
                     $items->walk(function($item) use (&$orders, $paymentMethod) {
-                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getStatusBeforePayment()->getId());
+                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
                     });
                     $cart->abandon();
                     $this->commit();
@@ -159,6 +159,11 @@ class OrderController extends ActionController
                         'store_id' => Bootstrap::getStore()->getId(),
                         'customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null
                     ])->save();
+                    if (!$segment->get('hasLoggedIn')) {
+                        $ids = $segment->get('address')? : [];
+                        $ids[] = $address->getId();
+                        $segment->set('address', $ids);
+                    }
                     $result['data'] = ['id' => $address->getId(), 'content' => $address->display(), 'json' => json_encode($address->toArray())];
                     Cart::instance()->setData(
                             $data['is_billing'] ? [

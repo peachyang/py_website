@@ -89,10 +89,11 @@ checkout_order_shipping:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     shipping:
                         type: Seahinet\Checkout\ViewModel\Order\Shipping
-                        template: checkout/order/address
+                        template: checkout/order/shipping
 checkout_order_payment:
     update: frontend
     root:
@@ -100,6 +101,7 @@ checkout_order_payment:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     payment:
                         type: Seahinet\Checkout\ViewModel\Order\Payment
@@ -111,7 +113,8 @@ checkout_order_review:
         template: page/ajax
         children:
             content:
+                unset: [breadcrumb,messages]
                 children:
                     review:
-                        type: Seahinet\Checkout\ViewModel\Order\Review
-                        template: checkout/order/review
+                        type: Seahinet\Checkout\ViewModel\Cart
+                        template: checkout/cart/total

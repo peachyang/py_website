@@ -16,6 +16,14 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\Free
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 3
+                    priority: 5
         bank_transfer:
             label: Bank Transfer
             scope: [merchant,store]
@@ -39,6 +47,14 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\BankTransfer
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 1
+                    priority: 5
                 description:
                     type: textarea
                     label: Description
@@ -82,6 +98,14 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\CheckMoneyOrder
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 1
+                    priority: 5
                 description:
                     type: textarea
                     label: Description
@@ -125,6 +149,14 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\CashOnDelivery
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 1
+                    priority: 5
                 description:
                     type: textarea
                     label: Description
@@ -168,6 +200,14 @@ payment:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Payment\Model\SavedCc
+                new_status:
+                    type: select
+                    label: New Order Status
+                    scope: merchant
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 1
+                    priority: 5
                 country:
                     type: multiselect
                     label: Available Countries

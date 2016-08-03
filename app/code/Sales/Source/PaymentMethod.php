@@ -4,6 +4,7 @@ namespace Seahinet\Sales\Source;
 
 use Seahinet\Lib\Source\SourceInterface;
 use Seahinet\Payment\Model\AbstractMethod;
+use Seahinet\Payment\Model\Free;
 use Seahinet\Sales\Model\Cart;
 
 class PaymentMethod implements SourceInterface
@@ -15,10 +16,10 @@ class PaymentMethod implements SourceInterface
     {
         $config = $this->getContainer()->get('config');
         $address = Cart::instance()->getShippingAddress();
-        if ($total = Cart::instance()->offsetGet('base_total')) {
+        if ($total = (float) Cart::instance()->offsetGet('base_total')) {
             $result = [];
             foreach ($config['system']['payment']['children'] as $code => $info) {
-                if($code === 'payment_free'){
+                if ($code === 'payment_free') {
                     continue;
                 }
                 $className = $config['payment/' . $code . '/model'];
@@ -34,7 +35,7 @@ class PaymentMethod implements SourceInterface
             }
             return $result;
         } else {
-            return ['payment_free' => $getObject ? $model->setLabel($config['payment/payment_free/label']) : $config['payment/payment_free/label']];
+            return ['payment_free' => $getObject ? (new Free)->setLabel($config['payment/payment_free/label']) : $config['payment/payment_free/label']];
         }
     }
 

@@ -21,6 +21,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .quick-search .input-group-addon{padding:0;border:none}
 .header .quick-search .form-control{border:none;font-size:12px;height:36px}
 .header .quick-search select.form-control{background:#f1f1f1;width:auto;padding:0 0 0 6px}
+.header .quick-search label.invalid{display:none!important}
 .header .quick-search .btn{border-radius:0;background-color:#fdbb30;padding:8px 20px;float:right;font-size:18px;line-height:1;color:#000}
 .header .welcome{font-size:0;letter-spacing:1px}
 .header .welcome p{font-size:12px;line-height:30px;color:#fff;display:inline}
@@ -93,18 +94,19 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-create .btn-submit{background:#479fe3;font-size:18px;height:45px}
 .customer-account-login label.invalid,.customer-account-create label.invalid{position:absolute;top:100%;left:6px;font-size:12px;line-height:1.5}
 .customer-account-create [type=checkbox]~label.invalid{position:static}
-.goods-filter{border:1px solid #e1e3ea;} 
-.goods-filter>tbody>tr>th,.goods-filter>tbody>tr>td{vertical-align:middle;padding:0}
-.goods-filter-th{width:80px;text-align:center;font-weight:normal;font-size:12px}
-.goods-filter-tr{border-bottom:1px solid #e2e4ea;}
-.goods-filter{margin-bottom:15px}
-.goods-filter-li{margin-left:50px}
-.goods-li-all{margin-left:20px;}
-.goods-filter-ul{border-left:1px solid #e1e4ea;font-size:12px;height:50px;line-height:50px;overflow:hidden}
-.goods-filter a{color:#575656}
-.goods-filter-more{width:80px;text-align:center}
-.gird-pro-a{word-wrap:break-word;color:#757474;font-size:14px}
-.product-name{margin:0}
+.filters{border:1px solid #e1e3ea;padding:0 15px}
+.filters dt{clear:both;padding:15px 0;text-align:left;text-indent:20px}
+.filters dd{padding:15px 0;display:table}
+.filters dd+dt,.filters dd+dt+dd{border-top:1px solid #e1e3ea}
+.filters a,.filters dt{color:#575656;font-size:12px;line-height:20px}
+.filters .init{display:table-cell;width:8.5%;border-left:1px solid #e1e3ea;padding:0 20px 0 15px;white-space:nowrap}
+.filters .more{display:table-cell;width:5%;white-space:nowrap}
+.filters .more a{display:inline-block;border:1px solid #dadada;padding:0 6px}
+.filters .more a:after{content:" ";display:inline-block;width:0;height:0;border:3.46410162px solid transparent;border-top:6px solid #575656;border-bottom:none}
+.filters .values{display:table-cell;width:85%}
+.filters .values ul{height:22px;overflow:hidden}
+.filters .values.open ul{height:auto}
+.filters .values li{margin-right:20px;padding:1px 0}
 .products-grid{margin-bottom:15px}
 .products-grid .item{padding:10px;border:1px solid transparent;transition:border .2s ease-in-out}
 .products-grid .item:hover{border-color:#d9d9d9}
@@ -211,6 +213,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
+.product-essential #product-media .item img{max-width:100%}
 .product-essential #product-media .carousel-indicators{position:static;margin:15px 0 0;font-size:0;width:100%;text-align:left}
 .product-essential #product-media .carousel-indicators>li{text-indent:0;width:auto;height:auto;border:none;margin:0 8px 0 0}
 .product-essential #product-media .carousel-indicators>li>img{vertical-align:top}
@@ -258,6 +261,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-detail .product-attributes{background:#f1f1f1;color:#747474;font-size:14px;line-height:36px;padding:34px 0;margin-bottom:12px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .product-detail .product-attributes .label:after{content:":"}
+.product-detail #description img{max-width:100%}
 .qty{font-size:0}
 .qty .spin{display:inline-block;font-size:18px;line-height:22px;border:1px solid #d4d4d4;width:28px;height:28px;text-align:center;color:#cbcbcb;background:#ededed;vertical-align:bottom;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .qty .spin:hover{color:#000}

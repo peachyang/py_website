@@ -158,7 +158,6 @@
     $(".selectall").click(function () {
         var this_value = $(this).val();
         var this_status = this.checked;
-        ;
         $(".checkbox-" + this_value).prop("checked", this_status);
         if (this_value == "on") {
             $("input[type='checkbox']").prop("checked", this_status);
@@ -227,8 +226,4 @@
     $("input:checkbox").change(function () {
         total_change();
     });
-   $("#related-menu a").click(function(){
-       $(this).addClass("selected-menu").siblings().removeClass("selected-menu");
-       $('#related-content .related-box:eq(' + $(this).index() + ')').show().siblings().hide();
-   });
 }));

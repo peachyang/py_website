@@ -2,7 +2,7 @@
 
 namespace Seahinet\Cms\Route;
 
-use Seahinet\Cms\Model\Collection\Page as Collection;
+use Seahinet\Cms\Model\Category;
 use Seahinet\Cms\Model\Page as Model;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Http\Request;
@@ -29,7 +29,11 @@ class Page extends Route
         if ($result = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
             if ($result[0]['page_id']) {
                 return new RouteMatch([
-                    'page' => (new Model)->load($result[0]['page_id']), 'namespace' => 'Seahinet\\Cms\\Controller', 'controller' => 'PageController', 'action' => 'index'
+                    'page' => (new Model)->load($result[0]['page_id']),
+                    'category' => isset($result[0]['category_id']) ? (new Category)->load($result[0]['category_id']) : null,
+                    'namespace' => 'Seahinet\\Cms\\Controller',
+                    'controller' => 'PageController',
+                    'action' => 'index'
                         ], $request);
             } else {
                 return false;

@@ -7,6 +7,21 @@ cms_page:
                 children:
                     page:
                         type: Seahinet\Cms\ViewModel\Page
+cms_page_with_nav:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: cms/main
+                        children:
+                            navigation:
+                                type: Seahinet\Cms\ViewModel\Navigation
+                                template: cms/navigation
+                            page:
+                                type: Seahinet\Cms\ViewModel\Page
 admin_cms_page_list:
     update: grid
     root:

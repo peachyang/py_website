@@ -3,11 +3,15 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Customer\Model\Address;
+use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
 use Seahinet\Sales\Model\Order\Item;
 
 class Order extends AbstractModel
 {
+
+    protected $items = null;
 
     protected function construct()
     {
@@ -22,7 +26,7 @@ class Order extends AbstractModel
         ]);
     }
 
-    public function place($warehouseId, $storeId, $statusId = 1)
+    public function place($warehouseId, $storeId, $statusId)
     {
         $cart = Cart::instance();
         $note = json_decode($cart->toArray()['customer_note'], true);
@@ -33,7 +37,7 @@ class Order extends AbstractModel
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
                     'status_id' => $statusId
-                ])->setId(null)->collateTotals()->save();
+                ])->setId(null)->save();
         $orderId = $this->getId();
         $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId, $orderId) {
             if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId) {
@@ -45,11 +49,59 @@ class Order extends AbstractModel
                 $item->setData('order_id', $orderId)->setId(null)->save();
             }
         });
+        $this->collateTotals();
         return $this;
+    }
+
+    public function getItems($force = false)
+    {
+        if ($force || is_null($this->items)) {
+            $items = new ItemCollection();
+            $items->where(['order_id' => $this->getId()]);
+            if ($force) {
+                return $items;
+            }
+            $result = [];
+            $items->walk(function($item) use (&$result) {
+                $result[$item['id']] = $item;
+                $result[$item['id']]['product'] = new Product;
+                $result[$item['id']]['product']->load($item['product_id']);
+            });
+            $this->items = $result;
+        }
+        return $this->items;
     }
 
     public function collateTotals()
     {
+        $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
+        $currency = (new Currency)->load($this->getContainer()->get('request')->getCookie('currency', $baseCurrency));
+
+        $items = $this->getItems(true);
+        $baseSubtotal = 0;
+        foreach ($items as $item) {
+            $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
+        }
+        $this->setData([
+            'base_subtotal' => $baseSubtotal,
+            'base_shipping' => $this->getShippingMethod()->getShippingRate($items)
+        ])->setData([
+            'subtotal' => $currency->convert($this->storage['subtotal']),
+            'shipping' => $currency->convert($this->storage['base_shipping'])
+        ]);
+        $this->getEventDispatcher()->trigger('tax.calc', ['model' => $this]);
+        $this->getEventDispatcher()->trigger('promotion.calc', ['model' => $this]);
+        $this->setData([
+            'base_total' => $this->storage['base_subtotal'] +
+            $this->storage['base_shipping'] +
+            $this->storage['base_tax'] +
+            $this->storage['base_discount'],
+            'total' => $this->storage['subtotal'] +
+            $this->storage['shipping'] +
+            $this->storage['tax'] +
+            $this->storage['discount']
+        ]);
+        $this->save();
         return $this;
     }
 

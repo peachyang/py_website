@@ -8,6 +8,7 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Cart;
+use Zend\Db\Sql\Predicate\In;
 
 class Address extends Template
 {
@@ -35,17 +36,18 @@ class Address extends Template
 
     public function getAddress()
     {
+        $segment = new Segment('customer');
         if ($this->hasLoggedIn()) {
             $address = new Collection;
-            $segment = new Segment('customer');
             $address->where(['customer_id' => $segment->get('customer')['id']]);
-            if ($address->count()) {
+            return $address;
+        } else {
+            $ids = $segment->get('address');
+            if ($ids) {
+                $address = new Collection;
+                $address->where(new In('id', $ids));
                 return $address;
             }
-        } else if (Cart::instance()['shipping_address_id']) {
-            $address = new Model;
-            $address->load(Cart::instance()['shipping_address_id']);
-            return [$address];
         }
         return [];
     }

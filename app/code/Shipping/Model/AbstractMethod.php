@@ -11,7 +11,7 @@ abstract class AbstractMethod
 
     abstract public function available();
 
-    abstract public function getShippingRate($storeId);
+    abstract public function getShippingRate($items);
 
     public function getLabel()
     {

@@ -152,7 +152,7 @@ class Grid extends Template
                 } else if (strpos($value, '%') !== false) {
                     $collection->where(new Like($key, $value));
                     unset($condition[$key]);
-                } else if($collection instanceof Collection){
+                } else if ($collection instanceof Collection) {
                     $attribute = new Attribute;
                     $attribute->load($key, 'code');
                     if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {

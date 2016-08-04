@@ -1,0 +1,91 @@
+---
+admin_sales_cart_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Abandoned Cart / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_cart/',label:'Abandoned Cart'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Cart
+admin_sales_order_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Order / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_order/',label:'Invoice'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Order
+admin_sales_invoice_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_invoice/',label:'Invoice'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Invoice
+admin_sales_shipment_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Shipment / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_shipment/',label:'Shipment'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Shipment
+admin_sales_creditmemo_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Credit Memo / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_creditmemo/',label:'Credit Memo'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\CreditMemo

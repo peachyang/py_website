@@ -15,10 +15,10 @@ trait DB
 {
 
     /**
-     * @var TableGateway
+     * @var array
      */
-    protected $tableGateway = null;
-
+    protected static $tableGateways = [];
+    
     /**
      * @var ConnectionInterface
      */
@@ -33,12 +33,15 @@ trait DB
      * @param string|TableIdentifier|array $table
      * @return TableGateway
      */
-    protected function getTableGateway($table = '')
+    protected function getTableGateway($table = null)
     {
-        if (is_null($this->tableGateway)) {
-            $this->tableGateway = new TableGateway($table, $this->getContainer()->get('dbAdapter'));
+        if(is_null($table)){
+            $table = $this->tableName;
         }
-        return $this->tableGateway;
+        if (!isset(static::$tableGateways[$table])) {
+            static::$tableGateways[$table] = new TableGateway($table, $this->getContainer()->get('dbAdapter'));
+        }
+        return static::$tableGateways[$table];
     }
 
     /**
@@ -59,7 +62,7 @@ trait DB
      */
     public function select($where = null, $tableGateway = null)
     {
-        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
             return $tableGateway->select($where);
         }
@@ -73,7 +76,7 @@ trait DB
      */
     public function insert($set, $tableGateway = null)
     {
-        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
             return $tableGateway->insert($set);
         }
@@ -88,7 +91,7 @@ trait DB
      */
     public function update($set, $where = null, $tableGateway = null)
     {
-        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
             return $tableGateway->update($set, $where);
         }
@@ -118,7 +121,7 @@ trait DB
      */
     public function delete($where, $tableGateway = null)
     {
-        $tableGateway = is_null($tableGateway) ? $this->tableGateway : $tableGateway;
+        $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
             return $tableGateway->delete($where);
         }

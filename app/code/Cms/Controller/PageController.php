@@ -13,7 +13,8 @@ class PageController extends ActionController
         if (!$page) {
             return $this->notFoundAction();
         }
-        $root = $this->getLayout($this->getOption('category')->offsetGet('show_navigation') ? 'cms_page_with_nav' : 'cms_page');
+        $category = $this->getOption('category');
+        $root = $this->getLayout($category && $category->offsetGet('show_navigation') ? 'cms_page_with_nav' : 'cms_page');
         $root->addBodyClass('page-' . $page['uri_key']);
         $head = $root->getChild('head');
         $head->setTitle($page['title'])
@@ -23,7 +24,7 @@ class PageController extends ActionController
         if ($category) {
             $category->setVariables([
                 'page' => $page,
-                'category' => $this->getOption('category')
+                'category' => $category
             ]);
         }
         $root->getChild('page', true)->setPageModel($page);

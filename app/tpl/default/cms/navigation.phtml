@@ -1,27 +1,39 @@
-<?php
-$navigation = $this->getVariable('category');
-$navigate = $navigation->offsetGet('uri_key');
-?>    
-<nav class="nav" id="layered-nav">
-    <?php if(count($navigate)): ?>
-    <dl class="level-0" role="menu">
-        <?php foreach ($navigate as $key => $title) :?>
-        <dt><?php if($title['parent_id'] === NULL) echo $this->translate($title['name']);?></dt>
-        <?php endforeach;?>
-        <dd>
-            <?php foreach ($navigate as $key => $title) :?>
-            <dl class="level-1">
-                <dt><?php if($title['parent_id'] != NULL) echo $title['name'];?></dt>
-                <dd>
-                    <ul class="level-2">
-                        <?php if($title['parent_id'] !=NULL || count($title['id']) != 0 ) :?>
-                        <li class="active" role="presentation"><a href="" role="menuitem"><span><?php echo $title['name'];?></span></a></li>
-                        <?php endif;?>
-                    </ul>
-                </dd>
+        <?php
+        $parent = $this->getVariable('category')->getParentCategory();
+        ?>    
+        <nav class="nav" id="layered-nav">
+            <dl class="level-0" role="menu">
+                <?php
+                foreach ($parent->getChildrenCategories(1) as $navigations):
+                    $children = $navigations->getChildrenCategories(1);
+                    $count = $children->count();
+                    ?>
+                <dt><?php if(!empty($count)) echo $navigations['title']; ?></dt>
+                    <dd>
+                        <dl class="level-1">
+                            <?php
+                            foreach ($children as $child):
+                                $grandChildren = $child->getChildrenCategories(1);
+                                ?>
+                                <dt><?php echo $child['title']; ?></dt>
+                                <?php if (!empty($grandChildren->count())): ?>
+                                    <dd>
+                                        <ul class="level-2">
+                                            <?php foreach ($grandChildren as $grandChild): ?>
+                                            <li class="active" role="presentation">
+                                                <a href="<?php echo $grandChild->getUrl() ?>" role="menuitem">
+                                                    <span><?php echo $grandChild['title'] ?></span>
+                                                </a>
+                                            </li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                    </dd>
+                                    <?php
+                                endif;
+                            endforeach;
+                            ?>
+                        </dl>
+                    </dd>
+                <?php endforeach; ?>
             </dl>
-            <?php endforeach;?>
-        </dd>
-    </dl>
-    <?php endif;?>
-</nav>
+        </nav>

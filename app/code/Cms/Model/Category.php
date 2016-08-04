@@ -2,6 +2,7 @@
 
 namespace Seahinet\Cms\Model;
 
+use Seahinet\Cms\Model\Collection\Category as Collection;
 use Seahinet\Lib\Model\AbstractModel;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -11,6 +12,31 @@ class Category extends AbstractModel
     protected function construct()
     {
         $this->init('cms_category', 'id', ['id', 'uri_key', 'show_navigation', 'status', 'parent_id']);
+    }
+
+    public function getParentCategory()
+    {
+        if (!empty($this->storage['parent_id'])) {
+            $navgiation = new Category;
+            $navgiation->load($this->storage['parent_id']);
+            return $navgiation;
+        }
+        return NULL;
+    }
+
+    public function getChildrenCategories()
+    {
+        if (isset($this->storage['id'])) {
+            $navgiation = new Collection();
+            $navgiation->where(['parent_id' => $this->storage['id']]);
+            return $navgiation;
+        }
+        return NULL;
+    }
+
+    public function getPages()
+    {
+        return $this->getPages();
     }
 
     protected function beforeSave()

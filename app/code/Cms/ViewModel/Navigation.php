@@ -3,6 +3,7 @@
 namespace Seahinet\Cms\ViewModel;
 
 use Seahinet\Cms\Model\Category;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 
 class Navigation extends Template
@@ -10,14 +11,6 @@ class Navigation extends Template
 
     protected $navigations = null;
     protected $urls = [];
-
-    public function getTemplate()
-    {
-        if (!$this->template) {
-            return 'cms/main' . $this->getQuery();
-        }
-        return parent::getTemplate();
-    }
 
     public function getCategory()
     {

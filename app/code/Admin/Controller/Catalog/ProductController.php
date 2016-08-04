@@ -88,6 +88,9 @@ class ProductController extends AuthActionController
                 ]);
                 $user = (new Segment('admin'))->get('user');
                 if ($user->getStore()) {
+                    if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
+                        return $this->redirectReferer();
+                    }
                     $model->setData('store_id', $user->getStore()->getId());
                 }
                 if (empty($data['parent_id'])) {

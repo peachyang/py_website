@@ -24,7 +24,7 @@
                 <tr>
                     <th colspan="2">
                         <label>
-                            <input type="checkbox" class="selectall">
+                            <input type="checkbox" checked class="selectall">
                             <?php echo $this->translate('Check All') ?>
                         </label>
                     </th>
@@ -53,7 +53,7 @@
                         ?>
                         <tr class="store">
                             <th>
-                                <input type="checkbox" class="selectall" value="<?php echo $item['store']['id'] ?>">
+                                <input type="checkbox" checked class="selectall" value="<?php echo $item['store']['id'] ?>">
                             </th>
                             <th colspan="6">
                                 <?php echo $item['store']['name'] ?>
@@ -73,7 +73,7 @@
                     <td colspan="3">
                         <label>
                 			<input type="hidden" id="qty-change" value="0" >
-                            <input type="checkbox" class="selectall">
+                            <input type="checkbox" checked class="selectall">
                             <?php echo $this->translate('Check All') ?>
                         </label>
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-serialize="#cart input[name]"><?php echo $this->translate('Delete Selected Item(s)') ?></a>

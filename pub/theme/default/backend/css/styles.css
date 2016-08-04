@@ -214,6 +214,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .breadcrumb .buttons-set+ol{float:left;width:50%}
 .admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:8px 0}
 .admin .grid .filters .input-box{display:inline-block!important;padding:12px 0 10px 23px;margin:0;vertical-align:top}
+.admin .grid .filters .input-group .input-group-addon{font-size:12px;line-height:19px}
 .admin .grid .filters .control-label{display:inline-block!important;width:auto!important;padding:0!important;line-height:21px;font-size:12px;color:#6c6c6c}
 .admin .grid .filters .cell{display:inline-block!important;padding:0!important}
 .admin .grid .filters .form-control{width:99px;height:21px;line-height:21px}

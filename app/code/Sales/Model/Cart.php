@@ -151,7 +151,7 @@ final class Cart extends AbstractModel implements Singleton
                 return $items;
             }
             $result = [];
-            $items->walk(function($item) use (&$result) {
+            $items->walk(function(&$item) use (&$result) {
                 $result[$item['id']] = $item;
                 $result[$item['id']]['product'] = new Product;
                 $result[$item['id']]['product']->load($item['product_id']);

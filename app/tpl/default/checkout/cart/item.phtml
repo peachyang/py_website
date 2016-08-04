@@ -1,21 +1,29 @@
 <?php
+use function Predis\dump;
+
 $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
 $inventory = $item->getInventory();
+$options = $this->getOption();
 ?>
 <tr class="product-list">
     <td></td>
     <td>
-        <input type="checkbox" class="float-left checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>">
+        <input type="checkbox" checked class="float-left checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>">
         <a  class="float-left" href="<?php echo $item['product']->getUrl() ?>">
             <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
         </a>
     </td>
     <td>
-        <a href="<?php echo $item['product']->getUrl() ?>">
+        <a  href="<?php echo $item['product']->getUrl() ?>">
             <?php echo $item['product_name'] ?>
         </a>
+        <?php 
+            foreach ($options as $k=>$v){
+                echo '<p><span>'. $k .'：'. $v .'</span></p>';
+            }
+        ?>
     </td>
     <td>
         <?php echo $this->getCurrency()->format($item['price']) ?>

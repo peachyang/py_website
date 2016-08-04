@@ -1,41 +1,40 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Resource;
+namespace Seahinet\Admin\Controller\Sales;
 
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Lib\Session\Segment;
-use Seahinet\Resource\Model\Category as Model;
 
-class CategoryController extends AuthActionController
+class OrderController extends AuthActionController
 {
 
     public function indexAction()
     {
-
-        $root = $this->getLayout('admin_resource_category_list');
+        $root = $this->getLayout('admin_sales_order_list');
         return $root;
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_resource_category_edit');
+        $root = $this->getLayout('admin_sales_order_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Category / Resource Category / CMS');
+            $root->getChild('head')->setTitle('Edit Order / CMS');
         } else {
-            $root->getChild('head')->setTitle('Add New Category / Resource Category / CMS');
+            $root->getChild('head')->setTitle('Add New Order / CMS');
         }
         return $root;
     }
 
+    public function deleteAction()
+    {
+        return $this->doDelete('\\Seahinet\\Sales\\Model\\Order', ':ADMIN/sales_order/');
+    }
+
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Resource\\Model\\Category', ':ADMIN/resource_category/', ['language_id', 'code', 'name'], function($model, $data) {
-                    if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
-                        $model->setData('parent_id', null);
-                    }
+        return $this->doSave('\\Seahinet\\Sales\\Model\\Order', ':ADMIN/sales_order/', [], function($model, $data) {
                     $user = (new Segment('admin'))->get('user');
                     if ($user->getStore()) {
                         if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
@@ -47,11 +46,6 @@ class CategoryController extends AuthActionController
                     }
                 }
         );
-    }
-
-    public function deleteAction()
-    {
-        return $this->doDelete('\\Seahinet\\Resource\\Model\\Category', ':ADMIN/resource_category/');
     }
 
 }

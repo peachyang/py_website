@@ -5,11 +5,11 @@ sales:
     priority: 40
     children:
         -
-            link: 'sales_abandonedcart/'
+            link: 'sales_cart/'
             title: Abandoned Cart
             priority: 10
         -
-            link: 'sales_orders/'
+            link: 'sales_order/'
             title: Orders
             priority: 20
         -

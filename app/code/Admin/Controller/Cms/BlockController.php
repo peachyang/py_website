@@ -39,6 +39,9 @@ class BlockController extends AuthActionController
         return $this->doSave('\\Seahinet\\Cms\\Model\\Block', ':ADMIN/cms_block/', ['code', 'language_id'], function($model, $data) {
                     $user = (new Segment('admin'))->get('user');
                     if ($user->getStore()) {
+                        if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
+                            throw new \Exception('Not allowed to save.');
+                        }
                         $model->setData('store_id', $user->getStore()->getId());
                     } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
                         $model->setData('store_id', null);

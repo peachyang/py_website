@@ -66,11 +66,14 @@ class ManageController extends AuthActionController
                 $type = new Type;
                 $type->load(Model::ENTITY_TYPE, 'code');
                 $model->setData('type_id', $type->getId());
-                $user = (new Segment('admin'))->get('user');
-                if ($user->getStore()) {
-                    $model->setData('store_id', $user->getStore()->getId());
-                }
                 try {
+                    $user = (new Segment('admin'))->get('user');
+                    if ($user->getStore()) {
+                        if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
+                            throw new \Exception('Not allowed to save.');
+                        }
+                        $model->setData('store_id', $user->getStore()->getId());
+                    }
                     $model->save();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {

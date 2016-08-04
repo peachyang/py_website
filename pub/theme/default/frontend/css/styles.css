@@ -238,7 +238,10 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-essential .product-info .options .input-box{display:table-row}
 .product-essential .product-info .options .control-label{display:table-cell;vertical-align:top;padding:0 10px 0 16px;font-size:12px;line-height:28px;width:1%;white-space:nowrap}
 .product-essential .product-info .options .cell{display:table-cell;padding-bottom:15px}
-.product-essential .product-info .options .cell [type=radio]+label,.product-essential .product-info .options .cell [type=checkbox]+label{margin-right:20px}
+.product-essential .product-info .options .cell label.invalid{display:block;padding:0}
+.product-essential .product-info .options .cell [type=radio],.product-essential .product-info .options .cell [type=checkbox]{display:none}
+.product-essential .product-info .options .cell [type=radio]+label,.product-essential .product-info .options .cell [type=checkbox]+label{margin:0 20px 10px 0;line-height:26px;border:1px solid #f4f4f4;color:#999;padding:0 6px}
+.product-essential .product-info .options .cell [type=radio]:checked+label,.product-essential .product-info .options .cell [type=checkbox]:checked+label{border-color:#666;color:#666}
 .product-essential .product-info .action{clear:both;width:100%;padding:20px 0 20px 16px;text-align:left}
 .product-essential .product-info .action .btn{min-width:150px;height:40px;background-color:#fbe5d2;border-color:#fd9233;color:#fd9030;border-radius:0;margin-right:12px;font-size:16px;padding:0 25px}
 .product-essential .product-info .action .btn-checkout,.product-essential .product-info .action .btn:hover{color:#fff;background-color:#fd9030}

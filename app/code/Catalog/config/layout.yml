@@ -52,6 +52,9 @@ catalog_product:
                     -
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
+                    -
+                        method: addScript
+                        params: frontend/js/product.js
             content:
                 children:
                     messages:

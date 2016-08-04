@@ -15,7 +15,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
             <div class="col-xs-12 col-sm-4">
                 <?php echo $this->getChild('media')->setVariable('product', $product), $this->getChild('share') ?>
             </div>
-            <div class="col-xs-12 col-sm-6 product-info">
+            <div class="col-xs-12 col-sm-8 col-md-6 product-info">
                 <h2 class="product-name"><?php echo $product['name'] ?></h2>
                 <div class="clearfix price-box">
                     <div class="col-xs-12 col-sm-8">
@@ -52,15 +52,15 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </button>
                 </div> 
             </div>
-            <div class="col-xs-12 col-sm-2 upsells">
+            <div class="col-xs-12 col-md-2 upsells">
                 <?php
                 echo $this->getChild('upsells')
                         ->setVariable('product', $product)
                         ->setLimit(3)
-                        ->setVariable('class', 'col-xs-4 col-sm-12')
+                        ->setVariable('class', 'col-xs-4 col-md-12')
                         ->setVariable('width', [
                             'xs' => '219',
-                            'sm' => '67',
+                            'sm' => '228',
                             'md' => '104',
                             'lg' => '137',
                         ])

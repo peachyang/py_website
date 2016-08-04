@@ -43,6 +43,7 @@ abstract class AbstractCollection extends ArrayObject
     protected $eventDispatcher = null;
     protected $cacheKey = '';
     protected $isLoaded = false;
+    protected $arrayMode = false;
     protected $tableName = '';
 
     public function __construct()
@@ -174,7 +175,7 @@ abstract class AbstractCollection extends ArrayObject
     {
         $this->isLoaded = true;
         $className = str_replace('\\Collection', '', get_class($this));
-        if (class_exists($className)) {
+        if (!$this->arrayMode && class_exists($className)) {
             foreach ($result as &$item) {
                 if (is_array($item)) {
                     $object = new $className;
@@ -187,6 +188,49 @@ abstract class AbstractCollection extends ArrayObject
         }
         $this->storage = $result;
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
+    }
+
+    public function serialize()
+    {
+        $storage = $this->storage;
+        if (!$this->arrayMode) {
+            foreach ($this->storage as &$item) {
+                if (is_object($item)) {
+                    $item = $item->toArray();
+                } else {
+                    break;
+                }
+            }
+        }
+        $result = parent::serialize();
+        $this->storage = $storage;
+        return $result;
+    }
+
+    public function unserialize($data)
+    {
+        $data = unserialize($data);
+        foreach ($data as $key => $value) {
+            if ($key === 'storage' && !$this->arrayMode) {
+                $className = str_replace('\\Collection', '', get_class($this));
+                if (class_exists($className)) {
+                    foreach ($value as &$item) {
+                        if (is_array($item)) {
+                            $object = new $className;
+                            $object->setData($item);
+                            $item = $object;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            } else {
+                $this->$key = $value;
+            }
+        }
+        if ($this instanceof Singleton) {
+            static::$instance = $this;
+        }
     }
 
     /**

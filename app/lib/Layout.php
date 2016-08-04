@@ -81,8 +81,8 @@ class Layout extends ArrayObject implements Singleton
      */
     public function renderLayout(array $layout, $name, $parent = null)
     {
-        if (!isset($layout['type'])) {
-            throw new \InvalidArgumentException('Missing type argument.');
+        if (!isset($layout['type']) || !class_exists($layout['type'])) {
+            return null;
         }
         if (is_subclass_of($layout['type'], '\\Seahinet\\Lib\\Stdlib\\Singleton')) {
             $viewModel = $layout['type']::instance();

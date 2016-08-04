@@ -193,14 +193,12 @@ abstract class Entity extends AbstractModel
                 $languages->columns(['id']);
                 $index = [];
                 foreach ($this->attributes as $attr) {
-                    if (!isset($attributes[$attr['code']])) {
-                        continue;
-                    }
+                    $attribute = @$attributes[$attr['code']];
                     if (!isset($tableGateways[$attr['type']])) {
                         $tableGateways[$attr['type']] = new TableGateway($this->valueTablePrefix . '_' . $attr['type'], $adapter);
                     }
-                    if (is_array($attributes[$attr['code']])) {
-                        foreach ($attributes[$attr['code']] as $id => $value) {
+                    if (is_array($attribute)) {
+                        foreach ($attribute as $id => $value) {
                             if (!isset($index[$id])) {
                                 $index[$id] = [];
                             }
@@ -216,21 +214,28 @@ abstract class Entity extends AbstractModel
                             if (!isset($index[$this->languageId])) {
                                 $index[$this->languageId] = [];
                             }
-                            $index[$this->languageId][$attr['code']] = $attributes[$attr['code']];
-                            $this->upsert(['value' => $attributes[$attr['code']]], ['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                            if (is_null($attribute)) {
+                                $index[$this->languageId][$attr['code']] = null;
+                                $this->delete(['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                            } else {
+                                $index[$this->languageId][$attr['code']] = $attribute;
+                                $this->upsert(['value' => $attribute], ['language_id' => $this->languageId, 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                            }
                         } else {
                             foreach ($languages as $language) {
                                 if (!isset($index[$language['id']])) {
                                     $index[$language['id']] = [];
                                 }
-                                $index[$language['id']][$attr['code']] = $attributes[$attr['code']];
-                                $this->insert(['value' => $attributes[$attr['code']], 'language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                                $index[$language['id']][$attr['code']] = $attribute;
+                                if (!is_null($attribute)) {
+                                    $this->insert(['value' => $attribute, 'language_id' => $language['id'], 'entity_id' => $this->getId(), 'attribute_id' => $attr['id']], $tableGateways[$attr['type']]);
+                                }
                             }
                         }
                     }
                 }
                 if ($isUpdate) {
-                    $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, $columns + (isset($index[$this->languageId]) ? $index[$this->languageId] : []), [$this->primaryKey => $this->getId()]);
+                    $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, (isset($index[$this->languageId]) ? $columns + $index[$this->languageId] : $columns), [$this->primaryKey => $this->getId()]);
                 } else {
                     foreach ($languages as $language) {
                         $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));

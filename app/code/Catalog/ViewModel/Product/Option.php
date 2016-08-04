@@ -3,9 +3,23 @@
 namespace Seahinet\Catalog\ViewModel\Product;
 
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Lib\Session\Segment;
 
 class Option extends Template
 {
+
+    public function getFormData()
+    {
+        $segment = new Segment('catalog');
+        $data = $segment->get('form_data');
+        if (isset($data['options'])) {
+            $values = $data['options'];
+            unset($data['options']);
+            $segment->set('form_data', $data);
+            return $values;
+        }
+        return [];
+    }
 
     public function getOptions()
     {

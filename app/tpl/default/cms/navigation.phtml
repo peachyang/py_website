@@ -1,31 +1,27 @@
-<?php 
+<?php
 $navigation = $this->getVariable('category');
+$navigate = $navigation->offsetGet('uri_key');
 ?>    
 <nav class="nav" id="layered-nav">
-    <dl class="level-0" role="menu">   
-        <dt>help-center</dt>
-            <dd>
-                <dl class="level-1">
-                    <dt>Beginner's Guide</dt>
-                    <dd>
-                        <ul class="level-2">
-                            <li class="active" role="presentation"><a href="" role="menuitem"><span>Register Help</span></a></li>
-                            <li role="presentation"><a href="" role="menuitem"><span>Shopping Help</span></a></li>
-                            <li role="presentation"><a href="" role="menuitem"><span>Help pay</span></a></li>
-                        </ul>
-                    </dd>
-                </dl>
-            </dd>
-            <dd>
-                <dl class="level-1">
-                    <dt>About payment</dt>
-                    <dd>
-                        <ul class="level-2">
-                            <li role="presentation"><a href="" role="menuitem"><span>About payment</span></a></li>
-                            <li role="presentation"><a href="" role="menuitem"><span>Invoice Policy</span></a></li>
-                        </ul>
-                    </dd>
-                </dl>
-            </dd>
-        </dl>
-    </nav>
+    <?php if(count($navigate)): ?>
+    <dl class="level-0" role="menu">
+        <?php foreach ($navigate as $key => $title) :?>
+        <dt><?php if($title['parent_id'] === NULL) echo $this->translate($title['name']);?></dt>
+        <?php endforeach;?>
+        <dd>
+            <?php foreach ($navigate as $key => $title) :?>
+            <dl class="level-1">
+                <dt><?php if($title['parent_id'] != NULL) echo $title['name'];?></dt>
+                <dd>
+                    <ul class="level-2">
+                        <?php if($title['parent_id'] !=NULL || count($title['id']) != 0 ) :?>
+                        <li class="active" role="presentation"><a href="" role="menuitem"><span><?php echo $title['name'];?></span></a></li>
+                        <?php endif;?>
+                    </ul>
+                </dd>
+            </dl>
+            <?php endforeach;?>
+        </dd>
+    </dl>
+    <?php endif;?>
+</nav>

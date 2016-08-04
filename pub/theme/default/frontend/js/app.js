@@ -210,19 +210,27 @@
         });
         $('.total-pirce').html($.trim($("#cart tbody").find("tr:eq(1)").find("td:eq(3)").html()).substr(0, 1) + total_price + '.00');
         var checked_total = 0;
+        var checked_total_off = 0;
         $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
-        	if ($(this).is(':checked')) {
-        		checked_total++;
+        	$(this).is(':checked') ? checked_total++ : checked_total_off++ ;
+        });
+        checked_total > 0 ? $(".btn-checkout").css("background","#fabb39") : $(".btn-checkout").css("background","none");
+        checked_total_off > 0 ? $(".selectall").prop("checked", false) : $(".selectall").prop("checked", true);
+    }
+    $(".btn-checkout").click(function(){
+    	var total_price = 0;
+        $("tbody .product-list").find("td:eq(5)").find("span.checkout-num").each(function () {
+        	var checked_total = 0;
+            $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
+            	if ($(this).is(':checked')) {
+            		checked_total++;
+                }
+            });
+            if(checked_total > 0){
+            	window.location.href = GLOBAL.BASE_URL+"/checkout/order/";
             }
         });
-        if(checked_total > 0){
-        	$(".btn-checkout").css("background","#fabb39");
-        	$(".btn-checkout").attr("href",GLOBAL.BASE_URL+"/checkout/order/");
-        }else{
-        	$(".btn-checkout").css("background","none");
-        	$(".btn-checkout").attr("href","javascript:viod(0)");
-        }
-    }
+    })
     $("input:checkbox").change(function () {
         total_change();
     });

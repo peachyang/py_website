@@ -33,6 +33,16 @@ class Cart extends Template
         return self::$qty;
     }
 
+    public function getTotal()
+    {
+        $items = $this->getCart()->getItems();
+        $total = 0;
+        foreach ($items as $item){
+            $total += $item['price'] * $item['qty'];
+        }
+        return $total;
+    }
+
     public function getItems()
     {
         return $this->getCart()->getItems();

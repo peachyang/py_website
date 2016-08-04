@@ -1,6 +1,9 @@
 <?php
 $csrf = $this->getCsrfKey();
 $items = $this->getItems();
+$item_model = new \Seahinet\Checkout\ViewModel\Cart\Item();
+//$options = $item_model->getOption($items);
+$options = $item_model->getOption($items);
 ?>
 <div class="minicart dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle">
@@ -23,6 +26,11 @@ $items = $this->getItems();
                         </a>
                         <h3 class="product-name col-xs-7">
                             <a href="<?php echo $item['product']->getUrl() ?>"><?php echo $item['product']['name'] ?></a>
+                            <?php 
+                                 foreach ($options as $k=>$v){
+                                     echo '<p><span>'. $k .'：'. $v .'</span></p>';
+                                 }
+                            ?>
                         </h3>
                         <div class="col-xs-3 action">
                             <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), 'x', (float) $item['qty'] ?></div>

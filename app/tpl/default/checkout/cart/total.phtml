@@ -1,5 +1,5 @@
 <?php echo $this->translate('Select Qty') ?>
-<span class="checkout-num select-qyt"><?php #echo $this->getQty()   ?>0</span>
+<span class="checkout-num select-qyt"><?php echo $this->getQty()   ?></span>
 <?php echo $this->translate('Unit') ?>
 <?php
 if ((float) $this->getCart()['discount']):
@@ -20,4 +20,4 @@ if ($this->getCart()['shipping']):
 endif;
 ?>
 <?php echo $this->translate('Total') ?>:
-<span class="checkout-num total-pirce"><?php echo $this->getCurrency()->offsetGet('symbol') ?>0.00</span>
+<span class="checkout-num total-pirce"><?php //echo $this->getCurrency()->format($this->getCart()['total']) ?><?php echo $this->getCurrency()->offsetGet('symbol'),$this->getTotal()?></span>

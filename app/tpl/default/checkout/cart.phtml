@@ -98,7 +98,7 @@
               $concern = $this->getChild('concern')->baseUrl;
         ?>
     </span>
-    <?php if ($this->getChild('crosssell')->baseUrl || $this->getChild('concern')->baseUrl || $this->getChild('logview')->baseUrl){?>
+    <?php if ($crosssell || $logview || $concern){?>
     <div class="related-products">
         <ul class="nav nav-tabs" role="tablist">
             <?php if ($crosssell){?>

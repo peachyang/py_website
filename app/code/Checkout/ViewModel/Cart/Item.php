@@ -15,11 +15,8 @@ class Item extends Template
     }
 
     public function getOption($product_mini = null){
-        $product = $product_mini ? $product_mini[15] : $this->getVariable('item');
-        //var_dump($product_mini[15]['product']);
+        $product = $product_mini ? $product_mini : $this->getVariable('item');
         $options = $product['product']->getOptions()->toArray();
-//         echo "<pre>";
-//         print_r($options);die;
         if ($options){
             $options_array = [];
             foreach ($options as $item){
@@ -31,7 +28,7 @@ class Item extends Template
             }
             $options_select = [];
             foreach (json_decode($product['options']) as $k=>$v){
-                $options_select[$options_array[$k]['title']] = $options_array[$k]['value'][$v]['title'];
+                $options_select[$options_array[$k]['title']] = isset($options_array[$k]['value'][$v]) ? $options_array[$k]['value'][$v]['title'] : $v;
             }
         }else {
             return [];

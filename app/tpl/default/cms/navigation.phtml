@@ -1,39 +1,29 @@
+<?php
+$parent = $this->getVariable('category')->getParentCategory();
+?>    
+<nav class="nav" id="layered-nav">
+    <h4><?php echo $parent['name'][$this->getLanguageId()]; ?></h4>
+    <dl id="myTabs" class="nav nav-tabs" role="tablist">
         <?php
-        $parent = $this->getVariable('category')->getParentCategory();
-        ?>    
-        <nav class="nav" id="layered-nav">
-            <dl class="level-0" role="menu">
-                <?php
-                foreach ($parent->getChildrenCategories(1) as $navigations):
-                    $children = $navigations->getChildrenCategories(1);
-                    $count = $children->count();
+        foreach ($parent->getChildrenCategories() as $category):
+            $children = $category->getPages();
+            $count = $children->count();
+            ?>
+        <dt role="presentation" class="active" <?php if($count):?> class="dropdown" <?php endif;?>><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $category['name'][$this->getLanguageId()]; ?></a></dt>
+            <dd style="display: block">
+                <ul id="myTabContent" class="tab-content">
+                    <?php
+                    foreach ($children as $child):
+                        $url = $child->getUrl();
+                        ?>
+                        <li role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                            <a href="<?php echo $url ? $this->getBaseUrl($url . '.html') : 'javascript:void(0);' ?>"><?php echo $child['title']; ?></a>
+                        </li>
+                        <?php
+                    endforeach;
                     ?>
-                <dt><?php if(!empty($count)) echo $navigations['title']; ?></dt>
-                    <dd>
-                        <dl class="level-1">
-                            <?php
-                            foreach ($children as $child):
-                                $grandChildren = $child->getChildrenCategories(1);
-                                ?>
-                                <dt><?php echo $child['title']; ?></dt>
-                                <?php if (!empty($grandChildren->count())): ?>
-                                    <dd>
-                                        <ul class="level-2">
-                                            <?php foreach ($grandChildren as $grandChild): ?>
-                                            <li class="active" role="presentation">
-                                                <a href="<?php echo $grandChild->getUrl() ?>" role="menuitem">
-                                                    <span><?php echo $grandChild['title'] ?></span>
-                                                </a>
-                                            </li>
-                                            <?php endforeach;?>
-                                        </ul>
-                                    </dd>
-                                    <?php
-                                endif;
-                            endforeach;
-                            ?>
-                        </dl>
-                    </dd>
-                <?php endforeach; ?>
-            </dl>
-        </nav>
+                </ul>
+            </dd>
+        <?php endforeach; ?>
+    </dl>
+</nav>

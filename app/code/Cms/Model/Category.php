@@ -3,6 +3,7 @@
 namespace Seahinet\Cms\Model;
 
 use Seahinet\Cms\Model\Collection\Category as Collection;
+use Seahinet\Cms\Model\Collection\Page as PageCollection;
 use Seahinet\Lib\Model\AbstractModel;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -17,6 +18,7 @@ class Category extends AbstractModel
     public function getParentCategory()
     {
         if (!empty($this->storage['parent_id'])) {
+
             $navgiation = new Category;
             $navgiation->load($this->storage['parent_id']);
             return $navgiation;
@@ -28,7 +30,7 @@ class Category extends AbstractModel
     {
         if (isset($this->storage['id'])) {
             $navgiation = new Collection();
-            $navgiation->where(['parent_id' => $this->storage['id']]);
+            $navgiation->where(['parent_id' => $this->storage['id']]); //print_r($navgiation);exit();
             return $navgiation;
         }
         return NULL;
@@ -36,7 +38,13 @@ class Category extends AbstractModel
 
     public function getPages()
     {
-        return $this->getPages();
+        if (isset($this->storage['id'])) {
+            $pages = new PageCollection();
+            $pages->join('cms_category_page', 'cms_page.id=cms_category_page.page_id', [])
+                    ->where(['cms_category_page.category_id' => $this->storage['id']]);
+            return $pages;
+        }
+        return NULL;
     }
 
     protected function beforeSave()

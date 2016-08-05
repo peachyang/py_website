@@ -30,12 +30,11 @@ final class Cart extends AbstractModel implements Singleton
         ]);
     }
 
-    protected function init($table, $primaryKey = 'id', $columns = array())
+    public function initInstance()
     {
-        parent::init($table, $primaryKey, $columns);
-        $segment = new Segment('customer');
         $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
         $currency = $this->getContainer()->get('request')->getCookie('currency', $baseCurrency);
+        $segment = new Segment('customer');
         if ($segment->get('cart')) {
             $this->load($segment->get('cart'));
         } else if ($segment->get('hasLoggedIn')) {
@@ -67,6 +66,7 @@ final class Cart extends AbstractModel implements Singleton
     {
         if (is_null(static::$instance)) {
             static::$instance = new static;
+            static::$instance->initInstance();
         }
         return static::$instance;
     }
@@ -78,7 +78,7 @@ final class Cart extends AbstractModel implements Singleton
         }
         $segment = new Segment('customer');
         $segment->offsetUnset('cart');
-        static::$instance = null;
+        unset(static::$instance);
     }
 
     public function combine($cart)
@@ -420,6 +420,14 @@ final class Cart extends AbstractModel implements Singleton
         if (isset($this->storage['payment_method'])) {
             $className = $this->getContainer()->get('config')['payment/' . $this->storage['payment_method'] . '/model'];
             return new $className;
+        }
+        return null;
+    }
+
+    public function getCurrency()
+    {
+        if (isset($this->storage['currency'])) {
+            return (new Currency)->load($this->storage['currency'], 'code');
         }
         return null;
     }

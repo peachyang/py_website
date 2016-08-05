@@ -1,45 +1,43 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Sales\Grid;
+namespace Seahinet\Admin\ViewModel\Sales\Grid\Cart;
 
 use Seahinet\Admin\ViewModel\Grid;
+use Seahinet\Sales\Model\Cart;
 use Seahinet\Sales\Model\Collection\Cart\Item as Collection;
 
 class Detail extends Grid
 {
 
     protected $translateDomain = 'sales';
+    protected $cart = null;
 
-    public function getRowLink($item)
+    public function getCart()
     {
-        return $this->getBaseUrl(':ADMIN/sales_cart/detail/?id=' . $item['id']);
+        if (is_null($this->cart)) {
+            $this->cart = (new Cart(['id' => $this->getQuery('id')]))->load($this->getQuery('id'));
+        }
+        return $this->cart;
     }
 
-    protected function prepareColumns()
+    public function getCustomer()
     {
-        return [
-            'customer_id' => [
-                'label' => 'Customer ID'
-            ],
-            'currency' => [
-                'label' => 'Currency'
-            ],
-            'total' => [
-                'label' => 'Total'
-            ],
-            'updated_at' => [
-                'label' => 'Last Modified',
-                'use4filter' => false
-            ]
-        ];
+        if ($id = $this->getCart()->offsetGet('customer_id')) {
+            $customer = new Customer;
+            $customer->load($id);
+            return $customer;
+        }
+        return null;
     }
 
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->columns(['warehouse_id', 'product_name', 'store_id', 'options', 'qty', 'sku', 'total', 'status'])
-                ->where([ 'cart_id' => $this->getQuery('id')]);
-        return parent::prepareCollection($collection);
+        $collection->columns(['product_id', 'product_name', 'store_id', 'sku', 'options', 'qty', 'sku', 'price', 'total'])
+                ->join('core_store', 'core_store.id=sales_cart_item.store_id', ['store' => 'name'])
+                ->join('warehouse', 'warehouse.id=sales_cart_item.warehouse_id', ['warehouse' => 'name'])
+                ->where(['cart_id' => $this->getQuery('id')]);
+        return $collection;
     }
 
 }

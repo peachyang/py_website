@@ -23,12 +23,14 @@ class Item extends AbstractModel
     public function &offsetGet($key)
     {
         $result = parent::offsetGet($key);
-        if (!$result && $key === 'product') {
-            $result = new Product;
-            $result->load($this->storage['product_id']);
-        } else if ($key === 'store') {
-            $result = new Store;
-            $result->load($this->storage['store_id']);
+        if (!$result) {
+            if ($key === 'product') {
+                $result = new Product;
+                $result->load($this->storage['product_id']);
+            } else if ($key === 'store') {
+                $result = new Store;
+                $result->load($this->storage['store_id']);
+            }
         }
         return $result;
     }
@@ -51,7 +53,7 @@ class Item extends AbstractModel
         if ($this->storage['product_id']) {
             $options = json_decode($this->storage['options']);
             $result = [];
-            foreach($options as $id => $value){
+            foreach ($options as $id => $value) {
                 $option = new Product\Option;
                 $option->load($id);
                 $result[$option->getLabel()] = $option->getValue($value);

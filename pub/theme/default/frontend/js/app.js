@@ -182,8 +182,12 @@
     });
     function qty_change(e) {
         var num = e.val();
-        var price = e.parent().prev().html().replace(/[^0-9]/ig, "") / 100;
-        var subtotal = $.trim(e.parent().prev().html()).substr(0, 1) + num * price + '.00';
+        var price_old = e.parent().prev().html();
+        var price_replace = $.trim(price_old.replace(/[^0-9\.\,]/g, ""));
+        var float_num = price_replace.length - (price_replace.indexOf('.') + 1);
+        var price = parseFloat(price_replace).toFixed(float_num);
+        var unit = price_old.replace(/[0-9\.\,\s]/g, "");
+        var subtotal = unit !== '€' ? unit + (num * price).toFixed(float_num) : (num * price).toFixed(float_num) + unit;
         var qty_change = $("#qty-change").val();
         if (num == 0) {
             e.val(1);
@@ -205,10 +209,14 @@
         var total_price = 0;
         $("tbody .product-list").find("td:eq(5)").find("span.checkout-num").each(function () {
             if ($(this).parent().parent().find("td:eq(1)").find("input").is(':checked')) {
-                total_price += $(this).html().replace(/[^0-9]/ig, "") / 100;
+                total_price += parseFloat($(this).html().replace(/[^0-9\.\,]/g, ""));
+                unit = $(this).html().replace(/[0-9\.\,\s]/g, "");
             }
         });
-        $('.total-pirce').html($.trim($("#cart tbody").find("tr:eq(1)").find("td:eq(3)").html()).substr(0, 1) + total_price + '.00');
+        var old_total = $.trim($('.total-pirce').html().replace(/[^0-9\.\,]/g, ""));
+        var float_num = old_total.length - (old_total.indexOf('.') + 1);
+        var total_price_real = unit !== '€' ? unit + total_price.toFixed(float_num) : total_price.toFixed(float_num) + unit;
+        $('.total-pirce').html(total_price_real);
         var checked_total = 0;
         var checked_total_off = 0;
         $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
@@ -227,7 +235,7 @@
                 }
             });
             if(checked_total > 0){
-            	window.location.href = GLOBAL.BASE_URL+"/checkout/order/";
+            	window.location.href = GLOBAL.BASE_URL+"checkout/order/";
             }
         });
     })

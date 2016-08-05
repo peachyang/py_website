@@ -18,7 +18,8 @@ trait DB
      * @var array
      */
     protected static $tableGateways = [];
-    
+    protected $mainTable = null;
+
     /**
      * @var ConnectionInterface
      */
@@ -35,8 +36,10 @@ trait DB
      */
     protected function getTableGateway($table = null)
     {
-        if(is_null($table)){
-            $table = $this->tableName;
+        if (is_null($table)) {
+            $table = is_null($this->mainTable) ? $this->tableName : $this->mainTable;
+        } else if (is_null($this->mainTable)) {
+            $this->mainTable = $table;
         }
         if (!isset(static::$tableGateways[$table])) {
             static::$tableGateways[$table] = new TableGateway($table, $this->getContainer()->get('dbAdapter'));

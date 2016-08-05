@@ -9,9 +9,11 @@ $parent = $this->getVariable('category')->getParentCategory();
             $children = $category->getPages();
             $count = $children->count();
             ?>
-        <dt role="presentation" class="active" <?php if($count):?> class="dropdown" <?php endif;?>><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $category['name'][$this->getLanguageId()]; ?></a></dt>
-            <dd style="display: block">
-                <ul id="myTabContent" class="tab-content">
+        <dt role="presentation" class="active">
+            <a data-toggle="collapse" href="#nav-<?php echo $category['id'] ?>"><?php echo $category['name'][$this->getLanguageId()]; ?></a>
+        </dt>
+            <dd>
+                <ul id="nav-<?php echo $category['id'] ?>" class="collapse in">
                     <?php
                     foreach ($children as $child):
                         $url = $child->getUrl();

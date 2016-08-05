@@ -7,21 +7,13 @@ abstract class AbstractMethod
 
     use \Seahinet\Lib\Traits\Container;
 
-    protected $label;
-
     abstract public function available();
 
     abstract public function getShippingRate($items);
 
     public function getLabel()
     {
-        return $this->label;
-    }
-
-    public function setLabel($label)
-    {
-        $this->label = $label;
-        return $this;
+        return $this->getContainer()->get('config')['shipping/' . static::METHOD_CODE . '/label'];
     }
 
 }

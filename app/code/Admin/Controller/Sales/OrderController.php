@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\Controller\Sales;
 
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Sales\Model\Order as Model;
 
 class OrderController extends AuthActionController
 {
@@ -13,18 +14,12 @@ class OrderController extends AuthActionController
         return $root;
     }
 
-    public function editAction()
+    public function viewAction()
     {
-        $root = $this->getLayout('admin_sales_order_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
-            $model = new Model;
-            $model->load($id);
-            $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Order / CMS');
-        } else {
-            $root->getChild('head')->setTitle('Add New Order / CMS');
+            return $this->getLayout('admin_sales_order_view');
         }
-        return $root;
+        return $this->notFoundAction();
     }
 
     public function deleteAction()

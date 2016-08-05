@@ -43,6 +43,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .minicart .dropdown-toggle .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .header .minicart .dropdown-menu{right:10px;border-radius:0;padding:0;border:none;background:#f7f7f7;width:100%}
 .header .minicart .dropdown-menu .product-image{display:block}
+.header .minicart .dropdown-menu .product-image img{max-width:100%}
 .header .minicart .dropdown-menu .product-name{font-size:12px;line-height:15px;color:#757474;height:36px;overflow:hidden;padding:6px 6px 0}
 .header .minicart .dropdown-menu .product-name p{margin:0;color:#9c9c9c;text-overflow:ellipsis;width:150px;overflow:hidden;white-space:nowrap}
 .header .minicart .dropdown-menu .price{white-space:nowrap}
@@ -333,3 +334,16 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .store-total{color:#000;background:#f1f2f4}
 .checkout-order .submit .btn-checkout{background:#007dc6;color:#fff;border-radius:0}
 .checkout-order .submit .btn-checkout span{padding:5px 15px;font-size:18px}
+.container .nav{width:208px;overflow: hidden;margin-right: 38px;}
+.container .nav>h4{width:100%;max-height:39px;line-height: 39px;background: #007dc6;color: #ffffff;text-align: center}
+.container .nav>dl{width:100%;overflow:hidden;text-align:center;color:#5f5f5f}
+.container .nav>dl>dt{background: #f5f6f9;border-bottom: 1px solid #64c4fc;max-height:39px;line-height: 39px;font-weight:bold}
+.container .nav dl dd{width:100%;overflow: hidden}
+.container .nav dl dd li{background:#fcfdff;line-height: 30px}
+.container .nav dl dd li a:hover{color:#64c4fc}
+.container .nav dl dt>a:after{content:"∨";display:inline-block;color:#5f5f5f;margin-left: 3px;font-size: 14px}
+.container .nav dl dt>a:hover:after{content:"∧";display:inline-block;color:#5f5f5f;margin-left: 3px;font-size: 14px}
+#faq-list dt>a{color:#1c61ad;font-size: 14px;font-weight: bold}
+#faq-list dt a::before {content: "+";display: inline-block;width: 40px;height: 40px;border: 2px solid #e3e3e3;border-radius: 3px;color: #b4b4b4;margin-right: 18px;text-align: center;font-size: 20px;line-height: 38px}
+#faq-list dt a:hover::before {content: "-";display: inline-block;width: 40px;height: 40px;border: 2px solid #e3e3e3;border-radius: 3px;color: #b4b4b4;margin-right: 18px;text-align: center;font-size: 20px;line-height: 38px}
+

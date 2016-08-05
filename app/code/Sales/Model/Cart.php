@@ -429,7 +429,7 @@ final class Cart extends AbstractModel implements Singleton
         if (isset($this->storage['currency'])) {
             return (new Currency)->load($this->storage['currency'], 'code');
         }
-        return null;
+        return $this->getContainer()->get('currency');
     }
 
 }

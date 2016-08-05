@@ -1,68 +1,66 @@
 <?php
-$currency = $this->getCart()->getCurrency();
+$order = $this->getOrder();
+$currency = $this->getOrder()->getCurrency();
 ?>
 <div class="view clearfix">
-    <?php if ($customer = $this->getCustomer()): ?>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Customer Infomation', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Order Infomation', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?><br />
+            <?php echo $this->translate('Status'), ': ', $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Customer Infomation', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body"><?php if ($customer = $this->getCustomer()): ?>
                 ID: <?php echo $customer->getId() ?><br />
                 <?php echo $this->translate('Username'), ': ', $customer['username'] ?>
-            </div>
+            <?php endif ?></div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Billing Address', [], 'sales') ?></h4>
         </div>
-    <?php endif ?>
-    <?php if ($billing = $this->getCart()->offsetGet('billing_address')): ?>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Billing Address', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo nl2br($billing) ?>
-            </div>
+        <div class="panel-body">
+            <?php echo nl2br($this->getOrder()->offsetGet('billing_address')) ?>
         </div>
-    <?php endif ?>
-    <?php if ($shipping = $this->getCart()->offsetGet('shipping_address')): ?>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo nl2br($shipping) ?>
-            </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
         </div>
-    <?php endif ?>
-    <?php if ($shippingMethod = $this->getCart()->offsetGet('shipping_method')): ?>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo $shippingMethod ?>
-            </div>
+        <div class="panel-body">
+            <?php echo nl2br($this->getOrder()->offsetGet('shipping_address')) ?>
         </div>
-    <?php endif ?>
-    <?php if ($paymentMethod = $this->getCart()->offsetGet('payment_method')): ?>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo $paymentMethod ?>
-            </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
         </div>
-    <?php endif ?>
+        <div class="panel-body">
+            <?php echo $this->getOrder()->getShippingMethod()->getLabel() ?>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->getOrder()->getPaymentMethod()->getLabel() ?>
+        </div>
+    </div>
     <div class="panel wide">
         <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Product(s)', [], 'sales') ?></h4>
+            <h4 class="panel-title"><?php echo $this->translate('Item(s)') ?></h4>
         </div>
         <div class="panel-body grid table-responsive">
             <table class="table table-hover table-striped table-no-border">
                 <thead class="sort-by">
                     <tr>
-                        <th><?php echo $this->translate('Store', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Warehouse', [], 'sales') ?></th>
                         <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
                         <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
                         <th><?php echo $this->translate('Options', [], 'sales') ?></th>
@@ -74,8 +72,6 @@ $currency = $this->getCart()->getCurrency();
                 <tbody>
                     <?php foreach ($this->getCollection() as $item): ?>
                         <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                            <td><?php echo $item['store'] ?></td>
-                            <td><?php echo $item['warehouse'] ?></td>
                             <td><?php echo $item['product_name'] ?></td>
                             <td><?php echo $item['sku'] ?></td>
                             <td>
@@ -99,7 +95,7 @@ $currency = $this->getCart()->getCurrency();
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="8" class="text-right">
+                        <td colspan="6" class="text-right">
 
                         </td>
                     </tr>

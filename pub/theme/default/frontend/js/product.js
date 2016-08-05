@@ -37,10 +37,33 @@
             }
         });
         $('.product-essential .product-info .btn').on('click', function () {
+            var f = $('.product-essential').parent('form');
             if ($(this).is('.btn-checkout')) {
-                $('.product-essential').parent('form').attr('data-ajax', true);
+                $(f).attr('data-ajax', true);
+                if ($(f).valid()) {
+                    var options = '';
+                    $('.product-info .options').find('input:not([type=radio]):not([type=checkbox]),select,textarea,[type=radio]:checked,[type=checkbox]:checkbox').each(function () {
+                        options += $(this).parents('.input-box').children('.control-label').text() + ': ';
+                        if ($(this).is('select')) {
+                            options += $(this).find('option:selected').text();
+                        } else if ($(this).is('[type=radio],[type=checkbox]')) {
+                            options += $(this).next('label').text();
+                        } else {
+                            options += $(this).val();
+                        }
+                        options += '<br />';
+                    });
+                    $('.minicart .dropdown-menu .items').append(
+                            $('#tmpl-minicart').html().replace(/\{\$id\}/g, $('[name=product_id]').val())
+                            .replace(/\{\$url\}/g, location.href)
+                            .replace(/\{\$thumbnail\}/g, $('#product-media .item.active img').attr('src'))
+                            .replace(/\{\$name\}/g, $('.product-info .product-name').text())
+                            .replace(/\{\$price\}/g, $('.product-info .price-box .price').not('.old-price .price').text())
+                            .replace(/\{\$qty\}/g, $('.product-info [name=qty]').val())
+                            .replace(/\{\$options\}/g, options));
+                }
             } else {
-                $('.product-essential').parent('form').removeAttr('data-ajax');
+                $(f).removeAttr('data-ajax');
             }
         });
     });

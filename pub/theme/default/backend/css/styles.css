@@ -29,6 +29,13 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .text-vtop{vertical-align:top!important}
 .text-vmiddle{vertical-align:middle!important}
 .text-vbottom{vertical-align:bottom!important}
+.panel{margin-bottom:20px;background-color:#fff;box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.panel-body{padding:15px;border:1px solid #ddd;border-top:none}
+.panel-body:empty{padding:0;border:none}
+.panel-heading{padding:10px 15px;border:1px solid #ddd;border-top-left-radius:3px;border-top-right-radius:3px;color:#333;background:#f5f5f5}
+.panel-title{margin-top:0;margin-bottom:0;font-size:16px;color:inherit}
+.panel-title>.small,.panel-title>.small>a,.panel-title>a,.panel-title>small,.panel-title>small>a{color:inherit}
+.panel-footer{padding:10px 15px;background-color:#f5f5f5;border:1px solid #ddd;border-top:none;border-bottom-right-radius:3px;border-bottom-left-radius:3px}
 .dropdown{position:relative}
 .dropdown-menu{display:none;position:absolute;z-index:9}
 .dropdown.open>.dropdown-menu,.no-touchevents .dropdown:hover>[data-toggle=dropdown]+.dropdown-menu{display:block}
@@ -39,7 +46,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .table-no-border th,.table-no-border td{border:none!important}
 .table-striped>tbody>tr:nth-child(even){background-color:#f6fbfd}
 .table-hover>tbody>tr:hover{background-color:#f5f5f5!important}
-.table-responsive{width:100%;margin-bottom:15px;overflow-x:auto;overflow-y:hidden;-ms-overflow-style:-ms-autohiding-scrollbar;border:1px solid #ddd}
+.table-responsive{width:100%;margin-bottom:15px;overflow-x:auto;overflow-y:hidden;-ms-overflow-style:-ms-autohiding-scrollbar}
 .table-responsive>.table{margin-bottom:0}
 .table-responsive>.table>tbody>tr>td,.table-responsive>.table>tbody>tr>th,.table-responsive>.table>tfoot>tr>td,.table-responsive>.table>tfoot>tr>th,.table-responsive>.table>thead>tr>td,.table-responsive>.table>thead>tr>th{white-space:nowrap}
 .scope.dropdown{display:inline-block;margin:10px 0 0 20px}
@@ -214,6 +221,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .breadcrumb .buttons-set+ol{float:left;width:50%}
 .admin .grid .filters{background:#fafafa;border-bottom:1px solid #cce0e9;padding:8px 0}
 .admin .grid .filters .input-box{display:inline-block!important;padding:12px 0 10px 23px;margin:0;vertical-align:top}
+.admin .grid .filters .input-group{max-width:138px}
 .admin .grid .filters .input-group .input-group-addon{font-size:12px;line-height:19px}
 .admin .grid .filters .control-label{display:inline-block!important;width:auto!important;padding:0!important;line-height:21px;font-size:12px;color:#6c6c6c}
 .admin .grid .filters .cell{display:inline-block!important;padding:0!important}
@@ -264,6 +272,9 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .edit .table td{vertical-align:middle}
+.admin .view .panel{width:50%;float:left;padding:0 10px;margin:20px 0 0}
+.admin .view .panel:nth-child(2n+1){clear:left}
+.admin .view .panel.wide{width:100%}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .tab-pane~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}

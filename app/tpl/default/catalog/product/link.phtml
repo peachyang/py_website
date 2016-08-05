@@ -1,6 +1,6 @@
 <?php
 $products = $this->getProducts();
-if (@$products[0]):
+if (count($products)):
     ?>
     <div class="product-link">
         <?php if ($this->getVariable('title')): ?>

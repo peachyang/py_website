@@ -92,4 +92,19 @@ class Page extends AbstractModel
         return null;
     }
 
+    public function getUrl($category = null)
+    {
+        if ($this->getId()) {
+            $constraint = ['page_id' => $this->getId()];
+            if (!is_null($category)) {
+                $constraint['category_id'] = $category['id'];
+            }
+            $result = $this->getContainer()->get('indexer')->select('cms_url', \Seahinet\Lib\Bootstrap::getLanguage()->getId(), $constraint);
+            if ($result) {
+                return $result[0]['path'];
+            }
+        }
+        return '';
+    }
+
 }

@@ -17,7 +17,7 @@ admin_sales_cart_list:
                                 params: [{link:':ADMIN/sales_cart/',label:'Abandoned Cart'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Cart
-admin_sales_cart_detail:
+admin_sales_cart_view:
     update: grid
     root:
         children:
@@ -35,9 +35,9 @@ admin_sales_cart_detail:
                                 params: [{link:':ADMIN/sales_cart/',label:'Abandoned Cart'}]
                             -
                                 method: addCrumb
-                                params: [{label:'Detail'}]
+                                params: [{label:'View'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Sales\Grid\Cart\Detail
+                        type: Seahinet\Admin\ViewModel\Sales\View\Cart
                         template: admin/sales/cart
 admin_sales_order_list:
     update: grid
@@ -54,9 +54,31 @@ admin_sales_order_list:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/sales_order/',label:'Invoice'}]
+                                params: [{link:':ADMIN/sales_order/',label:'Order'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Order
+admin_sales_order_view:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Order / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_order/',label:'Order'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'View'}]
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Order
+                        template: admin/sales/order
 admin_sales_invoice_list:
     update: grid
     root:

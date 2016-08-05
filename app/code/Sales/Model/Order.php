@@ -2,11 +2,13 @@
 
 namespace Seahinet\Sales\Model;
 
+use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
 use Seahinet\Sales\Model\Order\Item;
+use Seahinet\Sales\Model\Order\Status;
 
 class Order extends AbstractModel
 {
@@ -62,7 +64,7 @@ class Order extends AbstractModel
                 return $items;
             }
             $result = [];
-            $items->walk(function($item) use (&$result) {
+            $items->walk(function(&$item) use (&$result) {
                 $result[$item['id']] = $item;
                 $result[$item['id']]['product'] = new Product;
                 $result[$item['id']]['product']->load($item['product_id']);
@@ -137,6 +139,22 @@ class Order extends AbstractModel
         if (isset($this->storage['payment_method'])) {
             $className = $this->getContainer()->get('config')['payment/' . $this->storage['payment_method'] . '/model'];
             return new $className;
+        }
+        return null;
+    }
+
+    public function getCurrency()
+    {
+        if (isset($this->storage['currency'])) {
+            return (new Currency)->load($this->storage['currency'], 'code');
+        }
+        return $this->getContainer()->get('currency');
+    }
+
+    public function getStatus()
+    {
+        if(isset($this->storage['status_id'])){
+            return (new Status)->load($this->storage['status_id']);
         }
         return null;
     }

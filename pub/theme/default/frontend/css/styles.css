@@ -43,6 +43,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .minicart .dropdown-toggle .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .header .minicart .dropdown-menu{right:10px;border-radius:0;padding:0;border:none;background:#f7f7f7;width:100%}
 .header .minicart .dropdown-menu .product-image{display:block}
+.header .minicart .dropdown-menu .product-image img{max-width:100%}
 .header .minicart .dropdown-menu .product-name{font-size:12px;line-height:15px;color:#757474;height:36px;overflow:hidden;padding:6px 6px 0}
 .header .minicart .dropdown-menu .price{white-space:nowrap}
 .header .minicart .dropdown-menu .action{font-size:12px;color:#757474;text-align:right}

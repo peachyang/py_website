@@ -1,21 +1,20 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Sales\Grid\Cart;
+namespace Seahinet\Admin\ViewModel\Sales\View;
 
-use Seahinet\Admin\ViewModel\Grid;
-use Seahinet\Sales\Model\Cart;
+use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Sales\Model\Cart as Model;
 use Seahinet\Sales\Model\Collection\Cart\Item as Collection;
 
-class Detail extends Grid
+class Cart extends Template
 {
 
-    protected $translateDomain = 'sales';
     protected $cart = null;
 
     public function getCart()
     {
         if (is_null($this->cart)) {
-            $this->cart = (new Cart(['id' => $this->getQuery('id')]))->load($this->getQuery('id'));
+            $this->cart = (new Model(['id' => $this->getQuery('id')]))->load($this->getQuery('id'));
         }
         return $this->cart;
     }
@@ -30,7 +29,7 @@ class Detail extends Grid
         return null;
     }
 
-    protected function prepareCollection($collection = null)
+    public function getCollection()
     {
         $collection = new Collection;
         $collection->columns(['product_id', 'product_name', 'store_id', 'sku', 'options', 'qty', 'sku', 'price', 'total'])

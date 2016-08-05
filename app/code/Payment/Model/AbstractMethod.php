@@ -8,8 +8,6 @@ abstract class AbstractMethod
     use \Seahinet\Lib\Traits\Container,
         \Seahinet\Lib\Traits\Url;
 
-    protected $label;
-
     /**
      * @return bool
      */
@@ -46,13 +44,7 @@ abstract class AbstractMethod
 
     public function getLabel()
     {
-        return $this->label;
-    }
-
-    public function setLabel($label)
-    {
-        $this->label = $label;
-        return $this;
+        return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/label'];
     }
 
     public function saveData(array $data)

@@ -13,10 +13,10 @@ class CartController extends AuthActionController
         return $root;
     }
 
-    public function detailAction()
+    public function viewAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {
-            return $this->getLayout('admin_sales_cart_detail');
+            return $this->getLayout('admin_sales_cart_view');
         }
         return $this->notFoundAction();
     }

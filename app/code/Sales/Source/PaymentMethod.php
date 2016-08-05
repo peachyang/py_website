@@ -30,12 +30,12 @@ class PaymentMethod implements SourceInterface
                         (!$address || !$country || in_array($address->offsetGet('country'), $country)) &&
                         $total >= $config['payment/' . $code . '/min_total'] &&
                         (!$max || $total <= $max)) {
-                    $result[$code] = $getObject ? $model->setLabel($config['payment/' . $code . '/label']) : $config['payment/' . $code . '/label'];
+                    $result[$code] = $getObject ? $model : $config['payment/' . $code . '/label'];
                 }
             }
             return $result;
         } else {
-            return ['payment_free' => $getObject ? (new Free)->setLabel($config['payment/payment_free/label']) : $config['payment/payment_free/label']];
+            return ['payment_free' => $getObject ? (new Free) : $config['payment/payment_free/label']];
         }
     }
 

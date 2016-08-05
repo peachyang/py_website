@@ -38,7 +38,7 @@ trait DB
     {
         if (is_null($table)) {
             $table = is_null($this->mainTable) ? $this->tableName : $this->mainTable;
-        } else {
+        } else if (is_null($this->mainTable)) {
             $this->mainTable = $table;
         }
         if (!isset(static::$tableGateways[$table])) {

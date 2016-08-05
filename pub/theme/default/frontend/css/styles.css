@@ -315,3 +315,10 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .store th,#cart thead th{font-weight:normal}
 #cart .product-list td:nth-child(3){color:#000;font-size:12px}
 #cart .product-list td:nth-child(4){color:#000;font-size:16px}
+.container .nav{width:208px;overflow: hidden;margin-right: 38px;}
+.container .nav>h4{width:100%;max-height:39px;line-height: 39px;background: #007dc6;color: #ffffff;text-align: center}
+.container .nav>dl{width:100%;overflow:hidden;text-align:center;color:#5f5f5f}
+.container .nav>dl>dt{background: #f5f6f9;border-bottom: 1px solid #64c4fc;max-height:39px;line-height: 39px;font-weight:bold}
+.container .nav dl dd{width:100%;overflow: hidden}
+.container .nav dl dd li{background:#fcfdff;line-height: 30px}
+.container .nav dl dd li a:hover{color:#64c4fc}

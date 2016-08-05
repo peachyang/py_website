@@ -27,5 +27,10 @@ class Navigation extends Template
         $this->navigations = $navigations;
         return $this;
     }
+    
+    public function getLanguageId()
+    {
+        return Bootstrap::getLanguage()->getId();
+    }
 
 }

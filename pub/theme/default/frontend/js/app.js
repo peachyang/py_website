@@ -235,7 +235,7 @@
                 }
             });
             if(checked_total > 0){
-            	window.location.href = GLOBAL.BASE_URL+"/checkout/order/";
+            	window.location.href = GLOBAL.BASE_URL+"checkout/order/";
             }
         });
     })

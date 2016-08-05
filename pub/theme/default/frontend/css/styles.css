@@ -44,7 +44,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .minicart .dropdown-menu{right:10px;border-radius:0;padding:0;border:none;background:#f7f7f7;width:100%}
 .header .minicart .dropdown-menu .product-image{display:block}
 .header .minicart .dropdown-menu .product-name{font-size:12px;line-height:15px;color:#757474;height:36px;overflow:hidden;padding:6px 6px 0}
-.header .minicart .dropdown-menu .product-name a{display:block;text-overflow:ellipsis;width:150px;overflow:hidden;white-space:nowrap}
 .header .minicart .dropdown-menu .product-name p{margin:0;color:#9c9c9c;text-overflow:ellipsis;width:150px;overflow:hidden;white-space:nowrap}
 .header .minicart .dropdown-menu .price{white-space:nowrap}
 .header .minicart .dropdown-menu .action{font-size:12px;color:#757474;text-align:right}
@@ -317,3 +316,20 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .store th,#cart thead th{font-weight:normal}
 #cart .product-list td:nth-child(3){color:#000;font-size:12px}
 #cart .product-list td:nth-child(4){color:#000;font-size:16px}
+.checkout-order{color:#696868}
+.checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e4e6ec;padding:30px 0}
+.checkout-order .payment input{display:none}
+.checkout-order .payment input:checked + label{background:#f1f2f4}
+.checkout-order .payment label{padding:5px 15px;border:1px solid #e4e6ec;margin:0 25px;font-size:14px}
+.checkout-order .section .title{margin-bottom:20px;font-size:16px;color:#000}
+.checkout-order .section .btn-add{margin-left:25px;border-radius:0}
+.checkout-order .review .table{border:0 !important}
+.checkout-order .product-list{border:1px solid #e4e6ec}
+.checkout-order .store th:nth-child(1){padding-left:20px}
+.checkout-order .product-list td{vertical-align:middle}
+.checkout-order .product-list .td-name{vertical-align:top;color:#000}
+.checkout-order .product-list td select{padding:3px 8px}
+.checkout-order .product-list .td-img{padding-left:20px}
+.checkout-order .store-total{color:#000;background:#f1f2f4}
+.checkout-order .submit .btn-checkout{background:#007dc6;color:#fff;border-radius:0}
+.checkout-order .submit .btn-checkout span{padding:5px 15px;font-size:18px}

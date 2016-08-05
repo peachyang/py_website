@@ -4,26 +4,26 @@ $product = $item['product'];
 $thumbnail = $product->getThumbnail();
 ?>
 <tr class="product-list">
-    <td>
+    <td class="td-img">
         <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
     </td>
-    <td>
+    <td class="td-name">
         <?php echo $item['product_name'] ?>
     </td>
-    <td>
+    <td class="td-price">
         <?php echo $this->getCurrency()->format($item['price']) ?>
     </td>
-    <td class="tb-stock">
+    <td class="tb-stock td-qty">
         <?php echo (float) $item['qty'] ?>
     </td>
-    <td>
+    <td class="td-subtotal">
         <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
     </td>
     <?php if ($this->getVariable('rowspan')): ?>
-        <td rowspan="<?php echo $this->getVariable('rowspan') ?>">
+        <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-method">
             <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
         </td>
-        <td rowspan="<?php echo $this->getVariable('rowspan') ?>">
+        <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-comment">
             <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
         </td>
     <?php endif ?>

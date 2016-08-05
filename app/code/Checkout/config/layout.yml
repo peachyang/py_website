@@ -92,7 +92,7 @@ checkout_order:
                                         template: checkout/order/shipping
                             total:
                                 type: Seahinet\Checkout\ViewModel\Cart
-                                template: checkout/cart/total
+                                template: checkout/order/total
 checkout_order_shipping:
     update: frontend
     root:

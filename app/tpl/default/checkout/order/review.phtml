@@ -1,24 +1,20 @@
 <section class="section review">
-    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
+    <h4 class="title"><b><?php echo $this->translate('Order Infomation') ?></b></h4>
     <table class="table">
         <colgroup>
             <col width="1" />
             <col />
-            <col width="15%" />
-            <col width="15%" />
-            <col width="15%" />
-            <col width="15%" />
-            <col width="15%" />
+            <col width="12%" />
+            <col width="12%" />
+            <col width="12%" />
+            <col width="12%" />
+            <col width="12%" />
         </colgroup>
         <tbody>
             <?php
             $stores = [];
             foreach ($this->getItems() as $item) {
-                if (!isset($stores[$item['store_id']])) {
-                    $stores[$item['store_id']] = 1;
-                } else {
-                    $stores[$item['store_id']] ++;
-                }
+                $stores[$item['store_id']] = !isset($stores[$item['store_id']]) ? 1 : $stores[$item['store_id']]+1;
             }
             $current = 0;
             foreach ($this->getItems() as $item) {
@@ -52,13 +48,20 @@
                 endif;
             }
             ?>
+            <tr>
+                <th colspan="7" class="text-right text-nowrap store-total">
+                    	店铺合计(含运费):$100.00<?php //echo $item['store']['name'] ?>
+                </th>
+            </tr>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6" class="text-right total">
+                <td colspan="7" class="text-right total">
                     <?php echo $this->getChild('total') ?>
                 </td>
-                <td>
+            </tr>
+            <tr>
+                <td colspan="7" class="text-right submit">
                     <button type="button" class="btn btn-checkout">
                         <span><?php echo $this->translate('Place Order') ?></span>
                     </button>

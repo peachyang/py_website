@@ -3,7 +3,7 @@ $methods = $this->getPaymentMethods();
 $current = $this->getCurrentMethod();
 ?>
 <section class="section payment">
-    <h4 class="title"><?php echo $this->translate('Payment Method') ?></h4>
+    <h4 class="title"><b><?php echo $this->translate('Payment Method') ?></b></h4>
     <?php if ($methods): ?>
         <ul class="list list-inline">
             <?php foreach ($methods as $code => $model): ?>
@@ -15,6 +15,16 @@ $current = $this->getCurrentMethod();
                     <p class="payment-description"><?php echo $this->translate($model->getDescription()) ?></p>
                 </li>
             <?php endforeach ?>
+            <li>
+                <input type="radio" value="payment_free" id="payment-method-payment_free_1" name="payment_method">
+                <label for="payment-method-payment_free_1">微信支付</label>
+                <p class="payment-description"></p>
+            </li>
+            <li>
+                <input type="radio" value="payment_free" id="payment-method-payment_free_2" name="payment_method">
+                <label for="payment-method-payment_free_2">支付宝支付</label>
+                <p class="payment-description"></p>
+            </li>
         </ul>
     <?php else: ?>
         <p><?php echo $this->translate('Sorry, no payment methods are available for this order at this time.') ?></p>

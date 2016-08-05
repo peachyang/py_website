@@ -2,21 +2,29 @@
 
 namespace Seahinet\Cms\ViewModel;
 
+use Seahinet\Cms\Model\Category;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 
 class Navigation extends Template
 {
 
-    protected $navigationModel = null;
+    protected $navigations = null;
+    protected $urls = [];
 
-    public function getNavigationModel()
+    public function getCategory()
     {
-        return $this->navigationModel;
+        return $this->getVariable('category');
     }
 
-    public function setNavigationModel()
+    public function getNavigation()
     {
-        $this->navigationModel = $navigationModel;
+        return $this->navigations;
+    }
+
+    public function setNavigation($navigations)
+    {
+        $this->navigations = $navigations;
         return $this;
     }
 

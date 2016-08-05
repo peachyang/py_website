@@ -1,0 +1,93 @@
+<?php
+$attributes = $this->getVariable('attributes');
+$count = count($attributes);
+$query = $this->getQuery();
+$currency = $this->getCart()->getCurrency();
+?>
+<ul class="list-inline">
+    <?php if ($customer = $this->getCustomer()): ?>
+        <li>
+            <?php echo $this->translate('Customer Infomation') ?>:
+            ID: <?php echo $customer->getId() ?><br />
+            <?php echo $this->translate('Increment ID'), ': ', $customer['increment_id'] ?><br />
+            <?php echo $this->translate('Username'), ': ', $customer['username'] ?>
+        </li>
+    <?php endif ?>
+    <?php if ($billing = $this->getCart()->offsetGet('billing_address')): ?>
+        <li>
+            <?php echo $this->translate('Billing Address') ?>:<br />
+            <?php echo nl2br($billing) ?>
+        </li>
+    <?php endif ?>
+    <?php if ($shipping = $this->getCart()->offsetGet('shipping_address')): ?>
+        <li>
+            <?php echo $this->translate('Shipping Address') ?>:<br />
+            <?php echo nl2br($shipping) ?>
+        </li>
+    <?php endif ?>
+    <?php if ($shippingMethod = $this->getCart()->offsetGet('shipping_method')): ?>
+        <li>
+            <?php echo $this->translate('Shipping Method') ?>:<br />
+            <?php echo $shippingMethod ?>
+        </li>
+    <?php endif ?>
+    <?php if ($paymentMethod = $this->getCart()->offsetGet('payment_method')): ?>
+        <li>
+            <?php echo $this->translate('Payment Method') ?>:<br />
+            <?php echo $paymentMethod ?>
+        </li>
+    <?php endif ?>
+</ul>
+<div class="grid">
+    <table class="table table-hover table-striped table-no-border">
+        <thead class="sort-by">
+            <tr>
+                <th><?php echo $this->translate('Store', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Warehouse', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Product Name', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('SKU', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Options', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Price', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Qty', [], $this->getTranslateDomain()) ?></th>
+                <th><?php echo $this->translate('Total', [], $this->getTranslateDomain()) ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->getVariable('collection') as $item): ?>
+                <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                    <td><?php echo $item['store'] ?></td>
+                    <td><?php echo $item['warehouse'] ?></td>
+                    <td><?php echo $item['product_name'] ?></td>
+                    <td><?php echo $item['sku'] ?></td>
+                    <td>
+                        <?php
+                        if ($item['product_id']) {
+                            $options = json_decode($item['options'], true);
+                            foreach ($item['product']->getOptions() as $option) {
+                                if (isset($options[$option->getId()])) {
+                                    echo $option['title'], ': ', (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                            $option->getValue($options[$option->getId()]) : $options[$option->getId()]), '<br />';
+                                }
+                            }
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo $currency->format($item['price']) ?></td>
+                    <td><?php echo $item['qty'] ?></td>
+                    <td><?php echo $currency->format($item['total']) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="<?php echo $count ?>" class="text-right">
+                    <?php
+                    if (is_object($this->getVariable('collection'))) {
+                        echo $this->getChild('pager')->setCollection($this->getVariable('collection'));
+                    }
+                    ?>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

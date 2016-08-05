@@ -20,9 +20,9 @@ class PageController extends ActionController
         $head->setTitle($page['title'])
                 ->setKeywords($page['keywords'])
                 ->setDescription($page['description']);
-        $category = $root->getChild('category', true);
-        if ($category) {
-            $category->setVariables([
+        $navigation = $root->getChild('navigation', true);
+        if ($navigation) {
+            $navigation->setVariables([
                 'page' => $page,
                 'category' => $category
             ]);

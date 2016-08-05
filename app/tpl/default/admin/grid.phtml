@@ -78,6 +78,8 @@ $query = $this->getQuery();
                                     echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
                                 } else if (isset($name['type']) && $name['type'] === 'icon') {
                                     echo '<i class="fa fa-' . $item[$attr] . '" ></i>';
+                                } else if (isset($name['type']) && $name['type'] === 'price' && isset($name['currency'])) {
+                                    echo $name['currency']->format($item[$attr]);
                                 } else {
                                     echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]], [], $this->getTranslateDomain()) : $item[$attr]);
                                 }

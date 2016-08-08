@@ -11,5 +11,13 @@ class Status extends AbstractModel
     {
         $this->init('sales_order_status', 'id', ['id', 'phase_id', 'name', 'is_default']);
     }
-    
+
+    public function getPhase()
+    {
+        if (isset($this->storage['phase_id'])) {
+            return (new Phase)->load($this->storage['phase_id']);
+        }
+        return null;
+    }
+
 }

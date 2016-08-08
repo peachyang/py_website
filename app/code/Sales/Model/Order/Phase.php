@@ -22,7 +22,7 @@ class Phase extends AbstractModel
     {
         if ($this->getId()) {
             $status = new Collection;
-            $status->where(['phase_id' => $this->getId()]);
+            $status->where(['phase_id' => $this->getId()])->order('id ASC, is_default DESC');
             return $status;
         }
         return [];

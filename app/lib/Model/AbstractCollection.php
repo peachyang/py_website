@@ -59,6 +59,7 @@ abstract class AbstractCollection extends ArrayObject
     public function __call($name, $arguments)
     {
         if (is_callable([$this->select, $name])) {
+            $this->isLoaded = false;
             return call_user_func_array([$this->select, $name], $arguments);
         } else {
             throw new BadMethodCallException('Call to undefined method: ' . $name);

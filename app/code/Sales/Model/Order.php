@@ -6,7 +6,9 @@ use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Collection\Invoice;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
+use Seahinet\Sales\Model\Collection\Shipment;
 use Seahinet\Sales\Model\Order\Item;
 use Seahinet\Sales\Model\Order\Status;
 
@@ -60,16 +62,14 @@ class Order extends AbstractModel
         if ($force || is_null($this->items)) {
             $items = new ItemCollection();
             $items->where(['order_id' => $this->getId()]);
+            $result = [];
+            $items->walk(function($item) use (&$result) {
+                $result[$item['id']] = $item;
+            });
+            $this->items = $result;
             if ($force) {
                 return $items;
             }
-            $result = [];
-            $items->walk(function(&$item) use (&$result) {
-                $result[$item['id']] = $item;
-                $result[$item['id']]['product'] = new Product;
-                $result[$item['id']]['product']->load($item['product_id']);
-            });
-            $this->items = $result;
         }
         return $this->items;
     }
@@ -153,10 +153,39 @@ class Order extends AbstractModel
 
     public function getStatus()
     {
-        if(isset($this->storage['status_id'])){
+        if (isset($this->storage['status_id'])) {
             return (new Status)->load($this->storage['status_id']);
         }
         return null;
+    }
+
+    public function getInvoice()
+    {
+        if ($this->getId()) {
+            $collection = new Invoice;
+            $collection->where(['order_id' => $this->getId()]);
+            return $collection;
+        }
+        return [];
+    }
+
+    public function getShipment()
+    {
+        if ($this->getId()) {
+            $collection = new Shipment;
+            $collection->where(['order_id' => $this->getId()]);
+            return $collection;
+        }
+        return [];
+    }
+
+    public function getQty()
+    {
+        $qty = 0;
+        foreach ($this->getItems() as $item) {
+            $qty += $item['qty'];
+        }
+        return $qty;
     }
 
 }

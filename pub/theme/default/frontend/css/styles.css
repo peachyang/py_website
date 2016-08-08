@@ -365,16 +365,16 @@ select[multiple],select[size],textarea{resize:vertical}
 #faq-list dt a:hover::before {content: "-";display: inline-block;width: 40px;height: 40px;border: 2px solid #e3e3e3;border-radius: 3px;color: #b4b4b4;margin-right: 18px;text-align: center;font-size: 20px;line-height: 38px}
 .checkout-success{text-align: center;border: 1px solid #e2e4ea;margin: 42px 0;background: #f1f2f4}
 .checkout-success .item{font-size: 18px;line-height: 40px;color: #000;position: relative;color: #007dc6}
-.trading-success{text-align:center;margin:146px auto 300px;width:auto;overflow: hidden}
+.trading-success{text-align:center;margin:146px auto 300px}
 .trading-success>h3>span{color:#fa9116;font-size:50px}
 .trading-success>h3{line-height: 70px}
-.tranding-success>p{font-size:12px;color: #838282}
-.trading-success>ul{width:auto;overflow: hidden;text-align: center;margin:0 35%}
-.trading-success>ul>li{float:left;margin:0 10px;font-size: 16px;color: #007dc6}
+.trading-success p{font-size:12px;color:#838282;text-indent:10px}
+.trading-success ul{text-align:center;margin:0 39%}
+.trading-success ul li{float:right;margin:0 10px;font-size: 14px;color: #007dc6;text-align:center;width:auto}
 .product-search{margin-bottom:29px;background:#f9f9f9;border:1px solid #e4e2e2;text-indent:30px}
-.product-search ul>li{float:left;margin-top: 20px;line-height: 25px}
+.product-search ul li{float:left;margin-top: 20px;line-height: 25px}
 .product-search dl{clear: both;margin-bottom: 20px}
 .product-search dt{float: left;line-height:34px;}
 .product-search dd input{width:350px;height:34px;border:1px solid #e4e2e2;margin-right:6px}
 .product-search dd .btn-default, .btn-default:active, .open>.dropdown-toggle.btn-default{color: #fff;background-color: #fd9030;border:none}
-.product-search dd .form-control{display:inline-block}
+.product-search dd .form-control{display:inline-block;}

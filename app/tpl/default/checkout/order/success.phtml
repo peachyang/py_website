@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="checkout-success hidden-xs clearfix">
+        <div class="item col-sm-4"><?php echo $this->translate('Shopping Cart'); ?></div>
+        <div class="item col-sm-4"><?php echo $this->translate('Order Info'); ?></div>
+        <div class="item col-sm-4"><?php echo $this->translate('Complate'); ?></div>
+    </div>
+    <div class="trading-success">
+        <h3><span class="fa fa-check"></span><?php echo $this->translate('Congratulations you have completed the payment !') ?></h3>
+        <p><?php echo $this->translate('Order has been paid, please do not repeat the payment !'); ?></p>
+        <ul>
+            <li><a href="<?php echo $this->getBaseUrl('/'); ?>"><?php echo $this->translate('View order details'); ?></a></li>
+            <li><a href="<?php echo $this->getBaseUrl('checkout/order/detail'); ?>"><?php echo $this->translate('Seahinet home'); ?></a></li>
+        </ul>
+    </div>
+    <p style="border-top:1px solid #e1e3e9;height:53px">&nbsp;</p>
+    <div class="product-search">
+        <ul>
+            <li><?php echo $this->translate('Are you looking for it :');?></li>
+            <li></li>
+        </ul>
+        <dl class="clearfix">
+            <dt><?php echo $this->translate('Search again :');?></dt>
+            <dd><input type="text" name="product_search"  class="form-control" /><button type="submit" class="btn btn-default btn-md">search</button></dd>
+        </dl>
+    </div>
+</div>

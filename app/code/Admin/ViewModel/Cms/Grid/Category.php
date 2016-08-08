@@ -74,7 +74,7 @@ class Category extends PGrid
                 'type' => 'select',
                 'options' => [
                     'Disabled',
-                    'Enabled'
+                    'Enabled',
                 ]
             ]
         ];

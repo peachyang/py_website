@@ -129,3 +129,13 @@ checkout_order_review:
                     review:
                         type: Seahinet\Checkout\ViewModel\Cart
                         template: checkout/cart/total
+checkout_order_success:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    success:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: checkout/order/success
+                        

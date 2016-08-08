@@ -37,7 +37,7 @@
                             <?php echo $this->translate('Shipping Method') ?>
                         </th>
                         <th class="text-nowrap">
-                            <?php echo $this->translate('Comment') ?>
+                            <?php echo $this->translate('Buyer Message') ?>
                         </th>
                     </tr>
                     <?php
@@ -50,7 +50,7 @@
             ?>
             <tr>
                 <th colspan="7" class="text-right text-nowrap store-total">
-                    	<?php echo $this->translate('Shop Total').':'.$this->getCurrency()->format($this->getCart()['total'])//, $item['store']['name'] ?>
+                    	<?php echo $this->translate('Sub Total').':'.$this->getCurrency()->format($this->getCart()['total'])//, $item['store']['name'] ?>
                 </th>
             </tr>
         </tbody>

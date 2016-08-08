@@ -315,7 +315,7 @@ class OrderController extends ActionController
                     $cart = Cart::instance();
                     $cart->setData([
                         'shipping_method' => json_encode($data['shipping_method'])
-                    ])->save();
+                    ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

@@ -115,8 +115,8 @@ class Order extends Grid
                 'type' => 'select',
                 'options' => (new Status)->getSourceArray()
             ],
-            'updated_at' => [
-                'label' => 'Last Modified'
+            'created_at' => [
+                'label' => 'Ordered Date'
             ]
         ];
     }
@@ -131,7 +131,7 @@ class Order extends Grid
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
         if (!$this->getQuery('asc') && !$this->getQuery('desc')) {
-            $collection->order('updated_at DESC, created_at DESC');
+            $collection->order('created_at DESC');
         }
         return parent::prepareCollection($collection);
     }

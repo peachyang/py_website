@@ -39,7 +39,8 @@ class Address extends Template
         $segment = new Segment('customer');
         if ($this->hasLoggedIn()) {
             $address = new Collection;
-            $address->where(['customer_id' => $segment->get('customer')['id']]);
+            $address->where(['customer_id' => $segment->get('customer')['id']])
+                    ->order('is_default DESC, id ASC');
             return $address;
         } else {
             $ids = $segment->get('address');

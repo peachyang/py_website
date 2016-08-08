@@ -330,7 +330,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .address .list li:hover{background:#F1F2F4}
 .checkout-order .address .list li:hover .edit{display:block}
 .checkout-order .address .list li:hover .delete{display:block}
-.checkout-order .address .list .more-address{margin-left:20px;display:block;width:90px;margin-top:10px;color:#007dc6}
+.checkout-order .address .list .more-address{margin:10px 0 0 20px;padding-left:2px;display:block;width:105px;color:#007dc6}
 .checkout-order .address .btn-add{margin-left:12px;border-radius:0;color:#007dc6;float:right;padding:0;background:none}
 .checkout-order .review .table{border:0 !important}
 .checkout-order .product-list{border:1px solid #e4e6ec}

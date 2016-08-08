@@ -244,17 +244,22 @@
     });
     $(".more-address").click(function(){
     	var value = $(this).attr('data');
+    	var li = $(".checkout-order .address .list li");
     	if(value == 1){
-    		$(".checkout-order .address .list li").show();
+    		li.show();
     		$(this).attr('data',0);
+    		$(this).find('i').removeClass('fa-angle-down');
+    		$(this).find('i').addClass('fa-angle-up');
     	}else{
-    		$(".checkout-order .address .list li").hide();
+    		li.hide();
     		$(this).attr('data',1);
-    		$(".checkout-order .address .list li input").each(function () {
+    		li.find("input").each(function () {
     			if($(this).is(':checked')){
         			$(this).parent().show();
         		}
     		})
+    		$(this).find('i').removeClass('fa-angle-up');
+    		$(this).find('i').addClass('fa-angle-down');
     		
     				
     	}

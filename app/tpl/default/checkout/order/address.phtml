@@ -21,7 +21,10 @@ $attributes = $this->getAddressAttribute();
                 <a href="javascript:void(0);" class="edit"><?php echo $this->translate('Edit') ?></a>
             </li>
         <?php endforeach ?>
-        <a class="more-address" href="javascript:void(0)" data="1"><?php echo $this->translate('More Address') ?></a>
+        <a class="more-address" href="javascript:void(0)" data="1">
+            <?php echo $this->translate('More Address') ?>
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
     </ul>
     <template id="tmpl-address-list">
         <li data-id="{id}" data-json='{json}'>

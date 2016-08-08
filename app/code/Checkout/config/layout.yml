@@ -137,5 +137,5 @@ checkout_order_success:
                 children:
                     success:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: checkout/order/success
-                        
+                        template: checkout/order/success                        
+                        template: checkout/order/total

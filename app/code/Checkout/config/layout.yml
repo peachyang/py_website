@@ -128,4 +128,4 @@ checkout_order_review:
                 children:
                     review:
                         type: Seahinet\Checkout\ViewModel\Cart
-                        template: checkout/cart/total
+                        template: checkout/order/total

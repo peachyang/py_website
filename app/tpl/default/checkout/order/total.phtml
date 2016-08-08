@@ -14,10 +14,14 @@ endif;
 <?php
 if ($this->getCart()['shipping']):
     ?>
-    <?php //echo $this->translate('Shipping') ?>
-    <span class="checkout-num"><?php //echo $this->getCurrency()->format($this->getCart()['shipping']) ?></span>
+    <?php echo $this->translate('Shipping') ?>
+    <span class="checkout-num"><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></span>
     <?php
 endif;
 ?>
 <?php echo $this->translate('Total') ?>:
-<span class="checkout-num total-pirce"><?php echo $this->getCurrency()->format($this->getTotal()) ?></span>
+<span class="checkout-num total-pirce"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+<div>
+	<?php echo $this->translate('Total Should be') ?>：
+	<b><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></b>
+</div>

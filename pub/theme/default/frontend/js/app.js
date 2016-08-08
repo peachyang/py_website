@@ -242,4 +242,21 @@
     $("input:checkbox").change(function () {
         total_change();
     });
+    $(".more-address").click(function(){
+    	var value = $(this).attr('data');
+    	if(value == 1){
+    		$(".checkout-order .address .list li").show();
+    		$(this).attr('data',0);
+    	}else{
+    		$(".checkout-order .address .list li").hide();
+    		$(this).attr('data',1);
+    		$(".checkout-order .address .list li input").each(function () {
+    			if($(this).is(':checked')){
+        			$(this).parent().show();
+        		}
+    		})
+    		
+    				
+    	}
+    })
 }));

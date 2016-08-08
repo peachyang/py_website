@@ -50,7 +50,7 @@
             ?>
             <tr>
                 <th colspan="7" class="text-right text-nowrap store-total">
-                    	店铺合计(含运费):$100.00<?php //echo $item['store']['name'] ?>
+                    	<?php echo $this->translate('Shop Total').':'.$this->getCurrency()->format($this->getCart()['total'])//, $item['store']['name'] ?>
                 </th>
             </tr>
         </tbody>

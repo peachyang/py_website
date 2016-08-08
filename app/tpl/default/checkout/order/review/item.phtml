@@ -1,7 +1,11 @@
 <?php
+use Seahinet\Checkout\ViewModel\Cart\Item;
+
 $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
+$item_model = new Item();
+$options = $item_model->getOption($item);
 ?>
 <tr class="product-list">
     <td class="td-img">
@@ -9,6 +13,11 @@ $thumbnail = $product->getThumbnail();
     </td>
     <td class="td-name">
         <?php echo $item['product_name'] ?>
+        <?php 
+            foreach ($options as $k=>$v){
+                echo '<p><span>'. $k .'：'. $v .'</span></p>';
+            }
+        ?>
     </td>
     <td class="td-price">
         <?php echo $this->getCurrency()->format($item['price']) ?>
@@ -24,6 +33,7 @@ $thumbnail = $product->getThumbnail();
             <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
         </td>
         <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-comment">
+        	<span><?php echo $this->translate('Buyer Message') ?></span>
             <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
         </td>
     <?php endif ?>

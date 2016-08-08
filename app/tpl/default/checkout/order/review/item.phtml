@@ -33,7 +33,6 @@ $options = $item_model->getOption($item);
             <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
         </td>
         <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-comment">
-        	<span><?php echo $this->translate('Buyer Message') ?></span>
             <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
         </td>
     <?php endif ?>

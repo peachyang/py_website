@@ -81,7 +81,7 @@ $currency = $this->getOrder()->getCurrency();
     </div>
     <div class="panel wide">
         <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Item(s)') ?></h4>
+            <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
         </div>
         <div class="panel-body grid table-responsive">
             <table class="table table-hover table-striped table-no-border">
@@ -120,6 +120,75 @@ $currency = $this->getOrder()->getCurrency();
                     <?php endforeach ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Status History', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body">
+            <form action="<?php echo $this->getAdminUrl('sales_order/status/') ?>" method="post">
+                <input type="hidden" name="id" value="<?php echo $order->getId() ?>" />
+                <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                <div class="input-box">
+                    <label for="status" class="control-label"><?php echo $this->translate('Status') ?></label>
+                    <select name="status_id" id="status" class="form-control">
+                        <?php foreach ($order->getStatus()->getPhase()->getStatus() as $status): ?>
+                            <option value="<?php echo $status->getId() ?>"<?php if ($order->getStatus()->getId() == $status->getId()): ?> selected="selected"<?php endif ?>>
+                                <?php echo $this->translate($status->offsetGet('name')) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="comment" class="control-label"><?php echo $this->translate('Comment') ?></label>
+                    <textarea class="form-control" name="comment" id="comment"></textarea>
+                </div>
+                <div class="input-box">
+                    <input type="checkbox" name="is_customer_notified" id="notify-customer" value="1" />
+                    <label for="notify-customer"><?php echo $this->translate('Notify Customer', [], 'sales') ?></label>
+                </div>
+                <div class="input-box">
+                    <input type="checkbox" name="is_visible_on_front" id="visible" value="1" />
+                    <label for="visible"><?php echo $this->translate('Visible on Frontend', [], 'sales') ?></label>
+                </div>
+                <div class="buttons-set">
+                    <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Submit') ?></span></button>
+                </div>
+            </form>
+            <dl class="history">
+                <?php foreach ($order->getStatusHistory() as $history): ?>
+                    <dt><?php echo $history->offsetGet('created_at'), ' | ', $this->translate($history->offsetGet('status')) ?></dt>
+                    <dd>
+                        <span class="fa fa-fw fa-<?php echo $history->offsetGet('is_visible_on_front') ? 'eye' : 'eye-slash' ?>" title="<?php echo $this->translate($history->offsetGet('is_visible_on_front') ? 'Visible on Frontend' : 'Invisible on Frontend', [], 'sales') ?>"></span>
+                        <span class="fa fa-fw fa-<?php echo $history->offsetGet('is_customer_notified') ? 'bell-o' : 'bell-slash-o' ?>" title="<?php echo $this->translate($history->offsetGet('is_customer_notified') ? 'Customer Notified' : 'Customer Not Notified', [], 'sales') ?>"></span>
+                        <p>
+                            <?php echo $history->offsetGet('comment') ?>
+                        </p>
+                    </dd>
+                <?php endforeach ?>
+            </dl>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('subtotal')) ?></dd>
+                <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('shipping')) ?></dd>
+                <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('tax')) ?></dd>
+                <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('total')) ?></dd>
+                <dt><?php echo $this->translate('Total Paid', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('total_paid')) ?></dd>
+                <dt><?php echo $this->translate('Total Refunded', [], 'sales') ?></dt>
+                <dd><?php echo $currency->format($order->offsetGet('total_refunded')) ?></dd>
+            </dl>
         </div>
     </div>
 </div>

@@ -275,10 +275,14 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .view .panel{width:50%;float:left;padding:0 10px;margin:20px 0 0}
 .admin .view .panel:nth-child(2n+1){clear:left}
 .admin .view .panel.wide{width:100%}
-.admin .view .buttons-set{padding:0 10px}
-.admin .view .buttons-set~.panel:nth-child(2n+1){clear:none}
-.admin .view .buttons-set~.panel:nth-child(2n){clear:left}
+.admin .view .panel.wide~.panel{clear:none!important}
+.admin .view>.buttons-set{padding:0 10px}
+.admin .view>.buttons-set~.panel:nth-child(2n+1){clear:none}
+.admin .view>.buttons-set~.panel:nth-child(2n){clear:left}
 .admin .view .panel-body.grid,.admin .view .panel-body.grid .table{padding:0}
+.admin .view dl{max-height:160px;overflow:auto}
+.admin .view .dl-horizontal dt{width:75%;float:left;text-align:right;padding:0 10px}
+.admin .view .dl-horizontal dd{width:25%;float:left;text-align:left}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}
 .admin .input-box .comment:before{content:' ';display:inline-block;width:0;height:0;border:3px solid transparent;border-bottom:5.196152423px solid #555;vertical-align:2px}
 .admin .edit .tab-pane~.buttons-set{margin:26px 0 0;background:#F7F8FA;padding:20px 20px 20px 50px}

@@ -139,14 +139,11 @@ class OrderController extends AuthActionController
                         if (count($history)) {
                             $statusId = $history[0]->offsetGet('status_id');
                             $statusName = $history[0]->offsetGet('name');
-                            $order->setData('status_id', $history[0]->getId())
-                                    ->save();
                         } else {
                             $statusId = $status->offsetGet('id');
                             $statusName = $status->offsetGet('name');
-                            $order->setData('status_id', 3)
-                                    ->save();
                         }
+                        $order->setData('status_id', $statusId)->save();
                         $history = new History;
                         $history->setData([
                             'admin_id' => $userId,

@@ -2,12 +2,12 @@
 
 namespace Seahinet\Sales\Model;
 
-use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Sales\Model\Collection\Invoice;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
+use Seahinet\Sales\Model\Collection\Order\Status\History;
 use Seahinet\Sales\Model\Collection\Shipment;
 use Seahinet\Sales\Model\Order\Item;
 use Seahinet\Sales\Model\Order\Status;
@@ -157,6 +157,17 @@ class Order extends AbstractModel
             return (new Status)->load($this->storage['status_id']);
         }
         return null;
+    }
+
+    public function getStatusHistory()
+    {
+        if ($this->getId()) {
+            $history = new History;
+            $history->where(['order_id' => $this->getId()])
+                    ->order('created_at DESC');
+            return $history;
+        }
+        return [];
     }
 
     public function getInvoice()

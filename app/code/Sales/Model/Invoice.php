@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\I18n\Model\Currency;
 use Seahinet\Sales\Model\Collection\Invoice\Item as ItemCollection;
 
 class Invoice extends AbstractModel
@@ -37,4 +38,32 @@ class Invoice extends AbstractModel
         return $this->items;
     }
 
+    public function getCurrency()
+    {
+        if (isset($this->storage['currency'])) {
+            $currency = new Currency;
+            $currency->labol = 'invoice';
+            return $currency->load($this->storage['currency'], 'code');
+        }
+        return $this->getContainer()->get('currency');
+    }
+    
+    public function getShippingMethod()
+    {
+        if (isset($this->storage['shipping_method'])) {
+            $className = $this->getContainer()->get('config')['shipping/' . $this->storage['shipping_method'] . '/model'];
+            return new $className;
+        }
+        return null;
+    }
+
+    public function getPaymentMethod()
+    {
+        if (isset($this->storage['payment_method'])) {
+            $className = $this->getContainer()->get('config')['payment/' . $this->storage['payment_method'] . '/model'];
+            return new $className;
+        }
+        return null;
+    }
+        
 }

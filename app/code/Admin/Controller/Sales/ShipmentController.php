@@ -12,6 +12,14 @@ class ShipmentController extends AuthActionController
         $root = $this->getLayout('admin_sales_shipment_list');
         return $root;
     }
+    
+    public function viewAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            return $this->getLayout('admin_sales_shipment_view');
+        }
+        return $this->notFoundAction();
+    }
 
     public function editAction()
     {

@@ -3,6 +3,8 @@
 namespace Seahinet\Admin\Controller\Sales;
 
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Sales\Model\Creditmemo as Model;
+use Seahinet\Lib\Session\Segment;
 
 class CreditmemoController extends AuthActionController
 {
@@ -13,6 +15,14 @@ class CreditmemoController extends AuthActionController
         return $root;
     }
 
+    public function viewAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            return $this->getLayout('admin_sales_creditmemo_view');
+        }
+        return $this->notFoundAction();
+    }
+    
     public function editAction()
     {
         $root = $this->getLayout('admin_sales_creditmemo_edit');

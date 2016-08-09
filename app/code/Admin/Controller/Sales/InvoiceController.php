@@ -13,6 +13,13 @@ class InvoiceController extends AuthActionController
         return $root;
     }
 
+    public function viewAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            return $this->getLayout('admin_sales_invoice_view');
+        }
+        return $this->notFoundAction();
+    }
     public function editAction()
     {
         $root = $this->getLayout('admin_sales_invoice_edit');

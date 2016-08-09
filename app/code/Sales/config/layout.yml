@@ -97,6 +97,28 @@ admin_sales_invoice_list:
                                 params: [{link:':ADMIN/sales_invoice/',label:'Invoice'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Invoice
+admin_sales_invoice_view:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_invoice/',label:'Invoice'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'View'}]
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Invoice
+                        template: admin/sales/order
 admin_sales_shipment_list:
     update: grid
     root:
@@ -115,6 +137,28 @@ admin_sales_shipment_list:
                                 params: [{link:':ADMIN/sales_shipment/',label:'Shipment'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Shipment
+admin_sales_shipment_view:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Shipment / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_shipment/',label:'Shipment'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'View'}]
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Shipment
+                        template: admin/sales/order
 admin_sales_creditmemo_list:
     update: grid
     root:
@@ -133,3 +177,25 @@ admin_sales_creditmemo_list:
                                 params: [{link:':ADMIN/sales_creditmemo/',label:'Credit Memo'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\CreditMemo
+admin_sales_creditmemo_view:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Credit Memo / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_creditmemo/',label:'Credit Memo'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'View'}]
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
+                        template: admin/sales/order

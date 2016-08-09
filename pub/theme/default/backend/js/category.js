@@ -7,6 +7,7 @@
         factory(jQuery);
     }
 }(function ($) {
+    "use strict";
     $(function () {
         var ajax = null;
         $('.grid .table .sortable').sortable({

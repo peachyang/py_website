@@ -80,8 +80,8 @@ $currency = $this->getCart()->getCurrency();
                             <td><?php echo $item['sku'] ?></td>
                             <td>
                                 <?php
-                                if ($item['product_id']) {
-                                    $options = json_decode($item['options'], true);
+                                $options = json_decode($item['options'], true);
+                                if ($item['product_id'] && count($options)) {
                                     foreach ($item['product']->getOptions() as $option) {
                                         if (isset($options[$option->getId()])) {
                                             echo $option['title'], ': ', (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?

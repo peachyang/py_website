@@ -76,7 +76,7 @@ class Order extends AbstractModel
             if ($force) {
                 return $items;
             }
-        }var_dump($this->items);
+        }
         return $this->items;
     }
 

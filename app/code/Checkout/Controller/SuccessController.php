@@ -10,9 +10,9 @@ class SuccessController extends ActionController
 
     public function indexAction()
     {
-        if (count(Cart::instance()->getItems())) {
+//        if (count(Cart::instance()->getItems())) {
             return $this->getLayout('checkout_order_success');
-        }
+//        }
         return $this->redirectReferer('checkout/cart/');
     }
 

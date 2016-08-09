@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\ViewModel\Sales\View;
 
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Order as Model;
 

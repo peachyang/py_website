@@ -5,6 +5,7 @@ body{height:100%;position:relative}
 [hidden],.hidden,template{display:none!important}
 a{color:inherit;text-decoration:none}
 a:focus,a:hover{text-decoration:underline}
+p{margin:0 0 10px}
 h1,h2,h3,h4,h5,h6{margin:0;font-weight:normal}
 ul,ol,dl,menu{list-style:none;margin:0;padding:0}
 ul>li,ol>li,dl>dt,dl>dd,menu>li,menu>menuitem{margin:0;padding:0}
@@ -161,7 +162,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin-login .panel-login label.invalid{left:54px}
 .svg .admin-login .panel-login{background-image:url(../images/logo-top.svg);background-size:143px 137px}
 .csscalc .admin-login .panel-login{left:calc(50% - 16.8125rem);top:calc(50% - 168px);margin:0}
-.admin-login .panel-login .panel-body{width:60%;float:right;border-left:3px solid #dbdcdc;padding:8px 47px 0}
+.admin-login .panel-login .panel-body{width:60%;float:right;border:none;border-left:3px solid #dbdcdc;padding:8px 47px 0}
 .admin-login .panel-login .control-label{width:65px;width:4.0625rem}
 .admin-login .panel-login .form-control{width:156px;width:9.75rem}
 .admin-login .panel-login .form-control[type=checkbox]{width:auto;height:auto;margin:7px 7px 0 52px}
@@ -272,6 +273,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .edit .table td{vertical-align:middle}
+.admin .view{padding-bottom:20px}
 .admin .view .panel{width:50%;float:left;padding:0 10px;margin:20px 0 0}
 .admin .view .panel:nth-child(2n+1){clear:left}
 .admin .view .panel.wide{width:100%}
@@ -280,6 +282,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .view>.buttons-set~.panel:nth-child(2n+1){clear:none}
 .admin .view>.buttons-set~.panel:nth-child(2n){clear:left}
 .admin .view .panel-body.grid,.admin .view .panel-body.grid .table{padding:0}
+.admin .view .panel-body.grid .table td{vertical-align:middle}
 .admin .view dl{max-height:160px;overflow:auto}
 .admin .view .dl-horizontal dt{width:75%;float:left;text-align:right;padding:0 10px}
 .admin .view .dl-horizontal dd{width:25%;float:left;text-align:left}
@@ -329,3 +332,4 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin-media-edit .select-icon input{display:none}
 .admin-media-edit .select-icon input:checked+label{border:2px solid #8b8c8c}
 .admin-media-list .grid td i {font-size:25px;}
+.admin .totals [type=checkbox]:not(:checked)+.price{text-decoration:line-through}

@@ -235,7 +235,7 @@ class OrderController extends ActionController
                                     ] : [
                                 'billing_address_id' => $data['shipping_address_id'],
                                 'billing_address' => $shippingAddress->display(false)
-                            ])->save();
+                            ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
@@ -272,7 +272,7 @@ class OrderController extends ActionController
                     $cart = Cart::instance();
                     $cart->setData([
                         'payment_method' => $data['payment_method']
-                    ])->save();
+                    ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

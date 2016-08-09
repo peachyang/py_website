@@ -78,7 +78,7 @@ final class Cart extends AbstractModel implements Singleton
         }
         $segment = new Segment('customer');
         $segment->offsetUnset('cart');
-        unset(static::$instance);
+        static::$instance = null;
     }
 
     public function combine($cart)

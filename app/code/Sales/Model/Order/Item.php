@@ -4,7 +4,6 @@ namespace Seahinet\Sales\Model\Order;
 
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Store;
 
 class Item extends AbstractModel
 {
@@ -26,9 +25,6 @@ class Item extends AbstractModel
             if ($key === 'product') {
                 $result = new Product;
                 $result->load($this->storage['product_id']);
-            } else if ($key === 'store') {
-                $result = new Store;
-                $result->load($this->storage['store_id']);
             }
         }
         return $result;

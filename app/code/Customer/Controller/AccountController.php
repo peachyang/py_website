@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\Controller;
 
+use Seahinet\Lib\Controller\AuthActionController;
 use Exception;
 use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;
@@ -313,7 +314,6 @@ class AccountController extends AuthActionController
         $customerId = $segment->get('customer')->getId();
         $customer = new Model;
         $customer->load($customerId);
-
         $root = $this->getLayout('customer_account_personalinfo');
         $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
@@ -321,13 +321,30 @@ class AccountController extends AuthActionController
 
     public function editPersonalInfoAction()
     {
-        $segment = new Segment('customer');
-        $customerId = $segment->get('customer')->getId();
-        $customer = new Model;
-        $customer->load($customerId);
-        $data = $this->getRequest()->getPost();
-        $customer->setData('password', $data['password'])->save();
-        return $this->redirect('customer/account/');
+        $result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $segment = new Segment('customer');
+            $customer = $segment->get('customer');
+            $result = $this->validateForm($data, ['crpassword', 'password']);
+            if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
+                $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
+                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            } else if ($result['error'] === 0) {
+                $model = new Model;
+                $model->load($customer['id']);
+                $model->save();
+                if (isset($data['id']) && $data['id'] == $customer->getId()) {
+                    $customer->setData($data);
+                    $segment->set('customer', clone $customer);
+                }
+                $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                return $this->redirect('customer/account/');
+            }
+        }
     }
 
     public function addressAction()

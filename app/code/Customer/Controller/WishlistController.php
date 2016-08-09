@@ -24,8 +24,6 @@ class WishlistController extends AuthActionController
     public function addAction()
     {
         $data = $this->getRequest()->getQuery();
-//        $result = $this->validateForm($data, ['name']);
-//        if ($result['error'] === 0) {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         try {
@@ -33,11 +31,8 @@ class WishlistController extends AuthActionController
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
                 $wishlist->setData(['customer_id' => $customerId, 'id' => null])->save();
-            }
-            
+            }           
             $data['wishlist_id'] = $wishlist->getId();
-                    print_r($data);
-            die();
             $wishlist->getId();
             $wishlist->addItem($data);
             $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];

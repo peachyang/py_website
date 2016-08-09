@@ -1,26 +1,26 @@
-<?php 
-$customer = $this->getVariable('customer');
-?>
+<?php $customer = $this->getVariable('customer'); ?>
 <div class="col-xs-9 col-sm-9 col-md-10 personinfo">
-    <form action="<?php echo $this->getBaseUrl('customer/account/editPersonalInfo/') ?>" method="post" >
-    <div class="fieldset"> 
-    	<div>
-            <label><?php echo $this->translate('User Name:') ?></label>
-        	<span><?php echo $this->translate(ucwords($customer->username)) ?></span>
-    	</div>
-    	<div>
-        	<label for="edit:email" class="control-label"><?php echo $this->translate('Email:') ?></label> 
-        	<input type="email" name="email" id="edit:email" class="required email" value="<?php echo $this->translate($customer->email) ?>"/>
-    	</div>
-    	
-    	<div>
-        	<label for="edit:password" class="control-label"><?php echo $this->translate('Password:') ?></label> 
-        	<input type="password" name="password" id="edit:password" class="required password" />
-    	</div>
-    	
-    	<div>
-    		<button type="submit"><span><?php echo $this->translate('Submit') ?></span></button>
-    	</div>
-    </div>	
+    <form action="<?php echo $this->getBaseUrl('customer/account/editPersonalInfo/') ?>" method="post">
+        <div class="fieldset"> 
+            <dl>
+                <dt><label><?php echo $this->translate('Username :') ?></label></dt>
+                <dd><span><?php echo $this->translate(ucwords($customer->username)) ?></span></dd>
+            </dl>
+            <dl>
+                <dt><label for="edit:oldpassword" class="control-label"><?php echo $this->translate('Old Password :'); ?></label></dt>
+                <dd><input type="password" name="oldpassword" id="edit:oldpassword" class="required password"/></dd>
+            </dl>
+            <dl>
+                <dt><label for="edit:newpassword" class="control-label"><?php echo $this->translate('New Password :') ?></label></dt> 
+                <dd><input type="password" name="newpassword" id="edit:newpassword" class="required password" /></dd>
+            </dl>
+            <dl>
+                <dt><label for="edit:rppassword" class="control-label"><?php echo $this->translate('Confirm password :') ?></label></dt> 
+                <dd><input type="password" name="rppassword" id="edit:rppassword" class="required password" /></dd>
+            </dl>
+            <div>
+                <button type="submit" name="btn"><span><?php echo $this->translate('Submit') ?></span></button>
+            </div>
+        </div>	
     </form>		
 </div>

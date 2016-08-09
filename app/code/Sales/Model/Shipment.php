@@ -3,7 +3,7 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Sales\Model\Collection\Shipment\Item;
+use Seahinet\Sales\Model\Collection\Shipment\Item as ItemCollection;
 
 class Shipment extends AbstractModel
 {

@@ -15,3 +15,15 @@ Seahinet\Sales\Model\Order.model.save.before:
     -
         listener: [\Seahinet\Sales\Listeners\Increment, generate]
         priority: 10
+Seahinet\Sales\Model\Invoice.model.save.before:
+    -
+        listener: [\Seahinet\Sales\Listeners\Increment, generate]
+        priority: 10
+Seahinet\Sales\Model\Shipment.model.save.before:
+    -
+        listener: [\Seahinet\Sales\Listeners\Increment, generate]
+        priority: 10
+Seahinet\Sales\Model\CreditMemo.model.save.before:
+    -
+        listener: [\Seahinet\Sales\Listeners\Increment, generate]
+        priority: 10

@@ -3,9 +3,12 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Collection\CreditMemo\Item as ItemCollection;
 
 class CreditMemo extends AbstractModel
 {
+
+    protected $items = null;
 
     protected function construct()
     {
@@ -15,6 +18,23 @@ class CreditMemo extends AbstractModel
             'base_discount', 'discount', 'base_tax', 'tax',
             'base_total', 'total', 'comment', 'status'
         ]);
+    }
+
+    public function getItems($force = false)
+    {
+        if ($force || is_null($this->items)) {
+            $items = new ItemCollection();
+            $items->where(['order_id' => $this->getId()]);
+            $result = [];
+            $items->walk(function($item) use (&$result) {
+                $result[$item['id']] = $item;
+            });
+            $this->items = $result;
+            if ($force) {
+                return $items;
+            }
+        }
+        return $this->items;
     }
 
 }

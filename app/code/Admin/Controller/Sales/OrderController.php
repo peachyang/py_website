@@ -167,25 +167,93 @@ class OrderController extends AuthActionController
         return $this->redirectReferer(':ADMIN/sales_order/');
     }
 
-    public function deleteAction()
+    public function statusAction()
     {
-        return $this->doDelete('\\Seahinet\\Sales\\Model\\Order', ':ADMIN/sales_order/');
-    }
-
-    public function saveAction()
-    {
-        return $this->doSave('\\Seahinet\\Sales\\Model\\Order', ':ADMIN/sales_order/', [], function($model, $data) {
-                    $user = (new Segment('admin'))->get('user');
-                    if ($user->getStore()) {
-                        if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
-                            throw new \Exception('Not allowed to save.');
+        return $this->doSave('\\Seahinet\\Sales\\Model\\Order\\Status\\History', $this->getRequest()->getHeader('HTTP_REFERER'), [], function($model, $data) {
+                    $order = new Model;
+                    $order->load($data['id']);
+                    $collection = $order->getStatus()->getPhase()->getStatus();
+                    $flag = false;
+                    foreach ($collection as $status) {
+                        if ($status['id'] === $data['status_id']) {
+                            $flag = $status['name'];
+                            break;
                         }
-                        $model->setData('store_id', $user->getStore()->getId());
-                    } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
-                        $model->setData('store_id', null);
                     }
+                    if ($flag === false) {
+                        throw new Exception('Invalid status.');
+                    }
+                    $user = (new Segment('admin'))->get('user');
+                    $model->setData([
+                        'id' => null,
+                        'admin_id' => $user->getId(),
+                        'order_id' => $data['id'],
+                        'status' => $flag,
+                        'is_customer_notified' => isset($data['is_customer_notified']) ? 1 : 0,
+                        'is_visible_on_front' => isset($data['is_visible_on_front']) ? 1 : 0
+                    ]);
                 }
         );
+    }
+
+    public function shipAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Model;
+            $order->load($id);
+            if ($order->canShip()) {
+                $root = $this->getLayout('admin_sales_shipment_edit');
+                $root->getChild('breadcrumb', true)->addCrumb([
+                    'link' => ':ADMIN/sales_order/view/?id=' . $id,
+                    'label' => 'Order'
+                ])->addCrumb([
+                    'link' => ':ADMIN/sales_order/ship/?id=' . $id,
+                    'label' => 'Shipment'
+                ]);
+                return $root;
+            }
+        }
+        return $this->notFoundAction();
+    }
+
+    public function invoiceAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Model;
+            $order->load($id);
+            if ($order->canInvoice()) {
+                $root = $this->getLayout('admin_sales_invoice_edit');
+                $root->getChild('breadcrumb', true)->addCrumb([
+                    'link' => ':ADMIN/sales_order/view/?id=' . $id,
+                    'label' => 'Order'
+                ])->addCrumb([
+                    'link' => ':ADMIN/sales_order/invoice/?id=' . $id,
+                    'label' => 'Invoice'
+                ]);
+                return $root;
+            }
+        }
+        return $this->notFoundAction();
+    }
+
+    public function refundAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Model;
+            $order->load($id);
+            if ($order->canRefund()) {
+                $root = $this->getLayout('admin_sales_creditmemo_edit');
+                $root->getChild('breadcrumb', true)->addCrumb([
+                    'link' => ':ADMIN/sales_order/view/?id=' . $id,
+                    'label' => 'Order'
+                ])->addCrumb([
+                    'link' => ':ADMIN/sales_order/refund/?id=' . $id,
+                    'label' => 'Credit Memo'
+                ]);
+                return $root;
+            }
+        }
+        return $this->notFoundAction();
     }
 
 }

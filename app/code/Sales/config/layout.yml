@@ -97,6 +97,23 @@ admin_sales_invoice_list:
                                 params: [{link:':ADMIN/sales_invoice/',label:'Invoice'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Invoice
+admin_sales_invoice_edit:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Sales\Edit\Invoice
+                        template: admin/sales/edit/invoice
 admin_sales_shipment_list:
     update: grid
     root:
@@ -115,6 +132,23 @@ admin_sales_shipment_list:
                                 params: [{link:':ADMIN/sales_shipment/',label:'Shipment'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Shipment
+admin_sales_shipment_edit:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Sales\Edit\Shipment
+                        template: admin/sales/edit/shipment
 admin_sales_creditmemo_list:
     update: grid
     root:
@@ -133,3 +167,20 @@ admin_sales_creditmemo_list:
                                 params: [{link:':ADMIN/sales_creditmemo/',label:'Credit Memo'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\CreditMemo
+admin_sales_creditmemo_edit:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Credit Memo / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Sales\Edit\CreditMemo
+                        template: admin/sales/edit/creditmemo

@@ -4,7 +4,11 @@ namespace Seahinet\Sales\Model;
 
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\Language;
+use Seahinet\Lib\Model\Store;
+use Seahinet\Sales\Model\Collection\CreditMemo;
 use Seahinet\Sales\Model\Collection\Invoice;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
 use Seahinet\Sales\Model\Collection\Order\Status\History;
@@ -16,13 +20,14 @@ class Order extends AbstractModel
 {
 
     protected $items = null;
+    protected $phase = null;
 
     protected function construct()
     {
         $this->init('sales_order', 'id', [
-            'id', 'status_id', 'increment_id', 'customer_id',
-            'billing_address_id', 'shipping_address_id', 'warehouse_id',
-            'store_id', 'billing_address', 'shipping_address', 'coupon',
+            'id', 'status_id', 'increment_id', 'customer_id', 'language_id',
+            'billing_address_id', 'shipping_address_id', 'warehouse_id', 'base_total_refund',
+            'store_id', 'billing_address', 'shipping_address', 'coupon', 'total_refund',
             'is_virtual', 'free_shipping', 'base_currency', 'currency', 'base_subtotal',
             'shipping_method', 'payment_method', 'base_shipping', 'shipping', 'subtotal',
             'base_discount', 'discount', 'discount_detail', 'base_tax', 'tax', 'base_total', 'total',
@@ -40,6 +45,7 @@ class Order extends AbstractModel
                     'customer_note' => isset($note[$storeId]) ? $note[$storeId] : '',
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
+                    'language_id' => Bootstrap::getLanguage()->getId(),
                     'status_id' => $statusId
                 ])->setId(null)->save();
         $orderId = $this->getId();
@@ -159,6 +165,14 @@ class Order extends AbstractModel
         return null;
     }
 
+    public function getPhase()
+    {
+        if (is_null($this->phase)) {
+            $this->phase = $this->getStatus()->getPhase();
+        }
+        return $this->phase;
+    }
+
     public function getStatusHistory()
     {
         if ($this->getId()) {
@@ -190,6 +204,16 @@ class Order extends AbstractModel
         return [];
     }
 
+    public function getCreditMemo()
+    {
+        if ($this->getId()) {
+            $collection = new CreditMemo;
+            $collection->where(['order_id' => $this->getId()]);
+            return $collection;
+        }
+        return [];
+    }
+
     public function getQty()
     {
         $qty = 0;
@@ -197,6 +221,82 @@ class Order extends AbstractModel
             $qty += $item['qty'];
         }
         return $qty;
+    }
+
+    public function getLanguage()
+    {
+        if (isset($this->storage['language_id'])) {
+            return (new Language)->load($this->storage['language_id']);
+        }
+        return null;
+    }
+
+    public function getStore()
+    {
+        if (isset($this->storage['store_id'])) {
+            return (new Store)->load($this->storage['store_id']);
+        }
+        return null;
+    }
+
+    public function canCancel()
+    {
+        return in_array($this->getPhase()->offsetGet('code'), ['pending', 'pending_payment']);
+    }
+
+    public function canHold()
+    {
+        return $this->getPhase()->offsetGet('code') === 'processing';
+    }
+
+    public function canUnhold()
+    {
+        return $this->getPhase()->offsetGet('code') === 'holded';
+    }
+
+    public function canInvoice()
+    {
+        if (in_array($this->getPhase()->offsetGet('code'), ['complete', 'canceled', 'closed', 'holded'])) {
+            return false;
+        }
+        $invoices = $this->getInvoice();
+        $qty = $this->getQty();
+        foreach ($invoices as $invoice) {
+            foreach ($invoice->getItems() as $item) {
+                $qty -= $item['qty'];
+            }
+        }
+        return $qty > 0;
+    }
+
+    public function canShip()
+    {
+        if (in_array($this->getPhase()->offsetGet('code'), ['complete', 'canceled', 'closed', 'holded'])) {
+            return false;
+        }
+        $shipments = $this->getShipment();
+        $qty = $this->getQty();
+        foreach ($shipments as $shipment) {
+            foreach ($shipment->getItems() as $item) {
+                $qty -= $item['qty'];
+            }
+        }
+        return $qty > 0;
+    }
+
+    public function canRefund()
+    {
+        if ($this->getPhase()->offsetGet('code') !== 'holded') {
+            return false;
+        }
+        $memos = $this->getCreditMemo();
+        $qty = $this->getQty();
+        foreach ($memos as $memo) {
+            foreach ($memo->getItems() as $item) {
+                $qty -= $item['qty'];
+            }
+        }
+        return $qty > 0;
     }
 
 }

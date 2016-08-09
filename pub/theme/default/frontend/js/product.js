@@ -61,6 +61,9 @@
                             .replace(/\{\$price\}/g, $('.product-info .price-box .price').not('.old-price .price').text())
                             .replace(/\{\$qty\}/g, $('.product-info [name=qty]').val())
                             .replace(/\{\$options\}/g, options));
+                    $('.minicart .dropdown-toggle .badge').text(function () {
+                        return parseFloat($(this).text()) + parseFloat($('.product-info [name=qty]').val());
+                    });
                 }
             } else {
                 $(f).removeAttr('data-ajax');

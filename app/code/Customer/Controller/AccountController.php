@@ -297,67 +297,61 @@ class AccountController extends AuthActionController
 
     public function indexAction()
     {
-        
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         $customer = new Model;
         $customer->load($customerId);
-        
+
         $root = $this->getLayout('customer_account_dashboard');
         $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
     }
-    
+
     public function personalInfoAction()
     {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         $customer = new Model;
         $customer->load($customerId);
-        
+
         $root = $this->getLayout('customer_account_personalinfo');
-        $root->getChild('main',true)->setVariable('customer', $customer);
+        $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
     }
-    
+
     public function editPersonalInfoAction()
     {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         $customer = new Model;
         $customer->load($customerId);
-        
         $data = $this->getRequest()->getPost();
-        $customer->setData('email', $data['email']);
-        $customer->setData('password', $data['password']) ->save();
-       
+        $customer->setData('password', $data['password'])->save();
         return $this->redirect('customer/account/');
     }
-    
+
     public function addressAction()
     {
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         $addresses = new Addresses;
         $addresses->where(['customer_id' => $customerId]);
-        
+
         $root = $this->getLayout('customer_account_address');
-        $root->getChild('main',true)->setVariable('addresses',$addresses);
-        
+        $root->getChild('main', true)->setVariable('addresses', $addresses);
+
         return $root;
     }
-    
+
     public function delAddressAction()
     {
         $address = new Address;
         $data = $this->getRequest()->getQuery();
         $address->load($data['id'])->remove();
-        
+
         return $this->redirect('customer/account/address/');
-        
-        
     }
-    
+
     public function addAddressAction()
     {
         $result = ['error' => 1, 'message' => []];
@@ -387,21 +381,18 @@ class AccountController extends AuthActionController
                         'customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null
                     ])->save();
                     $result['data'] = ['id' => $address->getId(), 'content' => $address->display()];
-                    
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 }
             }
         }
-        return $this->redirect('customer/account/address');       
-    
+        return $this->redirect('customer/account/address');
     }
-    
+
     public function editAddressAction()
     {
         
-    
     }
 
 }

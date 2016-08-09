@@ -155,11 +155,14 @@ select[multiple],select[size],textarea{resize:vertical}
 .page-not-found .main-container .notice dt{display:inline;color:#a2a3a3}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
-.main-container .navigation{border:1px solid #dfe1e8;margin-bottom:20px;margin-top:15px}
+.main-container .navigation{border:1px solid #dfe1e8;margin-bottom:20px;margin-top:15px;}
 .main-container .navigation .nav-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
+.main-container .navigation .nav-list{background:#f6f6f9}
+.main-container .navigation .nav-list dt{line-height:50px;max-height:50px}
+.main-container .navigation .nav-list dd{line-height:24px}
 .main-container .navigation .fa-user{color:#007dc6;font-size:18px}
 .main-container .navigation .fa{height:15px;width:15px;margin-right:5px}
-.main-container .navigation dl{margin-top:20px;margin-bottom:10px}
+/*.main-container .navigation dl{margin-top:20px;margin-bottom:10px}*/
 .main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
 .main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a;font-weight:bold;}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
@@ -271,9 +274,13 @@ select[multiple],select[size],textarea{resize:vertical}
 .qty .spin{display:inline-block;font-size:18px;line-height:22px;border:1px solid #d4d4d4;width:28px;height:28px;text-align:center;color:#cbcbcb;background:#ededed;vertical-align:bottom;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
-.main-container .personinfo{padding-left:40px;margin-top:16px} 
-.main-container .personinfo div{margin-bottom:20px}
-.main-container .personinfo label{width:80px}
+.main-container .personinfo{padding-left:40px;margin-top:15px} 
+/*.main-container .personinfo label{width:80px}*/
+.main-container .personinfo dl{width:100%;overflow:hidden}
+.main-container .personinfo dt{width:15%;text-align:right;float:left;padding-right:5px}
+.main-container .personinfo dd{float:left;width:50%}
+.main-container .personinfo dd span{font-weight:bold}
+.main-container .personinfo button{text-align:center;margin-left:100px}
 .customer-account-address .main-container .address{padding-left:40px;margin-top:16px}
 .customer-account-address .main-container .address .add-div{display:inline-block;margin-top:20px;margin-right:30px}
 .checkout-cart .main-container .table input[type="checkbox"]{cursor:pointer}

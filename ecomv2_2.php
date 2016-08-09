@@ -209,6 +209,8 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice` (
     `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
+    `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
+    `subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Subtotal',
     `base_shipping` DECIMAL(12,4) NOT NULL COMMENT 'Base shipping fee',
     `shipping` DECIMAL(12,4) NOT NULL COMMENT 'Shipping fee',
     `base_discount` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base discount',

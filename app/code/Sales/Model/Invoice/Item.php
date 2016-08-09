@@ -29,4 +29,11 @@ class Item extends AbstractModel
         return $result;
     }
 
+    public function collateTotals()
+    {
+        $this->storage['base_total'] = $this->storage['base_price'] * $this->storage['qty'] + (isset($this->storage['base_tax']) ? $this->storage['base_tax'] : 0) + (isset($this->storage['base_discount']) ? $this->storage['base_discount'] : 0);
+        $this->storage['total'] = $this->storage['price'] * $this->storage['qty'] + (isset($this->storage['tax']) ? $this->storage['tax'] : 0) + (isset($this->storage['discount']) ? $this->storage['discount'] : 0);
+        return $this;
+    }
+
 }

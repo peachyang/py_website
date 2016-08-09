@@ -12,31 +12,31 @@ customer_account:
                         action:
                             -
                                 method: addGroup
-                                params: [{label:'Account Info',priority:0,icon:'th-list'}]
+                                params: [{label:'Order Center',priority:0,icon:'calendar-check-o'}]
                             -
                                 method: addGroup
-                                params: [{label:'My Orders',priority:10,icon:'calendar-check-o'}]
+                                params: [{label:'Center of Attention',priority:10,icon:'star'}]
                             -
                                 method: addGroup
-                                params: [{label:'Asset',priority:20,icon:'money'}]
-                            -
+                                params: [{label:'Member Information',priority:20,icon:'th-list'}]
+                            -                                   
                                 method: addGroup
-                                params: [{label:'Follow',priority:30,icon:'star'}]
+                                params: [{label:'Asset',priority:30,icon:'money'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/',label:'Purchased',group:'My Orders'}]
+                                params: [{link:'customer/account/',label:'Purchased',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Shopping Cart',group:'My Orders'}]
+                                params: [{link:'customer/account',label:'Shopping Cart',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Evaluation',group:'My Orders'}]
+                                params: [{link:'customer/account',label:'Evaluation',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Refund',group:'My Orders'}]
+                                params: [{link:'customer/account',label:'Refund',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Bougnt Store',group:'My Orders'}]
+                                params: [{link:'customer/account',label:'Bougnt Store',group:'Order Center'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'Balance',group:'Asset'}]
@@ -48,25 +48,25 @@ customer_account:
                                 params: [{link:'customer/account',label:'Integral',group:'Asset'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Followed Goods',group:'Follow'}]
+                                params: [{link:'customer/account',label:'Followed Goods',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Followed Store',group:'Follow'}]
+                                params: [{link:'customer/account',label:'Followed Store',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Wishlist',group:'Follow'}]
+                                params: [{link:'customer/account',label:'Wishlist',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Track',group:'Follow'}]
+                                params: [{link:'customer/account',label:'Track',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Account Info'}]
+                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Member Information'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/address',label:'Address',group:'Account Info'}]
+                                params: [{link:'customer/account/address',label:'Address',group:'Member Information'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'My Card',group:'Account Info'}]
+                                params: [{link:'customer/account',label:'My Card',group:'Member Information'}]
                     messages:
                         action:
                             -

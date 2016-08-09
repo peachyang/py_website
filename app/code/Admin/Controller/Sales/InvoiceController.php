@@ -4,10 +4,11 @@ namespace Seahinet\Admin\Controller\Sales;
 
 use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Sales\Model\Collection\Order\Status as StatusCollection;
 use Seahinet\Sales\Model\Invoice;
 use Seahinet\Sales\Model\Invoice\Item;
 use Seahinet\Sales\Model\Order;
-use Seahinet\Sales\Source\Order\Status;
+use Seahinet\Sales\Model\Order\Status\History;
 
 class InvoiceController extends AuthActionController
 {
@@ -79,12 +80,12 @@ class InvoiceController extends AuthActionController
                 $code = (int) $order->canShip() + (int) $order->canInvoice();
                 if ($code) {
                     $code = $code === 2 ? 'complete' : 'processing';
-                    $status = new Status;
+                    $status = new StatusCollection;
                     $status->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [])
                             ->where(['is_default' => 1, 'sales_order_phase.code' => $code])
                             ->limit(1);
-                    $this->setData('status_id', $status[0]->getId())->save();
-                    $history = new Status\History;
+                    $order->setData('status_id', $status[0]->getId())->save();
+                    $history = new History;
                     $history->setData([
                         'admin_id' => (new Segment('admin'))->get('user')->getId(),
                         'order_id' => $this->getId(),

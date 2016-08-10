@@ -155,16 +155,17 @@ select[multiple],select[size],textarea{resize:vertical}
 .page-not-found .main-container .notice dt{display:inline;color:#a2a3a3}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
-.main-container .navigation{border:1px solid #dfe1e8;margin-bottom:20px;margin-top:15px;}
+.main-container .navigation{background:#f6f6f9;border:1px solid #dfe1e8;margin-top:15px;}
 .main-container .navigation .nav-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
-.main-container .navigation .nav-list{background:#f6f6f9}
+.main-container .navigation .nav-list{padding-left:25px}
 .main-container .navigation .nav-list dt{line-height:50px;max-height:50px}
 .main-container .navigation .nav-list dd{line-height:24px}
 .main-container .navigation .fa-user{color:#007dc6;font-size:18px}
 .main-container .navigation .fa{height:15px;width:15px;margin-right:5px}
 /*.main-container .navigation dl{margin-top:20px;margin-bottom:10px}*/
 .main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
-.main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a;font-weight:bold;}
+.main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
+.container .address .btn{background:#007dc6;color:#ffffff}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 

@@ -10,7 +10,7 @@ class Account extends Template
     
     public function __construct() 
     {
-        $this->getTemplate('customer/account');
+        $this->getTemplate('customer/account/');
     }
     
     public function addMenu($menu)

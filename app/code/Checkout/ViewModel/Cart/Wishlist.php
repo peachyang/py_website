@@ -8,12 +8,12 @@ use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
 use Zend\Db\TableGateway\TableGateway;
 
-class Logview extends Link
+class Wishlist extends Link
 {
 
     public function getProducts()
     {
-        $products_id = array_filter(explode(',', $this->getRequest()->getCookie('log_view')));
+        /* $products_id = array_filter(explode(',', $this->getRequest()->getCookie('log_view')));
         $ids = [];
         foreach ($products_id as $item) {
             $ids[$item] = 1;
@@ -31,7 +31,8 @@ class Logview extends Link
         } else {
             return [];
         }
-        return $products;
+        return $products; */
+        return [];
     }
 
 }

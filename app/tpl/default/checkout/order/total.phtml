@@ -1,6 +1,3 @@
-<?php echo $this->translate('Select Qty') ?>
-<span class="checkout-num select-qyt"><?php echo $this->getQty()   ?></span>
-<?php echo $this->translate('Unit',['i18n/zh-CN/checkout']) ?>
 <?php
 if ((float) $this->getCart()['discount']):
     foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
@@ -22,6 +19,6 @@ endif;
 <?php echo $this->translate('Total') ?>:
 <span class="checkout-num total-pirce"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
 <div>
-	<?php echo $this->translate('Total',['i18n/zh-CN/payment']) ?>：
-	<b><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></b>
+    <?php echo $this->translate('Total') ?>：
+    <b><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></b>
 </div>

@@ -24,7 +24,8 @@ class Customer extends Entity
             'store_id' => $this->storage['store_id'],
             'language_id' => $this->storage['language_id'],
             'increment_id' => $this->storage['increment_id'],
-            'username' => $this->storage['username']
+            'username' => $this->storage['username'],
+            'password' =>  $this->storage['password']
         ];
         $this->storage = $storage;
         $this->isLoaded = false;

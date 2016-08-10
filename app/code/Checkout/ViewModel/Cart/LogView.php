@@ -6,9 +6,8 @@ use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\TableGateway\TableGateway;
 
-class Crosssell extends Link
+class LogView extends Link
 {
 
     protected $products = null;
@@ -20,21 +19,10 @@ class Crosssell extends Link
             foreach (Cart::instance()->getItems() as $item) {
                 $ids[] = $item['product_id'];
             }
-            $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
-            $select = $tableGateway->getSql()->select();
-            $select->columns(['linked_product_id'])
-                    ->where
-                    ->equalTo('type', 'c')
-                    ->in('product_id', $ids)
-                    ->notIn('linked_product_id', $ids);
-            $result = $tableGateway->selectWith($select);
-            $ids = [];
-            foreach ($result as $item) {
-                $ids[$item['linked_product_id']] = 1;
-            }
+            $ids = array_diff($ids, explode(',', $this->getRequest()->getCookie('log_view')));
             if (count($ids)) {
                 $products = new Product;
-                $products->where(new In('id', array_keys($ids)));
+                $products->where(new In('id', $ids));
                 $this->products = $products;
             } else {
                 $this->products = [];

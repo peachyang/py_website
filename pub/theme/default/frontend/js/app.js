@@ -97,7 +97,7 @@
     });
     $('.carousel .carousel-inner').on('touchstart', function (e) {
         GLOBAL.PAGEX = e.originalEvent.touches[0].pageX;
-        if(GLOBAL.CAROUSELTIMEOUT){
+        if (GLOBAL.CAROUSELTIMEOUT) {
             window.clearTimeout(GLOBAL.CAROUSELTIMEOUT);
             GLOBAL.CAROUSELTIMEOUT = null;
         }
@@ -141,9 +141,9 @@
                     $(t).removeClass('prev').removeClass('next');
                 });
             }
-            GLOBAL.CAROUSELTIMEOUT = window.setTimeout(function(){
+            GLOBAL.CAROUSELTIMEOUT = window.setTimeout(function () {
                 $('.carousel .item').removeAttr('style');
-            },600);
+            }, 600);
         }
     });
     if ($.bttrlazyloading) {
@@ -155,13 +155,43 @@
     $('img.bttrlazyloading').each(function () {
         $(this).bttrlazyloading();
     });
-    $(".selectall").click(function () {
-        var this_value = $(this).val();
-        var this_status = this.checked;
-        $(".checkbox-" + this_value).prop("checked", this_status);
-        if (this_value == "on") {
-            $("input[type='checkbox']").prop("checked", this_status);
+    var collateTotals = function () {
+        var t = 0;
+        var q = 0;
+        $('#cart tbody [type=checkbox][name]:checked').each(function () {
+            var p = $(this).parent();
+            var tq = parseFloat($(p).siblings('.qty').find('.form-control').val());
+            q += tq;
+            t += $(p).siblings('.price').data('price') * tq;
+        });
+        $('#cart tfoot .selected').text(q);
+        $('#cart tfoot .total').text(function () {
+            var f = $(this).data('format');
+            return f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, t.toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1')));
+        });
+        if (q) {
+            $(".btn-checkout").removeAttr('disabled');
+        } else {
+            $(".btn-checkout").attr('disabled', 'disabled');
         }
+    };
+    var cartSelectItem = function () {
+        var p = $('#cart');
+        if (this && $(this).is('.selectall,.selectall [type=checkbox]')) {
+            var f = this.checked;
+            $(p).find('[type=checkbox]').each(function () {
+                this.checked = f;
+            });
+        } else {
+            $(p).find('.selectall,.selectall [type=checkbox]').each(function () {
+                this.checked = $(p).find('[type=checkbox]').not(':checked,.selectall,.selectall [type=checkbox]').length ? false : true;
+            });
+        }
+        collateTotals();
+    };
+    cartSelectItem();
+    $('.table').on('click', '[type=checkbox]', function () {
+        cartSelectItem.call(this);
     });
     $('.qty .spin').click(function () {
         var t = $('#' + $(this).attr('for'));
@@ -178,68 +208,10 @@
         }
     });
     $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
-        qty_change($(this));
-    });
-    function qty_change(e) {
-        var num = e.val();
-        var price_old = e.parent().prev().html();
-        var price_replace = $.trim(price_old.replace(/[^0-9\.\,]/g, ""));
-        var float_num = price_replace.length - (price_replace.indexOf('.') + 1);
-        var price = parseFloat(price_replace).toFixed(float_num);
-        var unit = price_old.replace(/[0-9\.\,\s]/g, "");
-        var subtotal = unit !== '€' ? unit + (num * price).toFixed(float_num) : (num * price).toFixed(float_num) + unit;
-        var qty_change = $("#qty-change").val();
-        if (num == 0) {
-            e.val(1);
-        }
-        if (qty_change == 0) {
-            $("#qty-change").val(1);
-        }
-        e.parent().next().find("span").html(subtotal);
-        total_change();
-    }
-    function total_change() {
-        var total_num = 0;
-        $("tbody").find("input.required").each(function () {
-            if ($(this).parent().parent().find("td:eq(1)").find("input").is(':checked')) {
-                total_num += Number($(this).val());
-            }
-        });
-        $('.select-qyt').html(total_num);
-        var total_price = 0;
-        $("tbody .product-list").find("td:eq(5)").find("span.checkout-num").each(function () {
-            if ($(this).parent().parent().find("td:eq(1)").find("input").is(':checked')) {
-                total_price += parseFloat($(this).html().replace(/[^0-9\.\,]/g, ""));
-                unit = $(this).html().replace(/[0-9\.\,\s]/g, "");
-            }
-        });
-        var old_total = $.trim($('.total-pirce').html().replace(/[^0-9\.\,]/g, ""));
-        var float_num = old_total.length - (old_total.indexOf('.') + 1);
-        var total_price_real = unit !== '€' ? unit + total_price.toFixed(float_num) : total_price.toFixed(float_num) + unit;
-        $('.total-pirce').html(total_price_real);
-        var checked_total = 0;
-        var checked_total_off = 0;
-        $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
-        	$(this).is(':checked') ? checked_total++ : checked_total_off++ ;
-        });
-        checked_total > 0 ? $(".btn-checkout").css("background","#fabb39") : $(".btn-checkout").css("background","none");
-        checked_total_off > 0 ? $(".selectall").prop("checked", false) : $(".selectall").prop("checked", true);
-    }
-    $(".btn-checkout").click(function(){
-    	var total_price = 0;
-        $("tbody .product-list").find("td:eq(5)").find("span.checkout-num").each(function () {
-        	var checked_total = 0;
-            $("tbody .product-list").find("td:eq(1)").find("input").each(function () {
-            	if ($(this).is(':checked')) {
-            		checked_total++;
-                }
-            });
-            if(checked_total > 0){
-            	window.location.href = GLOBAL.BASE_URL+"checkout/order/";
-            }
-        });
-    })
-    $("input:checkbox").change(function () {
-        total_change();
+        var p = $(this).parents('.qty');
+        var price = $(p).siblings('.price');
+        var f = $(price).data('format');
+        $(p).siblings('.subtotal').text(f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, ($(price).data('price') * $(this).val()).toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1'))));
+        collateTotals();
     });
 }));

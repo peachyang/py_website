@@ -56,6 +56,9 @@ abstract class ActionController extends AbstractController
     protected function redirectReferer($location = '/', $code = 302)
     {
         $referer = $this->getRequest()->getHeader('HTTP_REFERER');
+        if ($referer === $this->getRequest()->getUri()->__toString()) {
+            $referer = false;
+        }
         if (!$referer && strpos($location, '://') === false) {
             $location = strpos($location, ':ADMIN') === false ? $this->getBaseUrl($location) : $this->getAdminUrl($location);
         }

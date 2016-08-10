@@ -26,6 +26,7 @@ class InvoiceController extends AuthActionController
         }
         return $this->notFoundAction();
     }
+
     public function editAction()
     {
         $root = $this->getLayout('admin_sales_invoice_edit');
@@ -84,7 +85,7 @@ class InvoiceController extends AuthActionController
                     }
                 }
                 $invoice->collateTotals()->save();
-                $code = (int) $order->canShip() + (int) $order->canInvoice();
+                $code = (int) !$order->canShip() + (int) !$order->canInvoice();
                 if ($code) {
                     $code = $code === 2 ? 'complete' : 'processing';
                     $status = new StatusCollection;

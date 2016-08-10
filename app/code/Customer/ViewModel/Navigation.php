@@ -50,13 +50,13 @@ class Navigation extends Template implements Singleton
         $this->links[] = $link;
         return $this;
     }
-    
+
     public function addGroup(array $group)
     {
         $this->groups[] = $group;
         return $this;
     }
-    
+
     public function getGroups()
     {
         uasort($this->groups, function($a, $b) {
@@ -64,13 +64,11 @@ class Navigation extends Template implements Singleton
                 $a['priority'] = 0;
             }
             if (!isset($b['priority'])) {
-                $b['priority'] = 0;                
+                $b['priority'] = 0;
             }
-            return $a['priority'] === $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);   
+            return $a['priority'] === $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
         });
         return $this->groups;
     }
-    
-    
 
 }

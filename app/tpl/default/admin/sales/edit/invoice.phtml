@@ -1,7 +1,7 @@
 <?php
 $order = $this->getOrder();
 $currency = $this->getOrder()->getCurrency();
-$format = preg_replace('/\%(?:1\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format'));
+$format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format'));
 ?>
 <div class="view clearfix">
     <form action="<?php echo $this->getAdminUrl('sales_invoice/save/') ?>" method="post" class="form-sales">

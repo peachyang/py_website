@@ -15,7 +15,7 @@ $item_model = new \Seahinet\Checkout\ViewModel\Cart\Item();
                 ?>
                 <li class="title"><?php echo $this->translate('Recently Added Products') ?></li>
                 <?php
-                foreach ($this->getItems() as $key=>$item):
+                foreach ($this->getItems() as $key => $item):
                     $thumbnail = $item['product']->getThumbnail();
                     ?>
                     <li data-id="<?php echo $item['id'] ?>" class="clearfix">
@@ -24,16 +24,28 @@ $item_model = new \Seahinet\Checkout\ViewModel\Cart\Item();
                         </a>
                         <h3 class="product-name col-xs-7">
                             <a href="<?php echo $item['product']->getUrl() ?>" title="<?php echo $item['product']['name'] ?>"><?php echo $item['product']['name'] ?></a>
-                            <p>
-                                <?php 
-                                    $options = $item_model->getOption($items[$key]);
-                                    $str = '';
-                                     foreach ($options as $k=>$v){
-                                         $str .= $k .':'. $v .'&nbsp;&#10;';
-                                     }
-                                     echo '<span title='.$str.' >'.$str.'<span>';
+                            <?php
+                            $options = json_decode($item['options'], true);
+                            if ($item['product_id'] && count($options)):
                                 ?>
-                            </p>
+                                <dl class="options">
+                                    <?php
+                                    foreach ($item['product']->getOptions() as $option):
+                                        if (isset($options[$option->getId()])):
+                                            ?>
+                                            <dt><?php echo $option['title'] ?></dt>
+                                            <dd>
+                                                <?php
+                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                ?>
+                                            </dd>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+                                </dl>
+                            <?php endif; ?>
                         </h3>
                         <div class="col-xs-3 action">
                             <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), 'x', (float) $item['qty'] ?></div>

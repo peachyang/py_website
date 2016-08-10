@@ -5,7 +5,7 @@ $attributes = $this->getAddressAttribute();
 <div class="col-xs-9 col-sm-9 col-md-10 address">
     <button type="button" class="btn" data-info="{}" data-toggle="modal" data-target="#modal-navigation-address" data-type="add">
         <span class="fa fa-plus" aria-hidden="true"></span> <?php echo $this->translate('Add a New Address') ?>
-    </button> 
+    </button>
 
     <div class="modal fade" id="modal-navigation-address">
         <div class="modal-dialog">
@@ -42,14 +42,16 @@ $attributes = $this->getAddressAttribute();
             </div>
         </div>
     </div>
-
-    <div>
+    
+    <?php if(!empty($attributes)) {?>
+    <div class="address-list">
         <?php foreach ($addresses as $address): ?>
-            <div  class="add-div">
-                <div>
-                    <?php echo nl2br($address->display(false)); ?>    		    
+            <div class="address-view">
+                <div class="address-detail">
+                    <?php echo $address->display(true); ?>
                 </div>
-                <div>
+                <div class="address-operater">
+                    <a href="<?php ?>" class="btn"><?php echo $this->translate('Default Address')?></a>
                     <button type="button" data-info='<?php echo json_encode($address->toArray()) ?>' class="btn" data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
                         <?php echo $this->translate('Edit') ?>
                     </button>
@@ -60,11 +62,9 @@ $attributes = $this->getAddressAttribute();
             </div>
         <?php endforeach ?>
     </div>
-
-
-
-
-
-
-
+<?php }
+ else {
+echo NULL;     
+}
+?>
 </div>

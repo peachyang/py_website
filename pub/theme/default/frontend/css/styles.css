@@ -165,7 +165,13 @@ select[multiple],select[size],textarea{resize:vertical}
 /*.main-container .navigation dl{margin-top:20px;margin-bottom:10px}*/
 .main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
 .main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
-.container .address .btn{background:#007dc6;color:#ffffff}
+.main-container .address .btn{background:#007dc6;color:#ffffff}
+.main-container .address .address-list{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
+.main-container .address .address-list:hover{background:#fdfbea}
+.main-container .address .address-list .address-detail{width:75%;overflow:hidden;float:left}
+.main-container .address .address-list .address-operater{width:25%;overflow:hidden;float:left;text-align:center}
+.main-container .address .address-list .address-detail dt{float:left;margin-right:20px}
+.main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 

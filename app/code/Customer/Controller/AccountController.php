@@ -298,13 +298,16 @@ class AccountController extends AuthActionController
     public function indexAction()
     {
         $segment = new Segment('customer');
-        $customerId = $segment->get('customer')->getId();
+        
+        if($customerId = $segment->get('customer')->getId()){
         $customer = new Model;
         $customer->load($customerId);
 
         $root = $this->getLayout('customer_account_dashboard');
         $root->getChild('main', true)->setVariable('customer', $customer);
         return $root;
+        }
+        return FALSE;
     }
 
     public function personalInfoAction()
@@ -326,9 +329,11 @@ class AccountController extends AuthActionController
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
             $result = $this->validateForm($data, ['crpassword', 'password']);
+            //var_dump($result);exit();
             if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
+                //var_dump($result);exit();
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
@@ -341,9 +346,9 @@ class AccountController extends AuthActionController
                     $segment->set('customer', clone $customer);
                 }
                 $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
-                return $this->redirect('customer/account/');
             }
         }
+        return $this->redirect('customer/account/');
     }
 
     public function addressAction()
@@ -355,7 +360,6 @@ class AccountController extends AuthActionController
 
         $root = $this->getLayout('customer_account_address');
         $root->getChild('main', true)->setVariable('addresses', $addresses);
-
         return $root;
     }
 
@@ -410,5 +414,7 @@ class AccountController extends AuthActionController
     {
         
     }
-
+    public function wishlistAction(){
+        
+    }
 }

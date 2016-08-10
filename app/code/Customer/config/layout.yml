@@ -24,19 +24,25 @@ customer_account:
                                 params: [{label:'Asset',priority:30,icon:'money'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/',label:'Purchased',group:'Order Center'}]
+                                params: [{link:'customer/account/',label:'Already bought Baby',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Shopping Cart',group:'Order Center'}]
+                                params: [{link:'customer/account/',label:'My Shopping Cart',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Evaluation',group:'Order Center'}]
+                                params: [{link:'customer/account/',label:'Refund Rights',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Refund',group:'Order Center'}]
+                                params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Bougnt Store',group:'Order Center'}]
+                                params: [{link:'customer/account/',label:'My Tracks',group:'Center of Attention'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Member Information'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/account/address',label:'Address Administration',group:'Member Information'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account',label:'Balance',group:'Asset'}]
@@ -45,28 +51,8 @@ customer_account:
                                 params: [{link:'customer/account',label:'Privilege',group:'Asset'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Integral',group:'Asset'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'Followed Goods',group:'Center of Attention'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'Followed Store',group:'Center of Attention'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'Wishlist',group:'Center of Attention'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'Track',group:'Center of Attention'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Member Information'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account/address',label:'Address',group:'Member Information'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account',label:'My Card',group:'Member Information'}]
+                                params: [{link:'customer/account',label:'Integral',group:'Asset'}] 
+    
                     messages:
                         action:
                             -
@@ -122,7 +108,7 @@ customer_account_address:
                     main:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address  
-wishlist:
+customer_account_wishlist:
     update: customer_account
     root:
         children:

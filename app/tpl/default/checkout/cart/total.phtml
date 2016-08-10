@@ -1,23 +1,7 @@
-<?php echo $this->translate('Select Qty') ?>
-<span class="checkout-num select-qyt"><?php echo $this->getQty()   ?></span>
-<?php echo $this->translate('Unit',['i18n/zh-CN/checkout']) ?>
 <?php
-if ((float) $this->getCart()['discount']):
-    foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
-        ?>
-        <?php echo $this->translate('Discount(%s)', [$type]) ?>
-        <?php echo $this->getCurrency()->format($discount) ?>
-        <?php
-    endforeach;
-endif;
+$currency = $this->getCurrency();
 ?>
-<?php
-if ($this->getCart()['shipping']):
-    ?>
-    <?php echo $this->translate('Shipping') ?>
-    <span class="checkout-num"><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></span>
-    <?php
-endif;
-?>
-<?php echo $this->translate('Total') ?>:
-<span class="checkout-num total-pirce"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+<span class="selected"><?php echo $this->getQty() ?></span>
+<span class="label"><?php echo $this->translate('Item(s) Selected') ?></span>
+<span class="label"><?php echo $this->translate('Total') ?>:</span>
+<span class="total" data-format="<?php echo preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format')) ?>"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>

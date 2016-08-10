@@ -25,7 +25,7 @@ class Cart implements ListenerInterface
             'status' => 1
         ])->order('id DESC');
         if ($collection->count()) {
-            $cart = $collection->toArray()[0];
+            $cart = new CartSingleton($collection->toArray()[0]);
             $cart->combine(CartSingleton::instance());
         } else {
             CartSingleton::instance()

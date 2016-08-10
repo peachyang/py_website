@@ -72,8 +72,12 @@ trait DataCache
         if (!is_null($cacheKey) && !isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
         }
+        if(is_object($id)){
+            $id = $id['id'];
+        }
         if (is_null($key)) {
-            return isset($this->cachedData[$cacheKey]['row'][$id]) ? $this->cachedData[$cacheKey]['row'][$id] : false;
+            return isset($this->cachedData[$cacheKey]['row'][$id]) ?
+                    $this->cachedData[$cacheKey]['row'][$id] : false;
         } else if (isset($this->cachedData[$cacheKey]['key'][$key . '=' . $id])) {
             $result = $this->fetchRow($this->cachedData[$cacheKey]['key'][$key . '=' . $id]);
             if ($result === false) {

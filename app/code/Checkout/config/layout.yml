@@ -32,10 +32,10 @@ checkout_cart:
                                 type: Seahinet\Checkout\ViewModel\Cart\Crosssell
                                 template: catalog/product/link
                             logview:
-                                type: Seahinet\Checkout\ViewModel\Cart\logview
+                                type: Seahinet\Checkout\ViewModel\Cart\LogView
                                 template: catalog/product/link
-                            concern:
-                                type: Seahinet\Checkout\ViewModel\Cart\concern
+                            wishlist:
+                                type: Seahinet\Checkout\ViewModel\Cart\Wishlist
                                 template: catalog/product/link
 checkout_cart_mini:
     update: frontend
@@ -136,6 +136,5 @@ checkout_order_success:
             content:
                 children:
                     success:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: checkout/order/success                        
-                        template: checkout/order/total
+                        type: Seahinet\Checkout\ViewModel\Success
+                        template: checkout/success

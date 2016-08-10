@@ -83,22 +83,21 @@ final class Cart extends AbstractModel implements Singleton
 
     public function combine($cart)
     {
+        $id = $this->getId();
         try {
             $this->beginTransaction();
-            $id = $this->getId();
-            $cart->setData('status', 0)->save();
             foreach ($cart->getItems() as $item) {
-                $item = new Item($item);
-                $item->setData([
-                    'id' => null,
-                    'cart_id' => $id
-                ])->save();
+                $this->addItem($item['product_id'], $item['qty'], $item['warehouse_id'], json_decode($item['options'], true), $item['sku'], false);
             }
+            $cart->setData('status', 0)->save();
+            $this->collateTotals();
             $this->commit();
         } catch (Exception $e) {
             $this->rollback();
             $this->getContainer()->get('log')->logException($e);
         }
+        $segment = new Segment('customer');
+        $segment->set('cart', $id);
         static::$instance = $this;
     }
 
@@ -159,7 +158,7 @@ final class Cart extends AbstractModel implements Singleton
         return $this->items;
     }
 
-    public function addItem($productId, $qty, $warehouseId, array $options = [], $sku = '')
+    public function addItem($productId, $qty, $warehouseId, array $options = [], $sku = '', $collate = true)
     {
         $product = new Product;
         $product->load($productId);
@@ -209,17 +208,19 @@ final class Cart extends AbstractModel implements Singleton
             ])->collateTotals()->save();
         }
         $this->items[$item->getId()] = $item->toArray();
-        $this->collateTotals();
+        if ($collate) {
+            $this->collateTotals();
+        }
         return $this;
     }
 
-    public function changeQty($item, $qty)
+    public function changeQty($item, $qty, $collate = true)
     {
         if (is_numeric($item)) {
-            $item = new Item;
-            $item->load($item);
+            $item = (new Item)->load($item);
         }
-        if ($item['qty'] > $qty && $item['min_qty'] <= $qty || $item['qty'] < $qty && $item['max_qty'] >= $qty) {
+        $inventory = $item['product']->getInventory($item['warehouse_id'], $item['sku']);
+        if ($item['qty'] > $qty && $inventory['min_qty'] <= $qty || $item['qty'] < $qty && $inventory['max_qty'] >= $qty) {
             $this->getEventDispatcher()->trigger('cart.add.before', [
                 'product_id' => $item['product_id'],
                 'qty' => $qty,
@@ -227,10 +228,28 @@ final class Cart extends AbstractModel implements Singleton
                 'sku' => $item['sku'],
                 'options' => $item['options']
             ]);
-            $item->setData('qty', $qty)->collateTotals()->save();
-            $this->items[$item->getId()]['qty'] = $item->toArray();
+            $item->setData(['qty' => $qty, 'status' => 1])->collateTotals()->save();
+            $this->items[$item->getId()] = $item->toArray();
+        } else if ($item['qty'] == $qty && $item['status'] == 0) {
+            return $this->changeItemStatus($item, true, $collate);
         }
-        $this->collateTotals();
+        if ($collate) {
+            $this->collateTotals();
+        }
+        return $this;
+    }
+
+    public function changeItemStatus($item, $status, $collate = true)
+    {
+        if (is_numeric($item)) {
+            $item = (new Item)->load($item);
+        }
+        $item->setData(['status' => $status])->collateTotals()->save();
+        $this->items[$item->getId()]['status'] = $status;
+        if ($collate) {
+            $this->collateTotals();
+        }
+        return $this;
     }
 
     public function removeItem($item)

@@ -1,49 +1,66 @@
 <?php
-use function Predis\dump;
-
 $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
 $inventory = $item->getInventory();
-$options = $this->getOption();
 ?>
 <tr class="product-list">
-    <td></td>
     <td>
-        <input type="checkbox" checked class="float-left checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>">
-        <a  class="float-left" href="<?php echo $item['product']->getUrl() ?>">
+        <input type="checkbox"<?php if($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
+    </td>
+    <td>
+        <a href="<?php echo $item['product']->getUrl() ?>">
             <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
         </a>
     </td>
-    <td>
-        <a  href="<?php echo $item['product']->getUrl() ?>">
+    <td class="product-name">
+        <a href="<?php echo $item['product']->getUrl() ?>">
             <?php echo $item['product_name'] ?>
         </a>
-        <?php 
-            foreach ($options as $k=>$v){
-                echo '<p><span>'. $k .'：'. $v .'</span></p>';
-            }
-        ?>
+        <?php
+        $options = json_decode($item['options'], true);
+        if ($item['product_id'] && count($options)):
+            ?>
+            <dl class="options">
+                <?php
+                foreach ($item['product']->getOptions() as $option):
+                    if (isset($options[$option->getId()])):
+                        ?>
+                        <dt><?php echo $option['title'] ?></dt>
+                        <dd>
+                            <?php
+                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                    $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                            ?>
+                        </dd>
+                        <?php
+                    endif;
+                endforeach;
+                ?>
+            </dl>
+        <?php endif; ?>
     </td>
-    <td>
+    <td class="price" data-format="<?php echo $this->getFormat() ?>" data-price="<?php echo $item['price'] ?>">
         <?php echo $this->getCurrency()->format($item['price']) ?>
     </td>
     <td class="qty">
-        <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
-        <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"
-               min="<?php echo (float) $inventory['min_qty'] ?>"
-               max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>"
-               step="<?php echo (float) $inventory['increment'] ?>"
-               class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
-        <label class="spin plus" for="qty-<?php echo $item['id'] ?>">+</label>
+        <div class="text-nowrap">
+            <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
+            <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"
+                   min="<?php echo (float) $inventory['min_qty'] ?>"
+                   max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>"
+                   step="<?php echo (float) $inventory['increment'] ?>"
+                   class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
+            <label class="spin plus" for="qty-<?php echo $item['id'] ?>">+</label>
+        </div>
     </td>
-    <td>
-        <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
+    <td class="subtotal">
+        <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>
     </td>
-    <td>
+    <td class="text-nowrap actions">
         <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/?csrf='), $this->getCsrfKey(), '&id=', $item['id'] ?>">
             <span><?php echo $this->translate('Move to Wishlist') ?></span>
-        </a>
+        </a><br /> 
         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/?csrf='), $this->getCsrfKey(), '&id=', $item['id'] ?>">
             <span><?php echo $this->translate('Delete') ?></span>
         </a>

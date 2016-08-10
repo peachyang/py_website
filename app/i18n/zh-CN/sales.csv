@@ -17,6 +17,7 @@
 "Customer Infomation","顾客信息"
 "Customer Not Notified","未通知顾客"
 "Customer Notified","已通知顾客"
+"Discount","折扣"
 "Grand Total","总价"
 "Hold","挂起"
 "Invoice","账单"
@@ -64,3 +65,4 @@
 "View","查看"
 "Visible on Frontend","前端可见"
 "Invisible on Frontend","前端不可见"
+"Type Infomation","打印信息"

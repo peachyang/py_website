@@ -2,7 +2,6 @@
 
 namespace Seahinet\Customer\Controller;
 
-use Seahinet\Lib\Controller\AuthActionController;
 use Exception;
 use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;

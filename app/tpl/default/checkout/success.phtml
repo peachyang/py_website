@@ -1,16 +1,19 @@
 <div class="container">
-    <div class="checkout-success hidden-xs clearfix">
-        <div class="item col-sm-4"><?php echo $this->translate('Shopping Cart'); ?></div>
-        <div class="item col-sm-4"><?php echo $this->translate('Order Info'); ?></div>
-        <div class="item col-sm-4"><?php echo $this->translate('Complate'); ?></div>
+    <div class="checkout-flow hidden-xs clearfix">
+        <div class="item col-sm-4 active"><?php echo $this->translate('Shopping Cart', [], 'checkout'); ?></div>
+        <div class="item col-sm-4 active"><?php echo $this->translate('Order Confirmation', [], 'checkout'); ?></div>
+        <div class="item col-sm-4 active"><?php echo $this->translate('Complate', [], 'checkout'); ?></div>
     </div>
-    <div class="trading-success clearfix">
-        <h3><span class="fa fa-check"></span><?php echo $this->translate('Congratulations you have completed the payment !') ?></h3>
-        <p><?php echo $this->translate('Order has been paid, please do not repeat the payment !'); ?></p>
-        <ul>
-            <li><a href="<?php echo $this->getBaseUrl('/'); ?>"><?php echo $this->translate('View order details'); ?></a></li>
-            <li><a href="<?php echo $this->getBaseUrl('checkout/order/detail'); ?>"><?php echo $this->translate('Seahinet home'); ?></a></li>
-        </ul>
+    <div class="text-center">
+        <div class="trading-success">
+            <h3 class="title"><span class="fa fa-check"></span><?php echo $this->translate('Your order has been received.') ?></h3>
+            <h4 class="sub-title"><?php echo $this->translate('We are appreciated that you can choose our products.') ?></h4>
+            <ul class="list-inline">
+                <li><a href="<?php echo $this->getBaseUrl(); ?>"><?php echo $this->translate('Continue Shopping'); ?></a></li>
+                <?php if ($this->hasLoggedIn()): ?>
+                    <li><a href="<?php echo $this->getBaseUrl('customer/order/'); ?>"><?php echo $this->translate('View Order'); ?></a></li>
+                <?php endif ?>
+            </ul>
+        </div>
     </div>
-    <p style="border-top:1px solid #e1e3e9;height:53px">&nbsp;</p>
 </div>

@@ -89,6 +89,8 @@ class OrderController extends ActionController
                     });
                     $cart->abandon();
                     $this->commit();
+                    $segment = new Segment('checkout');
+                    $segment->set('hasNewOrder', 1);
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

@@ -9,6 +9,7 @@ use Seahinet\Customer\Model\Wishlist;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Cart;
+use Seahinet\Sales\Model\Cart\Item;
 
 class CartController extends ActionController
 {
@@ -81,18 +82,23 @@ class CartController extends ActionController
     public function updateAction()
     {
         $data = $this->getRequest()->isGet() ? $this->getRequest()->getQuery() : $this->getRequest()->getPost();
-        $result = $this->validateForm($data, ['qty']);
+        $result = $this->validateForm($data, ['qty', 'item']);
         if ($result['error'] === 0) {
             $cart = Cart::instance();
             try {
                 foreach ($data['qty'] as $id => $qty) {
                     try {
-                        $cart->changeQty($id, $qty);
+                        if (in_array($id, $data['item'])) {
+                            $cart->changeQty($id, $qty, false);
+                        } else {
+                            $cart->changeItemStatus($id, false, false);
+                        }
                     } catch (OutOfStock $e) {
                         $result['error'] = 1;
                         $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [$cart->getItem($id)['name']]), 'level' => 'danger'];
                     }
                 }
+                $cart->collateTotals();
             } catch (Exception $e) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];

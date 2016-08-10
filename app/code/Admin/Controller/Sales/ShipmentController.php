@@ -82,7 +82,7 @@ class ShipmentController extends AuthActionController
                         'order_id' => $data['order_id']
                     ])->save();
                 }
-                $code = (int) $order->canShip() + (int) $order->canInvoice();
+                $code = (int) !$order->canShip() + (int) !$order->canInvoice();
                 if ($code) {
                     $code = $code === 2 ? 'complete' : 'processing';
                     $status = new StatusCollection;

@@ -8,7 +8,7 @@ use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
 use Zend\Db\TableGateway\TableGateway;
 
-class Concern extends Link
+class Wishlist extends Link
 {
 
     public function getProducts()
@@ -32,7 +32,7 @@ class Concern extends Link
             return [];
         }
         return $products; */
-        return ;
+        return [];
     }
 
 }

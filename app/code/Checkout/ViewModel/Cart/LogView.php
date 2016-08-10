@@ -6,32 +6,29 @@ use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\TableGateway\TableGateway;
 
-class Logview extends Link
+class LogView extends Link
 {
+
+    protected $products = null;
 
     public function getProducts()
     {
-        $products_id = array_filter(explode(',', $this->getRequest()->getCookie('log_view')));
-        $ids = [];
-        foreach ($products_id as $item) {
-            $ids[$item] = 1;
-        }
-        $products_model = new Product;
-        $products = [];
-        if (count($ids)) {
-            $products_model->where(new In('id', array_keys($ids)));
-            foreach ($products_id as $item) {
-                foreach ($products_model as $item_product){
-                    if ($item_product['id'] == $item)
-                    $products[] = $item_product;
-                }
+        if (is_null($this->products)) {
+            $ids = [];
+            foreach (Cart::instance()->getItems() as $item) {
+                $ids[] = $item['product_id'];
             }
-        } else {
-            return [];
+            $ids = array_diff($ids, explode(',', $this->getRequest()->getCookie('log_view')));
+            if (count($ids)) {
+                $products = new Product;
+                $products->where(new In('id', $ids));
+                $this->products = $products;
+            } else {
+                $this->products = [];
+            }
         }
-        return $products;
+        return $this->products;
     }
 
 }

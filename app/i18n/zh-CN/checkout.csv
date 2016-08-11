@@ -1,4 +1,4 @@
-"%d item(s) has been removed from your shopping cart.","%d个产品已成功从购物车移出"
+"%d item(s) has been removed from your shopping cart.","%d件产品已成功从购物车移出"
 """%s"" has been added to your shopping cart.","""%s""已成功加入购物车"
 """%s"" has been moved to your wishlist.","""%s""已成功移入收藏夹"
 """%s"" has been removed from your shopping cart.","""%s""已成功从购物车移出"
@@ -13,6 +13,7 @@
 "Default Address","默认地址"
 "Delete Selected Item(s)","删除选中商品"
 "Item(s) Selected","件商品已选中"
+"Message","留言"
 "Move to Wishlist","移入收藏夹"
 "My Wishlist","我的关注"
 "Order Confirmation","确认订单"

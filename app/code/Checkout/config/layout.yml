@@ -8,6 +8,9 @@ checkout_cart:
                     -
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/cart.js',defer:'defer',async:'async'}]
             content:
                 children:
                     messages:
@@ -128,7 +131,7 @@ checkout_order_review:
                 children:
                     review:
                         type: Seahinet\Checkout\ViewModel\Cart
-                        template: checkout/cart/total
+                        template: checkout/order/total
 checkout_order_success:
     update: frontend
     root:

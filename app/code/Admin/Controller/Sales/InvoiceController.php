@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller\Sales;
 
 use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\Order\Status as StatusCollection;
 use Seahinet\Sales\Model\Invoice;
 use Seahinet\Sales\Model\Invoice\Item;
@@ -12,6 +13,8 @@ use Seahinet\Sales\Model\Order\Status\History;
 
 class InvoiceController extends AuthActionController
 {
+
+    use \Seahinet\Lib\Traits\DB;
 
     public function indexAction()
     {
@@ -50,7 +53,7 @@ class InvoiceController extends AuthActionController
                 $order = new Order;
                 $order->load($data['order_id']);
                 if (!$order->canInvoice()) {
-                    return $this->notFoundAction();
+                    return $this->redirectReferer(':ADMIN/sales_order/view/?id=' . $data['order_id']);
                 }
                 $invoice = new Invoice;
                 $invoice->setData($order->toArray())->setData([
@@ -70,6 +73,7 @@ class InvoiceController extends AuthActionController
                         'tax' => 0
                     ]);
                 }
+                $this->beginTransaction();
                 $invoice->setId(null)->save();
                 foreach ($order->getItems(true) as $item) {
                     foreach ($data['item_id'] as $key => $id) {
@@ -96,12 +100,14 @@ class InvoiceController extends AuthActionController
                     $history = new History;
                     $history->setData([
                         'admin_id' => (new Segment('admin'))->get('user')->getId(),
-                        'order_id' => $this->getId(),
+                        'order_id' => $order->getId(),
                         'status_id' => $status[0]->getId(),
                         'status' => $status[0]->offsetGet('name')
                     ])->save();
                 }
+                $this->commit();
             } catch (Exception $e) {
+                $this->rollback();
                 $this->getContainer()->get('log')->logException($e);
                 $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                 $result['error'] = 1;

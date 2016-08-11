@@ -13,13 +13,25 @@
         <tbody>
             <?php
             $stores = [];
+            $subtotal = [];
             foreach ($this->getItems() as $item) {
-                $stores[$item['store_id']] = !isset($stores[$item['store_id']]) ? 1 : $stores[$item['store_id']]+1;
+                if (!isset($subtotal[$item['store_id']])) {
+                    $subtotal[$item['store_id']] = 0;
+                }
+                $stores[$item['store_id']] = !isset($stores[$item['store_id']]) ? 1 : $stores[$item['store_id']] + 1;
+                $subtotal[$item['store_id']] += $item['total'];
             }
             $current = 0;
             foreach ($this->getItems() as $item) {
                 if ($current !== $item['store_id']):
                     ?>
+                    <?php if ($current): ?>
+                        <tr>
+                            <th colspan="7" class="text-right text-nowrap store-total">
+                                <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
+                            </th>
+                        </tr>
+                    <?php endif ?>
                     <tr class="store">
                         <th colspan="2" class="text-left text-nowrap">
                             <?php echo $item['store']['name'] ?>
@@ -28,16 +40,16 @@
                             <?php echo $this->translate('Price', [], 'checkout') ?>
                         </th>
                         <th class="text-nowrap">
-                            <?php echo $this->translate('Qty') ?>
+                            <?php echo $this->translate('Qty', [], 'checkout') ?>
                         </th>
                         <th class="text-nowrap">
-                            <?php echo $this->translate('Subtotal') ?>
+                            <?php echo $this->translate('Subtotal', [], 'checkout') ?>
                         </th>
                         <th class="text-nowrap">
-                            <?php echo $this->translate('Shipping Method') ?>
+                            <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
                         </th>
                         <th class="text-nowrap">
-                            <?php echo $this->translate('Buyer Message') ?>
+                            <?php echo $this->translate('Message', [], 'checkout') ?>
                         </th>
                     </tr>
                     <?php
@@ -50,7 +62,7 @@
             ?>
             <tr>
                 <th colspan="7" class="text-right text-nowrap store-total">
-                    	<?php echo $this->translate('Sub Total').':'.$this->getCurrency()->format($this->getCart()['total'])//, $item['store']['name'] ?>
+                    <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                 </th>
             </tr>
         </tbody>

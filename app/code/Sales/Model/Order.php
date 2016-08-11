@@ -8,13 +8,15 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Model\Store;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\CreditMemo;
 use Seahinet\Sales\Model\Collection\Invoice;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
-use Seahinet\Sales\Model\Collection\Order\Status\History;
+use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
 use Seahinet\Sales\Model\Collection\Shipment;
 use Seahinet\Sales\Model\Order\Item;
 use Seahinet\Sales\Model\Order\Status;
+use Seahinet\Sales\Model\Order\Status\History;
 
 class Order extends AbstractModel
 {
@@ -26,8 +28,8 @@ class Order extends AbstractModel
     {
         $this->init('sales_order', 'id', [
             'id', 'status_id', 'increment_id', 'customer_id', 'language_id',
-            'billing_address_id', 'shipping_address_id', 'warehouse_id', 'base_total_refund',
-            'store_id', 'billing_address', 'shipping_address', 'coupon', 'total_refund',
+            'billing_address_id', 'shipping_address_id', 'warehouse_id', 'base_total_refunded',
+            'store_id', 'billing_address', 'shipping_address', 'coupon', 'total_refunded',
             'is_virtual', 'free_shipping', 'base_currency', 'currency', 'base_subtotal',
             'shipping_method', 'payment_method', 'base_shipping', 'shipping', 'subtotal',
             'base_discount', 'discount', 'discount_detail', 'base_tax', 'tax', 'base_total', 'total',
@@ -176,7 +178,7 @@ class Order extends AbstractModel
     public function getStatusHistory()
     {
         if ($this->getId()) {
-            $history = new History;
+            $history = new HistoryCollection;
             $history->where(['order_id' => $this->getId()])
                     ->order('created_at DESC');
             return $history;
@@ -286,7 +288,7 @@ class Order extends AbstractModel
 
     public function canRefund()
     {
-        if ($this->getPhase()->offsetGet('code') !== 'holded') {
+        if (!in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
         }
         $memos = $this->getCreditMemo();
@@ -298,6 +300,31 @@ class Order extends AbstractModel
         }
         return $qty > 0;
     }
-    
+
+    public function rollbackStatus()
+    {
+        if ($this->getId()) {
+            $history = new HistoryCollection;
+            $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', ['name'])
+                    ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [])
+                    ->where(['order_id' => $this->getId()])
+                    ->order('created_at DESC')
+                    ->limit(1)
+            ->where->notEqualTo('status_id', $this->storage['status_id']);
+            $userId = (new Segment('admin'))->get('user')->getId();
+            if (count($history)) {
+                $statusId = $history[0]->offsetGet('status_id');
+                $statusName = $history[0]->offsetGet('name');
+                $this->setData('status_id', $statusId)->save();
+                (new History)->setData([
+                    'admin_id' => $userId,
+                    'order_id' => $this->getId(),
+                    'status_id' => $statusId,
+                    'status' => $statusName
+                ])->save();
+            }
+        }
+        return $this;
+    }
 
 }

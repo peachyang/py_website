@@ -14,6 +14,7 @@ $query = $this->getQuery();
                 if (!isset($name['type'])) {
                     $name['type'] = 'text';
                 }
+                $attr = isset($name['sortby']) ? $name['sortby'] : $attr;
                 if (isset($query[$attr])) {
                     $name['value'] = $query[$attr];
                 }

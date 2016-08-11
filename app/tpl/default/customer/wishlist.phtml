@@ -3,37 +3,37 @@ $collection = $this->getVariable('collection');
 //print_r($collection->toArray());
 ?>
 <div class="container">
-<form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
-<table class="table">
-    <tbody>
-    	<?php
-        foreach ($collection as $item):
-            $product = new \Seahinet\Catalog\Model\Product;
-            $product->load($item['product_id']);
-        ?>
-        <tr>
-            <td>
-            	<a href="" title="<?php echo $product['name'] ?>" >
-            		<img src="<?php echo $product['thumbnail']?$this->getBaseUrl('pub/resource/image/'.$product['thumbnail']):$this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
-            	</a>
-            </td>
-            <td>
-                <?php echo $item['product_name'] ?>
-                <textarea name="description[<?php echo $item['id']?>]" class="form-control"><?php echo $item['description'] ?></textarea>
-            </td>
-            <td>        	
-            	<a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='),$item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
-            </td>
-        </tr>        
-    	<?php endforeach ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3">
-            	<button type="submit">submit</button>
-            </td>
-        </tr>
-    </tfoot>
-</table>
-</form>
+    <form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
+        <table class="table">
+            <tbody>
+                <?php
+                foreach ($collection as $item):
+                    $product = new \Seahinet\Catalog\Model\Product;
+                    $product->load($item['product_id']);
+                    ?>
+                    <tr>
+                        <td>
+                            <a href="" title="<?php echo $product['name'] ?>" >
+                                <img src="<?php echo $product['thumbnail'] ? $this->getBaseUrl('pub/resource/image/' . $product['thumbnail']) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                            </a>
+                        </td>
+                        <td>
+                            <?php echo $item['product_name'] ?>
+                            <textarea name="description[<?php echo $item['id'] ?>]" class="form-control"><?php echo $item['description'] ?></textarea>
+                        </td>
+                        <td>        	
+                            <a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
+                        </td>
+                    </tr>        
+                <?php endforeach ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <button type="submit">submit</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
 </div>

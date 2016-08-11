@@ -32,10 +32,12 @@
             $(fg).append('<option value=""></option>');
             var value = $(target).data('default-value');
             for (var i in options) {
-                $(fg).append('<option value="' + options[i].value + '"' +
-                        (value && value == options[i].value ?
-                                ' selected="selected"' : '')
-                        + '>' + options[i].label + '</option>');
+                var oo = document.createElement('option');
+                $(oo).attr('value', options[i].value).text(options[i].label);
+                if (value && value == options[i].value) {
+                    $(oo).attr('selected', 'selected');
+                }
+                $(fg).append(oo);
             }
             $(target).html(fg);
         } else {
@@ -103,6 +105,7 @@
             if (v) {
                 var param = 'region=' + v;
                 o.loadData('region', param);
+                $(o.objects.region).trigger('change.seahinet');
             } else {
                 $(o.objects['region-text']).removeAttr('hidden').removeAttr('disabled');
                 $(o.objects['region']).attr({hidden: 'hidden', disabled: 'disabled'});
@@ -117,6 +120,7 @@
             if (v) {
                 var param = 'city=' + v;
                 o.loadData('city', param);
+                $(o.objects.city).trigger('change.seahinet');
             } else {
                 $(o.objects['city-text']).removeAttr('hidden').removeAttr('disabled');
                 $(o.objects['city']).attr({hidden: 'hidden', disabled: 'disabled'});
@@ -129,6 +133,7 @@
             if (v) {
                 var param = 'county=' + v;
                 o.loadData('county', param);
+                $(o.objects.county).trigger('change.seahinet');
             } else {
                 $(o.objects['county-text']).removeAttr('hidden').removeAttr('disabled');
                 $(o.objects['county']).attr({hidden: 'hidden', disabled: 'disabled'});

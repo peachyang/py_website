@@ -35,7 +35,7 @@ class Order extends Grid
 
     public function getHoldAction($item)
     {
-        return $item['phase'] === 'processing' ? ('<a href="' . $this->getHoldUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Hold') .
+        return $item->canHold() ? ('<a href="' . $this->getHoldUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Hold') .
                 '"><span class="fa fa-fw fa-pause-circle-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Hold') . '</span></a>') : false;
     }
@@ -50,7 +50,7 @@ class Order extends Grid
 
     public function getUnholdAction($item)
     {
-        return $item['phase'] === 'holded' ? ('<a href="' . $this->getUnholdUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Unhold') .
+        return $item->canUnhold() ? ('<a href="' . $this->getUnholdUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Unhold') .
                 '"><span class="fa fa-fw fa-play-circle-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Unhold') . '</span></a>') : false;
     }
@@ -65,8 +65,9 @@ class Order extends Grid
 
     public function getCancelAction($item)
     {
-        return in_array($item['phase'], ['pending', 'pending_payment']) ? ('<a href="' . $this->getCancelUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Cancel') .
-                '"><span class="fa fa-fw fa-stop-circle-o" aria-hidden="true"></span><span class="sr-only">' .
+        return $item->canCancel() ? ('<a href="' . $this->getCancelUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Cancel') .
+                '" onclick="if(!confirm(\'' . $this->translate('Are you sure to cancel this order?') .
+                '\'))return false;"><span class="fa fa-fw fa-stop-circle-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Cancel') . '</span></a>') : false;
     }
 

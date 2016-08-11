@@ -1,23 +1,36 @@
 <?php
-use Seahinet\Checkout\ViewModel\Cart\Item;
-
 $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
-$item_model = new Item();
-$options = $item_model->getOption($item);
 ?>
 <tr class="product-list">
     <td class="td-img">
         <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
     </td>
     <td class="td-name">
-        <?php echo $item['product_name'] ?>
-        <?php 
-            foreach ($options as $k=>$v){
-                echo '<p><span>'. $k .'：'. $v .'</span></p>';
-            }
-        ?>
+        <strong><?php echo $item['product_name'] ?></strong>
+        <?php
+        $options = json_decode($item['options'], true);
+        if ($item['product_id'] && count($options)):
+            ?>
+            <dl class="options">
+                <?php
+                foreach ($item['product']->getOptions() as $option):
+                    if (isset($options[$option->getId()])):
+                        ?>
+                        <dt><?php echo $option['title'] ?></dt>
+                        <dd>
+                            <?php
+                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                    $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                            ?>
+                        </dd>
+                        <?php
+                    endif;
+                endforeach;
+                ?>
+            </dl>
+        <?php endif; ?>
     </td>
     <td class="td-price">
         <?php echo $this->getCurrency()->format($item['price']) ?>

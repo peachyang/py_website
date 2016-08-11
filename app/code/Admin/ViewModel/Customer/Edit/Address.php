@@ -14,6 +14,11 @@ class Address extends Template
 
     protected $collection = null;
 
+    public function getSaveUrl()
+    {
+        return $this->getAdminUrl('customer_address/save/');
+    }
+
     public function getInputBox($key, $item)
     {
         if (empty($item['type'])) {

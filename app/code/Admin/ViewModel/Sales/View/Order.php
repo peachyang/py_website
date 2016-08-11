@@ -59,16 +59,8 @@ class Order extends Template
         error_reporting(E_ALL & ~E_NOTICE);
         $order = (new Model)->load($id);
         $currency = $order->getCurrency();
-        $billing_address_str = $order->offsetGet('billing_address');
-        $billing_address_arr = explode("\n", $billing_address_str);
-        foreach ($billing_address_arr as $item){
-            $billing_address[] = explode(":", $item);
-        }
-        $shipping_address_str = $order->offsetGet('shipping_address');
-        $shipping_address_arr = explode("\n", $shipping_address_str);
-        foreach ($shipping_address_arr as $item){
-            $shipping_address[] = explode(":", $item);
-        }
+        $billing_address = nl2br($order->offsetGet('billing_address'));
+        $shipping_address = nl2br($order->offsetGet('shipping_address'));
         $product = '';
         $num = 0;
         foreach ($this->getCollection() as $key=>$item){
@@ -121,24 +113,24 @@ class Order extends Template
         <table class="first" cellpadding="4" cellspacing="0">
          <tr class="background">
           <td class="head" colspan="2" align="center"><b>'.$this->translate('Order Infomation', [], 'sales').'</b></td>
-          <td class="spacing" rowspan="17" align="center"></td>
+          <td class="spacing" rowspan="12" align="center"></td>
           <td class="head" colspan="2" align="center"><b>'.$this->translate('Customer Infomation', [], 'sales').'</b></td>
          </tr>
          <tr>
-          <td class="title" align="center"><b>'.$this->translate('ID').'</b></td><td class="content" align="center">'.$order['increment_id'].'</td>
-          <td class="title" align="center"><b>'.($customer = $this->getCustomer()?$this->translate('ID') :'').'</b></td><td class="content" align="center">'.($customer = $this->getCustomer()?$this->getCustomer()->getId() :'').'</td>
+          <td class="title" align="center"><b>'.$this->translate('ID').'</b></td><td class="content">'.$order['increment_id'].'</td>
+          <td class="title" align="center"><b>'.($customer = $this->getCustomer()?$this->translate('ID') :'').'</b></td><td class="content">'.($customer = $this->getCustomer()?$this->getCustomer()->getId() :'').'</td>
          </tr>
          <tr class="background">
-          <td class="title" align="center"><b>'.$this->translate('Status').'</b></td><td class="content" align="center">'.$this->translate($this->getStatus()->offsetGet('name'), [], 'sales').'</td>
-          <td class="title" align="center"><b>'.($customer = $this->getCustomer()?$this->translate('Username'):'').'</b></td><td class="content" align="center">'.($customer = $this->getCustomer()?$this->getCustomer()['username']:'').'</td>
+          <td class="title" align="center"><b>'.$this->translate('Status').'</b></td><td class="content">'.$this->translate($this->getStatus()->offsetGet('name'), [], 'sales').'</td>
+          <td class="title" align="center"><b>'.($customer = $this->getCustomer()?$this->translate('Username'):'').'</b></td><td class="content">'.($customer = $this->getCustomer()?$this->getCustomer()['username']:'').'</td>
          </tr>
          <tr>
-          <td class="title" align="center"><b>'.($store = $order->getStore()?$this->translate('Store') :'').'</b></td><td class="content" align="center">'.($storeName = $order->getStore()?$order->getStore()->offsetGet('name'):'').'</td>
-          <td class="title" align="center"><b></b></td><td class="content" align="center"></td>
+          <td class="title" align="center"><b>'.($store = $order->getStore()?$this->translate('Store') :'').'</b></td><td class="content">'.($storeName = $order->getStore()?$order->getStore()->offsetGet('name'):'').'</td>
+          <td class="title" align="center"><b></b></td><td class="content"></td>
          </tr>
          <tr class="background">
-          <td class="title" align="center"><b>'.($language = $order->getLanguage()?$this->translate('Language'):'').'</b></td><td class="content" align="center">'.($language = $order->getLanguage()?$order->getLanguage()->offsetGet('name'):'').'</td>
-          <td class="title" align="center"><b></b></td><td class="content" align="center"></td>
+          <td class="title" align="center"><b>'.($language = $order->getLanguage()?$this->translate('Language'):'').'</b></td><td class="content" >'.($language = $order->getLanguage()?$order->getLanguage()->offsetGet('name'):'').'</td>
+          <td class="title" align="center"><b></b></td><td class="content"></td>
          </tr>
          <tr>
           <td colspan="4" width="640px"></td>
@@ -148,28 +140,8 @@ class Order extends Template
           <td class="head" colspan="2" align="center"><b>'.$this->translate('Shipping Address', [], 'sales').'</b></td>
          </tr>
          <tr>
-          <td class="title" align="center"><b>'.$billing_address[0][0].'</b></td><td class="content" align="center">'.$billing_address[0][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[0][0].'</b></td><td class="content" align="center">'.$shipping_address[0][1].'</td>
-         </tr>
-         <tr class="background">
-          <td class="title" align="center"><b>'.$billing_address[1][0].'</b></td><td class="content" align="center">'.$billing_address[1][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[1][0].'</b></td><td class="content" align="center">'.$shipping_address[1][1].'</td>
-         </tr>
-         <tr>
-          <td class="title" align="center"><b>'.$billing_address[2][0].'</b></td><td class="content" align="center">'.$billing_address[2][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[2][0].'</b></td><td class="content" align="center">'.$shipping_address[2][1].'</td>
-         </tr>
-         <tr class="background">
-          <td class="title" align="center"><b>'.$billing_address[3][0].'</b></td><td class="content" align="center">'.$billing_address[3][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[3][0].'</b></td><td class="content" align="center">'.$shipping_address[3][1].'</td>
-         </tr>
-         <tr>
-          <td class="title" align="center"><b>'.$billing_address[4][0].'</b></td><td class="content" align="center">'.$billing_address[4][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[4][0].'</b></td><td class="content" align="center">'.$shipping_address[4][1].'</td>
-         </tr>
-         <tr class="background">
-          <td class="title" align="center"><b>'.$billing_address[5][0].'</b></td><td class="content" align="center">'.$billing_address[5][1].'</td>
-          <td class="title" align="center"><b>'.$shipping_address[5][0].'</b></td><td class="content" align="center">'.$shipping_address[5][1].'</td>
+          <td class="content-address" colspan="2">'.$billing_address.'</td>
+          <td class="content-address" colspan="2">'.$shipping_address.'</td>
          </tr>
          <tr>
           <td colspan="4" width="640px"></td>
@@ -208,31 +180,31 @@ class Order extends Template
          </tr>
          <tr>
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Subtotal', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('subtotal')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('subtotal')).'</td>
          </tr>
          <tr class="background">
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Shipping &amp; Handling', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('shipping')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('shipping')).'</td>
          </tr>
          <tr>
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Tax', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('tax')).'</td>
+          <td colspan="4" width="320px" >'.$currency->format($order->offsetGet('tax')).'</td>
          </tr>
          <tr class="background">
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Discount', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('discount')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('discount')).'</td>
          </tr>
          <tr>
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Grand Total', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('total')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('total')).'</td>
          </tr>
          <tr class="background">
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Total Paid', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('total_paid')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('total_paid')).'</td>
          </tr>
          <tr>
           <td colspan="4" width="320px" align="center"><b>'.$this->translate('Total Refunded', [], 'sales').'</b></td>
-          <td colspan="4" width="320px" align="center">'.$currency->format($order->offsetGet('total_refunded')).'</td>
+          <td colspan="4" width="320px">'.$currency->format($order->offsetGet('total_refunded')).'</td>
          </tr>
         </table>
         ';

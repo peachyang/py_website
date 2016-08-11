@@ -5,15 +5,17 @@ namespace Seahinet\Admin\ViewModel\Sales\View;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Creditmemo as Model;
 use Seahinet\Customer\Model\Customer;
+use Seahinet\Sales\Model\Order;
 
 class Creditmemo extends Template
 {
 
     protected $creditmemo = null;
+    protected $order = null;
     protected $status = null;
     protected $phase = null;
 
-    public function getOrder()
+    public function getCreditMemo()
     {
         if (is_null($this->creditmemo)) {
             $this->creditmemo = (new Model)->load($this->getQuery('id'));
@@ -21,9 +23,17 @@ class Creditmemo extends Template
         return $this->creditmemo;
     }
 
+    public function getOrder()
+    {
+        if (is_null($this->order)) {
+            $this->order = (new Order)->load($this->creditmemo['order_id']);
+        }
+        return $this->order;
+    }
+
     public function getCustomer()
     {
-        if ($id = $this->getorder()->offsetGet('customer_id')) {
+        if ($id = $this->getOrder()->offsetGet('customer_id')) {
             $customer = new Customer;
             $customer->load($id);
             return $customer;
@@ -33,7 +43,7 @@ class Creditmemo extends Template
 
     public function getCollection()
     {
-        $collection = $this->getOrder()->getItems();
+        $collection = $this->getCreditMemo()->getItems();
         return $collection;
     }
 

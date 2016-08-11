@@ -175,7 +175,7 @@ admin_sales_shipment_view:
                                 params: [{label:'View'}]
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Shipment
-                        template: admin/sales/order
+                        template: admin/sales/shipment
 admin_sales_shipment_edit:
     update: admin
     root:
@@ -232,7 +232,7 @@ admin_sales_creditmemo_view:
                                 params: [{label:'View'}]
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
-                        template: admin/sales/order
+                        template: admin/sales/creditmemo
 admin_sales_creditmemo_edit:
     update: admin
     root:

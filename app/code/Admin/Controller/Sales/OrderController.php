@@ -10,7 +10,6 @@ use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
 use Seahinet\Sales\Model\Order as Model;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
-use TCPDFBarcode;
 use Seahinet\Lib\Traits\Translate;
 use Seahinet\Admin\ViewModel\Sales\View\Order as Pdf;
 

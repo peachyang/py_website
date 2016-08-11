@@ -8,11 +8,11 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Model\Store;
-use Seahinet\Sales\Model\Collection\CreditMemo;
-use Seahinet\Sales\Model\Collection\Invoice;
+use Seahinet\Sales\Model\Collection\CreditMemo as CreditMemoModel;
+use Seahinet\Sales\Model\Collection\Invoice as InvoiceModel;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
 use Seahinet\Sales\Model\Collection\Order\Status\History;
-use Seahinet\Sales\Model\Collection\Shipment;
+use Seahinet\Sales\Model\Collection\Shipment as ShipmentModel;
 use Seahinet\Sales\Model\Order\Item;
 use Seahinet\Sales\Model\Order\Status;
 
@@ -187,7 +187,7 @@ class Order extends AbstractModel
     public function getInvoice()
     {
         if ($this->getId()) {
-            $collection = new Invoice;
+            $collection = new InvoiceModel;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }
@@ -197,7 +197,7 @@ class Order extends AbstractModel
     public function getShipment()
     {
         if ($this->getId()) {
-            $collection = new Shipment;
+            $collection = new ShipmentModel;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }
@@ -207,7 +207,7 @@ class Order extends AbstractModel
     public function getCreditMemo()
     {
         if ($this->getId()) {
-            $collection = new CreditMemo;
+            $collection = new CreditMemoModel;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }

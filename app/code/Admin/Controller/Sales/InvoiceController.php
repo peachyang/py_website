@@ -9,6 +9,8 @@ use Seahinet\Sales\Model\Invoice;
 use Seahinet\Sales\Model\Invoice\Item;
 use Seahinet\Sales\Model\Order;
 use Seahinet\Sales\Model\Order\Status\History;
+use TCPDF;
+use Seahinet\Admin\ViewModel\Sales\View\Invoice as Pdf;
 
 class InvoiceController extends AuthActionController
 {
@@ -111,4 +113,27 @@ class InvoiceController extends AuthActionController
         return $this->notFoundAction();
     }
 
+
+    public function printAction(){
+            if ($id = $this->getRequest()->getQuery('id')) {
+            require_once(BP.'vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
+            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $data = (new Pdf)->getHtml($pdf,$id);
+            $pdf->SetCreator(PDF_CREATOR);
+            $pdf->SetAuthor('Nicola Asuni');
+            $pdf->SetTitle($this->translate('Type Infomation'));
+            $pdf->SetSubject('TCPDF Tutorial');
+            $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+            $pdf->SetFont('stsongstdlight', '', 10);
+            $pdf->AddPage();
+            $pdf->writeHTML($data['html'], true, false, true, false, '');
+            $pdf->lastPage();
+            $pdf->Output($data['pdf_name'], 'I');
+        }
+    }
+    
 }

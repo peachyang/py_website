@@ -1,5 +1,6 @@
 <?php $customer = $this->getVariable('customer'); ?>
 <div class="col-xs-9 col-sm-9 col-md-10 personinfo">
+    <h3><?php echo $this->translate('Personal Info');?></h3>
     <form action="<?php echo $this->getBaseUrl('customer/account/editPersonalInfo/') ?>" method="post">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="id" value="<?php echo $customer->id ?>">

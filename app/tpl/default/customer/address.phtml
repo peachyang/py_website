@@ -42,29 +42,30 @@ $attributes = $this->getAddressAttribute();
             </div>
         </div>
     </div>
-    
-    <?php if(!empty($attributes)) {?>
-    <div class="address-list">
-        <?php foreach ($addresses as $address): ?>
-            <div class="address-view">
-                <div class="address-detail">
-                    <?php echo $address->display(true); ?>
+
+    <?php if (!empty($attributes)) { ?>
+        <div class="address-list">
+            <?php foreach ($addresses as $address): ?>
+                <div class="address-view">
+                    <div class="address-detail">
+                        <?php echo $address->display(true); ?>
+                    </div>
+                    <div class="address-operater">
+                        <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='),$address->getId() ?>" class="btn"><?php echo $this->translate('Default Address') ?></a>
+                        <button type="button" class="btn" data-info='<?php echo json_encode($address->toArray()) ?>' data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
+                            <?php echo $this->translate('Edit') ?>
+                        </button>
+                        <a href="<?php echo $this->getBaseUrl('customer/account/delAddress/?id='), $address->getId() ?>" class="btn">
+                            <?php echo $this->translate('Delete') ?>
+                        </a>
+                    </div>
                 </div>
-                <div class="address-operater">
-                    <a href="<?php ?>" class="btn"><?php echo $this->translate('Default Address')?></a>
-                    <button type="button" data-info='<?php echo json_encode($address->toArray()) ?>' class="btn" data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
-                        <?php echo $this->translate('Edit') ?>
-                    </button>
-                    <a href="<?php echo $this->getBaseUrl('customer/account/delAddress/?id='), $address->getId() ?>" class="btn">
-                        <?php echo $this->translate('Delete') ?>
-                    </a>
-                </div>
-            </div>
-        <?php endforeach ?>
-    </div>
-<?php }
- else {
-echo NULL;     
-}
-?>
+            <?php endforeach ?>
+        </div>
+    <?php
+    }
+    else {
+        echo NULL;
+    }
+    ?>
 </div>

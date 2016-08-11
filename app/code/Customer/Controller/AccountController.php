@@ -17,6 +17,7 @@ use Zend\Math\Rand;
 use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Address;
 
+
 class AccountController extends AuthActionController
 {
 
@@ -298,14 +299,14 @@ class AccountController extends AuthActionController
     public function indexAction()
     {
         $segment = new Segment('customer');
-        
-        if($customerId = $segment->get('customer')->getId()){
-        $customer = new Model;
-        $customer->load($customerId);
 
-        $root = $this->getLayout('customer_account_dashboard');
-        $root->getChild('main', true)->setVariable('customer', $customer);
-        return $root;
+        if ($customerId = $segment->get('customer')->getId()) {
+            $customer = new Model;
+            $customer->load($customerId);
+
+            $root = $this->getLayout('customer_account_dashboard');
+            $root->getChild('main', true)->setVariable('customer', $customer);
+            return $root;
         }
         return FALSE;
     }
@@ -410,11 +411,21 @@ class AccountController extends AuthActionController
         return $this->redirect('customer/account/address');
     }
 
-    public function editAddressAction()
+    public function defaultAddressAction()
     {
-        
+        $query = $this->getRequest()->getQuery();
+        $address = new Address;
+        if (isset($query['id'])) {
+            $address->load($query['id']);
+        } else {
+            $address->setData('wishlist_id', function() {
+                $set = new Set;
+                $set->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [])
+                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE, 'is_default' => 1]);
+                return $set->load()[0]['id'];
+            });
+        }
+        return $this->redirect('customer/account/address/');      
     }
-    public function wishlistAction(){
-        
-    }
+
 }

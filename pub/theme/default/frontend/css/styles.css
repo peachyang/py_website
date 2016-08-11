@@ -170,12 +170,14 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
 .main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
 .main-container .address .btn{background:#007dc6;color:#ffffff}
-.main-container .address .address-list{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
-.main-container .address .address-list:hover{background:#fdfbea}
+.main-container .address .address-view{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
+.main-container .address .address-view:hover{background:#fdfbea}
 .main-container .address .address-list .address-detail{width:75%;overflow:hidden;float:left}
 .main-container .address .address-list .address-operater{width:25%;overflow:hidden;float:left;text-align:center}
 .main-container .address .address-list .address-detail dt{float:left;margin-right:20px}
 .main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
+.main-container .wishlist{margin-top:15px;padding-left:40px}
+.main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 
@@ -286,7 +288,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
 .main-container .personinfo{padding-left:40px;margin-top:15px} 
-/*.main-container .personinfo label{width:80px}*/
+.main-container .personinfo h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;margin-bottom: 30px;font-weight:bold}
 .main-container .personinfo dl{width:100%;overflow:hidden}
 .main-container .personinfo dt{width:15%;text-align:right;float:left;padding-right:5px}
 .main-container .personinfo dd{float:left;width:50%}

@@ -66,6 +66,12 @@ admin_sales_order_view:
                     -
                         method: setTitle
                         params: Order / Sales
+                    -
+                        method: addScript
+                        params: backend/js/locate.js
+                    -
+                        method: addScript
+                        params: [{'src':'backend/js/modal.js','defer':'defer','async':'async'}]
             content:
                 children:
                     breadcrumb:
@@ -79,6 +85,11 @@ admin_sales_order_view:
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Order
                         template: admin/sales/order
+            extra:
+                children:
+                    address:
+                        type: Seahinet\Admin\ViewModel\Sales\Edit\Address
+                        template: admin/customer/addressForm
 admin_sales_invoice_list:
     update: grid
     root:

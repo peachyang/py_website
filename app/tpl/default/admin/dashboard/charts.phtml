@@ -7,7 +7,8 @@ $events = $this->getEvents();
         <?php
         $col = 0;
         foreach ($stat as $key => $item):
-            if ($col % 4 === 0):
+            $mod = $col % 4;
+            if ($mod === 0):
                 ?>
                 <div class="row">
                 <?php endif ?>
@@ -31,12 +32,15 @@ $events = $this->getEvents();
                     </ul>
                 </div>
                 <?php
-                if ($col++ % 4 === 0):
+                if (++$col % 4 === 0):
                     ?>
                 </div>
                 <?php
             endif;
         endforeach;
+        if ($mod) {
+            echo '</div>';
+        }
         ?>
     </div>
     <div class="chart">

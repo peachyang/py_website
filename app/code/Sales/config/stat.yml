@@ -1,0 +1,5 @@
+---
+orders:
+    data: sales_order/chart/
+    title: Order
+    color: '#0F0'

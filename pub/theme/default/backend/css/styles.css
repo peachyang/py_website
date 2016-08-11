@@ -283,7 +283,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .view>.buttons-set~.panel:nth-child(2n){clear:left}
 .admin .view .panel-body.grid,.admin .view .panel-body.grid .table{padding:0}
 .admin .view .panel-body.grid .table td{vertical-align:middle}
-.admin .view dl{max-height:160px;overflow:auto}
+.admin .view dl{max-height:150px;overflow:auto}
 .admin .view .dl-horizontal dt{width:75%;float:left;text-align:right;padding:0 10px}
 .admin .view .dl-horizontal dd{width:25%;float:left;text-align:left}
 .admin .input-box .comment{max-width:320px;font-size:12px;line-height:1.5;color:#555;padding:4px 4px 0}

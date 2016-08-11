@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller\Sales;
 
 use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\Order\Status as StatusCollection;
 use Seahinet\Sales\Model\Shipment;
 use Seahinet\Sales\Model\Shipment\Item;
@@ -16,6 +17,8 @@ use Seahinet\Admin\ViewModel\Sales\View\Shipment as Pdf;
 class ShipmentController extends AuthActionController
 {
 
+    use \Seahinet\Lib\Traits\DB;
+    
     public function indexAction()
     {
         $root = $this->getLayout('admin_sales_shipment_list');
@@ -57,12 +60,16 @@ class ShipmentController extends AuthActionController
             try {
                 $order = new Order;
                 $order->load($data['order_id']);
+                if (!$order->canShip()) {
+                    return $this->redirectReferer(':ADMIN/sales_order/view/?id=' . $data['order_id']);
+                }
                 $shipment = new Shipment;
                 $shipment->setData($order->toArray())->setData([
                     'increment_id' => '',
                     'order_id' => $data['order_id'],
                     'comment' => isset($data['comment']) ? $data['comment'] : ''
                 ]);
+                $this->beginTransaction();
                 $shipment->setId(null)->save();
                 foreach ($order->getItems(true) as $item) {
                     foreach ($data['item_id'] as $key => $id) {
@@ -95,12 +102,14 @@ class ShipmentController extends AuthActionController
                     $history = new History;
                     $history->setData([
                         'admin_id' => (new Segment('admin'))->get('user')->getId(),
-                        'order_id' => $this->getId(),
+                        'order_id' => $order->getId(),
                         'status_id' => $status[0]->getId(),
                         'status' => $status[0]->offsetGet('name')
                     ])->save();
                 }
+                $this->commit();
             } catch (Exception $e) {
+                $this->rollback();
                 $this->getContainer()->get('log')->logException($e);
                 $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                 $result['error'] = 1;

@@ -2,21 +2,101 @@
 
 namespace Seahinet\Admin\Controller\Sales;
 
+use DateTime;
 use Exception;
+use Seahinet\Customer\Model\Address;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Sales\Model\Collection\Order as Collection;
 use Seahinet\Sales\Model\Collection\Order\Status;
-use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
 use Seahinet\Sales\Model\Order as Model;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
-use Seahinet\Lib\Traits\Translate;
 use Seahinet\Admin\ViewModel\Sales\View\Order as Pdf;
 
 class OrderController extends AuthActionController
 {
 
     use \Seahinet\Lib\Traits\DB;
+
+    public function chartAction()
+    {
+        $filter = $this->getRequest()->getQuery('filter', 'd');
+        $collection = new Collection;
+        $collection->columns(['created_at']);
+        if ($filter === 'd') {
+            $filted = array_fill(1, 24, 0);
+        } else if ($filter === 'm') {
+            $filted = array_fill(1, 30, 0);
+        } else if ($filter === 'y') {
+            $filted = array_fill(1, 12, 0);
+        } else {
+            $filted = [];
+            $from1 = strtotime($this->getRequest()->getQuery('from1', 0));
+            $from2 = strtotime($this->getRequest()->getQuery('from2', 0));
+            $to1 = strtotime($this->getRequest()->getQuery('to1', 0));
+            $to2 = strtotime($this->getRequest()->getQuery('to2', 0));
+        }
+        $result = [
+            'amount' => 0,
+            'daily' => 0,
+            'monthly' => 0,
+            'yearly' => 0,
+            'filted' => $filted,
+            'keys' => array_keys($filted)
+        ];
+        if ($collection->count()) {
+            $current = new DateTime;
+            $keys = [];
+            foreach ($collection as $item) {
+                $time = new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
+                $diff = $current->diff($time);
+                if ($diff->d < 1) {
+                    $result['daily'] ++;
+                    if ($filter === 'd') {
+                        $result['filted'][$diff->h + 1] ++;
+                    }
+                }
+                if ($diff->m < 1) {
+                    $result['monthly'] ++;
+                    if ($filter === 'm') {
+                        $result['filted'][$diff->d + 1] ++;
+                    }
+                }
+                if ($diff->y < 1) {
+                    $result['yearly'] ++;
+                    if ($filter === 'y') {
+                        $result['filted'][$diff->m + 1] ++;
+                    }
+                }
+                if ($filter === 'c') {
+                    $ts = $time->getTimestamp();
+                    $key = date('Y-m-d', $ts);
+                    $result['compared'] = [];
+                    if ($ts >= $from1 && $ts <= $to1) {
+                        if (!isset($result['filted'][$key])) {
+                            $result['filted'][$key] = 0;
+                        }
+                        $result['compared'][$key] = null;
+                        $result['filted'][$key] ++;
+                        $keys[$key] = 1;
+                    }
+                    if ($ts >= $from2 && $ts <= $to2) {
+                        if (!isset($result['compared'][$key]) || is_null($result['compared'][$key])) {
+                            $result['compared'][$key] = 0;
+                        }
+                        $result['compared'][$key] ++;
+                        $keys[$key] = 1;
+                    }
+                }
+                $result['amount'] ++;
+            }
+            if (!empty($keys)) {
+                $result['keys'] = array_keys($keys);
+            }
+        }
+        return $result;
+    }
 
     public function indexAction()
     {
@@ -44,22 +124,22 @@ class OrderController extends AuthActionController
                 $count = 0;
                 $userId = (new Segment('admin'))->get('user')->getId();
                 $statusId = $status[0]->getId();
+                $dispatcher = $this->getContainer()->get('eventDispatcher');
                 $this->beginTransaction();
-                foreach ((array) $id as $i) {
-                    $order = new Model;
-                    $order->load($i);
+                $order = new Model;
+                $order->load($id);
+                if ($order->canCancel()) {
+                    $dispatcher->trigger('order.cancel.before', ['model' => $order]);
                     $history = new History;
                     $history->setData([
                         'admin_id' => $userId,
-                        'order_id' => $i,
+                        'order_id' => $id,
                         'status_id' => $statusId,
                         'status' => $status[0]->offsetGet('name')
                     ])->save();
-                    if (in_array($order->getStatus()->getPhase()->offsetGet('code'), ['pending', 'pending_payment'])) {
-                        $order->setData('status_id', $statusId)
-                                ->save();
-                        $count ++;
-                    }
+                    $order->setData('status_id', $statusId)
+                            ->save();
+                    $count ++;
                 }
                 $this->commit();
                 $result['message'][] = ['message' => $this->translate('%d order(s) has been canceled.', [count((array) $id)]), 'level' => 'success'];
@@ -90,14 +170,14 @@ class OrderController extends AuthActionController
                 foreach ((array) $id as $i) {
                     $order = new Model;
                     $order->load($i);
-                    $history = new History;
-                    $history->setData([
-                        'admin_id' => $userId,
-                        'order_id' => $i,
-                        'status_id' => $statusId,
-                        'status' => $status[0]->offsetGet('name')
-                    ])->save();
-                    if ($order->getStatus()->getPhase()->offsetGet('code') === 'processing') {
+                    if ($order->canHold()) {
+                        $history = new History;
+                        $history->setData([
+                            'admin_id' => $userId,
+                            'order_id' => $i,
+                            'status_id' => $statusId,
+                            'status' => $status[0]->offsetGet('name')
+                        ])->save();
                         $order->setData('status_id', $statusId)
                                 ->save();
                         $count ++;
@@ -131,29 +211,8 @@ class OrderController extends AuthActionController
                 foreach ((array) $id as $i) {
                     $order = new Model;
                     $order->load($i);
-                    $history = new HistoryCollection;
-                    $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', ['name'])
-                            ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [])
-                            ->where(['order_id' => $i])
-                            ->order('created_at DESC')
-                            ->limit(1)
-                    ->where->notEqualTo('sales_order_phase.code', 'holded');
-                    if ($order->getStatus()->getPhase()->offsetGet('code') === 'holded') {
-                        if (count($history)) {
-                            $statusId = $history[0]->offsetGet('status_id');
-                            $statusName = $history[0]->offsetGet('name');
-                        } else {
-                            $statusId = $status->offsetGet('id');
-                            $statusName = $status->offsetGet('name');
-                        }
-                        $order->setData('status_id', $statusId)->save();
-                        $history = new History;
-                        $history->setData([
-                            'admin_id' => $userId,
-                            'order_id' => $i,
-                            'status_id' => $statusId,
-                            'status' => $statusName
-                        ])->save();
+                    if ($order->canUnhold()) {
+                        $order->rollbackStatus();
                         $count ++;
                     }
                 }
@@ -258,12 +317,37 @@ class OrderController extends AuthActionController
         }
         return $this->notFoundAction();
     }
-    
-    public function printAction(){
+
+    public function saveAddressAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['order_id', 'id', 'is_billing']);
+            if ($result['error'] === 0) {
+                try {
+                    $order = new Model;
+                    $order->load($data['order_id']);
+                    $address = new Address();
+                    $address->load($data['id']);
+                    $order->setData($data['is_billing'] ? 'billing_address' : 'shipping_address', $address->setData($data)->display(false))->save();
+                    $result['reload'] = 1;
+                    return $this->response($result, ':ADMIN/sales_order/view/?id=' . $data['order_id']);
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response(isset($result) ? $result : [], ':ADMIN/sales_order/');
+    }
+
+    public function printAction()
+    {
         if ($id = $this->getRequest()->getQuery('id')) {
-            require_once(BP.'vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
+            require_once(BP . 'vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
             $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-            $data = (new Pdf)->getHtml($pdf,$id);
+            $data = (new Pdf)->getHtml($pdf, $id);
             $pdf->SetCreator(PDF_CREATOR);
             $pdf->SetAuthor('Nicola Asuni');
             $pdf->SetTitle($this->translate('Type Infomation'));
@@ -280,5 +364,5 @@ class OrderController extends AuthActionController
             $pdf->Output($data['pdf_name'], 'I');
         }
     }
-    
+
 }

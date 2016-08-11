@@ -129,7 +129,7 @@ admin_sales_invoice_view:
                                 params: [{label:'View'}]
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Invoice
-                        template: admin/sales/order
+                        template: admin/sales/invoice
 admin_sales_invoice_edit:
     update: admin
     root:

@@ -354,18 +354,10 @@ class OrderController extends AuthActionController
             $pdf->SetTitle($this->translate('Type Infomation'));
             $pdf->SetSubject('TCPDF Tutorial');
             $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-            //$pdf->SetHeaderData('', '', $data['title'], '', array(0,64,255), array(0,64,128));
-            $pdf->setHeaderFont(Array('stsongstdlight', 'B', 20));
-            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
             $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
             $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-            $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
             $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
             $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-            if (@file_exists(BP . 'vendor\tecnickcom\tcpdf\examples\lang/eng.php')) {
-                require_once(BP . 'vendor\tecnickcom\tcpdf\examples\lang/eng.php');
-                $pdf->setLanguageArray($l);
-            }
             $pdf->SetFont('stsongstdlight', '', 10);
             $pdf->AddPage();
             $pdf->writeHTML($data['html'], true, false, true, false, '');

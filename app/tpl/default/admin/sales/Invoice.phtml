@@ -1,0 +1,21 @@
+<?php
+$order = $this->getOrder();
+$currency = $order->getCurrency();
+?>
+<div class="view clearfix">
+	 <div class="buttons-set text-right">
+        <a href="<?php echo $this->getAdminUrl('sales_invoice/print/?id=' . $order->getId()) ?>" class="btn btn">
+            <?php echo $this->translate('Print', [], 'sales') ?>
+        </a>
+    </div>
+	<div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?php echo $this->translate('Invoice Infomation', [], 'sales') ?></h4>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?><br />
+            <?php echo $this->translate('Total'), ': ', $currency->format($order['base_total']) ?>
+        </div>
+    </div>
+    
+</div>

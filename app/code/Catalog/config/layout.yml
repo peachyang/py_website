@@ -486,7 +486,7 @@ admin_catalog_attribute_set_edit:
                                 params: [{link:':ADMIN/catalog_manage/',label:'Catalog Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Catalog Attribute Set'}]
+                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Product Attribute Set'}]
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/catalog_attribute_set/edit/',label:'Edit'}]

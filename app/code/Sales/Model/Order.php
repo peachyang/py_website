@@ -9,11 +9,11 @@ use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Collection\CreditMemo as CreditMemoModel;
-use Seahinet\Sales\Model\Collection\Invoice as InvoiceModel;
+use Seahinet\Sales\Model\Collection\CreditMemo as CreditMemoCollection;
+use Seahinet\Sales\Model\Collection\Invoice as InvoiceCollection;
 use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
 use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
-use Seahinet\Sales\Model\Collection\Shipment as ShipmentModel;
+use Seahinet\Sales\Model\Collection\Shipment as ShipmentCollection;
 use Seahinet\Sales\Model\Order\Item;
 use Seahinet\Sales\Model\Order\Status;
 use Seahinet\Sales\Model\Order\Status\History;
@@ -189,7 +189,7 @@ class Order extends AbstractModel
     public function getInvoice()
     {
         if ($this->getId()) {
-            $collection = new InvoiceModel;
+            $collection = new InvoiceCollection;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }
@@ -199,7 +199,7 @@ class Order extends AbstractModel
     public function getShipment()
     {
         if ($this->getId()) {
-            $collection = new ShipmentModel;
+            $collection = new ShipmentCollection;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }
@@ -209,7 +209,7 @@ class Order extends AbstractModel
     public function getCreditMemo()
     {
         if ($this->getId()) {
-            $collection = new CreditMemoModel;
+            $collection = new CreditMemoCollection;
             $collection->where(['order_id' => $this->getId()]);
             return $collection;
         }

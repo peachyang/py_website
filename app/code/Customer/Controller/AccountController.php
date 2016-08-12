@@ -298,14 +298,14 @@ class AccountController extends AuthActionController
     public function indexAction()
     {
         $segment = new Segment('customer');
-        
-        if($customerId = $segment->get('customer')->getId()){
-        $customer = new Model;
-        $customer->load($customerId);
 
-        $root = $this->getLayout('customer_account_dashboard');
-        $root->getChild('main', true)->setVariable('customer', $customer);
-        return $root;
+        if ($customerId = $segment->get('customer')->getId()) {
+            $customer = new Model;
+            $customer->load($customerId);
+
+            $root = $this->getLayout('customer_account_dashboard');
+            $root->getChild('main', true)->setVariable('customer', $customer);
+            return $root;
         }
         return FALSE;
     }
@@ -329,11 +329,9 @@ class AccountController extends AuthActionController
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
             $result = $this->validateForm($data, ['crpassword', 'password']);
-            //var_dump($result);exit();
             if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
-                //var_dump($result);exit();
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
@@ -410,11 +408,19 @@ class AccountController extends AuthActionController
         return $this->redirect('customer/account/address');
     }
 
-    public function editAddressAction()
+    public function defaultAddressAction()
     {
-        
+        $id = $this->getRequest()->getQuery('id');
+        if ($id) {
+            $address = new Address;
+            $address->load($id)->setData('is_default', 1)->save();
+            $collection = new Addresses;
+            $collection->where(['is_default' => 1])->where->notEqualTo('id', $id);
+            foreach ($collection as $address) {
+                $address->setData('is_default', 0)->save();
+            }
+        }
+        return $this->redirect('customer/account/address/');
     }
-    public function wishlistAction(){
-        
-    }
+
 }

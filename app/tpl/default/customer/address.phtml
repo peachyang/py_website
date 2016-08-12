@@ -10,7 +10,7 @@ $attributes = $this->getAddressAttribute();
     <div class="modal fade" id="modal-navigation-address">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php echo $this->getBaseUrl('customer/account/addAddress') ?>" method="post">
+                <form action="<?php echo $this->getBaseUrl('customer/account/addAddress') ?>" method="post" data-ajax="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?php echo $this->translate('Address Infomation') ?></h4>
@@ -42,29 +42,34 @@ $attributes = $this->getAddressAttribute();
             </div>
         </div>
     </div>
-    
-    <?php if(!empty($attributes)) {?>
-    <div class="address-list">
-        <?php foreach ($addresses as $address): ?>
-            <div class="address-view">
-                <div class="address-detail">
-                    <?php echo $address->display(true); ?>
+
+    <?php if (!empty($attributes)) { ?>
+        <div class="address-list">
+            <?php foreach ($addresses as $address): ?>
+                <div class="address-view">
+                    <div class="address-detail">
+                        <?php echo $address->display(true); ?>
+                    </div>
+                    <div class="address-operater">
+                        <?php if($address->is_default == 0 || $address->is_default== NULL) {?>
+                        <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='),$address->getId() ?>" class="btn"><?php echo $this->translate('Set as Default') ?></a>
+                        <?php }else {?>
+                        <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='),$address->getId() ?>" class="btn"><?php echo $this->translate('Default Address') ?></a>
+                        <?php }?>
+                        <button type="button" class="btn" data-info='<?php echo json_encode($address->toArray()) ?>' data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
+                            <?php echo $this->translate('Edit') ?>
+                        </button>
+                        <a href="<?php echo $this->getBaseUrl('customer/account/delAddress/?id='), $address->getId() ?>" class="btn">
+                            <?php echo $this->translate('Delete') ?>
+                        </a>
+                    </div>
                 </div>
-                <div class="address-operater">
-                    <a href="<?php ?>" class="btn"><?php echo $this->translate('Default Address')?></a>
-                    <button type="button" data-info='<?php echo json_encode($address->toArray()) ?>' class="btn" data-toggle="modal" data-target="#modal-navigation-address" data-type="edit">
-                        <?php echo $this->translate('Edit') ?>
-                    </button>
-                    <a href="<?php echo $this->getBaseUrl('customer/account/delAddress/?id='), $address->getId() ?>" class="btn">
-                        <?php echo $this->translate('Delete') ?>
-                    </a>
-                </div>
-            </div>
-        <?php endforeach ?>
-    </div>
-<?php }
- else {
-echo NULL;     
-}
-?>
+            <?php endforeach ?>
+        </div>
+    <?php
+    }
+    else {
+        echo NULL;
+    }
+    ?>
 </div>

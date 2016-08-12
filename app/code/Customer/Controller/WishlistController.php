@@ -16,21 +16,22 @@ class WishlistController extends AuthActionController
         $customerId = $segment->get('customer')->getId();
         $collection = new Collection;
         $collection->where(['customer_id' => $customerId]);
-        $root = $this->getLayout('wishlist');
-        $root->getChild('wishlist', true)->setVariable('collection', $collection);
+        $root = $this->getLayout('customer_account_wishlist');
+        $root->getChild('main', true)->setVariable('collection', $collection);
         return $root;
     }
 
     public function addAction()
     {
         $data = $this->getRequest()->getQuery();
+        //var_dump($data);exit();
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         try {
             $wishlist = new Model;
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
-                $wishlist->setData(['customer_id' => $customerId, 'id' => null])->save();
+                $wishlist->load($wishlist->getId())->setData(['customer_id' => $customerId, 'id' => null])->save();
             }           
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->getId();
@@ -40,9 +41,7 @@ class WishlistController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
             $this->getContainer()->get('log')->logException($e);
         }
-//        }
         return $this->redirect('customer/wishlist/');
-//        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'), 'customer');
     }
 
     public function commitAction()

@@ -84,31 +84,39 @@ $format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $curre
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($this->getCollection() as $item): ?>
-                            <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                                <td><?php echo $item['product_name'] ?></td>
-                                <td><?php echo $item['sku'] ?></td>
-                                <td>
-                                    <?php
-                                    $options = json_decode($item['options'], true);
-                                    if ($item['product_id'] && count($options)) {
-                                        foreach ($item['product']->getOptions() as $option) {
-                                            if (isset($options[$option->getId()])) {
-                                                echo $option['title'], ': ', (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()]), '<br />';
+                        <?php
+                        foreach ($this->getCollection() as $item):
+                            $max = $this->getMaxQty($item);
+                            if ($max):
+                                ?>
+                                <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                                    <td><?php echo $item['product_name'] ?></td>
+                                    <td><?php echo $item['sku'] ?></td>
+                                    <td>
+                                        <?php
+                                        $options = json_decode($item['options'], true);
+                                        if ($item['product_id'] && count($options)) {
+                                            foreach ($item['product']->getOptions() as $option) {
+                                                if (isset($options[$option->getId()])) {
+                                                    echo $option['title'], ': ', (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                            $option->getValue($options[$option->getId()]) : $options[$option->getId()]), '<br />';
+                                                }
                                             }
                                         }
-                                    }
-                                    ?>
-                                </td>
-                                <td class="price" data-price="<?php echo $item['price'] ?>" data-format="<?php echo $format ?>"><?php echo $currency->format($item['price']) ?></td>
-                                <td>
-                                    <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
-                                    <input type="range" name="qty[]" max="<?php echo $item['qty'] ?>" min="0" value="<?php echo $item['qty'] ?>" />
-                                </td>
-                                <td class="total"><?php echo $currency->format($item['total']) ?></td>
-                            </tr>
-                        <?php endforeach ?>
+                                        ?>
+                                    </td>
+                                    <td class="price" data-price="<?php echo $item['price'] ?>" data-format="<?php echo $format ?>"><?php echo $currency->format($item['price']) ?></td>
+                                    <td>
+                                        <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
+                                        <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
+                                    </td>
+                                    <td class="total"><?php echo $currency->format($item['total']) ?></td>
+                                </tr>
+                                <?php
+                            endif;
+                        endforeach;
+                        ?>
+                    </tbody>
                     </tbody>
                 </table>
             </div>

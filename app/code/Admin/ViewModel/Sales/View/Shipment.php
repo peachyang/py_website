@@ -7,6 +7,7 @@ use Seahinet\Sales\Model\Shipment as Model;
 use Seahinet\Sales\Model\Order as OrderModel;
 use Seahinet\Customer\Model\Customer;
 use TCPDFBarcode;
+use Pelago\Emogrifier;
 
 class Shipment extends Template
 {
@@ -61,8 +62,7 @@ class Shipment extends Template
         $data['html'] = '<img src="'.$image_file.'">';
         $params = $pdf->serializeTCPDFtagParameters(array($invoice['increment_id'], 'C39', '115', '23', 80, 25, 0.4, array('position'=>'S', 'border'=>false, 'padding'=>4, 'fgcolor'=>array(0,0,0), 'bgcolor'=>array(255,255,255), 'text'=>true, 'font'=>'helvetica', 'fontsize'=>8, 'stretchtext'=>4), 'N'));
         $data['html'] .= '<tcpdf method="write1DBarcode" params="'.$params.'" />';
-        $data['html'] .= '
-        <style>
+        $data['css'] = '
         	table{font-family:stsongstdlight;border: 1px solid #ddd;font-size:12px}
             td{border: 1px solid #ddd;}
             .head{width:298px;font-size:14px;background-color:#999;color:#fff}
@@ -78,7 +78,8 @@ class Shipment extends Template
             .product-qty{width:100px;}
             .product-total{width:100px;}
             .colspan{width:298px;}
-        </style>
+            ';
+        $data['html'] .= '
         <table class="first" cellpadding="4" cellspacing="0">
          <tr class="background">
           <td class="head" colspan="2" align="center"><b>'.$this->translate('Shipment Infomation', [], 'sales').'</b></td>
@@ -160,6 +161,7 @@ class Shipment extends Template
          </tr>
         </table>
         ';
+        $data['html'] = $data['css'] ? (new Emogrifier($data['html'],$data['css']))->emogrifyBodyContent() : $data['html'];
         $data['pdf_name'] = $this->translate('Shipment Infomation', [], 'sales').'.pdf';
         return $data;
     }

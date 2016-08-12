@@ -90,6 +90,14 @@ admin_sales_order_view:
                     address:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Address
                         template: admin/customer/addressForm
+admin_sales_order_print:
+    update: admin
+    root:
+        children:
+            content:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Order
+                        template: admin/sales/print/order
 admin_sales_invoice_list:
     update: grid
     root:

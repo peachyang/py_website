@@ -178,6 +178,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
 .main-container .wishlist{margin-top:15px;padding-left:40px}
 .main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold}
+.main-container .wishlist .wishlist_list li{text-align:center;line-height: 40px}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 

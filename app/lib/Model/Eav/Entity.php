@@ -310,7 +310,7 @@ abstract class Entity extends AbstractModel
         });
         $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $attrs) && ($this->isNew || in_array($key, $this->updatedColumns))) {
+            if (in_array($key, $attrs)) {
                 if (in_array($key, $datetime)) {
                     $timestamp = strtotime($value);
                     if ($timestamp) {

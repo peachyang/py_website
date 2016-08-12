@@ -17,7 +17,6 @@ use Zend\Math\Rand;
 use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Address;
 
-
 class AccountController extends AuthActionController
 {
 
@@ -330,11 +329,9 @@ class AccountController extends AuthActionController
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
             $result = $this->validateForm($data, ['crpassword', 'password']);
-            //var_dump($result);exit();
             if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
-                //var_dump($result);exit();
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
@@ -413,19 +410,17 @@ class AccountController extends AuthActionController
 
     public function defaultAddressAction()
     {
-        $query = $this->getRequest()->getQuery();
-        $address = new Address;
-        if (isset($query['id'])) {
-            $address->load($query['id']);
-        } else {
-            $address->setData('wishlist_id', function() {
-                $set = new Set;
-                $set->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [])
-                    ->where(['eav_entity_type.code' => Address::ENTITY_TYPE, 'is_default' => 1]);
-                return $set->load()[0]['id'];
-            });
+        $id = $this->getRequest()->getQuery('id');
+        if ($id) {
+            $address = new Address;
+            $address->load($id)->setData('is_default', 1)->save();
+            $collection = new Addresses;
+            $collection->where(['is_default' => 1])->where->notEqualTo('id', $id);
+            foreach ($collection as $address) {
+                $address->setData('is_default', 0)->save();
+            }
         }
-        return $this->redirect('customer/account/address/');      
+        return $this->redirect('customer/account/address/');
     }
 
 }

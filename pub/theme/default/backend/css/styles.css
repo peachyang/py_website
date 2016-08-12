@@ -30,7 +30,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .text-vtop{vertical-align:top!important}
 .text-vmiddle{vertical-align:middle!important}
 .text-vbottom{vertical-align:bottom!important}
-.panel{margin-bottom:20px;background-color:#fff;box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.panel{margin-bottom:20px;background-color:#fff}
 .panel-body{padding:15px;border:1px solid #ddd;border-top:none}
 .panel-body:empty{padding:0;border:none}
 .panel-heading{padding:10px 15px;border:1px solid #ddd;border-top-left-radius:3px;border-top-right-radius:3px;color:#333;background:#f5f5f5}

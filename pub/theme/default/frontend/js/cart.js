@@ -47,20 +47,6 @@
         $('.table').on('click', '[type=checkbox]', function () {
             cartSelectItem.call(this);
         });
-        $('.qty .spin').click(function () {
-            var t = $('#' + $(this).attr('for'));
-            var v = parseFloat($(t).val());
-            var s = parseFloat($(t).attr('step'));
-            var min = parseFloat($(t).attr('min'));
-            var max = parseFloat($(t).attr('max'));
-            if ($(this).is('.minus') && (isNaN(min) || v > min)) {
-                $(t).val(min ? Math.max(min, v - (s ? s : 1)) : v - (s ? s : 1));
-                $(t).trigger('change.seahinet');
-            } else if ($(this).is('.plus') && (isNaN(max) || v < max)) {
-                $(t).val(max ? Math.min(max, v + (s ? s : 1)) : v + (s ? s : 1));
-                $(t).trigger('change.seahinet');
-            }
-        });
         $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
             var p = $(this).parents('.qty');
             var price = $(p).siblings('.price');

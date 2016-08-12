@@ -20,6 +20,9 @@ class Crosssell extends Link
             foreach (Cart::instance()->getItems() as $item) {
                 $ids[] = $item['product_id'];
             }
+            if (!count($ids)) {
+                return [];
+            }
             $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
             $select = $tableGateway->getSql()->select();
             $select->columns(['linked_product_id'])

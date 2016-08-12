@@ -19,6 +19,9 @@ class LogView extends Link
             foreach (Cart::instance()->getItems() as $item) {
                 $ids[] = $item['product_id'];
             }
+            if (!count($ids)) {
+                return [];
+            }
             $ids = array_diff($ids, explode(',', $this->getRequest()->getCookie('log_view')));
             if (count($ids)) {
                 $products = new Product;

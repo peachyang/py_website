@@ -1,41 +1,36 @@
 <?php
-$wishlist = $this->getVariable('wishlist');
+$wishlists = $this->getVariable('wishlists');
 ?>
 <div class="col-xs-9 col-sm-9 col-md-10 wishlist">
-    <h3><?php echo $this->translate('My Wishlist');?></h3>
-    <form action="<?php echo $this->getBaseUrl('customer/account/add/') ?> " method="post">
+    <h3></span><?php echo $this->translate('My Wishlist'); ?></h3>
+    <form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
         <ul class="col-lg-12 col-xs-12 wishlist_list">
-            <li class="col-lg-6 col-xs-12 product_name"><?php echo $this->translate('Product Infomation');?></li>
-            <li class="col-lg-3 col-xs-12 product_price"><?php echo $this->translate('Price');?></li>
-            <li class="col-lg-3 col-xs-12 product_edit"><?php echo $this->translate('Edit');?></li>
+            <li class="col-lg-6 col-xs-12 product_name"><?php echo $this->translate('Product Infomation'); ?></li>
+            <li class="col-lg-3 col-xs-12 product_price"><?php echo $this->translate('Description'); ?></li>
+            <li class="col-lg-3 col-xs-12 product_edit"><?php echo $this->translate('Edit'); ?></li>
         </ul>
-        <table class="table">
-                <?php
-                if (!empty($wishlist)) {
-                    foreach ($wishlist as $item):
-                        $product = new \Seahinet\Catalog\Model\Product;
-                        $product->load($item['product_id']);
-                        ?>
-                        <tr>
-                            <td>
-                                <a href="<?php echo $this->$product->getUrl();?>" title="<?php echo $product['name'] ?>" >
-                                    <img src="<?php echo $product['thumbnail'] ? $this->getBaseUrl('pub/resource/image/' . $product['thumbnail']) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
-                                </a>
-                            </td>
-                            <td>
-                                <?php echo $item['product_name'] ?>
-                                <textarea name="description[<?php echo $item['id'] ?>]" class="form-control"><?php echo $item['description'] ?></textarea>
-                            </td>
-                            <td>        	
-                                <a href="<?php echo $this->getBaseUrl('customer/account/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
-                            </td>
-                        </tr>        
-                        <?php
-                    endforeach;
-                }else {
-                    echo NULL;
-                }
+        <?php
+        if (!empty($wishlists)) {
+            foreach ($wishlists as $item):
+                $product = new \Seahinet\Catalog\Model\Product;
+                $product->load($item['product_id']);
+                //var_dump($product);exit();
                 ?>
-         </table>
+                <ul class="col-lg-12 col-xs-12 wishlist_list">
+                    <li class="col-lg-6 col-xs-12 product_name">
+                        <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->name ?>" >
+                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $product->thumbnail . '.jpg'); ?>" alt="<?php echo $product['name'] ?>" width="150">
+                        </a>
+                        <h4><?php echo $item['product_name'] ?></h4>
+                    </li>
+                    <li class="col-lg-3 col-xs-12 product_price"><?php echo $item['description'] ?></li>
+                    <li class="col-lg-3 col-xs-12 product_edit">
+                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
+                    </li>
+                </ul>
+                <?php
+            endforeach;
+        }
+        ?>
     </form>
 </div>

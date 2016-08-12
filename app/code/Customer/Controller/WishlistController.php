@@ -13,18 +13,19 @@ class WishlistController extends AuthActionController
     public function indexAction()
     {
         $segment = new Segment('customer');
+        
         $customerId = $segment->get('customer')->getId();
+        
         $collection = new Collection;
+        
         $collection->where(['customer_id' => $customerId]);
         $root = $this->getLayout('customer_account_wishlist');
         $root->getChild('main', true)->setVariable('collection', $collection);
         return $root;
     }
-
     public function addAction()
     {
         $data = $this->getRequest()->getQuery();
-        //var_dump($data);exit();
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         try {

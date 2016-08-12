@@ -30,7 +30,7 @@ customer_account:
                                 params: [{link:'customer/account/',label:'Refund Rights',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/wishlist/',label:'My Wishlist',group:'Center of Attention'}]
+                                params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'Center of Attention'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/',label:'My Tracks',group:'Center of Attention'}]

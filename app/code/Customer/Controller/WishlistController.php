@@ -24,13 +24,14 @@ class WishlistController extends AuthActionController
     public function addAction()
     {
         $data = $this->getRequest()->getQuery();
+        //var_dump($data);exit();
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         try {
             $wishlist = new Model;
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
-                $wishlist->setData(['customer_id' => $customerId, 'id' => null])->save();
+                $wishlist->load($wishlist->getId())->setData(['customer_id' => $customerId, 'id' => null])->save();
             }           
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->getId();

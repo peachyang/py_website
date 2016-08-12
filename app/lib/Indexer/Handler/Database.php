@@ -73,7 +73,7 @@ class Database extends AbstractHandler
                     } else if ($attr['type'] === 'varchar') {
                         $column = new Ddl\Column\Varchar($attr['attr'], 255, true, $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {
-                        $column = new Ddl\Column\Timestamp($attr['attr'], true, $attr['default_value']? : null);
+                        $column = new Ddl\Column\Datetime($attr['attr'], true, $attr['default_value'] ? date('Y-m-d H:i:s', strtotime($attr['default_value'])) : null);
                     } else if ($attr['type'] === 'decimal') {
                         $column = new Ddl\Column\Decimal($attr['attr'], 12, 4, true, (float) $attr['default_value']);
                     } else {

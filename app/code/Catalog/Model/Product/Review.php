@@ -2,6 +2,7 @@
 
 namespace Seahinet\Catalog\Model\Product;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -43,6 +44,18 @@ class Review extends AbstractModel
             }
         }
         parent::afterLoad($result);
+    }
+    
+    public function getValues($id){
+         $tableGateway = new TableGateway('review', $this->getContainer()->get('dbAdapter'));
+         $select = $tableGateway->getSql()->select();
+         $select->where([
+                    'review.status' => 1,
+                    'review.product_id' => $id
+         ]);
+         $select->join('customer_1_index', 'customer_1_index.id=review.customer_id',['username']);
+         //$select->join('review_rating', 'customer_1_index.id=review.customer_id',['username']);
+        return $tableGateway->selectWith($select)->toArray();
     }
 
 }

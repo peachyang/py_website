@@ -90,6 +90,9 @@ catalog_product:
                             upsells:
                                 type: Seahinet\Catalog\ViewModel\Product\Upsells
                                 template: catalog/product/link
+                            review:
+                                type: Seahinet\Catalog\ViewModel\Product\View
+                                template: catalog/product/review
 admin_catalog_category_list:
     update: grid
     root:

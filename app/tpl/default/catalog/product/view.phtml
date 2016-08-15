@@ -92,7 +92,9 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                 <?php echo $this->getChild('attribute'), $product->offsetGet('description') ?>
             </div>
             <div role="tabpanel" class="tab-pane" id="review">
-                <?php echo $this->getChild('review') ?>
+                <?php 
+                //var_dump($this);
+                echo $this->getChild('review') ?>
             </div>
         </div>
     </div>

@@ -16,6 +16,9 @@ use Swift_TransportException;
 use Zend\Math\Rand;
 use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Address;
+use Seahinet\Customer\Model\Collection\Wishlist as Wishlists;
+use Seahinet\Customer\Model\Wishlist as WishModel;
+use Seahinet\Customer\Model\Wishlist\Item;
 
 class AccountController extends AuthActionController
 {
@@ -421,6 +424,17 @@ class AccountController extends AuthActionController
             }
         }
         return $this->redirect('customer/account/address/');
+    }
+
+    public function wishlistAction()
+    {
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $wishlists = new Wishlists;
+        $wishlists->where(['customer_id' => $customerId]);
+        $root = $this->getLayout('customer_account_wishlist');
+        $root->getChild('main', true)->setVariable('wishlists', $wishlists);
+        return $root;
     }
 
 }

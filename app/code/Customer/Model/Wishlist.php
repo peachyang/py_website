@@ -37,7 +37,8 @@ class Wishlist extends AbstractModel
         $item->setData([
             'wishlist_id' => $this->getId(),
             'store_id' => $product['store_id'],
-            'product_name' => $product['name']
+            'product_name' => $product['name'],
+            'description' => $product['description'],
         ]);
         $item->save();
         return $this;

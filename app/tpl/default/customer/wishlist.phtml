@@ -1,6 +1,5 @@
-<?php
-$wishlists = $this->getVariable('wishlists');
-?>
+<?php $wishlists = $this->getVariable('wishlists'); ?>
+
 <div class="col-xs-9 col-sm-9 col-md-10 wishlist">
     <h3></span><?php echo $this->translate('My Wishlist'); ?></h3>
     <form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
@@ -16,21 +15,22 @@ $wishlists = $this->getVariable('wishlists');
             foreach ($wishlists as $item):
                 $product = new \Seahinet\Catalog\Model\Product;
                 $product->load($item['product_id']);
-                //var_dump($product);exit();
+                $thumbnail = $product->getThumbnail();
                 ?>
-                <input type="hidden" name="product_id" value="<?php echo $product->getId() ?>" />
-
                 <dl class="col-lg-12 col-xs-12 wishlist_list">
                     <dt class="col-lg-6 col-xs-12 product_name">
                         <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->name ?>" >
-                            <img src="<?php echo $product['thumbnail'] ? $this->getBaseUrl('pub/resource/image/' . $product['thumbnail']) . '.png' : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" width="150" />
+                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" class="img-thumbnail" width="150" />
                         </a>
                         <h4><?php echo $item['product_name'] ?></h4>
                         <p><span><?php echo $this->translate('Wishlist Time') ?>：</span><?php echo $item['added_at']; ?></p>
                     </dt>
                     <dd class="col-lg-3 col-xs-12 product_price"><p><?php echo $product['special_price'] ? $product['special_price'] : $product['price'] ?></p></dd>
                     <dd class="col-lg-3 col-xs-12 product_edit">
-                        <button type="submit"><?php echo $this->translate('Add to Cart'); ?></button><a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
+                        <a href="<?php
+                        echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
+                                '&qty=1&csrf=' . $this->getCsrfKey())
+                                ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a><a href="<?php echo $this->getBaseUrl('customer/wishlist/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
                     </dd>
                 </dl>
                 <?php

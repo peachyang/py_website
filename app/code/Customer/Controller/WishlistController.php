@@ -13,16 +13,17 @@ class WishlistController extends AuthActionController
     public function indexAction()
     {
         $segment = new Segment('customer');
-        
+
         $customerId = $segment->get('customer')->getId();
-        
+
         $collection = new Collection;
-        
+
         $collection->where(['customer_id' => $customerId]);
         $root = $this->getLayout('customer_account_wishlist');
         $root->getChild('main', true)->setVariable('collection', $collection);
         return $root;
     }
+
     public function addAction()
     {
         $data = $this->getRequest()->getQuery();
@@ -33,7 +34,7 @@ class WishlistController extends AuthActionController
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
                 $wishlist->load($wishlist->getId())->setData(['customer_id' => $customerId, 'id' => null])->save();
-            }           
+            }
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->getId();
             $wishlist->addItem($data);

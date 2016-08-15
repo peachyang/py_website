@@ -3,12 +3,10 @@ $addresses = $this->getAddress();
 $attributes = $this->getAddressAttribute();
 ?>
 <section class="section address">
-    <h4 class="title">
-    	<b><?php echo $this->translate('Shipping Address') ?></b>
-    </h4>
+    <h4 class="title"><?php echo $this->translate('Shipping Address') ?></h4>
     <ul class="list">
-    	<?php foreach ($addresses as $address): ?>
-    		<li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'  >
+        <?php foreach ($addresses as $address): ?>
+            <li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'  >
                 <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address->getId() === $this->getCurrenctAddress() || count($addresses) === 1): ?> checked="checked"<?php endif ?> />
                 <label for="shipping-address-<?php echo $address->getId() ?>">
                     <?php echo $address->display() ?>

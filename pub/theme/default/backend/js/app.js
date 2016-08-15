@@ -55,7 +55,7 @@
             }
         });
         $('img.captcha').click(function () {
-            $(this).attr('src', $(this).attr('src').replace(/\?.+$/,'') + '?' + (new Date().getTime()));
+            $(this).attr('src', $(this).attr('src').replace(/\?.+$/, '') + '?' + (new Date().getTime()));
         });
         window.addMessages = function (messages) {
             var html = '';
@@ -179,23 +179,21 @@
                         info = eval('(' + info + ')');
                     }
                     $(this).find('form').trigger('reset');
-                    if (info.id) {
-                        for (var i in info) {
-                            var t = $(this).find('[name="' + i + '"]');
-                            if (t.length) {
-                                $(t).each(function () {
-                                    if ($(this).is('[type=radio],[type=checkbox]')) {
-                                        if ($(this).val() == info[i]) {
-                                            this.checked = true;
-                                        }
-                                    } else {
-                                        if ($(this).is('select')) {
-                                            $(this).attr('data-default-value', info[i]);
-                                        }
-                                        $(this).val(info[i]).trigger('change.seahinet');
+                    for (var i in info) {
+                        var t = $(this).find('[name="' + i + '"]');
+                        if (t.length) {
+                            $(t).each(function () {
+                                if ($(this).is('[type=radio],[type=checkbox]')) {
+                                    if ($(this).val() == info[i]) {
+                                        this.checked = true;
                                     }
-                                });
-                            }
+                                } else {
+                                    if ($(this).is('select')) {
+                                        $(this).attr('data-default-value', info[i]);
+                                    }
+                                    $(this).val(info[i]).trigger('change.seahinet');
+                                }
+                            });
                         }
                     }
                 }

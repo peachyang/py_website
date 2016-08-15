@@ -1,0 +1,5 @@
+---
+retailer:
+    method: [GET,POST]
+    route: /retailer/{controller}/[{action}[/]]
+    namespace: Seahinet\Retailer\Controller

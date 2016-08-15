@@ -198,8 +198,16 @@ $currency = $order->getCurrency();
         </div>
     </div>
     <div class="panel">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
+        <?php
+        $discount = json_decode($order->offsetGet('discount_detail'), true);
+        ?>
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
+            <?php if ($order->canCancel()): ?>
+                <button type="button" class="btn pull-right" data-info='{id:<?php echo $order->getId() ?>,discount:<?php echo $discount && isset($discount['Administrator']) ? $discount['Administrator'] : 0 ?>}' data-toggle="modal" data-target="#modal-edit-discount">
+                    <span><?php echo $this->translate('Edit') ?></span>
+                </button>
+            <?php endif ?>
         </div>
         <div class="panel-body">
             <dl class="dl-horizontal">
@@ -209,8 +217,16 @@ $currency = $order->getCurrency();
                 <dd><?php echo $currency->format($order->offsetGet('shipping')) ?></dd>
                 <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
                 <dd><?php echo $currency->format($order->offsetGet('tax')) ?></dd>
-                <dt><?php echo $this->translate('Discount', [], 'sales') ?></dt>
-                <dd><?php echo $currency->format($order->offsetGet('discount')) ?></dd>
+                <?php
+                if ((float) $order->offsetGet('discount')):
+                    foreach ($discount as $type => $price):
+                        ?>
+                        <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?></dt>
+                        <dd><?php echo $currency->convert($price, true) ?></dd>
+                        <?php
+                    endforeach;
+                endif;
+                ?>
                 <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
                 <dd><?php echo $currency->format($order->offsetGet('total')) ?></dd>
                 <dt><?php echo $this->translate('Total Paid', [], 'sales') ?></dt>

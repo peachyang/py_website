@@ -121,23 +121,17 @@ class ShipmentController extends AuthActionController
 
     public function printAction(){
         if ($id = $this->getRequest()->getQuery('id')) {
-            require_once(BP.'vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
-            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-            $data = (new Pdf)->getHtml($pdf,$id);
-            $pdf->SetCreator(PDF_CREATOR);
-            $pdf->SetAuthor('Nicola Asuni');
+            define ('K_TCPDF_EXTERNAL_CONFIG', true);
+            define('K_TCPDF_CALLS_IN_HTML', true);
+            $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+            $root = $this->getLayout('admin_sales_shipment_print');
+            $root->getChild('main',true)->setVariable('pdf', $pdf);
             $pdf->SetTitle($this->translate('Type Infomation'));
-            $pdf->SetSubject('TCPDF Tutorial');
-            $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-            $pdf->SetFont('stsongstdlight', '', 10);
+            $pdf->SetMargins(15, 27, 15);
+            $pdf->setImageScale(1.25);
             $pdf->AddPage();
-            $pdf->writeHTML($data['html'], true, false, true, false, '');
-            $pdf->lastPage();
-            $pdf->Output($data['pdf_name'], 'I');
+            $pdf->writeHTML($root->__toString(), true, false, true, false, '');
+            $pdf->Output('order-'.$id, 'I');
         }
     }
 }

@@ -1,5 +1,5 @@
 <section class="section review">
-    <h4 class="title"><b><?php echo $this->translate('Order Infomation') ?></b></h4>
+    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
     <table class="table">
         <colgroup>
             <col width="1" />
@@ -27,7 +27,7 @@
                     ?>
                     <?php if ($current): ?>
                         <tr>
-                            <th colspan="7" class="text-right text-nowrap store-total">
+                            <th colspan="7" class="text-right text-nowrap subtotal">
                                 <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                             </th>
                         </tr>
@@ -61,7 +61,7 @@
             }
             ?>
             <tr>
-                <th colspan="7" class="text-right text-nowrap store-total">
+                <th colspan="7" class="text-right text-nowrap subtotal">
                     <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                 </th>
             </tr>
@@ -73,7 +73,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="text-right submit">
+                <td colspan="7" class="text-right buttons-set">
                     <button type="button" class="btn btn-checkout">
                         <span><?php echo $this->translate('Place Order') ?></span>
                     </button>

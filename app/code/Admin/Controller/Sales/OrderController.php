@@ -342,6 +342,51 @@ class OrderController extends AuthActionController
         return $this->response(isset($result) ? $result : [], ':ADMIN/sales_order/');
     }
 
+    public function saveDiscountAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id', 'discount']);
+            if ($result['error'] === 0) {
+                try {
+                    $order = new Model;
+                    $order->load($data['id']);
+                    if ($order->canCancel()) {
+                        $currency = $order->getCurrency();
+                        $discount = $currency->convert($data['discount']);
+                        if ((float) $order->offsetGet('discount')) {
+                            $detail = json_decode($order->offsetGet('discount_detail'), true);
+                            $detail['Administrator'] = $data['discount'];
+                            $baseDiscount = 0;
+                            foreach ($detail as $price) {
+                                $baseDiscount += $price;
+                            }
+                            $order->setData([
+                                'base_discount' => $baseDiscount,
+                                'discount' => $currency->convert($baseDiscount),
+                                'discount_detail' => json_encode($detail)
+                            ]);
+                        } else {
+                            $order->setData([
+                                'base_discount' => $data['discount'],
+                                'discount' => $discount,
+                                'discount_detail' => '{"Administrator":' . $data['discount'] . '}'
+                            ]);
+                        }
+                        $order->collateTotals();
+                        $result['reload'] = 1;
+                        return $this->response($result, ':ADMIN/sales_order/view/?id=' . $data['id']);
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response(isset($result) ? $result : [], ':ADMIN/sales_order/');
+    }
+
     public function printAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {

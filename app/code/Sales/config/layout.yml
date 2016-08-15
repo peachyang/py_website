@@ -90,6 +90,9 @@ admin_sales_order_view:
                     address:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Address
                         template: admin/customer/addressForm
+                    discount:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/sales/edit/discount
 admin_sales_invoice_list:
     update: grid
     root:

@@ -1,10 +1,9 @@
 <?php
 $methods = $this->getPaymentMethods();
 $current = $this->getCurrentMethod();
-//var_dump($this);die;
 ?>
 <section class="section payment">
-    <h4 class="title"><b><?php echo $this->translate('Payment Method') ?></b></h4>
+    <h4 class="title"><?php echo $this->translate('Payment Method') ?></h4>
     <?php if ($methods): ?>
         <ul class="list list-inline">
             <?php foreach ($methods as $code => $model): ?>

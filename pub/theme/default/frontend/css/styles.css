@@ -26,7 +26,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .quick-search .btn{border-radius:0;background-color:#fdbb30;padding:8px 20px;float:right;font-size:18px;line-height:1;color:#000}
 .header .welcome{font-size:0;letter-spacing:1px}
 .header .welcome p{font-size:12px;line-height:30px;color:#fff;display:inline}
-.header .welcome ul{display:inline}
+.header .welcome ul{display:inline;margin-left:4px}
 .header .welcome li+li{margin-left:14px}
 .header .welcome a,.header .links>li>a{font-size:12px;line-height:30px;color:#fff}
 .header .welcome .register a{color:#fdbb30}
@@ -308,7 +308,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-flow .item{font-size:18px;line-height:40px;color:#000;position:relative}
 .checkout-flow .item.active{background:#f1f2f4;color:#007dc6}
 .checkout-flow .item.active:after{content:" ";display:block;width:0;height:0;position:absolute;top:0;left:100%;z-index:-1;border:20px solid transparent;border-left:34.64101615px solid #f1f2f4}
-#cart{color:#696868;font-size:12px}
+#cart{color:#696868;font-size:12px;margin-bottom:50px}
 #cart td.selectall{padding-left:8px!important}
 #cart thead{background:#f1f2f4}
 #cart tbody td{vertical-align:middle;padding:8px 16px;line-height:22px}
@@ -331,12 +331,12 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .payment-description{display:none;margin:0}
 .checkout-order [type=radio]:checked~.payment-description{display:block}
 .checkout-order{color:#696868}
-.checkout-order .prompt{font-size:16px}
+.checkout-order .page-title{font-size:16px;line-height:40px}
 .checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e4e6ec;padding:30px 0}
-.checkout-order .payment input{display:none}
-.checkout-order .payment input:checked + label{background:#f1f2f4}
+.checkout-order .section .title{font-weight:bold;margin-bottom:26px;font-size:16px;color:#000;padding-right:15px}
 .checkout-order .payment label{padding:5px 15px;border:1px solid #e4e6ec;margin:0 5px;font-size:14px}
-.checkout-order .section .title{margin-bottom:20px;font-size:16px;color:#000;padding-right:15px}
+.checkout-order .payment input{display:none}
+.checkout-order .payment input:checked+label{background:#f1f2f4}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px}
 .checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
 .checkout-order .address .list .edit,.delete{float:right;display:none}
@@ -344,8 +344,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .address .list li:hover .edit{display:block}
 .checkout-order .address .list li:hover .delete{display:block}
 .checkout-order .address .btn-add{margin-left:20px;margin-top:20px;border-radius:0}
-.checkout-order .review .table{border:0 !important}
-.checkout-order .product-list{border:1px solid #e4e6ec}
+.checkout-order .store th{border:none}
 .checkout-order .store th:nth-child(1){padding-left:20px}
 .checkout-order .product-list td{vertical-align:middle}
 .checkout-order .product-list .td-name{vertical-align:top;color:#000;font-size:12px}
@@ -356,16 +355,18 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list .options dd{display:block;float:left}
 .checkout-order .product-list .td-price,.checkout-order .product-list .td-qty{color:#000}
 .checkout-order .product-list .td-subtotal{color:#007dc6}
+.checkout-order .product-list .td-comment{border-right:1px solid #e4e6ec}
 .checkout-order .product-list .td-comment .form-control{border-radius:0}
 .checkout-order .product-list td select{padding:3px 8px}
-.checkout-order .product-list .td-img{padding-left:20px}
-.checkout-order tfoot .total{padding-bottom:0;height:92px}
-.checkout-order tfoot .total div{background:#f1f2f4;margin:8px -8px 0;padding:20px 8px 10px 0;font-size:16px;color:#000}
-.checkout-order tfoot .total div b{font-size:24px;color:#007dc6}
-.checkout-order tfoot .submit{padding:30px 8px}
-.checkout-order .store-total{color:#000;background:#f1f2f4}
-.checkout-order .submit .btn-checkout{background:#007dc6;color:#fff;border-radius:0}
-.checkout-order .submit .btn-checkout span{padding:5px 15px;font-size:18px}
+.checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e4e6ec}
+.checkout-order .review .total{padding:30px 0 0;border:none}
+.checkout-order .review .total th{color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
+.checkout-order .review .total td{margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}
+.checkout-order .review .total .grand-total th{background:#f1f2f4;font-size:16px}
+.checkout-order .review .total .grand-total td{background:#f1f2f4;font-size:25px;line-height:38px;padding-top:14px;color:#007dc6}
+.checkout-order .review .subtotal{color:#000;background:#f1f2f4;line-height:14px}
+.checkout-order .review .buttons-set{padding:37px 0}
+.checkout-order .review .buttons-set .btn-checkout{background:#007dc6;color:#fff;border-radius:0;padding:8px 36px;font-size:18px}
 #cms-layered-nav .title{font-size:18px;line-height:39px;background:#007dc6;color:#fff;text-align:center}
 #cms-layered-nav dt a{display:block;text-align:center;background:#f5f6f9;border-bottom:1px solid #64c4fc;font-size:16px;line-height:39px;color:#000}
 #cms-layered-nav dt a:after{content:"\2228";display:inline-block;color:#5f5f5f;margin-left:3px;font-size:18px}
@@ -385,4 +386,17 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-search dt{float: left;line-height:34px;}
 .product-search dd input{width:350px;height:34px;border:1px solid #e4e2e2;margin-right:6px}
 .product-search dd .btn-default, .btn-default:active, .open>.dropdown-toggle.btn-default{color: #fff;background-color: #fd9030;border:none}
-.product-search dd .form-control{display:inline-block;}
+.product-search dd .form-control{display:inline-block}
+.catalog-product #review{background:#f1f1f1}
+.catalog-product #review nav-tabs li{font-size:12px}
+.catalog-product #review a{padding:5px 10px}
+.catalog-product .content-box{padding:20px 0}
+.catalog-product .content-li{width:80%}
+.catalog-product .tab-pane{margin-bottom:5px}
+.catalog-product .subject-li,.content-li{float:left;padding:5px;border-style:solid;border-color:#fff;border-width:0 0 1px 0;height:70px;background:#f1f1f1;overflow:hidden}
+.catalog-product .subject-li{width:20%;padding-left:20px}
+.catalog-product .review-form{background:#fff}
+.catalog-product .review-form span{font-size:16px}
+.catalog-product .review-form .review-padding{padding:10px;background:#f1f1f1;height:224px}
+.catalog-product .review-form textarea{width:100%}
+.catalog-product .review-form .btn{float:right;min-width:100px;height:30px;background-color:#fd9233;color:#fff;border-radius:0;margin-top:5px;font-size:16px;padding:0 20px}}

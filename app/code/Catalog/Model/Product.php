@@ -12,6 +12,7 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
+use Seahinet\Catalog\Model\Product\Review;
 
 class Product extends Entity
 {
@@ -283,5 +284,17 @@ class Product extends Entity
         unset($this->storage['prices']);
         return parent::serialize();
     }
-
+    
+    public function getReviews(){
+        $result = [];
+        if ($this->getId()) {
+            $review = new Review();
+            $reviews = $review->getValues($this->getId());
+        }else {
+            return [];
+        }
+        
+        return $reviews;
+    }
+    
 }

@@ -1,0 +1,21 @@
+---
+retailer_account:
+    update: frontend
+retailer_apply:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    form:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/apply/form
+retailer_processing:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    notice:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/apply/processing

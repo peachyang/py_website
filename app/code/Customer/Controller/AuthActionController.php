@@ -5,19 +5,20 @@ namespace Seahinet\Customer\Controller;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 
-abstract class AuthActionController extends ActionController {
+abstract class AuthActionController extends ActionController
+{
 
-    protected $allowedAction;
+    protected $allowedAction = ['login', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'];
 
-    public function __construct() {
-        $this->allowedAction = $this->getContainer()->get('config')['customer/registion/enabled'] ? [
-            'create', 'login', 'createpost', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
-                ] : [
-            'login', 'loginpost', 'forgotpwd', 'forgotpwdpost', 'captcha', 'confirm'
-        ];
+    public function __construct()
+    {
+        if ($this->getContainer()->get('config')['customer/registion/enabled']) {
+            $this->allowedAction = array_merge($this->allowedAction, ['create', 'createpost']);
+        }
     }
 
-    public function dispatch($request = null, $routeMatch = null) {
+    public function dispatch($request = null, $routeMatch = null)
+    {
         $options = $routeMatch->getOptions();
         $action = isset($options['action']) ? strtolower($options['action']) : 'index';
         $session = new Segment('customer');

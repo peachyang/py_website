@@ -52,6 +52,15 @@ class Creditmemo extends Template
         return $collection;
     }
 
+    public function getOrderModel(){
+        error_reporting(E_ALL & ~E_NOTICE);
+        $id = $this->getRequest()->getQuery('id');
+        $invoice = (new Model)->load($id);
+        $order = (new Order())->load($invoice['order_id']);
+        return $order;
+    }
+    
+
     public function getHtml($pdf,$id){
         error_reporting(E_ALL & ~E_NOTICE);
         $invoice = (new Model)->load($id);

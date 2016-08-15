@@ -348,16 +348,14 @@ class OrderController extends AuthActionController
             define ('K_TCPDF_EXTERNAL_CONFIG', true);
             define('K_TCPDF_CALLS_IN_HTML', true);
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-            $html = $this->getLayout('admin_sales_order_print');
-            echo $html."rasfjid";die;
-            print_r($html->getChild());die;
-            $data = (new Pdf)->getHtml($pdf, $id);
+            $root = $this->getLayout('admin_sales_order_print');
+            $root->getChild('main',true)->setVariable('pdf', $pdf);
             $pdf->SetTitle($this->translate('Type Infomation'));
             $pdf->SetMargins(15, 27, 15);
             $pdf->setImageScale(1.25);
             $pdf->AddPage();
-            $pdf->writeHTML($data['html'], true, false, true, false, '');
-            $pdf->Output($data['pdf_name'], 'I');
+            $pdf->writeHTML($root->__toString(), true, false, true, false, '');
+            $pdf->Output('order-'.$id, 'I');
         }
     }
 

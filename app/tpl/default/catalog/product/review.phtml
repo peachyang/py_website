@@ -1,0 +1,22 @@
+<?php
+$reviews = $this->getProduct()->getReviews();
+//$customer = $this->getProduct()->getCustomer();
+if ($reviews):
+    ?>
+    <?php foreach ($reviews as $review): ?>
+        <ul class="product-attributes clearfix">
+            <li class="col-xs-12 col-sm-6 col-md-4">
+                <span class="label"><?php echo $this->translate('Name') ?></span>
+                <span class="value"><?php echo $review['username'] ?></span>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4">
+                <span class="label"><?php echo $this->translate('Content') ?></span>
+                <span class="value"><?php echo $review['content'] ?></span>
+            </li>
+            <li class="col-xs-12 col-sm-6 col-md-4">
+                <span class="label"><?php echo $this->translate('Subject') ?></span>
+                <span class="value"><?php echo $review['subject'] ?></span>
+            </li>
+        </ul>
+    <?php endforeach ?>
+<?php endif; ?>

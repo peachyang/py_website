@@ -93,6 +93,18 @@ admin_sales_order_view:
                     discount:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/sales/edit/discount
+admin_sales_order_print:
+    update: admin
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Order
+                        template: admin/sales/print/order
 admin_sales_invoice_list:
     update: grid
     root:
@@ -150,6 +162,18 @@ admin_sales_invoice_edit:
                     edit:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Invoice
                         template: admin/sales/edit/invoice
+admin_sales_invoice_print:
+    update: admin
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Invoice
+                        template: admin/sales/print/invoice
 admin_sales_shipment_list:
     update: grid
     root:
@@ -207,6 +231,18 @@ admin_sales_shipment_edit:
                     edit:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Shipment
                         template: admin/sales/edit/shipment
+admin_sales_shipment_print:
+    update: admin
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Shipment
+                        template: admin/sales/print/shipment
 admin_sales_creditmemo_list:
     update: grid
     root:
@@ -264,3 +300,15 @@ admin_sales_creditmemo_edit:
                     edit:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\CreditMemo
                         template: admin/sales/edit/creditmemo
+admin_sales_creditmemo_print:
+    update: admin
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
+                        template: admin/sales/print/creditmemo

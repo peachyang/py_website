@@ -54,7 +54,7 @@ class Review extends AbstractModel
                     'review.product_id' => $id
          ]);
          $select->join('customer_1_index', 'customer_1_index.id=review.customer_id',['username']);
-         //$select->join('review_rating', 'customer_1_index.id=review.customer_id',['username']);
+         //$select->join('review_rating', 'review.id=review_rating.review_id',['value']);
         return $tableGateway->selectWith($select)->toArray();
     }
 

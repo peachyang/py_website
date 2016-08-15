@@ -293,7 +293,6 @@ class Product extends Entity
         }else {
             return [];
         }
-        
         return $reviews;
     }
     

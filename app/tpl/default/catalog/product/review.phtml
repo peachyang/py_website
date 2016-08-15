@@ -3,20 +3,40 @@ $reviews = $this->getProduct()->getReviews();
 //$customer = $this->getProduct()->getCustomer();
 if ($reviews):
     ?>
-    <?php foreach ($reviews as $review): ?>
-        <ul class="product-attributes clearfix">
-            <li class="col-xs-12 col-sm-6 col-md-4">
-                <span class="label"><?php echo $this->translate('Name') ?></span>
-                <span class="value"><?php echo $review['username'] ?></span>
-            </li>
-            <li class="col-xs-12 col-sm-6 col-md-4">
-                <span class="label"><?php echo $this->translate('Content') ?></span>
-                <span class="value"><?php echo $review['content'] ?></span>
-            </li>
-            <li class="col-xs-12 col-sm-6 col-md-4">
-                <span class="label"><?php echo $this->translate('Subject') ?></span>
-                <span class="value"><?php echo $review['subject'] ?></span>
-            </li>
-        </ul>
-    <?php endforeach ?>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#user" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('') ?>评论</a></li>
+        <li role="presentation"><a href="#visitors" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('') ?>讨论</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="user">
+            <?php foreach ($reviews as $review): ?>
+            	<?php if ($review['customer_id']):?>
+                    <div class="content-box">
+                        <div class="subject-li"><?php echo $review['username'] ?>:</div>
+                        <div class="content-li"><?php echo $review['content'] ?></div>
+                    </div>
+                <?php endif?>
+            <?php endforeach ?>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="visitors">
+        	<?php foreach ($reviews as $review): ?>
+            	<?php if (!$review['order_id']):?>
+                    <div class="content-box">
+                        <div class="subject-li"><?php echo $this->translate('Visitor') ?>:</div>
+                        <div class="content-li"><?php echo $review['content'] ?></div>
+                    </div>
+                <?php endif?>
+            <?php endforeach ?>
+        </div>
+    </div>
 <?php endif; ?>
+<div class="review-form">
+    <span><br />讨论<?php echo $this->translate('Product') ?>:</span>
+	<div class="review-padding">
+    	<form action="">
+    		<p>主题：<input type="text" name="subject" /></p>
+    		<p>内容：<textarea rows="4" name="content" ></textarea></p>
+    		<button class="btn" type="submit" ><?php echo $this->translate('Submit') ?></button>
+    	</form>
+	</div>
+</div>

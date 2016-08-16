@@ -360,6 +360,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list td select{padding:3px 8px}
 .checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e1e1e1}
 .table>thead>tr>th{border-bottom:none}
+.form-control{width:50%}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top:1px solid #e1e1e1;vertical-align:middle}
 .checkout-order .review .total{padding:30px 0 0;border:none}
 .checkout-order .review .total th{color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
 .checkout-order .review .total td{margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}

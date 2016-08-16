@@ -89,10 +89,9 @@ checkout_order:
                             item:
                                 type: Seahinet\Checkout\ViewModel\Cart\Item
                                 template: checkout/order/review/item
-                                children:
-                                    shipping:
-                                        type: Seahinet\Checkout\ViewModel\Order\Shipping
-                                        template: checkout/order/shipping
+                            shipping:
+                                type: Seahinet\Checkout\ViewModel\Order\Shipping
+                                template: checkout/order/shipping
                             total:
                                 type: Seahinet\Checkout\ViewModel\Cart
                                 template: checkout/order/total

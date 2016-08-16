@@ -1,13 +1,13 @@
 <table class="table">
     <tr>
-        <th><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?>, <?php echo $this->translate('Subtotal') ?></th>
-        <td><?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></td>
+        <th><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?></th>
+        <td><?php echo $this->translate('Subtotal') ?>:<?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></td>
     </tr>
     <?php
     if ((float) $this->getCart()['tax']):
         ?>
         <tr>
-            <th><?php echo $this->translate('Tax') ?></th>
+            <th>4<?php echo $this->translate('Tax') ?></th>
             <td><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></td>
         </tr>
         <?php

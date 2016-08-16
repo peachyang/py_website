@@ -361,7 +361,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list .options dt:after{content:":"}
 .checkout-order .product-list .options dd{display:block;float:left}
 .checkout-order .product-list .td-price,.checkout-order .product-list .td-qty{color:#000}
-.checkout-order .product-list .td-subtotal{color:#007dc6}
+.checkout-order .product-list .td-subtotal{color:#007dc6;font-size:16px;border-right:1px solid #e1e1e1}
 .checkout-order .product-list .td-comment{border-right:1px solid #e4e6ec}
 .checkout-order .product-list .td-comment .form-control{border-radius:0}
 .checkout-order .product-list td select{padding:3px 8px}
@@ -369,14 +369,17 @@ select[multiple],select[size],textarea{resize:vertical}
 .table>thead>tr>th{border-bottom:none}
 .form-control{width:50%}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top:1px solid #e1e1e1;vertical-align:middle}
-.checkout-order .review .total{padding:30px 0 0;border:none}
-.checkout-order .review .total th{color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
-.checkout-order .review .total td{margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}
+.checkout-order .review .total{border:none}
+.checkout-order .review .total th{font-size:12px;color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
+.checkout-order .review .total td{font-size:12px;color:#000;margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}
 .checkout-order .review .total .grand-total th{background:#f1f2f4;font-size:16px}
-.checkout-order .review .total .grand-total td{background:#f1f2f4;font-size:25px;line-height:38px;padding-top:14px;color:#007dc6}
+.checkout-order .review .total .grand-total td{background:#f1f2f4;font-size:25px;line-height:38px;padding-top:14px;color:#007dc6;font-weight:bold}
 .checkout-order .review .subtotal{color:#000;background:#f1f2f4;line-height:14px}
-.checkout-order .review .buttons-set{padding:37px 0}
+.checkout-order .review .subtotal .text-right{font-size:12px}
+.checkout-order .review .subtotal input{border-radius:0}
+.checkout-order .review .buttons-set{padding:37px 0;border-top:0}
 .checkout-order .review .buttons-set .btn-checkout{background:#007dc6;color:#fff;border-radius:0;padding:8px 36px;font-size:18px}
+.checkout-order tfoot .total{padding:0}
 #cms-layered-nav .title{font-size:18px;line-height:39px;background:#007dc6;color:#fff;text-align:center}
 #cms-layered-nav dt a{display:block;text-align:center;background:#f5f6f9;border-bottom:1px solid #64c4fc;font-size:16px;line-height:39px;color:#000}
 #cms-layered-nav dt a:after{content:"\2228";display:inline-block;color:#5f5f5f;margin-left:3px;font-size:18px}

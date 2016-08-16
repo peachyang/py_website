@@ -12,7 +12,9 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
-use Seahinet\Catalog\Model\Product\Review;
+use Seahinet\Catalog\Model\Collection\Product\Review;
+use Seahinet\Lib\Session\Segment;
+use Seahinet\Customer\Model\Customer;
 
 class Product extends Entity
 {
@@ -288,12 +290,26 @@ class Product extends Entity
     public function getReviews(){
         $result = [];
         if ($this->getId()) {
-            $review = new Review();
-            $reviews = $review->getValues($this->getId());
+            $reviews = new Review;
+            $reviews->where(['product_id'=>$this->getId()]);
+            $customer = new Customer();
+            foreach ($reviews as $key => $value){
+                if (!is_null($value['customer_id'])){
+                    $reviews[$key]['username'] = $customer->load($value['customer_id'])['username'];
+                }
+            }
         }else {
             return [];
         }
         return $reviews;
+    }
+    
+    public function getCustomerID(){
+        $segment = new Segment('customer');
+        if ($segment->get('hasLoggedIn')) {
+            return $segment->get('customer')['id'];
+        }
+        return false;
     }
     
 }

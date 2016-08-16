@@ -27,13 +27,14 @@
                     ?>
                     <?php if ($current): ?>
                         <tr>
+
                             <th colspan="7" class="text-right text-nowrap subtotal">
                                 <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                             </th>
                         </tr>
                     <?php endif ?>
                     <tr class="store">
-                        <th colspan="2" class="text-left text-nowrap">
+                        <th colspan="4" class="text-left text-nowrap">
                             <?php echo $item['store']['name'] ?>
                         </th>
                         <th class="text-nowrap">
@@ -45,12 +46,7 @@
                         <th class="text-nowrap">
                             <?php echo $this->translate('Subtotal', [], 'checkout') ?>
                         </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Message', [], 'checkout') ?>
-                        </th>
+
                     </tr>
                     <?php
                     $current = $item['store_id'];
@@ -60,8 +56,16 @@
                 endif;
             }
             ?>
-            <tr>
-                <th colspan="7" class="text-right text-nowrap subtotal">
+            <tr class="subtotal">
+                <th class="text-nowrap text-right">
+                    <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
+                    <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
+                </th>
+                <th class="text-nowrap">
+                    <?php echo $this->translate('Message', [], 'checkout') ?>
+                    <input type="text" name="comment[<?php echo $item['store_id'] ?>]" class="form-control" style="display:inline-block" />
+                </th>
+                <th colspan="5" class="text-right text-nowrap">
                     <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                 </th>
             </tr>

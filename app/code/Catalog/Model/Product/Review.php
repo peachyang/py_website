@@ -45,17 +45,5 @@ class Review extends AbstractModel
         }
         parent::afterLoad($result);
     }
-    
-    public function getValues($id){
-         $tableGateway = new TableGateway('review', $this->getContainer()->get('dbAdapter'));
-         $select = $tableGateway->getSql()->select();
-         $select->where([
-                    'review.status' => 1,
-                    'review.product_id' => $id
-         ]);
-         $select->join('customer_1_index', 'customer_1_index.id=review.customer_id',['username'],'left');
-         //$select->join('review_rating', 'review.id=review_rating.review_id',['value']);
-        return $tableGateway->selectWith($select)->toArray();
-    }
 
 }

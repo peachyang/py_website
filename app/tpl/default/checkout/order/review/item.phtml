@@ -7,7 +7,7 @@ $thumbnail = $product->getThumbnail();
     <td class="td-img">
         <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
     </td>
-    <td class="td-name">
+    <td class="td-name" colspan="3">
         <strong><?php echo $item['product_name'] ?></strong>
         <?php
         $options = json_decode($item['options'], true);
@@ -41,12 +41,5 @@ $thumbnail = $product->getThumbnail();
     <td class="td-subtotal">
         <span class="checkout-num"><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></span>
     </td>
-    <?php if ($this->getVariable('rowspan')): ?>
-        <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-method">
-            <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
-        </td>
-        <td rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-comment">
-            <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
-        </td>
-    <?php endif ?>
+   
 </tr>

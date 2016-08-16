@@ -17,10 +17,13 @@
     <main class="col-main container">
         <form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <?php if ($success = $this->getQuery('success_url')): ?>
+                <input type="hidden" name="success_url" value="<?php echo $success = base64_decode($success) ?>" />
+            <?php endif ?>
             <div class="fieldset col-xs-12 pull-right">
                 <h2 class="legend"><?php echo $this->translate('Log in to your account') ?></h2>
                 <div class="register">
-                    <a href="<?php echo $this->getBaseUrl('customer/account/create/') ?>"><?php echo $this->translate('Create an Account') ?></a> 
+                    <a href="<?php echo $this->getBaseUrl('customer/account/create/'), $success ? '?success_url=' . $success : '' ?>"><?php echo $this->translate('Create an Account') ?></a> 
                 </div>
                 <?php echo $this->getChild('messages') ?>
                 <div class="input-box">

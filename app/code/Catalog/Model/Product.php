@@ -158,7 +158,7 @@ class Product extends Entity
 
     public function getThumbnail()
     {
-        if ($this->storage['thumbnail']) {
+        if (!empty($this->storage['thumbnail'])) {
             $resource = new Resource;
             $resource->load($this->storage['thumbnail']);
             return $resource['real_name'];

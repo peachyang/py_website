@@ -21,7 +21,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .quick-search{margin:35px 0 0;border:2px solid #fdbb30}
 .header .quick-search .input-group-addon{padding:0;border:none}
 .header .quick-search .form-control{border:none;font-size:12px;height:36px}
-.header .quick-search select.form-control{background:#f1f1f1;width:auto;padding:0 0 0 6px}
+.header .quick-search select.form-control{background:#f1f1f1;width:auto;padding:0 0 0 6px;box-shadow:none;border-radius:0;border:none}
 .header .quick-search label.invalid{display:none!important}
 .header .quick-search .btn{border-radius:0;background-color:#fdbb30;padding:8px 20px;float:right;font-size:18px;line-height:1;color:#000}
 .header .welcome{font-size:0;letter-spacing:1px}

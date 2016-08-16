@@ -16,6 +16,19 @@ class OrderController extends ActionController
 
     use \Seahinet\Lib\Traits\DB;
 
+    public function dispatch($request = null, $routeMatch = null)
+    {
+        $session = new Segment('customer');
+        if (!$session->get('hasLoggedIn') && !$this->getContainer()->get('config')['checkout/general/allow_guest']) {
+            return $this->redirect('customer/account/login/?success_url=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($this->getBaseUrl('checkout/order/'))));
+        } else if (Cart::instance()->offsetGet('base_total') < ($min = (float) $this->getContainer()->get('config')['checkout/sales/min_amount'])) {
+            $currency = Cart::instance()->getCurrency();
+            $this->addMessage($this->translate('The allowed minimal amount is %s, current is %s.', [$currency->convert($min, true), $currency->format(Cart::instance()->offsetGet('total'))]));
+            return $this->redirect('checkout/cart/');
+        }
+        return parent::dispatch($request, $routeMatch);
+    }
+
     public function indexAction()
     {
         if (count(Cart::instance()->getItems())) {

@@ -1,0 +1,7 @@
+---
+system:
+    children:
+        -
+            link: config/checkout/
+            title: Checkout Configuration
+            priority: 90

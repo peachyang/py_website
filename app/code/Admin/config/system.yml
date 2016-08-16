@@ -143,11 +143,25 @@ theme:
                     priority: 0
                     scope: merchant
                     default: default
+                mobile_template:
+                    type: text
+                    required: required
+                    label: Template for Mobile Terminal
+                    priority: 1
+                    scope: merchant
+                    default: default
                 static:
                     type: text
                     required: required
                     label: Static Files
                     priority: 10
+                    scope: merchant
+                    default: default
+                mobile_static:
+                    type: text
+                    required: required
+                    label: Static Files for Mobile Terminal
+                    priority: 11
                     scope: merchant
                     default: default
         backend:

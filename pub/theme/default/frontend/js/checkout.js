@@ -116,7 +116,9 @@
             $('.section.address .form-edit-address form').trigger('reset');
         });
         $('.section.address .form-edit-address form').on('submit', function () {
-            $('.section.address .form-edit-address').slideUp();
+            if ($(this).valid()) {
+                $('.section.address .form-edit-address').slideUp();
+            }
         }).on('afterajax.seahinet', function (e, json) {
             var t = $('.section.address [data-id=' + json.data.id + ']');
             if (t.length) {

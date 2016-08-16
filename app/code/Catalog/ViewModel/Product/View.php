@@ -26,5 +26,10 @@ class View extends Template
         $box->setVariable('product', self::$product);
         return $box;
     }
+    
+    public function reviewAction()
+    {
+        echo 1212;die;
+    }
 
 }

@@ -26,15 +26,21 @@ class WishlistController extends AuthActionController
 
     public function addAction()
     {
+
         $data = $this->getRequest()->getQuery();
+        //var_dump($data);exit();
         $segment = new Segment('customer');
+        //var_dump($segment);exit();
         $customerId = $segment->get('customer')->getId();
+        //var_dump($customerId);exit();
         try {
             $wishlist = new Model;
+            //var_dump($wishlist);exit();
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
                 $wishlist->load($wishlist->getId())->setData(['customer_id' => $customerId, 'id' => null])->save();
             }
+            $result['data'] = ['wishlist_id' =>$wishlist->getId()];
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->getId();
             $wishlist->addItem($data);
@@ -43,15 +49,16 @@ class WishlistController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
             $this->getContainer()->get('log')->logException($e);
         }
-        return $this->redirect('customer/wishlist/');
+        return $this->redirect('customer/account/wishlist/');
     }
 
-    public function commitAction()
+    function commitAction()
     {
         $data = $this->getRequest()->getPost();
     }
 
-    public function deleteAction()
+    public
+            function deleteAction()
     {
         $item = new Item;
         $data = $this->getRequest()->getQuery();

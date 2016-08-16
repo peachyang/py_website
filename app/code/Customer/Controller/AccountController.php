@@ -437,4 +437,12 @@ class AccountController extends AuthActionController
         return $root;
     }
 
+    public function deleteAction()
+    {
+        $item = new Item;
+        $data = $this->getRequest()->getQuery();
+        $item->setData('id', $data['id'])->remove();
+        return $this->redirect('customer/account/wishlist/');
+    }
+
 }

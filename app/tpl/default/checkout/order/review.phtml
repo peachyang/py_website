@@ -33,7 +33,7 @@
                         </tr>
                     <?php endif ?>
                     <tr class="store">
-                        <th colspan="2" class="text-left text-nowrap">
+                        <th colspan="4" class="text-left text-nowrap">
                             <?php echo $item['store']['name'] ?>
                         </th>
                         <th class="text-nowrap">
@@ -45,12 +45,6 @@
                         <th class="text-nowrap">
                             <?php echo $this->translate('Subtotal', [], 'checkout') ?>
                         </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Message', [], 'checkout') ?>
-                        </th>
                     </tr>
                     <?php
                     $current = $item['store_id'];
@@ -61,6 +55,14 @@
             }
             ?>
             <tr>
+                <?php if ($this->getVariable('rowspan')): ?>
+                    <th rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-method">
+                        <?php echo $this->getChild('shipping')->setVariable('store_id', $item['store_id']) ?>
+                    </th>
+                    <th rowspan="<?php echo $this->getVariable('rowspan') ?>" class="td-comment">
+                        <textarea name="comment[<?php echo $item['store_id'] ?>]" class="form-control"></textarea>
+                    </th>
+                <?php endif ?>
                 <th colspan="7" class="text-right text-nowrap subtotal">
                     <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                 </th>

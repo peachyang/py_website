@@ -178,12 +178,12 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
 .main-container .wishlist{margin-top:15px;padding-left:40px}
 .main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
-.main-container .wishlist .wishlist_list{border:1px solid #dfe1e8}
+.main-container .wishlist .wishlist_list{border:1px solid #e1e1e1}
 .main-container .wishlist .wishlist_list .product_name a{float:left;padding:10px;display:block}
 .main-container .wishlist .wishlist_list .product_name h4{width:auto;text-align: left;font-size:14px;padding:10px;margin-top:45px;vertical-align:middle;font-weight:bold}
 .main-container .wishlist .wishlist_list .product_name p{text-align:left;margin-right:10px}
 .main-container .wishlist .wishlist_list a{display:block}
-.main-container .wishlist .wishlist_list li{text-align:center;line-height:40px;border-right:1px solid #dfe1e8}
+.main-container .wishlist .wishlist_list li{text-align:center;line-height:40px;border-right:1px solid #e1e1e1}
 .main-container .wishlist .wishlist_list dd{text-align:center;margin: 60px auto}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
@@ -304,14 +304,14 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-address .main-container .address{padding-left:40px;margin-top:16px}
 .customer-account-address .main-container .address .add-div{display:inline-block;margin-top:20px;margin-right:30px}
 .checkout-cart .main-container .table input[type="checkbox"]{cursor:pointer}
-.checkout-flow{text-align:center;border:1px solid #e2e4ea;margin:42px 0;overflow:hidden}
+.checkout-flow{text-align:center;border:1px solid #e1e1e1;margin:42px 0;overflow:hidden}
 .checkout-flow .item{font-size:18px;line-height:40px;color:#000;position:relative}
-.checkout-flow .item.active{background:#f1f2f4;color:#007dc6}
+.checkout-flow .item.active{background:#f1f1f1;color:#007dc6}
 .checkout-flow .item.active:after{content:" ";display:block;width:0;height:0;position:absolute;top:0;left:100%;z-index:-1;border:20px solid transparent;border-left:34.64101615px solid #f1f2f4}
 #cart{color:#696868;font-size:12px;margin-bottom:50px}
 #cart td.selectall{padding-left:8px!important}
-#cart thead{background:#f1f2f4}
-#cart tbody td{vertical-align:middle;padding:8px 16px;line-height:22px}
+#cart thead{background:#f1f1f1;border-bottom:1px solid #e1e1e1}
+#cart tbody td{vertical-align:middle;padding:8px 16px;line-height:22px;border-top: 1px solid #e1e1e1}
 #cart tbody .price{font-size:16px}
 #cart tbody .subtotal{color:#007dc6;font-size:16px}
 #cart tbody .product-name{vertical-align:top}
@@ -322,7 +322,7 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart tbody .options dd{float:left;margin-left:4px}
 #cart tfoot .btn-checkout{border-radius:0;padding:15px 25px;margin-left:10px;background:#fabb39}
 #cart tfoot .btn-checkout[disabled]{background:#ccc}
-#cart tfoot td{background:#f1f2f4;padding:0;vertical-align:middle}
+#cart tfoot td{background:#f1f1f1;padding:0;vertical-align:middle}
 .checkout-cart .additional{border:1px solid #dadada;min-height:293px;font-size:12px;margin:52px 0 135px}
 .checkout-cart .additional .nav-tabs{border-bottom-width:0;background:#f1f2f4}
 .checkout-cart .additional .nav-tabs .active a{background-color:#f1f2f4;color:#007dc6}
@@ -332,17 +332,17 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order [type=radio]:checked~.payment-description{display:block}
 .checkout-order{color:#696868}
 .checkout-order .page-title{font-size:16px;line-height:40px}
-.checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e4e6ec;padding:30px 0}
+.checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e1e1e1;padding:30px 0}
 .checkout-order .section .title{font-weight:bold;margin-bottom:26px;font-size:16px;color:#000;padding-right:15px}
-.checkout-order .payment label{padding:5px 15px;border:1px solid #e4e6ec;margin:0 5px;font-size:14px}
+.checkout-order .payment label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
 .checkout-order .payment input{display:none}
 .checkout-order .payment input:checked+label{background:#f1f2f4}
-.checkout-order .address .list li{margin-left:5px;padding-right:5px}
+.checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
 .checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
-.checkout-order .address .list .edit,.delete{float:right;display:none}
+.checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
 .checkout-order .address .list li:hover{background:#F1F2F4}
-.checkout-order .address .list li:hover .edit{display:block}
-.checkout-order .address .list li:hover .delete{display:block}
+.checkout-order .address .list li:hover .edit{display:inline}
+.checkout-order .address .list li:hover .delete{display:inline}
 .checkout-order .address .btn-add{margin-left:20px;margin-top:20px;border-radius:0}
 .checkout-order .store th{border:none}
 .checkout-order .store th:nth-child(1){padding-left:20px}
@@ -358,7 +358,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list .td-comment{border-right:1px solid #e4e6ec}
 .checkout-order .product-list .td-comment .form-control{border-radius:0}
 .checkout-order .product-list td select{padding:3px 8px}
-.checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e4e6ec}
+.checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e1e1e1}
+.table>thead>tr>th{border-bottom:none}
 .checkout-order .review .total{padding:30px 0 0;border:none}
 .checkout-order .review .total th{color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
 .checkout-order .review .total td{margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}

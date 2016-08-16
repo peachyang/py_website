@@ -60,8 +60,11 @@ trait Url
         if ($this->pubUrl === '') {
             $config = $this->getContainer()->get('config');
             $base = $config['global/url/cookie_free_domain'];
+            $mobile = (is_callable([$this, 'isMobile']) ? $this->isMobile() :
+                            preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT'])) ?
+                    'mobile_' : '';
             $prefix = 'pub/theme/' . $config[is_callable([$this, 'isAdminPage']) && $this->isAdminPage() ?
-                            'theme/backend/static' : 'theme/frontend/static'] . '/';
+                            'theme/backend/' . $mobile . 'static' : 'theme/frontend/' . $mobile . 'static'] . '/';
             $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
         }
         return $this->pubUrl . ltrim($path, '/');

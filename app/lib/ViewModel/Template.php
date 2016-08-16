@@ -13,6 +13,16 @@ use Seahinet\Lib\Bootstrap;
 class Template extends AbstractViewModel
 {
 
+    private static $isMobile = null;
+
+    public function isMobile()
+    {
+        if (is_null(self::$isMobile)) {
+            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']) ? 'mobile_' : '';
+        }
+        return self::$isMobile;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -31,7 +41,8 @@ class Template extends AbstractViewModel
                 }
             }
             $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ?
-                            'theme/backend/template' : 'theme/frontend/template'] .
+                            'theme/backend/' . ($this->isMobile() ? 'mobile_' : '') . 'template' :
+                            'theme/frontend/' . ($this->isMobile() ? 'mobile_' : '') . 'template'] .
                     DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);

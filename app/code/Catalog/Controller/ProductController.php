@@ -2,7 +2,6 @@
 
 namespace Seahinet\Catalog\Controller;
 
-use Seahinet\Catalog\Model\Category;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Catalog\Model\Collection\Logview;
 use Seahinet\Catalog\Model\Logview as LogviewModel;

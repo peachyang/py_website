@@ -24,11 +24,11 @@ $parent = $this->getVariable('parent');
                        echo $parent->getAttrs($item['attrs']);
                    }
                    ?>/>
-                   <?php if (isset($item['comment'])): ?>
-                <div class="comment">
-                    <?php echo nl2br($this->translate($item['comment'])) ?>
-                </div>
-            <?php endif ?>
         </div>
+        <?php if (isset($item['comment'])): ?>
+            <div class="comment">
+                <?php echo nl2br($this->translate($item['comment'])) ?>
+            </div>
+        <?php endif ?>
     </div>
 </div>

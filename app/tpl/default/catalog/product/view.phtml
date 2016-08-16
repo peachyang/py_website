@@ -22,7 +22,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                         <?php echo $this->getPriceBox() ?>
                     </div>
                     <div class="hidden-xs col-sm-2 review">
-                        <span class="count">0</span>
+                        <span class="count"><?php echo count($product->getReviews())?></span>
                         <span><?php echo $this->translate('Review(s)', [], 'catalog'); ?></span>
                     </div>
                     <div class="hidden-xs col-sm-2 order">

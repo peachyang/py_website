@@ -441,8 +441,17 @@ class AccountController extends AuthActionController
     {
         $item = new Item;
         $data = $this->getRequest()->getQuery();
-        $item->setData('id', $data['id'])->remove();
+        if (isset($data['id'])) {
+            $item->setData('id', $data['id'])->remove();
+        }
         return $this->redirect('customer/account/wishlist/');
+    }
+
+    public function trackaction()
+    {
+        $segment = new Segment('track');
+        $root = $this->getLayout('customer_account_track');
+        return $root;
     }
 
 }

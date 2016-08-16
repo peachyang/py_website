@@ -310,19 +310,26 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-flow .item.active:after{content:" ";display:block;width:0;height:0;position:absolute;top:0;left:100%;z-index:-1;border:20px solid transparent;border-left:34.64101615px solid #f1f2f4}
 #cart{color:#696868;font-size:12px;margin-bottom:50px}
 #cart td.selectall{padding-left:8px!important}
-#cart thead{background:#f1f1f1;border-bottom:1px solid #e1e1e1}
+#cart thead{background:#f1f1f1;border-top:1px solid #e1e1e1}
 #cart tbody td{vertical-align:middle;padding:8px 16px;line-height:22px;border-top: 1px solid #e1e1e1}
-#cart tbody .price{font-size:16px}
+#cart tbody tr th{border-top:0px none}
+#cart tbody .price{font-size:14px;color:#000}
+#cart tbody .qty{color:#000}
 #cart tbody .subtotal{color:#007dc6;font-size:16px}
 #cart tbody .product-name{vertical-align:top}
-#cart tbody .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden}
+#cart tbody .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden;color:#000}
 #cart tbody .options{margin-bottom:0;line-height:14px;color:#9C9C9C}
 #cart tbody .options dt{clear:left;float:left}
 #cart tbody .options dt:after{content:":"}
 #cart tbody .options dd{float:left;margin-left:4px}
 #cart tfoot .btn-checkout{border-radius:0;padding:15px 25px;margin-left:10px;background:#fabb39}
 #cart tfoot .btn-checkout[disabled]{background:#ccc}
-#cart tfoot td{background:#f1f1f1;padding:0;vertical-align:middle}
+#cart tfoot td{background:#f1f1f1;padding:0;vertical-align:middle;border-top:0px none}
+#cart tfoot .selectall a{margin-left:6%}
+#cart .product-list{border:1px solid #e3e5eb}
+#cart .total,.selected{font-size:18px;color:#007dc6;font-weight:bold}
+#cart tfoot .label{font-size:14px}
+#cart tfoot .total-title{margin-left:5%}
 .checkout-cart .additional{border:1px solid #dadada;min-height:293px;font-size:12px;margin:52px 0 135px}
 .checkout-cart .additional .nav-tabs{border-bottom-width:0;background:#f1f2f4}
 .checkout-cart .additional .nav-tabs .active a{background-color:#f1f2f4;color:#007dc6}

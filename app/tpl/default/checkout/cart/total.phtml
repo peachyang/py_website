@@ -3,5 +3,5 @@ $currency = $this->getCurrency();
 ?>
 <span class="selected"><?php echo $this->getQty() ?></span>
 <span class="label"><?php echo $this->translate('Item(s) Selected') ?></span>
-<span class="label"><?php echo $this->translate('Total') ?>:</span>
+<span class="label total-title"><?php echo $this->translate('Total') ?>:</span>
 <span class="total" data-format="<?php echo preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format')) ?>"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>

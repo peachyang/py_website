@@ -27,9 +27,5 @@ class View extends Template
         return $box;
     }
     
-    public function reviewAction()
-    {
-        echo 1212;die;
-    }
 
 }

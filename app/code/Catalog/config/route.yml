@@ -2,7 +2,7 @@
 catalog:
     route: Seahinet\Catalog\Route\Router
     priority: 40
-catalog_search:
+catalog_regex:
     method: [GET,POST]
-    route: /catalog/search/[{action}[/]]
-    controller: Seahinet\Catalog\Controller\SearchController
+    route: /catalog/{controller}/[{action}[/]]
+    namespace: Seahinet\Catalog\Controller

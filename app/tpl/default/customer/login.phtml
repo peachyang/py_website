@@ -17,8 +17,8 @@
     <main class="col-main container">
         <form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <?php if ($success = $this->getQuery('success_url')): ?>
-                <input type="hidden" name="success_url" value="<?php echo $success = base64_decode($success) ?>" />
+            <?php if (!$this->getContainer()->get('config')['customer/registion/enabled'] || $success = $this->getQuery('success_url')): ?>
+                <input type="hidden" name="success_url" value="<?php echo ($success = $this->getQuery('success_url'))? base64_decode($success):$this->getRequest()->getHeader('HTTP_REFERER') ?>" />
             <?php endif ?>
             <div class="fieldset col-xs-12 pull-right">
                 <h2 class="legend"><?php echo $this->translate('Log in to your account') ?></h2>

@@ -1,1 +1,31 @@
 ---
+catalog:
+    label: Catalog Configuration
+    children:
+        review:
+            label: Review
+            scope: merchant
+            children:
+                status:
+                    type: select
+                    label: Default Status
+                    required: required
+                    options:
+                        - Not Approved
+                        - Approved
+                    default: 1
+                    priority: 0
+                guests:
+                    type: select
+                    label: Allow Guests to Write Reviews
+                    required: required
+                    options:
+                        - No
+                        - Yes
+                    priority: 20
+                    default: 1
+                akismet:
+                    type: text
+                    label: Akismet API key
+                    comment: Sign in <a href='https://akismet.com/' target='_blank'>Akismet API key</a>
+                    priority: 30

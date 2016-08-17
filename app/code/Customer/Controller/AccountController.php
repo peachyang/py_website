@@ -19,6 +19,8 @@ use Seahinet\Customer\Model\Address;
 use Seahinet\Customer\Model\Collection\Wishlist as Wishlists;
 use Seahinet\Customer\Model\Wishlist as WishModel;
 use Seahinet\Customer\Model\Wishlist\Item;
+use Seahinet\Catalog\Model\Logview;
+use Seahinet\Catalog\Model\Collection\Logview as Track;
 
 class AccountController extends AuthActionController
 {
@@ -447,7 +449,7 @@ class AccountController extends AuthActionController
         return $this->redirect('customer/account/wishlist/');
     }
 
-    public function trackaction()
+    public function trackAction()
     {
         $segment = new Segment('track');
         $root = $this->getLayout('customer_account_track');

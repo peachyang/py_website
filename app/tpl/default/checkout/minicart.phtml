@@ -48,7 +48,7 @@ $item_model = new \Seahinet\Checkout\ViewModel\Cart\Item();
                             <?php endif; ?>
                         </h3>
                         <div class="col-xs-3 action">
-                            <div class="price"><?php echo $this->getCurrency()->format($item['product']->getFinalPrice($item['qty'])), 'x', (float) $item['qty'] ?></div>
+                            <div class="price"><?php echo $this->getCurrency()->format($item['price']), 'x', (float) $item['qty'] ?></div>
                             <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
                                 <span><?php echo $this->translate('Delete') ?></span>
                             </a>

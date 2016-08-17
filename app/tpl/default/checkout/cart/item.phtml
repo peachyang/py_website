@@ -40,7 +40,7 @@ $inventory = $item->getInventory();
             </dl>
         <?php endif; ?>
     </td>
-    <td class="price" data-format="<?php echo $this->getFormat() ?>" data-price="<?php echo $item['price'] ?>">
+    <td class="price" data-price="<?php echo $item['price'] ?>">
         <?php echo $this->getCurrency()->format($item['price']) ?>
     </td>
     <td class="qty">

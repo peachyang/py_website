@@ -30,8 +30,7 @@
         });
         $('[type=range]').change(function () {
             var p = $(this).parent().siblings('.price');
-            var f = $(p).data('format');
-            $(this).parent().siblings('.total').text(f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, ($(p).data('price') * $(this).val()).toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1'))));
+            $(this).parent().siblings('.total').text(formatPrice($(p).data('price') * $(this).val()));
             $('.totals .subtotal').trigger('collate');
             $('.totals .total').trigger('collate');
         });
@@ -43,8 +42,7 @@
             $('[type=range]').each(function () {
                 t += $(this).val() * $(this).parent().siblings('.price').data('price');
             });
-            var f = $(this).data('format');
-            $(this).text(f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, t.toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1'))));
+            $(this).text(formatPrice(t));
         });
         $('.totals .total').on('collate', function () {
             var t = 0;
@@ -54,8 +52,7 @@
             $('.totals [type=checkbox]:checked').each(function () {
                 t += parseFloat($(this).siblings('.price').data('price'));
             });
-            var f = $(this).data('format');
-            $(this).text(f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, t.toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1'))));
+            $(this).text(formatPrice(t));
         });
         $('.carrier #carrier-code').change(function () {
             $('.carrier #carrier').val($(this).val() ? $(this).find(':selected').attr('title') : '');

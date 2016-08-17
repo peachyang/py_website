@@ -9,6 +9,9 @@
 }(function ($) {
     $(function () {
         "use strict";
+        window.formatPrice = function(price){
+            return GLOBAL.FORMAT.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, parseFloat(price).toFixed(GLOBAL.FORMAT.indexOf('.') === -1 ? 0 : GLOBAL.FORMAT.replace(/^.+\.(\d+)[fd]$/, '$1')))
+        };
         $('#nav-toggle').click(function () {
             $('.nav-container .open').removeClass('open');
             if ($(this).is('.active')) {

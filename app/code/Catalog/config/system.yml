@@ -27,5 +27,5 @@ catalog:
                 akismet:
                     type: text
                     label: Akismet API key
-                    comment: Sign in <a href='https://akismet.com/' target='_blank'>Akismet API key</a>
+                    comment: Sign in <a href="https://akismet.com/">Akismet API key</a>
                     priority: 30

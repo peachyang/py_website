@@ -110,7 +110,8 @@ class Config extends Edit
         if (isset($item['source']) && is_subclass_of($item['source'], '\\Seahinet\\Lib\\Source\\SourceInterface')) {
             $item['options'] = (new $item['source'])->getSourceArray($item);
         }
-        $item['value'] = $this->getConfig()[$prefix . '/' . $key] ? : (isset($item['default']) ? (string) $item['default'] : '');
+        $config = $this->getConfig()[$prefix . '/' . $key];
+        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config : (isset($item['default']) ? (string) $item['default'] : '');
         return $item;
     }
 

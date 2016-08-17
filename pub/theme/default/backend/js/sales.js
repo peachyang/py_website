@@ -11,18 +11,9 @@
     $(function () {
         $('.form-sales').submit(function () {
             var q = 0;
-            var flag = true;
             $('[type=range]').each(function () {
                 q += $(this).val();
-                if (parseFloat($(this).val()) < parseFloat($(this).attr('max'))) {
-                    flag = false;
-                }
             });
-            if (flag) {
-                $('.totals [type=checkbox]').each(function () {
-                    this.checked = true;
-                });
-            }
             if (q == 0) {
                 addMessages([{message: 'Please select 1 product at least.', level: 'danger'}]);
                 return false;

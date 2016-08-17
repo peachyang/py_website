@@ -118,6 +118,11 @@ class ServiceProvider implements ServiceProviderInterface
                 throw new Exception('Cannot find GeoIP2 database file.');
             };
         }
+        if (!$container->has('akismet')) {
+            $container['akismet'] = function($container) {
+                return new \TijsVerkoyen\Akismet\Akismet('b23b6cd0b44a', $container->get('config')['global/url/base_url']);
+            };
+        }
         if (!$container->has('htmlpurifier')) {
             $container['htmlpurifier'] = function($container) {
                 $config = \HTMLPurifier_Config::create([

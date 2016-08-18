@@ -3,25 +3,29 @@ $products = $this->getProducts();
 ?>
 <div class="col-xs-9 col-sm-9 col-md-10 track">
     <h3><?php echo $this->translate('My Tracks'); ?></h3>
-    <?php
-    if (count($products)) :
-        $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
-        $width = $this->getVariable('width');
-        $data = [];
-        foreach ($data as $value) {
-            
-        }
-        ?>
-        <dl>
-            <dt>
-                <span class="fa fa-circle-o" aria-hidden="true"></span>
-                <?php echo date('Y-m-d'); ?>
-                <span class="browse"><?php echo $this->translate('A total of ' . count($products) . ' items of goods'); ?></span>
-            </dt>
-            <dd>
-                <ul class="products-grid clearfix">
+    <dl>
+        <?php
+        if (count($products)) :
+            $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
+            $width = $this->getVariable('width');
+            $datas = [];
+            foreach ($products as $product) :
+                if (!isset($datas[$product['product_id']])) :
+                    ?>
+                    <dt>
+                        <span class="fa fa-circle-o" aria-hidden="true"></span>
+                        <?php echo date('Y-m-d', strtotime($product['created_at'])) ?>
+                        <span class="browse"><?php echo $this->translate('Total %d item(s)', [count($products)]); ?></span>
+                    </dt>
                     <?php
-                    foreach ($products as $product):
+                    $datas[$product['product_id']] = 1;
+                else :
+                    $datas[$product['product_id']] ++;
+                endif;
+                ?>
+                <dd>
+                    <ul class="products-grid clearfix">
+                        <?php
                         $thumbnail = $product->getThumbnail();
                         ?>
                         <li class="item <?php echo $class ?>">
@@ -48,15 +52,11 @@ $products = $this->getProducts();
                                 </a>
                             </div>
                         </li>
-                        <?php
-                    endforeach;
-                    ?>
-                </ul>
-            </dd>
-        </dl>
-        <?php
-    else :
-        return false;
-    endif;
-    ?>
+                    </ul>
+                </dd>
+                <?php
+            endforeach;
+        endif;
+        ?>
+    </dl>
 </div>

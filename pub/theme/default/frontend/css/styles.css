@@ -188,6 +188,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .track h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
 .main-container .track dt span{margin-right:10px;color:#007dc6}
 .main-container .track dt .browse{padding-left:10px;margin-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
+.main-container .track dt li p{margin-bottom:0px}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 

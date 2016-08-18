@@ -12,11 +12,11 @@ $products = $this->getProducts();
             foreach ($products as $product) :
                 if (!isset($datas[$product['product_id']])) :
                     ?>
-                    <li>
+                    <h4>
                         <span class="fa fa-circle-o" aria-hidden="true"></span>
                         <?php echo date('Y-m-d', strtotime($product['created_at'])) ?>
                         <span class="browse"><?php echo $this->translate('Total %d item(s)', [count($products)]); ?></span>
-                    </li>
+                    </h4>
                     <?php
                     $datas[$product['product_id']] = 1;
                 else :

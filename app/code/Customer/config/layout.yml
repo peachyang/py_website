@@ -33,7 +33,7 @@ customer_account:
                                 params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'Center of Attention'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/track',label:'My Tracks',group:'Center of Attention'}]
+                                params: [{link:'customer/account/logview',label:'My Tracks',group:'Center of Attention'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/personalInfo',label:'Personal Info',group:'Member Information'}]
@@ -119,7 +119,7 @@ customer_account_wishlist:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/wishlist
-customer_account_track:
+customer_account_logview:
     update: customer_account
     root:
         children:
@@ -127,12 +127,12 @@ customer_account_track:
                 action:
                     -
                         method: setTitle
-                        params: Wishlist
+                        params: Logview
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/track                        
+                        type: Seahinet\Checkout\ViewModel\Cart\LogView
+                        template: customer/logview                        
 customer_account_login:
     update: frontend
     root:

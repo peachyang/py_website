@@ -36,6 +36,25 @@
                 return false;
             }
         });
+        $('.product-essential .product-info .options [data-price]').change(function () {
+            var sum = 0;
+            $('.product-essential .product-info .options [data-price]').each(function () {
+                if ($(this).is('[type=radio],[type=checkbox]')) {
+                    if(this.checked){
+                        sum += parseFloat($(this).data('price'));
+                    }
+                } else if ($(this).is('option:selected')) {
+                    if(this.selected){
+                        sum += parseFloat($(this).data('price'));
+                    }
+                } else {
+                    sum += parseFloat($(this).data('price'));
+                }
+            });
+            $('.product-essential .product-info .price-box [data-price]').text(function(){
+                return formatPrice(parseFloat($(this).data('price')) + sum);
+            });
+        });
         $('.product-essential .product-info .btn').on('click', function () {
             var f = $('.product-essential').parent('form');
             if ($(this).is('.btn-checkout')) {

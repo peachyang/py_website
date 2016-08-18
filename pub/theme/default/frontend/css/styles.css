@@ -166,7 +166,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .navigation .nav-list dd{line-height:24px}
 .main-container .navigation .fa-user{color:#007dc6;font-size:18px}
 .main-container .navigation .fa{height:15px;width:15px;margin-right:5px}
-/*.main-container .navigation dl{margin-top:20px;margin-bottom:10px}*/
 .main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
 .main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
 .main-container .address .btn{background:#007dc6;color:#ffffff}
@@ -189,6 +188,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .track h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
 .main-container .track dt span{margin-right:10px;color:#007dc6}
 .main-container .track dt .browse{padding-left:10px;margin-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
+.main-container .track dt li p{margin-bottom:0px}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 
@@ -348,6 +348,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .payment label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
 .checkout-order .payment input{display:none}
 .checkout-order .payment input:checked+label{background:#f1f2f4}
+.checkout-order .address .form-edit-address{max-width:585px}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
 .checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
 .checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
@@ -371,7 +372,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list td select{padding:3px 8px}
 .checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e1e1e1}
 .table>thead>tr>th{border-bottom:none}
-.form-control{width:50%}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top:1px solid #e1e1e1;vertical-align:middle}
 .checkout-order .review .total{border:none}
 .checkout-order .review .total th{font-size:12px;color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}

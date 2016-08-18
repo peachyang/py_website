@@ -1,7 +1,6 @@
 <?php
 $order = $this->getOrder();
 $currency = $this->getOrder()->getCurrency();
-$format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format'));
 ?>
 <div class="view clearfix">
     <form action="<?php echo $this->getAdminUrl('sales_creditmemo/save/') ?>" method="post" class="form-sales">
@@ -105,7 +104,7 @@ $format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $curre
                                         }
                                         ?>
                                     </td>
-                                    <td class="price" data-price="<?php echo $item['price'] ?>" data-format="<?php echo $format ?>"><?php echo $currency->format($item['price']) ?></td>
+                                    <td class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></td>
                                     <td>
                                         <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
                                         <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
@@ -136,7 +135,7 @@ $format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $curre
                 <dl class="dl-horizontal totals">
                     <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
                     <dd>
-                        <span class="price subtotal" data-format="<?php echo $format ?>">
+                        <span class="price subtotal">
                             <?php echo $currency->format($order->offsetGet('subtotal')) ?>
                         </span>
                     </dd>
@@ -156,7 +155,7 @@ $format = preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $curre
                     </dd>
                     <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
                     <dd>
-                        <span class="price total" data-format="<?php echo $format ?>">
+                        <span class="price total">
                             <?php echo $currency->format($order->offsetGet('total')) ?>
                         </span>
                     </dd>

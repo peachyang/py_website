@@ -15,6 +15,6 @@ if (strpos($title, '/')) {
 <meta name="robots" content="<?php echo $this->getConfig()['theme/global/robots'] ?>" />
 <?php echo $this->getMeta(), $this->getLink(), $this->getScript(); ?>
 <script>
-    window.GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?php echo $this->getPubUrl() ?>',LOCALE:'<?php echo $this->getLocale() ?>',ADMIN_PATH:'<?php echo $this->getConfig()['global/url/admin_path'] ?>'};
+    window.GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?php echo $this->getPubUrl() ?>',LOCALE:'<?php echo $this->getLocale() ?>',ADMIN_PATH:'<?php echo $this->getConfig()['global/url/admin_path'] ?>',FORMAT:'<?php echo $this->getFormat() ?>'};
     <?php echo $this->translate ?>
 </script>

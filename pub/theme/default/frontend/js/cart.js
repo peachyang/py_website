@@ -19,10 +19,7 @@
                 t += $(p).siblings('.price').data('price') * tq;
             });
             $('#cart tfoot .selected').text(q);
-            $('#cart tfoot .total').text(function () {
-                var f = $(this).data('format');
-                return f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, t.toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1')));
-            });
+            $('#cart tfoot .total').text(formatPrice(t));
             if (q) {
                 $(".btn-checkout").removeAttr('disabled');
             } else {
@@ -50,8 +47,7 @@
         $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
             var p = $(this).parents('.qty');
             var price = $(p).siblings('.price');
-            var f = $(price).data('format');
-            $(p).siblings('.subtotal').text(f.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, ($(price).data('price') * $(this).val()).toFixed(f.indexOf('.') === -1 ? 0 : f.replace(/^.+\.(\d+)[fd]$/, '$1'))));
+            $(p).siblings('.subtotal').text(formatPrice($(price).data('price') * $(this).val()));
             collateTotals();
         });
     });

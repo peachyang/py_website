@@ -49,6 +49,9 @@
             }
             $(o).trigger('afterajax.seahinet', json);
         };
+        window.formatPrice = function(price){
+            return GLOBAL.FORMAT.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, parseFloat(price).toFixed(GLOBAL.FORMAT.indexOf('.') === -1 ? 0 : GLOBAL.FORMAT.replace(/^.+\.(\d+)[fd]$/, '$1')))
+        };
         $(document.body).on('click.seahinet.ajax', 'a[data-method]', function () {
             var o = this;
             if ($(o).data('method') !== 'delete' || confirm(translate($(o).is('[data-serialize]') ? 'Are you sure to delete these records?' : 'Are you sure to delete this record?'))) {

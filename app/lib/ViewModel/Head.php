@@ -335,4 +335,10 @@ final class Head extends Template implements Singleton
         return Bootstrap::getLanguage()->offsetGet('code');
     }
 
+    public function getFormat()
+    {
+        $currency = $this->getContainer()->get('currency');
+        return preg_replace('/\%(?:\d+\$)?s/', $currency->offsetGet('symbol'), $currency->offsetGet('format'));
+    }
+
 }

@@ -2,10 +2,24 @@
 customer:
     label: Customer Configuration
     children:
+        login:
+            label: Login Options
+            scope: merchant
+            priority: 0
+            children:
+                redirect_dashboard:
+                    label: Redirect Customer to Account Dashboard after Logging in
+                    type: select
+                    priority: 0
+                    default: 1
+                    comment: Customer will stay on the current page if "No" is selected.
+                    options:
+                        1: Yes
+                        0: No
         registion:
             label: Registion Options
             scope: merchant
-            priority: 20
+            priority: 10
             children:
                 enabled:
                     label: Enabled

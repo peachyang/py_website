@@ -22,7 +22,7 @@ class LogView extends Link
             if (!count($ids)) {
                 return [];
             }
-            $ids = array_diff($ids, explode(',', $this->getRequest()->getCookie('log_view')));
+            $ids = array_diff(explode(',', trim($this->getRequest()->getCookie('log_view'), ',')), $ids);
             if (count($ids)) {
                 $products = new Product;
                 $products->where(new In('id', $ids));

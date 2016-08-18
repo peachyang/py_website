@@ -30,7 +30,7 @@ if ($reviews):
         </div>
     </div>
 <?php endif; ?>
-<?php if ($this->getConfig()['catalog/review/guests'] || $customer):?>
+<?php if ($this->getConfig()['catalog/review/allow_guests'] || $customer):?>
     <div class="review-form">
         <span><br /><?php echo $this->translate('Discussion') ?>:</span>
     	<div class="review-padding">

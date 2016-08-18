@@ -24,3 +24,7 @@ sales:
             link: 'sales_creditmemo/'
             title: Credit Memos
             priority: 50
+        -
+            link: 'sales_status/'
+            title: Order Statuses
+            priority: 60

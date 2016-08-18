@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model\Order;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Collection\Order\Status as Collection;
 
 class Status extends AbstractModel
 {
@@ -18,6 +19,26 @@ class Status extends AbstractModel
             return (new Phase)->load($this->storage['phase_id']);
         }
         return null;
+    }
+
+    protected function beforeSave()
+    {
+        $this->beginTransaction();
+        parent::beforeSave();
+    }
+
+    public function afterSave()
+    {
+        parent::afterSave();
+        if ($this->offsetGet('is_default')) {
+            $collection = new Collection;
+            $collection->where(['is_default' => 1, 'phase_id' => $this->storage['phase_id']])
+            ->where->notEqualTo('id', $this->getId());
+            foreach ($collection as $status) {
+                $status->setData('is_default', 0)->save();
+            }
+        }
+        $this->commit();
     }
 
 }

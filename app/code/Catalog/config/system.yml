@@ -11,21 +11,21 @@ catalog:
                     label: Default Status
                     required: required
                     options:
-                        - Not Approved
-                        - Approved
+                        1: Approved
+                        0: Not Approved
                     default: 1
                     priority: 0
-                guests:
+                allow_guests:
                     type: select
                     label: Allow Guests to Write Reviews
                     required: required
                     options:
-                        - No
-                        - Yes
+                        1: Yes
+                        0: No
                     priority: 20
                     default: 1
                 akismet:
                     type: text
-                    label: Akismet API key
-                    comment: Sign in <a href="https://akismet.com/">Akismet API key</a>
+                    label: Akismet API Key
+                    comment: Sign up for API key from <a href="https://akismet.com/">Akismet</a>
                     priority: 30

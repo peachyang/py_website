@@ -5,8 +5,8 @@ namespace Seahinet\Catalog\Controller;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Catalog\Model\Collection\Logview;
 use Seahinet\Catalog\Model\Logview as LogviewModel;
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Lib\Session\Segment;
 
 class ProductController extends ActionController
 {

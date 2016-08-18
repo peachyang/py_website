@@ -197,4 +197,6 @@
             $(t).trigger('change.seahinet');
         }
     });
+    $(".bttrlazyloading").imagezoom();
 }));
+

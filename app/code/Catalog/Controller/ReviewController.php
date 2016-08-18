@@ -15,7 +15,7 @@ class ReviewController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $segment = new Segment('customer');
-            if (!$this->getContainer()->get('config')['catalog/review/guests'] && !$segment->get('hasLoggedIn')){
+            if (!$this->getContainer()->get('config')['catalog/review/allow_guests'] && !$segment->get('hasLoggedIn')){
                 return $this->notFoundAction();
             }
             $data = $this->getRequest()->getPost();

@@ -312,3 +312,36 @@ admin_sales_creditmemo_print:
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
                         template: admin/sales/print/creditmemo
+admin_order_status_list:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_status/',label:'Order Statuses'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/sales_status/edit/',label:'Add New Status'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Status
+                        template: admin/grid-simple
+admin_order_status_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_status/',label:'Order Statuses'}]
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_status/edit/',label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Sales\Edit\Status

@@ -1,22 +1,27 @@
 <?php
 $sorters = $this->getSorters();
 $current = $this->getCurrentSorter();
+$mode = $this->getQuery('mode', 'grid');
+$default = $this->getQuery('limit', $this->getConfig()['catalog/frontend/default_per_page_' . $mode]);
 ?>
 <div class="view-by clearfix">
     <div class="limit dropdown">
         <a href="javascript:void(0);" data-toggle="dropdown">
-            <?php echo $this->translate('View %d per page', [$this->getQuery('limit', 20)]) ?>
+            <?php echo $default === 'all' ? $this->translate('All Products') : $this->translate('View %d per page', [$default]) ?>
         </a>
         <ul class="dropdown-menu">
-            <li>
-                <a href="<?php echo $this->getSorterUrl('limit', '12') ?>" rel="nofollow">12</a>
-            </li>
-            <li>
-                <a href="<?php echo $this->getSorterUrl('limit', '24') ?>" rel="nofollow">24</a>
-            </li>
-            <li>
-                <a href="<?php echo $this->getSorterUrl('limit', '36') ?>" rel="nofollow">36</a>
-            </li>
+            <?php if ($this->getConfig()['catalog/frontend/allowed_all_products']): ?>
+                <li<?php if ($default === 'all'): ?> class="active"<?php endif ?>>
+                    <a href="<?php echo $this->getSorterUrl('limit', 'all') ?>" rel="nofollow"><?php echo $this->translate('All Products') ?></a>
+                </li>
+                <?php
+            endif;
+            foreach (explode(',', trim($this->getConfig()['catalog/frontend/allowed_per_page_' . $mode], ',')) as $limit):
+                ?>
+                <li<?php if ($default == $limit): ?> class="active"<?php endif ?>>
+                    <a href="<?php echo $this->getSorterUrl('limit', $limit) ?>" rel="nofollow"><?php echo $limit ?></a>
+                </li>
+            <?php endforeach ?>
         </ul>
     </div>
     <ul class="list-inline mode">

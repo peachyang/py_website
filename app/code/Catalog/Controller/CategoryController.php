@@ -35,29 +35,33 @@ class CategoryController extends ActionController
     protected function prepareCollection($collection, $category = null)
     {
         $condition = $this->getRequest()->getQuery();
-        unset($condition['q']);
-        unset($condition['type']);
-        unset($condition['mode']);
-        $limit = isset($condition['limit']) ? $condition['limit'] : 20;
-        if (isset($condition['page'])) {
-            $collection->offset(($condition['page'] - 1) * $limit);
-            unset($condition['page']);
+        $config = $this->getContainer()->get('config');
+        $mode = isset($condition['mode']) ? $condition['mode'] : 'grid';
+        unset($condition['q'], $condition['type'], $condition['mode']);
+        if ($condition['limit'] === 'all' && $config['catalog/frontend/allowed_all_products']) {
+            $collection->reset('limit')->reset('offset');
+        } else {
+            $limit = isset($condition['limit']) && in_array($condition['limit'], explode(',', trim($config['catalog/frontend/allowed_per_page_' . $mode], ','))) ?
+                    $condition['limit'] : $config['catalog/frontend/default_per_page_' . $mode];
+            if (isset($condition['page'])) {
+                $collection->offset(($condition['page'] - 1) * $limit);
+                unset($condition['page']);
+            }
+            $collection->limit((int) $limit);
         }
-        $collection->limit((int) $limit);
         unset($condition['limit']);
         if (isset($condition['asc'])) {
             $collection->order((strpos($condition['asc'], ':') ?
                             str_replace(':', '.', $condition['asc']) :
                             $condition['asc']) . ' ASC');
-            unset($condition['asc']);
-            unset($condition['desc']);
+            unset($condition['asc'], $condition['desc']);
         } else if (isset($condition['desc'])) {
             $collection->order((strpos($condition['desc'], ':') ?
                             str_replace(':', '.', $condition['desc']) :
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
-        } else if ($category && $category['default_sortable']) {
-            $collection->order($category['default_sortable']);
+        } else if ($category && $default = $category['default_sortable']) {
+            $collection->order($default);
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {

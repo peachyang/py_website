@@ -11,7 +11,6 @@ use Seahinet\Sales\Model\CreditMemo\Item;
 use Seahinet\Sales\Model\Order;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
-use Seahinet\Admin\ViewModel\Sales\View\Creditmemo as Pdf;
 
 class CreditmemoController extends AuthActionController
 {
@@ -113,19 +112,21 @@ class CreditmemoController extends AuthActionController
         return $this->notFoundAction();
     }
 
-    public function printAction(){
+    public function printAction()
+    {
         if ($id = $this->getRequest()->getQuery('id')) {
-            define ('K_TCPDF_EXTERNAL_CONFIG', true);
+            define('K_TCPDF_EXTERNAL_CONFIG', true);
             define('K_TCPDF_CALLS_IN_HTML', true);
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
             $root = $this->getLayout('admin_sales_creditmemo_print');
-            $root->getChild('main',true)->setVariable('pdf', $pdf);
+            $root->getChild('main', true)->setVariable('pdf', $pdf);
             $pdf->SetTitle($this->translate('Type Infomation'));
             $pdf->SetMargins(15, 27, 15);
             $pdf->setImageScale(1.25);
             $pdf->AddPage();
             $pdf->writeHTML($root->__toString(), true, false, true, false, '');
-            $pdf->Output('order-'.$id, 'I');
+            $pdf->Output('order-' . $id, 'I');
         }
     }
+
 }

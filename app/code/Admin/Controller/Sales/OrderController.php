@@ -12,7 +12,6 @@ use Seahinet\Sales\Model\Collection\Order\Status;
 use Seahinet\Sales\Model\Order as Model;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
-use Seahinet\Admin\ViewModel\Sales\View\Order as Pdf;
 
 class OrderController extends AuthActionController
 {
@@ -245,6 +244,7 @@ class OrderController extends AuthActionController
                     if ($flag === false) {
                         throw new Exception('Invalid status.');
                     }
+                    $order->setData('status_id', $data['status_id'])->save();
                     $user = (new Segment('admin'))->get('user');
                     $model->setData([
                         'id' => null,
@@ -390,17 +390,17 @@ class OrderController extends AuthActionController
     public function printAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {
-            define ('K_TCPDF_EXTERNAL_CONFIG', true);
+            define('K_TCPDF_EXTERNAL_CONFIG', true);
             define('K_TCPDF_CALLS_IN_HTML', true);
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
             $root = $this->getLayout('admin_sales_order_print');
-            $root->getChild('main',true)->setVariable('pdf', $pdf);
+            $root->getChild('main', true)->setVariable('pdf', $pdf);
             $pdf->SetTitle($this->translate('Type Infomation'));
             $pdf->SetMargins(15, 27, 15);
             $pdf->setImageScale(1.25);
             $pdf->AddPage();
             $pdf->writeHTML($root->__toString(), true, false, true, false, '');
-            $pdf->Output('order-'.$id, 'I');
+            $pdf->Output('order-' . $id, 'I');
         }
     }
 

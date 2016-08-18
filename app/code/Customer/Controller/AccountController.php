@@ -17,7 +17,6 @@ use Zend\Math\Rand;
 use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Address;
 use Seahinet\Customer\Model\Collection\Wishlist as Wishlists;
-use Seahinet\Customer\Model\Wishlist as WishModel;
 use Seahinet\Customer\Model\Wishlist\Item;
 use Seahinet\Catalog\Model\Logview;
 use Seahinet\Catalog\Model\Collection\Logview as Track;

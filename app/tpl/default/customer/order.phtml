@@ -1,0 +1,35 @@
+<?php
+$orders = $this->getVariable('orders');
+?>
+
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist">
+    <h3></span><?php echo $this->translate('My Order'); ?></h3>
+        <table class="table table-hover table-striped table-no-border text-center">
+        	<thead class="sort-by">
+        		<tr>
+        			<th class="col-lg-2 col-xs-12 order_id text-center"><?php echo $this->translate('ID'); ?></th>
+        			<th class="col-lg-2 col-xs-12 order_price text-center"><?php echo $this->translate('Price'); ?></th>
+        			<th class="col-lg-2 col-xs-12 order_status text-center"><?php echo $this->translate('Status'); ?></th>
+        			<th class="col-lg-2 col-xs-12 product_edit text-center"><?php echo $this->translate('Ordered Date'); ?></th>
+        			<th class="col-lg-2 col-xs-12 product_edit text-center"><?php echo $this->translate('Edit'); ?></th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		 <?php
+                    if (!empty($orders)) :
+                        foreach ($orders as $order):
+                            ?>  
+                            <tr>
+                            	<td><?php echo $order->offsetGet('increment_id') ?></td>
+                            	<td><?php echo $order->getCurrency()->format($order->offsetGet('total')) ?></td>
+                            	<td><?php echo $this->translate($order->getStatus()['name'],[],'sales') ?></td>
+                            	<td><?php echo $order->offsetGet('created_at') ?></td>
+                            	<td><a href="<?php echo $this->getBaseurl('customer/account/view/?order_id='.$order['id'])?>"><?php echo $this->translate('View Details')?></a></td>
+                            </tr>             
+                            <?php
+                        endforeach;
+                    endif;
+                    ?>
+        	</tbody>
+        </table>
+</div>

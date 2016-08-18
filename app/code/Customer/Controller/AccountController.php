@@ -21,6 +21,9 @@ use Seahinet\Customer\Model\Wishlist as WishModel;
 use Seahinet\Customer\Model\Wishlist\Item;
 use Seahinet\Catalog\Model\Logview;
 use Seahinet\Catalog\Model\Collection\Logview as Track;
+use Seahinet\Sales\Model\Collection\Order;
+use Seahinet\Sales\Model\Order as OrderModel;
+use Seahinet\Catalog\Model\Collection\Product;
 
 class AccountController extends AuthActionController
 {
@@ -453,6 +456,31 @@ class AccountController extends AuthActionController
     {
         $segment = new Segment('logview');
         $root = $this->getLayout('customer_account_logview');
+        return $root;
+    }
+
+    public function orderAction()
+    {
+        $segment = new Segment('customer');
+        $customerId = $segment->get('customer')->getId();
+        $orders = new Order;
+        $orders->where(['customer_id' => $customerId]);
+        $root = $this->getLayout('customer_account_order');
+        $root->getChild('main', true)->setVariable('orders', $orders);
+        return $root;
+    }
+
+    public function viewAction()
+    {
+        $id = $this->getRequest()->getQuery('order_id');
+        $order = new OrderModel;
+        $segment = new Segment('customer');
+        $order->load($id);
+        if($order['customer_id'] !== $segment->get('customer')->getId()){
+            return $this->notFoundAction();
+        }
+        $root = $this->getLayout('customer_account_view');
+        $root->getChild('main', true)->setVariable('order', $order);
         return $root;
     }
 

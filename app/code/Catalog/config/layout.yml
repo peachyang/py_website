@@ -55,6 +55,9 @@ catalog_product:
                     -
                         method: addScript
                         params: frontend/js/product.js
+                    -
+                        method: addScript
+                        params: frontend/js/magnifying.js
             content:
                 children:
                     messages:

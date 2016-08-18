@@ -449,10 +449,10 @@ class AccountController extends AuthActionController
         return $this->redirect('customer/account/wishlist/');
     }
 
-    public function trackAction()
+    public function logviewAction()
     {
-        $segment = new Segment('track');
-        $root = $this->getLayout('customer_account_track');
+        $segment = new Segment('logview');
+        $root = $this->getLayout('customer_account_logview');
         return $root;
     }
 

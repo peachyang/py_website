@@ -200,4 +200,6 @@
             $(t).trigger('change.seahinet');
         }
     });
+    $(".magnifying").imagezoom();
 }));
+

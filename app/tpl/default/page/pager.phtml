@@ -1,9 +1,9 @@
 <?php
-if ($this->getCollection()):
+$limit = $this->getLimit();
+if ($this->getCollection() && is_numeric($limit)):
     $pages = $this->getAllPages();
     if ($pages > 1):
         $current = $this->getCurrentPage();
-        $limit = $this->getLimit();
         if ($this->showLabel()) {
             $total = min($current * $limit, $this->getCount());
             echo $this->translate('Display %d - %d of %d record(s).', [min($total, ($current - 1) * $limit + 1), $total, $this->getCount()], 'pager');

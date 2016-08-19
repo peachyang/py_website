@@ -12,21 +12,19 @@ use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
-use Swift_TransportException;
-use Zend\Math\Rand;
-use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Address;
+use Seahinet\Customer\Model\Collection\Address as Addresses;
 use Seahinet\Customer\Model\Collection\Wishlist as Wishlists;
+use Seahinet\Customer\Model\Persistent;
 use Seahinet\Customer\Model\Wishlist\Item;
-use Seahinet\Catalog\Model\Logview;
-use Seahinet\Catalog\Model\Collection\Logview as Track;
 use Seahinet\Sales\Model\Collection\Order;
 use Seahinet\Sales\Model\Order as OrderModel;
-use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Sales\Model\Collection\Invoice;
 use Seahinet\Sales\Model\Collection\Shipment;
 use Seahinet\Sales\Model\Collection\CreditMemo;
 use Seahinet\Catalog\ViewModel\Product\View;
+use Swift_TransportException;
+use Zend\Math\Rand;
 
 class AccountController extends AuthActionController
 {
@@ -167,6 +165,15 @@ class AccountController extends AuthActionController
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {
                     $url = 'customer/account/';
+                    if (!empty($data['persistent'])) {
+                        $persistent = new Persistent;
+                        $key = md5(random_bytes(32) . $data['username']);
+                        $persistent->setData([
+                            'customer_id' => $customer->getId(),
+                            'key' => $key
+                        ])->save();
+                        $result['cookie'] = ['key' => 'persistent', 'value' => $key, 'path' => '/', 'expires' => time() + 604800];
+                    }
                     $result['data'] = ['username' => $data['username']];
                     $result['message'][] = ['message' => $this->translate('Welcome %s.', [$customer['username']], 'customer'), 'level' => 'success'];
                 } else if ($customer['status']) {
@@ -233,7 +240,8 @@ class AccountController extends AuthActionController
         $segment->set('hasLoggedIn', false);
         $result = ['error' => 0, 'message' => [[
             'message' => $this->translate('You have logged out successfully.'),
-            'level' => 'success'
+            'level' => 'success',
+            'cookie' => ['key' => 'persistent', 'value' => null]
         ]]];
         $this->getContainer()->get('eventDispatcher')->trigger('customer.logout.after');
         return $this->response($result, 'customer/account/login/', 'customer');
@@ -412,7 +420,7 @@ class AccountController extends AuthActionController
                     $result['data'] = ['id' => $address->getId(), 'content' => $address->display()];
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 }
             }
         }

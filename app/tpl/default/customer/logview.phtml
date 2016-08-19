@@ -54,6 +54,8 @@ $products = $this->getProducts();
                 </dd>
                 <?php
             endforeach;
+            else :
+                echo '<p>'.$this->translate('you have no browsing history!') .'<p>';
         endif;
         ?>
     </dl>

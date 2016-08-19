@@ -105,8 +105,9 @@ class OrderController extends ActionController
                     $segment = new Segment('checkout');
                     $segment->set('hasNewOrder', 1);
                 } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                     $this->rollback();
                 }
             }
@@ -192,7 +193,7 @@ class OrderController extends ActionController
                             ])->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 }
             }
         }
@@ -221,7 +222,7 @@ class OrderController extends ActionController
                     $result['removeLine'] = 1;
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                 }
             }
         }
@@ -253,7 +254,7 @@ class OrderController extends ActionController
                             ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                 }
             }
         }
@@ -290,7 +291,7 @@ class OrderController extends ActionController
                     ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                 }
             }
         }
@@ -333,7 +334,7 @@ class OrderController extends ActionController
                     ])->collateTotals()->save();
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                 }
             }
         }

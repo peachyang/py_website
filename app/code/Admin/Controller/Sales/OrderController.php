@@ -128,7 +128,6 @@ class OrderController extends AuthActionController
                 $order = new Model;
                 $order->load($id);
                 if ($order->canCancel()) {
-                    $dispatcher->trigger('order.cancel.before', ['model' => $order]);
                     $history = new History;
                     $history->setData([
                         'admin_id' => $userId,
@@ -138,6 +137,7 @@ class OrderController extends AuthActionController
                     ])->save();
                     $order->setData('status_id', $statusId)
                             ->save();
+                    $dispatcher->trigger('order.cancel.after', ['model' => $order]);
                     $count ++;
                 }
                 $this->commit();
@@ -335,7 +335,7 @@ class OrderController extends AuthActionController
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
                 }
             }
         }
@@ -380,7 +380,7 @@ class OrderController extends AuthActionController
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
                 }
             }
         }

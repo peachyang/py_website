@@ -28,7 +28,7 @@ $warehouse->load(1);
                             <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" class="img-thumbnail" width="150" />
                         </a>
                         <h4><?php echo $item['product_name'] ?></h4>
-                        <p><span><?php echo $this->translate('Wishlist Time') ?>：</span><?php echo $item['added_at']; ?></p>
+                        <p><span><?php echo $this->translate('Wishlist Time') ?>：</span><?php echo date('Y-m-d', strtotime($item['added_at'])); ?></p>
                     </dt>
                     <dd class="col-lg-3 col-xs-12 product_price"><p><?php echo $product['special_price'] ? $product['special_price'] : $product['price'] ?></p></dd>
                     <dd class="col-lg-3 col-xs-12 product_edit">

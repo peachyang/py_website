@@ -15,7 +15,11 @@ class Currency extends AbstractModel
     public function convert($price, $format = false)
     {
         if (isset($this->storage['rate'])) {
-            $price *= $this->storage['rate'];
+            if (function_exists('bcmul')) {
+                $price = bcmul($price, $this->storage['rate']);
+            } else {
+                $price *= $this->storage['rate'];
+            }
         }
         return $format ? $this->format($price) : $price;
     }

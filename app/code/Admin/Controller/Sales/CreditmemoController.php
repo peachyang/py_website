@@ -81,6 +81,7 @@ class CreditmemoController extends AuthActionController
                     }
                 }
                 $memo->collateTotals()->save();
+                $this->getContainer()->get('eventDispatcher')->trigger('order.refund.after', ['model' => $memo]);
                 $order->setData([
                     'base_total_refunded' => (float) $order['base_total_refunded'] + $memo['base_total'],
                     'total_refunded' => (float) $order['total_refunded'] + $memo['total']

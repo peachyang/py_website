@@ -32,22 +32,22 @@ class ProductController extends ActionController
                 if (!$this->getRequest()->getHeader('DNT')) {
                     $log_view = $this->getRequest()->getCookie('log_view');
                     if (!in_array($this->getOption('product_id'), explode(',', $log_view))) {
-                        $this->getResponse()->withCookie('log_view', ['value' => $this->getOption('product_id') . ',' . $log_view, 'path' => '/', 'expires' => time() + 3600 * 24 * 365 * 5]);
+                        $this->getResponse()->withCookie('log_view', ['value' => $this->getOption('product_id') . ',' . $log_view, 'path' => '/', 'expires' => time() + 31536000]);
+                        $segment = new Segment('customer');
+                        if ($segment->get('hasLoggedIn')) {
+                            $logView = new Logview();
+                            $logView->where(['product_id' => $this->getOption('product_id'), 'customer_id' => $segment->get('customer')->getId()]);
+                            if (!count($logView)) {
+                                $logViewModel = new LogviewModel();
+                                $logViewModel->setData([
+                                    'customer_id' => $segment->get('customer')->getId(),
+                                    'product_id' => $this->getOption('product_id'),
+                                ])->save();
+                            }
+                        }
                     } else {
                         $newLogView = str_replace(',' . $this->getOption('product_id') . ',', ',', $this->getOption('product_id') . ',' . $log_view);
-                        $this->getResponse()->withCookie('log_view', ['value' => $newLogView, 'path' => '/', 'expires' => time() + 3600 * 24 * 365 * 5]);
-                    }
-                    $segment = new Segment('customer');
-                    if ($segment->get('hasLoggedIn')) {
-                        $logView = new Logview();
-                        $logView->where(['product_id' => $this->getOption('product_id'), 'customer_id' => $segment->get('customer')->getId()]);
-                        if (!$logView[0]) {
-                            $logViewModel = new LogviewModel();
-                            $logViewModel->setData([
-                                'customer_id' => $segment->get('customer')->getId(),
-                                'product_id' => $this->getOption('product_id'),
-                            ])->save();
-                        }
+                        $this->getResponse()->withCookie('log_view', ['value' => $newLogView, 'path' => '/', 'expires' => time() + 31536000]);
                     }
                 }
                 return $root;

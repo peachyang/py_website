@@ -24,6 +24,9 @@
             if (typeof json === 'string') {
                 json = eval('(' + json + ')');
             }
+            if (json.cookie && $.cookie) {
+                $.cookie(json.cookie.key, json.cookie.value, json.cookie);
+            }
             if (json.redirect) {
                 location.href = json.redirect;
                 return;
@@ -49,7 +52,7 @@
             }
             $(o).trigger('afterajax.seahinet', json);
         };
-        window.formatPrice = function(price){
+        window.formatPrice = function (price) {
             return GLOBAL.FORMAT.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, parseFloat(price).toFixed(GLOBAL.FORMAT.indexOf('.') === -1 ? 0 : GLOBAL.FORMAT.replace(/^.+\.(\d+)[fd]$/, '$1')))
         };
         $(document.body).on('click.seahinet.ajax', 'a[data-method]', function () {

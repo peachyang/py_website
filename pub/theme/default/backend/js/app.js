@@ -74,6 +74,9 @@
             if (typeof json === 'string') {
                 json = eval('(' + json + ')');
             }
+            if (json.cookie && $.cookie) {
+                $.cookie(json.cookie.key, json.cookie.value, json.cookie);
+            }
             if (json.redirect) {
                 location.href = json.redirect;
             } else if (json.reload) {

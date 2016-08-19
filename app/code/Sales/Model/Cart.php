@@ -303,14 +303,14 @@ final class Cart extends AbstractModel implements Singleton
             foreach ($this->getItems() as $item) {
                 $item = new Item($item);
                 foreach (['price', 'tax', 'discount', 'total'] as $attr) {
-                    $item->offsetSet($attr, $currency->convert($item->offsetGet($attr)));
+                    $item->setData($attr, $currency->convert($item->offsetGet('base_' . $attr)));
                 }
                 $item->save();
-            };
-            foreach (['shipping', 'tax', 'discount', 'total'] as $attr) {
-                $this->offsetSet($attr, $currency->convert($this->storage[$attr]));
             }
-            $this->offsetSet('currency', $currency->offsetGet('code'));
+            foreach (['shipping', 'tax', 'discount', 'total'] as $attr) {
+                $this->setData($attr, $currency->convert($this->storage['base_' . $attr]));
+            }
+            $this->setData('currency', $currency->offsetGet('code'))->save();
             $this->commit();
         } catch (Exception $e) {
             $this->rollback();

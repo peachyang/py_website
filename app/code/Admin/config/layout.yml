@@ -102,6 +102,9 @@ admin:
                         params: backend/js/jquery.js
                     -
                         method: addScript
+                        params: [{src:'backend/js/jquery.cookie.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
                         params: backend/js/translate.js
                     -
                         method: addScript

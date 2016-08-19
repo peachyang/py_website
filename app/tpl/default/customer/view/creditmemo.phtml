@@ -4,7 +4,7 @@ $creditmemo = $this->getVariable('creditmemo');
 if (empty($creditmemo))return ;
 $currency = $order->getCurrency();
 ?>
-<div role="tabpanel" class="tab-pane" id="creditMemos<?php echo $this->getVariable('key') ?>">
+<div role="tabpanel" class="tab-pane active" id="creditMemos<?php echo $this->getVariable('key') ?>">
     <div class="content-box">
         <div class="panel">
             <div class="panel-heading">

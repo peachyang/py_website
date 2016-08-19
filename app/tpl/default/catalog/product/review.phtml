@@ -3,22 +3,40 @@ $reviews = $this->getProduct()->getReviews();
 $customer = $this->getProduct()->getCustomerID();
 if ($reviews):
     ?>
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#user" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Review') ?></a></li>
-        <li role="presentation"><a href="#visitors" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Discussion') ?></a></li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="user">
-            <?php foreach ($reviews as $review): ?>
+    <div class="">
+        <?php echo $this->translate('Review') ?>
+        <div class="content-box">
+                <div class="subject-li">&nbsp;</div>
+                <div class="content-li">&nbsp;</div>
+            </div>
+            <?php foreach ($reviews as $review){ ?>
             	<?php if (!is_null($review['order_id'])):?>
                     <div class="content-box">
-                        <div class="subject-li"><?php echo $review['username'] ?>:</div>
-                        <div class="content-li"><?php echo $review['content'] ?></div>
+                    <?php if (isset($review[0])){
+                        ?>
+                        <div class="subject-li"><?php echo $review['username'][0].':'.$this->translate('Rating').':' ?>
+                        <?php 
+                        foreach ($review as $key=>$vlaue){
+                    ?>
+                            <?php echo $vlaue['title'][0],$vlaue['value'][0] ?>
+                        <?php
+                        }
+                    }else { ?>
+                        <div class="subject-li"><?php echo $review['username'][0].':'.$this->translate('Rating').$review['title'][0],$review['value'][0] ?></div>
+                        <div class="content-li"><?php echo $review['content'][0] ?></div>
+                    <?php } ?>
                     </div>
                 <?php endif ?>
-            <?php endforeach ?>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="visitors">
+            <?php } ?>
+            <div class="content-box">
+                <div class="subject-li">&nbsp;</div>
+                <div class="content-li">&nbsp;</div>
+            </div>
+        <?php echo $this->translate('Discussion') ?>
+        <div class="content-box">
+                <div class="subject-li">&nbsp;</div>
+                <div class="content-li">&nbsp;</div>
+            </div>
         	<?php foreach ($reviews as $review): ?>
         		<?php if (is_null($review['order_id'])):?>
                     <div class="content-box">
@@ -27,7 +45,6 @@ if ($reviews):
                     </div>
                 <?php endif ?>
             <?php endforeach ?>
-        </div>
     </div>
 <?php endif; ?>
 <?php if ($this->getConfig()['catalog/review/allow_guests'] || $customer):?>

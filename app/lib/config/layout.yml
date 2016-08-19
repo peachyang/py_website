@@ -63,6 +63,9 @@ frontend:
                         params: frontend/js/jquery.js
                     -
                         method: addScript
+                        params: [{src:'frontend/js/jquery.cookie.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
                         params: frontend/js/translate.js
                     -
                         method: addScript

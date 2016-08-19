@@ -4,7 +4,6 @@ namespace Seahinet\Admin\Controller;
 
 use Exception;
 use Gregwar\Captcha\CaptchaBuilder;
-use Gregwar\Captcha\PhraseBuilder;
 use Seahinet\Admin\Model\User;
 use Seahinet\Email\Model\Template as TemplateModel;
 use Seahinet\Email\Model\Collection\Template as TemplateCollection;

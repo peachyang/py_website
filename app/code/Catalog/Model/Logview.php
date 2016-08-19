@@ -17,6 +17,7 @@ class Logview extends AbstractModel
     {
         if ($this->getId()) {
             $tracks = new Collection;
+            
             $tracks->Where(['product_id' => $this->getId()])
                     ->order('created_at');
             return $tracks;

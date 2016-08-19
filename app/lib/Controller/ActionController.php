@@ -173,9 +173,18 @@ abstract class ActionController extends AbstractController
         } else {
             $this->addMessage($result['message'], 'danger', $segment);
             if ($result['error']) {
-                return $this->redirectReferer($url);
+                $response = $this->redirectReferer($url);
+            } else {
+                $response = $this->redirect(isset($result['success_url']) ? $result['success_url'] : $url);
             }
-            return $this->redirect(isset($result['success_url']) ? $result['success_url'] : $url);
+            if (isset($result['cookie'])) {
+                foreach ($result['cookie'] as $cookie) {
+                    $key = $cookie['key'];
+                    unset($cookie['key']);
+                    $response->withCookie($key, $cookie);
+                }
+            }
+            return $response;
         }
     }
 

@@ -1,0 +1,128 @@
+<?php
+$order = $this->getVariable('order');
+$currency = $order->getCurrency();
+?>
+<div role="tabpanel" class="tab-pane active" id="orders">
+    <div class="content-box">
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Order Infomation', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?><br />
+                <?php echo $this->translate('Status'), ': ', $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?><br />
+                <?php
+                if ($store = $order->getStore()) {
+                    echo $this->translate('Store'), ': ', $store->offsetGet('name');
+                }
+                ?><br />
+                <?php
+                if ($language = $order->getLanguage()) {
+                    echo $this->translate('Language'), ': ', $language->offsetGet('name');
+                }
+                ?>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo nl2br($order->offsetGet('shipping_address')) ?>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+            </div>
+        </div>
+        <div class="panel wide">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
+            </div>
+            <div class="panel-body grid table-responsive">
+                <table class="table table-hover table-striped table-no-border">
+                    <thead class="sort-by">
+                        <tr>
+                            <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
+                            <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                            <th><?php echo $this->translate('Options', [], 'sales') ?></th>
+                            <th><?php echo $this->translate('Price', [], 'sales') ?></th>
+                            <th><?php echo $this->translate('Qty', [], 'sales') ?></th>
+                            <th><?php echo $this->translate('Total', [], 'sales') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($order->getItems() as $item): ?>
+                            <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                                <td><?php echo $item['product_name'] ?></td>
+                                <td><?php echo $item['sku'] ?></td>
+                                <td>
+                                    <?php
+                                    $options = json_decode($item['options'], true);
+                                    if ($item['product_id'] && count($options)) {
+                                        foreach ($item['product']->getOptions() as $option) {
+                                            if (isset($options[$option->getId()])) {
+                                                echo $option['title'], ': ', (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()]), '<br />';
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </td>
+                                <td><?php echo $currency->format($item['price']) ?></td>
+                                <td><?php echo $item['qty'] ?></td>
+                                <td><?php echo $currency->format($item['total']) ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel wide">
+            <?php
+            $discount = json_decode($order->offsetGet('discount_detail'), true);
+            ?>
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('subtotal')) ?></dd>
+                    <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('shipping')) ?></dd>
+                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('tax')) ?></dd>
+                    <?php
+                    if ((float) $order->offsetGet('discount')):
+                        foreach ($discount as $type => $price):
+                            ?>
+                            <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->convert($price, true) ?></dd>
+                            <?php
+                        endforeach;
+                    endif;
+                    ?>
+                    <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('total')) ?></dd>
+                    <dt><?php echo $this->translate('Total Paid', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('total_paid')) ?></dd>
+                    <dt><?php echo $this->translate('Total Refunded', [], 'sales') ?></dt>
+                    <dd><?php echo $currency->format($order->offsetGet('total_refunded')) ?></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,6 +23,9 @@ use Seahinet\Catalog\Model\Collection\Logview as Track;
 use Seahinet\Sales\Model\Collection\Order;
 use Seahinet\Sales\Model\Order as OrderModel;
 use Seahinet\Catalog\Model\Collection\Product;
+use Seahinet\Sales\Model\Collection\Invoice;
+use Seahinet\Sales\Model\Collection\Shipment;
+use Seahinet\Sales\Model\Collection\CreditMemo;
 
 class AccountController extends AuthActionController
 {
@@ -474,12 +477,21 @@ class AccountController extends AuthActionController
         $id = $this->getRequest()->getQuery('order_id');
         $order = new OrderModel;
         $segment = new Segment('customer');
+        $invoice = new Invoice;
+        $shipment = new Shipment;
+        $creditmemo = new CreditMemo;
         $order->load($id);
+        $invoice->where(['order_id'=>$id]);
+        $shipment->where(['order_id'=>$id]);
+        $creditmemo->where(['order_id'=>$id]);
         if($order['customer_id'] !== $segment->get('customer')->getId()){
             return $this->notFoundAction();
         }
         $root = $this->getLayout('customer_account_view');
-        $root->getChild('main', true)->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('order', $order)
+                                     ->setVariable('invoice', $invoice->load()->toArray())
+                                     ->setVariable('shipment', $shipment->load()->toArray())
+                                     ->setVariable('creditmemo', $creditmemo->load()->toArray());
         return $root;
     }
 

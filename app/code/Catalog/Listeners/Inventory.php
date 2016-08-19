@@ -24,19 +24,14 @@ class Inventory implements ListenerInterface
     public function decrease($event)
     {
         $model = $event['model'];
-        if ($model->getId()) {
-            return;
-        }
         $warehouse = new Warehouse;
         $warehouse->load($model['warehouse_id']);
-        foreach ($model->getItems() as $item) {
-            if (is_object($item)) {
-                $item = $item->toArray();
-            }
+        foreach ($model->getItems(true) as $item) {
             $this->check([
                 'warehouse_id' => $model['warehouse_id'],
                 'product_id' => $item['product_id'],
-                'sku' => $item['sku']
+                'sku' => $item['sku'],
+                'qty' => $item['qty']
             ]);
             $inventory = $warehouse->getInventory($item['product_id'], $item['sku']);
             $inventory['qty'] = $inventory['qty'] - $item['qty'];
@@ -48,20 +43,9 @@ class Inventory implements ListenerInterface
     public function increase($event)
     {
         $model = $event['model'];
-        if ($model->getId()) {
-            return;
-        }
         $warehouse = new Warehouse;
         $warehouse->load($model['warehouse_id']);
-        foreach ($model->getItems() as $item) {
-            if (is_object($item)) {
-                $item = $item->toArray();
-            }
-            $this->check([
-                'warehouse_id' => $model['warehouse_id'],
-                'product_id' => $item['product_id'],
-                'sku' => $item['sku']
-            ]);
+        foreach ($model->getItems(true) as $item) {
             $inventory = $warehouse->getInventory($item['product_id'], $item['sku']);
             $inventory['qty'] = $inventory['qty'] + $item['qty'];
             $inventory['id'] = null;

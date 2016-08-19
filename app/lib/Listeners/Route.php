@@ -2,7 +2,6 @@
 
 namespace Seahinet\Lib\Listeners;
 
-use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Route\Dispatcher;
 use Seahinet\Lib\Route\Collector;
 use Seahinet\Lib\Route\Generator;
@@ -44,7 +43,7 @@ class Route implements ListenerInterface
         return new Dispatcher($data);
     }
 
-    public function dispatch($event, $name)
+    public function dispatch($event)
     {
         $routers = $event['routers'];
         $dispatcher = $this->getDispatcher($routers);
@@ -63,6 +62,10 @@ class Route implements ListenerInterface
                             'IndexController');
         } else {
             $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
+        }
+        if(!class_exists($className)){
+            $routeMatch = $routers['default'];
+            $className = $routeMatch['controller'];
         }
         $controller = new $className;
         $this->getContainer()->get('response')->setData($controller->dispatch($request, $routeMatch));

@@ -133,6 +133,19 @@ customer_account_view:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/view
+                        children:
+                            order_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: customer/order/order
+                            invoice_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: customer/order/invoice
+                            shipment_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: customer/order/shipment
+                            creditmemo_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: customer/order/creditmemo
 customer_account_wishlist:
     update: customer_account
     root:

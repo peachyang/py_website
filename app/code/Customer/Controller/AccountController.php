@@ -19,6 +19,9 @@ use Seahinet\Customer\Model\Persistent;
 use Seahinet\Customer\Model\Wishlist\Item;
 use Seahinet\Sales\Model\Collection\Order;
 use Seahinet\Sales\Model\Order as OrderModel;
+use Seahinet\Sales\Model\Collection\Invoice;
+use Seahinet\Sales\Model\Collection\Shipment;
+use Seahinet\Sales\Model\Collection\CreditMemo;
 use Swift_TransportException;
 use Zend\Math\Rand;
 
@@ -416,7 +419,7 @@ class AccountController extends AuthActionController
                     $result['data'] = ['id' => $address->getId(), 'content' => $address->display()];
                 } catch (Exception $e) {
                     $result['error'] = 1;
-                    $result['message'] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 }
             }
         }
@@ -482,12 +485,21 @@ class AccountController extends AuthActionController
         $id = $this->getRequest()->getQuery('order_id');
         $order = new OrderModel;
         $segment = new Segment('customer');
+        $invoice = new Invoice;
+        $shipment = new Shipment;
+        $creditmemo = new CreditMemo;
         $order->load($id);
-        if ($order['customer_id'] !== $segment->get('customer')->getId()) {
+        $invoice->where(['order_id'=>$id]);
+        $shipment->where(['order_id'=>$id]);
+        $creditmemo->where(['order_id'=>$id]);
+        if($order['customer_id'] !== $segment->get('customer')->getId()){
             return $this->notFoundAction();
         }
         $root = $this->getLayout('customer_account_view');
-        $root->getChild('main', true)->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('order', $order)
+                                     ->setVariable('invoice', $invoice->load()->toArray())
+                                     ->setVariable('shipment', $shipment->load()->toArray())
+                                     ->setVariable('creditmemo', $creditmemo->load()->toArray());
         return $root;
     }
 

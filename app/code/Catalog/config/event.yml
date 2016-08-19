@@ -10,15 +10,15 @@ cart.add.before:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, check]
         priority: 0
-Seahinet\Sales\Model\Order.model.save.before:
+order.place.after:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, decrease]
         priority: 0
-Seahinet\Sales\Model\CreditMemo.model.save.before:
+order.refund.after:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, increase]
         priority: 0
-order.cancel.before:
+order.cancel.after:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, increase]
         priority: 0

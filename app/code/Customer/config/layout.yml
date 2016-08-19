@@ -172,8 +172,8 @@ customer_account_logview:
             content:
                 children:
                     main:
-                        type: Seahinet\Customer\ViewModel\Logview
-                        template: customer/logview                        
+                        type: Seahinet\Customer\ViewModel\Logviews
+                        template: customer/logview                      
 customer_account_login:
     update: frontend
     root:

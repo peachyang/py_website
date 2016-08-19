@@ -13,16 +13,4 @@ class Logview extends AbstractModel
         $this->init('log_view', 'customer_id,product_id', ['customer_id', 'product_id', 'created_at', 'updated_at']);
     }
 
-    public function getLogview()
-    {
-        if ($this->getId()) {
-            $tracks = new Collection;
-            
-            $tracks->Where(['product_id' => $this->getId()])
-                    ->order('created_at');
-            return $tracks;
-        }
-        return [];
-    }
-
 }

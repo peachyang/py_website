@@ -38,7 +38,7 @@ class CategoryController extends ActionController
         $config = $this->getContainer()->get('config');
         $mode = isset($condition['mode']) ? $condition['mode'] : 'grid';
         unset($condition['q'], $condition['type'], $condition['mode']);
-        if ($condition['limit'] === 'all' && $config['catalog/frontend/allowed_all_products']) {
+        if (isset($condition['limit']) && $condition['limit'] === 'all' && $config['catalog/frontend/allowed_all_products']) {
             $collection->reset('limit')->reset('offset');
         } else {
             $limit = isset($condition['limit']) && in_array($condition['limit'], explode(',', trim($config['catalog/frontend/allowed_per_page_' . $mode], ','))) ?

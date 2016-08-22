@@ -345,3 +345,18 @@ admin_order_status_edit:
                                 params: [{link:':ADMIN/sales_status/edit/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Status
+sales_refund:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Refund Rights
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/refund
+                        

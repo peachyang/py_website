@@ -27,7 +27,7 @@ customer_account:
                                 params: [{link:'customer/account/order',label:'My Order',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/',label:'Refund Rights',group:'Order Center'}]
+                                params: [{link:'sales/refund/index',label:'Refund Rights',group:'Order Center'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'Center of Attention'}]

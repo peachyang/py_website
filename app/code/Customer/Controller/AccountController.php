@@ -25,6 +25,8 @@ use Seahinet\Sales\Model\Collection\CreditMemo;
 use Seahinet\Catalog\ViewModel\Product\View;
 use Swift_TransportException;
 use Zend\Math\Rand;
+use Seahinet\Customer\Model\Refund;
+use Seahinet\Customer\Model\Collection\Refund as RefundModel;
 
 class AccountController extends AuthActionController
 {
@@ -351,21 +353,25 @@ class AccountController extends AuthActionController
             if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
+                $url = 'customer/account/personalInfo/';
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
+                $url = 'customer/account/personalInfo/';
             } else if ($result['error'] === 0) {
                 $model = new Model;
                 $model->load($customer['id']);
+                $model->setData($data);
                 $model->save();
                 if (isset($data['id']) && $data['id'] == $customer->getId()) {
                     $customer->setData($data);
                     $segment->set('customer', clone $customer);
                 }
                 $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                $url = 'customer/account/';
             }
         }
-        return $this->redirect('customer/account/');
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], $url, 'customer');
     }
 
     public function addressAction()
@@ -585,3 +591,10 @@ class AccountController extends AuthActionController
     }
 
 }
+
+
+
+
+
+
+

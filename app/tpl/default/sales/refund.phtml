@@ -1,0 +1,55 @@
+<?php
+$orders = $this->getVariable('orders');
+?>
+
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist">
+    <h3></span><?php echo $this->translate('Refund Rights'); ?></h3>
+    <table class="table">
+        	<?php 
+        if (!empty($orders)) : ?>
+            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+                <tr>
+                	<td><?php echo $this->translate('Order ID')?></td>
+                	<td colspan="3">
+                		<select name="order_id">
+                			<option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <?php foreach ($orders as $order): ?>  
+                				<option value="<?php echo $order['id']?>"><?php echo $order['increment_id']?></option>
+                			<?php endforeach;?>
+                		</select>
+    				</td>
+                </tr>
+                <tr>
+                	<td><?php echo $this->translate('Reason')?></td>
+                	<td colspan="3"><textarea rows="2" cols="20" name="comment"></textarea></td>
+                </tr>
+                <tr>
+                	<td></td>
+                	<td colspan="3">
+                		<input type="hidden" name="customer_id" value="<?php echo $orders[0]['customer_id'];?>">
+                		<button type="submit" class="btn btn-info">提交</button>
+                	</td>
+                </tr>
+            </form>
+        <?php else:?>
+            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+                <tr>
+                	<td><?php echo $this->translate('Order ID')?></td>
+                	<td colspan="3">
+                		<input type="text" name="order_id">
+    				</td>
+                </tr>
+                <tr>
+                	<td><?php echo $this->translate('Reason')?></td>
+                	<td colspan="3"><textarea rows="2" cols="20" name="comment"></textarea></td>
+                </tr>
+                <tr>
+                	<td></td>
+                	<td colspan="3">
+                		<button type="submit" class="btn btn-info">提交</button>
+                	</td>
+                </tr>
+            </form>
+        <?php endif; ?>
+    </table>
+</div>

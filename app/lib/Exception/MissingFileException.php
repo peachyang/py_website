@@ -17,7 +17,7 @@ class MissingFileException extends Exception
      */
     public function __construct($filename = '', $code = 0, Exception $previous = null)
     {
-        parent::__construct('File not found: ' . $message, $code, $previous);
+        parent::__construct('File not found: ' . $filename, $code, $previous);
     }
 
 }

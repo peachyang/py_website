@@ -1,8 +1,8 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(["jquery","jquery.validate"], factory);
+        define(["jquery", "jquery.validate"], factory);
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory(require(["jquery","jquery.validate"]));
+        module.exports = factory(require(["jquery", "jquery.validate"]));
     } else {
         factory(jQuery);
     }
@@ -137,6 +137,11 @@
                     this.disabled = true;
                 });
             }
+        });
+        $('.table.additional').on('click', '.add', function () {
+            $('.table.additional .target').append($('#tmpl-additional').html());
+        }).on('click', '.delete', function () {
+            $(this).parents('tr').first().remove();
         });
     });
 }));

@@ -161,7 +161,7 @@ class Edit extends Template
             'item' => $item,
             'parent' => $this
         ]);
-        $box->setTemplate('page/renderer/' . $item['type']);
+        $box->setTemplate('page/renderer/' . $item['type'], false);
         return $box;
     }
 

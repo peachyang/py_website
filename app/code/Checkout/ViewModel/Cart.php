@@ -49,8 +49,8 @@ class Cart extends Template
     {
         $cookies = $this->getRequest()->getCookie('log_view');
         $logView = [];
-        foreach (explode(',',$cookies) as $item){
-            if ($item){
+        foreach (explode(',', $cookies) as $item) {
+            if ($item) {
                 $logView[] = $this->getCart()->getLogView($item);
             }
         }

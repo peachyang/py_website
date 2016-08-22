@@ -295,7 +295,18 @@ class Product extends Entity
         $result = [];
         if ($this->getId()) {
             $reviews = new Review;
-            $reviews->where(['product_id' => $this->getId()]);
+            $reviews->where(['product_id'=>$this->getId()]);
+            $reviews->join('review_rating', 'review.id=review_rating.review_id', ['review_id','rating_id','value'], 'left')
+                    ->join('rating', 'review_rating.rating_id=rating.id', ['title'], 'left');
+            $reviews = $reviews->toArray();
+            foreach ($reviews as $key=>$value){
+                if ($key > 0){
+                    if ($reviews[$key]['id']==$reviews[$key-1]['id']){
+                        $reviews[$key] = array_merge_recursive($reviews[$key]->toArray(),$reviews[$key-1]->toArray());
+                        unset($reviews[$key-1]);
+                    }
+                }
+            }
             $customer = new Customer();
             foreach ($reviews as $key => $value) {
                 if (!is_null($value['customer_id'])) {

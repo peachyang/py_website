@@ -4,7 +4,7 @@ $shipment = $this->getVariable('shipment');
 if (empty($shipment))return ;
 $currency = $order->getCurrency();
 ?>
-<div role="tabpanel" class="tab-pane" id="shipments<?php echo $this->getVariable('key') ?>">
+<div role="tabpanel" class="tab-pane active" id="shipments<?php echo $this->getVariable('key') ?>">
     <div class="content-box">
         <div class="panel">
             <div class="panel-heading">

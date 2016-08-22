@@ -3,48 +3,56 @@ $products = $this->getProducts();
 ?>
 <div class="track">
     <h3><?php echo $this->translate('My Tracks'); ?></h3>
-    <dl>
-        <?php
-        if (count($products)) :
-            $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
-            $width = $this->getVariable('width');
-            $datas = [];
-            foreach ($products as $product) :
-                if (!isset($datas[$product['product_id']])) :
+    <?php
+    if (count($products)) :
+        $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
+        $width = $this->getVariable('width');
+        $num = [];
+        ?>
+        <dl class="clearfix">
+            <?php
+            $current = '';
+            foreach ($products as $item) :
+                $product = new \Seahinet\Catalog\Model\Product;
+                $product->load($item['product_id']);
+                $date = date('Y-m-d', strtotime($item['created_at']));
+                if (!isset($num[$item['product_id']])) :
+                    $num[$item['product_id']] = 1;
+                else :
+                    $num[$item['product_id']] ++;
+                endif;
+                $thumbnail = $product->getThumbnail();
+                if ($current !== $date):
                     ?>
                     <dt>
                         <span class="fa fa-circle-o" aria-hidden="true"></span>
-                        <?php echo date('Y-m-d', strtotime($product['created_at'])) ?>
-                        <span class="browse"><?php echo $this->translate('Total %d item(s)', [count($products)]); ?></span>
+                        <span><?php echo $date ?></span>
+                        <span class="browse">
+                            <?php echo $this->translate('Total %d item(s)', [count($products)]); ?>
+                        </span>
                     </dt>
                     <?php
-                    $datas[$product['product_id']] = 1;
-                else :
-                    $datas[$product['product_id']] ++;
+                    $current = $date;
                 endif;
-                $thumbnail = $product->getThumbnail();
                 ?>
                 <dd class="item <?php echo $class ?>">
                     <ul>
                         <li>
-                            <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
+                            <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
                                 <?php
                                 if (strpos($thumbnail, 'http') !== false):
                                     ?>
-                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
                                 <?php elseif ($width): ?>
-                                    <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
+                                    <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $item['name'] ?>" />
                                 <?php else: ?>
                                     <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
                                 <?php endif ?>
                             </a>
                             <p><?php echo $product['name']; ?></p>
-                            <div class="price-box">
-                                <?php echo $this->getPriceBox($product) ?>
-                            </div>
                             <div class="action">
                                 <a href="<?php
-                                echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
+                                echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $item['id'] .
                                         '&qty=1&csrf=' . $this->getCsrfKey())
                                 ?>" class="add2cart">
                                 </a>
@@ -54,9 +62,11 @@ $products = $this->getProducts();
                 </dd>
                 <?php
             endforeach;
-            else :
-                echo '<p>'.$this->translate('you have no browsing history!') .'<p>';
-        endif;
-        ?>
-    </dl>
+            ?>
+        </dl>
+        <?php
+    else :
+        echo '<p>' . $this->translate('you have no browsing history!') . '<p>';
+    endif;
+    ?>
 </div>

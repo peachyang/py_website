@@ -3,13 +3,15 @@ $order = $this->getVariable('order');
 $invoices = $this->getVariable('invoice');
 $shipments = $this->getVariable('shipment');
 $creditmemos = $this->getVariable('creditmemo');
+$title = $this->getVariable('title');
+$num = $this->getVariable('key');
 ?>
 
 <div class="wishlist">
     <h3></span><?php echo $this->translate('Order Infomation',[],'sales'); ?></h3>
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-        	<a href="#orders" aria-controls="description" role="tab" data-toggle="tab">
+        <li role="presentation" class="<?php echo $title=='view_order'?'active':'' ?>">
+        	<a href="<?php echo $this->getBaseUrl('customer/account/view_order/?order_id='.$order['id'])?>">
         		<?php echo $this->translate('Orders') ?>
         	</a>
     	</li>
@@ -17,8 +19,8 @@ $creditmemos = $this->getVariable('creditmemo');
     	   if (!empty($invoices)):
     	       foreach ($invoices as $key=>$invoice):
     	?>
-            <li role="presentation">
-                <a href="#invoices<?php echo count($invoices) !== 1 ? $key+1 : '' ?>" aria-controls="review" role="tab" data-toggle="tab">
+            <li role="presentation" class="<?php echo $title=='view_invoice' && $key ==($num>0?$num:0) ? 'active':'' ?>">
+                <a href="<?php echo $this->getBaseUrl('customer/account/view_invoice/?order_id='.$order['id'].'&key='.(count($invoices) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Invoices'),count($invoices) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>
@@ -28,8 +30,8 @@ $creditmemos = $this->getVariable('creditmemo');
             if (!empty($shipments)):
                 foreach ($shipments as $key=>$shipment):
         ?>
-            <li role="presentation">
-                <a href="#shipments<?php echo count($shipments) !== 1 ? $key+1 : '' ?>" aria-controls="review" role="tab" data-toggle="tab">
+            <li role="presentation" class="<?php echo $title=='view_shipment' && $key ==($num>0?$num:0) ? 'active':'' ?>">
+                <a href="<?php echo $this->getBaseUrl('customer/account/view_shipment/?order_id='.$order['id'].'&key='.(count($shipments) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Shipments'),count($shipments) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>
@@ -39,8 +41,8 @@ $creditmemos = $this->getVariable('creditmemo');
             if (!empty($creditmemos)):
                 foreach ($creditmemos as $key=>$creditmemo):
             ?>
-            <li role="presentation">
-                <a href="#creditMemos<?php echo count($creditmemos) !== 1 ? $key+1 : '' ?>" aria-controls="review" role="tab" data-toggle="tab">
+            <li role="presentation" class="<?php echo $title=='view_creditmemo' && $key ==($num>0?$num:0) ? 'active':'' ?>">
+                <a href="<?php echo $this->getBaseUrl('customer/account/view_creditmemo/?order_id='.$order['id'].'&key='.(count($creditmemos) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Credit Memos'),count($creditmemos) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>
@@ -51,27 +53,23 @@ $creditmemos = $this->getVariable('creditmemo');
     </ul>
     <div class="tab-content">
         <?php 
-            echo $this->getChild('order_info')->setVariable('order',$order);
-            foreach ($invoices as $key=>$invoice){
-                if (!empty($invoice)){
-                    echo $this->getChild('invoice_info')->setVariable('invoice',$invoice)
-                                                        ->setVariable('key',count($invoices) !== 1 ? $key+1 : null)
-                                                        ->setVariable('order',$order);
-                }
+            if($title == 'view_order'){
+                echo $this->getChild('order_info')->setVariable('order',$order);
             }
-            foreach ($shipments as $key=>$shipment){
-                if (!empty($shipment)){
-                    echo $this->getChild('shipment_info')->setVariable('shipment',$shipment)
-                                                        ->setVariable('key',count($shipments) !== 1 ? $key+1 : null)
-                                                        ->setVariable('order',$order);
-                }
+            if ($title == 'view_invoice' && !empty($invoices)){
+                echo $this->getChild('invoice_info')->setVariable('invoice',$invoices[$num>0?$num:0])
+                                                    ->setVariable('key',count($invoices) !== 1 ? $key+1 : null)
+                                                    ->setVariable('order',$order);
             }
-            foreach ($creditmemos as $key=>$creditmemo){
-                if (!empty($creditmemo)){
-                    echo $this->getChild('creditmemo_info')->setVariable('creditmemo',$creditmemo)
-                                                        ->setVariable('key',count($creditmemos) !== 1 ? $key+1 : null)
-                                                        ->setVariable('order',$order);
-                }
+            if ($title == 'view_shipment' && !empty($shipments)){
+                echo $this->getChild('shipment_info')->setVariable('shipment',$shipments[$num>0?$num:0])
+                                                    ->setVariable('key',count($shipments) !== 1 ? $key+1 : null)
+                                                    ->setVariable('order',$order);
+            }
+            if ($title == 'view_creditmemo' && !empty($creditmemos)){
+                echo $this->getChild('creditmemo_info')->setVariable('creditmemo',$creditmemos[$num>0?$num:0])
+                                                    ->setVariable('key',count($creditmemos) !== 1 ? $key+1 : null)
+                                                    ->setVariable('order',$order);
             }
         ?>
     </div>

@@ -408,9 +408,9 @@ select[multiple],select[size],textarea{resize:vertical}
 .catalog-product #review{background:#f1f1f1}
 .catalog-product #review nav-tabs li{font-size:12px}
 .catalog-product #review a{padding:5px 10px}
-.catalog-product .content-li{width:80%}
+.catalog-product .content-li{width:60%}
 .catalog-product .subject-li,.content-li{float:left;overflow:hidden}
-.catalog-product .subject-li{width:20%}
+.catalog-product .subject-li{width:40%}
 .catalog-product .review-form{background:#fff}
 .catalog-product .review-form span{font-size:16px}
 .catalog-product .review-form .review-padding{padding:10px;background:#f1f1f1;height:224px}

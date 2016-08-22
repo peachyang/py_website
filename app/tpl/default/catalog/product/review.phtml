@@ -12,19 +12,21 @@ if ($reviews):
             <?php foreach ($reviews as $review){ ?>
             	<?php if (!is_null($review['order_id'])):?>
                     <div class="content-box">
-                    <?php if (isset($review[0])){
+                    <?php if (isset($review['title'][0])){
                         ?>
-                        <div class="subject-li"><?php echo $review['username'][0].':'.$this->translate('Rating').':' ?>
+                        <div class="subject-li"><?php echo $review['username'].':&nbsp;&nbsp;'.$this->translate('Rating').':' ?>
                         <?php 
-                        foreach ($review as $key=>$vlaue){
-                    ?>
-                            <?php echo $vlaue['title'][0],$vlaue['value'][0] ?>
-                        <?php
-                        }
-                    }else { ?>
-                        <div class="subject-li"><?php echo $review['username'][0].':'.$this->translate('Rating').$review['title'][0],$review['value'][0] ?></div>
+                            foreach ($review['title'] as $key=>$item){
+                                 echo $item,$review['value'][$key];
+                            }
+                        ?>
+                        </div>
                         <div class="content-li"><?php echo $review['content'][0] ?></div>
-                    <?php } ?>
+                    <?php 
+                    }else { ?>
+                        <div class="subject-li"><?php echo $review['username'].':';echo $review['value'] ? $this->translate('Rating').$review['title'].$review['value'] : ''; ?></div>
+                        <div class="content-li"><?php echo $review['content'] ?></div>
+                    <?php }?>
                     </div>
                 <?php endif ?>
             <?php } ?>

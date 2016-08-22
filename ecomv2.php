@@ -1319,7 +1319,8 @@ INSERT INTO `eav_attribute` VALUES
 (41,4,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (42,4,'images','varchar','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (43,4,'default_image','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
+(44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(45,4,'additional','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (4, 5, 26, 0),
 (4, 5, 27, 0),
@@ -1339,7 +1340,8 @@ INSERT INTO `eav_entity_attribute` VALUES
 (4, 7, 41, 0),
 (4, 8, 42, 0),
 (4, 8, 43, 0),
-(4, 8, 44, 0);
+(4, 8, 44, 0),
+(4, 8, 45, 0);
 INSERT INTO `eav_attribute_label` VALUES
 (26, 1, 'Name'),
 (27, 1, 'Uri Key'),
@@ -1359,7 +1361,8 @@ INSERT INTO `eav_attribute_label` VALUES
 (41, 1, 'Meta Keywords'),
 (42, 1, 'Images'),
 (43, 1, 'Default Image'),
-(44, 1, 'Thumbnail');
+(44, 1, 'Thumbnail'),
+(45, 1, 'Additional');
 
 CREATE TABLE IF NOT EXISTS `product_type` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Product type ID',

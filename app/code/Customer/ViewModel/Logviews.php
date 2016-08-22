@@ -1,7 +1,10 @@
 <?php
+
 namespace Seahinet\Customer\ViewModel;
+
 use Seahinet\Catalog\Model\Logview;
 use Seahinet\Catalog\Model\Collection\Logview as Collection;
+use Seahinet\Resource\Model\Resource;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Catalog\ViewModel\Product\Link;
@@ -11,7 +14,6 @@ class Logviews extends Template
 
     protected $products = null;
 
-
     public function getProducts()
     {
 
@@ -19,7 +21,7 @@ class Logviews extends Template
             $logview = new Collection;
             $segment = new Segment('customer');
             $logview->where(['customer_id' => $segment->get('customer')['id']])
-                    ->order('created_at');
+                    ->order('created_at DESC');
             if ($logview->count()) {
                 return $logview;
             }

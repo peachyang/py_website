@@ -94,11 +94,14 @@ abstract class AbstractViewModel implements Serializable
      * Set template file path
      * 
      * @param string $template
+     * @param bool $force
      * @return AbstractViewModel
      */
-    public function setTemplate($template)
+    public function setTemplate($template, $force = true)
     {
-        $this->template = $template;
+        if ($force || empty($this->template)) {
+            $this->template = $template;
+        }
         return $this;
     }
 

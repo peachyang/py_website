@@ -213,6 +213,9 @@ class Product extends Entity
             }
             $this->storage['images'] = json_encode($images);
         }
+        if (is_array($this->storage['additional'])) {
+            $this->storage['additional'] = json_encode(array_combine($this->storage['additional']['key'], $this->storage['additional']['value']));
+        }
         parent::beforeSave();
     }
 
@@ -286,8 +289,9 @@ class Product extends Entity
         unset($this->storage['prices']);
         return parent::serialize();
     }
-    
-    public function getReviews(){
+
+    public function getReviews()
+    {
         $result = [];
         if ($this->getId()) {
             $reviews = new Review;
@@ -304,23 +308,24 @@ class Product extends Entity
                 }
             }
             $customer = new Customer();
-            foreach ($reviews as $key => $value){
-                if (!is_null($value['customer_id'])){
+            foreach ($reviews as $key => $value) {
+                if (!is_null($value['customer_id'])) {
                     $reviews[$key]['username'] = $customer->load($value['customer_id'])['username'];
                 }
             }
-        }else {
+        } else {
             return [];
         }
         return $reviews;
     }
-    
-    public function getCustomerID(){
+
+    public function getCustomerID()
+    {
         $segment = new Segment('customer');
         if ($segment->get('hasLoggedIn')) {
             return $segment->get('customer')['id'];
         }
         return false;
     }
-    
+
 }

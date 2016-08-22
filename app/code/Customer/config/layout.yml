@@ -55,6 +55,11 @@ customer_account:
                             -
                                 method: addHandledSegment
                                 params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - 1
 customer_account_dashboard:
     update: customer_account
     root:
@@ -69,11 +74,6 @@ customer_account_dashboard:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: customer/dashboard
-                    messages:
-                        action:
-                            -
-                                method: addHandledSegment
-                                params: customer
 customer_account_personalinfo:
     update: customer_account
     root:

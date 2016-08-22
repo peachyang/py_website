@@ -328,6 +328,12 @@ admin_catalog_product_edit:
                                             - cross_sells
                                             - Cross-sells
                                             - 160
+                                    -
+                                        method: addTab
+                                        params:
+                                            - additional
+                                            - Additional
+                                            - 170
                                 children:
                                     images:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Tab
@@ -368,6 +374,9 @@ admin_catalog_product_edit:
                                     custom_options:
                                         type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Options
                                         template: admin/catalog/product/options
+                                    additional:
+                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Additional
+                                        template: admin/catalog/product/additional
             extra:
                 children:
                     modal:

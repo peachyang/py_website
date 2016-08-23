@@ -2,15 +2,26 @@
 
 namespace Seahinet\Retailer\Controller;
 
+use Exception;
+use Seahinet\Retailer\Model\Retailer as Rmodel;
+use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\Model\Retailer;
 
 class AccountController extends AuthActionController
 {
 
     public function indexAction()
     {
-        return $this->getLayout('retailer_account');
+        $segment = new Segment('customer');
+        
+        if ($customerId = $segment->get('customer')->getId()) {
+            $customer = new Cmodel;
+            $customer->load($customerId);
+            $root = $this->getLayout('retailer_account_dashboard');
+            $root->getChild('main', true)->setVariable('customer', $customer);
+            return $root;
+        }
+        return $root;
     }
 
     public function applyAction()

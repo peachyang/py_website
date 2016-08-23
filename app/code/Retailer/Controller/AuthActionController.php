@@ -24,7 +24,7 @@ abstract class AuthActionController extends ActionController
                     return $this->redirect('retailer/account/');
                 }
             } else if (!$model->getId()) {
-                return $this->redirect('retailer/account/apply/');
+                //return $this->redirect('retailer/account/apply/');
             } else if (!$model->offsetGet('status') || !$model->offsetGet('store_id')) {
                 return $this->redirect('retailer/account/processing/');
             }

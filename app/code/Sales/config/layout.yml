@@ -359,4 +359,45 @@ sales_refund:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: sales/refund
-                        
+sales_myorder:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Order
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order
+sales_view:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Order
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/view
+                        children:
+                            order_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/order
+                            invoice_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/invoice
+                            shipment_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/shipment
+                            creditmemo_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/creditmemo
+         

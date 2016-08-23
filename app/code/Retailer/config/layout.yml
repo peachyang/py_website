@@ -1,6 +1,102 @@
 ---
 retailer_account:
     update: frontend
+    root:
+        children:
+            content:
+                type: Seahinet\Lib\ViewModel\Template
+                template: retailer/account
+                children:
+                    nav:
+                        type: Seahinet\Retailer\ViewModel\Navigation
+                        action:
+                            -
+                                method: addGroup
+                                params: [{label:'Transaction Management',priority:0,icon:'file-text'}]
+                            -
+                                method: addGroup
+                                params: [{label:'Goods Management',priority:10,icon:'file-image-o'}]
+                            -
+                                method: addGroup
+                                params: [{label:'Store Management',priority:20,icon:'bank'}]
+                            -                                   
+                                method: addGroup
+                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/transaction/product',label:'Sold Goods',priority:1,group:'Transaction Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/transaction/comment/',label:'Comment Management',priority:2,group:'Transaction Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/transaction/sale/',label:'After Sale Service',priority:3,group:'Transaction Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/goods/release/',label:'Release Goods',priority:4,group:'Goods Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/goods/sales/',label:'Sales of Goods',priority:5,group:'Goods Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/goods/stock',label:'Stock',priority:6,group:'Goods Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/goods/history',label:'History Record',priority:7,group:'Goods Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'retailer/store/view',label:'View Store',priority:8,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/decoration',label:'Store Decoration',priority:9,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/photo',label:'Photo Space',priority:10,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/mobile',label:'Mobile Phone Store',priority:11,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/cotegory',label:'Goods Category',priority:12,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/settings',label:'Store Settings',priority:13,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/store/brand',label:'Brand Management',priority:14,group:'Store Management'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/marketing/activity',label:'Activity Registration',priority:15,group:'Marketing Center'}]
+                            -
+                                method: addLink
+                                params: [{link:'customer/marketing/promotion',label:'Promotion Management',priority:16,group:'Marketing Center'}] 
+                            -
+                                method: addLink
+                                params: [{link:'customer/marketing/relationship',label:'Member Relationship Management',priority:17,group:'Marketing Center'}] 
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
+retailer_account_dashboard:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/dashboard
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: customer
 retailer_apply:
     update: frontend
     root:

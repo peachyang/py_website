@@ -46,7 +46,7 @@ class Layout extends ArrayObject implements Singleton
     public function getLayout($handler = '', $render = false)
     {
         if (empty($this->storage[$handler])) {
-            return [];
+            return '';
         }
         if ($render) {
             $cache = $this->getContainer()->get('cache');

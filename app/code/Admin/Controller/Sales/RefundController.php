@@ -16,8 +16,9 @@ class RefundController extends AuthActionController
     
     public function viewAction()
     {
-        $root = $this->getLayout('admin_refund_list');
+        $root = $this->getLayout('admin_refund_view');
         return $root;
     }
+    
 
 }

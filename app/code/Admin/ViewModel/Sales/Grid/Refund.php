@@ -10,9 +10,9 @@ class Refund extends Grid
 {
 
     protected $viewUrl = '';
-    protected $deleteUrl = '';
+    protected $printUrl = '';
     protected $translateDomain = 'sales';
-    protected $action = ['getViewAction', 'getDeleteAction'];
+    protected $action = ['getViewAction', 'getPrintAction'];
 
     public function getViewAction($item)
     {
@@ -21,29 +21,27 @@ class Refund extends Grid
                 $this->translate('View') . '</span></a>';
     }
 
-    public function getDeleteAction($item)
+    public function getPrintAction($item)
     {
-        return $item['is_default'] ? false : '<a href="' . $this->getDeleteUrl() .
-                '" data-method="delete" data-params="id=' . $item['id'] .
-                '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
-                '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
-                $this->translate('Delete') . '</span></a>';
+        return '<a href="' . $this->getPrintUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Print') .
+        '"><span class="fa fa-fw fa-print" aria-hidden="true"></span><span class="sr-only">' .
+        $this->translate('Print') . '</span></a>';
+    }
+    
+    public function getPrintUrl()
+    {
+        if ($this->printUrl == '') {
+            $this->printUrl = $this->getAdminUrl('sales_refund/print/');
+        }
+        return $this->printUrl;
     }
 
     public function getViewUrl()
     {
-        if (is_null($this->viewUrl)) {
+        if ($this->viewUrl === '') {
             $this->viewUrl = $this->getAdminUrl('sales_refund/view/');
         }
         return $this->viewUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/sales_refund/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns()

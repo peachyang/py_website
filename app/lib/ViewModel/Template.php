@@ -6,6 +6,7 @@ use Error;
 use Exception;
 use JsonSerializable;
 use Seahinet\Lib\Bootstrap;
+use Seahinet\Lib\Session\Segment;
 
 /**
  * Default view model
@@ -80,6 +81,11 @@ class Template extends AbstractViewModel
             ob_clean();
             return '';
         }
+    }
+
+    public function getSegment($name)
+    {
+        return new Segment($name);
     }
 
 }

@@ -1,0 +1,72 @@
+---
+admin_promotion_list:
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Promotion
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/promotion/',label:'Promotion'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/promotion/edit/',label:'Add New Promotion Rule'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Promotion\Grid\Rule
+admin_promotion_edit:
+    update: edit
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/promotion/',label:'Promotion'}]
+                            -
+                                method: addCrumb
+                                params: [{label:'Edit'}]
+                    edit:
+                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Rule
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - condition
+                                            - Condition
+                                            - 10
+                                    -
+                                        method: addTab
+                                        params:
+                                            - action
+                                            - Action
+                                            - 20
+                                    -
+                                        method: addTab
+                                        params:
+                                            - coupon
+                                            - Coupon
+                                            - 30
+                            condition:
+                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Condition
+                                template: admin/promotion/condition
+                            action:
+                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Action
+                                template: admin/promotion/action
+                            coupon:
+                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Coupon
+                                template: admin/promotion/coupon

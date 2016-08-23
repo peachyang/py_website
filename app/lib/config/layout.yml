@@ -123,6 +123,10 @@ frontend:
                                             - {link:'',label:'Home'}
                                     -
                                         method: addLink
+                                        params: 
+                                            - {link:'retailer/account/',label:'Retailer'}
+                                    -
+                                        method: addLink
                                         params:
                                             -
                                                 link: #

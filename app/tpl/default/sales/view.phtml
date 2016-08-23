@@ -11,7 +11,7 @@ $num = $this->getVariable('key');
     <h3></span><?php echo $this->translate('Order Infomation',[],'sales'); ?></h3>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="<?php echo $title=='view_order'?'active':'' ?>">
-        	<a href="<?php echo $this->getBaseUrl('customer/account/view_order/?order_id='.$order['id'])?>">
+        	<a href="<?php echo $this->getBaseUrl('sales/myorder/view_order/?order_id='.$order['id'])?>">
         		<?php echo $this->translate('Orders') ?>
         	</a>
     	</li>
@@ -20,7 +20,7 @@ $num = $this->getVariable('key');
     	       foreach ($invoices as $key=>$invoice):
     	?>
             <li role="presentation" class="<?php echo $title=='view_invoice' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('customer/account/view_invoice/?order_id='.$order['id'].'&key='.(count($invoices) !== 1 ? $key+1 : ''))?>" >
+                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_invoice/?order_id='.$order['id'].'&key='.(count($invoices) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Invoices'),count($invoices) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>
@@ -31,7 +31,7 @@ $num = $this->getVariable('key');
                 foreach ($shipments as $key=>$shipment):
         ?>
             <li role="presentation" class="<?php echo $title=='view_shipment' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('customer/account/view_shipment/?order_id='.$order['id'].'&key='.(count($shipments) !== 1 ? $key+1 : ''))?>" >
+                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_shipment/?order_id='.$order['id'].'&key='.(count($shipments) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Shipments'),count($shipments) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>
@@ -42,7 +42,7 @@ $num = $this->getVariable('key');
                 foreach ($creditmemos as $key=>$creditmemo):
             ?>
             <li role="presentation" class="<?php echo $title=='view_creditmemo' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('customer/account/view_creditmemo/?order_id='.$order['id'].'&key='.(count($creditmemos) !== 1 ? $key+1 : ''))?>" >
+                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_creditmemo/?order_id='.$order['id'].'&key='.(count($creditmemos) !== 1 ? $key+1 : ''))?>" >
                 	<?php echo $this->translate('Credit Memos'),count($creditmemos) !== 1 ? $key+1 : '' ?>
                 </a>
             </li>

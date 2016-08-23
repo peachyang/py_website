@@ -345,6 +345,23 @@ admin_order_status_edit:
                                 params: [{link:':ADMIN/sales_status/edit/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Sales\Edit\Status
+admin_refund_list:
+    update: grid
+    root:
+        children:
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_status/',label:'Refund Rights'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/sales_status/edit/',label:'Add New Refund'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\Refund
+                        template: admin/grid
 sales_refund:
     update: customer_account
     root:
@@ -359,4 +376,45 @@ sales_refund:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: sales/refund
-                        
+sales_myorder:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Order
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order
+sales_view:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Order
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/view
+                        children:
+                            order_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/order
+                            invoice_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/invoice
+                            shipment_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/shipment
+                            creditmemo_info:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: sales/view/creditmemo
+         

@@ -5,9 +5,9 @@ $orders = $this->getVariable('orders');
 <div class="col-xs-9 col-sm-9 col-md-10 wishlist">
     <h3></span><?php echo $this->translate('Refund Rights'); ?></h3>
     <table class="table">
+        <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
         	<?php 
-        if (!empty($orders)) : ?>
-            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+            if (!empty($orders)) : ?>
                 <tr>
                 	<td><?php echo $this->translate('Order ID')?></td>
                 	<td colspan="3">
@@ -24,15 +24,20 @@ $orders = $this->getVariable('orders');
                 	<td colspan="3"><textarea rows="2" cols="20" name="comment"></textarea></td>
                 </tr>
                 <tr>
+                	<td><?php echo $this->translate('Carrier')?></td>
+                	<td colspan="3"><input type="text" name="carrier"></td>
+                </tr>
+                <tr>
+                	<td><?php echo $this->translate('Track Number')?></td>
+                	<td colspan="3"><input type="text" name="track_number"></td>
+                </tr>
+                <tr>
                 	<td></td>
                 	<td colspan="3">
-                		<input type="hidden" name="customer_id" value="<?php echo $orders[0]['customer_id'];?>">
                 		<button type="submit" class="btn btn-info">提交</button>
                 	</td>
                 </tr>
-            </form>
-        <?php else:?>
-            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+        	<?php else:?>
                 <tr>
                 	<td><?php echo $this->translate('Order ID')?></td>
                 	<td colspan="3">
@@ -44,12 +49,20 @@ $orders = $this->getVariable('orders');
                 	<td colspan="3"><textarea rows="2" cols="20" name="comment"></textarea></td>
                 </tr>
                 <tr>
+                	<td><?php echo $this->translate('Carrier')?></td>
+                	<td colspan="3"><input type="text" name="carrier"></td>
+                </tr>
+                <tr>
+                	<td><?php echo $this->translate('Track Number')?></td>
+                	<td colspan="3"><input type="text" name="track_number"></td>
+                </tr>
+                <tr>
                 	<td></td>
                 	<td colspan="3">
                 		<button type="submit" class="btn btn-info">提交</button>
                 	</td>
                 </tr>
-            </form>
-        <?php endif; ?>
+        	<?php endif; ?>
+        </form>
     </table>
 </div>

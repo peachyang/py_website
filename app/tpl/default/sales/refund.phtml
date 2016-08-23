@@ -5,9 +5,9 @@ $orders = $this->getVariable('orders');
 <div class="col-xs-9 col-sm-9 col-md-10 wishlist">
     <h3></span><?php echo $this->translate('Refund Rights'); ?></h3>
     <table class="table">
+        <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
         	<?php 
-        if (!empty($orders)) : ?>
-            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+            if (!empty($orders)) : ?>
                 <tr>
                 	<td><?php echo $this->translate('Order ID')?></td>
                 	<td colspan="3">
@@ -30,9 +30,7 @@ $orders = $this->getVariable('orders');
                 		<button type="submit" class="btn btn-info">提交</button>
                 	</td>
                 </tr>
-            </form>
-        <?php else:?>
-            <form action="<?php echo $this->getBaseUrl('/sales/refund/saveRefund/')?>" method="post">
+        	<?php else:?>
                 <tr>
                 	<td><?php echo $this->translate('Order ID')?></td>
                 	<td colspan="3">
@@ -49,7 +47,7 @@ $orders = $this->getVariable('orders');
                 		<button type="submit" class="btn btn-info">提交</button>
                 	</td>
                 </tr>
-            </form>
-        <?php endif; ?>
+        	<?php endif; ?>
+        </form>
     </table>
 </div>

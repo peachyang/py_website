@@ -124,7 +124,7 @@ frontend:
                                     -
                                         method: addLink
                                         params: 
-                                            - {link:'retailer/account/',label:'Retailer'}
+                                            - {link:'retailer/account/',label:'Retailer Center'}
                                     -
                                         method: addLink
                                         params:

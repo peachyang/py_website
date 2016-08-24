@@ -51,28 +51,28 @@ retailer_account:
                                 params: [{link:'customer/store/decoration',label:'Store Decoration',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/photo',label:'Photo Space',priority:10,group:'Store Management'}]
+                                params: [{link:'retailer/store/photo',label:'Photo Space',priority:10,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/mobile',label:'Mobile Phone Store',priority:11,group:'Store Management'}]
+                                params: [{link:'retailer/store/mobile',label:'Mobile Phone Store',priority:11,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/cotegory',label:'Goods Category',priority:12,group:'Store Management'}]
+                                params: [{link:'retailer/store/cotegory',label:'Goods Category',priority:12,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/settings',label:'Store Settings',priority:13,group:'Store Management'}]
+                                params: [{link:'retailer/store/settings',label:'Store Settings',priority:13,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/brand',label:'Brand Management',priority:14,group:'Store Management'}]
+                                params: [{link:'retailer/store/brand',label:'Brand Management',priority:14,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/marketing/activity',label:'Activity Registration',priority:15,group:'Marketing Center'}]
+                                params: [{link:'retailer/marketing/activity',label:'Activity Registration',priority:15,group:'Marketing Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/marketing/promotion',label:'Promotion Management',priority:16,group:'Marketing Center'}] 
+                                params: [{link:'retailer/marketing/promotion',label:'Promotion Management',priority:16,group:'Marketing Center'}] 
                             -
                                 method: addLink
-                                params: [{link:'customer/marketing/relationship',label:'Member Relationship Management',priority:17,group:'Marketing Center'}] 
+                                params: [{link:'retailer/marketing/relationship',label:'Member Relationship Management',priority:17,group:'Marketing Center'}] 
                     messages:
                         action:
                             -
@@ -115,3 +115,17 @@ retailer_processing:
                     notice:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/apply/processing
+retailer_store_settings:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store Settings
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/settings

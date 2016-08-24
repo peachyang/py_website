@@ -49,8 +49,8 @@ class Template extends AbstractViewModel
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);
             } else if (file_exists($template . '.phtml')) {
                 $rendered = $this->getRendered($template . '.phtml');
-            } else if (file_exists($template = BP . 'app/tpl/default/' . $this->getTemplate())) {
-                $rendered = $this->getRendered($template . '.phtml');
+            } else if (file_exists($template = BP . 'app/tpl/default/' . $this->getTemplate() . '.phtml')) {
+                $rendered = $this->getRendered($template);
             } else {
                 $rendered = '';
             }
@@ -78,7 +78,7 @@ class Template extends AbstractViewModel
             return ob_get_clean();
         } catch (Error $e) {
             $this->getContainer()->get('log')->logError($e);
-            ob_clean();
+            ob_end_clean();
             return '';
         }
     }

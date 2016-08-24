@@ -315,7 +315,6 @@ class AccountController extends AuthActionController
         if ($customerId = $segment->get('customer')->getId()) {
             $customer = new Model;
             $customer->load($customerId);
-
             $root = $this->getLayout('customer_account_dashboard');
             $root->getChild('main', true)->setVariable('customer', $customer);
             return $root;
@@ -347,10 +346,10 @@ class AccountController extends AuthActionController
                 $result['error'] = 1;
                 $url = 'customer/account/personalInfo/';
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
-                $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
                 $url = 'customer/account/personalInfo/';
-            } else if ($result['error'] === 0) {
+            }else if ($result['error'] === 0) {
                 $model = new Model;
                 $model->load($customer['id']);
                 $model->setData($data);
@@ -372,12 +371,11 @@ class AccountController extends AuthActionController
         $customerId = $segment->get('customer')->getId();
         $addresses = new Addresses;
         $addresses->where(['customer_id' => $customerId]);
-
         $root = $this->getLayout('customer_account_address');
         $root->getChild('main', true)->setVariable('addresses', $addresses);
         return $root;
     }
-
+       
     public function delAddressAction()
     {
         $address = new Address;

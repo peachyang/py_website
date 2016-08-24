@@ -190,6 +190,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .track dt span{margin-right:10px;color:#007dc6}
 .main-container .track dt .browse{padding-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
 .main-container .track dd li{text-align:center;margin:0 10px}
+.main-container .track dd p{height:40px;text-align:left;overflow-y:hidden}
 .customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
 .customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
 .customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 

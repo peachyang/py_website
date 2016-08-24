@@ -14,6 +14,7 @@ $products = $this->getProducts();
             $current = '';
             foreach ($products as $item) :
                 $product = new \Seahinet\Catalog\Model\Product;
+                $currency = $product->getCurrency();
                 $product->load($item['product_id']);
                 $date = date('Y-m-d', strtotime($item['created_at']));
                 if (!isset($num[$item['product_id']])) :
@@ -27,9 +28,9 @@ $products = $this->getProducts();
                     <dt>
                         <span class="fa fa-circle-o" aria-hidden="true"></span>
                         <span><?php echo $date ?></span>
-                        <span class="browse">
-                            <?php echo $this->translate('Total %d item(s)', [count($products)]); ?>
-                        </span>
+                       <!-- <span class="browse">
+                            <?php //echo $this->translate('Total %d item(s)', [count($products)]); ?>
+                        </span>-->
                     </dt>
                     <?php
                     $current = $date;
@@ -50,6 +51,7 @@ $products = $this->getProducts();
                                 <?php endif ?>
                             </a>
                             <p><?php echo $product['name']; ?></p>
+                            <strong><?php echo $product['special_price'] ? $currency->format($product['special_price']) : $currency->format($product['price']) ?></strong>
                             <div class="action">
                                 <a href="<?php
                                 echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $item['id'] .

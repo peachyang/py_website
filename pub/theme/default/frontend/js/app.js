@@ -189,6 +189,7 @@
     $('img.bttrlazyloading').each(function () {
         $(this).bttrlazyloading();
     });
+    
     $('.qty .spin').click(function () {
         var t = $('#' + $(this).attr('for'));
         var v = parseFloat($(t).val());
@@ -203,5 +204,10 @@
             $(t).trigger('change.seahinet');
         }
     });
+    
+    $("#modal-navigation-address .btn-save").click(function(){
+    window.location.reload();
+    window.location.reload();
+   });
 }));
 

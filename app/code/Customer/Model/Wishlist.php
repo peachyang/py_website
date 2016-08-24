@@ -6,6 +6,7 @@ use Seahinet\Customer\Model\Collection\Wishlist\Item as Collection;
 use Seahinet\Customer\Model\Wishlist\Item as Model;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\I18n\Model\Currency;
 
 class Wishlist extends AbstractModel
 {

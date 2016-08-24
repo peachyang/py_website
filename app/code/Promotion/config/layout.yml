@@ -24,6 +24,11 @@ admin_promotion_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/promotion.js',async:'async',defer:'defer'}]
             content:
                 children:
                     breadcrumb:
@@ -61,12 +66,13 @@ admin_promotion_edit:
                                             - coupon
                                             - Coupon
                                             - 30
-                            condition:
-                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Condition
-                                template: admin/promotion/condition
-                            action:
-                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Action
-                                template: admin/promotion/action
-                            coupon:
-                                type: Seahinet\Admin\ViewModel\Promotion\Edit\Coupon
-                                template: admin/promotion/coupon
+                                children:
+                                    condition:
+                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Condition
+                                        template: admin/promotion/condition
+                                    action:
+                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Action
+                                        template: admin/promotion/action
+                                    coupon:
+                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Coupon
+                                        template: admin/promotion/coupon

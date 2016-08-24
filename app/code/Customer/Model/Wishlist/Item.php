@@ -23,4 +23,10 @@ class Item extends AbstractModel
         return $product;
     }
 
+    public function afterRemove()
+    {
+        $this->flushList('wishlist');
+        parent::afterRemove();
+    }
+
 }

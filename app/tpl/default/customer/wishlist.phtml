@@ -3,7 +3,6 @@ $wishlists = $this->getVariable('wishlists');
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 ?>
-
 <div class="wishlist">
     <h3></span><?php echo $this->translate('My Wishlist'); ?></h3>
     <form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
@@ -21,8 +20,9 @@ $warehouse->load(1);
                 $product = new \Seahinet\Catalog\Model\Product;
                 $product->load($item['product_id']);
                 $thumbnail = $product->getThumbnail();
+                $currency = $product->getCurrency();
                 ?>               
-                <dl class="col-lg-12 col-xs-12 wishlist_list">
+                <dl class="col-lg-12 col-xs-12 wishlist_list" id="modal-navigation-wishlist">
                     <dt class="col-lg-6 col-xs-12 product_name">
                         <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->name ?>" >
                             <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" class="img-thumbnail" width="150" />
@@ -30,13 +30,14 @@ $warehouse->load(1);
                         <h4><?php echo $item['product_name'] ?></h4>
                         <p><span><?php echo $this->translate('Wishlist Time') ?>：</span><?php echo date('Y-m-d', strtotime($item['added_at'])); ?></p>
                     </dt>
-                    <dd class="col-lg-3 col-xs-12 product_price"><p><?php echo $product['special_price'] ? $product['special_price'] : $product['price'] ?></p></dd>
+                    <dd class="col-lg-3 col-xs-12 product_price"><p><?php echo $product['special_price'] ? $currency->format($product['special_price']) : $currency->format($product['price']) ?></p></dd>
                     <dd class="col-lg-3 col-xs-12 product_edit">
                         <a href="<?php
                         echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
                                 '&warehouse_id=1&qty=1&csrf=' . $this->getCsrfKey())
                         ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a>
-                        <a href="<?php echo $this->getBaseUrl('customer/account/delete/?id='), $item['id'] ?>" ><?php echo $this->translate('Delete') ?></a>
+                        <a class="btn-delete" href="<?php echo $this->getBaseUrl('customer/account/delete/?id='), $item->getId() ?>"><?php echo $this->translate('Delete') ?>
+                        </a>
                     </dd>
                 </dl>
                 <?php

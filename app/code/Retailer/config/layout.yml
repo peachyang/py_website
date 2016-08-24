@@ -24,7 +24,7 @@ retailer_account:
                                 params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/transaction/product',label:'Sold Goods',priority:1,group:'Transaction Management'}]
+                                params: [{link:'retailer/transaction/goods',label:'Sold Goods',priority:1,group:'Transaction Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/transaction/comment/',label:'Comment Management',priority:2,group:'Transaction Management'}]
@@ -129,3 +129,31 @@ retailer_store_settings:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/settings
+retailer_goods:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Goods
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/goods
+retailer_order_view:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Order View
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/orderview

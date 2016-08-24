@@ -456,7 +456,7 @@ class AccountController extends AuthActionController
         $item = new Item;
         $data = $this->getRequest()->getQuery();
         if (isset($data['id'])) {
-            $item->setData('id', $data['id'])->remove();
+            $item->load($data['id'])->remove();
         }
         return $this->redirect('customer/account/wishlist/');
     }

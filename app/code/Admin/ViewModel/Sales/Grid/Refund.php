@@ -10,9 +10,10 @@ class Refund extends Grid
 {
 
     protected $viewUrl = '';
-    protected $printUrl = '';
+    protected $holdUrl = '';
+    protected $unholdUrl = '';
     protected $translateDomain = 'sales';
-    protected $action = ['getViewAction', 'getPrintAction'];
+    protected $action = ['getViewAction', 'getHoldAction', 'getUnholdAction'];
 
     public function getViewAction($item)
     {
@@ -20,21 +21,36 @@ class Refund extends Grid
                 '"><span class="fa fa-fw fa-search" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('View') . '</span></a>';
     }
-
-    public function getPrintAction($item)
+    public function getHoldAction($item)
     {
-        return '<a href="' . $this->getPrintUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Print') .
-        '"><span class="fa fa-fw fa-print" aria-hidden="true"></span><span class="sr-only">' .
-        $this->translate('Print') . '</span></a>';
+        return $item['status'] == 1 ? ('<a href="' . $this->getHoldUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Processing') .
+            '"><span class="fa fa-fw fa-pause-circle-o" aria-hidden="true"></span><span class="sr-only">' .
+            $this->translate('Processing') . '</span></a>') : false;
     }
     
-    public function getPrintUrl()
+    public function getHoldUrl()
     {
-        if ($this->printUrl == '') {
-            $this->printUrl = $this->getAdminUrl('sales_refund/print/');
+        if ($this->holdUrl=='') {
+            $this->holdUrl = $this->getAdminUrl('sales_refund/processing/');
         }
-        return $this->printUrl;
+        return $this->holdUrl;
     }
+    
+    public function getUnholdAction($item)
+    {
+        return $item['status'] == 0 ? ('<a href="' . $this->getUnholdUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Complete') .
+            '"><span class="fa fa-fw fa-play-circle-o" aria-hidden="true"></span><span class="sr-only">' .
+            $this->translate('Complete') . '</span></a>') : false;
+    }
+    
+    public function getUnholdUrl()
+    {
+        if ($this->unholdUrl=='') {
+            $this->unholdUrl = $this->getAdminUrl('sales_refund/complete/');
+        }
+        return $this->unholdUrl;
+    }
+    
 
     public function getViewUrl()
     {

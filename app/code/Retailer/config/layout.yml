@@ -30,7 +30,7 @@ retailer_account:
                                 params: [{link:'retailer/transaction/comment/',label:'Comment Management',priority:2,group:'Transaction Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/transaction/sale/',label:'After Sale Service',priority:3,group:'Transaction Management'}]
+                                params: [{link:'retailer/transaction/after/',label:'After Service',priority:3,group:'Transaction Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/goods/release/',label:'Release Goods',priority:4,group:'Goods Management'}]
@@ -171,3 +171,31 @@ retailer_comment:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/comment
+retailer_after:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer After Service
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/after
+retailer_after_view:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer After Service View
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/afterview

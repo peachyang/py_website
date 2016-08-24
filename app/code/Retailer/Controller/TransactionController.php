@@ -69,5 +69,31 @@ class TransactionController extends AuthActionController
         $root = $this->getLayout('retailer_comment');
         return $root;
     }
+    
+    /** 
+    * commentAction  
+    * View the comment information
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    public function afterAction()
+    {
+        $root = $this->getLayout('retailer_after');
+        return $root;
+    }
+    
+    /** 
+    * afterviewAction  
+    * View the after service information
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    public function afterviewAction()
+    {
+        $root = $this->getLayout('retailer_after_view');
+        return $root;
+    }
 
 }

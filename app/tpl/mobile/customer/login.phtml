@@ -1,0 +1,58 @@
+<header class="header">
+	<a href="#" onClick=”javascript:history.back(-1);” class="fa fa-angle-left headimg-left"></a>
+    <div class="container">
+        <?php echo $this->translate('Welcome - Login') ?>
+    </div>
+</header>
+<div class="main-container">
+    <main class="col-main container">
+        <form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <?php if ($success = $this->getQuery('success_url') || !$this->getContainer()->get('config')['customer/login/redirect_dashboard']): ?>
+                <input type="hidden" name="success_url" value="<?php echo $success ? base64_decode($success) : $this->getRequest()->getHeader('HTTP_REFERER') ?>" />
+            <?php endif ?>
+            <div class="fieldset col-xs-12 pull-right">
+                <?php echo $this->getChild('messages') ?>
+                <div class="input-box">
+                    <label class="sr-only control-label required" for="login:username"><?php echo $this->translate('Username') ?></label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></div>
+                        <input type="text" name="username" id="login:username" class="form-control required input-login" spellcheck="false" placeholder="<?php echo $this->translate('Username/Email') ?>" />
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label class="sr-only control-label required" for="login:password"><?php echo $this->translate('Password') ?></label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="fa fa-lock" aria-hidden="true"></span></div>
+                        <input type="password" name="password" id="login:password" class="form-control required input-login" minlength="6" placeholder="<?php echo $this->translate('Password') ?>" />
+                    </div>
+                </div>
+                <?php
+                if (in_array('login', $this->getConfig()['customer/captcha/form']) && ($this->getConfig()['customer/captcha/mode'] == 0 || $this->getConfig()['customer/captcha/attempt'] <= (new \Seahinet\Lib\Session\Segment('customer'))->get('fail2login'))):
+                    ?>
+                    <div class="input-box">
+                        <label for="login:captcha" class="control-label required"><?php echo $this->translate('Captcha') ?>: </label>
+                        <div class="cell">
+                            <input type="text" name="captcha" class="form-control required captcha" maxlength="5" autocomplete="off" spellcheck="false" id="login:captcha" />
+                            <img src="<?php echo $this->getBaseUrl('customer/account/captcha/') ?>" alt="" class="captcha" height="26" width="70" />
+                        </div>
+                    </div>
+                <?php endif ?>
+                <div class="additional clearfix">
+                	<input type="checkbox" id="login:forever" name="forever">
+                    <label for="login:forever"><?php echo $this->translate('Remember Username') ?></label>
+                </div>
+                <div class="buttons-set">
+                    <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Log in') ?></span></button>
+                </div>
+                <?php echo $this->getChild('oauth') ?>
+            </div>
+        </form>
+    </main>
+    <div class="register">
+        <a href="" class="pull-left fa fa-qq"><span class="text-color"> <?php echo $this->translate('QQ Login') ?></span></a> 
+        <a href="" class="pull-left fa fa-wechat"><span class="text-color"> <?php echo $this->translate('WeChat Login') ?></span></a> 
+        <a href="<?php echo $this->getBaseUrl('customer/account/create/'), $success ? '?success_url=' . $success : '' ?>" class="pull-right"><?php echo $this->translate('Create an Account') ?></a> 
+        <a href="<?php echo $this->getBaseUrl('customer/account/forgotpwd/') ?>" class="pull-right"><?php echo $this->translate('Forgot Your Password?') ?></a>
+    </div>
+</div>

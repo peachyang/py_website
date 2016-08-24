@@ -8,11 +8,11 @@ use Seahinet\Lib\Source\SourceInterface;
 class Group implements SourceInterface
 {
 
-    public function getSourceArray()
+    public function getSourceArray($flag = false)
     {
         $collection = new Collection;
         $collection->columns(['id', 'name']);
-        $record = [];
+        $record = $flag ? [0 => 'Not Logged In'] : [];
         foreach ($collection as $item) {
             $record[$item['id']] = $item['name'];
         }

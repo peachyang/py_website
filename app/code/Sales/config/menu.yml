@@ -28,3 +28,7 @@ sales:
             link: 'sales_status/'
             title: Order Statuses
             priority: 60
+        -
+            link: 'sales_refund/'
+            title: Refund Rights
+            priority: 70

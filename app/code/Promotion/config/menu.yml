@@ -1,0 +1,6 @@
+---
+promotion:
+    icon: gift
+    link: promotion/
+    title: Promotion
+    priority: 40

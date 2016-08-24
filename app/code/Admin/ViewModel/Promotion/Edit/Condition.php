@@ -7,6 +7,4 @@ use Seahinet\Lib\ViewModel\Template;
 class Condition extends Template
 {
 
-    
-
 }

@@ -123,9 +123,9 @@ abstract class AbstractViewModel implements Serializable
     public function getCsrfKey()
     {
         if (is_null($this->csrf)) {
-            $this->csrf = new Csrf;
+            $this->csrf = (new Csrf)->getValue();
         }
-        return $this->csrf->getValue();
+        return $this->csrf;
     }
 
     /**

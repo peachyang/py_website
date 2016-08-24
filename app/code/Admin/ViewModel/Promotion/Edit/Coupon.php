@@ -7,11 +7,15 @@ use Seahinet\Promotion\Model\Collection\Coupon as Collection;
 
 class Coupon extends Template
 {
-
+    
     public function getCoupons()
     {
-        $collection = new Collection;
-        return $collection;
+        if ($id = $this->getQuery('id')) {
+            $collection = new Collection;
+            $collection->where(['promotion_id' => $id])
+                    ->order('status DESC');
+            return $collection;
+        }
+        return [];
     }
-
 }

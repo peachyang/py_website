@@ -33,12 +33,14 @@ $query = $this->getQuery();
         </thead>
         <tbody>
             <?php foreach ($this->getVariable('collection') as $item): ?>
-                <tr<?php if (!$this->getMessAction() && is_callable([$this, 'getRowLink'])): ?> data-href="<?php echo $this->getRowLink($item) ?>"<?php endif;
-            if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                    <?php if ($this->getMessAction()): ?>
+                <tr<?php if (!$this->getMessAction() && is_callable([$this, 'getRowLink'])): ?> data-href="<?php echo $this->getRowLink($item) ?>"<?php
+                endif;
+                if (isset($item['id'])):
+                    ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                                                                                                    <?php if ($this->getMessAction()): ?>
                         <td class="text-center checkbox"><input type="checkbox" name="id[]" value="<?php echo $item['id'] ?>" /></td>
                     <?php endif ?>
-                        <?php foreach ($attributes as $attr => $name): ?>
+                    <?php foreach ($attributes as $attr => $name): ?>
                         <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
                             <?php
                             if (isset($name['editable']) && $name['editable']) {
@@ -53,7 +55,7 @@ $query = $this->getQuery();
                             ?>
                         </td>
                     <?php endforeach ?>
-                        <?php if ($this->getAction()): ?>
+                    <?php if ($this->getAction()): ?>
                         <td class="text-center action">
                             <?php
                             foreach ($this->getAction() as $action) {
@@ -63,11 +65,11 @@ $query = $this->getQuery();
                             }
                             ?>
                         </td>
-                <?php endif ?>
+                    <?php endif ?>
                 </tr>
-        <?php endforeach ?>
+            <?php endforeach ?>
         </tbody>
-<?php if ($this->getMessAction()): ?>
+        <?php if ($this->getMessAction()): ?>
             <tfoot>
                 <tr>
                     <td class="checkbox">
@@ -85,6 +87,6 @@ $query = $this->getQuery();
                     </td>
                 </tr>
             </tfoot>
-<?php endif ?>
+        <?php endif ?>
     </table>
 </div>

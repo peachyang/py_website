@@ -3,7 +3,9 @@
 namespace Seahinet\Admin\Controller;
 
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Promotion\Model\Coupon;
 use Seahinet\Promotion\Model\Rule as Model;
+use Zend\Math\Rand;
 
 class PromotionController extends AuthActionController
 {
@@ -52,6 +54,33 @@ class PromotionController extends AuthActionController
                     }
                 }
         );
+    }
+
+    public function deleteCouponAction()
+    {
+        return $this->doDelete('\\Seahinet\\Promotion\\Model\\Coupon');
+    }
+
+    public function generateCouponAction()
+    {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $data = $this->getRequest()->getPost();
+            if (!isset($data['coupon'])) {
+                $data['coupon'] = ['code' => []];
+            } else if (!isset($data['count'])) {
+                $data['count'] = 0;
+            }
+            $result = [];
+            for ($i = 0; $i < $data['count'];) {
+                $code = Rand::getString(10, 'abcdefghijkmnopqrstuvwxyz23456789ABCDEFGHJKLMNPQRSTUVWXYZ');
+                if (!in_array($code, $result) && !in_array($code, $data['coupon']['code']) && !(new Coupon)->load($code, 'code')->getId()) {
+                    $result[] = $code;
+                    $i++;
+                }
+            }
+            return $result;
+        }
+        return $this->notFoundAction();
     }
 
 }

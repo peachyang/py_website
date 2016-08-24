@@ -1,0 +1,141 @@
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+    <h3><?php echo $this->translate('Comment Management'); ?></h3>
+    
+    <div id="scarch_order">
+        <form method="get">
+            <div >
+                <span>商品名称:</span>
+                <input type="text" value="" name="good_name" />
+                <span>买家:</span>
+                <input type="text" value="" name="buyer_name" />
+                <span>评论内容:</span>
+                <input type="text" value="" name="keyword" />
+                <input type="submit" value="搜索" class="btn">
+            </div>
+        </form>
+    </div>
+    <br /><br />
+    
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <th><input type="checkbox" class="checkall" id="all"></th>
+                <th colspan="3">
+                    <label for="all"><span class="all">全选</span></label>
+                    <a href="javascript:void(0);">删除</a>
+                </th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value=""></td>
+                <td>
+                    <a target="_blank" href="#">test</a>
+                </td>
+                <td>
+                    <span>Stone</span>
+                </td>
+                <td>
+                    <a href="#">删除</a>&nbsp;&nbsp;
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-reply"> 编辑回复</a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <p><span>评论内容:</span> <span>2016-08-24 16:19:33</span></p>
+                    <p>hello3</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <p><span>我的回复:</span><span>2016-08-24 16:20:55</span></p>
+                    <p><span>what3?</span></p>
+                </td>
+            </tr>
+            <tr><td colspan="4"><hr/></td></tr>
+            <tr>
+                <td><input type="checkbox" class="checkitem" value=""></td>
+                <td>
+                    <a target="_blank" href="#">test</a>
+                </td>
+                <td>
+                    <span>tomorrow_sun2</span>
+                </td>
+                <td>
+                    <a href="#">删除</a>&nbsp;&nbsp;
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-reply">回复</a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <p><span>评论内容:</span><span>2016-08-24 16:19:24</span></p>
+                    <p>heelo2</p>
+                </td>
+            </tr>
+            <tr><td colspan="4"><hr/></td></tr>
+            <tr>
+                <td><input type="checkbox" class="checkitem" value="12"></td>
+                <td>
+                    <a target="_blank" href="#">test</a>
+                </td>
+                <td ><span>游客</span></td>
+                <td>
+                    <a href="#">删除</a>&nbsp;&nbsp;
+                    <a href="href="javascript:void(0);" data-toggle="modal" data-target="#modal-reply"">回复</a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <p><span>评论内容:</span><span>2016-08-24 16:19:15</span></p>
+                    <p>hello1</p>
+                </td>
+            </tr>
+            <tr><td colspan="4"><hr/></td></tr>
+            <tr>
+                <th><input type="checkbox" class="checkall" id="all2"></th>
+                <th colspan="3">
+                    <p>
+                        <label for="all2"><span class="all">全选</span></label>
+                        <a href="#">删除</a>
+                    </p>
+                    <div style="text-align: right;">
+                        <a>共 3 个项目</a>
+                        <a href="#">上一页</a>
+                        <a href="#">1</a>
+                        <span>1 / 1</span>
+                        <a href="#">下一页</a>
+                    </div>
+                </th>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="modal-reply" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="replyModalLabel">回复评论</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>
+                            <h3>评论内容:</h3>
+                            <p><label>hello3</label></p>
+                        </li>
+                        <li>
+                            <h3>回复评论:</h3>
+                            <p><textarea name="content">what3?</textarea><br></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -6,6 +6,10 @@ use Exception;
 use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Lib\Session\Segment;
 
+/** 
+* Retailer submenu transaction controller
+* 
+*/  
 class TransactionController extends AuthActionController
 {
 
@@ -50,6 +54,19 @@ class TransactionController extends AuthActionController
     public function orderviewAction()
     {
         $root = $this->getLayout('retailer_order_view');
+        return $root;
+    }
+    
+    /** 
+    * commentAction  
+    * View the comment information
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    public function commentAction()
+    {
+        $root = $this->getLayout('retailer_comment');
         return $root;
     }
 

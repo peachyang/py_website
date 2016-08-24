@@ -157,3 +157,17 @@ retailer_order_view:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/orderview
+retailer_comment:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Comment Management
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/comment

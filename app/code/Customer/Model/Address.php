@@ -30,7 +30,7 @@ class Address extends Entity
         if (isset($this->storage['is_default']) && $this->storage['is_default']) {
             $collection = new Collection;
             $collection->where(['is_default' => '1', 'customer_id' => $this->storage['customer_id']])
-            ->where->notEqualTo('id', $this->getId());
+                       ->where->notEqualTo('id', $this->getId());
             foreach ($collection as $item) {
                 $address = new static($this->languageId, $item);
                 $address->setData('is_default', '0')->save();

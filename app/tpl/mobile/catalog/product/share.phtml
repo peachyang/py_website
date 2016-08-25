@@ -1,0 +1,29 @@
+<?php
+$medias = $this->getMedia();
+?>
+<ul class="col-xs-12 links list-inline">
+    <li class="hidden-xs">
+        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add') ?>">
+            <span class="fa fa-star" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Add to Wishlist'); ?></span>
+        </a>
+    </li>
+    <?php if ($medias): ?>
+    <li class="dropdown share">
+        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="fa fa-share-alt" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Share'); ?></span>
+        </a>
+        <ul class="dropdown-menu">
+            <?php foreach ($medias as $media): ?>
+            <li>
+                <a href="<?php echo $this->getLink($media['link']) ?>" class="<?php echo $media['label'] ?>" rel="nofollow">
+                    <span class="fa fa-fw fa-<?php echo $media['icon'] ?>"></span>
+                    <span><?php echo $this->translate('Share to '), $this->translate($media['label']) ?></span>
+                </a>
+            </li>
+            <?php endforeach ?>
+        </ul>
+    </li>
+    <?php endif ?>
+</ul>

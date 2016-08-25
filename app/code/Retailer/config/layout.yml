@@ -213,3 +213,17 @@ retailer_goods_release:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/release
+retailer_store_category:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store Categories
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/category

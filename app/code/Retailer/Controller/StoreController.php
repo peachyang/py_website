@@ -7,6 +7,10 @@ use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
 
+/** 
+* Retailer submenu store management controller
+* 
+*/  
 class StoreController extends AuthActionController
 {
 
@@ -23,10 +27,30 @@ class StoreController extends AuthActionController
         }
         return $root;
     }
-    
+
+    /** 
+    * settingsAction  
+    * Show release good view
+    * 
+    * @access public 
+    * @return object 
+    */
     public function settingsAction()
     {
         $root = $this->getLayout('retailer_store_settings');
+        return $root;
+    }
+    
+    /** 
+    * cotegoryAction  
+    * Show category management view
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function cotegoryAction()
+    {
+        $root = $this->getLayout('retailer_store_category');
         return $root;
     }
 

@@ -255,3 +255,31 @@ retailer_brand:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/brand
+retailer_activity:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Activity Registration
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/activity
+retailer_activity_view:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer After Activity View
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/activityview

@@ -241,4 +241,17 @@ retailer_store_photo:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/photo
-
+retailer_brand:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Brand Management
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/brand

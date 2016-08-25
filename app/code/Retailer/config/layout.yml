@@ -199,3 +199,17 @@ retailer_after_view:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/afterview
+retailer_goods_release:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Release Goods
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/release

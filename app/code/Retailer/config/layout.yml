@@ -227,3 +227,18 @@ retailer_store_category:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/category
+retailer_store_photo:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Photo Sapce
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/photo
+

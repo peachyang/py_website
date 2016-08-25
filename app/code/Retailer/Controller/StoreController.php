@@ -53,5 +53,17 @@ class StoreController extends AuthActionController
         $root = $this->getLayout('retailer_store_category');
         return $root;
     }
+    
+    /** 
+    * photoAction  
+    * Show photo management view
+    * @access public 
+    * @return object 
+    */
+    public function photoAction()
+    {
+        $root = $this->getLayout('retailer_store_photo');
+        return $root;
+    }
 
 }

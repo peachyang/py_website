@@ -30,7 +30,7 @@ if (count($tabs)):
             if ($this->hasTab($id)):
                 ?>
                 <div role="tabpanel" class="tab-pane table fade" id="tab-<?php echo $id ?>">
-                    <?php echo $this->$id ?>
+                    <?php echo $this->getChild($id)->setVariable('model', $this->getVariable('model')) ?>
                 </div>
                 <?php
             endif;

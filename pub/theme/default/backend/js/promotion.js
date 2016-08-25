@@ -1,8 +1,8 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(["jquery"], factory);
+        define(["jquery", "jquery.validate"], factory);
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory(require(["jquery"]));
+        module.exports = factory(require(["jquery", "jquery.validate"]));
     } else {
         factory(jQuery);
     }
@@ -12,8 +12,65 @@
             $(this).parent('li').before(function () {
                 return $($(this).parent('ul').data('tmpl')).html();
             });
-        }).on('change', 'select', function () {
-            $(this).find(':selected').text();
+        }).on('change', 'select:not([name])', function () {
+            var selected = $(this).find(':selected');
+            var value = $('#tmpl-condition-value-' + $(this).val());
+            var html = '';
+            if ($(selected).is('[data-type]')) {
+                html = $('#tmpl-condition-' + $(selected).data('type')).html().replace('{$identifier}', $(this).val())
+                        .replace('{$identifier_text}', $(selected).text());
+                if (value.length) {
+                    html = html.replace('{$value}', $(value).html());
+                }
+            } else if (value.length) {
+                html = $(value).html();
+            }
+            $(this).after(html).remove();
+        }).on('click', '.delete', function () {
+            $(this).parents('li').first().remove();
+        });
+        $('.handler').on('click', '.add', function () {
+            $(this).parent('li').before(function () {
+                return $($(this).parent('ul').data('tmpl')).html();
+            });
+        }).on('change', 'select:not([name])', function () {
+            var selected = $(this).find(':selected');
+            var value = $('#tmpl-handler-value-' + $(this).val());
+            var html = '';
+            if ($(selected).is('[data-type]')) {
+                html = $('#tmpl-handler-' + $(selected).data('type')).html().replace('{$identifier}', $(this).val())
+                        .replace('{$identifier_text}', $(selected).text());
+                if (value.length) {
+                    html = html.replace('{$value}', $(value).html());
+                }
+            } else if (value.length) {
+                html = $(value).html();
+            }
+            $(this).after(html).remove();
+        }).on('click', '.delete', function () {
+            $(this).parents('li').first().remove();
+        });
+        $('.edit form').on('submit', function () {
+            if ($(this).valid()) {
+                $('.tree .children select:not([name])').parent('li').remove();
+                $('.tree .children').each(function () {
+                    if (!$(this).children('li:not(.last)').length) {
+                        $(this).parent('li').remove();
+                    }
+                });
+                $('.tree').each(function () {
+                    var c = 1;
+                    $(this).find('li').each(function () {
+                        $(this).children('.title').find('[name]').each(function () {
+                            $(this).attr('name', $(this).attr('name').replace('[]', '[' + c + ']'));
+                        });
+                        c++;
+                    });
+                    $(this).find('[name*="[pid]"]').each(function () {
+                        $(this).val($(this).parents('.children').first().siblings('.title').find('[name]').first().attr('name').replace(/.+\[(\d+)\]$/, '$1'));
+                    });
+                });
+            }
         });
         var addCoupon = function (code) {
             $('.coupon .target').prepend($('#tmpl-coupon').html().replace('{$code}', code ? code : ''));

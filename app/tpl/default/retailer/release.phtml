@@ -1,0 +1,190 @@
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+    <h3><?php echo $this->translate('Release Goods'); ?></h3>
+    <div>
+        <h4>商品分类:</h4>
+        <p>
+            <select>
+                <option>请选择...</option>
+                <option value="1">男装1</option>
+                <option value="2">女装/女士精品</option>
+                <option value="3">男女内衣/家居服</option>
+                <option value="4">服饰配件/帽子/围巾</option>
+                <option value="5">流行男鞋</option>
+                <option value="6">女鞋</option>
+                <option value="7">运动鞋</option>
+                <option value="8">箱包皮具/女包/男包</option>
+                <option value="9">品牌手表/流行手表</option>
+                <option value="10">zippo/瑞士军刀/眼镜</option>
+                <option value="11">饰品/流行首饰/时尚饰品</option>
+            </select>
+            <select>
+                <option>请选择...</option>
+                <option value="12">T恤</option>
+                <option value="13">Polo衫</option>
+                <option value="14">卫衣</option>
+                <option value="15">衬衫</option>
+                <option value="16">牛仔裤</option>
+                <option value="17">休闲裤</option>
+                <option value="18">西裤</option>
+                <option value="19">皮裤</option>
+                <option value="20">风衣</option>
+            </select>
+        </p>
+    </div>
+    <br />
+    
+    <div>
+        <h4>商品基本信息</h4>
+        <div>
+            <div>
+                <div>
+                    <img width="300" height="300" alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>">
+                </div>
+                <div>
+                    <button name="upload" value="">上传商品图片</button>
+                </div>
+            </div>
+
+            <div>
+                <ul>
+                    <li>
+                        <p>商品名称: </p>
+                        <div>
+                            <input type="text" value="" name="goods_name" title="">
+                            <span class="red">*</span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>品牌: </p>
+                        <div>
+                            <input type="text" value="" name="brand">
+                        </div>
+                    </li>
+                    <li>
+                        <p>价格: </p>
+                        <div>
+                            <input type="hidden" value="" name="spec_id">
+                            <input type="text" value="" name="price">
+                        </div>
+                    </li>
+                    <li>
+                        <p>库存: </p>
+                        <div>
+                            <input type="text" value="" name="stock">
+                        </div>
+                    </li>
+                    <li>
+                        <p>货号: </p>
+                        <div>
+                            <input type="text" value="" name="sku">
+                        </div>
+                    </li>
+                    <li>
+                        <p>规格: </p>
+                        <div>
+                            <div>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <th>颜色<input type="hidden" value="颜色" name="spec_name_1"></th>
+                                        <th>尺码<input type="hidden" value="尺码" name="spec_name_2"></th>
+                                        <th>价格</th>
+                                        <th>库存</th>
+                                        <th>货号</th>
+                                    </tr>
+                                    <tr style="" ectype="data">
+                                        <td item="spec_1">红色</td>
+                                        <td item="spec_2">15</td>
+                                        <td item="price">100.00</td>
+                                        <td item="stock">10</td>
+                                        <td item="sku"></td>
+                                    </tr>
+                               </table>
+                                <p class="table_btn">
+                                    <a href="javascript:;" data-toggle="modal" data-target="#modal-spec">编辑规格</a>
+                                    <a href="javascript:;">关闭规格</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <p>上架: </p>
+                        <div>
+                            <span> <label>
+                            <input type="radio" checked="checked" value="1" name="if_show">
+                            是</label> <label>
+                            <input type="radio" value="0" name="if_show">
+                            否</label> </span>
+                        </div>
+                    </li>
+                    <li>
+                        <p>推荐: </p>
+                        <div>
+                            <span> <label>
+                            <input type="radio" checked="checked" value="1" name="recommended">
+                            是</label> <label>
+                            <input type="radio" value="0" name="recommended">
+                            否</label> </span>
+                            <span>被推荐的商品会显示在店铺首页</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div>
+        <p>商品描述</p>
+        <div>
+            <div>
+                <textarea  id="description" name="description"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="提交" />
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-spec" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="specModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="specModalLabel">编辑商品规格</h4>
+                </div>
+                <div class="modal-body">
+                    <div ectype="spec_editor" class="table">
+                                <ul>
+                                    <li class="pull-left"><input type="text" col="spec_name_1"></li>
+                                    <li class="pull-left"><input type="text" col="spec_name_2"></li>
+                                    <li class="pull-left">价格</li>
+                                    <li class="pull-left">库存</li>
+                                    <li class="pull-left">货号</li>
+                                    <li class="pull-left">操作</li>
+                                </ul>
+                                <div class="clearfix"></div>
+                                <ul>
+                                    <li><input type="text" class="pull-left" item="spec_1"></li>
+                                    <li><input type="text" class="pull-left" item="spec_2"></li>
+                                    <li><input type="text" class="pull-left" item="price" style="width: 50px;"></li>
+                                    <li><input type="text" class="pull-left" item="stock" style="width: 50px;"></li>
+                                    <li><input type="text" class="pull-left" item="sku" style="width: 50px;"></li>
+                                    <li class="pull-right">
+                                        <span class="fa fa-sort-up"></span>
+                                        <span class="fa fa-sort-down"></span>
+                                        <span class="fa fa-remove"></span>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                                <ul>
+                                    <li class="add"><a href="javascript:;">添加新的规格属性</a></li>
+                                </ul>
+                            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button">保存规格</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

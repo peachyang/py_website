@@ -1,0 +1,160 @@
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+    <h3><?php echo $this->translate('Photo Space') ?></h3>
+    
+    <div>
+        <div>
+            <button data-toggle="modal" data-target="#modal-upload">上传图片</button>
+            <button data-toggle="modal" data-target="#modal-newfolder">新建文件夹</button>
+            <button>回收站</button>              
+        </div>
+        <div>
+            <div>
+                <input type="text" placeholder="按文件夹名称/图片名称搜索" />
+                <button>搜索</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <th></th>
+                <th>名称</th>
+                <th>类型</th>
+                <th>尺寸</th>
+                <th>大小</th>
+                <th>是否引用</th>
+                <th>更新时间</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value=""></td>
+                <td>装修</td>
+                <td>文件夹</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>2016-03-17 17:40</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value=""></td>
+                <td>商品图片</td>
+                <td>文件夹</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>2016-03-17 17:40</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value=""></td>
+                <td>banner.jpg</td>
+                <td>jpg</td>
+                <td>480x296</td>
+                <td>200k</td>
+                <td>是</td>
+                <td>2016-03-17 17:40</td>
+            </tr>
+            <tr>
+                <th><input type="checkbox" id="all2"></th>
+                <th colspan="6">
+                    <p>
+                        <label for="all2"><span class="all">全选</span></label>
+                        <a href="javascript:;" data-toggle="modal" data-target="#modal-move">移动</a>
+                        <a href="javascript:;">重命名</a>
+                        <a href="javascript:;">删除</a>
+                    </p>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <div style="text-align: right;">
+                        <a>共 3 个项目</a>
+                        <a href="#">上一页</a>
+                        <a href="#">1</a>
+                        <span>1 / 1</span>
+                        <a href="#">下一页</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="modal-upload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="uploadModalLabel">上传图片</h4>
+                </div>
+                <div class="modal-body">
+                    <div >
+                        <p>修改位置</p>
+                        <select>
+                            <option value="0">图片空间</option>
+                            <option value="1">装修</option>
+                            <option value="2">商品图片</option>
+                        </select>
+                    </div>
+                    <div >
+                        <button>上传</button>
+                    </div>
+                    <div>
+                        <p>小提示:</p>
+                        <ul>
+                        <li>1. 图片单张大小支持2M以下, 超过无法上传</li>
+                        <li>2. 自动压缩和宽度调整可能会使图片失真</li>
+                        <li>3. 支持的图片格式: jpg、jpeg、png、gif</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-newfolder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newfolderModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newfolderModalLabel">新建文件夹</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                    文件夹名称: <input type="text" placeholder="新建文件夹" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-move" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="moveModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="moveModalLabel">移动到</h4>
+                </div>
+                <div class="modal-body">
+                    <select>
+                            <option value="0">图片空间</option>
+                            <option value="1">装修</option>
+                            <option value="2">商品图片</option>
+                        </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

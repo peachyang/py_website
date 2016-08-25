@@ -283,3 +283,31 @@ retailer_activity_view:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/activityview
+retailer_promotion:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Promotion Management
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/promotion
+retailer_promotion_view:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Promotion View
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/promotionview

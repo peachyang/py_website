@@ -14,18 +14,20 @@ h1,h2,h3,h4,h5,h6{margin:0}
 select[multiple],select[size],textarea{resize:vertical}
 .input-box{position:relative}
 .table th{font-weight:normal}
+.header,.footer{display:none}
+.main-container .container .col-left,.col-xs-3,.clo-sm-3,.col-md-2{display:none}
 .customer-account-create,.customer-account-login{background:#e7e7e7}
-.customer-account-create .header{background:#3a3a3b;height:40px}
-.customer-account-create .headimg-left{color:#fff;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
-.customer-account-create .header .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
+.customer-account-create .header-m{background:#3a3a3b;height:40px}
+.customer-account-create .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
+.customer-account-create .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
 .customer-account-create .main-container{padding:40px 11px 0 11px}
 .customer-account-create .main-container .input-box{margin:8px 0}
 .customer-account-login .main-container .input-box{margin:18px 0}
 .customer-account-create .main-container .additional{margin-top:50px;padding-left:14px}
 .customer-account-create .main-container button{background:#05a0e9;width:100%}
-.customer-account-login .header{background:#3a3a3b;height:40px}
-.customer-account-login .header .headimg-left{color:#fff;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
-.customer-account-login .header .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
+.customer-account-login .header-m{background:#3a3a3b;height:40px}
+.customer-account-login .header-m .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
+.customer-account-login .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
 .customer-account-login .main-container button{background:#05a0e9;width:100%}
 .customer-account-login .main-container .additional{margin-top:50px;padding-left:14px}
 .customer-account-login .input-group-addon{color: #fff;border-radius:0;height:20px;font-size:18px}
@@ -34,3 +36,16 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-login .register{margin:10px;font-size:12px;color:#00a2f0}
 .customer-account-login .pull-right{margin:0 5px}
 .customer-account-login .text-color{color:#000}
+.customer-account-dashboard .header-m{background:#007ecc;height:40px;border-width:0 0 1px;border-style:solid;border-color:#57aadd}
+.customer-account-dashboard .headimg-left{color:#c3d9ee;font-size:24px;float:left;margin-left:4%;width:6%;line-height:40px}
+.customer-account-dashboard .headimg-right{color:#c3d9ee;font-size:24px;float:left;margin-right:4%;width:6%;line-height:40px}
+.customer-account-dashboard .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
+.customer-account-dashboard .col-xs-9{width:100%}
+.customer-account-dashboard .myinfo{background:#007ecc;text-align:center}
+.customer-account-dashboard .wel-name{color:#fff}
+.customer-account-dashboard .fa-star{color:#ff8a00;margin:10px 3px}
+.customer-account-dashboard .fa-star-null{color:#86d1ff}
+.customer-account-dashboard .start{background:#fff;padding:0 3px;margin-left:3px;display:inline-block;color:#007ecc}
+.customer-account-dashboard .start-num{font-size:10px;padding-left:1px}
+.customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
+.customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}

@@ -68,3 +68,99 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .content-box .badge{background-color:#b5b5b5;color:#fff;font-size:16px;border-radius:16px;line-height:15px}
 .customer-account-dashboard .content-box .fa-credit-card-alt{font-size:22px}
 .customer-account-dashboard .num-span{color:#2387cf}
+.customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
+.customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
+.product-essential .carousel .carousel-indicators .active{background:#ff8a00;border:1px solid #ff8a00}
+.product-essential .carousel .carousel-indicators li{background-color:rgba(196,196,196,158);border:1px solid #c4c4c4}
+.product-essential .carousel .carousel-inner img{margin: 0 auto;vertical-align:middle}
+.product-essential .product-info .product-name{font-size:16px;line-height:2em;text-align:center}
+.product-essential .price-box .price{color:#ff8a00;font-weight:bold;margin-left: 15px}
+.product-essential .price-box .share .fa-share-alt{ color:#ff8a00}
+.product-essential .price-box .share{margin-right:15px}
+.product-essential .price-box .share .dropdown-menu{left:-150px}
+.product-essential .product-info .selected{border-top:12px solid #e7e7e7;border-bottom:12px solid #e7e7e7;margin-top: 30px}
+.product-essential .product-info .selected span{text-align:right;margin-right:30px;float:right;color:#b5b4b4}
+.product-essential .product-info .selected a{width:100%;margin:0 15px;padding: 10px 0;display:inline-block}
+.product-essential .product-info .modal-dialog{position:absolute;bottom:0;width:100%;margin:0}
+.product-essential .product-info .modal-dialog　.options .cell{display: table-cell;padding-bottom: 15px;}
+.product-essential .product-info .modal-dialog .options .cell [type=radio], .product-essential .product-info .options .cell [type=checkbox]{display:none}
+.product-essential .product-info .options .cell [type=radio]+label, .product-essential .product-info .options .cell [type=checkbox]+label{margin: 0 8px 10px 0;line-height: 26px;border: 1px solid #f4f4f4;color: #333;padding: 0 6px;border-radius:10px;background:#e7e7e7}.product-essential .product-info .options .cell [type=radio]:checked+label, .product-essential .product-info .options .cell [type=checkbox]:checked+label{border-color: #ff8a00;color: #ffffff;background:#ff8a00;border-radius:10px}
+.product-essential .product-info .options label, .radio label{padding-left:0;margin-bottom:10px}
+.product-essential .product-info .options .input-box .control-label{display:inline-block}
+.product-essential .product-info .options .control-label {display: table-cell;vertical-align: top;font-size: 12px;white-space: nowrap;}
+
+.qty .form-control {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 28px;
+    border: 1px solid #d4d4d4;
+    border-left: none;
+    border-right: none;
+    width: 52px;
+    height: 28px;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: bottom;
+}
+.qty .spin {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 22px;
+    border: 1px solid #d4d4d4;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    color: #cbcbcb;
+    background: #ededed;
+    vertical-align: bottom;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.modal-dialog .modal-footer{padding:0}
+.modal-dialog .modal-footer .btn{
+ float: left;
+ padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.product-essential .product-info .action .btn {
+    min-width: 50%;
+    margin:0;
+    float: left;
+    height: 40px;
+    background-color: #ff8a00;
+    color: #ffffff;
+    border-radius: 0;
+    font-size: 16px;
+    padding: 0 25px;
+}
+.product-essential .product-info .action .btn-checkout{
+    min-width: 50%;
+    margin:0;
+    float: left;
+    height: 40px;
+    background-color: #ff440a;
+    color: #ffffff;
+    border-radius: 0;
+    font-size: 16px;
+    padding: 0 25px;
+}
+
+

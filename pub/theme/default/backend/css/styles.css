@@ -314,6 +314,11 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard .event .content{padding:20px}
 .admin .dashboard .event .time:before{content:'['}
 .admin .dashboard .event .time:after{content:'] '}
+.admin-promotion-edit .tree{line-height:26px}
+.admin-promotion-edit .tree li{padding:.25em 1em}
+.admin-promotion-edit .tree li.last{padding-left:0}
+.admin-promotion-edit .tree select{margin:0 4px}
+.admin-promotion-edit .tree .delete{font-size:16px;margin-left:4px}
 .admin #address-book>.btn{display:block;margin:0 15px 10px;padding:0}
 .admin #address-book .address-book{display:inline-block;padding:3px 15px 10px;margin-right:20px}
 .admin #address-book .address-book .buttons-set{text-align:right;margin-bottom:5px;height:20px}

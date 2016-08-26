@@ -4,14 +4,13 @@ namespace Seahinet\Retailer\Controller;
 
 use Exception;
 use Seahinet\Retailer\Model\Retailer as Rmodel;
-use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
 
 /** 
-* Retailer submenu store management controller
+* Retailer submenu goods marketing controller
 * 
 */  
-class StoreController extends AuthActionController
+class MarketingController extends AuthActionController
 {
 
     public function indexAction()
@@ -27,54 +26,56 @@ class StoreController extends AuthActionController
         }
         return $root;
     }
-
+    
     /** 
-    * settingsAction  
+    * releaseAction  
     * Show release good view
     * 
     * @access public 
     * @return object 
     */
-    public function settingsAction()
+    public function activityAction()
     {
-        $root = $this->getLayout('retailer_store_settings');
+        $root = $this->getLayout('retailer_activity');
         return $root;
     }
     
     /** 
-    * cotegoryAction  
-    * Show category management view
+    * viewActivityAction  
+    * Show more information about activity
     * 
     * @access public 
     * @return object 
     */
-    public function cotegoryAction()
+    public function viewActivityAction()
     {
-        $root = $this->getLayout('retailer_store_category');
+        $root = $this->getLayout('retailer_activity_view');
+        return $root;
+    }
+
+    /** 
+    * promotionAction  
+    * Manage the retailer's promotion
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function promotionAction()
+    {
+        $root = $this->getLayout('retailer_promotion');
         return $root;
     }
     
     /** 
-    * photoAction  
-    * Show photo management view
+    * viewPromotionAction  
+    * Show detail information about promotion
+    * 
     * @access public 
     * @return object 
     */
-    public function photoAction()
+    public function viewPromotionAction()
     {
-        $root = $this->getLayout('retailer_store_photo');
-        return $root;
-    }
-    
-    /** 
-    * brandAction  
-    * Show brand management view
-    * @access public 
-    * @return object 
-    */
-    public function brandAction()
-    {
-        $root = $this->getLayout('retailer_brand');
+        $root = $this->getLayout('retailer_promotion_view');
         return $root;
     }
 

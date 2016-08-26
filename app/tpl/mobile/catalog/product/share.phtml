@@ -1,18 +1,11 @@
 <?php
 $medias = $this->getMedia();
 ?>
-<ul class="col-xs-12 links list-inline">
-    <li class="hidden-xs">
-        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add') ?>">
-            <span class="fa fa-star" aria-hidden="true"></span>
-            <span><?php echo $this->translate('Add to Wishlist'); ?></span>
-        </a>
-    </li>
+<ul class="col-xs-6 col-sm-6 links list-inline">
     <?php if ($medias): ?>
     <li class="dropdown share">
         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="fa fa-share-alt" aria-hidden="true"></span>
-            <span><?php echo $this->translate('Share'); ?></span>
+            <span class="fa fa-share-alt" aria-hidden="true"></span><?php echo $this->translate('Share'); ?>
         </a>
         <ul class="dropdown-menu">
             <?php foreach ($medias as $media): ?>

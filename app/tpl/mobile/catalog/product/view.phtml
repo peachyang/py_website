@@ -21,7 +21,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     <div class="col-xs-6 col-sm-6">
                         <?php echo $this->getPriceBox() ?>
                     </div>
-                    <div class="col-xs-6 col-sm-6 text-right"><?php echo $this->getChild('share') ?></div>
+                    <?php echo $this->getChild('share') ?>
                 </div>
                 <div class="hidden-lg selected">
                     <a type="button" data-info="{}" data-toggle="modal" data-target="#modal-color-size" data-type="add">
@@ -63,43 +63,41 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 related">
-                <?php
-                echo $this->getChild('related')
-                        ->setVariable('product', $product)
-                        ->setVariable('title', 'Featured Products')
-                        ->setLimit(3)
-                        ->setVariable('width', [
-                            'xs' => '120',
-                            'sm' => '192',
-                            'md' => '221',
-                            'lg' => '173',
-                        ])
-                ?>
+            <div class="col-xs-12 col-sm-12 product-store">
+                <ul>
+                    <li class="col-xs-2 col-sm-2">
+                        <a href=""> <span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?>
+                    </li>
+                    <li class="col-xs-2 col-sm-2">
+                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add/') ?> "><span class="fa fa-star"></span><?php echo $this->translate('Wishlist'); ?></a>
+                    </li>
+                    <li class="col-xs-2 col-sm-2">
+                        <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>"> <span class="fa fa-shopping-cart"></span><?php echo $this->translate('Cart'); ?></a>
+                    </li>
+                    <li class="col-xs-3 col-sm-3">
+                        <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
+                    </li>
+                    <li class="col-xs-3 col-sm-3">
+                        <button type="submit" class="btn btn-checkout"><?php echo $this->translate('Add to Cart') ?></button>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 hidden-lg product-store">
-            <ul>
-                <li class="col-xs-2 col-sm-2">
-                    <span class="fa fa-qq fa-xs valign-baseline"></span><?php echo $this->translate('Custom Service'); ?>
-                </li>
-                <li class="col-xs-2 col-sm-2">
-                    <span class="fa fa-star fa-xs valign-baseline"></span><?php echo $this->translate('Wishlist'); ?>
-                </li>
-                <li class="col-xs-2 col-sm-2">
-                    <span class="fa fa-shopping-cart fa-xs valign-baseline"></span><?php echo $this->translate('Cart'); ?>
-                </li>
-                <li class="col-xs-3 col-sm-3">
-                    <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
-                </li>
-                <li class="col-xs-3 col-sm-3">
-                    <button type="submit" class="btn btn-checkout">
-                        <span><?php echo $this->translate('Add to Cart') ?></span>
-                    </button>
-                </li>
-            </ul>
         </div>        
     </form>
+    <div class="col-xs-12 col-sm-12 related">
+        <?php
+        echo $this->getChild('related')
+                ->setVariable('product', $product)
+                ->setVariable('title', 'Featured Products')
+                ->setLimit(3)
+                ->setVariable('width', [
+                    'xs' => '100',
+                    'sm' => '192',
+                    'md' => '221',
+                    'lg' => '173',
+                ])
+        ?>
+    </div>
     <div class="product-detail">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>

@@ -20,7 +20,7 @@ if (count($products)):
                         <?php
                         if (strpos($thumbnail, 'http') !== false):
                             ?>
-                            <img src="<?php echo $thumbnail ?> alt="<?php echo $product['name'] ?>" />
+                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                         <?php elseif ($width): ?>
                             <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
                         <?php else: ?>

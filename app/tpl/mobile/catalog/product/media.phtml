@@ -6,9 +6,13 @@ $default = (int) $product->offsetGet('default_image');
 <div id="product-media" class="carousel slide" data-ride="carousel" data-interval="false">
     <?php if (count($images)): ?>
         <ol class="carousel-indicators">
-            <?php for($num=0; $num<count($images); $num++) :?>
-            <li data-target="#product-media" data-slide-to="<?=$num;?>"></li>
-            <?php endfor;?>
+            <?php
+            foreach ($images as $key => $image):
+                ?>
+                <li data-target="#product-media" data-slide-to="<?php echo $key ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php $default = true;endif;?>>
+                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/45x/'), $image['src'] ?>" width="45" alt="" data-label="<?php echo $image['label'] ?>" data-group="<?php echo $image['group'] ?>" />
+                </li>
+    <?php endforeach ?>
         </ol>
         <div class="carousel-inner" role="listbox">
             <?php
@@ -33,26 +37,14 @@ $default = (int) $product->offsetGet('default_image');
                          $image['src']
                          ?>" alt="<?php echo $product->offsetGet('name') ?>">
                 </div>
-            <?php endforeach ?>
+        <?php endforeach ?>
         </div>
-        <ol class="carousel-indicators hidden-xs">
-            <?php
-            foreach ($images as $key => $image):
-                ?>
-                <li data-target="#product-media" data-slide-to="<?php echo $key ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php
-                    $default = true;
-                endif;
-                ?>>
-                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/45x/'), $image['src'] ?>" width="45" alt="" data-label="<?php echo $image['label'] ?>" data-group="<?php echo $image['group'] ?>" />
-                </li>
-            <?php endforeach ?>
-        </ol>
-    <?php else: ?>
+<?php else: ?>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <img src="<?php echo $this->getPubUrl('frontend/images/placeholder.png') ?>" 
                      width="345" height="448" alt="<?php echo $product->offsetGet('name') ?>" />
             </div>
         </div>
-    <?php endif ?>
+<?php endif ?>
 </div>

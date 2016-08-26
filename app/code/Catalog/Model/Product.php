@@ -29,6 +29,11 @@ class Product extends Entity
         $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'product_type_id', 'status']);
     }
 
+    public function isVirtual()
+    {
+        return isset($this->storage['product_type_id']) && $this->storage['product_type_id'] === 2;
+    }
+
     public function getOptions($constraint = [])
     {
         if ($this->getId()) {
@@ -328,6 +333,7 @@ class Product extends Entity
         }
         return false;
     }
+
     public function getCurrency()
     {
         if (isset($this->storage['currency'])) {

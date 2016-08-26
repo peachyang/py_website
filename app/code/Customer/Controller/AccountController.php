@@ -208,7 +208,7 @@ class AccountController extends AuthActionController
                         $mailer = $this->getContainer()->get('mailer');
                         $mailer->send((new TemplateModel($collection[0]))
                                         ->getMessage(['username' => $data['username'], 'password' => $password])
-                                        ->addFrom($config['email/customer/sender_email'], $config['email/customer/sender_name'])
+                                        ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
                                         ->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
                         $customer->setData('password', $password)->save();
                     }
@@ -349,7 +349,7 @@ class AccountController extends AuthActionController
                 $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
                 $url = 'customer/account/personalInfo/';
-            }else if ($result['error'] === 0) {
+            } else if ($result['error'] === 0) {
                 $model = new Model;
                 $model->load($customer['id']);
                 $model->setData($data);
@@ -375,7 +375,7 @@ class AccountController extends AuthActionController
         $root->getChild('main', true)->setVariable('addresses', $addresses);
         return $root;
     }
-       
+
     public function delAddressAction()
     {
         $address = new Address;
@@ -466,12 +466,4 @@ class AccountController extends AuthActionController
         return $root;
     }
 
-
 }
-
-
-
-
-
-
-

@@ -12,7 +12,7 @@ $current = $this->getCurrentFilters();
             <div class="values">
                 <ul class="list-inline">
                     <?php foreach ($filter['values'] as $value => $values): ?>
-                        <li>
+                        <li <?php if (isset($current[$key]) && $current[$key] == $value): ?> class="active"<?php endif ?>>
                             <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
                                 <span><?php echo $values['label'] ?></span>
                                 <?php if ($this->showCount()): ?>

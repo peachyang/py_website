@@ -7,12 +7,13 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use JsonSerializable;
 use Serializable;
 
 /**
  * Simplify PHP ArrayObject
  */
-class ArrayObject implements ArrayAccess, Countable, Serializable, IteratorAggregate
+class ArrayObject implements ArrayAccess, Countable, JsonSerializable, Serializable, IteratorAggregate
 {
 
     /**
@@ -114,6 +115,24 @@ class ArrayObject implements ArrayAccess, Countable, Serializable, IteratorAggre
         if ($this->offsetExists($key)) {
             unset($this->storage[$key]);
         }
+    }
+
+    /**
+     * Serialize an ArrayObject to json
+     * 
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        $result = [];
+        foreach ($this->storage as $key => $value) {
+            if (is_object($value)) {
+                $result[$key] = $value->toArray();
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        return json_encode($result);
     }
 
     /**

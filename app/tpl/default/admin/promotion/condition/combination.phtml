@@ -1,7 +1,9 @@
-<input type="hidden" name="condition[pid][]" />
-<span class="title"><input type="hidden" name="condition[identifier][]" value="combination" /><?php
+<span class="title">
+    <input type="hidden" name="condition[pid][]" />
+    <input type="hidden" name="condition[identifier][]" value="combination" />
+    <?php
     echo $this->translate('If %s of these conditions are %s.', [
-        '<span class="param form-inline"><select class="form-control" name="condition[operation][]"><option value="and">' .
+        '<span class="param form-inline"><select class="form-control" name="condition[operator][]"><option value="and">' .
         $this->translate('All', [], 'promotion') .
         '</option><option value="or">' .
         $this->translate('Any', [], 'promotion') .
@@ -10,7 +12,8 @@
         '</option><option value="0">' .
         $this->translate('Not Eligible', [], 'promotion') .
         '</option></select></span>'], 'promotion')
-    ?></span>
+    ?>
+</span>
 <a href="javascript:void(0);" class="delete">
     <span class="fa fa-times-circle" aria-hidden="true"></span>
     <span class="sr-only"><?php echo $this->translate('Delete') ?></span>

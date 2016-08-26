@@ -2,7 +2,9 @@
 
 namespace Seahinet\Admin\Controller;
 
+use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Promotion\Model\Coupon;
 use Seahinet\Promotion\Model\Rule as Model;
 use Zend\Math\Rand;
@@ -54,6 +56,50 @@ class PromotionController extends AuthActionController
                     }
                 }
         );
+    }
+
+    public function enableAction()
+    {
+        $data = $this->getRequest()->getQuery();
+        $result = $this->validateForm($data, ['id']);
+        if ($result['error'] === 0) {
+            try {
+                $model = new Model;
+                $count = 0;
+                foreach ((array) $data['id'] as $id) {
+                    $model->setData(['id' => $id, 'status' => 1])->save();
+                    $count++;
+                }
+                $result['message'][] = ['message' => $this->translate('%d item(s) have been enabled successfully.', [$count]), 'level' => 'success'];
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+                $result['message'][] = ['message' => $this->translate('An error detected while enabling. Please check the log report or try again.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            }
+        }
+        return $this->response($result, ':ADMIN/promotion/');
+    }
+
+    public function disableAction()
+    {
+        $data = $this->getRequest()->getQuery();
+        $result = $this->validateForm($data, ['id']);
+        if ($result['error'] === 0) {
+            try {
+                $model = new Model;
+                $count = 0;
+                foreach ((array) $data['id'] as $id) {
+                    $model->setData(['id' => $id, 'status' => 0])->save();
+                    $count++;
+                }
+                $result['message'][] = ['message' => $this->translate('%d item(s) have been disabled successfully.', [$count]), 'level' => 'success'];
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+                $result['message'][] = ['message' => $this->translate('An error detected while disabling. Please check the log report or try again.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            }
+        }
+        return $this->response($result, ':ADMIN/promotion/');
     }
 
     public function deleteCouponAction()

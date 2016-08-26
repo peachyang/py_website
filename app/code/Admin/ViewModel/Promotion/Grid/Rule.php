@@ -33,7 +33,7 @@ class Rule extends Grid
 
     public function getEnableAction($item)
     {
-        return $item['status'] ? false : ('<a href="' . $this->getEnableUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return $item['status'] ? false : ('<a href="' . $this->getEnableUrl() . '?id='. $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Enable') .
                 '"><span class="fa fa-fw fa-play" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Enable') . '</span></a>');
@@ -41,7 +41,7 @@ class Rule extends Grid
 
     public function getDisableAction($item)
     {
-        return $item['status'] ? ('<a href="' . $this->getDisableUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return $item['status'] ? ('<a href="' . $this->getDisableUrl() . '?id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Disable') .
                 '"><span class="fa fa-fw fa-pause" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Disable') . '</span></a>') : false;
@@ -65,18 +65,18 @@ class Rule extends Grid
 
     public function getEnableUrl()
     {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/promotion/edit/');
+        if ($this->enableUrl === '') {
+            $this->enableUrl = $this->getAdminUrl(':ADMIN/promotion/enable/');
         }
-        return $this->editUrl;
+        return $this->enableUrl;
     }
 
     public function getDisableUrl()
     {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/promotion/delete/');
+        if ($this->disableUrl === '') {
+            $this->disableUrl = $this->getAdminUrl(':ADMIN/promotion/disable/');
         }
-        return $this->deleteUrl;
+        return $this->disableUrl;
     }
 
     protected function prepareColumns()

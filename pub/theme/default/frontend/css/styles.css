@@ -105,12 +105,15 @@ select[multiple],select[size],textarea{resize:vertical}
 .filters dd{padding:15px 0;display:table}
 .filters dd+dt,.filters dd+dt+dd{border-top:1px solid #e1e3ea}
 .filters a,.filters dt{color:#575656;font-size:12px;line-height:20px}
-.filters .init{display:table-cell;width:8.5%;border-left:1px solid #e1e3ea;padding:0 20px 0 15px;white-space:nowrap}
+.filters .init{display:table-cell;width:8.5%;border-left:1px solid #e1e3ea;padding:0 20px 0 15px;white-space:nowrap;text-align:center}
+.filters .active a{color:#007dc6}
 .filters .more{display:table-cell;width:5%;white-space:nowrap}
 .filters .more a{display:inline-block;border:1px solid #dadada;padding:0 6px}
 .filters .more a:after{content:" ";display:inline-block;width:0;height:0;border:3.46410162px solid transparent;border-top:6px solid #575656;border-bottom:none}
+.filters .all .more a:after{border-top:none;border-bottom:6px solid #575656}
 .filters .values{display:table-cell;width:85%}
 .filters .values ul{height:22px;overflow:hidden}
+.filters .all .values ul{height:auto}
 .filters .values.open ul{height:auto}
 .filters .values li{margin-right:20px;padding:1px 0}
 .products-grid{margin-bottom:15px}

@@ -158,6 +158,16 @@ final class Cart extends AbstractModel implements Singleton
         return $this->items;
     }
 
+    public function isVirtual()
+    {
+        foreach($this->getItems() as $item){
+            if(!$item['is_virtual']){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function addItem($productId, $qty, $warehouseId, array $options = [], $sku = '', $collate = true)
     {
         $product = new Product;
@@ -198,9 +208,9 @@ final class Cart extends AbstractModel implements Singleton
                 'product_name' => $product['name'],
                 'store_id' => $product['store_id'],
                 'qty' => $qty,
+                'is_virtual' => $product->isVirtual() ? 1 : 0,
                 'options' => json_encode($options),
                 'sku' => $sku,
-                'is_virtual' => $product['product_type_id'] == 2 ? 1 : 0,
                 'warehouse_id' => $warehouseId,
                 'weight' => $product['weight'],
                 'base_price' => $product->getFinalPrice($qty, false),
@@ -360,9 +370,11 @@ final class Cart extends AbstractModel implements Singleton
             $storeId[$item['store_id']][] = $item;
         }
         $shipping = 0;
-        foreach ($storeId as $id => $i) {
-            if ($method = $this->getShippingMethod($id)) {
-                $shipping += $method->getShippingRate($i);
+        if (!$this->offsetGet('free_shipping') && !$this->offsetGet('is_virtual')) {
+            foreach ($storeId as $id => $i) {
+                if ($method = $this->getShippingMethod($id)) {
+                    $shipping += $method->getShippingRate($i);
+                }
             }
         }
         $this->setData([

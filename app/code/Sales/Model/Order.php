@@ -95,7 +95,7 @@ class Order extends AbstractModel
         }
         $this->setData([
             'base_subtotal' => $baseSubtotal,
-            'base_shipping' => $this->getShippingMethod()->getShippingRate($items)
+            'base_shipping' => $this->offsetGet('free_shipping') || $this->offsetGet('is_virtual') ? 0 : $this->getShippingMethod()->getShippingRate($items)
         ])->setData([
             'subtotal' => $currency->convert($this->storage['subtotal']),
             'shipping' => $currency->convert($this->storage['base_shipping'])

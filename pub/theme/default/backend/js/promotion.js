@@ -92,6 +92,26 @@
         $('.coupon .target').on('click', '.delete:not([data-method])', function () {
             $(this).parents('tr').first().remove();
         });
+        var generateTree = function (pid, tree) {
+            var o = this;
+            $(tree[pid]).each(function () {
+                $(o).children('.last').before(function () {
+                    return $($(this).parent('ul').data('tmpl')).html();
+                });
+                var oli = $(o).find('select:not([name])').parent('li');
+                $(o).find('select:not([name])').val(this.identifier).trigger('change');
+                $(oli).find('[name*="[value]"]').val(this.value);
+                $(oli).find('[name*="[operator]"]').val(this.operator);
+                if (typeof tree[this.id] !== 'undefined') {
+                    generateTree.call($(oli).find('.children'), this.id, tree);
+                }
+            });
+        };
+        $('.tree[data-json]').each(function () {
+            var json = $(this).data('json');
+            generateTree.call($(this).find('.children'), json['0'][0].id, json);
+            $(this).removeAttr('data-json');
+        });
     });
 }));
 

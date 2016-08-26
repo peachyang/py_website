@@ -72,24 +72,37 @@ class OrderController extends ActionController
             } else {
                 try {
                     $this->beginTransaction();
-                    $shippingAddress = $this->validShippingAddress($data);
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
-                    $this->validShipping($data);
                     $cart = Cart::instance();
-                    $cart->setData([
-                        'shipping_address_id' => $data['shipping_address_id'],
-                        'shipping_address' => $shippingAddress->display(false),
-                        'payment_method' => $data['payment_method'],
-                        'shipping_method' => json_encode($data['shipping_method']),
-                        'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
-                    ])->setData($billingAddress ? [
+                    if ($cart->isVirtual()) {
+                        $cart->setData([
+                            'payment_method' => $data['payment_method'],
+                            'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
+                        ]);
+                        if ($billingAddress) {
+                            $cart->setData([
                                 'billing_address_id' => $data['billing_address_id'],
                                 'billing_address' => $billingAddress->display(false)
-                                    ] : [
-                                'billing_address_id' => $data['shipping_address_id'],
-                                'billing_address' => $shippingAddress->display(false)
-                    ]);
+                            ]);
+                        }
+                    } else {
+                        $shippingAddress = $this->validShippingAddress($data);
+                        $this->validShipping($data);
+                        $cart->setData([
+                            'shipping_address_id' => $data['shipping_address_id'],
+                            'shipping_address' => isset($shippingAddress) ? $shippingAddress->display(false) : '',
+                            'payment_method' => $data['payment_method'],
+                            'shipping_method' => json_encode($data['shipping_method']),
+                            'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
+                        ])->setData($billingAddress ? [
+                                    'billing_address_id' => $data['billing_address_id'],
+                                    'billing_address' => $billingAddress->display(false)
+                                        ] : [
+                                    'billing_address_id' => $data['shipping_address_id'],
+                                    'billing_address' => $shippingAddress->display(false)
+                        ]);
+                    }
                     $items = $cart->getItems(true);
                     $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
                     $orders = [];
@@ -239,19 +252,28 @@ class OrderController extends ActionController
                 $result['error'] = 1;
             } else {
                 try {
-                    $shippingAddress = $this->validShippingAddress($data);
                     $billingAddress = $this->validBillingAddress($data);
                     $cart = Cart::instance();
-                    $cart->setData([
-                        'shipping_address_id' => $data['shipping_address_id'],
-                        'shipping_address' => $shippingAddress->display(false)
-                    ])->setData($billingAddress ? [
+                    if ($cart->isVirtual()) {
+                        if ($billingAddress) {
+                            $cart->setData([
                                 'billing_address_id' => $data['billing_address_id'],
                                 'billing_address' => $billingAddress->display(false)
-                                    ] : [
-                                'billing_address_id' => $data['shipping_address_id'],
-                                'billing_address' => $shippingAddress->display(false)
-                            ])->collateTotals()->save();
+                            ])->collateTotals();
+                        }
+                    } else {
+                        $shippingAddress = $this->validShippingAddress($data);
+                        $cart->setData([
+                            'shipping_address_id' => $data['shipping_address_id'],
+                            'shipping_address' => $shippingAddress->display(false)
+                        ])->setData($billingAddress ? [
+                                    'billing_address_id' => $data['billing_address_id'],
+                                    'billing_address' => $billingAddress->display(false)
+                                        ] : [
+                                    'billing_address_id' => $data['shipping_address_id'],
+                                    'billing_address' => $shippingAddress->display(false)
+                                ])->collateTotals();
+                    }
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
@@ -288,7 +310,7 @@ class OrderController extends ActionController
                     $cart = Cart::instance();
                     $cart->setData([
                         'payment_method' => $data['payment_method']
-                    ])->collateTotals()->save();
+                    ])->collateTotals();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
@@ -327,11 +349,13 @@ class OrderController extends ActionController
                 $result['error'] = 1;
             } else {
                 try {
-                    $this->validShipping($data);
                     $cart = Cart::instance();
-                    $cart->setData([
-                        'shipping_method' => json_encode($data['shipping_method'])
-                    ])->collateTotals()->save();
+                    if (!$cart->isVirtual()) {
+                        $this->validShipping($data);
+                        $cart->setData([
+                            'shipping_method' => json_encode($data['shipping_method'])
+                        ])->collateTotals();
+                    }
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

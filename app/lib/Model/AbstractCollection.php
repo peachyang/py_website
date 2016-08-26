@@ -191,6 +191,14 @@ abstract class AbstractCollection extends ArrayObject
         $this->getEventDispatcher()->trigger(get_class($this) . '.collection.load.after', ['collection' => $this]);
     }
 
+    public function jsonSerialize()
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+        return parent::jsonSerialize();
+    }
+
     public function serialize()
     {
         $storage = $this->storage;

@@ -1,16 +1,22 @@
-<div class="condition tree">
-    <span class="title"><input type="hidden" name="condition[identifier][0]" value="combination" /><?php
+<?php
+$conditions = $this->getCollection();
+?>
+<div class="condition tree" data-json='<?php echo json_encode($conditions) ?>'>
+    <span class="title">
+        <input type="hidden" name="condition[identifier][0]" value="combination" />
+        <?php
         echo $this->translate('If %s of these conditions are %s.', [
-            '<span class="param form-inline"><select class="form-control" name="condition[operation][0]"><option value="and">' .
+            '<span class="param form-inline"><select class="form-control" name="condition[operator][0]"><option value="and">' .
             $this->translate('All', [], 'promotion') .
-            '</option><option value="or">' .
+            '</option><option value="or"' . (isset($conditions[0][0]['operator']) && $conditions[0][0]['operator'] === 'or' ? ' selected="selected"' : '') . '>' .
             $this->translate('Any', [], 'promotion') .
             '</option></select></span>', '<span class="param form-inline"><select class="form-control" name="condition[value][0]"><option value="1">' .
             $this->translate('Eligible', [], 'promotion') .
-            '</option><option value="0">' .
+            '</option><option value="0"' . (isset($conditions[0][0]['value']) && $conditions[0][0]['value'] == '0' ? ' selected="selected"' : '') . '>' .
             $this->translate('Not Eligible', [], 'promotion') .
             '</option></select></span>'], 'promotion')
-        ?></span>
+        ?>
+    </span>
     <ul class="children" data-tmpl="#tmpl-condition-parent">
         <li class="last">
             <a href="javascript:void(0);" class="add">

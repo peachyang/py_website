@@ -78,5 +78,44 @@ class MarketingController extends AuthActionController
         $root = $this->getLayout('retailer_promotion_view');
         return $root;
     }
+    
+    /** 
+    * relationshipAction  
+    * Manage relation of memebers
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function relationshipAction()
+    {
+        $root = $this->getLayout('retailer_members');
+        return $root;
+    }
+    
+    /** 
+    * memberDetailAction  
+    * Show member's detail information
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function memberDetailAction()
+    {
+        $root = $this->getLayout('retailer_member_detail');
+        return $root;
+    }
+    
+    /** 
+    * recordAction  
+    * Show customer's transaction record'
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function recordAction()
+    {
+        $root = $this->getLayout('retailer_transaction_record');
+        return $root;
+    }
 
 }

@@ -226,6 +226,15 @@ class Order extends AbstractModel
         return $qty;
     }
 
+    public function getWeight()
+    {
+        $qty = 0;
+        foreach ($this->getItems() as $item) {
+            $qty += $item['weight'];
+        }
+        return $qty;
+    }
+
     public function getLanguage()
     {
         if (isset($this->storage['language_id'])) {

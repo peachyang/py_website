@@ -119,7 +119,7 @@ final class Cart extends AbstractModel implements Singleton
         ]);
         if ($segment->get('hasLoggedIn')) {
             $cart->setData([
-                'currency' => $currency
+                'customer_id' => $segment->get('customer')->getId()
             ]);
         }
         $cart->save();
@@ -160,8 +160,8 @@ final class Cart extends AbstractModel implements Singleton
 
     public function isVirtual()
     {
-        foreach($this->getItems() as $item){
-            if(!$item['is_virtual']){
+        foreach ($this->getItems() as $item) {
+            if (!$item['is_virtual']) {
                 return false;
             }
         }
@@ -212,7 +212,7 @@ final class Cart extends AbstractModel implements Singleton
                 'options' => json_encode($options),
                 'sku' => $sku,
                 'warehouse_id' => $warehouseId,
-                'weight' => $product['weight'],
+                'weight' => $product['weight'] * $qty,
                 'base_price' => $product->getFinalPrice($qty, false),
                 'price' => $product->getFinalPrice($qty)
             ])->collateTotals()->save();
@@ -433,6 +433,17 @@ final class Cart extends AbstractModel implements Singleton
             }
         }
         return $qty;
+    }
+
+    public function getWeight($storeId = null)
+    {
+        $weight = 0;
+        foreach ($this->getItems() as $item) {
+            if (is_null($storeId) || $item->offsetGet('store_id') == $storeId) {
+                $weight += $item['weight'];
+            }
+        }
+        return $weight;
     }
 
     public function getShippingMethod($storeId)

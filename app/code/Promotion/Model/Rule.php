@@ -23,7 +23,7 @@ class Rule extends AbstractModel
     {
         if ($this->getId() && !empty($this->storage['use_coupon'])) {
             $collection = new CouponCollection;
-            $collection->where('promotion_id', $this->getId());
+            $collection->where(['promotion_id' => $this->getId()]);
             return $collection;
         }
         return [];
@@ -33,8 +33,11 @@ class Rule extends AbstractModel
     {
         if ($this->getId()) {
             $collection = new ConditionCollection;
-            $collection->where('promotion_id', $this->getId());
-            return $collection;
+            $collection->where([
+                'promotion_id' => $this->getId(),
+                'parent_id' => null
+            ]);
+            return $collection->load()[0];
         }
         return [];
     }

@@ -10,36 +10,33 @@ class Regular implements ListenerInterface
 {
 
     protected $model;
-    protected $customer;
-    protected $items = [];
+    protected $stores = [];
 
     public function calc($event)
     {
         $this->model = $event['model'];
-        $this->customer = new Customer;
-        $this->customer->load($this->model->offsetGet('customer_id'));
         if ($this->model instanceof \Seahinet\Sales\Model\Cart) {
             foreach ($this->model->getItems(true) as $item) {
-                if (!isset($this->items[$item->offsetGet('store_id')])) {
-                    $this->items[$item->offsetGet('store_id')] = [];
-                }
-                $this->items[$item->offsetGet('store_id')][] = $item;
+                $this->stores[$item->offsetGet('store_id')] = 1;
             }
         } else {
             foreach ($this->model->getItems(true) as $item) {
-                if (!isset($this->items[$this->model->offsetGet('store_id')])) {
-                    $this->items[$this->model->offsetGet('store_id')] = [];
-                }
-                $this->items[$this->model->offsetGet('store_id')][] = $item;
+                $this->stores[$this->model->offsetGet('store_id')] = 1;
             }
         }
         $result = 0;
-        foreach ($this->items as $storeId => $items) {
+        foreach ($this->stores as $storeId => $i) {
             $rules = new Rule;
-            $rules->where(['store_id' => $storeId]);
+            $rules->where(['status' => 1])
+                    ->where('(store_id IS NULL OR store_id = ' . $storeId . ')')
+                    ->order('sort_order');
+            $block = false;
             foreach ($rules as $rule) {
-                if ($this->matchRule($rule)) {
-                    $result += $this->handleRule($rule);
+                if ($this->matchRule($rule, $storeId)) {
+                    $result += $this->handleRule($rule, $block);
+                    if ($block) {
+                        break;
+                    }
                 }
             }
         }
@@ -47,22 +44,25 @@ class Regular implements ListenerInterface
             $this->model->setData([
                 'base_discount' => $result,
                 'discount' => $this->model->getCurrency()->convert($result, false),
-                'discount_detail' => json_encode(['Promotion' => $result] + json_decode($this->model['discount_detail'], true))
+                'discount_detail' => json_encode(['Promotion' => $result] + (json_decode($this->model['discount_detail'], true)? : []))
             ]);
         }
     }
 
-    protected function matchRule($rule)
+    protected function matchRule($rule, $storeId)
     {
-        foreach ($rule->getCondition() as $condition) {
-            
-        }
-        return false;
+        return $rule->getCondition()->match($this->model, $storeId);
     }
 
-    protected function handleRule($rule)
+    protected function handleRule($rule, &$block)
     {
-        
+        if ($rule['stop_processing']) {
+            $block = true;
+        }
+        if ($rule['free_shipping']) {
+            $this->model->setData('free_shipping', 1);
+        }
+        return max(-($rule['apply_to'] ? $this->model['base_subtotal'] : $this->model['base_total']), $rule['is_fixed'] ? $rule['price'] : ($rule['apply_to'] ? $this->model['base_subtotal'] : $this->model['base_total']) * $rule['price']);
     }
 
 }

@@ -7,9 +7,11 @@ if (count($crumbs)):
         <div class="breadcrumb-m hidden-lg">
             <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left headimg-left col-xs-1 col-sm-1"></a>
             <div class="content-list col-xs-10 col-sm-10">
-                <a href="" class="col-xs-4 col-sm-4"><?php echo $this->translate('Product');?></a>
-                <a class="col-xs-4 col-sm-4" href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a>
-                <a href="" class="col-xs-4 col-sm-4"><?php echo $this->translate('Review');?></a>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review') ?></a></li>
+                </ul>
             </div>
             <a href="javascript:viod(0);" class="fa fa-bars headimg-right col-xs-1 col-sm-1"></a>
         </div>

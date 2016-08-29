@@ -71,7 +71,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
 .customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #8f8f8f;height:40px;}
-.main-container .breadcrumb-m .headimg-left{text-align:right}
+.main-container .breadcrumb-m .headimg-left{text-align:l}
 .main-container .breadcrumb-m .fa{font-size:24px;color:#a7a7a7;line-height:40px}
 .main-container .breadcrumb-m .content-list{line-height:40px;text-align:center}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
@@ -175,4 +175,5 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-detail .review-form button{width:100%;background:#ff8a00;color:#fff}
 .product-detail .tab-content .tab-pane img{width:100%}
 .product-detail .nav-tabs {border-bottom: 1px solid #ddd}
+.product-detail .fa{line-height: 42px;text-align: center;color: #a7a7a7;font-size:24px}
 .product-info .modal-body{width:100%;overflow:hidden}

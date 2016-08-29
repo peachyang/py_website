@@ -4,7 +4,7 @@ $current = $this->getCurrentSorter();
 $mode = $this->getQuery('mode', 'grid');
 $default = $this->getQuery('limit', $this->getConfig()['catalog/frontend/default_per_page_' . $mode]);
 ?>
-<div class="view-by clearfix">
+<div class="view-by hidden-xs clearfix">
     <div class="limit dropdown">
         <a href="javascript:void(0);" data-toggle="dropdown">
             <?php echo $default === 'all' ? $this->translate('All Products') : $this->translate('View %d per page', [$default]) ?>

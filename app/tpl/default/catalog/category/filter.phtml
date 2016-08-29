@@ -1,8 +1,9 @@
 <?php
 $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
+
 ?>
-<dl class="filters clearfix">
+<dl class="filters hidden-xs clearfix">
     <?php foreach ($filters as $key => $filter): ?>
         <dt class="col-xs-12 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
         <dd class="col-xs-12 col-sm-10 col-md-11">
@@ -31,3 +32,11 @@ $current = $this->getCurrentFilters();
         </dd>
     <?php endforeach ?>
 </dl>
+<div class="sort-by hidden-lg clearfix" style="position:relative;top:60px;z-index:100">
+    <ul class="col-xs-12 col-sm-12">
+        <li class="col-xs-3"><?php echo $this->translate('Comprehensive Ranking');?></li>
+        <li class="col-xs-2"><?php echo $this->translate('Price');?></li>
+        <li class="col-xs-2"><?php echo $this->translate('Sales Volume');?></li>
+        <li class="col-xs-5"><input type="text" class="form-control"></li>
+    </ul>
+</div>

@@ -5,7 +5,6 @@ $images = $product->offsetGet('images');
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
-
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -103,10 +102,17 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
         ?>
     </div>
     <div class="product-detail clearfix">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
-            <li role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
-        </ul>
+        <div class="col-xs-12 col-sm-12">
+            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left headimg-left col-xs-1 col-sm-1"></a>
+            <div class="content-list col-xs-10 col-sm-10">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
+                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
+                </ul>
+            </div>
+            <a href="javascript:viod(0);" class="fa fa-bars headimg-right col-xs-1 col-sm-1"></a>
+        </div>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="description">
                 <?php echo $this->getChild('attribute'), $product->offsetGet('description') ?>

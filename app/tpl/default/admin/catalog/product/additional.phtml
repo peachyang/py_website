@@ -7,18 +7,24 @@
             <th><?php echo $this->translate('Action') ?></th>
         </tr>
     </thead>
-    <tbody class="target"><?php foreach ($this->getAttributes() as $key => $value): ?>
-        <tr>
-            <td><input type="text" name="additional[key][]" class="form-control required" value="<?php echo $key ?>" /></td>
-            <td><input type="text" name="additional[value][]" class="form-control required" value="<?php echo $value ?>" /></td>
-            <td>
-                <a href="javascript:void(0);" class="delete">
-                    <span class="fa fa-trash-o" aria-hidden="true"></span>
-                    <span class="sr-only"><?php echo $this->translate('Remove') ?></span>
-                </a>
-            </td>
-        </tr>
-        <?php endforeach ?></tbody>
+    <tbody class="target"><?php
+        if ($attributes = $this->getAttributes()):
+            foreach ($attributes as $key => $value):
+                ?>
+                <tr>
+                    <td><input type="text" name="additional[key][]" class="form-control required" value="<?php echo $key ?>" /></td>
+                    <td><input type="text" name="additional[value][]" class="form-control required" value="<?php echo $value ?>" /></td>
+                    <td>
+                        <a href="javascript:void(0);" class="delete">
+                            <span class="fa fa-trash-o" aria-hidden="true"></span>
+                            <span class="sr-only"><?php echo $this->translate('Remove') ?></span>
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            endforeach;
+        endif;
+        ?></tbody>
     <tfoot>
         <tr>
             <td colspan="3">

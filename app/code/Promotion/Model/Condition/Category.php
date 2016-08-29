@@ -1,0 +1,31 @@
+<?php
+
+namespace Seahinet\Promotion\Model\Condition;
+
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Predicate\Operator;
+
+class Category implements ConditionInterface
+{
+
+    use \Seahinet\Lib\Traits\Container;
+
+    public function match($model, $condition, $storeId)
+    {
+        if ($condition['identifier'] === 'category') {
+            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $select = $tableGateway->getSql()->select();
+            $select->where(new Operator('category_id', preg_replace('/[^\<\>\=\!]/', '', $condition['operator']), $condition['value']));
+            $where = '(';
+            foreach ($model->getItems(true) as $item) {
+                if (isset($item['store_id']) && $item['store_id'] == $storeId) {
+                    $where .= 'product_id = ' . $item['product_id'] . ' OR';
+                }
+            }
+            $select->where(preg_replace('/OR\s*$/', ')', $where));
+            return (bool) count($tableGateway->selectWith($select)->toArray());
+        }
+        return false;
+    }
+
+}

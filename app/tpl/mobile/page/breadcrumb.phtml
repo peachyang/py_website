@@ -5,15 +5,11 @@ if (count($crumbs)):
     ?>
     <div class="container">
         <div class="breadcrumb-m hidden-lg">
-            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left headimg-left col-xs-1 col-sm-1"></a>
+            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-bars breadcrumb-right col-xs-1 col-sm-1"></a>
             <div class="content-list col-xs-10 col-sm-10">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
-                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
-                    <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review') ?></a></li>
-                </ul>
+                <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>
             </div>
-            <a href="javascript:viod(0);" class="fa fa-bars headimg-right col-xs-1 col-sm-1"></a>
+            <a href="javascript:viod(0);" class="fa fa-plus-square col-xs-1 col-sm-1" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
         </div>
     </div>
 <?php endif; ?>

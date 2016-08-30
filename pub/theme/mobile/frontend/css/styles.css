@@ -73,7 +73,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
 .main-container .breadcrumb-m .breadcrumb-logo{}
-.main-container .breadcrumb-m .fa{font-size:24px;color:#a7a7a7;line-height:50px}
+.main-container .breadcrumb-m .fa{color:#a7a7a7;line-height:50px}
 .main-container .breadcrumb-m .content-list{line-height:50px;text-align:center}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
 .main-container .breadcrumb-m .content-list a{color:#c8c6c6}

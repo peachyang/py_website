@@ -203,5 +203,8 @@
             $(t).trigger('change.seahinet');
         }
     });
+    $('.filters .more a').click(function(){
+        $(this).parents('dd').toggleClass('all');
+    });
 }));
 

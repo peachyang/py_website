@@ -1,0 +1,16 @@
+
+<?php
+$sorters = $this->getSorters();
+$current = $this->getCurrentSorter();
+$mode = $this->getQuery('mode', 'grid');
+$default = $this->getQuery('limit', $this->getConfig()['catalog/frontend/default_per_page_' . $mode]);
+?>
+<div class="view-by clearfix">
+    <ul class="list-inline sort-by">
+        <?php foreach ($sorters as $key => $label): ?>
+            <li<?php if ($this->getCurrentSorter() == $key): ?> class="active <?php echo ($this->isAscending() ? 'asc' : 'desc') ?>"<?php endif ?>>
+                <a href="<?php echo $this->getSorterUrl($key) ?>" rel="nofollow"><?php echo $label ?></a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

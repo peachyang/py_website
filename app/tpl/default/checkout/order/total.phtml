@@ -7,7 +7,7 @@
     if ((float) $this->getCart()['tax']):
         ?>
         <tr>
-            <th>4<?php echo $this->translate('Tax') ?></th>
+            <th><?php echo $this->translate('Tax') ?></th>
             <td><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></td>
         </tr>
         <?php
@@ -29,7 +29,7 @@
             ?>
             <tr>
                 <th><?php echo $this->translate('Discount(' . $type . ')') ?></th>
-                <td><?php echo $this->getCurrency()->convert($discount, true) ?><td>
+                <td><?php echo $this->getCurrency()->convert($discount, true) ?></td>
             </tr>
             <?php
         endforeach;

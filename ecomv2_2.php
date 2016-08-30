@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `sales_cart` (
     `shipping_address` TEXT COMMENT 'Billing address',
     `is_virtual` BOOLEAN DEFAULT 0 COMMENT 'Is order virtual',
     `free_shipping` BOOLEAN DEFAULT 0 COMMENT 'Is order shipping free',
+    `coupon` VARCHAR(255) DEFAULT NULL COMMENT 'Coupon',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `shipping_method` VARCHAR(255) DEFAULT NULL COMMENT 'Shipping method',
@@ -129,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `sales_order` (
     `shipping_address` TEXT COMMENT 'Billing address',
     `is_virtual` BOOLEAN DEFAULT 0 COMMENT 'Is order virtual',
     `free_shipping` BOOLEAN DEFAULT 0 COMMENT 'Is order shipping free',
+    `coupon` VARCHAR(50) DEFAULT NULL COMMENT 'Coupon',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `shipping_method` VARCHAR(255) DEFAULT NULL COMMENT 'Shipping method',
@@ -538,27 +540,39 @@ CREATE TABLE IF NOT EXISTS `promotion`(
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Promotion ID',
     `name` VARCHAR(255) NOT NULL COMMENT 'Promotion name',
     `description` TEXT COMMENT 'Promotion description',
-    `store_id` INTEGER NULL DEFAULT NULL COMMENT 'Store ID',
     `use_coupon` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Use coupon',
     `from_date` DATETIME NULL DEFAULT NULL COMMENT 'From date',
     `to_date` DATETIME NULL DEFAULT NULL COMMENT 'To date',
-    `stop_processing` BOOLEAN DEFAULT 0 COMMENT 'Stop other promotions processing',
+    `qty` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Quentity',
+    `price` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Price',
+    `is_fixed` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is fixed',
+    `per_item` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Per item',
+    `free_shipping` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Free shipping',
+    `apply_to` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Apply to item or whole cart',
+    `stop_processing` BOOLEAN DEFAULT 0 COMMENT 'Stop processing more rules',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
     `sort_order` INTEGER NOT NULL DEFAULT 0 COMMENT 'Sort Order',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     `updated_at` DATETIME NULL DEFAULT NULL COMMENT 'Updated at',
     PRIMARY KEY (`id`),
-    INDEX IDX_PROMOTION_SORT_ORDER (`sort_order`),
-    INDEX IDX_PROMOTION_STORE_ID (`store_id`),
-    CONSTRAINT FK_PROMOTION_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    INDEX IDX_PROMOTION_SORT_ORDER (`sort_order`)
 );
 
 CREATE TRIGGER `TGR_UPDATE_PROMOTION` BEFORE UPDATE ON `promotion` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
+CREATE TABLE IF NOT EXISTS `promotion_in_store`(
+    `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
+    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    PRIMARY KEY (`promotion_id`,`store_id`),
+    INDEX IDX_PROMOTION_STORE_ID (`store_id`),
+    CONSTRAINT FK_PROMOTION_IN_STORE_PROMOTION_ID_PROMOTION_ID FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PROMOTION_IN_STORE_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `promotion_condition`(
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Condition ID',
     `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `parent_id` INTEGER NOT NULL COMMENT 'Parent ID',
+    `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent ID',
     `identifier` VARCHAR(50) NOT NULL COMMENT 'Identifier',
     `operator` VARCHAR(20) NOT NULL COMMENT 'Operator',
     `value` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Value',
@@ -572,15 +586,15 @@ CREATE TABLE IF NOT EXISTS `promotion_condition`(
 CREATE TABLE IF NOT EXISTS `promotion_handler`(
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Handler ID',
     `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `qty` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Quentity',
-    `price` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Price',
-    `is_fixed` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is fixed',
-    `per_item` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Per item',
-    `free_shipping` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Free shipping',
-    `apply_to_subtotal` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Apply to subtotal only',
+    `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent ID',
+    `identifier` VARCHAR(50) NOT NULL COMMENT 'Identifier',
+    `operator` VARCHAR(20) NOT NULL COMMENT 'Operator',
+    `value` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Value',
     PRIMARY KEY (`id`),
-    INDEX IDX_PROMOTION_HANDLER_PROMOTION_ID (`promotion_id`),
-    CONSTRAINT FK_PROMOTION_HANDLER_PROMOTION_ID FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    INDEX IDX_HANDLER_CONDITION_PROMOTION_ID (`promotion_id`),
+    INDEX IDX_HANDLER_CONDITION_PARENT_ID (`parent_id`),
+    CONSTRAINT FK_HANDLER_CONDITION_PROMOTION_ID_PROMOTION_ID FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_HANDLER_CONDITION_PARENT_ID_PROMOTION_HANDLER_ID FOREIGN KEY (`parent_id`) REFERENCES `promotion_handler` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `promotion_coupon`(
@@ -603,7 +617,7 @@ CREATE TABLE IF NOT EXISTS `promotion_coupon_log`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Log ID',
     `coupon_id` INTEGER NOT NULL COMMENT 'Coupon ID',
     `order_id` INTEGER NOT NULL COMMENT 'Order ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `customer_id` INTEGER NULL DEFAULT NULL COMMENT 'Customer ID',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`id`),
     INDEX IDX_PROMOTION_COUPON_LOG_COUPON_ID (`coupon_id`),

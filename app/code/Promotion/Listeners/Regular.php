@@ -2,7 +2,6 @@
 
 namespace Seahinet\Promotion\Listeners;
 
-use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Listeners\ListenerInterface;
 use Seahinet\Promotion\Model\Collection\Rule;
 
@@ -10,30 +9,35 @@ class Regular implements ListenerInterface
 {
 
     protected $model;
-    protected $stores = [];
+    protected $items = [];
 
     public function calc($event)
     {
         $this->model = $event['model'];
         if ($this->model instanceof \Seahinet\Sales\Model\Cart) {
             foreach ($this->model->getItems(true) as $item) {
-                $this->stores[$item->offsetGet('store_id')] = 1;
+                if (!isset($this->items[$item->offsetGet('store_id')])) {
+                    $this->items[$item->offsetGet('store_id')] = [];
+                }
+                $this->items[$item->offsetGet('store_id')][$item['id']] = $item;
             }
         } else {
             foreach ($this->model->getItems(true) as $item) {
-                $this->stores[$this->model->offsetGet('store_id')] = 1;
+                if (!isset($this->items[$this->model->offsetGet('store_id')])) {
+                    $this->items[$this->model->offsetGet('store_id')] = [];
+                }
+                $this->items[$this->model->offsetGet('store_id')][$item['id']] = $item;
             }
         }
         $result = 0;
-        foreach ($this->stores as $storeId => $i) {
+        foreach ($this->items as $storeId => $i) {
             $rules = new Rule;
             $rules->where(['status' => 1])
-                    ->where('(store_id IS NULL OR store_id = ' . $storeId . ')')
                     ->order('sort_order');
             $block = false;
             foreach ($rules as $rule) {
-                if ($this->matchRule($rule, $storeId)) {
-                    $result += $this->handleRule($rule, $block);
+                if ((empty($rule->offsetGet('store_id')) || in_array($storeId, (array) $rule->offsetGet('store_id'))) && $this->matchRule($rule, $storeId)) {
+                    $result += $this->handleRule($rule, $storeId, $block);
                     if ($block) {
                         break;
                     }
@@ -51,18 +55,61 @@ class Regular implements ListenerInterface
 
     protected function matchRule($rule, $storeId)
     {
-        return $rule->getCondition()->match($this->model, $storeId);
+        if (!$rule['use_coupon'] || $rule->matchCoupon($this->model->getCoupon($storeId), $this->model)) {
+            return $rule->getCondition()->match($this->model, $storeId);
+        }
+        return false;
     }
 
-    protected function handleRule($rule, &$block)
+    protected function handleRule($rule, $storeId, &$block)
     {
         if ($rule['stop_processing']) {
             $block = true;
         }
-        if ($rule['free_shipping']) {
-            $this->model->setData('free_shipping', 1);
+        $handler = $rule->getHandler();
+        if ($handler) {
+            $count = count($this->items[$storeId]);
+            $items = $handler->matchItems($this->items[$storeId]);
+            $total = $rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax'];
+            if ($rule['free_shipping'] && $count === count($items)) {
+                $this->model->setData([
+                    'free_shipping' => 1,
+                    'base_shipping' => 0,
+                    'shipping' => 0
+                ]);
+            }
+            foreach ($items as $item) {
+                if ($rule['free_shipping']) {
+                    $item->setData([
+                        'free_shipping' => 1,
+                        'base_shipping' => 0,
+                        'shipping' => 0
+                    ]);
+                }
+                $discount = max(-$item['base_price'], $rule['is_fixed'] ? $rule['price'] : $item['base_price'] * $rule['price']);
+                if ($rule['qty']) {
+                    $discount *= min($rule['qty'], $item['qty']);
+                } else {
+                    $discount *= $item['qty'];
+                }
+                $item->setData([
+                    'base_discount' => $discount,
+                    'discount' => $this->model->getCurrency()->convert($discount, false)
+                ])->collateTotals()->save();
+                $total += $item['base_total'];
+            }
+            return $total;
+        } else {
+            if ($rule['free_shipping']) {
+                $this->model->setData([
+                    'free_shipping' => 1,
+                    'base_shipping' => 0,
+                    'shipping' => 0
+                ]);
+            }
+            $total = $this->model['base_subtotal'] + ($rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
+            return max(-$total, $rule['is_fixed'] ? $rule['price'] : $total * $rule['price']);
         }
-        return max(-($rule['apply_to'] ? $this->model['base_subtotal'] : $this->model['base_total']), $rule['is_fixed'] ? $rule['price'] : ($rule['apply_to'] ? $this->model['base_subtotal'] : $this->model['base_total']) * $rule['price']);
     }
 
 }

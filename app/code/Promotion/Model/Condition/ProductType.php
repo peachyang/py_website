@@ -11,7 +11,7 @@ class ProductType implements ConditionInterface
             switch ($condition['operator']) {
                 case '=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && $item['product']['product_type_id'] == $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && $item['product']['product_type_id'] == $condition['value']) {
                             return true;
                         }
                     }
@@ -19,7 +19,7 @@ class ProductType implements ConditionInterface
                 case '<>':
                 case '!=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && $item['product']['product_type_id'] != $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && $item['product']['product_type_id'] != $condition['value']) {
                             return true;
                         }
                     }

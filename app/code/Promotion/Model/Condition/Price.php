@@ -11,7 +11,7 @@ class Price implements ConditionInterface
             switch ($condition['operator']) {
                 case '=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] === (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] === (float) $condition['value']) {
                             return true;
                         }
                     }
@@ -19,42 +19,42 @@ class Price implements ConditionInterface
                 case '<>':
                 case '!=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] !== (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] !== (float) $condition['value']) {
                             return true;
                         }
                     }
                     break;
                 case '>':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] > (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] > (float) $condition['value']) {
                             return true;
                         }
                     }
                     break;
                 case '>=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] >= (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] >= (float) $condition['value']) {
                             return true;
                         }
                     }
                     break;
                 case '<':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] < (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] < (float) $condition['value']) {
                             return true;
                         }
                     }
                     break;
                 case '<=':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && (float) $item['base_price'] <= (float) $condition['value']) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && (float) $item['base_price'] <= (float) $condition['value']) {
                             return true;
                         }
                     }
                     break;
                 case 'in':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && in_array((float) $item['base_price'], explode(',', $condition['value']))) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && in_array((float) $item['base_price'], explode(',', $condition['value']))) {
                             return true;
                         }
                     }
@@ -62,7 +62,7 @@ class Price implements ConditionInterface
                 case 'not in':
                 case 'nin':
                     foreach ($model->getItems(true) as $item) {
-                        if (isset($item['store_id']) && $item['store_id'] == $storeId && !in_array((float) $item['base_price'], explode(',', $condition['value']))) {
+                        if ((!isset($item['store_id']) || $item['store_id'] == $storeId) && !in_array((float) $item['base_price'], explode(',', $condition['value']))) {
                             return true;
                         }
                     }

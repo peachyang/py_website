@@ -5,7 +5,8 @@ namespace Seahinet\Promotion\Model;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Promotion\Model\Collection\Coupon as CouponCollection;
 use Seahinet\Promotion\Model\Collection\Condition as ConditionCollection;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Promotion\Model\Collection\Handler as HandlerCollection;
+use Zend\Db\Sql\Expression;
 
 class Rule extends AbstractModel
 {
@@ -13,7 +14,7 @@ class Rule extends AbstractModel
     protected function construct()
     {
         $this->init('promotion', 'id', [
-            'id', 'name', 'description', 'store_id', 'status', 'use_coupon',
+            'id', 'name', 'description', 'status', 'use_coupon',
             'from_date', 'to_date', 'stop_processing', 'qty', 'price', 'is_fixed',
             'per_item', 'free_shipping', 'apply_to', 'sort_order'
         ]);
@@ -29,6 +30,22 @@ class Rule extends AbstractModel
         return [];
     }
 
+    public function matchCoupon($coupon, $model)
+    {
+        if ($coupons = $this->getCoupon()) {
+            $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['uses' => new Expression('count(promotion_coupon_log.id)')])
+                    ->where([
+                        'code' => $coupon,
+                        'status' => 1,
+                        'customer_id' => $model['customer_id']
+                    ])->columns(['id', 'uses_per_customer'])->group(['id', 'uses_per_customer'])->limit(1);
+            if (count($coupons) && ($coupons[0]['uses_per_customer'] == 0 || $coupons[0]['uses_per_customer'] > $coupons[0]['uses'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getCondition()
     {
         if ($this->getId()) {
@@ -39,7 +56,20 @@ class Rule extends AbstractModel
             ]);
             return $collection->load()[0];
         }
-        return [];
+        return null;
+    }
+
+    public function getHandler()
+    {
+        if ($this->getId()) {
+            $collection = new HandlerCollection;
+            $collection->where([
+                'promotion_id' => $this->getId(),
+                'parent_id' => null
+            ]);
+            return $collection->load()[0];
+        }
+        return null;
     }
 
     protected function beforeSave()
@@ -67,7 +97,7 @@ class Rule extends AbstractModel
             }
         }
         if (!empty($this->storage['condition'])) {
-            $tableGateway = new TableGateway('promotion_condition', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('promotion_condition');
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
             foreach ($this->prepareTree($this->storage['condition']) as $id => $data) {
@@ -78,7 +108,7 @@ class Rule extends AbstractModel
             }
         }
         if (!empty($this->storage['handler'])) {
-            $tableGateway = new TableGateway('promotion_handler', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('promotion_handler');
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
             foreach ($this->prepareTree($this->storage['handler']) as $id => $data) {
@@ -88,8 +118,43 @@ class Rule extends AbstractModel
                 $pids[$id] = $model->getId();
             }
         }
+        if (!empty($this->storage['store_id'])) {
+            $tableGateway = $this->getTableGateway('promotion_in_store');
+            $tableGateway->delete(['promotion_id' => $this->getId()]);
+            foreach ((array) $this->storage['store_id'] as $id) {
+                $this->applyToStore($id);
+            }
+        }
         parent::afterSave();
         $this->commit();
+    }
+    
+    protected function beforeLoad($select)
+    {
+        $select->join('promotion_in_store', 'promotion_in_store.promotion_id=promotion.id', ['store_id'], 'left');
+        parent::beforeLoad($select);
+    }
+
+    protected function afterLoad(&$result)
+    {
+        if (isset($result[0])) {
+            $store = [];
+            foreach ($result as $item) {
+                $store[] = $item['store_id'];
+            }
+            $result[0]['store_id'] = $store;
+        }
+        parent::afterLoad($result);
+    }
+
+    public function applyToStore($store)
+    {
+        $tableGateway = $this->getTableGateway('promotion_in_store');
+        $tableGateway->insert([
+            'promotion_id' => $this->getId(),
+            'store_id' => is_scalar($store) ? $store : $store['id']
+        ]);
+        return $this;
     }
 
     private function prepareTree($tree)

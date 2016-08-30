@@ -55,7 +55,8 @@ class Action extends Edit
             ],
             'qty' => [
                 'type' => 'number',
-                'label' => 'Maximum Qty Discount is Applied To'
+                'label' => 'Maximum Qty Discount is Applied To',
+                'comment' => 'Available when filter is defined.'
             ],
             'free_shipping' => [
                 'type' => 'select',

@@ -18,7 +18,7 @@ class Category implements ConditionInterface
             $select->where(new Operator('category_id', preg_replace('/[^\<\>\=\!]/', '', $condition['operator']), $condition['value']));
             $where = '(';
             foreach ($model->getItems(true) as $item) {
-                if (isset($item['store_id']) && $item['store_id'] == $storeId) {
+                if ((!isset($item['store_id']) || $item['store_id'] == $storeId)) {
                     $where .= 'product_id = ' . $item['product_id'] . ' OR';
                 }
             }

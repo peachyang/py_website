@@ -26,7 +26,7 @@ final class Cart extends AbstractModel implements Singleton
             'billing_address_id', 'shipping_address_id', 'billing_address', 'shipping_address',
             'is_virtual', 'free_shipping', 'base_currency', 'currency', 'base_subtotal',
             'shipping_method', 'payment_method', 'base_shipping', 'shipping', 'subtotal',
-            'base_discount', 'discount', 'base_tax', 'tax', 'base_total', 'total'
+            'base_discount', 'discount', 'base_tax', 'tax', 'base_total', 'total', 'coupon'
         ]);
     }
 
@@ -444,6 +444,15 @@ final class Cart extends AbstractModel implements Singleton
             }
         }
         return $weight;
+    }
+
+    public function getCoupon($storeId = null)
+    {
+        if (!empty($this->storage['coupon'])) {
+            $coupons = json_decode($this->storage['coupon'], true);
+            return !is_null($storeId) && isset($coupons[$storeId]) ? $coupons[$storeId] : $coupons;
+        }
+        return '';
     }
 
     public function getShippingMethod($storeId)

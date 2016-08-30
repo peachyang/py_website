@@ -33,17 +33,20 @@ class Order extends AbstractModel
             'is_virtual', 'free_shipping', 'base_currency', 'currency', 'base_subtotal',
             'shipping_method', 'payment_method', 'base_shipping', 'shipping', 'subtotal',
             'base_discount', 'discount', 'discount_detail', 'base_tax', 'tax', 'base_total', 'total',
-            'base_total_paid', 'total_paid', 'additional', 'customer_note'
+            'base_total_paid', 'total_paid', 'additional', 'customer_note', 'coupon'
         ]);
     }
 
     public function place($warehouseId, $storeId, $statusId)
     {
         $cart = Cart::instance();
-        $note = json_decode($cart->toArray()['customer_note'], true);
-        $this->setData($cart->toArray())
+        $cartArray = $cart->toArray();
+        $note = json_decode($cartArray['customer_note'], true);
+        $coupon = $cartArray['coupon'] ? json_decode($cartArray['coupon'], true) : [];
+        $this->setData($cartArray)
                 ->setData([
-                    'shipping_method' => json_decode($cart->toArray()['shipping_method'], true)[$storeId],
+                    'coupon' => isset($coupon[$storeId]) ? $coupon[$storeId] : '',
+                    'shipping_method' => json_decode($cartArray['shipping_method'], true)[$storeId],
                     'customer_note' => isset($note[$storeId]) ? $note[$storeId] : '',
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
@@ -132,6 +135,14 @@ class Order extends AbstractModel
             return $address->getId() ? $address : null;
         }
         return null;
+    }
+
+    public function getCoupon()
+    {
+        if (!empty($this->storage['coupon'])) {
+            return $this->storage['coupon'];
+        }
+        return '';
     }
 
     public function getShippingMethod()

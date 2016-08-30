@@ -1,0 +1,33 @@
+<?php
+
+namespace Seahinet\Promotion\Model\Handler;
+
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Predicate\Operator;
+
+class Category implements HandlerInterface
+{
+
+    use \Seahinet\Lib\Traits\Container;
+
+    public function matchItems($items, $handler)
+    {
+        $result = [];
+        if ($handler['identifier'] === 'category') {
+            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $select = $tableGateway->getSql()->select();
+            $select->where(new Operator('category_id', preg_replace('/[^\<\>\=\!]/', '', $handler['operator']), $handler['value']));
+            $where = '(';
+            foreach ($items as $item) {
+                $where .= 'product_id = ' . $item['product_id'] . ' OR';
+            }
+            $select->where(preg_replace('/OR\s*$/', ')', $where));
+            $set = $tableGateway->selectWith($select)->toArray();
+            foreach ($set as $item) {
+                $result[$item['product_id']] = $items[$item['product_id']];
+            }
+        }
+        return $result;
+    }
+
+}

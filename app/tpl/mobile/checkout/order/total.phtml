@@ -1,0 +1,42 @@
+<table class="table">
+    <tr>
+        <th><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?></th>
+        <td><?php echo $this->translate('Subtotal') ?>:<?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></td>
+    </tr>
+    <?php
+    if ((float) $this->getCart()['tax']):
+        ?>
+        <tr>
+            <th><?php echo $this->translate('Tax') ?></th>
+            <td><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></td>
+        </tr>
+        <?php
+    endif;
+    ?>
+    <?php
+    if ((float) $this->getCart()['shipping']):
+        ?>
+        <tr>
+            <th><?php echo $this->translate('Shipping') ?></th>
+            <td><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></td>
+        </tr>
+        <?php
+    endif;
+    ?>
+    <?php
+    if ((float) $this->getCart()['discount']):
+        foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
+            ?>
+            <tr>
+                <th><?php echo $this->translate('Discount(' . $type . ')') ?></th>
+                <td><?php echo $this->getCurrency()->convert($discount, true) ?></td>
+            </tr>
+            <?php
+        endforeach;
+    endif;
+    ?>
+    <tr class="grand-total">
+        <th><?php echo $this->translate('Grand Total') ?></th>
+        <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>
+    </tr>
+</table>

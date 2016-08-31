@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="checkout-flow hidden-xs clearfix">
+        <div class="item col-sm-4 active"><?php echo $this->translate('Shopping Cart', [], 'checkout') ?></div>
+        <div class="item col-sm-4 active"><?php echo $this->translate('Order Confirmation', [], 'checkout') ?></div>
+        <div class="item col-sm-4"><?php echo $this->translate('Complate', [], 'checkout') ?></div>
+    </div>
+    <h2 class="page-title"><?php echo $this->translate('Please comfirm the order information') ?></h2>
+    <?php echo $this->getChild('messages') ?>
+    <div class="checkout-steps">
+        <?php echo $this->getChild('address'), $this->getChild('shipping'), $this->getChild('payment'), $this->getChild('review') ?>
+    </div>
+</div>

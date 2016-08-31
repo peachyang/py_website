@@ -181,7 +181,7 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .product-list .product-name{float:left;width:72%;margin-right:2%}
 #cart .checkout{background:#ffffff;height:50px;line-height:50px;position:fixed;bottom:0;z-index:10}
 #cart .checkout span{display:inline-block}
-#cart .checkout .btn{background:#ffb900;color: #fff;font-size:15px;width:40%;height:50px;float:right;display:inline-block}
+#cart .checkout .btn{background:#ffb900;color: #fff;font-size:15px;width:35%;height:50px;float:right;display:inline-block}
 #cart .qty .spin{font-size: 18px;line-height: 22px;border:1px solid #d4d4d4;width:30%;height: 28px;text-align: center;color: #cbcbcb;background: #ededed}
 #cart .store{padding-right:5%}
 .tab-content .products-grid .item{text-align:center}

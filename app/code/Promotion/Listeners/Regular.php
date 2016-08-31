@@ -30,13 +30,17 @@ class Regular implements ListenerInterface
             }
         }
         $result = 0;
+        $time = time();
+        $rules = new Rule;
+        $rules->where(['status' => 1])
+                ->order('sort_order');
         foreach ($this->items as $storeId => $i) {
-            $rules = new Rule;
-            $rules->where(['status' => 1])
-                    ->order('sort_order');
             $block = false;
             foreach ($rules as $rule) {
-                if ((empty($rule->offsetGet('store_id')) || in_array($storeId, (array) $rule->offsetGet('store_id'))) && $this->matchRule($rule, $storeId)) {
+                if ((empty($rule->offsetGet('store_id')) || in_array($storeId, (array) $rule->offsetGet('store_id'))) &&
+                        (empty($rule->offsetGet('from_date')) || $time >= strtotime($rule->offsetGet('from_date'))) &&
+                        (empty($rule->offsetGet('to_date')) || $time <= strtotime($rule->offsetGet('to_date'))) &&
+                        $this->matchRule($rule, $storeId)) {
                     $result += $this->handleRule($rule, $storeId, $block);
                     if ($block) {
                         break;

@@ -13,7 +13,7 @@ class FlatRate extends AbstractMethod
         if ($config['shipping/' . self::METHOD_CODE . '/unit']) {
             $total = 0;
             foreach ($items as $item) {
-                if (!$items['free_shipping'] && !$item['is_virtual']) {
+                if (!$item['free_shipping'] && !$item['is_virtual']) {
                     $total += $item['base_price'] * $item['qty'];
                 }
             }
@@ -25,7 +25,7 @@ class FlatRate extends AbstractMethod
             $calc = $config['shipping/' . self::METHOD_CODE . '/calc'];
             $rate = $config['shipping/' . self::METHOD_CODE . '/rate'];
             foreach ($items as $item) {
-                if (!$items['free_shipping'] && !$item['is_virtual']) {
+                if (!$item['free_shipping'] && !$item['is_virtual']) {
                     $result += ($calc ? $item->offsetGet('base_price') * $rate : $rate) * $item->offsetGet('qty');
                 }
             }

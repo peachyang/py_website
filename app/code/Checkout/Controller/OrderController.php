@@ -61,6 +61,16 @@ class OrderController extends ActionController
         return $this->notFoundAction();
     }
 
+    public function couponAction()
+    {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $root = $this->getLayout('checkout_order_coupon');
+            $root->getChild('coupon', true)->setVariable('store', $this->getRequest()->getQuery('store'));
+            return $root;
+        }
+        return $this->notFoundAction();
+    }
+
     public function placeAction()
     {
         $result = ['error' => 0, 'message' => []];
@@ -356,6 +366,29 @@ class OrderController extends ActionController
                             'shipping_method' => json_encode($data['shipping_method'])
                         ])->collateTotals();
                     }
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response($result, 'checkout/order/', 'checkout');
+    }
+
+    public function selectCouponAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
+                $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            } else {
+                try {
+                    $cart = Cart::instance();
+                    $cart->setData([
+                        'coupon' => json_encode($data['coupon'])
+                    ])->collateTotals();
                 } catch (Exception $e) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];

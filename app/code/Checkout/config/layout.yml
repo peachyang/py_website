@@ -86,6 +86,9 @@ checkout_order:
                         type: Seahinet\Checkout\ViewModel\Order\Review
                         template: checkout/order/review
                         children:
+                            coupon:
+                                type: Seahinet\Checkout\ViewModel\Order\Coupon
+                                template: checkout/order/coupon
                             item:
                                 type: Seahinet\Checkout\ViewModel\Cart\Item
                                 template: checkout/order/review/item
@@ -131,6 +134,18 @@ checkout_order_review:
                     review:
                         type: Seahinet\Checkout\ViewModel\Cart
                         template: checkout/order/total
+checkout_order_coupon:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    coupon:
+                        type: Seahinet\Checkout\ViewModel\Order\Coupon
+                        template: checkout/order/coupon
 checkout_order_success:
     update: frontend
     root:

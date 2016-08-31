@@ -24,10 +24,10 @@
             $current = 0;
             foreach ($this->getItems() as $item) {
                 if ($current !== $item['store_id']):
+                    $store = $item['store'];
                     ?>
                     <?php if ($current): ?>
                         <tr>
-
                             <th colspan="7" class="text-right text-nowrap subtotal">
                                 <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                             </th>
@@ -35,7 +35,8 @@
                     <?php endif ?>
                     <tr class="store">
                         <th colspan="4" class="text-left text-nowrap">
-                            <?php echo $item['store']['name'] ?>
+                            <?php echo $store['name'] ?>
+                            <div class="dropdown coupon" data-store="<?php echo $item['store_id'] ?>"><?php echo $this->getChild('coupon')->setVariable('store', $item['store_id']) ?></div>
                         </th>
                         <th class="text-nowrap">
                             <?php echo $this->translate('Price', [], 'checkout') ?>
@@ -46,7 +47,6 @@
                         <th class="text-nowrap">
                             <?php echo $this->translate('Subtotal', [], 'checkout') ?>
                         </th>
-
                     </tr>
                     <?php
                     $current = $item['store_id'];

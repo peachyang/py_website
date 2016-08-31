@@ -98,7 +98,12 @@ class Order extends AbstractModel
         }
         $this->setData([
             'base_subtotal' => $baseSubtotal,
-            'base_shipping' => $this->offsetGet('free_shipping') || $this->offsetGet('is_virtual') ? 0 : $this->getShippingMethod()->getShippingRate($items)
+            'base_shipping' => $this->offsetGet('free_shipping') || $this->offsetGet('is_virtual') ? 0 : $this->getShippingMethod()->getShippingRate($items),
+            'base_discount' => 0,
+            'discount' => 0,
+            'discount_detail' => '',
+            'base_tax' => 0,
+            'tax' => 0
         ])->setData([
             'subtotal' => $currency->convert($this->storage['subtotal']),
             'shipping' => $currency->convert($this->storage['base_shipping'])

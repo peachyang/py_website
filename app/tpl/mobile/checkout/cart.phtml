@@ -2,6 +2,13 @@
     <?php
     if (count($this->getItems())):
         ?>
+        <div class="breadcrumb-m hidden-lg">
+            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-chevron-left fa-2x breadcrumb-right col-xs-1 col-sm-1"></a>
+            <div class="content-list col-xs-10 col-sm-10">
+                <a href=""><?php echo $this->translate('Shopping Cart');?></a>
+            </div>
+            <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
+        </div>
         <form action="<?php echo $this->getBaseUrl('checkout/cart/update/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <div id="cart">

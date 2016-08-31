@@ -1,0 +1,5 @@
+<?php
+$currency = $this->getCurrency();
+?>
+<span class="label total-title"><?php echo $this->translate('Total') ?>:</span>
+<span class="total"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>

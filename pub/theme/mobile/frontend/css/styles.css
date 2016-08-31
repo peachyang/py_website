@@ -158,3 +158,31 @@ select[multiple],select[size],textarea{resize:vertical}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
+#cart{color:#696868;font-size:12px;margin-bottom:50px;overflow:hidden}
+#cart .store{background:#ffffff;height:40px;line-height:40px;border-bottom:1px solid #e3e5eb}
+#cart .col-xs-1{text-align:center}
+#cart .qty{color:#000}
+#cart .qty p{line-height:26px;text-align:center}
+#cart .subtotal{color:#007dc6;font-size:16px}
+#cart .product-name{vertical-align:top}
+#cart .product-name .price{color:#007ecc;font-weight:bold}
+#cart .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden;color:#000}
+#cart .product-name h4{font-size:13px;color:#696868;height:30px;overflow-y:hidden}
+#cart .product-name .options{margin-bottom:0;line-height:20px;display:inline-block;width: 100%;color:#979797}
+#cart .product-name .options dt{float:left;}
+#cart .product-name .options dt:after{content:":"}
+#cart .product-name .options dd{float:left;margin-right:5px}
+#cart .product-list{border-bottom:1px solid #e3e5eb}
+#cart .total,.selected{font-size:18px;color:#007dc6;font-weight:bold}
+#cart .col-xs-3{display:block}
+#cart .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4;border-left:none;border-right:none;width:40%;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
+#cart .product-list{background:#ffffff;padding:15px 5% 15px 0}
+#cart .product-list .product-img{float:left;width:26%}
+#cart .product-list .product-name{float:left;width:72%;margin-right:2%}
+#cart .checkout{background:#ffffff;height:50px;line-height:50px;position:fixed;bottom:0;z-index:10}
+#cart .checkout span{display:inline-block}
+#cart .checkout .btn{background:#ffb900;color: #fff;font-size:15px;width:35%;height:50px;float:right;display:inline-block}
+#cart .qty .spin{font-size: 18px;line-height: 22px;border:1px solid #d4d4d4;width:30%;height: 28px;text-align: center;color: #cbcbcb;background: #ededed}
+#cart .store{padding-right:5%}
+.tab-content .products-grid .item{text-align:center}
+.tab-content .products-grid .item p{height:20px;overflow-y:hidden;margin:0 5%}

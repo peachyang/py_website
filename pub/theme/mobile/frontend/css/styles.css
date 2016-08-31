@@ -167,7 +167,7 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .product-name{vertical-align:top}
 #cart .product-name .price{color:#007ecc;font-weight:bold}
 #cart .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden;color:#000}
-#cart .product-name h4{font-size:14px;color:#696868;height:30px;overflow-y:hidden}
+#cart .product-name h4{font-size:13px;color:#696868;height:30px;overflow-y:hidden}
 #cart .product-name .options{margin-bottom:0;line-height:20px;display:inline-block;width: 100%;color:#979797}
 #cart .product-name .options dt{float:left;}
 #cart .product-name .options dt:after{content:":"}

@@ -11,7 +11,7 @@ class Condition extends Template
     public function getOptions($source)
     {
         if (is_subclass_of($source, '\\Seahinet\\Lib\\Source\\SourceInterface')) {
-            return (new $source)->getSourceArray();
+            return (new $source)->getSourceArray(true);
         }
         return [];
     }

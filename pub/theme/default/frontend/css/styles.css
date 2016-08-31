@@ -363,6 +363,9 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .address .btn-add{margin-left:20px;margin-top:20px;border-radius:0}
 .checkout-order .store th{border:none}
 .checkout-order .store th:nth-child(1){padding-left:20px}
+.checkout-order .coupon{display:inline-block;background:url(../images/bg-coupon-yellow.png) left top,url(../images/bg-coupon-yellow.png) right top;background-repeat:repeat-y;background-color:#f7bc44;color:#fff;font-size:12px;line-height:25px;padding:0 9px;margin-left:50px}
+.checkout-order .coupon .dropdown-menu{min-width:100%;width:auto;color:#696868;border-top-left-radius:0}
+.checkout-order .coupon .dropdown-menu label{padding:0 .5em;display:block}
 .checkout-order .product-list td{vertical-align:middle}
 .checkout-order .product-list .td-name{vertical-align:top;color:#000;font-size:12px}
 .checkout-order .product-list .td-name strong{font-weight:normal}
@@ -376,8 +379,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-order .product-list .td-comment .form-control{border-radius:0}
 .checkout-order .product-list td select{padding:3px 8px}
 .checkout-order .product-list .td-img{padding-left:20px;border-left:1px solid #e1e1e1}
-.table>thead>tr>th{border-bottom:none}
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top:1px solid #e1e1e1;vertical-align:middle}
 .checkout-order .review .total{border:none}
 .checkout-order .review .total th{font-size:12px;color:#000;text-align:right;vertical-align:baseline;border:none;padding:0;line-height:42px}
 .checkout-order .review .total td{font-size:12px;color:#000;margin:0;width:120px;vertical-align:baseline;border:none;padding:0 10px;line-height:42px}

@@ -17,11 +17,14 @@ class Rule extends AbstractCollection
     {
         $data = [];
         foreach ($result as $key => $item) {
-            if (isset($item['id']) && isset($data[$item['id']])) {
-                $data[$item['id']]['store_id'][] = $item['store_id'];
-            } else if (isset($item['id'])) {
-                $data[$item['id']] = $item;
-                $data[$item['id']]['store_id'] = [$item['store_id']];
+            if (isset($item['id'])) {
+                if (!isset($data[$item['id']])) {
+                    $data[$item['id']] = $item;
+                    $data[$item['id']]['store_id'] = [];
+                }
+                if (!empty($item['store_id'])) {
+                    $data[$item['id']]['store_id'][] = $item['store_id'];
+                }
             }
         }
         $result = array_values($data);

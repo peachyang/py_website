@@ -89,6 +89,14 @@ class Rule extends Grid
                 'label' => 'Name',
                 'class' => 'text-left'
             ],
+            'use_coupon' =>[
+                'label' => 'Use Coupon',
+                'type' => 'select',
+                'options' => [
+                    'No',
+                    'Yes'
+                ]
+            ],
             'from_date' => [
                 'type' => 'datetime',
                 'label' => 'From Date'

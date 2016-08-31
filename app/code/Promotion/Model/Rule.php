@@ -32,13 +32,13 @@ class Rule extends AbstractModel
 
     public function matchCoupon($coupon, $model)
     {
-        if ($coupons = $this->getCoupon()) {
-            $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['uses' => new Expression('count(promotion_coupon_log.id)')])
+        if ($coupon && $coupons = $this->getCoupon()) {
+            $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['uses' => new Expression('count(promotion_coupon_log.id)')], 'left')
                     ->where([
                         'code' => $coupon,
                         'status' => 1,
                         'customer_id' => $model['customer_id']
-                    ])->columns(['id', 'uses_per_customer'])->group(['id', 'uses_per_customer'])->limit(1);
+                    ])->columns(['id', 'uses_per_customer'])->group(['promotion_coupon.id', 'uses_per_customer'])->limit(1);
             if (count($coupons) && ($coupons[0]['uses_per_customer'] == 0 || $coupons[0]['uses_per_customer'] > $coupons[0]['uses'])) {
                 return true;
             }
@@ -128,7 +128,7 @@ class Rule extends AbstractModel
         parent::afterSave();
         $this->commit();
     }
-    
+
     protected function beforeLoad($select)
     {
         $select->join('promotion_in_store', 'promotion_in_store.promotion_id=promotion.id', ['store_id'], 'left');
@@ -140,7 +140,9 @@ class Rule extends AbstractModel
         if (isset($result[0])) {
             $store = [];
             foreach ($result as $item) {
-                $store[] = $item['store_id'];
+                if (!empty($item['store_id'])) {
+                    $store[] = $item['store_id'];
+                }
             }
             $result[0]['store_id'] = $store;
         }
@@ -166,7 +168,7 @@ class Rule extends AbstractModel
                     'pid' => isset($tree['pid'][$key]) ? (int) $tree['pid'][$key] : null,
                     'identifier' => $identifier,
                     'operator' => $tree['operator'][$key],
-                    'value' => empty($tree['value'][$key]) ? null : $tree['value'][$key]
+                    'value' => isset($tree['value'][$key]) && $tree['value'][$key] !== '' ? $tree['value'][$key] : null
                 ];
             }
             uasort($array, function($a, $b) {

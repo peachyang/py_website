@@ -38,7 +38,7 @@ class Cart extends Template
         return $this->getCart()->getItems();
     }
 
-    public function getRow($item, $rowspan = 0)
+    public function getRow($item)
     {
         $row = $this->getChild('item');
         $row->setVariable('item', $item);

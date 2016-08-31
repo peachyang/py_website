@@ -380,6 +380,11 @@ final class Cart extends AbstractModel implements Singleton
         $this->setData([
             'base_subtotal' => $baseSubtotal,
             'base_shipping' => $shipping,
+            'base_discount' => 0,
+            'discount' => 0,
+            'discount_detail' => '',
+            'base_tax' => 0,
+            'tax' => 0
         ])->setData([
             'subtotal' => $currency->convert($this->storage['base_subtotal']),
             'shipping' => $currency->convert($shipping),

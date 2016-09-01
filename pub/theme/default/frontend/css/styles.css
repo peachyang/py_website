@@ -70,6 +70,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .nav-main .dropdown>.dropdown-toggle:after{content:" ";display:inline-block;border:5px solid transparent;border-bottom:none;border-top:8px solid #007dc6;margin-left:8px}
 .header .nav-main .dropdown:hover>.dropdown-menu{display:block;border-radius:0;border-top:none}
 .breadcrumb .clearfix{display:none}
+.col-left+.col-main{padding:15px 0 0 40px}
 .customer-account-login .input-box+.input-box{margin-top:25px}
 .customer-account-login .header,.customer-account-create .header{padding:0;background:none;box-shadow:none;margin:0 auto;border-bottom:1px solid #d0dfe8}
 .customer-account-login .header .logo,.customer-account-create .header .logo{padding:24px 0 22px}
@@ -145,6 +146,11 @@ select[multiple],select[size],textarea{resize:vertical}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
+.rating{position:relative;width:6em}
+.rating .fa{display:block;letter-spacing:.25em}
+.rating .fa-star{position:absolute;top:0;left:0;white-space:nowrap;overflow:hidden;max-width:100%}
+.rating .fa-star-o:before{content:"\f006\f006\f006\f006\f006"}
+.rating .fa-star:before{content:"\f005\f005\f005\f005\f005"}
 .footer .container{margin-bottom:30px}
 .footer .foot-navigation{border-top:1px solid #cfcfcf;border-bottom:1px solid #cfcfcf;font-size:12px}
 .footer .foot-navigation ul{margin-top:15px;margin-bottom:15px}
@@ -162,15 +168,15 @@ select[multiple],select[size],textarea{resize:vertical}
 .page-not-found .main-container .notice dt{display:inline;color:#a2a3a3}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
-.main-container .navigation{background:#f6f6f9;border:1px solid #dfe1e8;margin-top:15px;}
-.main-container .navigation .nav-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
-.main-container .navigation .nav-list{padding-left:25px}
-.main-container .navigation .nav-list dt{line-height:50px;max-height:50px}
-.main-container .navigation .nav-list dd{line-height:24px}
-.main-container .navigation .fa-user{color:#007dc6;font-size:18px}
-.main-container .navigation .fa{height:15px;width:15px;margin-right:5px}
-.main-container .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
-.main-container .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
+.col-left .navigation{background:#f6f6f9;border:1px solid #dfe1e8;margin-top:15px;}
+.col-left .navigation .nav-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
+.col-left .navigation .nav-list{padding-left:25px}
+.col-left .navigation .nav-list dt{line-height:50px;max-height:50px}
+.col-left .navigation .nav-list dd{line-height:24px}
+.col-left .navigation .fa-user{color:#007dc6;font-size:18px}
+.col-left .navigation .fa{height:15px;width:15px;margin-right:5px}
+.col-left .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
+.col-left .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
 .main-container .address .btn{background:#007dc6;color:#ffffff}
 .main-container .address .address-view{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
 .main-container .address .address-view:hover{background:#fdfbea}
@@ -194,11 +200,19 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .track dt .browse{padding-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
 .main-container .track dd li{text-align:center;margin:0 10px}
 .main-container .track dd p{height:40px;text-align:left;overflow-y:hidden}
-.customer-account-dashboard .main-container .dashboard{padding-left:40px;margin-top:16px}
-.customer-account-dashboard .main-container .dashboard .ad{border:1px solid #dfe1e8;height:35px;line-height:35px;padding-left:20px;}
-.customer-account-dashboard .main-container .dashboard .ad-text{color:#e26932} 
-.customer-account-dashboard .main-container .dashboard .ad-a{color:#608fdc}
-.customer-account-dashboard .main-container .dashboard .ad>a{float:right;margin-right:5px;color:#e26932}
+.customer-account-dashboard .profile{border:1px solid #dfe1e8;padding:30px 50px;font-size:12px;line-height:20px;color:#9e9e9e}
+.customer-account-dashboard .profile .photo{display:block;padding-right:18px}
+.customer-account-dashboard .profile .name{font-size:20px;line-height:1;color:#000;margin-bottom:.5em}
+.customer-account-dashboard .profile .level{background:#007dc6;color:#fff;font-size:12px;line-height:18px;display:inline-block;padding:0 3px;vertical-align:bottom}
+.customer-account-dashboard .profile .count{font-size:13px;color:#007dc6;font-weight:bold}
+.customer-account-dashboard .profile span:not(.label)+span{margin-left:10px}
+.customer-account-dashboard .coupon .carousel-control{width:25px;color:#007dc6}
+.customer-account-dashboard .coupon .item .content{padding:0 25px;color:#dcf0fb;font-size:12px;line-height:18px}
+.customer-account-dashboard .coupon .item .content .inner{padding:0 15px 12px;background:url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top;background-repeat:repeat-y;background-color:#007dc6}
+.customer-account-dashboard .coupon .price{font-size:25px;line-height:60px;letter-spacing:-.2px;color:#fff}
+.customer-account-dashboard .coupon .free-shipping{font-size:25px;line-height:60px;position:relative;color:#fff}
+.customer-account-dashboard .coupon .price+.free-shipping{text-align:right}
+.customer-account-dashboard .coupon .store:empty,.customer-account-dashboard .coupon .date:empty{height:18px}
 .customer-account-dashboard .main-container .dashboard .myinfo{border:1px solid #dfe1e8;margin-top:20px;padding-left:50px;padding-top:30px;padding-bottom:30px}
 .customer-account-dashboard .main-container .dashboard .infodetail{display:inline-block;height:100px;vertical-align:top}
 .customer-account-dashboard .main-container .dashboard .wel{font-size:14px}

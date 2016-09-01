@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\Model;
 
+use Seahinet\Customer\Model\Collection\Group;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
@@ -72,6 +73,27 @@ class Customer extends Entity
             $this->load($username, 'username');
         }
         return $this->offsetGet('status') && (new Bcrypt)->verify($password, $this->offsetGet('password'));
+    }
+
+    public function getGroup()
+    {
+        if ($this->getId()) {
+            $groups = new Group;
+            $groups->join('customer_in_group', 'customer_in_group.group_id=customer_group.id', [], 'left')
+                    ->where(['customer_in_group.customer_id' => $this->getId()]);
+            return $groups;
+        }
+        return [];
+    }
+
+    public function getLevel()
+    {
+        return 0;
+    }
+
+    public function getBalance()
+    {
+        return 0;
     }
 
 }

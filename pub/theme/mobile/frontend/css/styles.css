@@ -186,3 +186,14 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .store{padding-right:5%}
 .tab-content .products-grid .item{text-align:center}
 .tab-content .products-grid .item p{height:20px;overflow-y:hidden;margin:0 5%}
+.checkout-order .message-box{margin-top:50px}
+.checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;padding:0 10px;font-size:13px}
+.checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold}
+.checkout-order .checkout-steps .address .list li label{width:92%}
+.checkout-order .checkout-steps .address .list li p{clear:both;line-height:30px;width:90%;margin:0 5%}
+.checkout-order .checkout-steps .address .list li p span{display:inline-block}
+.checkout-order .checkout-steps .address .list li p .default{width:50%}
+.checkout-order .checkout-steps .address .list li p .edit,.delete{width: 23%;text-align:right}
+.checkout-order .checkout-steps .address .more{line-height: 30px;color: #007ecc}
+.checkout-order .checkout-steps .address .more .fa{margin-left:5px;}
+.checkout-order .checkout-steps .payment li{margin-right:10px}

@@ -1,5 +1,4 @@
 <section class="section review">
-    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
     <table class="table">
         <colgroup>
             <col width="1" />
@@ -34,19 +33,9 @@
                         </tr>
                     <?php endif ?>
                     <tr class="store">
-                        <th colspan="4" class="text-left text-nowrap">
+                        <th colspan="7" class="text-left text-nowrap">
                             <?php echo $item['store']['name'] ?>
                         </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Price', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Qty', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Subtotal', [], 'checkout') ?>
-                        </th>
-
                     </tr>
                     <?php
                     $current = $item['store_id'];

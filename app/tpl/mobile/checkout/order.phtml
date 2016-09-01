@@ -1,10 +1,11 @@
 <div class="container">
-    <div class="checkout-flow hidden-xs clearfix">
-        <div class="item col-sm-4 active"><?php echo $this->translate('Shopping Cart', [], 'checkout') ?></div>
-        <div class="item col-sm-4 active"><?php echo $this->translate('Order Confirmation', [], 'checkout') ?></div>
-        <div class="item col-sm-4"><?php echo $this->translate('Complate', [], 'checkout') ?></div>
+    <div class="breadcrumb-m hidden-lg">
+        <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-chevron-left fa-2x breadcrumb-right col-xs-1 col-sm-1"></a>
+        <div class="content-list col-xs-10 col-sm-10">
+            <a href=""><?php echo $this->translate('Order Confirmation'); ?></a>
+        </div>
+        <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
     </div>
-    <h2 class="page-title"><?php echo $this->translate('Please comfirm the order information') ?></h2>
     <?php echo $this->getChild('messages') ?>
     <div class="checkout-steps">
         <?php echo $this->getChild('address'), $this->getChild('shipping'), $this->getChild('payment'), $this->getChild('review') ?>

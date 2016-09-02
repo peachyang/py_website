@@ -41,6 +41,9 @@ class Goods extends Template
         if(!empty($condition['order_status']) && $condition['order_status'] > 0){
             $where->equalTo('sales_order.status_id', $condition['order_status']);
         }
+        if(!empty($condition['add_time_from']) && !empty($condition['add_time_to'])){
+            $where->between('sales_order.created_at', $condition['add_time_from'], $condition['add_time_to']);
+        }
        $sales_order_collection
        ->where($where)
        //->where(['sales_order.store_id' => $segment->get('customer')['store_id']])
@@ -78,8 +81,7 @@ class Goods extends Template
        foreach($sales_order_collection as &$order){
            $order["items"] = $product_list[$order['id']];
        }
-       
-        
+
         //return $segment->get('customer');
         return $sales_order_collection;
     }
@@ -151,6 +153,77 @@ class Goods extends Template
             $status_collection->order('id');
         }
         return $status_collection;
+    }
+    
+    /**
+     * Handle sql for collection
+     * 
+     * @param AbstractCollection $collection
+     * @return AbstractCollection
+     */
+    protected function prepareCollection($collection = null)
+    {
+        if (is_null($collection)) {
+            return [];
+        }
+        $condition = $this->getQuery();
+        $limit = isset($condition['limit']) ? $condition['limit'] : 20;
+        if (isset($condition['page'])) {
+            $collection->offset(($condition['page'] - 1) * $limit);
+            unset($condition['page']);
+        }
+        $collection->limit((int) $limit);
+        unset($condition['limit']);
+        if (isset($condition['asc'])) {
+            $collection->order((strpos($condition['asc'], ':') ?
+                            str_replace(':', '.', $condition['asc']) :
+                            $condition['asc']) . ' ASC');
+            unset($condition['asc']);
+        } else if (isset($condition['desc'])) {
+            $collection->order((strpos($condition['desc'], ':') ?
+                            str_replace(':', '.', $condition['desc']) :
+                            $condition['desc']) . ' DESC');
+            unset($condition['desc']);
+        }
+        if (!empty($condition)) {
+            foreach ($condition as $key => $value) {
+                if (trim($value) === '') {
+                    unset($condition[$key]);
+                } else if (strpos($key, ':')) {
+                    if (strpos($value, '%') !== false) {
+                        $collection->where(new Like(str_replace(':', '.', $key), $value));
+                    } else {
+                        $condition[str_replace(':', '.', $key)] = $value;
+                    }
+                    unset($condition[$key]);
+                } else if (strpos($value, '%') !== false) {
+                    $collection->where(new Like($key, $value));
+                    unset($condition[$key]);
+                } else if ($collection instanceof Collection) {
+                    $attribute = new Attribute;
+                    $attribute->load($key, 'code');
+                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
+                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
+                        unset($condition[$key]);
+                    }
+                }
+            }
+            $collection->where($condition);
+        }
+        return $collection;
+    }
+
+    /**
+     * {@inhertdoc}
+     */
+    protected function getRendered($template)
+    {
+        $collection = $this->prepareCollection();
+        if ($collection instanceof AbstractCollection) {
+            $collection->load();
+        }
+        $this->setVariable('collection', $collection);
+        return parent::getRendered($template);
     }
     
 }

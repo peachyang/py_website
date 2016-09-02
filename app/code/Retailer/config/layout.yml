@@ -143,6 +143,9 @@ retailer_goods:
                     main:
                         type: Seahinet\Retailer\ViewModel\Goods
                         template: retailer/goods
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 retailer_order_view:
     update: frontend
     root:

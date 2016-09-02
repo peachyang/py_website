@@ -218,10 +218,15 @@
                 </div>
             </div>
             <div class="pull-right">
-                <div>
+                <!--div>
                     <button class="btn-options">上一页</button>
                     <button class="btn-options">下一页</button>
-                </div>
+                </div-->
+                <?php
+                    if (is_object($this->getVariable('collection'))) {
+                        echo $this->getChild('pager')->setCollection($this->getVariable('collection'));
+                    }
+                    ?>
             </div>
         </div>
     </div>

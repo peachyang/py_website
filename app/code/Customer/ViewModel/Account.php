@@ -2,34 +2,30 @@
 
 namespace Seahinet\Customer\ViewModel;
 
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\ViewModel\Template;
 
-
-class Account extends Template 
+class Account extends Template
 {
-    protected $menu = [];
+
+    protected static $customer = null;
     protected static $currency = null;
-    
-    public function __construct() 
+
+    public function getCurrency()
     {
-        $this->getTemplate('customer/account/');
-    }
-    
-    public function addMenu($menu)
-    {
-        $this->menu = $menu;
-    }
-    
-    public function getMenu() {
-        
-        return  $this->menu;
-    }
-   public function getCurrency()
-    {
-        if (isset($this->storage['currency'])) {
-            return (new Currency)->load($this->storage['currency'], 'code');
+        if (is_null(self::$currency)) {
+            self::$currency = $this->getContainer()->get('currency');
         }
-        return $this->getContainer()->get('currency');
+        return self::$currency;
     }
-    
+
+    public function getCustomer()
+    {
+        if(is_null(self::$customer)){
+            $segment = new Segment('customer');
+            self::$customer = $segment->get('customer');
+        }
+        return self::$customer;
+    }
+
 }

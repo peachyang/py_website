@@ -1,7 +1,7 @@
 ---
 sales:
     icon: money
-    title: Sales
+    title: Transaction
     priority: 40
     children:
         -

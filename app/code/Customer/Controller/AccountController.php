@@ -310,16 +310,7 @@ class AccountController extends AuthActionController
 
     public function indexAction()
     {
-        $segment = new Segment('customer');
-
-        if ($customerId = $segment->get('customer')->getId()) {
-            $customer = new Model;
-            $customer->load($customerId);
-            $root = $this->getLayout('customer_account_dashboard');
-            $root->getChild('main', true)->setVariable('customer', $customer);
-            return $root;
-        }
-        return FALSE;
+        return $this->getLayout('customer_account_dashboard');
     }
 
     public function personalInfoAction()

@@ -37,8 +37,7 @@
                         GLOBAL.AJAX[url] = null;
                         $('.section.review [name="shipping_method[' + s + ']"]').parent().html(xhr);
                         if (!store.length) {
-                            loadPayment();
-                            loadReview();
+                            loadCoupon();
                         }
                     }
                 });

@@ -27,7 +27,7 @@ customer_account:
                                 params: [{link:'sales/myorder/order',label:'My Order',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'sales/refund/index',label:'Refund Rights',group:'Order Center'}]
+                                params: [{link:'sales/refund/index',label:'Return &amp; Refund',group:'Order Center'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'Center of Attention'}]
@@ -68,12 +68,21 @@ customer_account_dashboard:
                 action:
                     -
                         method: setTitle
-                        params: Account
+                        params: My Account
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: customer/dashboard
+                        type: Seahinet\Lib\ViewModel\Wrapper
+                        children:
+                            profile:
+                                type: Seahinet\Customer\ViewModel\Dashboard\Profile
+                                template: customer/dashboard/profile
+                            order:
+                                type: Seahinet\Customer\ViewModel\Dashboard\Order
+                                template: customer/dashboard/order
+                            coupon:
+                                type: Seahinet\Customer\ViewModel\Dashboard\Coupon
+                                template: customer/dashboard/coupon
 customer_account_personalinfo:
     update: customer_account
     root:

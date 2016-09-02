@@ -3,6 +3,7 @@
 namespace Seahinet\Promotion\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\Store;
 use Seahinet\Promotion\Model\Collection\Coupon as CouponCollection;
 use Seahinet\Promotion\Model\Collection\Condition as ConditionCollection;
 use Seahinet\Promotion\Model\Collection\Handler as HandlerCollection;
@@ -147,6 +148,15 @@ class Rule extends AbstractModel
             $result[0]['store_id'] = $store;
         }
         parent::afterLoad($result);
+    }
+
+    public function getStores()
+    {
+        $result = [];
+        foreach ($this->storage['store_id'] as $store) {
+            $result[] = (new Store)->load($store);
+        }
+        return $result;
     }
 
     public function applyToStore($store)

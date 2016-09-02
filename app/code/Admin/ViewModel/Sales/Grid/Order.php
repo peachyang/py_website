@@ -101,6 +101,9 @@ class Order extends Grid
             'increment_id' => [
                 'label' => 'ID'
             ],
+            'customer_id' => [
+                'label' => 'Customer ID'
+            ],
             'base_total' => [
                 'label' => 'Total',
                 'type' => 'price',

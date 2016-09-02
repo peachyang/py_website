@@ -166,7 +166,7 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart .subtotal{color:#007dc6;font-size:16px}
 #cart .product-name{vertical-align:top}
 #cart .product-name .price{color:#007ecc;font-weight:bold}
-#cart .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden;color:#000}
+#cart .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden}
 #cart .product-name h4{font-size:13px;color:#696868;height:30px;overflow-y:hidden}
 #cart .product-name .options{margin-bottom:0;line-height:20px;display:inline-block;width: 100%;color:#979797}
 #cart .product-name .options dt{float:left;}
@@ -186,7 +186,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .tab-content .products-grid .item{text-align:center}
 .tab-content .products-grid .item p{height:20px;overflow-y:hidden;margin:0 5%}
 .checkout-order .message-box{margin-top:50px}
-.checkout-order .checkout-steps section{background:#fff;margin-top:5px;padding:0 10px;font-size:13px}
+.checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
+.checkout-order .checkout-steps .payment{margin-bottom:60px}
 .checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold}
 .checkout-order .checkout-steps .address .list li label{width:92%}
 .checkout-order .checkout-steps .address .list li p{clear:both;line-height:30px;width:90%;margin:0 5%}
@@ -201,7 +202,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-steps .review .order .product-list{padding:15px 0;border-bottom:1px solid #e3e5eb}
 .checkout-steps .review .order .product-list .product-img{float:left;width:26%}
 .checkout-steps .review .order .product-list .product-name{float:left;width:72%;margin-right:2%}
-.checkout-steps .review .order .product-list .product-name h4{line-height:20px;font-size: 1em;font-weight:normal}
+.checkout-steps .review .order .product-list .product-name h4{line-height:20px;font-size:1em;font-weight:normal;height:40px;overflow-y:hidden}
 .checkout-steps .review .order .product-list .product-name .options{margin-bottom:0;line-height:20px;display:inline-block;width: 100%;color:#979797}
 .checkout-steps .review .order .product-list .product-name .options dt{float:left;}
 .checkout-steps .review .order .product-list .product-name .options dt:after{content:":"}
@@ -211,5 +212,9 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-steps .review .order .shipping,.subtotal{line-height:40px;width:100%;overflow:hidden}
 .checkout-steps .review .order .text-nowrap{margin-right:8px}
 .checkout-steps .review .order .total .table{overflow: hidden}
-.checkout-steps .review .order .grand-total{line-height:50px;width:100%}
-
+.checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}
+.checkout-steps .grand-total{background:#ffffff;height:50px;line-height: 50px;position:fixed;z-index: 1000;bottom: 0}
+.checkout-steps .grand-total span{color: #007ecc;font-weight:bold;margin-right:10px}
+.checkout-steps .grand-total .buttons-set{background:#ffb900;color:#fff;text-align: center}
+.checkout-steps .grand-total .buttons-set .btn{background:#ffb900;text-align:center;padding:0}
+.col-xs-3{display:inline-block}

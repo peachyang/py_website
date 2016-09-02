@@ -15,13 +15,13 @@
             if ($current !== $item['store_id']):
                 ?>
                 <?php if ($current): ?>
-                    <tr>
-                        <th colspan="7" class="text-right text-nowrap subtotal">
+                    <ul class="col-xs-12 col-sm-12">
+                        <li class="col-xs-12 col-sm-12 text-right text-nowrap subtotal">
                             <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
-                        </th>
-                    </tr>
+                        </li>
+                    </ul>
                 <?php endif ?>
-                <ul class="store">
+                <ul class="col-xs-12 col-sm-12 store">
                     <li class="col-xs-12 col-sm-12">
                         <?php echo $item['store']['name'] ?>
                     </li>
@@ -34,7 +34,7 @@
             endif;
         }
         ?>
-        <ul class="shipping">
+        <ul class="col-xs-12 col-sm-12 shipping">
             <li class="col-xs-2 col-sm-2 text-nowrap text-right">
                 <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
             </li>
@@ -42,20 +42,18 @@
                 <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
             </li>
         </ul>
-        <ul class="subtotal">
+        <ul class="col-xs-12 col-sm-12 subtotal">
             <li class="text-right total">
                 <?php echo $this->getChild('total') ?>
             </li>
         </ul>
-        <ul  class="grand-total">
-            <li class="col-xs-10 col-sm-10 text-right">
-                <?php echo $this->translate('Grand Total') ?>:<?php echo $this->getCurrency()->format($this->getCart()['total']) ?>
-            </li>
-            <li class="col-xs-2 col-sm-2 buttons-set">
-                <button type="button" class="btn btn-checkout">
-                    <span><?php echo $this->translate('Place Order') ?></span>
-                </button>
-            </li>
-        </ul>
     </div>
 </section>
+<ul  class="col-xs-12 col-sm-12 grand-total">
+    <li class="col-xs-9 col-sm-9 text-right">
+        <?php echo $this->translate('Grand Total') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+    </li>
+    <li class="col-xs-3 col-sm-3 buttons-set">
+        <button type="button" class="btn btn-checkout"><?php echo $this->translate('Place Order') ?></button>
+    </li>
+</ul>

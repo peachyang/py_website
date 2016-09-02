@@ -23,11 +23,13 @@ $attributes = $this->getAddressAttribute();
             </li>
         <?php endforeach ?>
     </ul>
+    <?php if(count($addresses) !== 1 && count($addresses) !== 0): ?>
     <div class="cell more">
         <a href="javascript:void(0);">
             <?php echo $this->translate('More Address') ?><span class="fa fa-angle-down fa-1"></span>
         </a>
     </div>
+    <?php endif;?>
     <template id="tmpl-address-list">
         <li data-id="{id}" data-json='{json}'>
             <input type="radio" name="shipping_address_id" id="shipping-address-{id}" value="{id}" />

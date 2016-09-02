@@ -1,25 +1,25 @@
-<table class="table">
-    <tr>
-        <th><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?></th>
-        <td><?php echo $this->translate('Subtotal') ?>:<?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></td>
-    </tr>
+<div class="table">
+    <ul>
+        <li class="col-xs-9 col-sm-9 text-right"><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?></li>
+        <li class="col-xs-3 col-sm-3"><?php echo $this->translate('Subtotal') ?>:<?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></li>
+    </ul>
     <?php
     if ((float) $this->getCart()['tax']):
         ?>
-        <tr>
-            <th><?php echo $this->translate('Tax') ?></th>
-            <td><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></td>
-        </tr>
+        <ul>
+            <li class="col-xs-2 col-sm-2 text-right text-nowrap"><?php echo $this->translate('Tax') ?></li>
+            <li class="col-xs-10 col-sm-10"><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></li>
+        </ul>
         <?php
     endif;
     ?>
     <?php
     if ((float) $this->getCart()['shipping']):
         ?>
-        <tr>
-            <th><?php echo $this->translate('Shipping') ?></th>
-            <td><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></td>
-        </tr>
+        <ul>
+            <li class="col-xs-12 col-sm-12 text-right text-nowrap"><?php echo $this->translate('Shipping') ?>:
+                <?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></li>
+        </ul>
         <?php
     endif;
     ?>
@@ -27,16 +27,11 @@
     if ((float) $this->getCart()['discount']):
         foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
             ?>
-            <tr>
-                <th><?php echo $this->translate('Discount(' . $type . ')') ?></th>
-                <td><?php echo $this->getCurrency()->convert($discount, true) ?></td>
-            </tr>
+            <ul>
+                <li class="col-xs-12 col-sm-12 text-right text-nowrap"><?php echo $this->translate('Discount(' . $type . ')') ?>:<?php echo $this->getCurrency()->convert($discount, true) ?></li>
+            </ul>
             <?php
         endforeach;
     endif;
     ?>
-    <tr class="grand-total">
-        <th><?php echo $this->translate('Grand Total') ?></th>
-        <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>
-    </tr>
-</table>
+</div>

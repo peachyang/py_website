@@ -1,88 +1,61 @@
 <section class="section review">
-    <h4 class="title"><?php echo $this->translate('Order Infomation') ?></h4>
-    <table class="table">
-        <colgroup>
-            <col width="1" />
-            <col />
-            <col width="12%" />
-            <col width="12%" />
-            <col width="12%" />
-            <col width="12%" />
-            <col width="12%" />
-        </colgroup>
-        <tbody>
-            <?php
-            $stores = [];
-            $subtotal = [];
-            foreach ($this->getItems() as $item) {
-                if (!isset($subtotal[$item['store_id']])) {
-                    $subtotal[$item['store_id']] = 0;
-                }
-                $stores[$item['store_id']] = !isset($stores[$item['store_id']]) ? 1 : $stores[$item['store_id']] + 1;
-                $subtotal[$item['store_id']] += $item['total'];
+    <div class="order">
+        <?php
+        $stores = [];
+        $subtotal = [];
+        foreach ($this->getItems() as $item) {
+            if (!isset($subtotal[$item['store_id']])) {
+                $subtotal[$item['store_id']] = 0;
             }
-            $current = 0;
-            foreach ($this->getItems() as $item) {
-                if ($current !== $item['store_id']):
-                    ?>
-                    <?php if ($current): ?>
-                        <tr>
-
-                            <th colspan="7" class="text-right text-nowrap subtotal">
-                                <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
-                            </th>
-                        </tr>
-                    <?php endif ?>
-                    <tr class="store">
-                        <th colspan="4" class="text-left text-nowrap">
-                            <?php echo $item['store']['name'] ?>
+            $stores[$item['store_id']] = !isset($stores[$item['store_id']]) ? 1 : $stores[$item['store_id']] + 1;
+            $subtotal[$item['store_id']] += $item['total'];
+        }
+        $current = 0;
+        foreach ($this->getItems() as $item) {
+            if ($current !== $item['store_id']):
+                ?>
+                <?php if ($current): ?>
+                    <tr>
+                        <th colspan="7" class="text-right text-nowrap subtotal">
+                            <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                         </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Price', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Qty', [], 'checkout') ?>
-                        </th>
-                        <th class="text-nowrap">
-                            <?php echo $this->translate('Subtotal', [], 'checkout') ?>
-                        </th>
-
                     </tr>
-                    <?php
-                    $current = $item['store_id'];
-                    echo $this->getRow($item, $stores[$item['store_id']]);
-                else:
-                    echo $this->getRow($item);
-                endif;
-            }
-            ?>
-            <tr class="subtotal">
-                <th class="text-nowrap text-right">
-                    <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
-                    <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
-                </th>
-                <th class="text-nowrap">
-                    <?php echo $this->translate('Message', [], 'checkout') ?>
-                    <input type="text" name="comment[<?php echo $item['store_id'] ?>]" class="form-control" style="display:inline-block" />
-                </th>
-                <th colspan="5" class="text-right text-nowrap">
-                    <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
-                </th>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="7" class="text-right total">
-                    <?php echo $this->getChild('total') ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="7" class="text-right buttons-set">
-                    <button type="button" class="btn btn-checkout">
-                        <span><?php echo $this->translate('Place Order') ?></span>
-                    </button>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+                <?php endif ?>
+                <ul class="store">
+                    <li class="col-xs-12 col-sm-12">
+                        <?php echo $item['store']['name'] ?>
+                    </li>
+                </ul>
+                <?php
+                $current = $item['store_id'];
+                echo $this->getRow($item, $stores[$item['store_id']]);
+            else:
+                echo $this->getRow($item);
+            endif;
+        }
+        ?>
+        <ul class="shipping">
+            <li class="col-xs-2 col-sm-2 text-nowrap text-right">
+                <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
+            </li>
+            <li class="col-xs-9 col-sm-9">
+                <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
+            </li>
+        </ul>
+        <ul class="subtotal">
+            <li class="text-right total">
+                <?php echo $this->getChild('total') ?>
+            </li>
+        </ul>
+        <ul  class="grand-total">
+            <li class="col-xs-10 col-sm-10 text-right">
+                <?php echo $this->translate('Grand Total') ?>:<?php echo $this->getCurrency()->format($this->getCart()['total']) ?>
+            </li>
+            <li class="col-xs-2 col-sm-2 buttons-set">
+                <button type="button" class="btn btn-checkout">
+                    <span><?php echo $this->translate('Place Order') ?></span>
+                </button>
+            </li>
+        </ul>
+    </div>
 </section>

@@ -2,8 +2,6 @@
 
 namespace Seahinet\Retailer\Controller;
 
-use Exception;
-use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Lib\Session\Segment;
 
 /** 

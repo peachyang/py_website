@@ -313,15 +313,9 @@ class AccountController extends AuthActionController
         return $this->getLayout('customer_account_dashboard');
     }
 
-    public function personalInfoAction()
+    public function editAction()
     {
-        $segment = new Segment('customer');
-        $customerId = $segment->get('customer')->getId();
-        $customer = new Model;
-        $customer->load($customerId);
-        $root = $this->getLayout('customer_account_personalinfo');
-        $root->getChild('main', true)->setVariable('customer', $customer);
-        return $root;
+        return $this->getLayout('customer_account_edit');
     }
 
     public function editPersonalInfoAction()

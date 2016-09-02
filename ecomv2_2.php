@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `promotion`(
     `use_coupon` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Use coupon',
     `from_date` DATETIME NULL DEFAULT NULL COMMENT 'From date',
     `to_date` DATETIME NULL DEFAULT NULL COMMENT 'To date',
-    `qty` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Quentity',
+    `qty` DECIMAL(12,4) DEFAULT 0 COMMENT 'Quentity',
     `price` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Price',
     `is_fixed` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is fixed',
     `per_item` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Per item',

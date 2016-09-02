@@ -46,16 +46,14 @@ class Rule extends Edit
             'description' => [
                 'type' => 'textarea',
                 'label' => 'Description',
-                'class' => 'htmleditor'
+                'comment' => 'Please introduce the condition of this promotion rule.'
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
+                'type' => 'hidden'
                     ] : [
-                'type' => 'select',
+                'type' => 'multiselect',
                 'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'empty_string' => '(NULL)'
+                'label' => 'Store'
                     ]),
             'from_date' => [
                 'type' => 'datetime',

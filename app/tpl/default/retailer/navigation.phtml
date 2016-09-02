@@ -1,23 +1,25 @@
-<div class="col-xs-3 col-sm-3 col-md-2 navigation">
-    <div class="nav-title">
-        <span class="fa fa-user" aria-hidden="true">&nbsp;</span><a href="<?php echo $this->getBaseUrl('retailer/account/')?>"><?php echo $this->translate('Retailer Center') ?></a>
-    </div>
-    <div class="nav-list">    		
-        <dl>
-            <?php
-                $links = $this->getLinks();
-                foreach ($this->getGroups() as $group){
-            ?>
-                    <dt><span class="fa fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span><span><?php echo $this->translate($group['label']) ?></span></dt>
-                        <?php foreach ($links as $key => $link){ ?>
-                            <?php if ($link['group'] == $group['label']){ ?>
-                                <dd><a href="<?php echo $this->getBaseUrl($link['link']) ?>"><span><?php echo $this->translate($link['label']) ?></span></a></dd>
-                            <?php
-                                unset($links[$key]);
-							    } 
-							?>
-                        <?php } ?>                
-            <?php } ?>              
-        </dl>
+<div class="col-left col-xs-3 col-sm-3 col-md-2">
+    <div class="navigation">
+        <div class="nav-title">
+            <span class="fa fa-user" aria-hidden="true">&nbsp;</span><a href="<?php echo $this->getBaseUrl('retailer/account/')?>"><?php echo $this->translate('Retailer Center') ?></a>
+        </div>
+        <div class="nav-list">    		
+            <dl>
+                <?php
+                    $links = $this->getLinks();
+                    foreach ($this->getGroups() as $group){
+                ?>
+                        <dt><span class="fa fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span><span><?php echo $this->translate($group['label']) ?></span></dt>
+                            <?php foreach ($links as $key => $link){ ?>
+                                <?php if ($link['group'] == $group['label']){ ?>
+                                    <dd><a href="<?php echo $this->getBaseUrl($link['link']) ?>"><span><?php echo $this->translate($link['label']) ?></span></a></dd>
+                                <?php
+                                    unset($links[$key]);
+    							    } 
+    							?>
+                            <?php } ?>                
+                <?php } ?>              
+            </dl>
+        </div>
     </div>
 </div>

@@ -1,0 +1,48 @@
+<?php
+$customer = $this->getCustomer();
+?>
+<h2 class="page-title"><?php echo $this->translate('Account Information') ?></h2>
+<div class="page-content">
+    <form action="<?php echo $this->getBaseUrl('customer/account/save/') ?>" method="post" class="form-inline">
+        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+        <input type="hidden" name="id" value="<?php echo $customer->getId() ?>">
+        <div class="fieldset">
+            <div class="input-box">
+                <label class="control-label"><?php echo $this->translate('Username') ?></label>
+                <div class="cell">
+                    <span><?php echo $customer->offsetGet('username') ?></span>
+                </div>
+            </div>
+            <?php
+            foreach ($this->getAttribute() as $attr) {
+                echo $this->getInputBox($attr);
+            }
+            ?>
+            <div class="input-box">
+                <label class="control-label required" for="crpassword"><?php echo $this->translate('Current Password') ?></label>
+                <div class="cell">
+                    <input type="password" name="crpassword" id="crpassword" class="form-control required" class="form-control required" minlength="6"/>
+                </div>
+            </div>
+            <input type="checkbox" class="edit-password" id="edit-password" />
+            <label for="edit-password"><?php echo $this->translate('Edit Password') ?></label>
+            <div class="input-box">
+                <label class="control-label" for="password"><?php echo $this->translate('New Password') ?></label>
+                <div class="cell">
+                    <input type="password" name="password" id="password" class="form-control" minlength="6" />
+                </div>
+            </div>
+            <div class="input-box">
+                <label class="control-label" for="cpassword"><?php echo $this->translate('Confirm Password') ?></label>
+                <div class="cell">
+                    <input type="password" name="cpassword" id="cpassword" class="form-control" data-rule-equalTo="#password" minlength="6" />
+                </div>
+            </div>
+            <div class="buttons-set">
+                <button type="submit" class="btn btn-submit">
+                    <span><?php echo $this->translate('Submit') ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

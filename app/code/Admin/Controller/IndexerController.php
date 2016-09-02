@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\Controller;
 
+use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Type;
 
@@ -18,7 +19,7 @@ class IndexerController extends AuthActionController
         $code = $this->getRequest()->getPost('id');
         $result = ['message' => [], 'error' => 0];
         if (!$code) {
-            $code = (new Type)->toArray();
+            $code = array_merge((new Type)->toArray(), array_keys($this->getContainer()->get('config')['indexer']));
         }
         $manager = $this->getContainer()->get('indexer');
         $count = 0;
@@ -28,7 +29,7 @@ class IndexerController extends AuthActionController
                 $manager->reindex(is_string($indexer) ? $indexer : $indexer['code']);
                 $count ++;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
         }
         unlink(BP . 'maintence');

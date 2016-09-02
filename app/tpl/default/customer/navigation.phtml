@@ -1,17 +1,27 @@
-<div class="navigation">
-    <div class="nav-title">
-        <span class="fa fa-user" aria-hidden="true">&nbsp;</span><a href="<?php echo $this->getBaseUrl()?>"><?php echo $this->translate('Personal Center') ?></a>
-    </div>
-    <div class="nav-list">    		
+<div class="nav">
+    <h2 class="page-title">
+        <a href="<?php echo $this->getBaseUrl('customer/account/') ?>">
+            <span class="fa fa-user" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Personal Center') ?></span>
+        </a>
+    </h2>
+    <nav>    		
         <dl>
             <?php foreach ($this->getGroups() as $group): ?>
-                <dt><span class="fa fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span><span><?php echo $this->translate($group['label']) ?></span></dt>
-                        <?php foreach ($this->getLinks() as $link): ?>
-                            <?php if ($link['group'] == $group['label']): ?>
-                        <dd><a href="<?php echo $this->getBaseUrl($link['link']) ?>"><span><?php echo $this->translate($link['label']) ?></span></a></dd>
+                <dt>
+                    <span class="fa fa-fw fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span>
+                    <span><?php echo $this->translate($group['label']) ?></span>
+                </dt>
+                <?php foreach ($this->getLinks() as $link): ?>
+                    <?php if ($link['group'] == $group['label']): ?>
+                        <dd>
+                            <a href="<?php echo $this->getBaseUrl($link['link']) ?>">
+                                <span><?php echo $this->translate($link['label']) ?></span>
+                            </a>
+                        </dd>
                     <?php endif; ?>
                 <?php endforeach; ?>                
             <?php endforeach; ?>              
         </dl>
-    </div>
+    </nav>
 </div>

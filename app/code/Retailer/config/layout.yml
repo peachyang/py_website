@@ -141,7 +141,7 @@ retailer_goods:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Retailer\ViewModel\Goods
                         template: retailer/goods
 retailer_order_view:
     update: frontend

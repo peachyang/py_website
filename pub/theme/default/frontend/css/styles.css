@@ -7,6 +7,9 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .hidden,[hidden]{display:none!important}
 .global-notice .no-cookie{display:none}
 .no-cookies .global-notice .no-cookie{display:none}
+.text-vtop{vertical-align:top!important}
+.text-vmiddle{vertical-align:middle!important}
+.text-vbottom{vertical-align:bottom!important}
 a{color:inherit}
 a:hover,a:focus{color:inherit;text-decoration:none}
 h1,h2,h3,h4,h5,h6{margin:0}
@@ -127,9 +130,13 @@ select[multiple],select[size],textarea{resize:vertical}
 .products-list .item .product-image img{width:100%}
 .products-list .item .product-name{font-size:11px;line-height:19px;height:38px;overflow:hidden}
 .price-box .label{display:none}
-.price-box .old-price{text-decoration:line-through}
-.price-box .old-price .price{text-decoration:line-through;font-size:14px;line-height:42px;color:#9b9a9a!important}
+.price-box .old-price .price,.price-box .old-price .label{text-decoration:line-through;font-size:14px;line-height:42px;color:#9b9a9a!important}
 .price-box .special-price .price,.price-box .regular-price .price{font-size:16px;line-height:42px;color:#fd9030;font-weight:bold}
+dl.options{margin-bottom:0;line-height:14px;color:#9C9C9C}
+dl.options:after{content:" ";display:block;width:0;height:0;clear:both}
+dl.options dt{clear:left;float:left}
+dl.options dt:after{content:":"}
+dl.options dd{float:left;margin-left:4px}
 .pager{text-align:left}
 .pager li>.current{border:none;color:#a5a5a6}
 .pager li>span,.pager li>a{border-radius:1px;color:#a5a5a6}
@@ -168,15 +175,13 @@ select[multiple],select[size],textarea{resize:vertical}
 .page-not-found .main-container .notice dt{display:inline;color:#a2a3a3}
 .page-not-found .main-container .notice dd{display:inline;padding:0 10px;color:#007dc6}
 .page-not-found .main-container .notice dd+dd{border-left:1px solid #a2a3a3}
-.col-left .navigation{background:#f6f6f9;border:1px solid #dfe1e8;margin-top:15px;}
-.col-left .navigation .nav-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000;}
-.col-left .navigation .nav-list{padding-left:25px}
-.col-left .navigation .nav-list dt{line-height:50px;max-height:50px}
-.col-left .navigation .nav-list dd{line-height:24px}
-.col-left .navigation .fa-user{color:#007dc6;font-size:18px}
-.col-left .navigation .fa{height:15px;width:15px;margin-right:5px}
-.col-left .navigation dt{padding-left:20px;font-size:14px;color:#000000;font-weight:bold;}
-.col-left .navigation dd{padding-left:40px;font-size:14px;color:#8b8a8a}
+.col-left .nav{background:#f6f6f9;border:1px solid #dfe1e8;margin:15px 0}
+.col-left .nav .page-title{height:50px;border-bottom:1px solid #dfe1e8;text-align:center;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000}
+.col-left .nav .page-title .fa{color:#007dc6;font-size:18px}
+.col-left .nav dt{padding-left:36px;font-size:14px;line-height:30px;color:#000;font-weight:bold;margin-top:1em}
+.col-left .nav dt .fa{font-size:20px;vertical-align:middle}
+.col-left .nav dl a{display:block;text-indent:65px;font-size:12px;line-height:24px;color:#8b8a8a}
+.col-left .nav dl a:hover{text-decoration:underline}
 .main-container .address .btn{background:#007dc6;color:#ffffff}
 .main-container .address .address-view{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
 .main-container .address .address-view:hover{background:#fdfbea}
@@ -184,7 +189,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .address .address-list .address-operater{width:25%;overflow:hidden;float:left;text-align:center}
 .main-container .address .address-list .address-detail dt{float:left;margin-right:20px}
 .main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
-.main-container .wishlist{margin-top:15px;padding-left:40px}
 .main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
 .main-container .wishlist .wishlist_list{border:1px solid #e1e1e1}
 .main-container .wishlist .wishlist_list .product_name a{float:left;padding:10px;display:block}
@@ -193,71 +197,42 @@ select[multiple],select[size],textarea{resize:vertical}
 .main-container .wishlist .wishlist_list a{display:block}
 .main-container .wishlist .wishlist_list li{text-align:center;line-height:40px;border-right:1px solid #e1e1e1}
 .main-container .wishlist .wishlist_list dd{text-align:center;margin: 60px auto}
-.main-container .track{margin-top:15px;padding-left:40px}
 .main-container .track h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
 .main-container .track dt{font-size:14px;line-height:30px}
 .main-container .track dt span{margin-right:10px;color:#007dc6}
 .main-container .track dt .browse{padding-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
 .main-container .track dd li{text-align:center;margin:0 10px}
 .main-container .track dd p{height:40px;text-align:left;overflow-y:hidden}
+.customer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:bold;border-bottom:1px solid #dfe1e8}
+.customer-account-dashboard .panel{box-shadow:none}
+.customer-account-dashboard .panel-heading{border-bottom:1px solid #dbdee5}
+.customer-account-dashboard .panel-title{border-bottom:1px solid;color:#007dc6;display:inline-block;padding:19px 12px;font-size:14px;line-height:1;margin:21px 0 -1px}
+.customer-account-dashboard .panel-heading,.customer-account-dashboard .panel-body{padding:0}
 .customer-account-dashboard .profile{border:1px solid #dfe1e8;padding:30px 50px;font-size:12px;line-height:20px;color:#9e9e9e}
 .customer-account-dashboard .profile .photo{display:block;padding-right:18px}
 .customer-account-dashboard .profile .name{font-size:20px;line-height:1;color:#000;margin-bottom:.5em}
 .customer-account-dashboard .profile .level{background:#007dc6;color:#fff;font-size:12px;line-height:18px;display:inline-block;padding:0 3px;vertical-align:bottom}
 .customer-account-dashboard .profile .count{font-size:13px;color:#007dc6;font-weight:bold}
 .customer-account-dashboard .profile span:not(.label)+span{margin-left:10px}
+.customer-account-dashboard .coupon .panel-body{margin-top:25px}
 .customer-account-dashboard .coupon .carousel-control{width:25px;color:#007dc6}
+.customer-account-dashboard .coupon .carousel-control .fa{position:absolute;top:50%;margin-top:-10px;display:block}
 .customer-account-dashboard .coupon .item .content{padding:0 25px;color:#dcf0fb;font-size:12px;line-height:18px}
 .customer-account-dashboard .coupon .item .content .inner{padding:0 15px 12px;background:url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top;background-repeat:repeat-y;background-color:#007dc6}
-.customer-account-dashboard .coupon .price{font-size:25px;line-height:60px;letter-spacing:-.2px;color:#fff}
-.customer-account-dashboard .coupon .free-shipping{font-size:25px;line-height:60px;position:relative;color:#fff}
-.customer-account-dashboard .coupon .price+.free-shipping{text-align:right}
+.customer-account-dashboard .coupon .price{font-size:35px;line-height:60px;letter-spacing:-.2px;color:#fff}
+.customer-account-dashboard .coupon .free-shipping{font-size:35px;line-height:60px;position:relative;color:#fff}
 .customer-account-dashboard .coupon .store:empty,.customer-account-dashboard .coupon .date:empty{height:18px}
-.customer-account-dashboard .main-container .dashboard .myinfo{border:1px solid #dfe1e8;margin-top:20px;padding-left:50px;padding-top:30px;padding-bottom:30px}
-.customer-account-dashboard .main-container .dashboard .infodetail{display:inline-block;height:100px;vertical-align:top}
-.customer-account-dashboard .main-container .dashboard .wel{font-size:14px}
-.customer-account-dashboard .main-container .dashboard .wel-name{font-size:20px}
-.customer-account-dashboard .main-container .dashboard .fa-star{color:#007dc6}
-.customer-account-dashboard .main-container .dashboard .fa-star-o{color:#bcbcbc} 
-.customer-account-dashboard .main-container .dashboard .start{display:inline-block;background-color:#007dc6;color:#ffffff;width:22px;text-align:center}
-.customer-account-dashboard .main-container .dashboard .start-v{font-size:17px}
-.customer-account-dashboard .main-container .dashboard .start-num{font-size:12px}
-.customer-account-dashboard .main-container .dashboard .bal-text{font-size:12px;color:#9e9e9e} 
-.customer-account-dashboard .main-container .dashboard .bal-num{font-size:13px;color:#007dc6;font-weight:bold}
-.customer-account-dashboard .main-container .dashboard .tran-num{font-size:13px;color:#007dc6} 
-.customer-account-dashboard .main-container .dashboard .checkin{display:inline-block;margin-right:35px;margin-top:20px;float:right;width:160px;height:40px;}
-.customer-account-dashboard .main-container .dashboard .check-button{background-color:#007dc6;color:#ffffff;font-size:17px;text-align:center;line-height:40px;font-weight:bold}
-.customer-account-dashboard .main-container .dashboard .checked{color:#aeaeae;font-size:14px}
-.customer-account-dashboard .main-container .dashboard .order{margin-top:20px}
-.customer-account-dashboard .main-container .dashboard .order .th-shop{height:40px;vertical-align:middle;font-size:12px;font-weight:bold;border:none;color:#000000;padding-left:0}
-.customer-account-dashboard .main-container .dashboard .order .fa-commenting{font-size:18px;color:#007dc6;vertical-align:middle}
-.customer-account-dashboard .main-container .dashboard .order .th-num{height:40px;vertical-align:middle;font-size:12px;border:none;color:#696868;text-align:right}
-.customer-account-dashboard .main-container .dashboard .order .order-coupon{display:inline-block;width:60px;height:25px;background-image:url(../images/coupon-order.png);background-repeat:repeat-y;background-size:60px;vertical-align:middle;text-align:center;line-height:25px;color:#ffffff;font-weight:normal}
-.customer-account-dashboard .main-container .dashboard .order .table td{height:140px;vertical-align:middle;border:1px solid #dbdee5}
-.customer-account-dashboard .main-container .dashboard .order .des{display:inline-block;max-width:160px;vertical-align:top;font-size:12px;color:#757474}
-.customer-account-dashboard .main-container .dashboard .order .status{font-size:13px;color:#608fdc} 
-.customer-account-dashboard .main-container .dashboard .order .jpy1{font-size:14px;color:#000000}
-.customer-account-dashboard .main-container .dashboard .order .order-div{display:inline-block;vertical-align:middle;margin-left:20px}
-.customer-account-dashboard .main-container .dashboard .order .now-price{font-size:14px;color:#000000}
-.customer-account-dashboard .main-container .dashboard .order .old-price{font-size:12px;color:#ababab}
-.customer-account-dashboard .main-container .dashboard .order .old-price-num{font-size:12px;color:#ababab;text-decoration:line-through} 
-.customer-account-dashboard .main-container .dashboard .order .logistics{font-size:12px;color:#696868} 
-.customer-account-dashboard .main-container .dashboard .order .jpy2{font-size:16px;color:#007dc6} 
-.customer-account-dashboard .main-container .dashboard .order .total-price{font-size:16px;color:#007dc6}
-.customer-account-dashboard .main-container .dashboard .order .confirm{height:35px;line-height:35px;padding:0 8px;background-color:#ffffff;border:1px solid #e2e4ea;font-size:13px;color:#608fdc}
-.customer-account-dashboard .main-container .dashboard .myorder{border-bottom:1px solid #dbdee5;margin-top:25px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
-.customer-account-dashboard .main-container .dashboard .myorder-text{border-bottom:1px solid #007dc6;height:55px;line-height:55px;width:150px;text-align:center}
-.customer-account-dashboard .main-container .dashboard .coupon-title{border-bottom:1px solid #dbdee5;margin-bottom:20px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
-.customer-account-dashboard .main-container .coupon{margin-bottom:30px}
-.customer-account-dashboard .main-container .coupon .coupon-div{display:inline-block;width:30%;text-align:center}
-.customer-account-dashboard .main-container .coupon .coupon-info{text-align:left;width:245px;background-image:url(../images/coupon.png);background-repeat: repeat-y;color:#ffffff;padding:9px 0 10px 15px;display:inline-block} 
-.customer-account-dashboard .main-container .coupon .price-title{display:inline-block;height:60px;line-height:60px;font-size:20px;vertical-align:middle} 
-.customer-account-dashboard .main-container .coupon .coupon-price{display:inline-block;font-size:50px;height:60px;line-height:60px;vertical-align:middle}  
-.customer-account-dashboard .main-container .coupon .obtain{display:inline-block;font-size:12px;height:60px;vertical-align:middle;padding-top:15px;float:right;margin-right: 20px} 
-.customer-account-dashboard .main-container .coupon .table>tbody>tr>td{border:none;vertical-align:middle;}
-.customer-account-dashboard .main-container .coupon .now{background-color:white;color:#007dc6;padding:2px 6px;border-radius:2px} 
-.customer-account-dashboard .main-container .coupon .condition{font-size:12px;line-height:18px}
-.customer-account-dashboard .main-container .coupon .change{width:4%;display:inline-block;vertical-align:top;text-align:center;margin-top:60px}
+.customer-account-dashboard .order .store{font-weight:bold;color:#000}
+.customer-account-dashboard .order tbody td{border-color:#e1e3e9;padding:24px 12px}
+.customer-account-dashboard .order tbody td:first-child{border-left:1px solid #e1e3e9;padding-left:24px}
+.customer-account-dashboard .order tbody td[rowspan]:last-child{border-right:1px solid #e1e3e9;padding-right:24px}
+.customer-account-dashboard .order tbody td span:not(.label):not(.price){display:block}
+.customer-account-dashboard .order tbody tr:last-child td{border-bottom:1px solid #e1e3e9}
+.customer-account-dashboard .order .price-box .old-price .label{display:inline}
+.customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
+.customer-account-dashboard .order .options{font-size:12px}
+.customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
+.customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -317,7 +292,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .qty .spin{display:inline-block;font-size:18px;line-height:22px;border:1px solid #d4d4d4;width:28px;height:28px;text-align:center;color:#cbcbcb;background:#ededed;vertical-align:bottom;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
-.main-container .personinfo{padding-left:40px;margin-top:15px} 
 .main-container .personinfo h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;margin-bottom: 30px;font-weight:bold}
 .main-container .personinfo dl{width:100%;overflow:hidden}
 .main-container .personinfo dt{width:15%;text-align:right;float:left;padding-right:5px}
@@ -341,10 +315,6 @@ select[multiple],select[size],textarea{resize:vertical}
 #cart tbody .subtotal{color:#007dc6;font-size:16px}
 #cart tbody .product-name{vertical-align:top}
 #cart tbody .product-name a{display:block;margin-bottom:8px;max-height:44px;overflow:hidden;color:#000}
-#cart tbody .options{margin-bottom:0;line-height:14px;color:#9C9C9C}
-#cart tbody .options dt{clear:left;float:left}
-#cart tbody .options dt:after{content:":"}
-#cart tbody .options dd{float:left;margin-left:4px}
 #cart tfoot .btn-checkout{border-radius:0;padding:15px 25px;margin-left:10px;background:#fabb39}
 #cart tfoot .btn-checkout[disabled]{background:#ccc}
 #cart tfoot td{background:#f1f1f1;padding:0;vertical-align:middle;border-top:0px none}

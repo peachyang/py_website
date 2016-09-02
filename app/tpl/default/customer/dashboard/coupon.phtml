@@ -4,7 +4,7 @@ $flag = true;
 ?>
 <div class="panel coupon">
     <div class="panel-heading">
-        <h4 class="panel-title"><?php echo $this->translate('Coupons') ?></h4>
+        <h4 class="panel-title"><?php echo $this->translate('My Coupons') ?></h4>
     </div>
     <div class="panel-body carousel slide" data-ride="carousel" id="carousel-coupon" data-interval="false">
         <div class="carousel-inner" role="listbox">
@@ -24,15 +24,14 @@ $flag = true;
                     <div class="content col-xs-4">
                         <div class="inner clearfix">
                             <?php if ($coupon['price']): ?>
-                                <div class="col-xs-6 price">
+                                <div class="col-xs-12 price">
                                     <?php echo $coupon['is_fixed'] ? $this->getCurrency()->convert($coupon['price'], true) : (100 * $coupon['price'] . '%') ?>
                                 </div>
-                            <?php endif ?>
-                            <?php #if ($coupon['free_shipping']): ?>
-                                <div class="col-xs-6 free-shipping">
+                            <?php else: ?>
+                                <div class="col-xs-12 free-shipping">
                                     <span><?php echo $this->translate('Free Shipping') ?></span>
                                 </div>
-                            <?php #endif ?>
+                            <?php endif ?>
                             <div class="col-xs-12 store"><?php if ($stores = $coupon->getStores()): ?>
                                     <span class="label"><?php echo $this->translate('Available Store') ?>:</span>
                                     <?php foreach ($stores as $store): ?>

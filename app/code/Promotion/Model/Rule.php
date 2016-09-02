@@ -34,13 +34,18 @@ class Rule extends AbstractModel
     public function matchCoupon($coupon, $model)
     {
         if ($coupon && $coupons = $this->getCoupon()) {
-            $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['uses' => new Expression('count(promotion_coupon_log.id)')], 'left')
+            $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['customer_id', 'uses' => new Expression('count(promotion_coupon_log.id)')], 'left')
                     ->where([
                         'code' => $coupon,
-                        'status' => 1,
-                        'customer_id' => $model['customer_id']
-                    ])->columns(['id', 'uses_per_customer'])->group(['promotion_coupon.id', 'uses_per_customer'])->limit(1);
-            if (count($coupons) && ($coupons[0]['uses_per_customer'] == 0 || $coupons[0]['uses_per_customer'] > $coupons[0]['uses'])) {
+                        'status' => 1
+                    ])->columns(['id', 'uses_per_customer'])
+                    ->group(['promotion_coupon.id', 'customer_id', 'uses_per_customer']);
+            if (count($coupons)) {
+                foreach ($coupons as $coupon) {
+                    if ($coupon['customer_id'] == $model['customer_id'] && $coupons['uses_per_customer'] > 0 && $coupons['uses_per_customer'] <= $coupons['uses']) {
+                        return false;
+                    }
+                }
                 return true;
             }
         }
@@ -97,7 +102,7 @@ class Rule extends AbstractModel
                 }
             }
         }
-        if (!empty($this->storage['condition'])) {
+        if (isset($this->storage['condition'])) {
             $tableGateway = $this->getTableGateway('promotion_condition');
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
@@ -108,7 +113,7 @@ class Rule extends AbstractModel
                 $pids[$id] = $model->getId();
             }
         }
-        if (!empty($this->storage['handler'])) {
+        if (isset($this->storage['handler'])) {
             $tableGateway = $this->getTableGateway('promotion_handler');
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
@@ -119,7 +124,7 @@ class Rule extends AbstractModel
                 $pids[$id] = $model->getId();
             }
         }
-        if (!empty($this->storage['store_id'])) {
+        if (isset($this->storage['store_id'])) {
             $tableGateway = $this->getTableGateway('promotion_in_store');
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             foreach ((array) $this->storage['store_id'] as $id) {

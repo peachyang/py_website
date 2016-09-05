@@ -13,10 +13,7 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Customer\Model\Address;
-use Seahinet\Customer\Model\Collection\Address as Addresses;
-use Seahinet\Customer\Model\Collection\Wishlist as Wishlists;
 use Seahinet\Customer\Model\Persistent;
-use Seahinet\Customer\Model\Wishlist\Item;
 use Swift_TransportException;
 use Zend\Math\Rand;
 
@@ -352,27 +349,32 @@ class AccountController extends AuthActionController
 
     public function addressAction()
     {
-        $segment = new Segment('customer');
-        $customerId = $segment->get('customer')->getId();
-        $addresses = new Addresses;
-        $addresses->where(['customer_id' => $customerId]);
-        $root = $this->getLayout('customer_account_address');
-        $root->getChild('main', true)->setVariable('addresses', $addresses);
-        return $root;
+        return $this->getLayout('customer_account_address');
     }
 
-    public function delAddressAction()
+    public function deleteAddressAction()
     {
-        $address = new Address;
-        $data = $this->getRequest()->getQuery();
-        $address->load($data['id'])->remove();
-
-        return $this->redirect('customer/account/address/');
+        if ($this->getRequest()->isDelete()) {
+            $address = new Address;
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                try {
+                    $address->setId($data['id'])->remove();
+                    $result['removeLine'] = 1;
+                    $result['message'][] = ['message' => $this->translate('The address has been deleted successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please contact us or try again later.'), 'level' => 'success'];
+                }
+            }
+        }
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/address/', 'customer');
     }
 
-    public function addAddressAction()
+    public function saveAddressAction()
     {
-        $result = ['error' => 1, 'message' => []];
+        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attribute = new Attribute;
@@ -388,16 +390,20 @@ class AccountController extends AuthActionController
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 $address = new Address;
-                unset($data['customer_id']);
-                unset($data['store_id']);
-                unset($data['attribute_set_id']);
                 try {
                     $segment = new Segment('customer');
+                    if (isset($data['id'])) {
+                        $address->load($data['id']);
+                    }
+                    if (!empty($address->offsetGet('customer_id')) && $address->offsetGet('customer_id') != $segment->get('customer')->getId()) {
+                        throw new Exception('');
+                    }
                     $address->setData($data + [
                         'attribute_set_id' => $setId,
                         'store_id' => Bootstrap::getStore()->getId(),
                         'customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null
                     ])->save();
+                    $result['message'][] = ['message' => $this->translate('The address has been saved successfully.'), 'level' => 'success'];
                     $result['data'] = ['id' => $address->getId(), 'content' => $address->display()];
                 } catch (Exception $e) {
                     $result['error'] = 1;
@@ -405,7 +411,7 @@ class AccountController extends AuthActionController
                 }
             }
         }
-        return $this->redirect('customer/account/address');
+        return $this->response($result, 'customer/account/address', 'customer');
     }
 
     public function defaultAddressAction()
@@ -414,39 +420,12 @@ class AccountController extends AuthActionController
         if ($id) {
             $address = new Address;
             $address->load($id)->setData('is_default', 1)->save();
-            $collection = new Addresses;
-            $collection->where(['is_default' => 1])->where->notEqualTo('id', $id);
-            foreach ($collection as $address) {
-                $address->setData('is_default', 0)->save();
-            }
         }
-        return $this->redirect('customer/account/address/');
-    }
-
-    public function wishlistAction()
-    {
-        $segment = new Segment('customer');
-        $customerId = $segment->get('customer')->getId();
-        $wishlists = new Wishlists;
-        $wishlists->where(['customer_id' => $customerId]);
-        $root = $this->getLayout('customer_account_wishlist');
-        $root->getChild('main', true)->setVariable('wishlists', $wishlists);
-        return $root;
-    }
-
-    public function deleteAction()
-    {
-        $item = new Item;
-        $data = $this->getRequest()->getQuery();
-        if (isset($data['id'])) {
-            $item->load($data['id'])->remove();
-        }
-        return $this->redirect('customer/account/wishlist/');
+        return $this->response(['error' => 0, 'message' => []], 'customer/account/address/');
     }
 
     public function logviewAction()
     {
-        $segment = new Segment('logview');
         $root = $this->getLayout('customer_account_logview');
         return $root;
     }

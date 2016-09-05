@@ -9,10 +9,11 @@ use Seahinet\Customer\Model\Wishlist;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Cart;
-use Seahinet\Sales\Model\Cart\Item;
 
 class CartController extends ActionController
 {
+
+    use \Seahinet\Lib\Traits\DB;
 
     public function addAction()
     {
@@ -137,18 +138,18 @@ class CartController extends ActionController
                 $wishlist->setData('customer_id', $segment->get('customer')['id'])->save();
             }
             try {
+                $this->beginTransaction();
                 foreach ((array) $data['id'] as $id) {
                     $item = Cart::instance()->getItem($id);
-                    $wishlist->addItem([
-                        'product_id' => $item['product_id'],
-                        'product' => $item['product'],
-                        'qty' => $item['qty'],
-                        'options' => $item['options']
-                    ]);
-                    $result['message'][] = ['message' => $this->translate('"%s" has been moved to wishlist.', [$item['product']['name']]), 'level' => 'success'];
-                    Cart::instance()->removeItem($item);
+                    if ($item) {
+                        $wishlist->addItem($item->toArray());
+                        $result['message'][] = ['message' => $this->translate('"%s" has been moved to your wishlist.', [$item['product']['name']], 'checkout'), 'level' => 'success'];
+                        Cart::instance()->removeItem($item);
+                    }
                 }
+                $this->commit();
             } catch (Exception $e) {
+                $this->rollback();
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                 $this->getContainer()->get('log')->logException($e);

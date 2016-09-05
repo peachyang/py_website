@@ -6,7 +6,6 @@ use Seahinet\Customer\Model\Collection\Wishlist\Item as Collection;
 use Seahinet\Customer\Model\Wishlist\Item as Model;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Catalog\Model\Product;
-use Seahinet\I18n\Model\Currency;
 
 class Wishlist extends AbstractModel
 {
@@ -26,22 +25,21 @@ class Wishlist extends AbstractModel
         return [];
     }
 
-    public function addItem($item)
+    public function addItem($data)
     {
-        $item = new Model($item);
-        if (isset($item['product'])) {
-            $product = $item['product'];
-        } else {
-            $product = new Product;
-            $product->load($item['product_id'], 'id');
-        }
+        $item = new Model($data);
+        $product = new Product;
+        $product->load($data['product_id'], 'id');
         $item->setData([
+            'id' => null,
             'wishlist_id' => $this->getId(),
-            'store_id' => $product['store_id'],
+            'store_id' => $data['store_id'],
             'product_name' => $product['name'],
-            'description' => $product['description'],
+            'description' => preg_replace('/\<[^\>]+\>/', '', $product['description']),
+            'price' => isset($data['base_price']) ? $data['base_price'] : $product->getFinalPrice($data['qty'], false)
         ]);
         $item->save();
+        $this->flushList('wishlist');
         return $this;
     }
 

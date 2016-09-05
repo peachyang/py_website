@@ -3,9 +3,9 @@
     $order = $this->getVariable("order");
     $transactions = $this->getRetailerTransaction();
     $sales_status = $this->getAllSalesStatus();
-    
 ?>
-<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+<main class="col-main col-xs-9 col-sm-9 col-md-10 mg-bottom-40">
+    <div class="wishlist">
     <h3><?php echo $this->translate($subtitle); ?></h3>
     
     <div class="filter-bar">
@@ -44,7 +44,7 @@
                 <span>成交时间:</span>
                 <input class="form-control " type="text" value="" id="add_time_from" name="add_time_from">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-control " type="text" value="" name="add_time_to" id="add_time_to">&nbsp;&nbsp;<br />
                 <span>收件人:</span>
-                <input class="form-control " type="text" value="" id="receiver" name="receiver">&nbsp;&nbsp;
+                <input class="form-control " type="text" value="" id="receiver" name="receiver" />&nbsp;&nbsp;
             </div>
         </form>
     </div>
@@ -223,8 +223,8 @@
                     <button class="btn-options">下一页</button>
                 </div-->
                 <?php
-                    if (is_object($this->getVariable('collection'))) {
-                        echo $this->getChild('pager')->setCollection($this->getVariable('collection'));
+                    if (is_object($transactions)) {
+                        echo $this->getChild('pager')->setCollection($transactions);
                     }
                     ?>
             </div>
@@ -324,5 +324,5 @@
             </div>
         </div>
     </div>
-    
-</div>
+    </div>
+</main>

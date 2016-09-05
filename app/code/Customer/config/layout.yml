@@ -28,31 +28,31 @@ customer_account:
                                 params: [{label:'Asset',priority:10,icon:'money'}]
                             -
                                 method: addLink
-                                params: [{link:'sales/order/view',label:'My Orders',group:'Order Center'}]
+                                params: [{link:'sales/order/view/',label:'My Orders',group:'Order Center'}]
                             -
                                 method: addLink
                                 params: [{link:'sales/refund/',label:'Return &amp; Refund',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/wishlist',label:'My Wishlist',group:'My Following'}]
+                                params: [{link:'customer/wishlist/',label:'My Wishlist',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/logview',label:'Browsing History',group:'My Following'}]
+                                params: [{link:'customer/account/logview/',label:'Browsing History',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/edit',label:'Account Information',group:'Account Information'}]
+                                params: [{link:'customer/account/edit/',label:'Account Information',group:'Account Information'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/address',label:'Address Book',group:'Account Information'}]
+                                params: [{link:'customer/account/address/',label:'Address Book',group:'Account Information'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Balance',group:'Asset'}]
+                                params: [{link:'customer/account/',label:'Balance',group:'Asset'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Privilege',group:'Asset'}]
+                                params: [{link:'customer/account/',label:'Privilege',group:'Asset'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account',label:'Integral',group:'Asset'}] 
+                                params: [{link:'customer/account/',label:'Integral',group:'Asset'}] 
     
                     messages:
                         action:
@@ -109,7 +109,7 @@ customer_account_address:
                 action:
                     -
                         method: setTitle
-                        params: Address
+                        params: Address Book
                     -
                         method: addScript
                         params: frontend/js/locate.js
@@ -117,7 +117,12 @@ customer_account_address:
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\Address
-                        template: customer/address  
+                        template: customer/address/book
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Customer\ViewModel\Address
+                        template: customer/address/modal
 customer_account_wishlist:
     update: customer_account
     root:
@@ -126,11 +131,11 @@ customer_account_wishlist:
                 action:
                     -
                         method: setTitle
-                        params: Wishlist
+                        params: My Wishlist
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Customer\ViewModel\Wishlist
                         template: customer/wishlist
 customer_account_logview:
     update: customer_account

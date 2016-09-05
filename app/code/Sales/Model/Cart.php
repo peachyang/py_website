@@ -129,6 +129,9 @@ final class Cart extends AbstractModel implements Singleton
 
     public function getItem($id)
     {
+        if(is_null($this->items)){
+            $this->getItems();
+        }
         if (isset($this->items[$id])) {
             return $this->items[$id];
         } else {

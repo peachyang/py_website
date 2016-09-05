@@ -182,27 +182,6 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dt .fa{font-size:20px;vertical-align:middle}
 .col-left .nav dl a{display:block;text-indent:65px;font-size:12px;line-height:24px;color:#8b8a8a}
 .col-left .nav dl a:hover{text-decoration:underline}
-.main-container .address .btn{background:#007dc6;color:#ffffff}
-.main-container .address .address-view{width:98%;overflow:hidden;border:1px solid #dfe1e8;margin:10px auto;padding:2%}
-.main-container .address .address-view:hover{background:#fdfbea}
-.main-container .address .address-list .address-detail{width:75%;overflow:hidden;float:left}
-.main-container .address .address-list .address-operater{width:25%;overflow:hidden;float:left;text-align:center}
-.main-container .address .address-list .address-detail dt{float:left;margin-right:20px}
-.main-container .address .address-list .address-detail dd{float:left;margin:0 10px}
-.main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
-.main-container .wishlist .wishlist_list{border:1px solid #e1e1e1}
-.main-container .wishlist .wishlist_list .product_name a{float:left;padding:10px;display:block}
-.main-container .wishlist .wishlist_list .product_name h4{width:auto;text-align: left;font-size:14px;padding:10px;margin-top:45px;vertical-align:middle;font-weight:bold}
-.main-container .wishlist .wishlist_list .product_name p{text-align:left;margin-right:10px}
-.main-container .wishlist .wishlist_list a{display:block}
-.main-container .wishlist .wishlist_list li{text-align:center;line-height:40px;border-right:1px solid #e1e1e1}
-.main-container .wishlist .wishlist_list dd{text-align:center;margin: 60px auto}
-.main-container .track h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
-.main-container .track dt{font-size:14px;line-height:30px}
-.main-container .track dt span{margin-right:10px;color:#007dc6}
-.main-container .track dt .browse{padding-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
-.main-container .track dd li{text-align:center;margin:0 10px}
-.main-container .track dd p{height:40px;text-align:left;overflow-y:hidden}
 .customer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:bold;border-bottom:1px solid #dfe1e8}
 .customer-account-dashboard .panel{box-shadow:none}
 .customer-account-dashboard .panel-heading{border-bottom:1px solid #dbdee5}
@@ -232,7 +211,36 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
 .customer-account-dashboard .order .options{font-size:12px}
 .customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
+.customer-account .fieldset{display:table;width:100%}
+.customer-account .fieldset .input-box{display:table-row}
+.customer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px;padding-bottom:6px}
+.customer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 12px 0;white-space:nowrap;width:1%}
+.customer-account .fieldset .buttons-set{display:table-row}
+.customer-account .btn-theme{background:#00A0E9;color:#fff}
+.customer-account .btn-theme:hover{background:#007dc6}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
+.customer-account-address .btn-add{margin:12px 6px}
+.customer-account-address .address-list li{padding:0 6px;line-height:34px;font-size:14px}
+.customer-account-address .address-list li:hover{background:#f5f5f5}
+.customer-account-address .address-list .inline{overflow:hidden;text-overflow:ellipse;white-space:nowrap}
+.customer-account-address .address-list .inline a{display:block}
+.customer-account-address .address-list .action{text-align:right}
+.customer-account-address .address-list .action a{margin-left:4px}
+
+.main-container .wishlist h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
+.main-container .wishlist .wishlist_list{border:1px solid #e1e1e1}
+.main-container .wishlist .wishlist_list .product_name a{float:left;padding:10px;display:block}
+.main-container .wishlist .wishlist_list .product_name h4{width:auto;text-align: left;font-size:14px;padding:10px;margin-top:45px;vertical-align:middle;font-weight:bold}
+.main-container .wishlist .wishlist_list .product_name p{text-align:left;margin-right:10px}
+.main-container .wishlist .wishlist_list a{display:block}
+.main-container .wishlist .wishlist_list li{text-align:center;line-height:40px;border-right:1px solid #e1e1e1}
+.main-container .wishlist .wishlist_list dd{text-align:center;margin: 60px auto}
+.main-container .track h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;font-weight:bold;margin-bottom: 15px}
+.main-container .track dt{font-size:14px;line-height:30px}
+.main-container .track dt span{margin-right:10px;color:#007dc6}
+.main-container .track dt .browse{padding-left:10px;border-left:1px #cccccc dashed;color:#9C9C9C}
+.main-container .track dd li{text-align:center;margin:0 10px}
+.main-container .track dd p{height:40px;text-align:left;overflow-y:hidden}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -292,14 +300,6 @@ dl.options dd{float:left;margin-left:4px}
 .qty .spin{display:inline-block;font-size:18px;line-height:22px;border:1px solid #d4d4d4;width:28px;height:28px;text-align:center;color:#cbcbcb;background:#ededed;vertical-align:bottom;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
-.main-container .personinfo h3{font-size:16px;line-height:40px;border-bottom:1px solid #dfe1e8;margin-bottom: 30px;font-weight:bold}
-.main-container .personinfo dl{width:100%;overflow:hidden}
-.main-container .personinfo dt{width:15%;text-align:right;float:left;padding-right:5px}
-.main-container .personinfo dd{float:left;width:50%}
-.main-container .personinfo dd span{font-weight:bold}
-.main-container .personinfo button{text-align:center;margin-left:100px}
-.customer-account-address .main-container .address{padding-left:40px;margin-top:16px}
-.customer-account-address .main-container .address .add-div{display:inline-block;margin-top:20px;margin-right:30px}
 .checkout-cart .main-container .table input[type="checkbox"]{cursor:pointer}
 .checkout-flow{text-align:center;border:1px solid #e1e1e1;margin:42px 0;overflow:hidden}
 .checkout-flow .item{font-size:18px;line-height:40px;color:#000;position:relative}

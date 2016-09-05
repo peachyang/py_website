@@ -76,6 +76,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-footer .btn-group .btn + .btn{margin-left:-1px;}
 .modal-footer .btn-block + .btn-block{margin-left:0}
 .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
+.alert .close{display:none}
 .image-body-list{height:450px;overflow-y:scroll}
 .image-body-list img{max-width:100px;max-height:100px}
 .image-body-list-b{text-align:right}

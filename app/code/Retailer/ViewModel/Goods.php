@@ -44,17 +44,21 @@ class Goods extends Template
         if(!empty($condition['add_time_from']) && !empty($condition['add_time_to'])){
             $where->between('sales_order.created_at', $condition['add_time_from'], $condition['add_time_to']);
         }
-       $sales_order_collection
-       ->where($where)
-       //->where(['sales_order.store_id' => $segment->get('customer')['store_id']])
-       ->join(['sos' => 'sales_order_status'], 'sos.id = sales_order.status_id', ['status_name' => 'name'], 'left')
-       ->order(['sales_order.created_at'=>'DESC']);
+        $sales_order_collection
+        ->where($where)
+//      ->where(['sales_order.store_id' => $segment->get('customer')['store_id']])
+        ->join(['sos' => 'sales_order_status'], 'sos.id = sales_order.status_id', ['status_name' => 'name'], 'left')
+        ->order(['sales_order.created_at'=>'DESC']);
+        $sales_order_collection = $this->prepareCollection($sales_order_collection);
+//      if(!empty($condition['limit'])){
+//          $sales_order_collection->limit((int) $condition['limit']);
+//      }
+//      unset($condition['limit']);
        
-//      Debug code
+        //Debug code
 //      $adapter = $this->getContainer()->get('dbAdapter');
 //      $sql = $sales_order_collection->getSqlString($adapter->getPlatform(), $adapter::QUERY_MODE_EXECUTE);
 //      echo "<pre>";
-//      print_r($condition);
 //      print_r($sql);
 //      echo "</pre>";
 //      exit();
@@ -147,7 +151,6 @@ class Goods extends Template
     public function getAllSalesStatus($statusID = NULL){
         $status_collection = new Scollection;
         if(!empty($statusID)){
-            echo $statusID;
             $status_collection->where('id', $statusID);
         }else{
             $status_collection->order('id');
@@ -184,31 +187,6 @@ class Goods extends Template
                             str_replace(':', '.', $condition['desc']) :
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
-        }
-        if (!empty($condition)) {
-            foreach ($condition as $key => $value) {
-                if (trim($value) === '') {
-                    unset($condition[$key]);
-                } else if (strpos($key, ':')) {
-                    if (strpos($value, '%') !== false) {
-                        $collection->where(new Like(str_replace(':', '.', $key), $value));
-                    } else {
-                        $condition[str_replace(':', '.', $key)] = $value;
-                    }
-                    unset($condition[$key]);
-                } else if (strpos($value, '%') !== false) {
-                    $collection->where(new Like($key, $value));
-                    unset($condition[$key]);
-                } else if ($collection instanceof Collection) {
-                    $attribute = new Attribute;
-                    $attribute->load($key, 'code');
-                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
-                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
-                        unset($condition[$key]);
-                    }
-                }
-            }
-            $collection->where($condition);
         }
         return $collection;
     }

@@ -1,8 +1,11 @@
 <div class="col-left col-xs-3 col-sm-3 col-md-2">
-    <div class="navigation">
-        <div class="nav-title">
-            <span class="fa fa-user" aria-hidden="true">&nbsp;</span><a href="<?php echo $this->getBaseUrl('retailer/account/')?>"><?php echo $this->translate('Retailer Center') ?></a>
-        </div>
+    <div class="nav">
+        <h2 class="page-title">
+            <a href="<?php echo $this->getBaseUrl('retailer/account/')?>">
+                <span class="fa fa-user" aria-hidden="true">&nbsp;</span>
+                <span><?php echo $this->translate('Retailer Center') ?></span>
+            </a>
+        </h2>
         <div class="nav-list">    		
             <dl>
                 <?php

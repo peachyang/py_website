@@ -22,19 +22,10 @@ $default = (int) $product->offsetGet('default_image');
                 ?>
                 <div class="item<?php if (!$default || (int) $image['id'] === $default): ?> active<?php $default = true;
                 endif; ?>">
-                    <img class="bttrlazyloading magnifying" data-bttrlazyloading-xs-src="<?php
-                         echo $this->getBaseUrl('pub/resource/image/resized/345x/'),
-                         $image['src']
-                         ?>" data-bttrlazyloading-md-src="<?php
-                         echo $this->getBaseUrl('pub/resource/image/resized/278x/'),
-                         $image['src']
-                         ?>" data-bttrlazyloading-sm-src="<?php
-                         echo $this->getBaseUrl('pub/resource/image/resized/205x/'),
-                         $image['src']
-                         ?>" data-bttrlazyloading-lg-src="<?php
+                    <img class="bttrlazyloading magnifying" data-bttrlazyloading-lg-src="<?php
                          echo $this->getBaseUrl('pub/resource/image/resized/704x/'),
                          $image['src']
-                         ?>" alt="<?php echo $product->offsetGet('name') ?>" width="100%">
+                                 ?>" alt="<?php echo $product->offsetGet('name') ?>" width="100%">
                 </div>
         <?php endforeach ?>
         </div>

@@ -6,7 +6,7 @@ $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
 ?>
-<div class="container">
+<div class="container prodcut-box">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="product_id" value="<?php echo $product->getId() ?>" />
@@ -25,7 +25,8 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                 </div>
                 <div class="hidden-lg selected">
                     <a type="button" data-info="{}" data-toggle="modal" data-target="#modal-color-size" data-type="add">
-                        <?php echo $this->translate('Please select the color size') ?><span class="fa fa-chevron-down" aria-hidden="true"></span>
+                        <?php echo $this->translate('Please select the color size') ?>
+                        <span class="fa fa-chevron-down" aria-hidden="true"></span>
                     </a>
                 </div>
                 <div class="modal fade" id="modal-color-size">
@@ -67,7 +68,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 product-store">
-                <ul>
+                <ul class="col-xs-12 col-sm-12">
                     <li class="col-xs-2 col-sm-2">
                         <a href=""> <span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?>
                     </li>
@@ -78,10 +79,10 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>"> <span class="fa fa-shopping-cart"></span><?php echo $this->translate('Cart'); ?></a>
                     </li>
                     <li class="col-xs-3 col-sm-3">
-                        <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
+                        <button type="button" class="btn" data-info="{}" data-toggle="modal" data-target="#modal-color-size" data-type="add"><?php echo $this->translate('Buy Now') ?></button>
                     </li>
                     <li class="col-xs-3 col-sm-3">
-                        <button type="submit" class="btn btn-checkout"><?php echo $this->translate('Add to Cart') ?></button>
+                        <button type="button" class="btn btn-checkout" data-info="{}" data-toggle="modal" data-target="#modal-color-size" data-type="add"><?php echo $this->translate('Add to Cart') ?></button>
                     </li>
                 </ul>
             </div>
@@ -101,9 +102,9 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                 ])
         ?>
     </div>
-    <div class="product-detail clearfix">
-        <div class="col-xs-12 col-sm-12">
-            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left headimg-left col-xs-1 col-sm-1"></a>
+    <div class="product-detail clearfix" id="myAffix">
+        <div class="col-xs-12 col-sm-12 info" data-spy="affix" data-offset-top="718" data-offset-bottom="200">
+            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
             <div class="content-list col-xs-10 col-sm-10">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
@@ -111,7 +112,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
                 </ul>
             </div>
-            <a href="javascript:viod(0);" class="fa fa-bars headimg-right col-xs-1 col-sm-1"></a>
+            <a href="javascript:viod(0);" class="fa fa-bars fa-2x text-left col-xs-1 col-sm-1"></a>
         </div>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="description">

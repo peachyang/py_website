@@ -4,7 +4,14 @@ $attributes = $this->getAddressAttribute();
 ?>
 <section class="section address">
     <h4 class="title"><?php echo $this->translate('Shipping Address') ?></h4>
-    <ul class="list">
+    <?php if(count($addresses) !== 1 && count($addresses) !== 0): ?>
+    <div class="cell more panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <?php echo $this->translate('More Address') ?><span class="fa fa-angle-down fa-1"></span>
+        </a>
+    </div>
+    <?php endif;?>
+    <ul class="list panel-collapse collapse" id="collapseOne" role="tabpanel" aria-labelledby="headingOne">
         <?php foreach ($addresses as $address): ?>
             <li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'  >
                 <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address->getId() === $this->getCurrenctAddress() || count($addresses) === 1): ?> checked="checked"<?php endif ?> />
@@ -13,23 +20,16 @@ $attributes = $this->getAddressAttribute();
                 </label>
                 <p>
                     <?php if ($address->getId() === $this->getCurrenctAddress() || count($addresses) === 1): ?>
-                        <span class="default"><?php echo $this->translate('Set as Default') ?></span>
-                    <?php else: ?>
                         <span class="default"><?php echo $this->translate('Default Address') ?></span>
+                    <?php else: ?>
+                        <span class="default"><?php echo $this->translate('Set as Default') ?></span>
                     <?php endif; ?>
                     <span class="fa fa-edit edit"><a href="javascript:void(0);" class="edit"><?php echo $this->translate('Edit') ?></a></span>
                     <span class="fa fa-trash-o delete"><a href="<?php echo $this->getBaseUrl('checkout/order/deleteaddress/') ?>" class="delete" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&id=<?php echo $address->getId() ?>"><?php echo $this->translate('Delete') ?></a></span>
                 </p>
-            </li>
+            </li>         
         <?php endforeach ?>
     </ul>
-    <?php if(count($addresses) !== 1 && count($addresses) !== 0): ?>
-    <div class="cell more">
-        <a href="javascript:void(0);">
-            <?php echo $this->translate('More Address') ?><span class="fa fa-angle-down fa-1"></span>
-        </a>
-    </div>
-    <?php endif;?>
     <template id="tmpl-address-list">
         <li data-id="{id}" data-json='{json}'>
             <input type="radio" name="shipping_address_id" id="shipping-address-{id}" value="{id}" />

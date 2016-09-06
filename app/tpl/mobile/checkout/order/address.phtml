@@ -11,7 +11,7 @@ $attributes = $this->getAddressAttribute();
         </a>
     </div>
     <?php endif;?>
-    <ul class="list panel-collapse collapse" id="collapseOne" role="tabpanel" aria-labelledby="headingOne">
+    <ul class="list panel-collapse collapse in" id="collapseOne" role="tabpanel" aria-labelledby="headingOne">
         <?php foreach ($addresses as $address): ?>
             <li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'  >
                 <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address->getId() === $this->getCurrenctAddress() || count($addresses) === 1): ?> checked="checked"<?php endif ?> />

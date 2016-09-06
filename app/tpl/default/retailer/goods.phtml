@@ -67,12 +67,6 @@
                     </label>
                 </div>
             </div>
-            <div class="pull-right">
-                <div>
-                    <button class="btn-options">上一页</button>
-                    <button class="btn-options">下一页</button>
-                </div>
-            </div>
         </div>
         <div class="clearfix mg-bottom-20"></div>
         <table class="table table-title">
@@ -167,7 +161,7 @@
                                 <span ><?php echo $this->translate($transaction['status_name']); ?></span>
                             </p>
                             <p class="text-center">
-                                <a target="_blank" href="">详情</a>
+                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?sales_id='.$transaction['id'])?>">详情</a>
                             </p>
                         </div>
                         <?php
@@ -206,7 +200,7 @@
         ?>
         
         <div>
-            <div class="pull-left">
+            <div>
                 <div>
                     <label>
                     <input type="checkbox" data-cbtype="all">
@@ -217,11 +211,9 @@
                     <button class="btn-options">批量免运费</button>
                 </div>
             </div>
-            <div class="pull-right">
-                <!--div>
-                    <button class="btn-options">上一页</button>
-                    <button class="btn-options">下一页</button>
-                </div-->
+        </div>
+        <div class="page-block">
+            <div>
                 <?php
                     if (is_object($transactions)) {
                         echo $this->getChild('pager')->setCollection($transactions);

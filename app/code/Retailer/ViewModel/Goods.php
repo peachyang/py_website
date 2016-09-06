@@ -10,6 +10,7 @@ use Seahinet\Sales\Model\Collection\Order\Item as Icollection;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Catalog\Model\Product as Pmodel;
 use Seahinet\Sales\Model\Collection\Order\Status as Scollection;
+use Zend\Db\Sql\Expression;
 
 class Goods extends Template
 {
@@ -23,18 +24,24 @@ class Goods extends Template
     public function getRetailerTransaction()
     {
         $condition = $this->getQuery();
+        $segment = new Segment('customer');
         
-        
-        //$collection = new Collection;
-       // $transaction = $collection->getRetailerTransaction();
-       $sales_order_collection = new Ocollection;
-       $segment = new Segment('customer');
+        //Sub query to select order id from sales_order table
+       $sales_order_id_collection = new Ocollection;
+       $order_id_select = $sales_order_id_collection->columns(['id'])->where(['sales_order.store_id' => $segment->get('customer')['store_id']]);
        
-       //Generate table name used for join
-       //$language_id = $segment->get('customer')['language_id'];
-       //$customer_table = 'customer_'.$language_id.'_index';
-       //$sales_order_collection->join(['c' => $customer_table], 'c.id = sales_order.customer_id', ['username'], 'left')
+       $where_order_id = new \Zend\Db\Sql\Where();
+       $where_order_id->in('order_id', $order_id_select);
+       
+       //Get total price for order
+       $sales_order_product_collection = new Icollection;
+       $order_total_price = $sales_order_product_collection->columns(['order_id', 'total_order_price'=> new Expression('SUM(total)')])->where($where_order_id)->group('order_id');
+        
+       //Generate where condition
         $where = new \Zend\Db\Sql\Where();
+        if(!empty($condition['sales_id'])){
+            $where->like('sales_order.id', $condition['sales_id']);
+        }
         if(!empty($condition['id'])){
             $where->like('sales_order.increment_id', '%'.$condition['id'].'%');
         }
@@ -44,10 +51,12 @@ class Goods extends Template
         if(!empty($condition['add_time_from']) && !empty($condition['add_time_to'])){
             $where->between('sales_order.created_at', $condition['add_time_from'], $condition['add_time_to']);
         }
+        $sales_order_collection = new Ocollection;
         $sales_order_collection
         ->where($where)
 //      ->where(['sales_order.store_id' => $segment->get('customer')['store_id']])
         ->join(['sos' => 'sales_order_status'], 'sos.id = sales_order.status_id', ['status_name' => 'name'], 'left')
+        ->join(['op' => $order_total_price], 'sales_order.id = op.order_id', ['total_order_price'], 'left')
         ->order(['sales_order.created_at'=>'DESC']);
         $sales_order_collection = $this->prepareCollection($sales_order_collection);
 //      if(!empty($condition['limit'])){
@@ -64,27 +73,22 @@ class Goods extends Template
 //      exit();
        
        
-       //Sub query to select order id from sales_order table
-       $sales_order_collection2 = new Ocollection;
-       $order_id_select = $sales_order_collection2->columns(['id'])->where(['sales_order.store_id' => $segment->get('customer')['store_id']]);
        
        //Get product list in the order
        $item_collection = new Icollection;
-       $where = new \Zend\Db\Sql\Where();
-       $where->in('order_id', $order_id_select);
        //$item_collection->where(['order_id' => $order_id_select]);
-       $item_collection->where($where);
+       $item_collection->where($where_order_id);
        
        
-       //Seperate product by order id
-       $product_list = array();
-       foreach($item_collection as $item){
+        //Seperate product by order id
+        $product_list = array();
+        foreach($item_collection as $item){
             $product_list[$item['order_id']][] = $item;
         }
         //Combine product list to sales order
-       foreach($sales_order_collection as &$order){
-           $order["items"] = $product_list[$order['id']];
-       }
+        foreach($sales_order_collection as &$order){
+            $order["items"] = $product_list[$order['id']];
+        }
 
         //return $segment->get('customer');
         return $sales_order_collection;

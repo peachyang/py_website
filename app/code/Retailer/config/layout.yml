@@ -155,10 +155,13 @@ retailer_order_view:
                     -
                         method: setTitle
                         params: Retailer Order View
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Retailer\ViewModel\Goods
                         template: retailer/orderview
 retailer_comment:
     update: retailer_account

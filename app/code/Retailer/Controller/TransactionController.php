@@ -51,6 +51,10 @@ class TransactionController extends AuthActionController
     */ 
     public function orderviewAction()
     {
+        $sales_id = $this->getRequest()->getQuery('sales_id');
+        if(empty($sales_id) || !is_numeric($sales_id)){
+            return $this->redirect('retailer/transaction/goods/');
+        }
         $root = $this->getLayout('retailer_order_view');
         return $root;
     }

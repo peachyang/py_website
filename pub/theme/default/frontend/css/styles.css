@@ -514,4 +514,43 @@ dl.options dd{float:left;margin-left:4px}
 .list-info .good-title p{margin: 8px 0;}
 .list-info .good-title p a{color: #3c3c3c; text-decoration: none; word-break: break-all;}
 
+.page-block{text-align: right; }
+.page-block ol{display: inline-block;}
+.page-block ol li{font-size: 12px; padding: 0 4px;}
+.page-block ol li a, .page-block ol li span{border: none; background: none; padding: 5px; color: #02a0e9;}
+.page-block ol li button{background: none;}
+.page-block .pager .current::before {content: "[";}
+.page-block .pager .current::after {content: "]";}
+
+.order-dashboard{background-color: #fff7eb; margin-top: 10px;}
+.order-dashboard .bd {background: #fffcf3 none repeat scroll 0 0; border: 1px solid #f7e4a5; padding: 20px 30px;}
+.order-dashboard .tbnotes {border-top: 1px solid #ddd; line-height: 21px; margin-top: 15px; padding-top: 5px;
+}
+.order-dashboard .tbnotes span {color: #f60; font-weight: 700;}
+
+.tabs-container {margin: 20px 0; position: relative;}
+.tabs-container .tabs-nav {left: 20px; position: absolute; z-index: 50;}
+.tabs-container .tabs-nav li {background: rgba(0, 0, 0, 0) url("../images/tabview_bg.gif") no-repeat scroll 0 6px;  cursor: pointer; display: inline; float: left; height: 30px; line-height: 21px; margin-right: 3px; padding-top: 8px; text-align: center; width: 130px;}
+.tabs-container .tabs-nav .current {background-position: 0 -40px;}
+.tabs-container .tabs-panels {border: 1px solid #aec7e5; clear: both; margin-bottom: 40px; overflow: hidden; padding: 10px 20px; position: relative; top: 29px;}
+.tabs-container .contact-info th, .contact-info td{padding: 5px 10px 5px 0;}
+.tabs-container .contact-info h4 {font-weight: bold; font-size: 14px;}
+.tabs-container .order-hd {background: #e8f2ff none repeat scroll 0 0; color: #404040;}
+.tabs-container .order-hd .item {border-left: 1px solid #ddd;}
+.tabs-container .order-hd th {border-bottom: 1px solid #ddd; line-height: 130%; padding: 8px 10px; text-align: center;}
+.tabs-container .order-hd .last {border-right: 1px solid #ddd;}
+.tabs-container .order-item .item {border-left: 1px solid #ddd;}
+.tabs-container .order-item .pic-info {display: inline; float: left; margin-right: 5px;}
+.tabs-container .order-item .pic-info .pic {border: medium none; overflow: hidden; width: 50px; height: 50px;}
+.tabs-container .order-item .pic-info .pic img{display: block; margin: 0 auto; max-width: 100%;}
+.tabs-container .order-item .order-price {line-height: 18px; padding: 10px 0 5px; vertical-align: middle; text-align: center;}
+.tabs-container .order-ft .get-money, .order-ft .trade-money {clear: both; display: inline; float: right; line-height: 23px; padding-top: 15px; text-align: right;}
+.tabs-container .order-ft .get-money strong {color: #f50; font-size: 16px; font-weight: 700; padding-right: 5px;}
+.tabs-container .misc-info .label {margin-right: 5px; text-align: right; width: 90px;}
+.tabs-container .misc-info span {display: inline-block;}
+.tabs-container .info-box table {table-layout: fixed;}
+.tabs-container .simple-list {border-top: 1px solid #eed; margin-bottom: 20px; width: 100%;}
+.tabs-container .simple-list th, .simple-list td {padding: 7px 0;}
+.tabs-container .simple-list th {vertical-align: top; width: 100px;}
+
 /*=E Stone's CSS end' */

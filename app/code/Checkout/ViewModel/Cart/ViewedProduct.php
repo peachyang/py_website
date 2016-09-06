@@ -3,12 +3,11 @@
 namespace Seahinet\Checkout\ViewModel\Cart;
 
 use Seahinet\Catalog\Model\Collection\Product;
-use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
 
-class LogView extends Link
+class ViewedProduct extends Link
 {
 
     protected $products = null;

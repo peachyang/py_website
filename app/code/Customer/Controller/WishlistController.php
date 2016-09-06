@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\Controller;
 
+use Exception;
 use Seahinet\Customer\Model\Wishlist as Model;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Customer\Model\Wishlist\Item;
@@ -11,7 +12,7 @@ class WishlistController extends AuthActionController
 
     public function indexAction()
     {
-        return $this->getLayout('customer_account_wishlist');
+        return $this->getLayout('customer_wishlist');
     }
 
     public function addAction()
@@ -29,9 +30,9 @@ class WishlistController extends AuthActionController
             $data['wishlist_id'] = $wishlist->getId();
             $wishlist->getId();
             $wishlist->addItem($data);
-            $result['message'][] = ['message' => $this->translate('success'), 'level' => 'success'];
-        } catch (\Exception $e) {
-            $result['message'][] = ['message' => $this->translate('failed'), 'level' => 'danger'];
+            $result['message'][] = ['message' => $this->translate('The product has been added to wishlist successfully.'), 'level' => 'success'];
+        } catch (Exception $e) {
+            $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             $this->getContainer()->get('log')->logException($e);
         }
         return $this->redirect('customer/account/wishlist/');
@@ -39,7 +40,26 @@ class WishlistController extends AuthActionController
 
     function commitAction()
     {
-        $data = $this->getRequest()->getPost();
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['description']);
+            if ($result['error'] === 0) {
+                try {
+                    foreach ((array) $data['description'] as $id => $description) {
+                        $item = new Item;
+                        $item->setData([
+                            'id' => $id,
+                            'description' => preg_replace('/\<[^\>]+\>/','',$description)
+                        ])->save();
+                    }
+                    $result['message'][] = ['message' => $this->translate('The description has been updated successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'success'];
+                }
+            }
+        }
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/wishlist/', 'customer');
     }
 
     public function deleteAction()

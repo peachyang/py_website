@@ -34,7 +34,7 @@ class Wishlist extends AbstractModel
             'id' => null,
             'wishlist_id' => $this->getId(),
             'store_id' => $data['store_id'],
-            'product_name' => $product['name'],
+            'product_name' => isset($data['product_name']) ? $data['product_name'] : $product['name'],
             'description' => preg_replace('/\<[^\>]+\>/', '', $product['description']),
             'price' => isset($data['base_price']) ? $data['base_price'] : $product->getFinalPrice($data['qty'], false)
         ]);

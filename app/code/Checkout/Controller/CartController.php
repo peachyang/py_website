@@ -32,7 +32,9 @@ class CartController extends ActionController
                 if ($result['error'] === 1) {
                     return $this->response($result, $product->getUrl(), 'checkout');
                 }
-                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], isset($data['options']) ? $data['options'] : [], isset($data['sku']) ? $data['sku'] : '' );
+                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], isset($data['options']) ?
+                                (is_string($data['options']) ? json_decode($data['options'], true) : $data['options']) : [], isset($data['sku']) ? $data['sku'] : '' );
+                $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
             } catch (OutOfStock $e) {
                 $result['error'] = 1;

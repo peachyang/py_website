@@ -224,6 +224,13 @@ final class Cart extends AbstractModel implements Singleton
         if ($collate) {
             $this->collateTotals();
         }
+        $this->getEventDispatcher()->trigger('cart.add.after', [
+            'product_id' => $productId,
+            'qty' => $qty,
+            'warehouse_id' => $warehouseId,
+            'sku' => $sku,
+            'options' => $options
+        ]);
         return $this;
     }
 
@@ -406,12 +413,6 @@ final class Cart extends AbstractModel implements Singleton
         ]);
         $this->save();
         return $this;
-    }
-
-    public function getLogView($id)
-    {
-        $model = new Product();
-        return $model->load($id);
     }
 
     public function getShippingAddress()

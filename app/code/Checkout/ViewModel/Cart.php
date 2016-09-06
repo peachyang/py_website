@@ -45,16 +45,4 @@ class Cart extends Template
         return $row;
     }
 
-    public function getLogView()
-    {
-        $cookies = $this->getRequest()->getCookie('log_view');
-        $logView = [];
-        foreach (explode(',', $cookies) as $item) {
-            if ($item) {
-                $logView[] = $this->getCart()->getLogView($item);
-            }
-        }
-        return $logView;
-    }
-
 }

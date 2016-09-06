@@ -55,7 +55,7 @@
 <?php endif; ?>
 <?php
 $countC = count($this->getChild('crosssell')->getProducts());
-$countL = count($this->getChild('logview')->getProducts());
+$countL = count($this->getChild('viewed_product')->getProducts());
 $countW = count($this->getChild('wishlist')->getProducts());
 ?>
 <?php if ($countC + $countL + $countW): ?>
@@ -91,7 +91,7 @@ $countW = count($this->getChild('wishlist')->getProducts());
                 <?php echo $this->getChild('wishlist')->setVariable('width', ['xs' => '362', 'sm' => '228', 'md' => '221', 'lg' => '173']) ?>
             </div>
             <div role="tabpanel" class="tab-pane<?php echo $countC + $countW ? '' : ' active'; ?>" id="viewed">
-                <?php echo $this->getChild('logview')->setVariable('width', ['xs' => '362', 'sm' => '228', 'md' => '221', 'lg' => '173']) ?>
+                <?php echo $this->getChild('viewed_product')->setVariable('width', ['xs' => '362', 'sm' => '228', 'md' => '221', 'lg' => '173']) ?>
             </div>
         </div>
     </div>

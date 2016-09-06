@@ -37,7 +37,7 @@ customer_account:
                                 params: [{link:'customer/wishlist/',label:'My Wishlist',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/logview/',label:'Browsing History',group:'My Following'}]
+                                params: [{link:'customer/history/',label:'Browsing History',group:'My Following'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/edit/',label:'Account Information',group:'Account Information'}]
@@ -123,7 +123,7 @@ customer_account_address:
                     modal:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address/modal
-customer_account_wishlist:
+customer_wishlist:
     update: customer_account
     root:
         children:
@@ -137,7 +137,7 @@ customer_account_wishlist:
                     main:
                         type: Seahinet\Customer\ViewModel\Wishlist
                         template: customer/wishlist
-customer_account_logview:
+customer_history:
     update: customer_account
     root:
         children:
@@ -145,12 +145,12 @@ customer_account_logview:
                 action:
                     -
                         method: setTitle
-                        params: Logview
+                        params: Browsing History
             content:
                 children:
                     main:
-                        type: Seahinet\Customer\ViewModel\Logviews
-                        template: customer/logview                      
+                        type: Seahinet\Customer\ViewModel\ViewedProduct
+                        template: customer/viewed                      
 customer_account_login:
     update: frontend
     root:

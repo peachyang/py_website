@@ -34,8 +34,8 @@ checkout_cart:
                             crosssell:
                                 type: Seahinet\Checkout\ViewModel\Cart\Crosssell
                                 template: catalog/product/link
-                            logview:
-                                type: Seahinet\Checkout\ViewModel\Cart\LogView
+                            viewed_product:
+                                type: Seahinet\Checkout\ViewModel\Cart\ViewedProduct
                                 template: catalog/product/link
                             wishlist:
                                 type: Seahinet\Checkout\ViewModel\Cart\Wishlist

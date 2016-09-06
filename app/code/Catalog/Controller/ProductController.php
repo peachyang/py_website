@@ -3,8 +3,8 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Product;
-use Seahinet\Catalog\Model\Collection\Logview;
-use Seahinet\Catalog\Model\Logview as LogviewModel;
+use Seahinet\Catalog\Model\Collection\ViewedProduct as ViewedCollection;
+use Seahinet\Catalog\Model\ViewedProduct;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 
@@ -30,24 +30,24 @@ class ProductController extends ActionController
                     'label' => $product->offsetGet('name')
                 ]);
                 if (!$this->getRequest()->getHeader('DNT')) {
-                    $log_view = $this->getRequest()->getCookie('log_view');
-                    if (!in_array($this->getOption('product_id'), explode(',', $log_view))) {
-                        $this->getResponse()->withCookie('log_view', ['value' => $this->getOption('product_id') . ',' . $log_view, 'path' => '/', 'expires' => time() + 31536000]);
+                    $cookie = $this->getRequest()->getCookie('viewed_product');
+                    if (!in_array($this->getOption('product_id'), explode(',', $cookie))) {
+                        $this->getResponse()->withCookie('viewed_product', ['value' => $this->getOption('product_id') . ',' . $cookie, 'path' => '/', 'expires' => time() + 31536000]);
                         $segment = new Segment('customer');
                         if ($segment->get('hasLoggedIn')) {
-                            $logView = new Logview();
-                            $logView->where(['product_id' => $this->getOption('product_id'), 'customer_id' => $segment->get('customer')->getId()]);
-                            if (!count($logView)) {
-                                $logViewModel = new LogviewModel();
-                                $logViewModel->setData([
+                            $collection = new ViewedCollection;
+                            $collection->where(['product_id' => $this->getOption('product_id'), 'customer_id' => $segment->get('customer')->getId()]);
+                            if (!count($collection)) {
+                                $model = new ViewedProduct;
+                                $model->setData([
                                     'customer_id' => $segment->get('customer')->getId(),
-                                    'product_id' => $this->getOption('product_id'),
+                                    'product_id' => $this->getOption('product_id')
                                 ])->save();
                             }
                         }
                     } else {
-                        $newLogView = str_replace(',' . $this->getOption('product_id') . ',', ',', $this->getOption('product_id') . ',' . $log_view);
-                        $this->getResponse()->withCookie('log_view', ['value' => $newLogView, 'path' => '/', 'expires' => time() + 31536000]);
+                        $value = str_replace(',' . $this->getOption('product_id') . ',', ',', $this->getOption('product_id') . ',' . $cookie);
+                        $this->getResponse()->withCookie('viewed_product', ['value' => $value, 'path' => '/', 'expires' => time() + 31536000]);
                     }
                 }
                 return $root;

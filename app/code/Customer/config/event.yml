@@ -7,3 +7,8 @@ dispatch.before:
     -
         listener: [\Seahinet\Customer\Listeners\Persistent, validate]
         priority: 10
+cart.add.after:
+    -
+        listener: [\Seahinet\Customer\Listeners\Wishlist, afterAddToCart]
+        priority: 10
+    

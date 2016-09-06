@@ -2,9 +2,12 @@
 
 namespace Seahinet\Retailer\Controller;
 
-use Exception;
-use Seahinet\Retailer\Model\Retailer as Rmodel;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Catalog\Model\Product as Model;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
+use Seahinet\Lib\Model\Eav\Type;
 
 /** 
 * Retailer submenu goods management controller
@@ -36,7 +39,24 @@ class GoodsController extends AuthActionController
     */
     public function releaseAction()
     {
-        $root = $this->getLayout('retailer_goods_release');
+        $query = $this->getRequest()->getQuery();
+        $model = new Model;
+        if (isset($query['id'])) {
+            $model->load($query['id']);
+            $root = $this->getLayout('admin_catalog_product_edit_' . $model['product_type_id']);
+            $root->getChild('head')->setTitle('Edit Product / Product Management');
+        } else {
+            $model->setData('attribute_set_id', function() {
+                $set = new Set;
+                $set->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
+                        ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+                return $set->load()[0]['id'];
+            });
+            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_goods_release' : 'retailer_goods_product_edit_' . $query['product_type']);
+            $root->getChild('head')->setTitle('Add New Product / Product Management');
+            $root->getChild('content')->getChild('main')->setVariable('model', $model);
+        }
+        //$root->setVariable('model', $model);
         return $root;
     }
     
@@ -90,5 +110,6 @@ class GoodsController extends AuthActionController
         $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('order', $order);
         return $root;
     }
+    
 
 }

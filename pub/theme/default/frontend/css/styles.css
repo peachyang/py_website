@@ -554,4 +554,20 @@ dl.options dd{float:left;margin-left:4px}
 .tabs-container .simple-list th, .simple-list td {padding: 7px 0;}
 .tabs-container .simple-list th {vertical-align: top; width: 100px;}
 
+.btn-submit, .btn-reset, .btn-delete, .btn-theme, .btn-add {background: #02a0e9 none repeat scroll 0 0; border: 1px solid #797979; border-radius: 5px; color: #fff; font-size: 13px; line-height: 1; padding: 5px 13px;}
+
+.product-edit .control-label.required::before {color: #f00; content: "*";}
+.product-edit .input-box {display: table-row; position: relative;}
+.product-edit .input-box .control-label {display: table-cell; padding: 4px; vertical-align: top; white-space: nowrap; width: 1px;}
+.product-edit .input-box .cell {display: table-cell; font-size: 13px; line-height: 2; padding: 4px; position: relative; vertical-align: top;}
+.product-edit .buttons-set {background: #f7f8fa none repeat scroll 0 0; margin: 26px 0 0; padding: 20px 20px 20px 50px;}
+.product-edit .tab-pane {padding: 10px 0 0 30px;}
+.product-edit .nav-tabs ~ .tab-pane {display: none;}
+.product-edit .tab-pane.active {display: table;}
+.product-edit .widget-upload .add {font-size: 32px; line-height: 139.2px; text-decoration: none; vertical-align: middle;}
+.product-edit .grid .table.category ul {clear: both; padding-left: 2em;}
+.product-edit .control-label {-moz-user-select: none; color: #000; display: block; font-size: 13px; line-height: 26px; width: 100%;}
+.product-edit td.checkbox {display: table-cell;}
+.product-edit .checkbox input[type=checkbox]{margin-left: 0; position: relative;}
+
 /*=E Stone's CSS end' */

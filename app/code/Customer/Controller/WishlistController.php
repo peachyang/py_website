@@ -17,10 +17,11 @@ class WishlistController extends AuthActionController
 
     public function addAction()
     {
-        $data = $this->getRequest()->getQuery();
+        $data = $this->getRequest()->isGet() ? $this->getRequest()->getQuery() : $this->getRequest()->getPost();
         $segment = new Segment('customer');
         $customerId = $segment->get('customer')->getId();
         try {
+            $result = $this->validateForm($data, ['product_id', 'qty', 'warehouse_id']);
             $wishlist = new Model;
             $wishlist->load($customerId, 'customer_id');
             if (!$wishlist->getId()) {
@@ -35,7 +36,7 @@ class WishlistController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             $this->getContainer()->get('log')->logException($e);
         }
-        return $this->redirect('customer/account/wishlist/');
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER')? : 'customer/wishlist/', 'customer');
     }
 
     function commitAction()
@@ -49,7 +50,7 @@ class WishlistController extends AuthActionController
                         $item = new Item;
                         $item->setData([
                             'id' => $id,
-                            'description' => preg_replace('/\<[^\>]+\>/','',$description)
+                            'description' => preg_replace('/\<[^\>]+\>/', '', $description)
                         ])->save();
                     }
                     $result['message'][] = ['message' => $this->translate('The description has been updated successfully.'), 'level' => 'success'];

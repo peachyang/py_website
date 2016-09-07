@@ -1,4 +1,20 @@
 ---
+customer_account:
+    root:
+        children:
+            content:
+                children:
+                    nav:
+                        action:
+                            -
+                                method: addGroup
+                                params: [{label:'Order Center',priority:20,icon:'calendar-check-o'}]
+                            -
+                                method: addLink
+                                params: [{link:'sales/order/list/',label:'My Orders',group:'Order Center'}]
+                            -
+                                method: addLink
+                                params: [{link:'sales/refund/',label:'Return &amp; Refund',group:'Order Center'}]
 admin_sales_cart_list:
     update: grid
     root:
@@ -394,13 +410,13 @@ sales_refund:
                 action:
                     -
                         method: setTitle
-                        params: Refund Rights
+                        params: Return &amp; Refund
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Sales\ViewModel\Refund
                         template: sales/refund
-sales_myorder:
+sales_order_list:
     update: customer_account
     root:
         children:
@@ -408,12 +424,19 @@ sales_myorder:
                 action:
                     -
                         method: setTitle
-                        params: My Order
+                        params: My Orders
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: sales/order
+                        type: Seahinet\Sales\ViewModel\Order
+                        template: sales/order/list
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: setDefaultLimit
+                                        params: 20
 sales_view:
     update: customer_account
     root:

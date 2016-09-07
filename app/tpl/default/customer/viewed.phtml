@@ -1,63 +1,53 @@
 <?php
 $products = $this->getProducts();
 ?>
-<div class="track">
-    <h3><?php echo $this->translate('My Tracks'); ?></h3>
-    <?php
-    if (count($products)) :
-        $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
-        $width = $this->getVariable('width');
-        $num = [];
-        ?>
-        <dl class="clearfix">
+<h2 class="page-title"><?php echo $this->translate('Browsing History') ?></h2>
+<div class="page-content">
+    <?php if (count($products)): ?>
+        <dl class="products-grid">
             <?php
             $current = '';
-            foreach ($products as $item) :
-                $product = new \Seahinet\Catalog\Model\Product;
-                $currency = $product->getCurrency();
-                $product->load($item['product_id']);
-                $date = date('Y-m-d', strtotime($item['created_at']));
-                if (!isset($num[$item['product_id']])) :
-                    $num[$item['product_id']] = 1;
-                else :
-                    $num[$item['product_id']] ++;
-                endif;
+            foreach ($products as $item):
+                $product = $item['product'];
+                $date = date('Y-m-d', strtotime($item['updated_at']));
                 $thumbnail = $product->getThumbnail();
                 if ($current !== $date):
                     ?>
                     <dt>
                         <span class="fa fa-circle-o" aria-hidden="true"></span>
                         <span><?php echo $date ?></span>
-                       <!-- <span class="browse">
-                            <?php //echo $this->translate('Total %d item(s)', [count($products)]); ?>
-                        </span>-->
                     </dt>
                     <?php
                     $current = $date;
                 endif;
                 ?>
-                <dd class="item <?php echo $class ?>">
-                    <ul>
-                        <li>
+                <dd>
+                    <ul class="clearfix">
+                        <li class="item col-xs-6 col-sm-4 col-md-3">
                             <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
-                                <?php
-                                if (strpos($thumbnail, 'http') !== false):
-                                    ?>
+                                <?php if (strpos($thumbnail, 'http') !== false): ?>
                                     <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
-                                <?php elseif ($width): ?>
-                                    <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $item['name'] ?>" />
-                                <?php else: ?>
-                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                                <?php elseif ($thumbnail): ?>
+                                    <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php
+                                    echo $this->getResourceUrl('image/resized/213x/'), $thumbnail
+                                    ?>" data-bttrlazyloading-md-src="<?php
+                                         echo $this->getResourceUrl('image/resized/182x/'), $thumbnail
+                                         ?>" data-bttrlazyloading-sm-src="<?php
+                                         echo $this->getResourceUrl('image/resized/167x/'), $thumbnail
+                                         ?>" data-bttrlazyloading-xs-src="<?php
+                                         echo $this->getResourceUrl('image/resized/240x/'), $thumbnail
+                                         ?>" alt="<?php echo $product->offsetGet('name') ?>" />
+                                     <?php else: ?>
+                                    <img src="<?php echo $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
                                 <?php endif ?>
                             </a>
-                            <p><?php echo $product['name']; ?></p>
-                            <strong><?php echo $product['special_price'] ? $currency->format($product['special_price']) : $currency->format($product['price']) ?></strong>
-                            <div class="action">
-                                <a href="<?php
-                                echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $item['id'] .
-                                        '&qty=1&csrf=' . $this->getCsrfKey())
-                                ?>" class="add2cart">
+                            <h3 class="product-name">
+                                <a href="<?php echo $product->getUrl() ?>">
+                                    <?php echo $product['name'] ?>
                                 </a>
+                            </h3>
+                            <div class="price-box">
+                                <?php echo $this->getChild('price')->setVariable('product', $product) ?>
                             </div>
                         </li>
                     </ul>

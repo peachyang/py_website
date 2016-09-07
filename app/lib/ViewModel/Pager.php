@@ -25,6 +25,11 @@ class Pager extends Template
      */
     protected $total = null;
 
+    /**
+     * @var int
+     */
+    protected $limit = 20;
+
     public function __construct()
     {
         $this->setTemplate('page/pager');
@@ -76,7 +81,18 @@ class Pager extends Template
      */
     public function getLimit()
     {
-        return $this->getQuery('limit', 20);
+        return $this->getQuery('limit', $this->limit);
+    }
+
+    /**
+     * Set default sql limit
+     * @param int $limit
+     * @return Pager
+     */
+    public function setDefaultLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
     }
 
     /**

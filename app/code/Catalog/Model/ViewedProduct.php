@@ -11,7 +11,7 @@ class ViewedProduct extends AbstractModel
 
     protected function construct()
     {
-        $this->init('log_viewed_product', 'customer_id', ['customer_id', 'product_id', 'created_at', 'updated_at']);
+        $this->init('log_viewed_product', 'id', ['id', 'customer_id', 'product_id']);
     }
 
     public function offsetGet($key)

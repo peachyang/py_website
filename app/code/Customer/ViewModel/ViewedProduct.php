@@ -17,7 +17,7 @@ class ViewedProduct extends Template
             $collection = new Collection;
             $segment = new Segment('customer');
             $collection->where(['customer_id' => $segment->get('customer')['id']])
-                    ->order('created_at DESC');
+                    ->order('updated_at DESC, created_at DESC');
             if ($collection->count()) {
                 return $collection;
             }

@@ -1,85 +1,71 @@
 <?php
+
 namespace Seahinet\Sales\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Collection\Order;
 use Seahinet\Sales\Model\Order as OrderModel;
+use Seahinet\Sales\Model\Order\Phase;
 use Seahinet\Sales\Model\Rma;
 
 class RefundController extends ActionController
 {
 
-    public function indexAction(){
-        $segment = new Segment('customer');
-        $customer = $segment->get('customer');
-        if ($customer){
-            $customerId = $customer->getId();
-            $orders = new Order;
-            $orders->where(['customer_id' => $customerId]);
-            foreach ($orders as $key => $order){
-                if(!$order->canRefund() && !$order->canHold()){
-                    unset($orders[$key]);
-                }
-            }
-            $root = $this->getLayout('sales_refund');
-            $root->getChild('main', true)->setVariable('orders', $orders);
-        }else {
-            $root = $this->getLayout('sales_refund');
-        }
+    use \Seahinet\Lib\Traits\DB;
+
+    public function indexAction()
+    {
+        $root = $this->getLayout('sales_refund');
         return $root;
     }
-    
-    public function saveRefundAction(){
-        if ($this->getRequest()->isPost()){
+
+    public function saveAction()
+    {
+        if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if (!$data['carrier'] || !$data['track_number']){
-                $result['error'] = 1;
-                $result['message'][] = ['message'=>'The carrier or track number is not empty.', 'level' => 'danger'];
-                return $this->response($result, 'customer/account/', 'customer');
-            }
-            $segment = new Segment('customer');
-            $customer = $segment->get('customer');
-            if ($customer){
-                $customer_id = $customer->getID();
-            }
-            $order = (new OrderModel)->load($data['order_id'],isset($customer_id) ? 'id' : 'increment_id');
-            if(isset($customer_id)){
-                if ($customer_id !== $order['customer_id']){
-                    $result['error'] = 1;
-                    $result['message'][] = ['message'=>'Invalid order ID', 'level' => 'danger'];
-                    return $this->response($result, 'customer/account/', 'customer');
+            $result = $this->validateForm($data, ['order_id', 'comment']);
+            if ($result['error'] === 0) {
+                $segment = new Segment('customer');
+                if ($segment->get('hasLoggedIn')) {
+                    $customerId = $segment->get('customer')->getID();
                 }
-            }else {
-                if ($order['customer_id']){
+                $order = (new OrderModel)->load($data['order_id'], isset($customerId) ? 'id' : 'increment_id');
+                if (isset($customerId)) {
+                    if ($customerId !== $order['customer_id']) {
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
+                    }
+                } else if ($order['customer_id']) {
                     $result['error'] = 1;
-                    $result['message'][] = ['message'=>'Invalid order ID', 'level' => 'danger'];
-                    return $this->response($result, 'customer/account/', 'customer');
+                    $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
                 }
-            }
-            if ($order->getId() && ($order->canRefund() || $order->canHold())){
-                $refund = new Rma;
-                $refund->setData([
-                    'order_id' => $order['id'],
-                    'comment' => $data['comment'],
-                    'customer_id' => isset($customer_id) ? $customer_id : null,
-                    'carrier' => $data['carrier'],
-                    'track_number' => $data['track_number'],
-                ]);
-                try {
-                    $refund->save();
-                    $result['error'] = 0;
-                    $result['message'][] = ['message'=>'Submitted Successfully', 'level' => 'success'];
-                    $url = isset($customer_id) ? 'customer/account/' : '/';
-                } catch (Exception $e) {
+                if ($order->getId() && $order->canRefund(false)) {
+                    $refund = new Rma($data);
+                    $refund->setData([
+                        'order_id' => $order['id'],
+                        'customer_id' => isset($customerId) ? $customerId : null
+                    ]);
+                    try {
+                        $this->beginTransaction();
+                        $refund->save();
+                        $status = (new Phase)->load('holded', 'code')->getDefaultStatus()->getId();
+                        if ($order->offsetGet('status_id') != $status) {
+                            $order->setData('status_id', $status)->save();
+                        }
+                        $result['message'][] = ['message' => 'We have received your application. The customer service will contact you as soon as possible. Thanks for your support.', 'level' => 'success'];
+                        $this->commit();
+                    } catch (Exception $e) {
+                        $this->rollback();
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => 'An error detected. Please contact us or try again later.', 'level' => 'danger'];
+                    }
+                } else {
                     $result['error'] = 1;
-                    $result['message'][] = ['message'=>'An error detected. Please contact us or try again later.', 'level' => 'danger'];
+                    $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
                 }
-            }else {
-                $result['error'] = 1;
-                $result['message'][] = ['message'=>'Invalid order ID', 'level' => 'danger'];
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : 'customer/account/', 'customer');
+        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'sales/refund/', 'customer');
     }
+
 }

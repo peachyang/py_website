@@ -8,69 +8,69 @@ $num = $this->getVariable('key');
 ?>
 
 <div class="wishlist">
-    <h3></span><?php echo $this->translate('Order Infomation',[],'sales'); ?></h3>
+    <h3></span><?php echo $this->translate('Order Infomation', [], 'sales'); ?></h3>
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="<?php echo $title=='view_order'?'active':'' ?>">
-        	<a href="<?php echo $this->getBaseUrl('sales/myorder/view_order/?order_id='.$order['id'])?>">
-        		<?php echo $this->translate('Orders') ?>
-        	</a>
-    	</li>
-    	<?php 
-    	   if (!empty($invoices)):
-    	       foreach ($invoices as $key=>$invoice):
-    	?>
-            <li role="presentation" class="<?php echo $title=='view_invoice' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_invoice/?order_id='.$order['id'].'&key='.(count($invoices) !== 1 ? $key+1 : ''))?>" >
-                	<?php echo $this->translate('Invoices'),count($invoices) !== 1 ? $key+1 : '' ?>
-                </a>
-            </li>
-        <?php 
-                endforeach;
-            endif;
-            if (!empty($shipments)):
-                foreach ($shipments as $key=>$shipment):
-        ?>
-            <li role="presentation" class="<?php echo $title=='view_shipment' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_shipment/?order_id='.$order['id'].'&key='.(count($shipments) !== 1 ? $key+1 : ''))?>" >
-                	<?php echo $this->translate('Shipments'),count($shipments) !== 1 ? $key+1 : '' ?>
-                </a>
-            </li>
+        <li role="presentation" class="<?php echo $title == 'view_order' ? 'active' : '' ?>">
+            <a href="<?php echo $this->getBaseUrl('sales/myorder/view_order/?order_id=' . $order['id']) ?>">
+                <?php echo $this->translate('Orders') ?>
+            </a>
+        </li>
         <?php
-                endforeach;
-            endif;
-            if (!empty($creditmemos)):
-                foreach ($creditmemos as $key=>$creditmemo):
-            ?>
-            <li role="presentation" class="<?php echo $title=='view_creditmemo' && $key ==($num>0?$num:0) ? 'active':'' ?>">
-                <a href="<?php echo $this->getBaseUrl('sales/myorder/view_creditmemo/?order_id='.$order['id'].'&key='.(count($creditmemos) !== 1 ? $key+1 : ''))?>" >
-                	<?php echo $this->translate('Credit Memos'),count($creditmemos) !== 1 ? $key+1 : '' ?>
-                </a>
-            </li>
-        <?php 
-                endforeach;
-            endif;
+        if (!empty($invoices)):
+            foreach ($invoices as $key => $invoice):
+                ?>
+                <li role="presentation" class="<?php echo $title == 'view_invoice' && $key == ($num > 0 ? $num : 0) ? 'active' : '' ?>">
+                    <a href="<?php echo $this->getBaseUrl('sales/myorder/view_invoice/?order_id=' . $order['id'] . '&key=' . (count($invoices) !== 1 ? $key + 1 : '')) ?>" >
+                        <?php echo $this->translate('Invoices'), count($invoices) !== 1 ? $key + 1 : '' ?>
+                    </a>
+                </li>
+                <?php
+            endforeach;
+        endif;
+        if (!empty($shipments)):
+            foreach ($shipments as $key => $shipment):
+                ?>
+                <li role="presentation" class="<?php echo $title == 'view_shipment' && $key == ($num > 0 ? $num : 0) ? 'active' : '' ?>">
+                    <a href="<?php echo $this->getBaseUrl('sales/myorder/view_shipment/?order_id=' . $order['id'] . '&key=' . (count($shipments) !== 1 ? $key + 1 : '')) ?>" >
+                        <?php echo $this->translate('Shipments'), count($shipments) !== 1 ? $key + 1 : '' ?>
+                    </a>
+                </li>
+                <?php
+            endforeach;
+        endif;
+        if (!empty($creditmemos)):
+            foreach ($creditmemos as $key => $creditmemo):
+                ?>
+                <li role="presentation" class="<?php echo $title == 'view_creditmemo' && $key == ($num > 0 ? $num : 0) ? 'active' : '' ?>">
+                    <a href="<?php echo $this->getBaseUrl('sales/myorder/view_creditmemo/?order_id=' . $order['id'] . '&key=' . (count($creditmemos) !== 1 ? $key + 1 : '')) ?>" >
+                        <?php echo $this->translate('Credit Memos'), count($creditmemos) !== 1 ? $key + 1 : '' ?>
+                    </a>
+                </li>
+                <?php
+            endforeach;
+        endif;
         ?>
     </ul>
     <div class="tab-content">
-        <?php 
-            if($title == 'view_order'){
-                echo $this->getChild('order_info')->setVariable('order',$order);
-            }
-            if ($title == 'view_invoice' && !empty($invoices)){
-                echo $this->getChild('invoice_info')->setVariable('invoice',$invoices[$num>0?$num:0])
-                                                    ->setVariable('key',count($invoices) !== 1 ? $key+1 : null)
-                                                    ->setVariable('order',$order);
-            }
-            if ($title == 'view_shipment' && !empty($shipments)){
-                echo $this->getChild('shipment_info')->setVariable('shipment',$shipments[$num>0?$num:0])
-                                                    ->setVariable('key',count($shipments) !== 1 ? $key+1 : null)
-                                                    ->setVariable('order',$order);
-            }
-            if ($title == 'view_creditmemo' && !empty($creditmemos)){
-                echo $this->getChild('creditmemo_info')->setVariable('creditmemo',$creditmemos[$num>0?$num:0])
-                                                    ->setVariable('key',count($creditmemos) !== 1 ? $key+1 : null)
-                                                    ->setVariable('order',$order);
-            }
+        <?php
+        if ($title == 'view_order') {
+            echo $this->getChild('order_info')->setVariable('order', $order);
+        }
+        if ($title == 'view_invoice' && !empty($invoices)) {
+            echo $this->getChild('invoice_info')->setVariable('invoice', $invoices[$num > 0 ? $num : 0])
+                    ->setVariable('key', count($invoices) !== 1 ? $key + 1 : null)
+                    ->setVariable('order', $order);
+        }
+        if ($title == 'view_shipment' && !empty($shipments)) {
+            echo $this->getChild('shipment_info')->setVariable('shipment', $shipments[$num > 0 ? $num : 0])
+                    ->setVariable('key', count($shipments) !== 1 ? $key + 1 : null)
+                    ->setVariable('order', $order);
+        }
+        if ($title == 'view_creditmemo' && !empty($creditmemos)) {
+            echo $this->getChild('creditmemo_info')->setVariable('creditmemo', $creditmemos[$num > 0 ? $num : 0])
+                    ->setVariable('key', count($creditmemos) !== 1 ? $key + 1 : null)
+                    ->setVariable('order', $order);
+        }
         ?>
     </div>
 </div>

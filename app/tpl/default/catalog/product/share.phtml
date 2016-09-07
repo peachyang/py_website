@@ -3,10 +3,10 @@ $medias = $this->getMedia();
 ?>
 <ul class="hidden-xs links list-inline">
     <li>
-        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add') ?>">
+        <button type="submit" formaction="<?php echo $this->getBaseUrl('customer/wishlist/add') ?>">
             <span class="fa fa-star" aria-hidden="true"></span>
             <span><?php echo $this->translate('Add to Wishlist'); ?></span>
-        </a>
+        </button>
     </li>
     <?php if ($medias): ?>
     <li class="dropdown share">

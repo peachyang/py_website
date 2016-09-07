@@ -146,6 +146,23 @@ retailer_goods:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+retailer_sales_products:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Sales
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\SalesProducts
+                        template: retailer/salesproducts
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 retailer_order_view:
     update: frontend
     root:
@@ -369,6 +386,9 @@ retailer_goods_product_edit:
                         method: addScript
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
+                        method: addLink
+                        params: backend/css/jquery-ui.min.css
+                    -
                         method: addScript
                         params: backend/js/jquery.ui/core.js
                     -
@@ -390,8 +410,14 @@ retailer_goods_product_edit:
                         method: addScript
                         params: backend/js/product.js
                     -
-                        method: addLink
-                        params: backend/css/jquery-ui.min.css
+                        method: addScript
+                        params: backend/ckeditor/ckeditor.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor/adapters/jquery.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor.js
             content:
                 children:
                     breadcrumb:

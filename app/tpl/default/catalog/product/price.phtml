@@ -4,7 +4,7 @@ $currency = $this->getCurrency();
 $format = $currency['format'];
 $symbol = $currency['symbol'];
 ?>
-<?php if ($product->getFinalPrice() == $product['prices']['regular']): ?>
+<?php if ($product->getFinalPrice(1, false) == $product['prices']['regular']): ?>
     <span class="regular-price">
         <span class="label"><?php echo $this->translate('Price') ?></span>
         <span class="price" data-price="<?php echo $product['prices']['regular'] ?>"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>

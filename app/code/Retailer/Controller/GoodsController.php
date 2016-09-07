@@ -69,7 +69,7 @@ class GoodsController extends AuthActionController
     */
     public function salesAction()
     {
-        $root = $this->getLayout('retailer_goods');
+        $root = $this->getLayout('retailer_sales_products');
         $order = Array(
             'type' => 'sales'
         );

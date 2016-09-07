@@ -559,4 +559,26 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit td.checkbox {display: table-cell;}
 .product-edit .checkbox input[type=checkbox]{margin-left: 0; position: relative;}
 
+
 /*=E Stone's CSS end' */
+
+/* sales products css - ammon */
+.sales-products .myfilters ul,.sales-products .myfilters li{margin:0px;padding: 0px; list-style: none;} 
+.sales-products .myfilters li{float:left;width:300px;margin-bottom:20px}
+.sales-products .myfilters input[type=text]{width:150px;height:26px;margin-left:11px;}
+.sales-products .myfilters input[type=text].small-text{width:69px}
+.sales-products .myfilters input[type=text].small-text.nomargin{margin-left:0px}
+.sales-products .myfilters select{margin-left:11px;padding:1px 12px;height:26px}
+.sales-products .seperation{width:100%;border:1px solid #6699ff;margin:11px 0px;}
+.sales-products .seperation-title{margin-top:18px}
+.sales-products .products-content td{border:0px}
+.sales-products .products-content .table-title{border:0px}
+.sales-products .products-content .function-seperation{color:#CCCCCC;margin:0px 3px}
+.sales-products .products-content .btn-options.enhancement{background-color:rgba(204, 204, 204, 0.15);font-size:13px} 
+.sales-products .products-content .list-info .recommend{width:20px;float:left;font-size:12px;color:#fd6a30}
+.sales-products .products-content .list-info .good-pic{margin-top:11px}
+.sales-products .products-content .list-info .good-title{margin-left:90px}
+.sales-products .products-content .transaction-list-sales{border-bottom:1px solid #EDEDED}
+.sales-products .products-content .transaction-list-sales .money{color:#fd6a30}
+/* end */
+

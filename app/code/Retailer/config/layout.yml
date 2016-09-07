@@ -146,6 +146,23 @@ retailer_goods:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+retailer_sales_products:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Sales
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\SalesProducts
+                        template: retailer/salesproducts
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 retailer_order_view:
     update: frontend
     root:

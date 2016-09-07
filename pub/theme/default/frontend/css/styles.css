@@ -563,6 +563,7 @@ dl.options dd{float:left;margin-left:4px}
 /*=E Stone's CSS end' */
 
 /* sales products css - ammon */
+.sales-products .control-right{color:#6699ff}
 .sales-products .myfilters ul,.sales-products .myfilters li{margin:0px;padding: 0px; list-style: none;} 
 .sales-products .myfilters li{float:left;width:300px;margin-bottom:20px}
 .sales-products .myfilters input[type=text]{width:150px;height:26px;margin-left:11px;}
@@ -580,5 +581,6 @@ dl.options dd{float:left;margin-left:4px}
 .sales-products .products-content .list-info .good-title{margin-left:90px}
 .sales-products .products-content .transaction-list-sales{border-bottom:1px solid #EDEDED}
 .sales-products .products-content .transaction-list-sales .money{color:#fd6a30}
+
 /* end */
 

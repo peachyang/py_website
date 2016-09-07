@@ -1,8 +1,7 @@
 <?php
     $subtitle = $this->getVariable("subtitle");
     $order = $this->getVariable("order");
-    $transactions = $this->getRetailerTransaction();
-    $sales_status = $this->getAllSalesStatus();
+	$sales_products = $this->getRetailerSalesProducts();
 ?>
 <main class="col-main col-xs-9 col-sm-9 col-md-10 mg-bottom-40 sales-products">
     <div class="wishlist">
@@ -29,6 +28,7 @@
  				<li><span>橱窗推荐:</span> 
  				  <select class="form-control " id="send_status" name="send_status">
                      <option value="">全部</option>
+                     
                 </select>
  				</li>
  				<li><span>商品设置:</span> 
@@ -70,7 +70,7 @@
                     <button class="btn-options enhancement">评论有礼</button>
 
            	</td>
-           	<td>efefef</td>
+           	<td class="control-right">更多操作</td>
            </tr>
            
            
@@ -78,14 +78,13 @@
         </table>
         <div class="clearfix mg-bottom-10"></div>
         <?php
-            foreach($transactions as $transaction){
+            foreach($sales_products as $sales_product){
         ?>
         <div class="transaction-list-sales">
   
             <table class="list-info">
                 <?php
-                    foreach($transaction['items'] as $key => $item){
-                        $thumbnail =  $this->getProduct($item['product_id'])->getThumbnail();
+                    $thumbnail =  $this->getProduct($sales_product['id'])->getThumbnail();
                 ?>
                 <tr>
                     <td style="width: 34%;">
@@ -96,16 +95,16 @@
                         <div class="good-pic">
                             <a href="">
                                 <?php if (strpos($thumbnail, 'http') === false){ ?>
-                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
+                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                 <?php }else{ ?>
-                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
+                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
                                 <?php } ?>
                             </a>
                         </div>
                         <div class="good-title">
                             <p>
                                 <a target="_blank" href="">
-                                    <span><?php echo $item['product_name'] ?></span>
+                                    <span><?php echo $sales_product['name'] ?></span>
                                 </a>
                             </p>
                         </div>
@@ -113,57 +112,34 @@
                     <td style="width: 14%;">
                         <div>
                             <p class="text-center">
-                                <span class="money"  ><?php echo $this->getCurrency()->format($item['price']); ?></span>
+                                <span class="money"  ><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
                             </p>
                         </div>
                     </td>
                     <td style="width: 11%;">
                         <div>
-                            <p class="text-center"><?php echo $this->translate('%d', [$item['qty']]); ?></p>
+                            <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'],$sales_product['sku'])]); ?></p>
                         </div>
                     </td>
                     <td class="border-right" style="width: 11%;">&nbsp; </td>
                     <td class="border-right" style="width: 15%;">
-                        <?php
-                            if($key == 0){
-                        ?>
-                        <div>
-                            <p class="text-center word-break-all">
-                                <a href="" target="_blank"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></a><i title="查询该买家订单"></i>
-                            </p>
-                            <p class="text-center">
-                                <a title="查询该买家订单" target="_blank" href=""></a>
-                            </p>
-                        </div>
-                        <?php
-                            }else{
-                                echo '&nbsp;';
-                            }
-                        ?>
+
                     </td>
                     <td class="border-right" style="width: 15%;">
-                        <?php
-                            if($key == 0){
-                        ?>
+
                         <div>
                             <p class="text-center">
-                                <span ><?php echo $this->translate($transaction['status_name']); ?></span>
+                                <span class="control-right" >编辑商品</span>
                             </p>
                             <p class="text-center">
-                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?sales_id='.$transaction['id'])?>">详情</a>
+                                <a target="_blank" class="control-right" >复制链接</a>
                             </p>
                         </div>
-                        <?php
-                            }else{
-                                echo '&nbsp;';
-                            }
-                        ?>
+  
                     </td>
 
                 </tr>
-                <?php
-                    }
-                ?>
+
             </table>
         </div>
         <?php
@@ -194,8 +170,8 @@
         <div class="page-block">
             <div>
                 <?php
-                    if (is_object($transactions)) {
-                        echo $this->getChild('pager')->setCollection($transactions);
+                    if (is_object($sales_products)) {
+                        echo $this->getChild('pager')->setCollection($sales_products);
                     }
                     ?>
             </div>

@@ -551,6 +551,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .input-box .cell {display: table-cell; font-size: 13px; line-height: 2; padding: 4px; position: relative; vertical-align: top;}
 .product-edit .buttons-set {background: #f7f8fa none repeat scroll 0 0; margin: 26px 0 0; padding: 20px 20px 20px 50px;}
 .product-edit .tab-pane {padding: 10px 0 0 30px;}
+.product-edit .admin .nav-tabs {border-bottom: 1px solid #cce0e9;}
 .product-edit .nav-tabs ~ .tab-pane {display: none;}
 .product-edit .tab-pane.active {display: table;}
 .product-edit .widget-upload .add {font-size: 32px; line-height: 139.2px; text-decoration: none; vertical-align: middle;}
@@ -558,6 +559,10 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .control-label {-moz-user-select: none; color: #000; display: block; font-size: 13px; line-height: 26px; width: 100%;}
 .product-edit td.checkbox {display: table-cell;}
 .product-edit .checkbox input[type=checkbox]{margin-left: 0; position: relative;}
+.product-edit .nav-tabs > .error > a {color: red;}
+.product-edit .form-control.invalid {border-color: red;}
+.product-edit label.invalid {background: #000 none repeat scroll 0 0; border-radius: 3px; bottom: 100%; color: #fff; display: inline-block; font-size: 12px; left: 0; margin-bottom: 3px; padding: 2px 8px; position: absolute; text-align: center;}
+.product-edit label.invalid::after {-moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #000 transparent -moz-use-text-color; border-image: none; border-style: solid solid none; border-width: 3px 3px medium; content: " "; left: 50%; position: absolute; top: 100%;}
 
 
 /*=E Stone's CSS end' */

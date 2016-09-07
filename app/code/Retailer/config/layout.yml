@@ -386,6 +386,9 @@ retailer_goods_product_edit:
                         method: addScript
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
+                        method: addLink
+                        params: backend/css/jquery-ui.min.css
+                    -
                         method: addScript
                         params: backend/js/jquery.ui/core.js
                     -
@@ -407,8 +410,14 @@ retailer_goods_product_edit:
                         method: addScript
                         params: backend/js/product.js
                     -
-                        method: addLink
-                        params: backend/css/jquery-ui.min.css
+                        method: addScript
+                        params: backend/ckeditor/ckeditor.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor/adapters/jquery.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor.js
             content:
                 children:
                     breadcrumb:

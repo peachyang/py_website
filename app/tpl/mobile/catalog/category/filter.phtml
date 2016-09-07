@@ -2,32 +2,39 @@
 $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
 ?>
-<dl class="filters clearfix" id="collapseExample">
-    <?php foreach ($filters as $key => $filter): ?>
-        <dt class="col-xs-2 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
-        <dd class="col-xs-10 col-sm-10 col-md-11">
-            <a href="<?php echo $this->getInitFilterUrl($key) ?>" class="init" rel="nofollow">
-                <?php echo $this->translate('All') ?>
-            </a>
-            <div class="values">
-                <ul class="list-inline">
-                    <?php foreach ($filter['values'] as $value => $values): ?>
-                        <li <?php if (isset($current[$key]) && $current[$key] == $value): ?> class="active"<?php endif ?>>
-                            <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
-                                <span><?php echo $values['label'] ?></span>
-                                <?php if ($this->showCount()): ?>
-                                    <span class="count"><?php echo $values['count'] ?></span>
-                                <?php endif ?>
-                            </a>
-                        </li>
-                    <?php endforeach ?>                    
-                </ul>
-            </div>
-            <div class="cell more">
-                <a href="javascript:void(0);">
-                    <?php echo $this->translate('More') ?>
+<div class="breadcrumb-m hidden-lg">
+    <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-bars fa-2x breadcrumb-right col-xs-1 col-sm-1"></a>
+    <div class="content-list col-xs-10 col-sm-10">
+        <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>
+    </div>
+    <a href="javascript:viod(0);" class="fa fa-filter fa-2x col-xs-1 col-sm-1 dropdown-toggle in" data-toggle="dropdown"></a>
+    <dl class="filters clearfix dropdown-menu ">
+        <?php foreach ($filters as $key => $filter): ?>
+            <dt class="col-xs-2 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
+            <dd class="col-xs-10 col-sm-10 col-md-11">
+                <a href="<?php echo $this->getInitFilterUrl($key) ?>" class="init" rel="nofollow">
+                    <?php echo $this->translate('All') ?>
                 </a>
-            </div>
-        </dd>
-    <?php endforeach ?>
-</dl>
+                <div class="values">
+                    <ul class="list-inline">
+                        <?php foreach ($filter['values'] as $value => $values): ?>
+                            <li <?php if (isset($current[$key]) && $current[$key] == $value): ?> class="active"<?php endif ?>>
+                                <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
+                                    <span><?php echo $values['label'] ?></span>
+                                    <?php if ($this->showCount()): ?>
+                                        <span class="count"><?php echo $values['count'] ?></span>
+                                    <?php endif ?>
+                                </a>
+                            </li>
+                        <?php endforeach ?>                    
+                    </ul>
+                </div>
+                <div class="cell more">
+                    <a href="javascript:void(0);">
+                        <?php echo $this->translate('More') ?>
+                    </a>
+                </div>
+            </dd>
+        <?php endforeach ?>
+    </dl>
+</div>

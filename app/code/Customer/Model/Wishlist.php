@@ -33,10 +33,11 @@ class Wishlist extends AbstractModel
         $item->setData([
             'id' => null,
             'wishlist_id' => $this->getId(),
-            'store_id' => $data['store_id'],
+            'store_id' => isset($data['store_id']) ? $data['store_id'] : $product['store_id'],
             'product_name' => isset($data['product_name']) ? $data['product_name'] : $product['name'],
             'description' => preg_replace('/\<[^\>]+\>/', '', $product['description']),
-            'price' => isset($data['base_price']) ? $data['base_price'] : $product->getFinalPrice($data['qty'], false)
+            'price' => isset($data['base_price']) ? $data['base_price'] : $product->getFinalPrice($data['qty'], false),
+            'options' => is_scalar($data['options']) ? $data['options'] : json_encode($data['options'])
         ]);
         $item->save();
         $this->flushList('wishlist');

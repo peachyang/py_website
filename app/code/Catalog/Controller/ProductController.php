@@ -37,13 +37,12 @@ class ProductController extends ActionController
                         if ($segment->get('hasLoggedIn')) {
                             $collection = new ViewedCollection;
                             $collection->where(['product_id' => $this->getOption('product_id'), 'customer_id' => $segment->get('customer')->getId()]);
-                            if (!count($collection)) {
-                                $model = new ViewedProduct;
-                                $model->setData([
-                                    'customer_id' => $segment->get('customer')->getId(),
-                                    'product_id' => $this->getOption('product_id')
-                                ])->save();
-                            }
+                            $model = new ViewedProduct;
+                            $model->setData([
+                                'id' => count($collection) ? $collection[0]['id'] : null,
+                                'customer_id' => $segment->get('customer')->getId(),
+                                'product_id' => $this->getOption('product_id')
+                            ])->save();
                         }
                     } else {
                         $value = str_replace(',' . $this->getOption('product_id') . ',', ',', $this->getOption('product_id') . ',' . $cookie);

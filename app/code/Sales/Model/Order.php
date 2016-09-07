@@ -312,9 +312,9 @@ class Order extends AbstractModel
         return $qty > 0;
     }
 
-    public function canRefund()
+    public function canRefund($flag = true)
     {
-        if (!in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
+        if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
         }
         $memos = $this->getCreditMemo();

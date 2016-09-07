@@ -1,0 +1,299 @@
+<?php
+    $subtitle = $this->getVariable("subtitle");
+    $order = $this->getVariable("order");
+    $transactions = $this->getRetailerTransaction();
+    $sales_status = $this->getAllSalesStatus();
+?>
+<main class="col-main col-xs-9 col-sm-9 col-md-10 mg-bottom-40 sales-products">
+    <div class="wishlist">
+    <h3><?php echo $this->translate($subtitle); ?></h3>
+    
+    <div class="myfilters" >
+        <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
+            <div >
+ 				<ul>
+ 				<li><span>商品名称:</span> <input class="form-control " type="text" value="" name="id"></li>
+ 				<li><span>商家编码:</span> <input class="form-control " type="text" value="" name="id"></li>
+ 				<li><span>商品类目:</span> 
+ 				 <select class="form-control " id="send_status" name="send_status">
+                     <option value="">全部</option>
+                </select>
+ 				</li>
+ 				<li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
+ 				<li><span>总 &nbsp;销 &nbsp;量:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
+ 				<li><span>商品分类:</span> 
+ 				 				  <select class="form-control " id="send_status" name="send_status">
+                     <option value="">全部</option>
+                </select>
+ 				</li>
+ 				<li><span>橱窗推荐:</span> 
+ 				  <select class="form-control " id="send_status" name="send_status">
+                     <option value="">全部</option>
+                </select>
+ 				</li>
+ 				<li><span>商品设置:</span> 
+ 				 <select class="form-control " id="send_status" name="send_status">
+                     <option value="">全部</option>
+                </select>
+ 				</li>
+ 				 <li><span>清空条件</span> 
+				 &nbsp;&nbsp; <button >搜 索</button>
+ 				</li>	
+ 				</ul>
+            </div>
+        </form>
+    </div>
+    <div style="clear:both"></div>
+
+    <div class="seperation-title">共有出售中商品 4 条记录</div>
+   <hr class="seperation">
+    <div class="products-content">
+        <table class="table table-title">
+            <tr>
+                <td style="width: 34%;">商品名称</td>
+                <td style="width: 14%;">价 格</td>
+                <td style="width: 11%;"><span><a href=>库 存</a></span></td>
+                <td style="width: 11%;"><span><a href=>总销量</a></span></td>
+                <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
+                <td style="width: 15%;">操 作</td>
+           </tr>
+           <tr style="border-bottom: 1px solid #EDEDED;" >
+           	<td colspan="5" style="text-align: left;" >
+           	 	    <input type="checkbox" data-cbtype="all">
+                    <span>全选</span>
+					&nbsp;&nbsp;
+                    <button class="btn-options enhancement">删 除</button>
+                    <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement">橱窗推荐</button>
+                    <button class="btn-options enhancement">取消推荐</button>
+                    <button class="btn-options enhancement">设置VIP</button>
+                    <button class="btn-options enhancement">评论有礼</button>
+
+           	</td>
+           	<td>efefef</td>
+           </tr>
+           
+           
+           
+        </table>
+        <div class="clearfix mg-bottom-10"></div>
+        <?php
+            foreach($transactions as $transaction){
+        ?>
+        <div class="transaction-list-sales">
+  
+            <table class="list-info">
+                <?php
+                    foreach($transaction['items'] as $key => $item){
+                        $thumbnail =  $this->getProduct($item['product_id'])->getThumbnail();
+                ?>
+                <tr>
+                    <td style="width: 34%;">
+                        <div class="recommend">
+                        <input type="checkbox">	已推荐
+                        </div>
+                        
+                        <div class="good-pic">
+                            <a href="">
+                                <?php if (strpos($thumbnail, 'http') === false){ ?>
+                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
+                                <?php }else{ ?>
+                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
+                                <?php } ?>
+                            </a>
+                        </div>
+                        <div class="good-title">
+                            <p>
+                                <a target="_blank" href="">
+                                    <span><?php echo $item['product_name'] ?></span>
+                                </a>
+                            </p>
+                        </div>
+                    </td>
+                    <td style="width: 14%;">
+                        <div>
+                            <p class="text-center">
+                                <span class="money"  ><?php echo $this->getCurrency()->format($item['price']); ?></span>
+                            </p>
+                        </div>
+                    </td>
+                    <td style="width: 11%;">
+                        <div>
+                            <p class="text-center"><?php echo $this->translate('%d', [$item['qty']]); ?></p>
+                        </div>
+                    </td>
+                    <td class="border-right" style="width: 11%;">&nbsp; </td>
+                    <td class="border-right" style="width: 15%;">
+                        <?php
+                            if($key == 0){
+                        ?>
+                        <div>
+                            <p class="text-center word-break-all">
+                                <a href="" target="_blank"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></a><i title="查询该买家订单"></i>
+                            </p>
+                            <p class="text-center">
+                                <a title="查询该买家订单" target="_blank" href=""></a>
+                            </p>
+                        </div>
+                        <?php
+                            }else{
+                                echo '&nbsp;';
+                            }
+                        ?>
+                    </td>
+                    <td class="border-right" style="width: 15%;">
+                        <?php
+                            if($key == 0){
+                        ?>
+                        <div>
+                            <p class="text-center">
+                                <span ><?php echo $this->translate($transaction['status_name']); ?></span>
+                            </p>
+                            <p class="text-center">
+                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?sales_id='.$transaction['id'])?>">详情</a>
+                            </p>
+                        </div>
+                        <?php
+                            }else{
+                                echo '&nbsp;';
+                            }
+                        ?>
+                    </td>
+
+                </tr>
+                <?php
+                    }
+                ?>
+            </table>
+        </div>
+        <?php
+            }
+        ?>
+        
+        <div>
+        <table class="table table-title">
+           	<tr style="background-color:#F1F2F4;">
+           	<td  style="text-align: left;" >
+           	 	    <input type="checkbox" data-cbtype="all">
+                    <span>全选</span>
+					&nbsp;&nbsp;
+                    <button class="btn-options enhancement">删 除</button>
+                    <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement">橱窗推荐</button>
+                    <button class="btn-options enhancement">取消推荐</button>
+                    <button class="btn-options enhancement">设置VIP</button>
+                    <button class="btn-options enhancement">评论有礼</button>
+
+           	</td>
+           </tr>
+           
+           
+           
+        </table>
+        </div>
+        <div class="page-block">
+            <div>
+                <?php
+                    if (is_object($transactions)) {
+                        echo $this->getChild('pager')->setCollection($transactions);
+                    }
+                    ?>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="receiveModalLabel">收到货款</h4>
+                </div>
+                <div class="modal-body">
+                    <div >
+                        <h1>您确定已经收到买家的货款了吗？</h1>
+                        <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
+                        <dl>
+                            <dt>操作原因:</dt>
+                            <dd><textarea name="remark"></textarea></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-price" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="priceModalLabel">费用调整</h4>
+                </div>
+                <div class="modal-body">
+                    <div>买家:&nbsp;&nbsp;Stone<br>订单号&nbsp;&nbsp;:<strong>88888888888</strong></div>
+                    <div>
+                        <ul>
+                            <li>
+                                <h3>商品总价:<strong>¥100.00</strong></h3>
+                                <p><input type="text" value="100.00" name="goods_amount"></p>
+                            </li>
+                            <li>
+                                <h3>配送费用:<strong>¥10.00</strong></h3>
+                                <p><input type="text" value="10.00" name="shipping_fee"></p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div><h3>订单总价:<strong>¥110.00</strong></h3></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-cancel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="cancelModalLabel">费用调整</h4>
+                </div>
+                <div class="modal-body">
+                    <h1>您是否确定要取消以下订单？</h1>
+                    <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
+                    <dl>
+                        <dt>取消原因:</dt>
+                        <dd>
+                            <div class="li">
+                                <input type="radio" value="无法备齐货物" id="d1" name="cancel_reason" checked=""> <label for="d1">无法备齐货物</label>
+                            </div>
+                            <div class="li">
+                                <input type="radio" value="不是有效的订单" id="d2" name="cancel_reason"> <label for="d2">不是有效的订单</label>
+                            </div>
+                            <div class="li">
+                                <input type="radio" value="买家主动要求" id="d3" name="cancel_reason"> <label for="d3">买家主动要求</label>
+                            </div>
+                            <div class="li">
+                                <input type="radio" value="其他原因" id="d4" flag="other_reason" name="cancel_reason"> <label for="d4">其他原因</label>
+                            </div>
+                        </dd>
+                        <dd id="other_reason">
+                            <textarea name="remark" id="other_reason_input"></textarea>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>

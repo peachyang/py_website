@@ -206,5 +206,6 @@
     $('.filters .more a').click(function(){
         $(this).parents('dd').toggleClass('all');
     });
+    $('.collapse').collapse();
 }));
 

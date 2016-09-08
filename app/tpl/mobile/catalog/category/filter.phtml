@@ -3,12 +3,17 @@ $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
 ?>
 <div class="breadcrumb-m hidden-lg">
-    <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-bars fa-2x breadcrumb-right col-xs-1 col-sm-1"></a>
+    <div class="col-xs-1 col-sm-1 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <a class="fa fa-bars fa-2x breadcrumb-right collapsed" data-toggle="collapse" data-parent="#accordion" href="#headingOne" aria-expanded="false" aria-controls="headingOne"></a>
+        </div>
+        <?php echo $this->getChild('category'); ?>
+    </div>
     <div class="content-list col-xs-10 col-sm-10">
         <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>
     </div>
-    <a href="javascript:viod(0);" class="fa fa-filter fa-2x col-xs-1 col-sm-1 dropdown-toggle in" data-toggle="dropdown"></a>
-    <dl class="filters clearfix dropdown-menu ">
+    <a href="javascript:void(0);" class="fa fa-filter fa-2x col-xs-1 col-sm-1 dropdown-toggle in" data-toggle="dropdown"></a>
+    <dl class="filters clearfix dropdown-menu">
         <?php foreach ($filters as $key => $filter): ?>
             <dt class="col-xs-2 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
             <dd class="col-xs-10 col-sm-10 col-md-11">

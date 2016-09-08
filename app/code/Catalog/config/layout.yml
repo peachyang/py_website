@@ -28,6 +28,10 @@ catalog_category:
                             filter:
                                 type: Seahinet\Catalog\ViewModel\Category\Filter
                                 template: catalog/category/filter
+                                children:
+                                    category:
+                                        type: Seahinet\Catalog\ViewModel\Navigation
+                                        template: catalog/navigation/top
                             sortby:
                                 type: Seahinet\Catalog\ViewModel\Category\SortBy
                                 template: catalog/category/sortby

@@ -113,31 +113,30 @@ frontend:
                                         template: checkout/minicart/total
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
-                                action: 
+                                action:
                                     -
                                         method: setClass
                                         params: text-right
                                     -
                                         method: addLink
                                         params: 
-                                            - {link:'',label:'Home'}
-                                    -
-                                        method: addLink
-                                        params: 
-                                            - {link:'retailer/account/',label:'Retailer Center'}
+                                            - {link:'',label:'Home',priority:0}
                                     -
                                         method: addLink
                                         params:
                                             -
                                                 link: #
                                                 label: Customer Service
+                                                priority: 10
                                                 children: [{link:'',label:'Live Chat'}]
                                     -
                                         method: addLink
-                                        params: language
+                                        params:
+                                            - {block:'language',priority:50}
                                     -
                                         method: addLink
-                                        params: currency
+                                        params:
+                                            - {block:'currency',priority:60}
                                 children:
                                     language:
                                         type: Seahinet\Lib\ViewModel\Language

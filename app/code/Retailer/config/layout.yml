@@ -1,4 +1,17 @@
 ---
+frontend:
+    root:
+        children:
+            header:
+                children:
+                    block:
+                        children:
+                            links:
+                                action:
+                                    -
+                                        method: addLink
+                                        params: 
+                                            - {link:'retailer/account/',label:'Retailer Center',priority:15}
 retailer_account:
     update: frontend
     root:
@@ -98,7 +111,7 @@ retailer_account_dashboard:
                                 method: addHandledSegment
                                 params: customer
 retailer_apply:
-    update: frontend
+    update: retailer_account
     root:
         children:
             content:
@@ -107,7 +120,7 @@ retailer_apply:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/apply/form
 retailer_processing:
-    update: frontend
+    update: retailer_account
     root:
         children:
             content:

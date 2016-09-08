@@ -2,13 +2,10 @@
 
 namespace Seahinet\Sales\Controller;
 
-use Seahinet\Sales\Model\Collection\Order;
-use Seahinet\Sales\Model\Order as OrderModel;
-use Seahinet\Sales\Model\Collection\Invoice;
-use Seahinet\Sales\Model\Collection\Shipment;
-use Seahinet\Sales\Model\Collection\CreditMemo;
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Customer\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
+use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Sales\Model;
 
 class OrderController extends AuthActionController
 {
@@ -18,57 +15,68 @@ class OrderController extends AuthActionController
         return $this->getLayout('sales_order_list');
     }
 
-    /* protected function viewAction($id, $title, $key = 0)
-      {
-      $id = $this->getRequest()->getQuery('order_id');
-      $key = intval($this->getRequest()->getQuery('key') - 1);
-      $order = new OrderModel;
-      $segment = new Segment('customer');
-      $invoice = new Invoice;
-      $shipment = new Shipment;
-      $creditmemo = new CreditMemo;
-      $order->load($id);
-      $invoice->where(['order_id' => $id]);
-      $shipment->where(['order_id' => $id]);
-      $creditmemo->where(['order_id' => $id]);
-      if ($order['customer_id'] !== $segment->get('customer')->getId()) {
-      return $this->notFoundAction();
-      }
-      $root = $this->getLayout('sales_view');
-      $root->getChild('main', true)->setVariable('order', $order)
-      ->setVariable('invoice', $invoice->load()->toArray())
-      ->setVariable('shipment', $shipment->load()->toArray())
-      ->setVariable('creditmemo', $creditmemo->load()->toArray())
-      ->setVariable('key', $key >= 0 ? $key : -1)
-      ->setVariable('title', $title);
-      return $root;
-      } */
-
-    public function view_orderAction()
+    public function viewAction($handler = 'sales_order_view')
     {
-        $id = $this->getRequest()->getQuery('order_id');
-        return $this->viewAction($id, 'view_order');
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Model\Order;
+            $order->load($id);
+            $segment = new Segment('customer');
+            if ($order->offsetGet('customer_id') == $segment->get('customer')->getId()) {
+                $root = $this->getLayout($handler);
+                $root->getChild('head')->setTitle($this->translate('Order #%s', [$order->offsetGet('increment_id')], 'sales'));
+                $root->getChild('main', true)->setVariable('order', $order);
+                return $root;
+            }
+        }
+        return $this->redirectReferer('sales/order/list');
     }
 
-    public function view_invoiceAction()
+    public function invoiceAction()
     {
-        $id = $this->getRequest()->getQuery('order_id');
-        $key = intval($this->getRequest()->getQuery('key') - 1);
-        return $this->viewAction($id, 'view_invoice', $key);
+        if ($id = $this->getRequest()->getQuery('invoice')) {
+            $model = new Model\Invoice;
+            $model->load($id);
+            if ($model->offsetGet('order_id') == $this->getRequest()->getQuery('id')) {
+                $root = $this->viewAction('sales_order_invoice');
+                if ($root instanceof Template) {
+                    $root->getChild('pane', true)->setVariable('model', $model);
+                }
+                return $root;
+            }
+        }
+        return $this->redirectReferer('sales/order/list');
     }
 
-    public function view_shipmentAction()
+    public function shippmentAction()
     {
-        $id = $this->getRequest()->getQuery('order_id');
-        $key = intval($this->getRequest()->getQuery('key') - 1);
-        return $this->viewAction($id, 'view_shipment', $key);
+        if ($id = $this->getRequest()->getQuery('shippment')) {
+            $model = new Model\Shipment;
+            $model->load($id);
+            if ($model->offsetGet('order_id') == $this->getRequest()->getQuery('id')) {
+                $root = $this->viewAction('sales_order_shipment');
+                if ($root instanceof Template) {
+                    $root->getChild('pane', true)->setVariable('model', $model);
+                }
+                return $root;
+            }
+        }
+        return $this->redirectReferer('sales/order/list');
     }
 
-    public function view_creditmemoAction()
+    public function creditMemoAction()
     {
-        $id = $this->getRequest()->getQuery('order_id');
-        $key = intval($this->getRequest()->getQuery('key') - 1);
-        return $this->viewAction($id, 'view_creditmemo', $key);
+        if ($id = $this->getRequest()->getQuery('creditmemo')) {
+            $model = new Model\CreditMemo;
+            $model->load($id);
+            if ($model->offsetGet('order_id') == $this->getRequest()->getQuery('id')) {
+                $root = $this->viewAction('sales_order_creditmemo');
+                if ($root instanceof Template) {
+                    $root->getChild('pane', true)->setVariable('model', $model);
+                }
+                return $root;
+            }
+        }
+        return $this->redirectReferer('sales/order/list');
     }
 
 }

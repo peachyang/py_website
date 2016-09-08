@@ -1,0 +1,7 @@
+<?php
+$order = $this->getVariable('order');
+?>
+<h2 class="page-title"><?php echo $this->translate('Order #%s', [$order->offsetGet('increment_id')]) ?></h2>
+<div class="page-content sales-order-view">
+    <?php echo $this->getChild('tab')->setVariable('order', $order), $this->getChild('pane')->setVariable('order', $order) ?>
+</div>

@@ -230,6 +230,10 @@ dl.options dd{float:left;margin-left:4px}
 .customer-wishlist .wishlist .product-name~.form-control{font-size:12px;line-height:24px;margin-top:12px}
 .customer-history .products-grid dt{font-size:14px;line-height:30px;margin-bottom:1.5em}
 .customer-history .products-grid dt .fa{color:#007dc6;font-size:24px;vertical-align:sub}
+.customer-account .sales-order-view .nav-tabs{margin:2% 0}
+.customer-account .sales-order-view .panel{width:49%;float:left;margin-bottom:2%}
+.customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
+.customer-account .sales-order-view .panel.wide{clear:both;width:100%;margin-left:0}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}

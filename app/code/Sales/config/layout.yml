@@ -437,31 +437,68 @@ sales_order_list:
                                     -
                                         method: setDefaultLimit
                                         params: 20
-sales_view:
+sales_order_view:
     update: customer_account
     root:
         children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: My Order
             content:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: sales/view
+                        template: sales/order/view
                         children:
-                            order_info:
+                            tab:
+                                type: Seahinet\Sales\ViewModel\Tab
+                                template: sales/tab
+                            pane:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: sales/view/order
-                            invoice_info:
+                                template: sales/order/content/order
+sales_order_invoice:
+    update: customer_account
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order/view
+                        children:
+                            tab:
+                                type: Seahinet\Sales\ViewModel\Tab
+                                template: sales/tab
+                            pane:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: sales/view/invoice
-                            shipment_info:
+                                template: sales/order/content/invoice
+sales_order_shipment:
+    update: customer_account
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order/view
+                        children:
+                            tab:
+                                type: Seahinet\Sales\ViewModel\Tab
+                                template: sales/tab
+                            pane:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: sales/view/shipment
-                            creditmemo_info:
+                                template: sales/order/content/shipment
+sales_order_creditmemo:
+    update: customer_account
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order/view
+                        children:
+                            tab:
+                                type: Seahinet\Sales\ViewModel\Tab
+                                template: sales/tab
+                            pane:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: sales/view/creditmemo
+                                template: sales/order/content/creditmemo
          

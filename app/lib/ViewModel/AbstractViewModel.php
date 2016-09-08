@@ -144,6 +144,17 @@ abstract class AbstractViewModel implements Serializable
     }
 
     /**
+     * Whether the variable at the specified key exists or not
+     * 
+     * @param string $key
+     * @return bool
+     */
+    public function hasVariable($key)
+    {
+        return isset($this->variables[$key]);
+    }
+
+    /**
      * Returns the variable at the specified key
      * 
      * @param string $key

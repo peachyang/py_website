@@ -79,7 +79,7 @@ class Invoice extends AbstractModel
         $this->setData([
             'base_subtotal' => $baseSubtotal,
         ])->setData([
-            'subtotal' => $currency->convert($this->storage['subtotal'])
+            'subtotal' => $currency->convert($this->storage['base_subtotal'])
         ]);
         $this->setData([
             'base_total' => $this->storage['base_subtotal'] +

@@ -115,7 +115,7 @@ class ServiceProvider implements ServiceProviderInterface
                 foreach ($finder as $file) {
                     return new \MaxMind\Db\Reader($file->getRealPath());
                 }
-                throw new Exception('Cannot find GeoIP2 database file.');
+                return null;
             };
         }
         if (!$container->has('akismet')) {

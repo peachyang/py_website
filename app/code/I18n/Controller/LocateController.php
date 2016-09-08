@@ -15,7 +15,8 @@ class LocateController extends ActionController
         $locate = new Locate;
         $locale = Bootstrap::getLanguage()->offsetGet('code');
         $result = [];
-        $code = $this->getContainer()->get('geoip')->get($_SERVER['REMOTE_ADDR'])['country']['iso_code'];
+        $geoip = $this->getContainer()->get('geoip');
+        $code = $geoip ? $geoip->get($_SERVER['REMOTE_ADDR'])['country']['iso_code'] : '';
         if ($data) {
             foreach ($data as $part => $id) {
                 $resultSet = $locate->load($part, $id);
@@ -25,13 +26,13 @@ class LocateController extends ActionController
             $resultSet = $locate->load('country');
         }
         foreach ($resultSet as $id => $item) {
-            if(isset($item['iso2_code'])&&$item['iso2_code']===$code){
+            if (isset($item['iso2_code']) && $item['iso2_code'] === $code) {
                 $default = [
                     'value' => $id,
                     'code' => $code,
                     'label' => $item->getName($locale)
                 ];
-            }else{
+            } else {
                 $result[] = [
                     'value' => $id,
                     'code' => isset($item['iso2_code']) ? $item['iso2_code'] : $item['code'],
@@ -43,7 +44,7 @@ class LocateController extends ActionController
             $result = strnatcmp($a['code'], $b['code']);
             return $result > 0 ? 1 : ($result < 0 ? -1 : 0);
         });
-        if(isset($default)){
+        if (isset($default)) {
             array_unshift($result, $default);
         }
         return array_values($result);

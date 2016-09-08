@@ -7,6 +7,8 @@ if (count($links)):
         foreach ($links as $link):
             if (is_string($link)):
                 echo $this->getChild($link)->__toString();
+            elseif (isset($link['block'])):
+                echo $this->getChild($link['block'])->__toString();
             elseif (isset($link['children'])):
                 ?>
                 <li class="dropdown">

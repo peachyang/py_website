@@ -1,4 +1,17 @@
 ---
+frontend:
+    root:
+        children:
+            header:
+                children:
+                    block:
+                        children:
+                            links:
+                                action:
+                                    -
+                                        method: addLink
+                                        params: 
+                                            - {link:'retailer/account/',label:'Retailer Center',priority:15}
 retailer_account:
     update: frontend
     root:
@@ -48,7 +61,7 @@ retailer_account:
                                 params: [{link:'retailer/store/view',label:'View Store',priority:8,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/store/decoration',label:'Store Decoration',priority:9,group:'Store Management'}]
+                                params: [{link:'retailer/store/decoration',label:'Store Decoration',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/photo',label:'Photo Space',priority:10,group:'Store Management'}]
@@ -98,7 +111,7 @@ retailer_account_dashboard:
                                 method: addHandledSegment
                                 params: customer
 retailer_apply:
-    update: frontend
+    update: retailer_account
     root:
         children:
             content:
@@ -107,7 +120,7 @@ retailer_apply:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/apply/form
 retailer_processing:
-    update: frontend
+    update: retailer_account
     root:
         children:
             content:
@@ -159,7 +172,7 @@ retailer_sales_products:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\SalesProducts
-                        template: retailer/salesproducts
+                        template: retailer/salesProducts
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -537,3 +550,31 @@ retailer_goods_product_edit_1:
     update: retailer_goods_product_edit
 retailer_goods_product_edit_2:
     update: retailer_goods_product_edit
+view_store:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store
+decoration_store:
+    update: decorationStore
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/storeDecoration

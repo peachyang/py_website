@@ -89,5 +89,20 @@ class StoreController extends AuthActionController
         $root = $this->getLayout('view_store');
         return $root;
     }
+	
+	 /** 
+    * decorationAction  
+    * decorate store page
+    * @access public 
+    * @return object 
+    */
+    public function decorationAction()
+    {
+        $root = $this->getLayout('decoration_store');
+        return $root;
+    }
+	
+	
+	
 
 }

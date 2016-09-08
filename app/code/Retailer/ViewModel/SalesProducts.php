@@ -24,6 +24,19 @@ class SalesProducts extends Template
 		$condition = $this->getQuery();
         $sales_products = new Pcollection;
 		$sales_products = $sales_products->withInSales();
+		$where = new \Zend\Db\Sql\Where();
+
+        if(!empty($condition['name'])){
+            $where->like('name', '%'.$condition['name'].'%');
+        }
+        if(!empty($condition['price_from'])){
+            $where->greaterThanOrEqualTo('price',$condition['price_from']);
+        }
+		if(!empty($condition['price_to'])){
+            $where->lessThanOrEqualTo('price',$condition['price_to']);
+        }
+		
+		$sales_products->where($where);		
 		return $this->prepareCollection($sales_products);
 		
 	}

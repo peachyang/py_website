@@ -11,14 +11,14 @@
         <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div >
  				<ul>
- 				<li><span>商品名称:</span> <input class="form-control " type="text" value="" name="id"></li>
+ 				<li><span>商品名称:</span> <input class="form-control " type="text" value="" name="name"></li>
  				<li><span>商家编码:</span> <input class="form-control " type="text" value="" name="id"></li>
  				<li><span>商品类目:</span> 
  				 <select class="form-control " id="send_status" name="send_status">
                      <option value="">全部</option>
                 </select>
  				</li>
- 				<li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
+ 				<li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="" name="price_to"> </li>
  				<li><span>总 &nbsp;销 &nbsp;量:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
  				<li><span>商品分类:</span> 
  				 				  <select class="form-control " id="send_status" name="send_status">
@@ -122,9 +122,7 @@
                         </div>
                     </td>
                     <td class="border-right" style="width: 11%;">&nbsp; </td>
-                    <td class="border-right" style="width: 15%;">
-
-                    </td>
+                    <td class="border-right" style="width: 15%;"><?php echo $sales_product['created_at']  ?></td>
                     <td class="border-right" style="width: 15%;">
 
                         <div>

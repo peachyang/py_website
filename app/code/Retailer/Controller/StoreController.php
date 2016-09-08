@@ -77,5 +77,17 @@ class StoreController extends AuthActionController
         $root = $this->getLayout('retailer_brand');
         return $root;
     }
+    
+     /** 
+    * viewAction  
+    * Show retailer store's home page
+    * @access public 
+    * @return object 
+    */
+    public function viewAction()
+    {
+        $root = $this->getLayout('view_store');
+        return $root;
+    }
 
 }

@@ -588,5 +588,72 @@ dl.options dd{float:left;margin-left:4px}
 .sales-products .products-content .transaction-list-sales{border-bottom:1px solid #EDEDED}
 .sales-products .products-content .transaction-list-sales .money{color:#fd6a30}
 
+.retailer-stor{}
+.retailer-store .banner{margin: 5px auto 20px; text-align: center;}
+.retailer-store .hot-product{margin-bottom: 20px;}
+.retailer-store .hot-product .title{padding: 0 0 5px 0; border-bottom: 1px solid #FD9030; margin-bottom: 10px;}
+.retailer-store .hot-product .title h2{color: #333; font-size: 14px; font-weight: bold;}
+.retailer-store .hot-product .content{border: 1px solid #ccc; overflow: hidden; padding: 20px; text-align: center;}
+.retailer-store .hot-product .content ul{}
+.retailer-store .hot-product .content ul li{padding: 10px 20px;}
+.retailer-store .hot-product .content ul li .pic{width: 100%;}
+.retailer-store .hot-product .content ul li .price{text-align: left;}
+.retailer-store .hot-product .content ul li .price .actural{color: #FD9030; font-size: 15px; font-weight: bold;}
+.retailer-store .hot-product .content ul li .price .discount{text-decoration: line-through; color: #757474;}
+.retailer-store .hot-product .content ul li h3.product-name{text-align: left; color: #757474; font-size: 14px; font-weight: bold;}
+.retailer-store .hot-product .content ul li .paid-count{color: #757474; text-align: left;}
+.retailer-store .search{margin-bottom: 20px; border: 1px solid#ccc; padding: 15px; background: #f5f6f9;}
+.retailer-store .retailer-prompt .title{padding: 0 0 5px 0; border-bottom: 1px solid #FD9030; margin-bottom: 10px;}
+.retailer-store .retailer-prompt .title h2{color: #333; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
+.retailer-store .retailer-prompt .title span{color: #333; font-size: 13px; font-weight: bold; float: right; display: inline-block; width: auto;}
+.retailer-store .retailer-prompt .content{overflow: hidden; padding: 0px 10px 20px; text-align: center;}
+.retailer-store .retailer-prompt .content .prompt-small{padding: 5px;}
+.retailer-store .retailer-prompt .content .prompt-small img{width: 100%;}
+.retailer-store .retailer-prompt .content .prompt-big{padding: 5px;}
+.retailer-store .retailer-prompt .content .prompt-big .pic{width: 80%;}
+.retailer-store .retailer-prompt .content .prompt-big .price{text-align: left; width: 80%; margin: 0 auto;}
+.retailer-store .retailer-prompt .content .prompt-big .price .actural{color: #FD9030; font-size: 15px; font-weight: bold;}
+.retailer-store .retailer-prompt .content .prompt-big .price .discount{text-decoration: line-through; color: #757474;}
+.retailer-store .retailer-prompt .content .prompt-big h3.product-name{text-align: left; color: #757474; font-size: 14px; font-weight: bold; width: 80%; margin: 0 auto;}
+.retailer-store .retailer-prompt .content .prompt-big .paid-count{color: #757474; text-align: left; width: 80%; margin: 0 auto;}
+.retailer-store .local-search{margin-bottom: 20px;}
+.retailer-store .local-search .title{padding: 5px 0px 10px 5px; background: #FD9030;}
+.retailer-store .local-search .title h2{color: #fff; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
+.retailer-store .local-search .search-table{padding: 10px; border: 1px solid #ccc;}
+.retailer-store .local-search .search-table td {padding: 2px 3px;}
+.retailer-store .local-search .search-table td.label{color: #666;}
+.retailer-store .local-search .search-table input{ border: 1px solid #eee;}
+.retailer-store .local-search .search-table input.price-from{width: 40%;}
+.retailer-store .local-search .search-table input.price-to{width: 40%;}
+.retailer-store .category{margin-bottom: 20px;}
+.retailer-store .category .title{padding: 5px 0px 10px 5px; background: #FD9030;}
+.retailer-store .category .title h2{color: #fff; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
+.retailer-store .category .content{padding: 10px; border: 1px solid #ccc;}
+.retailer-store .category .content .category_list{}
+.retailer-store .category .content .category_list li{padding: 2px 0;}
+.retailer-store .statics{margin-bottom: 20px;}
+.retailer-store .statics .content{border: 1px solid #ccc; overflow: hidden; padding: 10px;  }
+.retailer-store .statics .title{padding: 5px 0px 10px 5px; background: #FD9030;}
+.retailer-store .statics .title h2{color: #fff; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
+.retailer-store .statics .content ul{}
+.retailer-store .statics .content ul li .pic{width: 100%;}
+.retailer-store .statics .content ul li .price{text-align: left;}
+.retailer-store .statics .content ul li .price .actural{color: #FD9030; font-size: 15px; font-weight: bold;}
+.retailer-store .statics .content ul li .price .discount{text-decoration: line-through; color: #757474;}
+.retailer-store .statics .content ul li h3.product-name{text-align: left; color: #757474; font-size: 14px; font-weight: bold;}
+.retailer-store .statics .content ul li .paid-count{color: #757474; text-align: left;}
+.retailer-store .statics .content ul li .paid-count .sales-num{color:#FD9030; font-size: 15px;}
+.retailer-store .products{margin-bottom: 20px; padding: 0 10px;}
+.retailer-store .products .title{padding: 5px 0px 10px 5px; background: #FD9030;}
+.retailer-store .products .title h2{color: #fff; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
+.retailer-store .products .content{overflow: hidden; padding: 10px; text-align: center; }
+.retailer-store .products .content ul{}
+.retailer-store .products .content ul li{padding: 10px 20px;}
+.retailer-store .products .content ul li .pic{width: 100%;}
+.retailer-store .products .content ul li .price{text-align: left;}
+.retailer-store .products .content ul li .price .actural{color: #FD9030; font-size: 15px; font-weight: bold; width: 50%; display: inline-block;}
+.retailer-store .products .content ul li .price .paid-count{color: #757474; text-align: right; width: 50%; display: inline-block;}
+.retailer-store .products .content ul li h3.product-name{text-align: left; color: #757474; font-size: 14px; font-weight: bold;}
+
 /* end */
 

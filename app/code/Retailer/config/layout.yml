@@ -537,3 +537,17 @@ retailer_goods_product_edit_1:
     update: retailer_goods_product_edit
 retailer_goods_product_edit_2:
     update: retailer_goods_product_edit
+view_store:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store

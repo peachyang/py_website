@@ -72,6 +72,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
 .customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
+.main-container .breadcrumb-m .breadcrumb-right{text-align:right}
 .wrapperhovertree {text-align:right;min-height: 100%;height: auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;background-size: 100% 100%;}
 .wrapperhovertree {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box}

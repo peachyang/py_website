@@ -192,57 +192,39 @@
                                     <div class="view"> i'm html code, change me </div>
                                 </div>
                                 
-                                <div class="box box-element" data-type="function1">
+                                <div class="box box-element" data-type="long_search" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
                                     <div class="preview"> <i class="fa"> + </i>
-                                        <div class="element-desc">function</div>
+                                        <div class="element-desc">长搜索条</div>
                                     </div>
-                                    <div class="view">             <div class="search">
-                <label class="search-label">本店搜索</label>
-                <input class="keyword" type="text" name="keyword" value="" />&nbsp;&nbsp;
-                <input class="price-from" type="text" name="price-from" value="" />
-                &nbsp;-&nbsp;
-                <input class="price-to" type="text" name="price-to" value="" />
-                <button class="search-button">搜索</button>
-            </div> </div>
+                                    <div class="view"></div>
                                 </div>
                                 
-                                 <div class="box box-element" data-type="function2">
+                                 <div class="box box-element" data-type="short_search" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
                                     <div class="preview"> <i class="fa"> + </i>
-                                        <div class="element-desc">function2</div>
+                                        <div class="element-desc">短搜索条</div>
                                     </div>
                                     <div class="view">
-                                               <div class="local-search">
-                <div class="title"><h2>本店搜索</h2></div>
-                <div class="search-table">
-                    <table>
-                        <tr>
-                            <td class="label">关键字:</td>
-                            <td><input class="keyword" type="text" name="key" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td class="label">价格:</td>
-                            <td><input class="price-from" type="text" name="pri-from" value="" />&nbsp;&nbsp;<input class="price-to" type="text" name="pri-to" value="" />
-                </td>
-                        </tr>
-                        <tr>
-                            <td class="label">&nbsp;</td>
-                            <td><button class="search-button">搜索</button></td>
-                        </tr>
-                        <tr>
-                            <td class="label">热门</td>
-                            <td><a href="">雄鹰能量棒</a>&nbsp;<a href="">吸入式咖啡</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </div> 	
-            					
-            					</div>
+                    
+            				        </div>
                                 </div>
                                 
+                  <div class="box box-element" data-type="function3">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">产品推荐</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            						</div>           
+                           
+                           
+                           
                             </li>
                         </ul>
                     </div>
@@ -741,3 +723,41 @@
             </div>
 
 </div>
+
+<script id="long_search" type="text/html">
+<div class="search">
+                <label class="search-label">本店搜索</label>
+                <input class="keyword" type="text" name="keyword" value="" />&nbsp;&nbsp;
+                <input class="price-from" type="text" name="price-from" value="" />
+                &nbsp;-&nbsp;
+                <input class="price-to" type="text" name="price-to" value="" />
+                <button class="search-button">搜索</button>
+</div> 
+</script>
+
+<script id="short_search" type="text/html">
+<div class="local-search">
+                <div class="title"><h2>本店搜索</h2></div>
+                <div class="search-table">
+                    <table>
+                        <tr>
+                            <td class="label">关键字:</td>
+                            <td><input class="keyword" type="text" name="key" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td class="label">价格:</td>
+                            <td><input class="price-from" type="text" name="pri-from" value="" />&nbsp;&nbsp;<input class="price-to" type="text" name="pri-to" value="" />
+                </td>
+                        </tr>
+                        <tr>
+                            <td class="label">&nbsp;</td>
+                            <td><button class="search-button">搜索</button></td>
+                        </tr>
+                        <tr>
+                            <td class="label">热门</td>
+                            <td><a href="">雄鹰能量棒</a>&nbsp;<a href="">吸入式咖啡</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+</script> 	

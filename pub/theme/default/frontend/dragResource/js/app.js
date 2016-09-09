@@ -90,11 +90,26 @@ function _init() {
         connectToSortable: ".column",
         helper: "clone",
         handle: ".preview",
+        start:function (e,t){
+        	var obj = t.helper;
+        	var dataType = $(obj).attr('data-type');
+        	var showType = $(obj).attr('show-type');
+        	if(showType=="1")
+        	{
+        		var htmls = template(dataType);
+        		$(obj).find(".view").html(htmls);
+        		$(".box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+ 			}
+        	
+        },
         drag: function (e, t) {
             t.helper.width(400);
+            
         },
         stop: function (e, t) {
-			console.log(t.helper);
+			//console.log(t.helper);
+			if($(".htmlpage .lyrow").length<=0)
+			alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
         }
     });
 

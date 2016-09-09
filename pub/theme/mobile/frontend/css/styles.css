@@ -146,7 +146,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-detail .affix{position:fixed;z-index:1001;top:0;background:#8f8f8f;color:#c8c6c6}
 .product-detail .fa{line-height:50px;color:#a7a7a7}
 .product-info .modal-body{width:100%;overflow:hidden}
-.container .products-grid .product-list{text-align:center;border:1px solid #d9d6d6;background:#ffffff;width: 48%;height: 260px;margin: 0 1% 20px}
+.container .products-grid .product-list{text-align:center;border:1px solid #d9d6d6;background:#ffffff;width: 48%;margin: 0 1% 20px}
 .container .products-grid .product-list .product-image{display:block;max-width:100%;height:auto}
 .products-grid .item .product-name{font-size:1em;border-bottom:1px solid #d7d7d7;height:30px;line-height: 30px;overflow-y:hidden;padding:0 1%}
 .products-grid .item .price-box{color:#ff8a00;font-size:16px;text-align:left;font-weight:bold;line-height:30px}

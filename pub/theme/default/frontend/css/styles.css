@@ -19,6 +19,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .bttrlazyloading-wrapper{background-repeat:no-repeat;background-position:center;display:block;background-color:transparent!important}
 .bttrlazyloading-clone{margin:0 auto;padding:0;border:0;display:block;height:auto;max-width:100%}
 .bttrlazyloading-loaded{background-image:none!important}
+[type=file].form-control.preview+.preview{display:none;position:absolute;bottom:100%;left:0}
+[type=file].form-control.preview:hover+.preview{display:block}
 .header{background:#007dc6;box-shadow:0 0 7px #ccc;margin-bottom:7px}
 .header .logo{padding:30px 0 0}
 .header .quick-search{margin:35px 0 0;border:2px solid #fdbb30}

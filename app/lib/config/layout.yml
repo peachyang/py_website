@@ -247,3 +247,6 @@ decorationStore:
                     -
                         method: addScript
                         params: frontend/dragResource/js/app.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/layer/layer.js

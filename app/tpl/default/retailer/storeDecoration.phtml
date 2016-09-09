@@ -2,6 +2,8 @@
             .lyrow {
                 margin-bottom: 10px;
             }
+            .col-md-41{padding:0px}
+            .col-md-61{padding:0px}
         </style>
         <script type="text/javascript">
             var path = '';
@@ -11,15 +13,15 @@
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Drag and Drop Sample</a>
+                <a class="navbar-brand" href="/">装 修 店 铺</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav" id="menu-htmleditor">
                     <li>
                         <div class="btn-group" data-toggle="buttons-radio">
-                            <button type="button" id="edit" class="active btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Edit</button>
-                            <button type="button" class="btn btn-primary" id="sourcepreview"><i class="glyphicon-eye-open glyphicon"></i> Preview</button>
-                            <button type="button" id="save" class="btn btn-warning float-right"><i class="fa fa-save"></i>&nbsp;save</button>
+                            <button type="button" id="edit" class="active btn btn-primary"><i class="glyphicon glyphicon-edit "></i> 编辑</button>
+                            <button type="button" class="btn btn-primary" id="sourcepreview"><i class="glyphicon-eye-open glyphicon"></i> 预览</button>
+                            <button type="button" id="save" class="btn btn-warning float-right"><i class="fa fa-save"></i>&nbsp;保存</button>
                         </div> &nbsp;
                         <div class="btn-group" data-toggle="buttons-radio" id='add' style='display: none;'>
                             <button type="button" class="active btn btn-default" id="pc"><i class="fa fa-laptop"></i> Desktop</button>
@@ -35,7 +37,7 @@
                 <div class="">
                     <div class="sidebar-nav">
                         <ul class="nav nav-list ">
-                            <li class="nav-header"> <i class="fa fa fa-th"> </i>&nbsp; Grid System </li>
+                            <li class="nav-header"> <i class="fa fa fa-th"> </i>&nbsp; 表格元素 </li>
                             <li class="rows" id="estRows">
                                 <div class="lyrow">
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
@@ -140,7 +142,7 @@
                         </ul> <br>
                         
                         <ul class="nav nav-list">
-                            <li class="nav-header"><i class="fa fa-html5"></i>&nbsp; Html Elements </li>
+                            <li class="nav-header"><i class="fa fa-html5"></i>&nbsp; 功能模块 </li>
                             <li class="boxes" id="elmBase">
                                 <div class="box box-element" data-type="header">
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
@@ -212,24 +214,70 @@
             				        </div>
                                 </div>
                                 
-                  <div class="box box-element" data-type="function3">
+                  				<div class="box box-element" data-type="product_class" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
                                     <div class="preview"> <i class="fa"> + </i>
-                                        <div class="element-desc">产品推荐</div>
+                                        <div class="element-desc">商品分类</div>
                                     </div>
                                     <div class="view">
                                     	   
             						</div>
-            						</div>           
-                           
+            					</div>
+            					
+            					<div class="box box-element" data-type="sales_amount" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">销 售 量</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="hot_product" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">热卖商品</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div> 
+            					
+            					<div class="box box-element" data-type="store_recommend" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">店长推荐</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="product_recommend" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">商品推荐</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>               
+                          
                            
                            
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="htmlpage" style="width:1060px;margin:0px auto" > </div>
+                <div class="htmlpage" style="width:1100px;margin:0px auto" > 
+                                
+                </div>
             </div>
             
             <div class="modal fade" id="download" tabindex="-1" role="dialog" aria-labelledby="download" aria-hidden="true">
@@ -760,4 +808,209 @@
                     </table>
                 </div>
             </div>
-</script> 	
+</script>
+
+<script id="product_class" type="text/html">
+            <div class="category">
+                <div class="title"><h2>商品分类</h2></div>
+                <div class="content">
+                    <ul class="category_list">
+                        <li><a href="">查看所有分类&gt;&gt;</a></li>
+                        <li><a href="">按销量</a>&nbsp;<a href="">按价格</a>&nbsp;<a href="">按评价</a>&nbsp;<a href="">按新品</a></li>
+                        <li class="dropdown">
+                            <span>薄荷糖口香糖补充剂等</span>
+                            <ul>
+                                <li></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <span>益智开脑洞</span>
+                        </li>
+                        <li class="dropdown">
+                            <span>睡眠放松</span>
+                        </li>
+                        <li class="dropdown">
+                            <span>改善心情</span>
+                        </li>
+                        <li class="dropdown">
+                            <span>能量补充</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+</script>
+
+<script id="sales_amount" type="text/html">
+            <div class="statics">
+                <div class="title"><h2>销售量</h2></div>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <div class="col-md-4">
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="pad-5">
+                                        <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                        <p class="price"><span class="actural">￥119.00 </span></p>
+                                        <p class="paid-count">热销<span class="sales-num">900</span>笔</p>
+                                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+</script>
+
+<script id="hot_product" type="text/html">
+            <div class="hot-product">
+                <div class="title"><h2>热卖商品</h2></div>
+                <div class="content">
+                    <ul>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <p class="paid-count">1999人付款</p>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <p class="paid-count">1999人付款</p>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <p class="paid-count">1999人付款</p>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <p class="paid-count">1999人付款</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+</script> 
+
+<script id="store_recommend" type="text/html">
+             <div class="retailer-prompt">
+                <div class="title"><h2>店长推荐</h2><span class="more">更多&gt;</span></div>
+                <div class="content">
+                <div class="col-md-4">
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                            <div class="prompt-big">
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <p class="paid-count">1999人付款</p>
+                            </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                    <div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+</script>
+
+<script id="product_recommend" type="text/html">
+            <div class="products">
+                <div class="title"><h2>商品推荐</h2></div>
+                <div class="content">
+                    <ul>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                            </div>
+                        </li>
+                        <li class="col-md-3">
+                            <div>
+                                <a href=""><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></a>
+                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+</script>
+
+<script>
+	function saveData(){
+    	var htmls = $.trim($(".htmlpage").html());
+    	if(htmls=="")
+    	{   layer.msg('亲, 请装修您的店铺吧, 加个表格试试先', {shade: [0.3,'#fff'],time: 2000});
+    		return;
+    	}
+    	
+    	$.ajax({
+                url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
+                type: "post",
+                dataType: 'json',
+                data:{},
+                beforeSend:function(){
+                	layer.msg(' 加载中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
+                },
+                success: function (data) {
+					alert(data[0]);
+					layer.closeAll();
+                },
+                error: function (msg) {
+                  
+                }
+
+        })
+    	
+    }
+</script>

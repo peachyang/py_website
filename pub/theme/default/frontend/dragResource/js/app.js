@@ -94,11 +94,13 @@ function _init() {
         	var obj = t.helper;
         	var dataType = $(obj).attr('data-type');
         	var showType = $(obj).attr('show-type');
+        	//console.log($("#hot_product").html());
         	if(showType=="1")
         	{
         		var htmls = template(dataType);
-        		$(obj).find(".view").html(htmls);
+        		
         		$(".box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+        		$(obj).find(".view").html('模块');
  			}
         	
         },
@@ -172,8 +174,11 @@ function _init() {
     });
 
     $("#save").click(function (e) {
-        downloadLayoutSrc();
+        //downloadLayoutSrc();
+        saveData();
     });
+    
+
 
 
     $("#clear").click(function (e) {
@@ -210,8 +215,8 @@ function _init() {
 
     $("#sourcepreview").click(function () {
     	$(".edit.container").removeClass('edit')
-        $('#pc').addClass('active');
-        $('#add').show();
+        //$('#pc').addClass('active');
+        //$('#add').show();
         $("body").removeClass("edit");
         $("body").addClass("devpreview sourcepreview");
         removeMenuClasses();
@@ -496,7 +501,7 @@ function removeElm() {
         var  b = $(this).parent().css('border');
         $(this).parent().css('border', '2px solid red');
 
-        if (confirm("Sei sicuro di eliminare la parte selezionata ?")) {
+        if (confirm("确定要删除吗?")) {
             e.preventDefault();
             $(this).parent().remove();
 

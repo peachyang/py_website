@@ -174,5 +174,5 @@
             });
         });
     });
-    $('.collapse').collapse()
+    $('.collapse').collapse();
 }));

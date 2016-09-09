@@ -56,7 +56,6 @@ class GoodsController extends AuthActionController
             $root->getChild('head')->setTitle('Add New Product / Product Management');
             $root->getChild('content')->getChild('main')->setVariable('model', $model);
         }
-        //$root->setVariable('model', $model);
         return $root;
     }
     
@@ -109,6 +108,71 @@ class GoodsController extends AuthActionController
         );
         $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('order', $order);
         return $root;
+    }
+    
+    /** 
+    * saveAction  
+    * Save new product
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function saveAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $attributes = new Attribute;
+            $attributes->withSet()->where([
+                        'is_required' => 1,
+                        'eav_attribute_set.id' => $data['attribute_set_id'],
+                    ])->columns(['code'])
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id AND eav_entity_type.id=eav_attribute_set.type_id', [], 'right')
+                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+            $required = ['store_id', 'attribute_set_id'];
+            $attributes->walk(function ($attribute) use (&$required) {
+                $required[] = $attribute['code'];
+            });
+            $result = $this->validateForm($data, $required);
+            if ($result['error'] === 0) {
+                $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
+                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                    $model->setId(null);
+                }
+                if (!isset($data['uri_key']) || !$data['uri_key']) {
+                    $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
+                }
+                $type = new Type;
+                $type->load(Model::ENTITY_TYPE, 'code');
+                $model->setData([
+                    'type_id' => $type->getId()
+                ]);
+                $user = (new Segment('customer'))->get('customer');
+                if ($user->getStore()) {
+                    if ($model->getId() && $model->offsetGet('store_id') == $user->getStore()->getId()) {
+                        $model->setData('store_id', $user->getStore()->getId());
+                    }
+                }
+                if (empty($data['parent_id'])) {
+                    $model->setData('parent_id', null);
+                } else if (empty($data['uri_key'])) {
+                    $model->setData('uri_key', trim(preg_replace('/\s+/', '-', $data['name'])), '-');
+                } else {
+                    $model->setData('uri_key', rawurlencode(trim(preg_replace('/\s+/', '-', $data['uri_key']), '-')));
+                }
+                try {
+                    $model->save();
+                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
+                    $result['error'] = 1;
+                }
+                $this->getContainer()->get('indexer')->reindex('catalog_url');
+                $this->getContainer()->get('indexer')->reindex('catalog_search');
+            }
+        }
+        return $this->response($result, 'retailer/goods/release/');
     }
     
 

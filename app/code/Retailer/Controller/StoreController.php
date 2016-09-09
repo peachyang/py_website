@@ -102,6 +102,11 @@ class StoreController extends AuthActionController
         return $root;
     }
 	
+	public function addTemplateAction(){
+		$result = ['a','b'];	
+		echo json_encode($result);
+	}
+	
 	
 	
 

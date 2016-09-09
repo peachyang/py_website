@@ -15,6 +15,10 @@ frontend:
 retailer_account:
     update: frontend
     root:
+        action:
+            -
+                method: addBodyClass
+                params: retailer-account
         children:
             content:
                 type: Seahinet\Lib\ViewModel\Template
@@ -116,7 +120,7 @@ retailer_apply:
         children:
             content:
                 children:
-                    form:
+                    main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/apply/form
 retailer_processing:

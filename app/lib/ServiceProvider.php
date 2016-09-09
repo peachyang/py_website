@@ -103,17 +103,19 @@ class ServiceProvider implements ServiceProviderInterface
         }
         if (!$container->has('geoip')) {
             $container['geoip'] = function($container) {
-                $config = $container->get('config');
-                if (isset($config['adapter']['geoip'])) {
-                    $db = BP . 'var/geoip/' . $config['adapter']['geoip'];
-                    if (file_exists($db)) {
-                        return new \MaxMind\Db\Reader($db);
+                if (is_dir(BP . 'var/geoip/')) {
+                    $config = $container->get('config');
+                    if (isset($config['adapter']['geoip'])) {
+                        $db = BP . 'var/geoip/' . $config['adapter']['geoip'];
+                        if (file_exists($db)) {
+                            return new \MaxMind\Db\Reader($db);
+                        }
                     }
-                }
-                $finder = new \Symfony\Component\Finder\Finder;
-                $finder->files()->in(BP . 'var/geoip/')->name('*.mmdb');
-                foreach ($finder as $file) {
-                    return new \MaxMind\Db\Reader($file->getRealPath());
+                    $finder = new \Symfony\Component\Finder\Finder;
+                    $finder->files()->in(BP . 'var/geoip/')->name('*.mmdb');
+                    foreach ($finder as $file) {
+                        return new \MaxMind\Db\Reader($file->getRealPath());
+                    }
                 }
                 return null;
             };

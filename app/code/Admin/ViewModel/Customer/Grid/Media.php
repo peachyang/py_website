@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Customer\Media;
+namespace Seahinet\Admin\ViewModel\Customer\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Customer\Model\Collection\Media as Collection;

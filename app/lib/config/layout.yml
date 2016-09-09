@@ -243,4 +243,7 @@ decorationStore:
                         params: frontend/dragResource/js/bootstrap-colorselector.js
                     -
                         method: addScript
+                        params: frontend/dragResource/js/template.js
+                    -
+                        method: addScript
                         params: frontend/dragResource/js/app.js

@@ -6,6 +6,7 @@ use Seahinet\Customer\Model\Collection\Group;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
+use Seahinet\Lib\Model\Store;
 use Zend\Db\TableGateway\TableGateway;
 
 class Customer extends Entity
@@ -94,6 +95,18 @@ class Customer extends Entity
     public function getBalance()
     {
         return 0;
+    }
+    
+    public function getStore()
+    {
+        if (is_null($this->store) && $this->offsetGet('store_id')) {
+            $store = new Store;
+            $store->load($this->offsetGet('store_id'));
+            if ($store->getId()) {
+                $this->store = $store;
+            }
+        }
+        return $this->store;
     }
 
 }

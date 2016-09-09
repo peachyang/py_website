@@ -1,37 +1,39 @@
 <?php
 $root = $this->getRootCategory();
 ?>
-<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-    <ul class="list-group">
-        <?php
-        foreach ($root->getChildrenCategories(1) as $category):
-            $children = $category->getChildrenCategories(1);
-            $count = $children->count();
-            ?>
-            <li<?php if ($count): ?> class="list-group-item"<?php endif ?>>
-                <a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a>
-                <?php if ($count): ?>
-                    <dl class="list-group-item">
-                        <?php
-                        foreach ($children as $child):
-                            $grandChildren = $child->getChildrenCategories(1);
+<div class="slide-mask"></div>
+<aside class="slide-wrapper">
+    <div>
+        <ul>
+            <?php
+            foreach ($root->getChildrenCategories(1) as $category):
+                $children = $category->getChildrenCategories(1);
+                $count = $children->count();
+                ?>
+                <li><a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a>
+                    <?php if ($count): ?>
+                        <dl>
+                            <?php
+                            foreach ($children as $child):
+                                $grandChildren = $child->getChildrenCategories(1);
+                                ?>
+                                <dt><a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a></dt>
+                                <?php if ($grandChildren->count()): ?>
+                                    <dd>
+                                        <ul>
+                                            <?php foreach ($grandChildren as $grandChild): ?>
+                                                <li><a href="<?php echo $grandChild->getUrl() ?>"><?php echo $grandChild['name'] ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </dd>
+                                    <?php
+                                endif;
+                            endforeach;
                             ?>
-                            <dt><a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a></dt>
-                            <?php if ($grandChildren->count()): ?>
-                                <dd>
-                                    <ul>
-                                        <?php foreach ($grandChildren as $grandChild): ?>
-                                            <li><a href="<?php echo $grandChild->getUrl() ?>"><?php echo $grandChild['name'] ?></a></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </dd>
-                                <?php
-                            endif;
-                        endforeach;
-                        ?>
-                    </dl>
-                <?php endif; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+                        </dl>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</aside>

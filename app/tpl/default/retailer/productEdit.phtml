@@ -9,7 +9,7 @@ if ($this->hasTitle()):
             <form action="<?php echo $this->getSaveUrl() ?>" method="post"<?php if ($this->hasUploadingFile()): ?> enctype="multipart/form-data"<?php endif ?>>
                 <?php echo $this->getChild('tabs') ? $this->getChild('tabs')->setVariable('model', $this->getVariable('model')) : '' ?>
                 <div class="page-content table tab-pane fade active in" id="main-tab">
-                    <?php
+                <?php
                 endif;
                 foreach ($elements as $key => $item) {
                     echo $this->getInputBox($key, $item);

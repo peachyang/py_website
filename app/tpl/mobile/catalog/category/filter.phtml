@@ -2,13 +2,13 @@
 $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
 ?>
-<div class="breadcrumb-m hidden-lg">
-    <div class="col-xs-1 col-sm-1 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <a class="fa fa-bars fa-2x breadcrumb-right collapsed" data-toggle="collapse" data-parent="#accordion" href="#headingOne" aria-expanded="false" aria-controls="headingOne"></a>
+<div class="breadcrumb-m">
+    <div class="col-xs-1 col-sm-1 wrapperhovertree">
+        <div class="container">
+        <a href="javascript:void(0);" class="fa fa-bars fa-2x breadcrumb-right slide-menu"></a>
         </div>
-        <?php echo $this->getChild('category'); ?>
     </div>
+    <?php echo $this->getChild('category'); ?>
     <div class="content-list col-xs-10 col-sm-10">
         <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>
     </div>

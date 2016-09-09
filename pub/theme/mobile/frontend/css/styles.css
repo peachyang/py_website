@@ -72,20 +72,19 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
 .customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
-.main-container .breadcrumb-m .panel-group{margin-bottom:0}
-.main-container .breadcrumb-m .panel-heading a{display:block;width: 100%;overflow:hidden}
-.main-container .breadcrumb-m .panel-heading .breadcrumb-right{text-align:right}
-.main-container .breadcrumb-m .panel-heading{padding:0}
-.main-container .breadcrumb-m .collapse.in{position:relative;top:0;z-index: 1001;max-width:150px!important;width:150px;overflow:hidden;text-align: left;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-}
-.main-container .breadcrumb-m .collapse.in .list-group{margin-bottom:0}
-.main-container .breadcrumb-m .collapse.in .list-group li{padding:5px}
+.main-container .breadcrumb-m .breadcrumb-right{text-align:right}
+.wrapperhovertree {text-align:right;min-height: 100%;height: auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;background-size: 100% 100%;}
+.wrapperhovertree {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box}
+.wrapperhovertree .container{position: relative;z-index: 1000;height:100%;width: 100%}
+div.slide-mask {position: absolute;z-index: 1000;left: 0;top: 0;width: 30%;height: 100%;-webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out;display: none;}
+aside.slide-wrapper {position: absolute;z-index: 10001;left: 0;top: 50px;width: 30%;-webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);-ms-transform: translate3d(-100%, 0, 0); -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0); -webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out}
+aside.slide-wrapper > div {background-color: #ffffff;min-height: 100%}
+aside.slide-wrapper.moved {-webkit-transform: translate3d(0, 0, 0);-moz-transform: translate3d(0, 0, 0);-ms-transform: translate3d(0, 0, 0);-o-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0)}
+aside.slide-wrapper li > a {padding: 10px 10px;border-bottom: 1px solid #e1e1e1;display: block;color: #333}
+aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .main-container .breadcrumb-m .fa{color:#a7a7a7;line-height:50px}
 .main-container .breadcrumb-m .content-list{line-height:50px;text-align:center}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
@@ -146,7 +145,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .product-detail .affix{position:fixed;z-index:1001;top:0;background:#8f8f8f;color:#c8c6c6}
 .product-detail .fa{line-height:50px;color:#a7a7a7}
 .product-info .modal-body{width:100%;overflow:hidden}
-.container .products-grid .product-list{text-align:center;border:1px solid #d9d6d6;background:#ffffff;width: 48%;height: 260px;margin: 0 1% 20px}
+.container .products-grid .product-list{text-align:center;border:1px solid #d9d6d6;background:#ffffff;width: 48%;margin: 0 1% 20px}
 .container .products-grid .product-list .product-image{display:block;max-width:100%;height:auto}
 .products-grid .item .product-name{font-size:1em;border-bottom:1px solid #d7d7d7;height:30px;line-height: 30px;overflow-y:hidden;padding:0 1%}
 .products-grid .item .price-box{color:#ff8a00;font-size:16px;text-align:left;font-weight:bold;line-height:30px}

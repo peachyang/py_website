@@ -559,10 +559,14 @@ function cleanRow(row) {
 function downloadLayoutSrc() {
 	if($("#edit").hasClass("active"))
 	{
-	$('.htmlpage .column').css('padding','11px');
-	var htmls = $(".htmlpage").html();
-	$('.htmlpage .column').css('padding','39px 19px 24px');
+		$('.htmlpage .column').css('padding','11px');
+		var htmls = $(".htmlpage").html();
+		$('.htmlpage .column').css('padding','39px 19px 24px');
 	}
+	else{
+		var htmls = $(".htmlpage").html();
+	}
+	
     $("#download-layout").children().html(htmls);
 
     $("#download-layout").children('.container').each(function (i) {

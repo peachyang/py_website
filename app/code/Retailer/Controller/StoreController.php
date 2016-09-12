@@ -91,6 +91,17 @@ class StoreController extends AuthActionController
         return $root;
     }
 	
+	/**
+	 * temporary view
+	 * 
+	 */
+	
+	public function view1Action()
+    {
+        $root = $this->getLayout('view_store1');
+        return $root;
+    }
+	
 	 /** 
     * decorationAction  
     * decorate store page
@@ -111,7 +122,7 @@ class StoreController extends AuthActionController
 		$model = new StoreTemplate();
         $model->setData($data);	
 		$model->save();
-		$result = ['status'=>true];	
+		$result = ['status'=>true,'id'=>$model->getID()];	
 		echo json_encode($result);
 	}
 	

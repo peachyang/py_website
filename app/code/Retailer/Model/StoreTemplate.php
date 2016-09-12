@@ -9,7 +9,7 @@ class StoreTemplate extends AbstractModel
 
     protected function construct()
     {
-        $this->init('decoration_store_template','id',['id','template_name','code_model','src_model','status','store_id']);
+        $this->init('store_decoration_template','id',['id','template_name','code_model','src_model','status','store_id']);
     }
 
 }

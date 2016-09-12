@@ -10,7 +10,7 @@ use Zend\Db\Sql\Expression;
 class StoreDecoration extends Template
 {
     /**  
-    * Get customers
+    * Get store template view
     * 
     * @access public 
     * @return object 
@@ -21,6 +21,9 @@ class StoreDecoration extends Template
 		$id = $this->getQuery('id');
 		$template = new StoreTemplate();
 		$templateView = $template->load($id);
+		$segment = new Segment('customer');
+		if( $templateView['store_id'] != $segment->get('customer')['store_id'])
+		$templateView = [];
 		return $templateView;				 		      
     }
 

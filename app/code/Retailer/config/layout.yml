@@ -563,11 +563,31 @@ view_store:
                     -
                         method: setTitle
                         params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\StoreDecoration
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/store
+view_store1:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/store1
 decoration_store:
     update: decorationStore
     root:

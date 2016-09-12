@@ -613,7 +613,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .hot-product .content ul li .price .discount{text-decoration: line-through; color: #757474;}
 .retailer-store .hot-product .content ul li h3.product-name{text-align: left; color: #757474; font-size: 14px; font-weight: bold;}
 .retailer-store .hot-product .content ul li .paid-count{color: #757474; text-align: left;}
-.retailer-store .search{margin-bottom: 20px; border: 1px solid#ccc; padding: 15px; background: #f5f6f9;}
+.retailer-store .search{margin-bottom: 10px; border: 1px solid#ccc; padding: 15px; background: #f5f6f9;}
 .retailer-store .retailer-prompt .title{padding: 0 0 5px 0; border-bottom: 1px solid #FD9030; margin-bottom: 10px;}
 .retailer-store .retailer-prompt .title h2{color: #333; font-size: 14px; font-weight: bold; display: inline-block; padding-right: 50px;}
 .retailer-store .retailer-prompt .title span{color: #333; font-size: 13px; font-weight: bold; float: right; display: inline-block; width: auto;}

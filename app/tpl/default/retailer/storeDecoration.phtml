@@ -773,6 +773,8 @@
 
 </div>
 
+</div>
+
 <script id="long_search" type="text/html">
 <div class="search">
                 <label class="search-label">本店搜索</label>
@@ -995,7 +997,8 @@
     		return;
     	}
     	var code_model = htmls;
-    	var src_model = style_html($("#download-layout").html()));
+    	$("#download-layout .container .column").css("padding","7px");
+    	var src_model = style_html($("#download-layout .container").html());
     	
     	layer.prompt({
   			title: '请输入模版名称',
@@ -1020,11 +1023,12 @@
 					layer.closeAll();
 					$(".store_template_name").html(' - ' + template_name);
 					layer.confirm('您已经保存了新的店铺模版,接下来您要', {
-  						btn: ['继续店铺装修','查看新装修的店铺'] 
+  						btn: ['继续店铺装修','查看当前装修的店铺'] 
 						}, function(){
 							layer.closeAll();
 						}, function(){
   							layer.closeAll();
+  							window.open('<?php echo $this->getBaseUrl('/retailer/store/view') ?>?id='+data.id);
 					});
                 },
                 error: function (msg) {

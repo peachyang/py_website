@@ -27,9 +27,9 @@ $params = $this->getVariable('pdf')->serializeTCPDFtagParameters(array($invoice[
 <tcpdf method="write1DBarcode" params="<?php echo $params ?>" />
 <table class="first" cellpadding="4" cellspacing="0">
  <tr class="background">
-  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Credit Memo Infomation', [], 'sales') ?></b></td>
+  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Credit Memo Information', [], 'sales') ?></b></td>
   <td class="spacing" rowspan="5" align="center"></td>
-  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Customer Infomation', [], 'sales') ?></b></td>
+  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Customer Information', [], 'sales') ?></b></td>
  </tr>
  <tr>
   <td class="title" align="center"><b><?php echo $this->translate('ID') ?></b></td><td class="content"><?php echo $invoice['increment_id'] ?></td>

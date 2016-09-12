@@ -26,9 +26,9 @@ $params = $this->getVariable('pdf')->serializeTCPDFtagParameters(array($order['i
 <tcpdf method="write1DBarcode" params="<?php echo $params ?>" />
 <table class="first" cellpadding="4" cellspacing="0">
  <tr class="background">
-  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Order Infomation', [], 'sales') ?></b></td>
+  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Order Information', [], 'sales') ?></b></td>
   <td class="spacing" rowspan="12" align="center"></td>
-  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Customer Infomation', [], 'sales') ?></b></td>
+  <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Customer Information', [], 'sales') ?></b></td>
  </tr>
  <tr>
   <td class="title" align="center"><b><?php echo $this->translate('ID') ?></b></td><td class="content"><?php echo $order['increment_id'] ?></td>

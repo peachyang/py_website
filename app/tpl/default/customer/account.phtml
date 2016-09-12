@@ -3,6 +3,12 @@
         <?php echo $this->getChild('nav') ?>
     </div>
     <main class="col-main col-xs-9 col-sm-9 col-md-10">
-        <?php echo $this->getChild('messages'), $this->getChild('main') ?>
+        <?php if ($title = $this->getVariable('title')): ?>
+            <h2 class="page-title"><?php echo $this->translate($title) ?></h2>
+        <?php endif ?>
+        <?php echo $this->getChild('messages') ?>
+        <div class="page-content">
+            <?php echo $this->getChild('main') ?>
+        </div>
     </main>
 </div>

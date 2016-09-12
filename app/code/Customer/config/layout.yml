@@ -86,8 +86,14 @@ customer_account_edit:
                 action:
                     -
                         method: setTitle
-                        params: Edit Account Infomation
+                        params: Edit Account Information
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Account Information
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\Edit
@@ -105,6 +111,12 @@ customer_account_address:
                         method: addScript
                         params: frontend/js/locate.js
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Address Book
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\Address
@@ -124,6 +136,12 @@ customer_wishlist:
                         method: setTitle
                         params: My Wishlist
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - My Wishlist
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\Wishlist
@@ -141,6 +159,12 @@ customer_history:
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Browsing History
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\ViewedProduct

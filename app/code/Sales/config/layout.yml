@@ -412,6 +412,12 @@ sales_refund:
                         method: setTitle
                         params: Return &amp; Refund
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Return &amp; Refund
                 children:
                     main:
                         type: Seahinet\Sales\ViewModel\Refund
@@ -426,6 +432,12 @@ sales_order_list:
                         method: setTitle
                         params: My Orders
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - My Orders
                 children:
                     main:
                         type: Seahinet\Sales\ViewModel\Order
@@ -442,6 +454,12 @@ sales_order_view:
     root:
         children:
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Information
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -458,6 +476,12 @@ sales_order_invoice:
     root:
         children:
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Information
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -474,6 +498,12 @@ sales_order_shipment:
     root:
         children:
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Information
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -490,6 +520,12 @@ sales_order_creditmemo:
     root:
         children:
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Information
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template

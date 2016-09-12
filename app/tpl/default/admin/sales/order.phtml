@@ -40,7 +40,7 @@ $currency = $order->getCurrency();
     </div>
     <div class="panel">
         <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Order Infomation', [], 'sales') ?></h4>
+            <h4 class="panel-title"><?php echo $this->translate('Order Information', [], 'sales') ?></h4>
         </div>
         <div class="panel-body">
             <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?><br />
@@ -59,7 +59,7 @@ $currency = $order->getCurrency();
     </div>
     <div class="panel">
         <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Customer Infomation', [], 'sales') ?></h4>
+            <h4 class="panel-title"><?php echo $this->translate('Customer Information', [], 'sales') ?></h4>
         </div>
         <div class="panel-body"><?php if ($customer = $this->getCustomer()): ?>
                 ID: <?php echo $customer->getId() ?><br />

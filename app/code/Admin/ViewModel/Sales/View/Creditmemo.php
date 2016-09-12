@@ -94,9 +94,9 @@ class Creditmemo extends Template
         $data['html'] .= '
         <table class="first" cellpadding="4" cellspacing="0">
          <tr class="background">
-          <td class="head" colspan="2" align="center"><b>'.$this->translate('Credit Memo Infomation', [], 'sales').'</b></td>
+          <td class="head" colspan="2" align="center"><b>'.$this->translate('Credit Memo Information', [], 'sales').'</b></td>
           <td class="spacing" rowspan="20" align="center"></td>
-          <td class="head" colspan="2" align="center"><b>'.$this->translate('Customer Infomation', [], 'sales').'</b></td>
+          <td class="head" colspan="2" align="center"><b>'.$this->translate('Customer Information', [], 'sales').'</b></td>
          </tr>
          <tr>
           <td class="title" align="center"><b>'.$this->translate('ID').'</b></td><td class="content">'.$invoice['increment_id'].'</td>
@@ -130,7 +130,7 @@ class Creditmemo extends Template
           <td colspan="4" width="640px"></td>
          </tr>
          <tr>
-          <td class="head" colspan="2" align="center"><b>'.$this->translate('Order Infomation', [], 'sales').'</b></td>
+          <td class="head" colspan="2" align="center"><b>'.$this->translate('Order Information', [], 'sales').'</b></td>
           <td class="head" colspan="2" align="center"><b>'.$this->translate('Payment Method', [], 'sales').'</b></td>
          </tr>
          <tr>
@@ -175,7 +175,7 @@ class Creditmemo extends Template
         </table>
         ';
         $data['html'] = $data['css'] ? (new Emogrifier($data['html'],$data['css']))->emogrifyBodyContent() : $data['html'];
-        $data['pdf_name'] = $this->translate('Shipment Infomation', [], 'sales').'.pdf';
+        $data['pdf_name'] = $this->translate('Shipment Information', [], 'sales').'.pdf';
         return $data;
     }
 

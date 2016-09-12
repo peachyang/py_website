@@ -2,123 +2,120 @@
 $items = $this->getItems();
 $flag = false;
 ?>
-<h2 class="page-title"><?php echo $this->translate('My Wishlist'); ?></h2>
-<div class="page-content">
-    <form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
-        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        <table class="table wishlist">
-            <colgroup>
-                <col width="1" />
-                <col />
-                <col width="1" />
-                <col width="1" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th colspan="2"><?php echo $this->translate('Product') ?></th>
-                    <th class="text-nowrap"><?php echo $this->translate('Price') ?></th>
-                    <th class="text-nowrap"><?php echo $this->translate('Action') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($items as $item):
-                    if ($item->offsetGet('product_id') && $item->offsetGet('warehouse_id') && $item->offsetGet('store_id')):
-                        $flag = true;
-                        $product = $item->getProduct();
-                        $thumbnail = $product->getThumbnail();
-                        ?>
-                        <tr>
-                            <td>
-                                <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->offsetGet('name') ?>" >
-                                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/150x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product->offsetGet('name') ?>" width="150" />
-                                </a>
-                            </td>
-                            <td class="text-vtop">
-                                <h3 class="product-name"><?php echo $item['product_name'] ?></h3>
-                                <?php
-                                $price = $product->getFinalPrice($item['qty'], false);
-                                $sum = 0;
-                                $options = json_decode($item['options'], true);
-                                if ($item['product_id'] && count($options)):
-                                    ?>
-                                    <dl class="options">
-                                        <?php
-                                        foreach ($product->getOptions() as $option):
-                                            if (isset($options[$option->getId()])):
-                                                ?>
-                                                <dt><?php echo $option['title'] ?></dt>
-                                                <dd>
-                                                    <?php
-                                                    if (in_array($option->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
-                                                        foreach ($option->getValues() as $value) {
-                                                            if ($value['id'] == $options[$option->getId()]) {
-                                                                echo $value['title'];
-                                                                $sum += $value['is_fixed'] ? $value['price'] : $price * $value['price'] / 100;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        echo $options[$option->getId()];
-                                                        $sum += $option['is_fixed'] ? $option['price'] : $price * $option['price'] / 100;
-                                                    }
-                                                    ?>
-                                                </dd>
-                                                <?php
-                                            endif;
-                                        endforeach;
-                                        ?>
-                                    </dl>
-                                <?php endif ?>
-                                <textarea class="form-control" name="description[<?php echo $item->getId() ?>]"><?php echo $item['description'] ?></textarea>
-                            </td>
-                            <td>
-                                <div class="price-box">
-                                    <?php if (($price += $sum) == $item['price']): ?>
-                                        <span class="regular-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
-                                    <?php else: ?>
-                                        <span class="old-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
-                                        <span class="special-price"><?php echo $this->getCurrency()->convert($price, true) ?></span>
-                                    <?php endif ?>
-                                </div>
-                            </td>
-                            <td>
-                                <a class="text-nowrap" href="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" data-method="post" data-params="<?php
-                                echo http_build_query([
-                                    'product_id' => $item['product_id'],
-                                    'csrf' => $this->getCsrfKey(),
-                                    'qty' => $item['qty'],
-                                    'options' => $item['options'],
-                                    'warehouse_id' => $item['warehouse_id']
-                                ])
-                                ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a>
-                                <a class="text-nowrap" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="3"><?php echo $this->translate('%s is out of stock.', [$item['product_name']], 'catalog') ?></td>
-                            <td>
-                                <a class="text-nowrap" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
-                            </td>
-                        </tr>
-                    <?php
-                    endif;
-                endforeach;
-                ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <?php if ($flag): ?>
-                        <td colspan="4" class="text-right">
-                            <button type="submit" class="btn btn-theme">
-                                <?php echo $this->translate('Save') ?>
-                            </button>
+<form action="<?php echo $this->getBaseUrl('customer/wishlist/commit/') ?> " method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+    <table class="table wishlist">
+        <colgroup>
+            <col width="1" />
+            <col />
+            <col width="1" />
+            <col width="1" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="2"><?php echo $this->translate('Product') ?></th>
+                <th class="text-nowrap"><?php echo $this->translate('Price') ?></th>
+                <th class="text-nowrap"><?php echo $this->translate('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($items as $item):
+                if ($item->offsetGet('product_id') && $item->offsetGet('warehouse_id') && $item->offsetGet('store_id')):
+                    $flag = true;
+                    $product = $item->getProduct();
+                    $thumbnail = $product->getThumbnail();
+                    ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->offsetGet('name') ?>" >
+                                <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/150x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product->offsetGet('name') ?>" width="150" />
+                            </a>
                         </td>
-                    <?php else: ?>
-                        <td colspan="4" class="text-center"><?php echo $this->translate('There is no product in wishlist.') ?></td>
-                    <?php endif; ?>
-                </tr>
-            </tfoot>
-        </table>
-    </form>
-</div>
+                        <td class="text-vtop">
+                            <h3 class="product-name"><?php echo $item['product_name'] ?></h3>
+                            <?php
+                            $price = $product->getFinalPrice($item['qty'], false);
+                            $sum = 0;
+                            $options = json_decode($item['options'], true);
+                            if ($item['product_id'] && count($options)):
+                                ?>
+                                <dl class="options">
+                                    <?php
+                                    foreach ($product->getOptions() as $option):
+                                        if (isset($options[$option->getId()])):
+                                            ?>
+                                            <dt><?php echo $option['title'] ?></dt>
+                                            <dd>
+                                                <?php
+                                                if (in_array($option->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
+                                                    foreach ($option->getValues() as $value) {
+                                                        if ($value['id'] == $options[$option->getId()]) {
+                                                            echo $value['title'];
+                                                            $sum += $value['is_fixed'] ? $value['price'] : $price * $value['price'] / 100;
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo $options[$option->getId()];
+                                                    $sum += $option['is_fixed'] ? $option['price'] : $price * $option['price'] / 100;
+                                                }
+                                                ?>
+                                            </dd>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+                                </dl>
+                            <?php endif ?>
+                            <textarea class="form-control" name="description[<?php echo $item->getId() ?>]"><?php echo $item['description'] ?></textarea>
+                        </td>
+                        <td>
+                            <div class="price-box">
+                                <?php if (($price += $sum) == $item['price']): ?>
+                                    <span class="regular-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
+                                <?php else: ?>
+                                    <span class="old-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
+                                    <span class="special-price"><?php echo $this->getCurrency()->convert($price, true) ?></span>
+                                <?php endif ?>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="text-nowrap" href="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" data-method="post" data-params="<?php
+                            echo http_build_query([
+                                'product_id' => $item['product_id'],
+                                'csrf' => $this->getCsrfKey(),
+                                'qty' => $item['qty'],
+                                'options' => $item['options'],
+                                'warehouse_id' => $item['warehouse_id']
+                            ])
+                            ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a>
+                            <a class="text-nowrap" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="3"><?php echo $this->translate('%s is out of stock.', [$item['product_name']], 'catalog') ?></td>
+                        <td>
+                            <a class="text-nowrap" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
+                        </td>
+                    </tr>
+                <?php
+                endif;
+            endforeach;
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <?php if ($flag): ?>
+                    <td colspan="4" class="text-right">
+                        <button type="submit" class="btn btn-theme">
+                            <?php echo $this->translate('Save') ?>
+                        </button>
+                    </td>
+                <?php else: ?>
+                    <td colspan="4" class="text-center"><?php echo $this->translate('There is no product in wishlist.') ?></td>
+                <?php endif; ?>
+            </tr>
+        </tfoot>
+    </table>
+</form>

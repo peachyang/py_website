@@ -1,11 +1,9 @@
 <?php
 $messages = $this->getMessages();
 ?>
-<div class="message-box<?php if(!$this->getVariable('inline')): ?> container<?php endif ?>">
-    <?php foreach ($messages as $message): ?>
+<div class="message-box<?php if (!$this->getVariable('inline')): ?> container<?php endif ?>"><?php foreach ($messages as $message): ?>
         <div class="alert alert-<?php echo $message['level'] ?>">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
             <?php echo $message['message'] ?>
         </div>
-    <?php endforeach ?>
-</div>
+    <?php endforeach ?></div>

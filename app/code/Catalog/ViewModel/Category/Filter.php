@@ -74,6 +74,9 @@ class Filter extends Toolbar
 
     protected function statAttributeValue(&$array, $value, $attribute = false)
     {
+        if (is_string($value) && strpos($value, ',')) {
+            $value = explode(',', $value);
+        }
         if (is_array($value)) {
             foreach ($value as $v) {
                 if (!isset($array[$v])) {

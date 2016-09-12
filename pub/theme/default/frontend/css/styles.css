@@ -185,6 +185,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dl a{display:block;text-indent:65px;font-size:12px;line-height:24px;color:#8b8a8a}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:bold;border-bottom:1px solid #dfe1e8}
+.customer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account-dashboard .panel{box-shadow:none}
 .customer-account-dashboard .panel-heading{border-bottom:1px solid #dbdee5}
 .customer-account-dashboard .panel-title{border-bottom:1px solid;color:#007dc6;display:inline-block;padding:19px 12px;font-size:14px;line-height:1;margin:21px 0 -1px}

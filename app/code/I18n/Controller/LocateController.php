@@ -24,6 +24,9 @@ class LocateController extends ActionController
             }
         } else {
             $resultSet = $locate->load('country');
+            $config = $this->getContainer()->get('config');
+            $enabled = $config['global/locale/enabled_country'];
+            $disabled = $config['global/locale/disabled_country'];
         }
         foreach ($resultSet as $id => $item) {
             if (isset($item['iso2_code']) && $item['iso2_code'] === $code) {
@@ -32,7 +35,7 @@ class LocateController extends ActionController
                     'code' => $code,
                     'label' => $item->getName($locale)
                 ];
-            } else {
+            } else if ((empty($enabled) || in_array($item['iso2_code'], explode(',', $enabled))) && (empty($disabled) || !in_array($item['iso2_code'], explode(',', $disabled)))) {
                 $result[] = [
                     'value' => $id,
                     'code' => isset($item['iso2_code']) ? $item['iso2_code'] : $item['code'],

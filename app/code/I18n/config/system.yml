@@ -1,4 +1,41 @@
 ---
+global:
+    children:
+        locale:
+            label: Locale
+            priority: 10
+            scope: [merchant,store]
+            children:
+                timezone:
+                    type: select
+                    required: required
+                    label: Timezone
+                    priority: 0
+                    scope: [merchant]
+                    default: Etc/GMT
+                    source: Seahinet\Lib\Source\Timezone
+                country:
+                    type: select
+                    required: required
+                    label: Default Country
+                    priority: 10
+                    default: CN
+                    scope: [merchant]
+                    source: Seahinet\I18n\Source\Country
+                enabled_country:
+                    type: multiselect
+                    label: Enabled Countries
+                    priority: 20
+                    scope: [merchant]
+                    source: Seahinet\I18n\Source\Country
+                    comment: Leave blank if all countries are allowed
+                disabled_country:
+                    type: multiselect
+                    label: Disabled Countries
+                    priority: 21
+                    scope: [merchant]
+                    source: Seahinet\I18n\Source\Country
+                    comment: Leave blank if all countries are allowed
 i18n:
     label: I18N
     children:

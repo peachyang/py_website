@@ -4,6 +4,7 @@ namespace Seahinet\Retailer\Controller;
 
 use Exception;
 use Seahinet\Retailer\Model\Retailer as Rmodel;
+use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
 
@@ -102,8 +103,15 @@ class StoreController extends AuthActionController
         return $root;
     }
 	
-	public function addTemplateAction(){
-		$result = ['a','b'];	
+	public function addTemplateAction()
+	{
+		$data = $this->getRequest()->getPost();
+		$segment = new Segment('customer');
+		$data['store_id'] = $segment->get('customer')['store_id'];
+		$model = new StoreTemplate();
+        $model->setData($data);	
+		$model->save();
+		$result = ['status'=>true];	
 		echo json_encode($result);
 	}
 	

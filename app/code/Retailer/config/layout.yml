@@ -566,7 +566,7 @@ view_store:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Lib\ViewModel\StoreDecoration
                         template: retailer/store
 decoration_store:
     update: decorationStore

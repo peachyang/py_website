@@ -7,13 +7,14 @@
         </style>
         <script type="text/javascript">
             var path = '';
+            var template_id = 0;
         </script>
 <?php //var_dump($this->getCustomers()) ?>
       
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">装 修 店 铺</a>
+                <a class="navbar-brand" href="/">装 修 店 铺  <span class="store_template_name"></span></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav" id="menu-htmleditor">
@@ -993,24 +994,43 @@
     	{   layer.msg('亲, 请装修您的店铺吧, 加个表格试试先', {shade: [0.3,'#fff'],time: 2000});
     		return;
     	}
+    	var code_model = htmls;
+    	var src_model = style_html($("#download-layout").html()));
     	
+    	layer.prompt({
+  			title: '请输入模版名称',
+  			formType: 0 //prompt风格，支持0-2
+			}, 
+			function(pass){
+  				saveDataFinal(code_model,src_model,pass);	
+			});
+    	    	
+    }
+    
+    function saveDataFinal(code_model,src_model,template_name){
     	$.ajax({
                 url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
                 type: "post",
                 dataType: 'json',
-                data:{},
+                data:{code_model:code_model,src_model:src_model,template_name:template_name},
                 beforeSend:function(){
-                	layer.msg(' 加载中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
+                	layer.msg(' 保存中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
                 },
                 success: function (data) {
-					alert(data[0]);
 					layer.closeAll();
+					$(".store_template_name").html(' - ' + template_name);
+					layer.confirm('您已经保存了新的店铺模版,接下来您要', {
+  						btn: ['继续店铺装修','查看新装修的店铺'] 
+						}, function(){
+							layer.closeAll();
+						}, function(){
+  							layer.closeAll();
+					});
                 },
                 error: function (msg) {
                   
                 }
 
-        })
-    	
+        });
     }
 </script>

@@ -1,3 +1,6 @@
+<?php
+$data = $this->getVariable('data', []);
+?>
 <h2 class="page-title"><?php echo $this->translate('Register for a Business Account') ?></h2>
 <div class="page-content">
     <div class="alert alert-warning">
@@ -13,7 +16,8 @@
     </div>
     <div class="form">
         <button type="button" class="btn btn-theme" onclick="$(this).next('form').show();$(this).hide();$('.flow li').first().addClass('active');"><?php echo $this->translate('Register Now') ?></button>
-        <form action="<?php echo $this->getBaseUrl('retailer/account/applypost/') ?>" method="post" style="display:none">
+        <form action="<?php echo $this->getBaseUrl('retailer/account/applypost/') ?>" method="post" enctype="multipart/form-data" style="display:none">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <div class="input-box clearfix">
                 <label class="control-label"><?php echo $this->translate('ID Card 1') ?></label>
                 <div class="cell dropdown">
@@ -29,22 +33,22 @@
             <div class="input-box clearfix">
                 <label class="control-label"><?php echo $this->translate('Phone Number') ?></label>
                 <div class="cell">
-                    <input type="tel" name="phone" class="form-control required digits" />
+                    <input type="tel" name="phone" class="form-control required digits" value="<?php echo isset($data['phone']) ? $data['phone'] : '' ?>" />
                 </div>
             </div>
             <div class="input-box clearfix">
                 <label class="control-label"><?php echo $this->translate('Brand') ?></label>
                 <div class="cell">
-                    <input type="radio" name="brand" class="required" id="brand-1" value="o" />
+                    <input type="radio" name="brand_type" class="required" id="brand-1" value="1"<?php if (isset($data['brand_type']) && $data['brand_type'] == 1): ?> checked="checked"<?php endif ?> />
                     <label for="brand-1"><?php echo $this->translate('Own', [], 'retailer') ?></label>
-                    <input type="radio" name="brand" class="required" id="brand-2" value="a" />
+                    <input type="radio" name="brand_type" class="required" id="brand-2" value="0"<?php if (isset($data['brand_type']) && $data['brand_type'] === '0'): ?> checked="checked"<?php endif ?> />
                     <label for="brand-2"><?php echo $this->translate('Agency', [], 'retailer') ?></label>
                 </div>
             </div>
             <div class="input-box clearfix">
                 <label class="control-label"><?php echo $this->translate('Product Type') ?></label>
                 <div class="cell">
-                    <input type="text" name="product_type" class="form-control required" />
+                    <input type="text" name="product_type" class="form-control required" value="<?php echo isset($data['product_type']) ? $data['product_type'] : '' ?>" />
                 </div>
             </div>
             <div class="buttons-set">

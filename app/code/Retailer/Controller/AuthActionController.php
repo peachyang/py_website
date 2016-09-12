@@ -4,7 +4,7 @@ namespace Seahinet\Retailer\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\Model\Retailer;
+use Seahinet\Retailer\Model\Application;
 
 abstract class AuthActionController extends ActionController
 {
@@ -17,15 +17,17 @@ abstract class AuthActionController extends ActionController
         if (!$session->get('hasLoggedIn')) {
             return $this->redirect('customer/account/login/');
         } else {
-            $model = new Retailer;
-            $model->load($session->get('customer')->getId(), 'customer_id');
-            if (in_array($action, ['apply', 'processing'])) {
-                if($model->offsetGet('status') && $model->offsetGet('store_id')){
+            $model = new Application;
+            $model->load($session->get('customer')->getId());
+            if (in_array($action, ['apply', 'reapply', 'processing'])) {
+                if ($model->offsetGet('status')) {
                     return $this->redirect('retailer/account/');
+                } else if ($action === 'apply' && $model->getId()) {
+                    return $this->redirect('retailer/account/processing/');
                 }
             } else if (!$model->getId()) {
                 //return $this->redirect('retailer/account/apply/');
-            } else if (!$model->offsetGet('status') || !$model->offsetGet('store_id')) {
+            } else if (!$model->offsetGet('status')) {
                 return $this->redirect('retailer/account/processing/');
             }
         }

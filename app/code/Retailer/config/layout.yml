@@ -129,7 +129,7 @@ retailer_processing:
         children:
             content:
                 children:
-                    notice:
+                    main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/apply/processing
 retailer_store_settings:

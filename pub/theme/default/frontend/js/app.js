@@ -130,6 +130,7 @@
         });
         $('.carousel .carousel-inner').on('touchstart', function (e) {
             GLOBAL.PAGEX = e.originalEvent.touches[0].pageX;
+            GLOBAL.PAGEY = e.originalEvent.touches[0].pageY;
             if (GLOBAL.CAROUSELTIMEOUT) {
                 window.clearTimeout(GLOBAL.CAROUSELTIMEOUT);
                 GLOBAL.CAROUSELTIMEOUT = null;
@@ -137,23 +138,26 @@
             $('.carousel .item').css('transition', 'none');
         }).on('touchmove', function (e) {
             var x = e.originalEvent.touches[0].pageX;
-            var c = $(this).children('.item.active');
-            if (x < GLOBAL.PAGEX) {
-                var t = $(c).is('.item:last-child') ? $(this).children('.item:first-child') : $(c).next('.item');
-                $(t).removeClass('prev').addClass('next');
-                $(c).css('left', x - GLOBAL.PAGEX);
-                $(t).css('left', x - GLOBAL.PAGEX);
-            } else {
-                var t = $(c).is('.item:first-child') ? $(this).children('.item:last-child') : $(c).prev('.item');
-                $(t).removeClass('next').addClass('prev');
-                $(c).css('left', x - GLOBAL.PAGEX);
-                $(t).css('left', x - GLOBAL.PAGEX);
+            var y = e.originalEvent.touches[0].pageY;
+            if (Math.abs(y - GLOBAL.PAGEY) < 30) {
+                var c = $(this).children('.item.active');
+                if (x < GLOBAL.PAGEX) {
+                    var t = $(c).is('.item:last-child') ? $(this).children('.item:first-child') : $(c).next('.item');
+                    $(t).removeClass('prev').addClass('next');
+                    $(c).css('left', x - GLOBAL.PAGEX);
+                    $(t).css('left', x - GLOBAL.PAGEX);
+                } else {
+                    var t = $(c).is('.item:first-child') ? $(this).children('.item:last-child') : $(c).prev('.item');
+                    $(t).removeClass('next').addClass('prev');
+                    $(c).css('left', x - GLOBAL.PAGEX);
+                    $(t).css('left', x - GLOBAL.PAGEX);
+                }
             }
         }).on('touchend', function (e) {
             var t = $(this).children('.item.prev,.item.next');
             if (t.length) {
                 var c = $(this).children('.item.active');
-                if (Math.abs($(c).css('left').replace('px', '')) > $(c).width() / 2) {
+                if (Math.abs($(c).css('left').replace('px', '')) > $(c).width() / 20) {
                     var w = $(c).width();
                     if ($(t[0]).is('.prev')) {
                         $(t).animate({left: w}, 300);
@@ -176,6 +180,8 @@
                 }
                 GLOBAL.CAROUSELTIMEOUT = window.setTimeout(function () {
                     $('.carousel .item').removeAttr('style');
+                    $('.carousel .carousel-indicators li').removeClass('active');
+                    $('.carousel .carousel-indicators [data-slide-to=' + $('.carousel .item.active').prevAll('item').length + ']').addClass('active');
                 }, 600);
             }
         });

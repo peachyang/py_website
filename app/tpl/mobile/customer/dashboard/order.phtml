@@ -1,0 +1,99 @@
+<?php
+$order = $this->getOrder();
+if ($order && $order->getId()):
+$flag = true;
+?>
+<div class="panel order">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php echo $this->translate('Latest Order') ?></h3>
+    </div>
+    <table class="panel-body table">
+        <caption>
+            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?></div>
+            <div class="col-xs-6 text-right">
+                <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
+                <span><?php echo $order['increment_id'] ?></span>
+                <span><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
+            </div>
+        </caption>
+        <tbody>
+            <?php
+            foreach ($order->getItems() as $item):
+            $product = $item['product'];
+            $thumbnail = $product->getThumbnail();
+            ?>
+            <tr>
+                <td>
+                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                </td>
+                <td class="text-vtop">
+                    <h4 class="product-name"><?php echo $product['name'] ?></h4>
+                    <?php
+                    $options = json_decode($item['options'], true);
+                    if ($item['product_id'] && count($options)):
+                    ?>
+                    <dl class="options">
+                        <?php
+                        foreach ($product->getOptions() as $option):
+                        if (isset($options[$option->getId()])):
+                        ?>
+                        <dt><?php echo $option['title'] ?></dt>
+                        <dd>
+                            <?php
+                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                            $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                            ?>
+                        </dd>
+                        <?php
+                        endif;
+                        endforeach;
+                        ?>
+                    </dl>
+                    <?php endif ?>
+                </td>
+                <td>
+                    <div class="price-box text-center">
+                        <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
+                        <span class="regular-price">
+                            <span class="label"><?php echo $this->translate('Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
+                        </span>
+                        <?php else: ?>
+                        <span class="old-price text-nowrap">
+                            <span class="label"><?php echo $this->translate('Old Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->convert($product->getFinalPrice($item['qty'], false), true) ?></span>
+                        </span>
+                        <span class="special-price">
+                            <span class="label"><?php echo $this->translate('Special Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                </td>
+                <td>
+                    <?php echo (float) $item['qty'] ?>
+                </td>
+                <?php if ($flag): ?>
+                <td rowspan="<?php echo count($order->getItems()) ?>" class="text-center text-nowrap">
+                    <span class="total"><?php echo $order->getCurrency()->format($order['total']) ?></span>
+                    <span class="shipping"><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order['shipping'])]) ?></span>
+                </td>
+                <td rowspan="<?php echo count($order->getItems()) ?>" class="text-nowrap">
+                    <span class="status">
+                        <?php echo $this->translate($order->getStatus()['name']) ?>
+                    </span>
+                    <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
+                    <?php if ($order->canRefund()): ?>
+                    <a href="<?php echo $this->getBaseUrl('sales/refund/?id=' . $order->getId()) ?>"><?php echo $this->translate('Refund Application') ?></a>
+                    <?php endif ?>
+                </td>
+                <?php
+                $flag = false;
+                endif;
+                ?>
+            </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
+<?php endif; ?>

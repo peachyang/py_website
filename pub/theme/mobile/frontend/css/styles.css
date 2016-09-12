@@ -41,6 +41,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .headimg-right{color:#c3d9ee;font-size:24px;float:left;margin-right:4%;width:6%;line-height:40px}
 .customer-account-dashboard .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
 .customer-account-dashboard .col-xs-9{width:100%}
+.customer-account-dashboard .profile .head_pic{margin-top:40px}
 .customer-account-dashboard .profile .head_pic img{margin:0 auto}
 .customer-account-dashboard .myinfo{background:#007ecc;text-align:center;padding-bottom:10px}
 .customer-account-dashboard .wel-name{color:#fff}

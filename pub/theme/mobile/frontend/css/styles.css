@@ -41,6 +41,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .headimg-right{color:#c3d9ee;font-size:24px;float:left;margin-right:4%;width:6%;line-height:40px}
 .customer-account-dashboard .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
 .customer-account-dashboard .col-xs-9{width:100%}
+.customer-account-dashboard .profile .head_pic img{margin:0 auto}
 .customer-account-dashboard .myinfo{background:#007ecc;text-align:center;padding-bottom:10px}
 .customer-account-dashboard .wel-name{color:#fff}
 .customer-account-dashboard .fa-star{color:#ff8a00;margin:10px 3px}
@@ -49,7 +50,10 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .start-num{font-size:10px;padding-left:1px}
 .customer-account-dashboard .infodetail .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
 .customer-account-dashboard .infodetail .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
-.customer-account-dashboard .info{width:80%;height:85px;border:1px solid #0185d7;margin:4px auto}
+.customer-account-dashboard .profile{background:#007ecc;color:#fff}
+.customer-account-dashboard .main-container .message-box{margin-top:0}
+.customer-account-dashboard .info{width:80%;height:85px;margin:4px 10%}
+.customer-account-dashboard .info {text-align:center}
 .customer-account-dashboard .info-num{width:40px;height:40px;background:#0185d7;margin:10px auto;line-height:40px;font-size:18px;color:#fff}
 .customer-account-dashboard .info-box{float:left;width:33.33333333%;font-size:12px}
 .customer-account-dashboard .title-content{height:30px;background:#fff;margin-top:10px;border-width:0 0 1px;border-style:solid;border-color:#eff0f4}
@@ -91,17 +95,17 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .main-container .breadcrumb-m .content-list a{color:#c8c6c6}
 .main-container .message-box{margin-top:50px} 
 .product-essential .carousel .carousel-indicators{bottom:-10px}
-.product-essential .carousel .carousel-indicators .active{background:#ff8a00;border:1px solid #ff8a00}
+.product-essential .carousel .carousel-indicators .active{width:10px;height:10px;background:#ff8a00;border:1px solid #ff8a00}
 .product-essential .carousel .carousel-indicators li{background-color:rgba(196,196,196,158);border:1px solid #c4c4c4}
 .product-essential .carousel .carousel-inner img{margin: 0 auto;vertical-align:middle}
 .product-essential .product-info .product-name{font-size:16px;line-height:30px;text-align:center;margin:0 15px}
 .product-essential .price-box .price{color:#ff8a00;font-weight:bold;margin-left: 15px}
 .product-essential .price-box .share .fa-share-alt{ color:#ff8a00;margin-right:8px}
-.product-essential .price-box .share{margin-right:15px;width:100%;text-align:right;padding-right:15px}
+.product-essential .price-box .share{width:100%;text-align:right;padding-right:15px}
 .product-essential .price-box .share .dropdown-menu{border:none}
 .product-essential .product-info .selected{border-top:12px solid #e7e7e7;border-bottom:12px solid #e7e7e7;background:#fff;margin-top: 30px}
-.product-essential .product-info .selected span{text-align:right;margin-right:30px;float:right;color:#b5b4b4}
-.product-essential .product-info .selected a{width:100%;margin:0 15px;padding: 10px 0;display:inline-block}
+.product-essential .product-info .selected span{text-align:right;float:right;color:#b5b4b4}
+.product-essential .product-info .selected a{width:90%;margin:0 5%;padding: 10px 0;display:inline-block}
 .product-essential .product-info .modal-dialog{position:absolute;bottom:0;width:100%;margin:0}
 .product-essential .product-info .modal-dialog .options{margin-bottom:30px}
 .product-essential .product-info .modal-dialog　.options .cell{display: table-cell;padding-bottom: 15px;}

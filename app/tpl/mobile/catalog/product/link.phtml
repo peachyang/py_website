@@ -7,43 +7,52 @@ if (count($products)):
             <span><?php echo $this->translate($this->getVariable('title')) ?></span>
         </h4>
     <?php endif ?>
-    <div class="carousel slide product-link" id="product-media" data-ride="carousel" data-interval="false">
-        <ul class="products-grid clearfix">
-            <?php
-            $class = $this->getVariable('class', 'col-xs-4 col-sm-4 col-md-3 col-lg-2');
-            $width = $this->getVariable('width');
-            foreach ($products as $product):
-                $thumbnail = $product->getThumbnail();
-                ?>
-                <li class="item <?php echo $class ?>">
-                    <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
-                        <?php
-                        if (strpos($thumbnail, 'http') !== false):
-                            ?>
-                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
-                        <?php elseif ($width): ?>
-                            <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
-                        <?php else: ?>
-                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
-                        <?php endif ?>
-                    </a>
-                    <p><?php echo $product['name'] ?></p>
-                    <div class="price-box">
-                        <?php echo $this->getPriceBox($product) ?>
-                    </div>
-                    <div class="action">
-                        <a href="<?php
-                        echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
-                                '&qty=1&csrf=' . $this->getCsrfKey())
-                        ?>" class="add2cart">
+    <div class="carousel slide product-link" id="product-media" data-ride="carousel" data-interval="false" id="carousel-example-generic">
+        <div class="products-grid carousel-inner clearfix" role="listbox">
+            <ul class="item" style="display:inline-block">
+                <?php
+                $class = $this->getVariable('class', 'col-xs-4 col-sm-4 col-md-3 col-lg-2');
+                $width = $this->getVariable('width');
+                foreach ($products as $product):
+                    $thumbnail = $product->getThumbnail();
+                    ?>
+                    <li class="<?php echo $class ?>">
+                        <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
+                            <?php
+                            if (strpos($thumbnail, 'http') !== false):
+                                ?>
+                                <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                            <?php elseif ($width): ?>
+                                <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
+                            <?php else: ?>
+                                <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                            <?php endif ?>
                         </a>
-                    </div>
-                </li>
-            <?php endforeach ?>
-        </ul>
-    </div>
-<?php
-else:
-    return false;
-    ?>
-<?php endif; ?>
+                        <p><?php echo $product['name'] ?></p>
+                        <div class="price-box">
+                            <?php echo $this->getPriceBox($product) ?>
+                        </div>
+                        <div class="action">
+                            <a href="<?php
+                            echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
+                                    '&qty=1&csrf=' . $this->getCsrfKey())
+                            ?>" class="add2cart">
+                            </a>
+                        </div>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <?php
+    else:
+        return false;
+        ?>
+    <?php endif; ?>

@@ -1,0 +1,47 @@
+<?php
+$customer = $this->getCustomer();
+?>
+<div class="profile clearfix">
+    <div class="head_pic">
+        <a href="javascript:void(0);" class="photo col-xs-12 col-sm-2">
+            <img alt="<?php echo $customer->offsetGet('username') ?>" class="img-responsive" width="100" src="<?php echo $this->getPubUrl('frontend/images/placeholder.png') ?>" />
+        </a>
+    </div>
+    <div class="info col-xs-12 col-sm-10">
+        <div class="name">
+            <span><?php echo $customer->offsetGet('username') ?></span>
+            <span class="level"><?php echo $customer->getLevel() ?></span>
+        </div>
+
+        <div class="transaction">
+            <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>&nbsp;&nbsp;&nbsp;
+            <span><?php echo $this->translate('Shipping', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>&nbsp;&nbsp;&nbsp;
+            <span><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></span>
+        </div>
+        <div class="wishlist_track">
+            <ul class="col-xs-12 col-sm-12">
+                <li class="col-xs-6 col-sm-6 text-center">
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/"></a>
+                    <span><?php echo $this->translate('My Wishlist'); ?></span>
+                </li>
+                <li class="col-xs-6 col-sm-6 text-center">
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/history/"></a>
+                    <span><?php echo $this->translate('My Tracks'); ?></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="profile-foot">
+        <ul class="col-xs-12 col-sm-12">
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="<?php echo $this->getBaseUrl() ?>clothes.html"><?php echo $this->translate('Shopping'); ?></a>
+            </li>
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="#"><?php echo $this->translate('Enter the Store Center'); ?></a>
+            </li>
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="<?php echo $this->getBaseUrl() ?>customer/account/logout/"><?php echo $this->translate('Log out'); ?></a>
+            </li>
+        </ul>
+    </div>
+</div>

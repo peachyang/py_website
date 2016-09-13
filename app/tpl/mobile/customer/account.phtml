@@ -1,16 +1,16 @@
 <header class="header-m">
-    <a href="javascript:viod(0);" onClick="javascript:history.back(-1);" class="fa fa-angle-left headimg-left"></a>
-    <div class="container">
+    <a href="javascript:viod(0);" onClick="javascript:history.back(-1);" class="fa fa-angle-left fa-2x col-xs-1 col-sm-1 text-right"></a>
+    <div class="container col-xs-10 col-md-10 text-center">
         <?php echo $this->translate('Personal Center') ?>
     </div>
-    <a href="javascript:viod(0);" class="fa fa-bars headimg-right"></a>
+    <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1 text-left"></a>
 </header>
 <div class="container">
     <?php if ($this->getSegment('customer')->get('hasLoggedIn')): ?>
-        <div class="col-left col-xs-3 col-sm-3 col-md-2">
+        <div class="col-left col-md-2 hidden-xs">
             <?php echo $this->getChild('nav') ?>
         </div>
-        <main class="col-main col-xs-9 col-sm-9 col-md-10">
+        <main class="col-main col-xs-12 col-sm-12 col-md-10">
         <?php else: ?>
             <main class="col-main col-xs-12">
             <?php endif ?>

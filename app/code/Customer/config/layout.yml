@@ -20,9 +20,6 @@ customer_account:
                             -
                                 method: addGroup
                                 params: [{label:'Account Information',priority:0,icon:'th-list'}]
-                            -                                   
-                                method: addGroup
-                                params: [{label:'Asset',priority:10,icon:'money'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/wishlist/',label:'My Wishlist',group:'My Following'}]
@@ -35,15 +32,18 @@ customer_account:
                             -
                                 method: addLink
                                 params: [{link:'customer/account/address/',label:'Address Book',group:'Account Information'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account/',label:'Balance',group:'Asset'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account/',label:'Privilege',group:'Asset'}]
-                            -
-                                method: addLink
-                                params: [{link:'customer/account/',label:'Integral',group:'Asset'}] 
+#                            -                                   
+#                                method: addGroup
+#                                params: [{label:'Asset',priority:10,icon:'money'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'customer/account/',label:'Balance',group:'Asset'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'customer/account/',label:'Privilege',group:'Asset'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'customer/account/',label:'Integral',group:'Asset'}]
     
                     messages:
                         action:

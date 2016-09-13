@@ -81,7 +81,7 @@ frontend:
                         params: [{src:'frontend/js/bootstrap.js',defer:'defer',async:'async'}]
                     -    
                         method: addScript
-                        params: [{src:'frontend/js/app.js',defer:'defer'}]
+                        params: frontend/js/app.js
                     -
                         method: addScript
                         params: [{src:'frontend/js/selectivizr.js',defer:'defer'},lt IE 9]

@@ -11,7 +11,7 @@
             <ul class="list-inline">
                 <li><a href="<?php echo $this->getBaseUrl(); ?>"><?php echo $this->translate('Continue Shopping'); ?></a></li>
                 <?php if ($this->hasLoggedIn()): ?>
-                    <li><a href="<?php echo $this->getBaseUrl('customer/order/'); ?>"><?php echo $this->translate('View Order'); ?></a></li>
+                    <li><a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>"><?php echo $this->translate('View Order'); ?></a></li>
                 <?php endif ?>
             </ul>
         </div>

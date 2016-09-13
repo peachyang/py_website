@@ -102,7 +102,7 @@ class StoreController extends AuthActionController
         return $root;
     }
 	
-	 /** 
+	/** 
     * decorationAction  
     * decorate store page
     * @access public 
@@ -114,15 +114,43 @@ class StoreController extends AuthActionController
         return $root;
     }
 	
+	
+	public function decorationListAction(){
+		$root = $this->getLayout('decoration_list');
+		$root->getChild('main', true)->setVariable('subtitle', 'Sales of Goods');
+        return $root;
+	}
+	
+	/** 
+    * addTemplateAction 
+    * return json for store decoration page
+    * @access public 
+    * @return object 
+    */
+	
 	public function addTemplateAction()
 	{
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
 		$data['store_id'] = $segment->get('customer')['store_id'];
 		$model = new StoreTemplate();
-        $model->setData($data);	
-		$model->save();
-		$result = ['status'=>true,'id'=>$model->getID()];	
+        
+        if($data['template_id']=='0')
+		{
+        	$model->setData($data);	
+			$model->save();
+			$template_id = $model->getID();
+		}
+		else{
+			$template_id = $data['template_id'];
+			unset($data['template_id']);
+//			$model->update($data,['id'=>$template_id]);
+			$model->load($template_id);
+			$model->setData($data);
+			$model->save();
+		}
+
+		$result = ['status'=>true,'id'=>$template_id];	
 		echo json_encode($result);
 	}
 	

@@ -65,7 +65,7 @@ retailer_account:
                                 params: [{link:'retailer/store/view',label:'View Store',priority:8,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/decoration',label:'Store Decoration',priority:9,group:'Store Management'}]
+                                params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/photo',label:'Photo Space',priority:10,group:'Store Management'}]
@@ -602,3 +602,17 @@ decoration_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/storeDecoration
+decoration_list:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationList

@@ -44,8 +44,8 @@ $sales_products = $this->getRetailerSalesProducts();
     </div>
     <div style="clear:both"></div>
 
-    <div class="seperation-title">共有出售中商品 4 条记录</div>
-    <hr class="seperation">
+    <div class="seperation-title">共有出售中商品 <span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
+   <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
             <tr>

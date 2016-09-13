@@ -1,0 +1,50 @@
+<?php
+$orders = $this->getOrders();
+$default = $this->getDefaultOrder();
+?>
+<form action="<?php echo $this->getBaseUrl('/sales/refund/save/') ?>" method="post" class="form-inline">
+    <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+    <div class="fieldset">
+        <div class="input-box">
+            <label for="order" class="control-label"><?php echo $this->translate('Order ID') ?></label>
+            <div class="cell">
+                <?php if (empty($orders)): ?>
+                    <input type="text" name="order_id" id="order" class="form-control required" />
+                <?php else: ?>
+                    <select name="order_id" id="order" class="form-control required">
+                        <option value=""><?php echo $this->translate('Please Select') ?></option>
+                        <?php foreach ($orders as $order): ?>  
+                            <option value="<?php echo $order['id'] ?>"<?php if ($order->getId() == $default || $order['increment_id'] == $default): ?> selected="selected"<?php endif ?>><?php echo $order['increment_id'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif ?>
+            </div>
+        </div>
+        <div class="input-box">
+            <label for="reason" class="control-label"><?php echo $this->translate('Reason') ?></label>
+            <div class="cell">
+                <textarea class="form-control required" name="comment" id="reason"></textarea>
+            </div>
+        </div>
+        <div class="input-box">
+            <label for="carrier" class="control-label"><?php echo $this->translate('Carrier') ?></label>
+            <div class="cell">
+                <input type="text" name="carrier" class="form-control" id="carrier" />
+            </div>
+        </div>
+        <div class="input-box">
+            <label for="track-number" class="control-label"><?php echo $this->translate('Track Number') ?></label>
+            <div class="cell">
+                <input type="text" name="track_number" id="track-number" class="form-control" />
+            </div>
+        </div>
+        <div class="buttons-set text-center">
+            <div class="cell">&nbsp;</div>
+            <div class="cell">
+                <button type="submit" class="btn btn-theme">
+                    <?php echo $this->translate('Submit') ?>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

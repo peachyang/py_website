@@ -1,0 +1,34 @@
+<?php
+$orders = $this->getOrders();
+?>
+<table class="table table-hover table-striped table-no-border text-center">
+    <thead class="sort-by">
+        <tr>
+            <th class="col-lg-2 col-xs-3 text-center"><?php echo $this->translate('ID'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Price'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Status'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Ordered Date'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Action'); ?></th>
+        </tr>
+    </thead>
+    <?php if (count($orders)): ?>
+        <tbody>
+            <?php foreach ($orders as $order): ?>  
+                <tr>
+                    <td><?php echo $order->offsetGet('increment_id') ?></td>
+                    <td><?php echo $order->getCurrency()->format($order->offsetGet('total')) ?></td>
+                    <td><?php echo $this->translate($order->getStatus()['name'], [], 'sales') ?></td>
+                    <td><?php echo $order->offsetGet('created_at') ?></td>
+                    <td><a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>"><?php echo $this->translate('View Details') ?></a></td>
+                </tr>             
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <?php echo $this->getChild('pager')->setCollection($orders) ?>
+                </td>
+            </tr>
+        </tfoot>
+    <?php endif ?>
+</table>

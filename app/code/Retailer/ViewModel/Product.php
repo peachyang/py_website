@@ -4,7 +4,7 @@ namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\Model\Collection\Goods as Collection;
+use Seahinet\Retailer\Model\Collection\Product as Collection;
 use Seahinet\Sales\Model\Collection\Order as Ocollection;
 use Seahinet\Sales\Model\Collection\Order\Item as Icollection;
 use Seahinet\Customer\Model\Customer as Cmodel;
@@ -12,7 +12,7 @@ use Seahinet\Catalog\Model\Product as Pmodel;
 use Seahinet\Sales\Model\Collection\Order\Status as Scollection;
 use Zend\Db\Sql\Expression;
 
-class Goods extends Template
+class Product extends Template
 {
     /** 
     * getRetailerTransaction  

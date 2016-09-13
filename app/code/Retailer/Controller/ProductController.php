@@ -10,10 +10,10 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
 
 /** 
-* Retailer submenu goods management controller
+* Retailer submenu products management controller
 * 
 */  
-class GoodsController extends AuthActionController
+class ProductController extends AuthActionController
 {
 
     public function indexAction()
@@ -32,7 +32,7 @@ class GoodsController extends AuthActionController
     
     /** 
     * releaseAction  
-    * Show release good view
+    * Show release product view
     * 
     * @access public 
     * @return object 
@@ -52,7 +52,7 @@ class GoodsController extends AuthActionController
                         ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
                 return $set->load()[0]['id'];
             });
-            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_goods_release' : 'retailer_goods_product_edit_' . $query['product_type']);
+            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_products_release' : 'retailer_products_product_edit_' . $query['product_type']);
             $root->getChild('head')->setTitle('Add New Product / Product Management');
             $root->getChild('content')->getChild('main')->setVariable('model', $model);
         }
@@ -61,7 +61,7 @@ class GoodsController extends AuthActionController
     
     /** 
     * salesAction  
-    * Show the list of under sale goods
+    * Show the list of under sale products
     * 
     * @access public 
     * @return object 
@@ -72,20 +72,20 @@ class GoodsController extends AuthActionController
         $order = Array(
             'type' => 'sales'
         );
-        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Goods')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('order', $order);
         return $root;
     }
     
     /** 
     * stockAction  
-    * Show the list of goods in stock
+    * Show the list of products in stock
     * 
     * @access public 
     * @return object 
     */
     public function stockAction()
     {
-        $root = $this->getLayout('retailer_goods');
+        $root = $this->getLayout('retailer_product');
         $order = Array(
             'type' => 'stock'
         );
@@ -95,14 +95,14 @@ class GoodsController extends AuthActionController
     
     /** 
     * historyAction  
-    * Show the list of history goods record
+    * Show the list of history products record
     * 
     * @access public 
     * @return object 
     */
     public function historyAction()
     {
-        $root = $this->getLayout('retailer_goods');
+        $root = $this->getLayout('retailer_product');
         $order = Array(
             'type' => 'history'
         );
@@ -172,7 +172,7 @@ class GoodsController extends AuthActionController
                 $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
-        return $this->response($result, 'retailer/goods/release/');
+        return $this->response($result, 'retailer/products/release/');
     }
     
 

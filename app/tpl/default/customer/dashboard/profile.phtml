@@ -19,7 +19,7 @@ $customer = $this->getCustomer();
         <div class="transaction">
             <span class="label"><?php echo $this->translate('My Orders') ?>:</span>
             <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>
-            <span><?php echo $this->translate('Shipping', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>
+            <span><?php echo $this->translate('Delivering', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>
             <span><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></span>
         </div>
     </div>

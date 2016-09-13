@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Model;
 
+use Seahinet\Catalog\Model\Collection\Product\Review;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Bootstrap;
@@ -295,6 +296,16 @@ class Order extends AbstractModel
             }
         }
         return $qty > 0;
+    }
+
+    public function canReview()
+    {
+        if ($this->getPhase()->offsetGet('code') !== 'complete') {
+            return false;
+        }
+        $collection = new Review;
+        $collection->where(['order_id' => $this->getId()]);
+        return (bool) $collection->count();
     }
 
     public function canShip()

@@ -32,7 +32,7 @@ class Search implements Provider
                             'CREATE TABLE `' . $table . '`(`id` INTEGER NOT NULL,`store_id` INTEGER NOT NULL,`data` LONGTEXT,PRIMARY KEY (`id`),CONSTRAINT FK_' .
                             strtoupper($table) . '_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,CONSTRAINT FK_' .
                             strtoupper($table) . '_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`id`) REFERENCES `prouct_entity`(`id`),FULLTEXT INDEX `FTI_' .
-                            strtoupper($table) . '_FULLTEXT_DATA` (`data`)) ENGINE=MyISAM;', $adapter::QUERY_MODE_EXECUTE
+                            strtoupper($table) . '_FULLTEXT_DATA` (`data`));', $adapter::QUERY_MODE_EXECUTE
                     );
                 } else {
                     $ddl = new Ddl\CreateTable($table);

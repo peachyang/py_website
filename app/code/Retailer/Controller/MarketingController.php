@@ -7,7 +7,7 @@ use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Lib\Session\Segment;
 
 /** 
-* Retailer submenu goods marketing controller
+* Retailer submenu products marketing controller
 * 
 */  
 class MarketingController extends AuthActionController
@@ -29,7 +29,7 @@ class MarketingController extends AuthActionController
     
     /** 
     * releaseAction  
-    * Show release good view
+    * Show release product view
     * 
     * @access public 
     * @return object 

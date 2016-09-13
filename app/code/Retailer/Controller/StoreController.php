@@ -8,17 +8,17 @@ use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
 
-/** 
-* Retailer submenu store management controller
-* 
-*/  
+/**
+ * Retailer submenu store management controller
+ * 
+ */
 class StoreController extends AuthActionController
 {
 
     public function indexAction()
     {
         $segment = new Segment('customer');
-        
+
         if ($customerId = $segment->get('customer')->getId()) {
             $customer = new Cmodel;
             $customer->load($customerId);
@@ -29,85 +29,84 @@ class StoreController extends AuthActionController
         return $root;
     }
 
-    /** 
-    * settingsAction  
-    * Show release good view
-    * 
-    * @access public 
-    * @return object 
-    */
-    public function settingsAction()
+    /**
+     * settingsAction  
+     * Show release product view
+     * 
+     * @access public 
+     * @return object 
+     */
+    public function settingAction()
     {
-        $root = $this->getLayout('retailer_store_settings');
+        $root = $this->getLayout('retailer_store_setting');
         return $root;
     }
-    
-    /** 
-    * cotegoryAction  
-    * Show category management view
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * cotegoryAction  
+     * Show category management view
+     * 
+     * @access public 
+     * @return object 
+     */
     public function cotegoryAction()
     {
         $root = $this->getLayout('retailer_store_category');
         return $root;
     }
-    
-    /** 
-    * photoAction  
-    * Show photo management view
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * photoAction  
+     * Show photo management view
+     * @access public 
+     * @return object 
+     */
     public function photoAction()
     {
         $root = $this->getLayout('retailer_store_photo');
         return $root;
     }
-    
-    /** 
-    * brandAction  
-    * Show brand management view
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * brandAction  
+     * Show brand management view
+     * @access public 
+     * @return object 
+     */
     public function brandAction()
     {
         $root = $this->getLayout('retailer_brand');
         return $root;
     }
-    
-     /** 
-    * viewAction  
-    * Show retailer store's home page
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * viewAction  
+     * Show retailer store's home page
+     * @access public 
+     * @return object 
+     */
     public function viewAction()
     {
         $root = $this->getLayout('view_store');
         return $root;
     }
-	
-	/**
-	 * temporary view
-	 * 
-	 */
-	
-	public function view1Action()
+
+    /**
+     * temporary view
+     * 
+     */
+    public function view1Action()
     {
         $root = $this->getLayout('view_store1');
         return $root;
     }
-	
-	/** 
-    * decorationAction  
-    * decorate store page
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * decorationAction  
+     * decorate store page
+     * @access public 
+     * @return object 
+     */
     public function decorationAction()
     {
         $root = $this->getLayout('decoration_store');

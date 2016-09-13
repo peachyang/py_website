@@ -7,7 +7,7 @@
     if ((float) $this->getCart()['tax']):
         ?>
         <tr>
-            <th><?php echo $this->translate('Tax') ?></th>
+            <th><?php echo $this->translate('Tax', [], 'checkout') ?></th>
             <td><?php echo $this->getCurrency()->format($this->getCart()['tax']) ?></td>
         </tr>
         <?php
@@ -17,7 +17,7 @@
     if ((float) $this->getCart()['shipping']):
         ?>
         <tr>
-            <th><?php echo $this->translate('Shipping') ?></th>
+            <th><?php echo $this->translate('Shipping', [], 'checkout') ?></th>
             <td><?php echo $this->getCurrency()->format($this->getCart()['shipping']) ?></td>
         </tr>
         <?php
@@ -28,7 +28,7 @@
         foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
             ?>
             <tr>
-                <th><?php echo $this->translate('Discount(' . $type . ')') ?></th>
+                <th><?php echo $this->translate('Discount(' . $type . ')', [], 'checkout') ?></th>
                 <td><?php echo $this->getCurrency()->convert($discount, true) ?></td>
             </tr>
             <?php
@@ -36,7 +36,7 @@
     endif;
     ?>
     <tr class="grand-total">
-        <th><?php echo $this->translate('Grand Total') ?></th>
+        <th><?php echo $this->translate('Grand Total', [], 'checkout') ?></th>
         <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>
     </tr>
 </table>

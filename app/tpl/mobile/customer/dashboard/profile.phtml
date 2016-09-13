@@ -12,15 +12,36 @@ $customer = $this->getCustomer();
             <span><?php echo $customer->offsetGet('username') ?></span>
             <span class="level"><?php echo $customer->getLevel() ?></span>
         </div>
-        <div class="balance">
-            <span class="label"><?php echo $this->translate('My Account') ?>:</span>
-            <span><?php echo $this->translate('Balance') ?><span class="count"><?php echo $this->getCurrency()->convert($customer->getBalance(), true) ?></span></span>
-        </div>
+
         <div class="transaction">
-            <span class="label"><?php echo $this->translate('My Orders') ?>:</span>
-            <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>
-            <span><?php echo $this->translate('Shipping', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>
+            <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>&nbsp;&nbsp;&nbsp;
+            <span><?php echo $this->translate('Shipping', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>&nbsp;&nbsp;&nbsp;
             <span><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></span>
         </div>
+        <div class="wishlist_track">
+            <ul class="col-xs-12 col-sm-12">
+                <li class="col-xs-6 col-sm-6 text-center">
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/"></a>
+                    <span><?php echo $this->translate('My Wishlist'); ?></span>
+                </li>
+                <li class="col-xs-6 col-sm-6 text-center">
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/history/"></a>
+                    <span><?php echo $this->translate('My Tracks'); ?></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="profile-foot">
+        <ul class="col-xs-12 col-sm-12">
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="<?php echo $this->getBaseUrl() ?>clothes.html"><?php echo $this->translate('Shopping'); ?></a>
+            </li>
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="#"><?php echo $this->translate('Enter the Store Center'); ?></a>
+            </li>
+            <li class="col-xs-4 col-sm-4 text-center">
+                <a href="<?php echo $this->getBaseUrl() ?>customer/account/logout/"><?php echo $this->translate('Log out'); ?></a>
+            </li>
+        </ul>
     </div>
 </div>

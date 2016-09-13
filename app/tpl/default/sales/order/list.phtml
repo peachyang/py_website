@@ -4,11 +4,11 @@ $orders = $this->getOrders();
 <table class="table table-hover table-striped table-no-border text-center">
     <thead class="sort-by">
         <tr>
-            <th class="col-lg-2 col-xs-12 text-center"><?php echo $this->translate('ID'); ?></th>
-            <th class="col-lg-2 col-xs-12 text-center"><?php echo $this->translate('Price'); ?></th>
-            <th class="col-lg-2 col-xs-12 text-center"><?php echo $this->translate('Status'); ?></th>
-            <th class="col-lg-2 col-xs-12 text-center"><?php echo $this->translate('Ordered Date'); ?></th>
-            <th class="col-lg-2 col-xs-12 text-center"><?php echo $this->translate('Action'); ?></th>
+            <th class="col-lg-2 col-xs-3 text-center"><?php echo $this->translate('ID'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Price'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Status'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Ordered Date'); ?></th>
+            <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Action'); ?></th>
         </tr>
     </thead>
     <?php if (count($orders)): ?>

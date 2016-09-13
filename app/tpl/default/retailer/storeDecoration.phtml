@@ -11,6 +11,7 @@
         <script type="text/javascript">
             var path = '';
             var template_id = <?php echo empty($templateView) ? 0 : $templateView['id'] ?>;
+            var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
         </script>
 
       
@@ -26,7 +27,7 @@
                             <button type="button" id="edit" class="active btn btn-primary"><i class="glyphicon glyphicon-edit "></i> 编辑</button>
                             <button type="button" class="btn btn-primary" id="sourcepreview"><i class="glyphicon-eye-open glyphicon"></i> 预览</button>
                             <button type="button" id="save" class="btn btn-warning float-right"><i class="fa fa-save"></i>&nbsp;保存</button>
-                            <button type="button" id="returns" class="btn btn-danger float-right"><i class="fa fa-arrow-right"></i>&nbsp;返回</button>
+                            <button type="button" id="returns" class="btn btn-danger float-right" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decorationList') ?>'" ><i class="fa fa-arrow-right"></i>&nbsp;返回</button>
                         </div> &nbsp;
                         <div class="btn-group" data-toggle="buttons-radio" id='add' style='display: none;'>
                             <button type="button" class="active btn btn-default" id="pc"><i class="fa fa-laptop"></i> Desktop</button>
@@ -1000,13 +1001,19 @@
     	{   layer.msg('亲, 请装修您的店铺吧, 加个表格试试先', {shade: [0.3,'#fff'],time: 2000});
     		return;
     	}
+    	if(!$("#edit").hasClass("active"))
+		{
+			$('.htmlpage .column').css('padding','39px 19px 24px');
+			htmls = $(".htmlpage").html();
+			$('.htmlpage .column').css('padding','11px');		
+		}
     	var code_model = htmls;
     	$("#download-layout .container .column").css("padding","7px");
     	var src_model = style_html($("#download-layout .container").html());
     	var titles = template_id == 0 ?'请输入模版名称':'请修改模板名称';
     	layer.prompt({
   			title: titles,
-  			value:'<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>',
+  			value:template_name,
   			formType: 0 //prompt风格，支持0-2
 			}, 
 			function(pass){
@@ -1026,8 +1033,18 @@
                 },
                 success: function (data) {
 					layer.closeAll();
+					var messages = "";
+					if(template_id == 0)
+					{
+						
+						template_id = data.id;
+						messages = '您已经保存了新的店铺模版,接下来您要';
+					}
+					else{
+						messages = '您已经修改了当前的店铺模版,接下来您要';
+					}
 					$(".store_template_name").html(' - ' + template_name);
-					layer.confirm('您已经保存了新的店铺模版,接下来您要', {
+					layer.confirm(messages, {
   						btn: ['继续店铺装修','查看当前装修的店铺'] 
 						}, function(){
 							layer.closeAll();

@@ -17,7 +17,7 @@ class Product extends PEdit
     
     public function getSaveUrl()
     {
-        return $this->getBaseUrl('retailer/goods/save');
+        return $this->getBaseUrl('retailer/products/save');
     }
     
     protected function prepareElements($columns = [])

@@ -78,6 +78,16 @@ abstract class AbstractModel extends ArrayObject
     }
 
     /**
+     * Get primary key name
+     * 
+     * @return string
+     */
+    public function getPrimaryKey()
+    {
+        return $this->primaryKey;
+    }
+
+    /**
      * Set primary key value
      * 
      * @param int|string $id

@@ -14,6 +14,8 @@ use Seahinet\Lib\Session\Segment;
 class AuthActionController extends ActionController
 {
 
+    use \Seahinet\Lib\Traits\DB;
+
     /**
      * {@inheritdoc}
      */
@@ -85,7 +87,7 @@ class AuthActionController extends ActionController
         return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
-    protected function doSave($modelName, $redirect = null, $required = [], $beforeSave = null)
+    protected function doSave($modelName, $redirect = null, $required = [], $beforeSave = null, $transaction = false)
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -96,8 +98,11 @@ class AuthActionController extends ActionController
                 } else {
                     $model = new $modelName($data);
                 }
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (!isset($data[$model->getPrimaryKey()]) || (int) $data[$model->getPrimaryKey()] === 0) {
                     $model->setId(null);
+                }
+                if ($transaction) {
+                    $this->beginTransaction();
                 }
                 if ($beforeSave instanceof Closure) {
                     $beforeSave($model, $data);
@@ -106,7 +111,13 @@ class AuthActionController extends ActionController
                     $model->save();
                     $result['data'] = $model->getArrayCopy();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                    if ($transaction) {
+                        $this->commit();
+                    }
                 } catch (Exception $e) {
+                    if ($transaction) {
+                        $this->rollback();
+                    }
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;

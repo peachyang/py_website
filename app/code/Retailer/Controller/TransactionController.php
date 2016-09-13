@@ -26,19 +26,19 @@ class TransactionController extends AuthActionController
     }
     
     /** 
-    * goodsAction  
-    * Show retailer sold goods list
+    * productsAction  
+    * Show retailer sold products list
     * 
     * @access public 
     * @return object 
     */ 
-    public function goodsAction()
+    public function productAction()
     {
-        $root = $this->getLayout('retailer_goods');
+        $root = $this->getLayout('retailer_product');
         $order = Array(
             'type' => 'sold'
         );
-        $root->getChild('main', true)->setVariable('subtitle', 'Sold Goods')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'Sold Product')->setVariable('order', $order);
         return $root;
     }
     
@@ -53,7 +53,7 @@ class TransactionController extends AuthActionController
     {
         $sales_id = $this->getRequest()->getQuery('sales_id');
         if(empty($sales_id) || !is_numeric($sales_id)){
-            return $this->redirect('retailer/transaction/goods/');
+            return $this->redirect('retailer/transaction/products/');
         }
         $root = $this->getLayout('retailer_order_view');
         return $root;

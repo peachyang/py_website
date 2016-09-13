@@ -3,7 +3,7 @@ namespace Seahinet\Retailer\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
 
-class Goods extends AbstractCollection
+class Product extends AbstractCollection
 {
 
     protected function construct()

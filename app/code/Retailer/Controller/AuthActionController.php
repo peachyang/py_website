@@ -21,14 +21,14 @@ abstract class AuthActionController extends ActionController
             $model->load($session->get('customer')->getId());
             if (in_array($action, ['apply', 'reapply', 'processing'])) {
                 if ($model->offsetGet('status')) {
-                    return $this->redirect('retailer/account/');
+//                    return $this->redirect('retailer/account/');
                 } else if ($action === 'apply' && $model->getId()) {
-                    return $this->redirect('retailer/account/processing/');
+//                    return $this->redirect('retailer/account/processing/');
                 }
             } else if (!$model->getId()) {
                 //return $this->redirect('retailer/account/apply/');
             } else if (!$model->offsetGet('status')) {
-                return $this->redirect('retailer/account/processing/');
+//                return $this->redirect('retailer/account/processing/');
             }
         }
         return parent::dispatch($request, $routeMatch);

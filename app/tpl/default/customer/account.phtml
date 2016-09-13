@@ -4,7 +4,7 @@
     </div>
     <main class="col-main col-xs-9 col-sm-9 col-md-10">
         <?php if ($title = $this->getVariable('title')): ?>
-            <h2 class="page-title"><?php echo $this->translate($title) ?></h2>
+            <h2 class="page-title"><span><?php echo $this->translate($title) ?></span></h2>
         <?php endif ?>
         <?php echo $this->getChild('messages') ?>
         <div class="page-content">

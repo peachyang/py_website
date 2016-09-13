@@ -45,8 +45,7 @@ class Pager extends Template
     {
         $this->collection = clone $collection;
         $this->collection->reset('limit')
-                ->reset('offset')
-                ->columns(['id']);
+                ->reset('offset');
         $this->collection->load();
         return $this;
     }

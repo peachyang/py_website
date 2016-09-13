@@ -13,7 +13,7 @@ Options FollowSymLinks
     SecFilterScanPOST Off
 </IfModule>
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript image/svg+xml
+    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript image/svg+xml
     #BrowserMatch ^Mozilla/4 gzip-only-text/html
     #BrowserMatch ^Mozilla/4\.0[678] no-gzip
     #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
@@ -67,6 +67,14 @@ Allow from all
     Order allow,deny
     Deny from all
 </FilesMatch>
+<FilesMatch \.xml$>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+<FilesMatch sitemap\.xml$>
+    Order allow,deny
+    Allow from all
+</FilesMatch>
 ############################################
 ## APACHE 2.4
 ##
@@ -76,4 +84,10 @@ Allow from all
 #</FilesMatch>
 #<FilesMatch \.ya?ml$>
 #    Require all denied
+#</FilesMatch>
+#<FilesMatch \.xml$>
+#    Require all denied
+#</FilesMatch>
+#<FilesMatch sitemap\.xml$>
+#    Require all granted
 #</FilesMatch>

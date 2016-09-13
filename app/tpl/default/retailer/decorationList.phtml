@@ -1,5 +1,5 @@
 <?php
-  
+  $templates = $this->getTemplateList();
 ?>
 <main class="col-main col-xs-9 col-sm-9 col-md-10 mg-bottom-40 sales-products">
     <div class="wishlist decorationlist">
@@ -9,37 +9,64 @@
 
     <div class="seperation-title"><span class="title">主题模版</span> 共有  4 条记录</div>
     <hr class="seperation">
-    <div class="products-content">
-
-        <div class="clearfix mg-bottom-10"></div>
-
-       <div>
-
-        </div>
+    <div class="decoration-content">
+     <ul>
+     	<li>
+     	<div class="top">
+     		<div class="position1">模版1</div>
+     		<div class="position2"><button class="btn btn-danger btn-sm">使用该模版</button></div>
+     	</div>
+     	<div class="bottom">经典模版</div>	
+     	</li>
+     	
+     	     	<li>
+     	<div class="top">
+     		<div class="position1">模版1</div>
+     		<div class="position2"><button class="btn btn-danger btn-sm">使用该模版</button></div>
+     	</div>
+     	<div class="bottom">经典模版</div>	
+     	</li>
+     	
+     </ul>
+     
         
-        <div class="page-block">
-            <div>
+        <div class="page-block" style="clear:both">
+        <div>
 
-            </div>
+         </div>
         </div>
     </div>
     
-    <div class="seperation-title"><span class="title">我的模版</span> <span>共有  4 条记录</span> &nbsp;&nbsp;&nbsp; <button class="btn btn-primary">新建模版</button></div>
+    <div class="seperation-title"><span class="title">我的模版</span> <span>共有  4 条记录</span> &nbsp;&nbsp;&nbsp; <button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration') ?>'">新建模版</button></div>
     <hr class="seperation">
-    <div class="products-content">
-
-        <div class="clearfix mg-bottom-10"></div>
-
-       <div>
-
-        </div>
+    <div class="decoration-content">
+     <ul>
+     	
+     	<?php foreach ($templates as $key => $template) { ?>
+     	
+     	<li>
+     	<div class="top">
+     		<div class="position1">模版1</div>
+     		<div class="position3">
+     			<button class="btn btn-success btn-sm" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id='.$template['id']) ?>'" >修改</button>
+     			<button class="btn btn-danger btn-sm">删除</button>
+					<button class="btn btn-info btn-sm">设为当前模版</button>
+					</div>
+     	</div>
+     	<div class="bottom"><?php echo $template['template_name'] ?></div>	
+     	</li>
+    <?php } ?> 
+     
+     </ul>
+     
         
-        <div class="page-block">
-            <div>
+        <div class="page-block" style="clear:both">
+        <div>
 
-            </div>
+         </div>
         </div>
     </div>
+    
     
     <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">
         <div class="modal-dialog" role="document">
@@ -136,3 +163,18 @@
     </div>
     </div>
 </main>
+<script>
+	$(function(){
+		$(".decorationlist .decoration-content li div.top").mouseover(function(){
+			$(this).find('.position2').show();
+			$(this).find('.position3').show();
+		});
+		
+	$(".decorationlist .decoration-content li div.top").mouseout(function(){
+			$(this).find('.position2').hide();
+			$(this).find('.position3').hide();
+		});
+		
+		
+	});
+</script>

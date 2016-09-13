@@ -144,7 +144,6 @@ class StoreController extends AuthActionController
 		else{
 			$template_id = $data['template_id'];
 			unset($data['template_id']);
-//			$model->update($data,['id'=>$template_id]);
 			$model->load($template_id);
 			$model->setData($data);
 			$model->save();
@@ -152,6 +151,21 @@ class StoreController extends AuthActionController
 
 		$result = ['status'=>true,'id'=>$template_id];	
 		echo json_encode($result);
+	}
+	
+	public function delTemplateAction(){
+		$data = $this->getRequest()->getPost();
+		$segment = new Segment('customer');
+		$store_id = $segment->get('customer')['store_id'];
+		
+		$model = new StoreTemplate();
+		$model->load($data['id']);
+		
+		
+	}
+	
+	public function setTemplateAction(){
+		
 	}
 	
 	

@@ -8,6 +8,7 @@ use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Lib\Session\Segment;
 use Zend\Db\Sql\Expression;
 
+
 class StoreDecoration extends Template
 {
     /**  
@@ -16,7 +17,7 @@ class StoreDecoration extends Template
     * @access public 
     * @return object 
     */ 
-    public function getTemplateView()
+    public function getTemplateView($model = 0)
     {
 		
 		$id = $this->getQuery('id');
@@ -33,8 +34,16 @@ class StoreDecoration extends Template
 			
 		if( $templateView['store_id'] != $segment->get('customer')['store_id'])
 			$templateView = [];
+		
+		if(!empty($templateView))
+			$templateView = $this->changeModel($templateView,$model);
+		
 		return $templateView;				 		      
     }
+	
+	public function changeModel($view,$model){
+       return $view;
+	}
 	
 	/**  
     * Get store template list

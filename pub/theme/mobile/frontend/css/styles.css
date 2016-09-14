@@ -58,7 +58,6 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .info-num{width:40px;height:40px;background:#0185d7;margin:10px auto;line-height:40px;font-size:18px;color:#fff}
 .customer-account-dashboard .profile .info .wishlist_track li{line-height:40px;margin-top:10px}
 .customer-account-dashboard .profile .info .wishlist_track a{width:50px;height:50px;background:#0185d7;display:block;margin:0 auto}
-
 .customer-account-dashboard .profile .info .order .panel-title{display:inline-block}
 .customer-account-dashboard .profile .info .order .panel-title span{float:right;display:block}
 .customer-account-dashboard .info-box{float:left;width:33.33333333%;font-size:12px}

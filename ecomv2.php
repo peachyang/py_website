@@ -871,9 +871,11 @@ CREATE TABLE IF NOT EXISTS `customer_in_group` (
 CREATE TABLE IF NOT EXISTS `customer_level` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Customer level ID',
     `level` INTEGER NOT NULL DEFAULT 0 COMMENT 'Customer level',
+    `amount` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Amount',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
     `updated_at` DATETIME NULL DEFAULT NULL COMMENT 'Updated time',
     PRIMARY KEY (`id`),
+    INDEX IDX_CUSTOMER_LEVEL_AMOUNT (`amount`),
     CONSTRAINT UNQ_CUSTOMER_LEVEL_LEVEL UNIQUE (`level`)
 );
 

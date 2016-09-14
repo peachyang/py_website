@@ -139,6 +139,7 @@ class CartController extends ActionController
             if (!$wishlist->getId()) {
                 $wishlist->setData('customer_id', $segment->get('customer')['id'])->save();
             }
+            $result['removeLine'] = [];
             try {
                 $this->beginTransaction();
                 foreach ((array) $data['id'] as $id) {
@@ -146,6 +147,7 @@ class CartController extends ActionController
                     if ($item) {
                         $wishlist->addItem($item->toArray());
                         $result['message'][] = ['message' => $this->translate('"%s" has been moved to your wishlist.', [$item['product']['name']], 'checkout'), 'level' => 'success'];
+                        $result['removeLine'][] = $item->getId();
                         Cart::instance()->removeItem($item);
                     }
                 }

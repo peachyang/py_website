@@ -11,7 +11,7 @@ class Item extends AbstractModel
     protected function construct()
     {
         $this->init('wishlist_item', 'id', [
-            'id', 'wishlist_id', 'product_id', 'product_name', 'sku', 'warehouse_id',
+            'id', 'wishlist_id', 'product_id', 'product_name', 'warehouse_id',
             'store_id', 'qty', 'options', 'description', 'price'
         ]);
     }

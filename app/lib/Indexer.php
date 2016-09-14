@@ -58,7 +58,7 @@ class Indexer implements Stdlib\Singleton
      * @param int $languageId
      * @param array $constraint
      */
-    public function delete($entityType, $languageId, $constraint)
+    public function delete($entityType, $languageId, $constraint = [])
     {
         $this->getHandler($entityType)->delete($languageId, $constraint);
     }
@@ -93,7 +93,7 @@ class Indexer implements Stdlib\Singleton
      * @param array $constraint
      * @return array
      */
-    public function select($entityType, $languageId, $constraint)
+    public function select($entityType, $languageId, $constraint = [])
     {
         return $this->getHandler($entityType)->select($languageId, $constraint);
     }
@@ -106,7 +106,7 @@ class Indexer implements Stdlib\Singleton
      * @param array $values
      * @param array $constraint
      */
-    public function update($entityType, $languageId, $values, $constraint)
+    public function update($entityType, $languageId, $values, $constraint = [])
     {
         $this->getHandler($entityType)->update($languageId, $values, $constraint);
     }
@@ -119,7 +119,7 @@ class Indexer implements Stdlib\Singleton
      * @param array $values
      * @param array $constraint
      */
-    public function upsert($entityType, $languageId, $values, $constraint)
+    public function upsert($entityType, $languageId, $values, $constraint = [])
     {
         $this->getHandler($entityType)->upsert($languageId, $values, $constraint);
     }

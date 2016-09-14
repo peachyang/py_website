@@ -58,7 +58,7 @@ $inventory = $item->getInventory();
         <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>
     </td>
     <td class="text-nowrap actions">
-        <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/?csrf='), $this->getCsrfKey(), '&id=', $item['id'] ?>">
+        <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-params="csrf=<?php echo $this->getCsrfKey() ?>&<?php echo http_build_query($item->toArray()) ?>">
             <span><?php echo $this->translate('Move to Wishlist') ?></span>
         </a><br /> 
         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/?csrf='), $this->getCsrfKey(), '&id=', $item['id'] ?>">

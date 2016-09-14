@@ -69,3 +69,25 @@ catalog:
                     label: Akismet API Key
                     comment: Sign up for API key from <a href="https://akismet.com/">Akismet</a>
                     priority: 30
+        sitemap:
+            label: Sitemap
+            scope: merchant
+            children:
+                filename:
+                    type: text
+                    label: Filename
+                    comment: 'Example: sitemap'
+                    default: sitemap
+                    priority: 0
+                path:
+                    type: text
+                    label: Path
+                    comment: 'Example: "sitemap/" or "/" for base path (path must be writeable)'
+                    default: '/'
+                    priority: 10
+                generate:
+                    type: link
+                    label: Generate
+                    link: catalog_sitemap/
+                    content: Generate Now
+                    priority: 20

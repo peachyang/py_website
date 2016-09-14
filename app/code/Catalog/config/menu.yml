@@ -28,6 +28,10 @@ catalog:
             link: catalog_product_rating/
             title: Rating Management
             priority: 35
+        -
+            link: catalog_sitemap/
+            title: XML Sitemap
+            priority: 40
 system:
     children:
         -

@@ -12,16 +12,21 @@ class StoreTemplateCollection extends AbstractCollection
 
     }
 	
-     public function storeTemplateList($store = null)
+    public function storeTemplateList($store = null,$status='')
     {
         if (is_null($store)) {
             $store = Bootstrap::getStore()->getId();
         } else if (is_object($store) || is_array($store)) {
             $store = $store['id'];
         }
-
-		$this->select->where->equalTo('store_id',$store);
+			
+		if(!empty($status))
+			$this->select->where->equalTo('store_id',$store)->equalTo('status',$status);
+		else
+			$this->select->where->equalTo('store_id',$store);
         return $this;
     }
+	
+	
     
 }

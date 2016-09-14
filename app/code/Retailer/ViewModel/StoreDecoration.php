@@ -20,11 +20,19 @@ class StoreDecoration extends Template
     {
 		
 		$id = $this->getQuery('id');
-		$template = new StoreTemplate();
-		$templateView = $template->load($id);
-		$segment = new Segment('customer');
+		$segment = new Segment('customer');	
+		if(!empty($id)){		
+			$template = new StoreTemplate();
+			$templateView = $template->load($id);
+		}else{
+			$template = new StoreTemplateCollection();
+			$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
+			if(count($templateViewCollection))
+				$templateView = $templateViewCollection[0];
+		}
+			
 		if( $templateView['store_id'] != $segment->get('customer')['store_id'])
-		$templateView = [];
+			$templateView = [];
 		return $templateView;				 		      
     }
 	

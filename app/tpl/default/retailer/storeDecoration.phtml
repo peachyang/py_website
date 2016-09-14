@@ -281,7 +281,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="htmlpage" style="width:1100px;margin:0px auto" > 
+                      <div class="col-md-12">
+            <div class="banner">
+                <img src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/home_banner.jpg')?>" style='width:1100px' />
+            </div>
+        </div>
+                <div class="htmlpage" style="width:1100px;margin:0px auto;margin-top:390px" > 
+                 
                  <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>              
                 </div>
             </div>
@@ -1022,12 +1028,12 @@
     	    	
     }
     
-    function saveDataFinal(code_model,src_model,template_name){
+    function saveDataFinal(code_model,src_model,template_names){
     	$.ajax({
                 url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
                 type: "post",
                 dataType: 'json',
-                data:{code_model:code_model,src_model:src_model,template_name:template_name,template_id:template_id},
+                data:{code_model:code_model,src_model:src_model,template_name:template_names,template_id:template_id},
                 beforeSend:function(){
                 	layer.msg(' 保存中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
                 },
@@ -1038,6 +1044,7 @@
 					{
 						
 						template_id = data.id;
+						template_name = template_names;
 						messages = '您已经保存了新的店铺模版,接下来您要';
 					}
 					else{

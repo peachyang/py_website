@@ -37,7 +37,7 @@
         </div>
     </div>
     
-    <div class="seperation-title"><span class="title">我的模版</span> <span>共有  4 条记录</span> &nbsp;&nbsp;&nbsp; <button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration') ?>'">新建模版</button></div>
+    <div class="seperation-title"><span class="title">我的模版</span> <span>共有  4 条记录</span> &nbsp;&nbsp;&nbsp; <button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'">新建模版</button></div>
     <hr class="seperation">
     <div class="decoration-content">
      <ul>
@@ -45,12 +45,12 @@
      	<?php foreach ($templates as $key => $template) { ?>
      	
      	<li>
-     	<div class="top">
+     	<div class="top <?php echo $template['status']==1 ? 'active' : '' ?>">
      		<div class="position1">模版1</div>
      		<div class="position3">
      			<button class="btn btn-success btn-sm" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id='.$template['id']) ?>'" >修改</button>
-     			<button class="btn btn-danger btn-sm">删除</button>
-					<button class="btn btn-info btn-sm">设为当前模版</button>
+     			<button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
+					<button class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>' >设为当前模版</button>
 					</div>
      	</div>
      	<div class="bottom"><?php echo $template['template_name'] ?></div>	
@@ -175,6 +175,55 @@
 			$(this).find('.position3').hide();
 		});
 		
+		
+	});
+	
+	$('.delTemplateBtn').click(function(){
+			    	var template_id = $(this).attr("template_id");
+			    	var obj = $(this);
+			    	$.ajax({
+                url: '<?php echo $this->getBaseUrl('/retailer/store/delTemplate') ?>',
+                type: "post",
+                dataType: 'json',
+                data:{id:template_id},
+                beforeSend:function(){    	
+                },
+                success: function (data) {
+									if(data.status)
+									{
+										obj.closest("li").remove();
+									}
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
+		
+	});
+	
+		$('.setTemplateBtn').click(function(){
+			    	var template_id = $(this).attr("template_id");
+			    	var obj = $(this);
+			    	$.ajax({
+                url: '<?php echo $this->getBaseUrl('/retailer/store/setTemplate') ?>',
+                type: "post",
+                dataType: 'json',
+                data:{id:template_id},
+                beforeSend:function(){    	
+                },
+                success: function (data) {
+									if(data.status)
+									{ 
+										$(".decoration-content div.top").removeClass('active');
+										obj.closest("div.top").addClass('active');
+									}
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
 		
 	});
 </script>

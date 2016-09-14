@@ -666,4 +666,16 @@ CREATE TABLE IF NOT EXISTS `customer_account`(
     CONSTRAINT FK_CUSTOMER_ACCOUNT_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `store_decoration_template` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Template ID',
+    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `template_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Template name',
+    `code_model` text COMMENT 'Code model',
+    `src_model` text COMMENT 'Src model',
+    `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
+    PRIMARY KEY (`id`),
+    INDEX IDX_STORE_DECORATION_TEMPLATE_STORE_ID (`store_id`),
+    CONSTRAINT FK_STORE_DECORATION_TEMPLATE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 SET FOREIGN_KEY_CHECKS=1;

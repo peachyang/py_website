@@ -57,15 +57,16 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .info {text-align:center}
 .customer-account-dashboard .info-num{width:40px;height:40px;background:#0185d7;margin:10px auto;line-height:40px;font-size:18px;color:#fff}
 .customer-account-dashboard .profile .info .wishlist_track li{line-height:40px;margin-top:10px}
-.customer-account-dashboard .profile .info .wishlist_track a{width:50px;height:50px;background:#0185d7;display:block;margin:0 auto}
-
+.customer-account-dashboard .profile .info .wishlist_track a{width:50px;height:50px;line-height:50px;background:#0185d7;display:block;margin:0 auto}
 .customer-account-dashboard .profile .info .order .panel-title{display:inline-block}
 .customer-account-dashboard .profile .info .order .panel-title span{float:right;display:block}
 .customer-account-dashboard .info-box{float:left;width:33.33333333%;font-size:12px}
 .customer-account-dashboard .title-content{height:30px;background:#fff;margin-top:10px;border-width:0 0 1px;border-style:solid;border-color:#eff0f4}
 .customer-account-dashboard .order{background:#ffffff;margin-bottom:5px}
-.customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4}
+.customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4;padding:10px 10px}
 .customer-account-dashboard .order h3 {line-height:30px;display:inline-block;width:100%}
+.customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}
+.customer-account-dashboard .order h3 .text-right{color:#b5b5b5}
 .customer-account-dashboard .order h3 a{display: block;float:right;color:#b5b5b5;padding-top:7px}
 .customer-account-dashboard .order .panel-info li{line-height:40px;margin-top:10px}
 .customer-account-dashboard .order .panel-info li a{display:block;margin:0 auto;color:#b5b5b5}
@@ -73,6 +74,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .custom-info .panel-heading{border-bottom:1px solid #eff0f4}
 .customer-account-dashboard .custom-info h3{line-height: 30px;width:100%;display:inline-block}
 .customer-account-dashboard .custom-info h3 a{width:10%;display:block;float:right;color:#b5b5b5;padding-top:7px}
+.customer-account-dashboard .custom-info h3 .fa{color:#007ecc;padding-right:5px}
+.customer-account-dashboard .custom-info h3 .text-right{color:#b5b5b5}
 .customer-account-dashboard .profile-foot{position:fixed;z-index:1000;bottom:0;height:50px;background:#ffffff;width:100%;color:#5a5a5a;line-height:50px}
 .customer-account-dashboard .notop{margin-top:0;padding-left:4px}
 .customer-account-dashboard .title-content .title-left{float:left;margin-left:20px;color:#007ecc;font-size:20px;line-height:30px;}
@@ -92,7 +95,10 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .content-box .fa-credit-card-alt{font-size:22px}
 .customer-account-dashboard .num-span{color:#2387cf}
 .customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
+.customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
 .customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
+.customer-account .profile .info .name .badge{position: absolute;display: block;top: -3px;right: 135px;background: #fdbb30;font-size: 12px;line-height: 14px;padding: 0 5px;border-radius: 2px;color: #fff;width:20px;height:20px}
+.customer-account .profile .info .name .level{position:relative;z-index:1;left: 4px;top: -2px;}
 .customer-account .header-m{width:100%;height:50px;line-height:50px;background:#007ecc;color:#ffffff}
 .customer-account .header-m a{height:50px;line-height:50px}
 .customer-account .header-m .container{font-size:20px;line-height:50px}
@@ -101,6 +107,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account .fieldset .input-box input{margin-top:3px}
 .customer-account .fieldset .input-box label{width:23%;text-align:right}
 .customer-account .fieldset .input-box .cell{width:77%;float:right}
+.sales-refund .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
+.customer-account-edit .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
 .wrapperhovertree {text-align:right;min-height: 100%;height:auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;

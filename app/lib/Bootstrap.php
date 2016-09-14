@@ -84,9 +84,9 @@ final class Bootstrap
         if (is_null(static::$container)) {
             static::init($server);
         }
-        static::$eventDispatcher->trigger('route', ['routers' => static::$container->get('config')['route']]);
-        static::$eventDispatcher->trigger('render', ['response' => static::$container->get('response')->getData()]);
-        static::$eventDispatcher->trigger('respond', ['response' => static::$container->get('response')]);
+        static::$eventDispatcher->trigger('route', ['routers' => static::getContainer()->get('config')['route']]);
+        static::$eventDispatcher->trigger('render', ['response' => static::getContainer()->get('response')->getData()]);
+        static::$eventDispatcher->trigger('respond', ['response' => static::getContainer()->get('response')]);
     }
 
     /**
@@ -119,7 +119,7 @@ final class Bootstrap
     private static function handleConfig($config)
     {
         if (isset($config['event'])) {
-            static::$eventDispatcher = static::$container->get('eventDispatcher');
+            static::$eventDispatcher = static::getContainer()->get('eventDispatcher');
             foreach ($config['event'] as $name => $events) {
                 if (!is_array($events)) {
                     $events = [$events];

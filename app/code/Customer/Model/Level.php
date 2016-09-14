@@ -10,7 +10,7 @@ class Level extends AbstractModel
 
     protected function construct()
     {
-        $this->init('customer_level', 'id', ['id', 'level']);
+        $this->init('customer_level', 'id', ['id', 'level', 'amount']);
     }
 
     protected function beforeSave()

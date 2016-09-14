@@ -27,3 +27,9 @@ $attributes = $this->getAddressAttribute();
         </li>
     <?php endforeach ?>
 </ul>
+<div class="btn sub-add">
+    <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
+        <span class="fa fa-plus" aria-hidden="true"></span>
+        <span><?php echo $this->translate('Add New Address') ?></span>
+    </button>
+</div>

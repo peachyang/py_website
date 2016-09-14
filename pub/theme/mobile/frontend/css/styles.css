@@ -134,7 +134,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .product-essential .product-info .selected a{width:90%;margin:0 5%;padding: 10px 0;display:inline-block}
 .product-essential .product-info .modal-dialog{position:absolute;bottom:0;width:100%;margin:0}
 .product-essential .product-info .modal-dialog .options{margin-bottom:30px}
-.product-essential .product-info .modal-dialog　.options .cell{display: table-cell;padding-bottom: 15px;}
+.product-essential .product-info .modal-dialog銆�.options .cell{display: table-cell;padding-bottom: 15px;}
 .product-essential .product-info .modal-dialog .options .cell [type=radio], .product-essential .product-info .options .cell [type=checkbox]{display:none}
 .product-essential .product-info .options .cell [type=radio]+label, .product-essential .product-info .options .cell [type=checkbox]+label{margin: 0 8px 10px 0;line-height: 26px;border: 1px solid #f4f4f4;color: #333;padding: 0 6px;border-radius:10px;background:#e7e7e7}.product-essential .product-info .options .cell [type=radio]:checked+label, .product-essential .product-info .options .cell [type=checkbox]:checked+label{border-color: #ff8a00;color: #ffffff;background:#ff8a00;border-radius:10px}
 .product-essential .product-info .options label, .radio label{padding-left:0;margin-bottom:10px}
@@ -264,3 +264,5 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-steps .grand-total .buttons-set{background:#ffb900;color:#fff;text-align: center}
 .checkout-steps .grand-total .buttons-set .btn{background:#ffb900;text-align:center;padding:0}
 .col-xs-3{display:inline-block}
+
+

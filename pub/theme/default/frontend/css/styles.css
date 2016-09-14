@@ -687,5 +687,81 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist .decoration-content li div.top .position3{position: absolute;left:10px;top:185px;display:none}
 .decorationlist .decoration-content li div.bottom{width:220px;margin-top:6px;font-size:16px}
 /* end */
-
-.page-home .menu .menu_left{float:left}.page-home .menu .menu_contre{float:left;margin:0 8px}.page-home .menu .menu_left .menus{background-color:#f5f6f9;width:168px}.page-home .menu .menu_left .menus li{padding:7px 0;margin-left:7px}.page-home #myTabContent #two li{width:100%}.page-home .menu .menu_left .menus li a{padding:0;margin-left:3px}.page-home .menu  .menu_contre_top{margin:10px 0}.page-home .menu  .menu_contre_bt{margin:10px 0}.page-home .menu  .menu_contre_bt .menu_bt_a{width:206px;height:125px;border:1px solid #eee;float:left}.page-home .menu  .menu_contre_bt .menu_ad{float:left;padding:20px 0  10px 10px}.page-home .menu  .menu_contre_bt .menu_ad h4{font-size:16px;color:#007dc6;padding:3px 0}.page-home .menu  .menu_contre_bt .menu_ad h5{color:#d42f53}.page-home .menu  .menu_contre_bt .menu_ad_img{padding-top:5px}.page-home .menu  .menu_right{float:left;margin-top:10px}.page-home .menu  .menu_right .menu_rg_top{width:190px;height:240px}.page-home .menu  .menu_right .menu_rg_bt{border:1px solid #eee;width:190px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.page-home .menu  .menu_right  img{width:190px;height:242px}.page-home .menu  .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}.page-home .menu  .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis}.page-home .menu  .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px}.page-home .menu  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}.page-home .menu  .nav-tabs{border-bottom:1px solid #fdcb60}.page-home .menu  .nav-tabs a{font-size:14px}.page-home .menu  .nav-tabs li{width:94px}.page-home .menu .nav-tabs>li>a{margin-right:0px;line-height:1.42857143;border:none;border-radius:0}.page-home /*brand*/.brand h4{color:#000;font-weight:bold}.page-home .brand_title{margin-top:50px;margin-bottom:15px}.page-home .brand .brand_left{float:left}.page-home .brand  .brand_right li{border:1px solid #eee;width:119px;height:75px;position:relative;border-right:none;border-bottom:none}.page-home .border_right{border-right:1px solid #eee!important}.page-home .brand_d li{border-bottom:1px solid #eee!important}.page-home .brand  .brand_right li a{display:block;height:100%}.page-home .brand  .brand_right{float:left}.page-home .brand  .brand_right ul{margin-left:30px}.page-home .brand  .brand_right li img{position:absolute;margin:auto;top:0;bottom:0;left:0;right:0}.page-home .clothing  .clothing_left{float:left;margin:0 5px}.page-home .clothing  .clothing_left img{border:1px solid #eee;width:154px;height:197px}.page-home .clothing .clothing_tilte{display:inline-block;position:absolute;top:0;margin-left:100px;padding:10px 0}.page-home .clothing .clothing_tilte li{list-style:square;padding:0 15px 0 2px}.page-home .clothing_ct{float:left;margin:0 9px}.page-home .clothing_ct img{border:1px solid #eee}.page-home .clothing .clothing_left img{border:1px solid #eee;margin:2px 0}.page-home .border_rg{border-right:none!important}.page-home .border_lt{border-left:none!important}.page-home .clothing .img_two{margin:0 0 0 -10px}.page-home .clothing_right{width:154px;height:197px;float:right;border:1px solid #eee;padding:5px 0}.page-home .clothing_right li{float:left}.page-home .clothing_right li a{padding:0 10px}.page-home .font-color{color:red}.page-home .electron_left{float:left}.page-home .electron .electron_left img{border:1px solid #eee}.page-home .electron_menu{width:295px;height:212px;border:1px solid #eee;text-align:center;background-color:#fbfbfb;margin-top:10px;display:inline-block}.page-home .electron_menu li a{padding:10px;color:#79797a;vertical-align:middle}.page-home .electron_menu_ul .menu_top{margin-top:5px}.page-home .electron_menu_ul .menu_top li{padding:0 10px}.page-home .electron_menu_ul .menu_bt li{padding:0 50px}.page-home .electron_ct_top{height:280px;overflow:hidden}.page-home .elct_top_l,.elct_top_r{float:left}.page-home .elct_top_r img{margin:2px 0;border:1px solid #eee}.page-home .elct_top_l{margin:1px 12px 0 12px}.page-home .electron_ct_bt img{border:1px solid #eee;width:216px;height:250px}.page-home .electron_ct_bt ul{padding-left:19px}.page-home .electron_ct_bt ul li{margin:7px 0px 0 10px}.page-home .bg_img{width:100%;height:40px;display:inline-block;background-repeat:no-repeat;padding:10px 30px;position:relative}.page-home .electron .bg_img{padding:0 30px}.page-home .electron .clothing_tilte{padding:0}.page-home .carousel-indicators{bottom:10px;margin-left:0}.page-home .carousel-indicators li{margin:0 3px;width:12px;height:12px}
+.page-home .container{position: relative;}
+.page-home .menu .menu_left{float:left}
+.page-home .menu .menu_contre{float:left;margin:0 8px;}
+.page-home .menu .menu_left .menus{background-color:#f5f6f9;width:168px}
+.page-home .menu .menu_left .menus li{padding:9px 0;margin-left:7px}
+.page-home #myTabContent #two li{width:100%}
+.page-home .menu .menu_left .menus li a{padding:0;margin-left:3px}
+.page-home .menu .menu_contre_top{margin:14px 0}
+.page-home .menu .menu_contre_bt{margin:10px 0}
+.page-home .menu .menu_contre_bt .menu_bt_a{width:204px;height:125px;border:1px solid #eee;float:left}
+.page-home .menu .menu_contre_bt .menu_ad{float:left;padding:20px 0  10px 10px}
+.page-home .menu .menu_contre_bt .menu_ad h4{font-size:16px;color:#007dc6;padding:3px 0}
+.page-home .menu .menu_contre_bt .menu_ad h5{color:#d42f53}
+.page-home .menu .menu_contre_bt .menu_ad_img{padding-top:5px}
+.page-home .menu .menu_right{float:left;margin-top:10px}
+.page-home .menu .menu_right .menu_rg_top{width:170px;height:240px}
+.page-home .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
+.page-home .menu .menu_right img{width:170px;height:247px}
+.page-home .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}
+.page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space: nowrap;}
+.page-home .menu .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px}
+.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
+.page-home .menu .nav-tabs{border-bottom:1px solid #fdcb60}
+.page-home .menu .nav-tabs a{font-size:14px}
+.page-home .menu .nav-tabs li{width:84px}
+.page-home .menu .nav-tabs>li>a{margin-right:0px;line-height:1.42857143;border:none;border-radius:0}
+.page-home .brand h4{color:#000;font-weight:bold}
+.page-home .brand_title{margin-top:50px;margin-bottom:15px;position: relative;}
+.page-home .brand .brand_left{float:left}
+.page-home .brand .brand_right li{border:1px solid #eee;width:119px;height:75px;position:relative;border-right:none;border-bottom:none;float: left;}
+.page-home .border_right{border-right:1px solid #eee!important}
+.page-home .brand_d li{border-bottom:1px solid #eee!important}
+.page-home .brand .brand_right li a{display:block;height:100%}
+.page-home .brand .brand_right{position: absolute;right: 0;}
+.page-home .brand .brand_right ul{margin-left:30px}
+.page-home .brand .brand_right li img{position:absolute;margin:auto;top:0;bottom:0;left:0;right:0}
+.page-home .clothing .clothing_left{float:left;}
+.page-home .clothing .clothing_left img{border:1px solid #eee;width:154px;height:197px}
+.page-home .clothing .clothing_tilte{display:inline-block;position:absolute;top:10px;margin-left:150px;}
+.page-home .clothing .clothing_tilte li{list-style:square;padding:0 18px 0 2px;float: left;}
+.page-home .clothing_ct{float:left;margin:0 10px}
+.page-home .clothing_ct img{border:1px solid #eee;width: 265px;height: 402px}
+.page-home .clothing .clothing_left img{border:1px solid #eee;margin:2px 0}
+.page-home .border_rg{border-right:none!important}
+.page-home .border_lt{border-left:none!important}
+.page-home .clothing .img_two{margin:0 0 0 -10px}
+.page-home .clothing_right{width:154px;height:197px;float:right;border:1px solid #eee;padding:5px 0}
+.page-home .clothing_right li{float:left;padding:1px 0}
+.page-home .clothing_right li a{padding:0 8px}
+.page-home .font-color{color:red}
+.page-home .electron_left{float:left}
+.page-home .electron .electron_left img{border:1px solid #eee}
+.page-home .electron_menu{width:295px;height:212px;border:1px solid #eee;text-align:center;background-color:#fbfbfb;margin-top:10px;display:inline-block}
+.page-home .electron_menu li a{padding:10px;color:#79797a;vertical-align:middle}
+.page-home .electron_menu_ul .menu_top{margin-top:10px}
+.page-home .electron_menu_ul .menu_top li{float: left;margin:0 8px}
+.page-home .electron_menu_ul .menu_bt li{padding:0 50px}
+.page-home .electron_ct_top{height:280px;overflow:hidden;}
+.page-home .elct_top_l,.elct_top_r{float:left}
+.page-home .elct_top_r img{margin:2px 0;border:1px solid #eee}
+.page-home .elct_top_l{margin:1px 12px 0 12px;float: left;width: 520px}
+.page-home .electron_ct_bt img{border:1px solid #eee;width:208px;height:250px}
+.page-home .electron_ct_bt ul{padding-left:19px}
+.page-home .electron_ct_bt ul li{margin:7px 0px 0 10px;float: left;}
+.page-home .bg_img{width:100%;height:40px;display:inline-block;background-repeat:no-repeat;padding:10px 30px;position:relative}
+.page-home .electron .bg_img{padding:0 30px}
+.page-home .electron .clothing_tilte{top:0}
+.page-home .carousel-indicators{bottom:10px;}
+.page-home .carousel-indicators li{margin:0 3px;width:12px;height:12px}
+.page-home .menu_rg_bt li a{padding:10px;}
+.page-home .brand_left img{width: 320px;height: 299px}
+.page-home .electron_ct{position: relative;}
+.page-home .electron_ct .elct_top_r{position: absolute;right: 0;top: 0}
+.page-home .elct_top_l .carousel-inner .item img{width: 503px;height: 282px}
+.page-home .electron{margin-bottom:30px}
+.page-home .menu_contre_top .item img{width: 815px}
+.page-home .electron_menu_ul_1{margin-left: 20px;}
+.page-home .electron_menu_ul_2{margin-left: 30px;}

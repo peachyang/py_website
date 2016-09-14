@@ -10,7 +10,7 @@
             </div>
         </div>
         </div>
-        <?php echo $templateView['src_model']; ?>
+        <?php echo !empty($templateView) ? $templateView['src_model'] : ''; ?>
 	</div>
 </div>
 

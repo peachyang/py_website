@@ -5,6 +5,7 @@ namespace Seahinet\Retailer\Controller;
 use Exception;
 use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Retailer\Model\StoreTemplate;
+use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
 
@@ -159,11 +160,41 @@ class StoreController extends AuthActionController
 		
 		$model = new StoreTemplate();
 		$model->load($data['id']);
+		if($model['store_id']!=$store_id)
+			$result = ['status'=>FALSE];
+		else{
+			$model->remove();
+			$result = ['status'=>TRUE];
+		}
 		
+		echo json_encode($result);
 		
 	}
 	
 	public function setTemplateAction(){
+		$data = $this->getRequest()->getPost();
+		$segment = new Segment('customer');
+		$store_id = $segment->get('customer')['store_id'];
+		
+		$model = new StoreTemplate();
+		$model->load($data['id']);
+		if($model['store_id']!=$store_id)
+			$result = ['status'=>FALSE];
+		else{
+		    $template = new StoreTemplateCollection();
+		    $template->storeTemplateList($segment->get('customer')['store_id']);
+			foreach ($template as $key => $value) {
+				$tempModel = new StoreTemplate();
+				$tempModel->load($value['id']);
+				$tempModel->setData(['status'=>0]);
+				$tempModel->save();
+			}
+			$model->setData(['status'=>1]);
+			$model->save();			
+			$result = ['status'=>TRUE];
+		}
+		
+		echo json_encode($result);
 		
 	}
 	

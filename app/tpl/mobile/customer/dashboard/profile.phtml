@@ -10,22 +10,18 @@ $customer = $this->getCustomer();
     <div class="info col-xs-12 col-sm-10">
         <div class="name">
             <span><?php echo $customer->offsetGet('username') ?></span>
-            <span class="level"><?php echo $customer->getLevel() ?></span>
+            <a class="level"><?php echo $customer->getLevel() ?></a>
+            <span class="badge"></span>
         </div>
-
-        <div class="transaction">
-            <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>&nbsp;&nbsp;&nbsp;
-            <span><?php echo $this->translate('Shipping', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>&nbsp;&nbsp;&nbsp;
-            <span><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></span>
-        </div>
+        
         <div class="wishlist_track">
             <ul class="col-xs-12 col-sm-12">
                 <li class="col-xs-6 col-sm-6 text-center">
-                    <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/"></a>
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/">0</a>
                     <span><?php echo $this->translate('My Wishlist'); ?></span>
                 </li>
                 <li class="col-xs-6 col-sm-6 text-center">
-                    <a href="<?php echo $this->getBaseUrl() ?>customer/history/"></a>
+                    <a href="<?php echo $this->getBaseUrl() ?>customer/history/">0</a>
                     <span><?php echo $this->translate('My Tracks'); ?></span>
                 </li>
             </ul>

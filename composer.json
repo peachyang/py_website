@@ -16,6 +16,7 @@
         "paragonie/random_compat": "~2.0",
         "pelago/emogrifier": "~1.0",
         "php-curl-class/php-curl-class": "~4.11",
+        "phpoffice/phpexcel": "~1.8",
         "pimple/pimple": "~3.0",
         "predis/predis": "~1.0",
         "psr/http-message": "~1.0",

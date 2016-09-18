@@ -57,6 +57,9 @@ class Level extends PGrid
                 'label' => 'Name',
                 'use4filter' => false,
                 'use4sort' => false
+            ],
+            'amount' => [
+                'label' => 'Amount'
             ]
         ];
     }

@@ -18,6 +18,7 @@
                 $(".tabs-panels .info-box").hide().eq($(this).index()).show();
             }
         });
+        $("#add_time_from, #add_time_to").datepicker();
     });
     
 }));

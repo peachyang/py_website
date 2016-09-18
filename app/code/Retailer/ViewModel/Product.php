@@ -29,6 +29,10 @@ class Product extends Template
         //Sub query to select order id from sales_order table
        $sales_order_id_collection = new Ocollection;
        $order_id_select = $sales_order_id_collection->columns(['id'])->where(['sales_order.store_id' => $segment->get('customer')['store_id']]);
+            
+        if($sales_order_id_collection->count() <= 0){
+            return [];
+        }
        
        $where_order_id = new \Zend\Db\Sql\Where();
        $where_order_id->in('order_id', $order_id_select);
@@ -85,6 +89,7 @@ class Product extends Template
         foreach($item_collection as $item){
             $product_list[$item['order_id']][] = $item;
         }
+
         //Combine product list to sales order
         foreach($sales_order_collection as &$order){
             $order["items"] = $product_list[$order['id']];

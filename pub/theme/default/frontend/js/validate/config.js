@@ -49,6 +49,19 @@
                         });
                     }
                     $(error).appendTo($(element).parent());
+                },
+                success: function (error, element) {
+                    if ($(element).parents('.tab-pane').length) {
+                        $(element).parents('.tab-pane').each(function () {
+                            var t = $('.nav-tabs>li>[data-toggle=tab][href="#' + $(this).attr('id') + '"]').parent('li');
+                            if ($(this).find('input.invalid,select.invalid,textarea.invalid').length) {
+                                $(t).addClass('error');
+                            } else {
+                                $(t).removeClass('error');
+                            }
+                        });
+                    }
+                    $(error).remove();
                 }
             });
         });

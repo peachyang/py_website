@@ -89,14 +89,22 @@ class Customer extends Entity
 
     public function getLevel()
     {
-        return 0;
+        if (empty($this->storage['level'])) {
+            $this->getEventDispatcher()->trigger('customer.level.calc', ['customer' => $this]);
+        } else {
+            $this->storage['level'] = (new Level)->load($this->storage['level']);
+        }
+        return empty($this->storage['level']) ? 0 : $this->storage['level']->getName();
     }
 
     public function getBalance()
     {
-        return 0;
+        if (empty($this->storage['balance'])) {
+            $this->getEventDispatcher()->trigger('customer.balance.calc', ['customer' => $this]);
+        }
+        return empty($this->storage['balance']) ? 0 : $this->storage['balance'];
     }
-    
+
     public function getStore()
     {
         if (is_null($this->store) && $this->offsetGet('store_id')) {

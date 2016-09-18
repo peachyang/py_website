@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\Model;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -52,6 +53,17 @@ class Level extends AbstractModel
             $result[0]['name'] = $name;
         }
         parent::afterLoad($result);
+    }
+
+    public function getName($languageId = null)
+    {
+        if (!$this->getId()) {
+            return 0;
+        }
+        if (is_null($languageId)) {
+            $languageId = Bootstrap::getLanguage()->getId();
+        }
+        return isset($this->storage['name'][$languageId]) ? $this->storage['name'][$languageId] : 0;
     }
 
 }

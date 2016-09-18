@@ -1,0 +1,30 @@
+---
+dataflow_product_import:
+    update: edit
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Import Products
+            content:
+                children:
+                    form:
+                        type: Seahinet\Admin\ViewModel\Dataflow\Import
+                        action:
+                            -
+                                method: setVariable
+                                params:
+                                    - title
+                                    - Import Products
+                            -
+                                method: setVariable
+                                params:
+                                    - save_url
+                                    - 'dataflow_product/importprocess/'
+                            -
+                                method: setVariable
+                                params:
+                                    - tmpl_url
+                                    - 'dataflow_product/template/'

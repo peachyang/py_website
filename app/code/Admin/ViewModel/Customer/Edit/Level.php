@@ -42,6 +42,11 @@ class Level extends PEdit
                 'label' => 'Level',
                 'required' => 'required'
             ],
+            'amount' => [
+                'type' => 'number',
+                'label' => 'Amount',
+                'required' => 'required'
+            ],
             'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',

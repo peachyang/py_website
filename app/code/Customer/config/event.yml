@@ -11,4 +11,15 @@ cart.add.after:
     -
         listener: [\Seahinet\Customer\Listeners\Wishlist, afterAddToCart]
         priority: 10
-    
+customer.level.calc:
+    -
+        listener: [\Seahinet\Customer\Listeners\Level, calc]
+        priority: 10
+Seahinet\Customer\Model\Level.model.save.after:
+    -
+        listener: [\Seahinet\Customer\Listeners\Level, collate]
+        priority: 10
+customer.balance.calc:
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance, calc]
+        priority: 10

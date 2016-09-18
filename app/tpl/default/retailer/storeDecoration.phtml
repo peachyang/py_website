@@ -786,8 +786,12 @@
 
 </div>
 
+
+<div id='save_html' style="display:none">
+	
+</div>
 <script id="long_search" type="text/html">
-<div class="search long_search">
+<div class="search function-tag" data-tag='long_search' >
                 <label class="search-label">本店搜索</label>
                 <input class="keyword" type="text" name="keyword" value="" />&nbsp;&nbsp;
                 <input class="price-from" type="text" name="price-from" value="" />
@@ -798,7 +802,7 @@
 </script>
 
 <script id="short_search" type="text/html">
-<div class="local-search short_search">
+<div class="local-search function-tag" data-tag='short_search' >
                 <div class="title"><h2>本店搜索</h2></div>
                 <div class="search-table">
                     <table>
@@ -827,7 +831,7 @@
 <script id="product_class" type="text/html">
             <div class="category">
                 <div class="title"><h2>商品分类</h2></div>
-                <div class="content product_class">
+                <div class="content function-tag" data-tag='product_class' >
                     <ul class="category_list">
                         <li><a href="">查看所有分类&gt;&gt;</a></li>
                         <li><a href="">按销量</a>&nbsp;<a href="">按价格</a>&nbsp;<a href="">按评价</a>&nbsp;<a href="">按新品</a></li>
@@ -857,7 +861,7 @@
 <script id="sales_amount" type="text/html">
             <div class="statics">
                 <div class="title"><h2>销售量</h2></div>
-                <div class="content sales_amount">
+                <div class="content function-tag" data-tag='sales_amount' >
                     <ul>
                         <li>
                             <div class="col-md-4">
@@ -879,7 +883,7 @@
 <script id="hot_product" type="text/html">
             <div class="hot-product">
                 <div class="title"><h2>热卖商品</h2></div>
-                <div class="content hot_product">
+                <div class="content function-tag" data-tag='hot_product'  >
                     <ul>
                         <li class="col-md-3">
                             <div>
@@ -921,7 +925,7 @@
 <script id="store_recommend" type="text/html">
              <div class="retailer-prompt">
                 <div class="title"><h2>店长推荐</h2><span class="more">更多&gt;</span></div>
-                <div class="content store_recommend">
+                <div class="content function-tag" data-tag='store_recommend' >
                 <div class="col-md-4">
                     <div class="col-md-6 col-md-61">
                         <div class="prompt-small"><img class="pic" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg')?>"  /></div>
@@ -965,7 +969,7 @@
 <script id="product_recommend" type="text/html">
             <div class="products">
                 <div class="title"><h2>商品推荐</h2></div>
-                <div class="content product_recommend">
+                <div class="content function-tag" data-tag='product_recommend' >
                     <ul>
                         <li class="col-md-3">
                             <div>
@@ -1000,6 +1004,8 @@
             </div>
 </script>
 
+
+
 <script>
 	function saveData(){
     	var htmls = $.trim($(".htmlpage").html());
@@ -1013,9 +1019,13 @@
 			htmls = $(".htmlpage").html();
 			$('.htmlpage .column').css('padding','11px');		
 		}
-    	var code_model = htmls;
+		$("#save_html").html(htmls);
+    	var code_model = changeTag();
     	$("#download-layout .container .column").css("padding","7px");
     	var src_model = style_html($("#download-layout .container").html());
+    	$("#save_html").html(src_model);
+    	src_model = changeTag();
+    	
     	var titles = template_id == 0 ?'请输入模版名称':'请修改模板名称';
     	layer.prompt({
   			title: titles,

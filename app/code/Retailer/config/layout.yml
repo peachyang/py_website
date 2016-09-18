@@ -179,6 +179,9 @@ retailer_product:
                     -
                         method: addScript
                         params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
             content:
                 children:
                     main:

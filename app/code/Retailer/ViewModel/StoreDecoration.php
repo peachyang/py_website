@@ -19,27 +19,33 @@ class StoreDecoration extends Template
     */ 
     public function getTemplateView($model = 0)
     {
-		
+		$templateView = [];
 		$id = $this->getQuery('id');
 		$segment = new Segment('customer');	
-		if(!empty($id)){		
-			$template = new StoreTemplate();
-			$templateView = $template->load($id);
+		if(!empty($id)){
+			if($id!='-1')
+			{		
+				$template = new StoreTemplate();
+				$templateView = $template->load($id);
+			}
 		}else{
-			$template = new StoreTemplateCollection();
-			$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
-			if(count($templateViewCollection))
-				$templateView = $templateViewCollection[0];
+				$template = new StoreTemplateCollection();
+				$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
+				if(!empty($templateViewCollection))
+					$templateView = $templateViewCollection[0];
+				else
+					$templateView = [];
 		}
 			
-		if( $templateView['store_id'] != $segment->get('customer')['store_id'])
-			$templateView = [];
 		
 		if(!empty($templateView))
 		{
 			$templateView['code_model'] = $this->changeModel($templateView['code_model']);
 			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
 		}
+		
+		if( !empty($templateView) && $templateView['store_id'] != $segment->get('customer')['store_id'] && $templateView['store_id']!=0 )
+			$templateView = [];
 		
 		return $templateView;				 		      
     }

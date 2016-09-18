@@ -132,10 +132,11 @@ class StoreController extends AuthActionController
 	{
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
+		$store_id = $data['store_id'];
 		$data['store_id'] = $segment->get('customer')['store_id'];
 		$model = new StoreTemplate();
         
-        if($data['template_id']=='0' || $data['store_id']=='0' )
+        if($data['template_id']=='0' || $store_id == '0' )
 		{
         	$model->setData($data);	
 			$model->save();

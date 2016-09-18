@@ -1027,7 +1027,7 @@
     	$("#save_html").html(src_model);
     	src_model = changeTag();
     	
-    	var titles = template_id == 0 ?'请输入模版名称':'请修改模板名称';
+    	var titles = template_id == 0 || store_id == 0 ?'请输入模版名称':'请修改模板名称';
     	layer.prompt({
   			title: titles,
   			value:template_name,

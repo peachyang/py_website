@@ -61,11 +61,15 @@ class StoreDecoration extends Template
     * 
     * @access public 
     * @return object 
+	* @param  judge 1:theme template; 0:customer template
     */ 
-	public function getTemplateList(){
+	public function getTemplateList($judge=0){
 		$segment = new Segment('customer');
 		$template = new StoreTemplateCollection();
-		$template->storeTemplateList($segment->get('customer')['store_id']);
+		if($judge==0)
+			$template->storeTemplateList($segment->get('customer')['store_id']);
+		else
+			$template->storeTemplateList(0);
 		return $template;
 		
 	}

@@ -12,13 +12,14 @@
             var path = '';
             var template_id = <?php echo empty($templateView) ? 0 : $templateView['id'] ?>;
             var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
+            var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
 
       
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
             <div class="navbar-header">
-                <a class="navbar-brand" sty href="/">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span></a>
+                <a class="navbar-brand" sty href="/">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) || $templateView['store_id']==0 ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav" id="menu-htmleditor">
@@ -1043,18 +1044,19 @@
                 url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
                 type: "post",
                 dataType: 'json',
-                data:{code_model:code_model,src_model:src_model,template_name:template_names,template_id:template_id},
+                data:{code_model:code_model,src_model:src_model,template_name:template_names,template_id:template_id,store_id:store_id},
                 beforeSend:function(){
                 	layer.msg(' 保存中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
                 },
                 success: function (data) {
 					layer.closeAll();
 					var messages = "";
-					if(template_id == 0)
+					if(template_id == 0 || store_id == 0)
 					{
 						
 						template_id = data.id;
 						template_name = template_names;
+						store_id = data.store_id;
 						messages = '您已经保存了新的店铺模版,接下来您要';
 					}
 					else{

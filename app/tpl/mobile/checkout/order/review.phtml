@@ -49,6 +49,9 @@
         </ul>
     </div>
 </section>
+<section class="section" style="padding-top:10px;padding-bottom:10px;">
+    <div class="dropdown coupon" data-store="<?php echo $item['store_id'] ?>"><?php echo $this->getChild('coupon')->setVariable('store', $item['store_id']) ?></div>
+</section>
 <ul  class="col-xs-12 col-sm-12 grand-total">
     <li class="col-xs-9 col-sm-9 text-right">
         <?php echo $this->translate('Grand Total') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>

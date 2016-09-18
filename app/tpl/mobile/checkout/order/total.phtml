@@ -28,7 +28,10 @@
         foreach (json_decode($this->getCart()['discount_detail'], true) as $type => $discount):
             ?>
             <ul class="col-xs-12 col-sm-12">
-                <li class="col-xs-12 col-sm-12 text-right text-nowrap"><?php echo $this->translate('Discount(' . $type . ')') ?>:<?php echo $this->getCurrency()->convert($discount, true) ?></li>
+                <li class="col-xs-12 col-sm-12 text-right text-nowrap">
+                    <?php echo $this->translate('Discount(' . $type . ')') ?>:
+                    <span><?php echo $this->getCurrency()->convert($discount, true) ?></span>
+                </li>
             </ul>
             <?php
         endforeach;

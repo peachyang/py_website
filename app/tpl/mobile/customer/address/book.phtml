@@ -2,27 +2,18 @@
 $addresses = $this->getAddress();
 $attributes = $this->getAddressAttribute();
 ?>
-<button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
-    <span class="fa fa-plus" aria-hidden="true"></span>
-    <span><?php echo $this->translate('Add New Address') ?></span>
-</button>
 <ul class="address-list">
     <?php foreach ($addresses as $address): ?>
         <li class="clearfix">
-            <div class="col-sm-8 col-lg-9 inline">
+            <div class="col-xs-12 col-sm-12 inline">
                 <a href="javascript:void(0);" data-info='<?php echo json_encode($address->toArray()) ?>' data-toggle="modal" data-target="#modal-address" data-type="edit">
                     <?php echo $address->display(true); ?>
                 </a>
             </div>
-            <div class="col-sm-4 col-lg-3 action">
+            <div class="col-xs-12 col-sm-12 action">
                 <?php if (!$address->offsetGet('is_default')): ?>
-                    <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='), $address->getId() ?>"><?php echo $this->translate('Set as Default') ?></a>
-                <?php else: ?>
-                    <span><?php echo $this->translate('Default Address') ?></span>
-                <?php endif ?>
-                <a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>">
-                    <?php echo $this->translate('Delete') ?>
-                </a>
+                <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='), $address->getId() ?>"><?php echo $this->translate('Set as Default') ?></a><?php else: ?><?php echo $this->translate('Default Address') ?><?php endif ?></a>
+                <a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
             </div>
         </li>
     <?php endforeach ?>

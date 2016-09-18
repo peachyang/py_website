@@ -8,11 +8,11 @@ $customer = $this->getCustomer();
         <div class="input-box">
             <label class="control-label col-xs-3 col-sm-3 text-right"><?php echo $this->translate('Username') ?>:</label>
             <div class="cell col-xs-9 col-sm-9 text-left">
-                <span><?php echo $customer->offsetGet('username') ?></span>
+                <span><strong><?php echo $customer->offsetGet('username') ?></strong></span>
             </div>
         </div>
         <?php
-        foreach ($this->getAttribute() as $attr){
+        foreach ($this->getAttribute() as $attr) {
             echo $this->getInputBox($attr);
         }
         ?>
@@ -23,9 +23,9 @@ $customer = $this->getCustomer();
             </div>
         </div>
         
-            <span class="col-xs-1 col-sm-1 text-right"><input type="checkbox" class="edit-password" id="edit-password" /></span>
-                <label class="col-xs-11 col-sm-11 text-left" for="edit-password"><?php echo $this->translate('Edit Password') ?></label>
-      
+        <input type="checkbox" class="edit-password" id="edit-password" style="float:left" />
+        <label class="col-xs-11 col-sm-11" for="edit-password"><?php echo $this->translate('Edit Password') ?></label>
+
         <div class="input-box">
             <label class="control-label col-xs-3 col-sm-3 text-right" for="password"><?php echo $this->translate('New Password') ?>:</label>
             <div class="cell col-xs-9 col-sm-9 text-left">
@@ -38,13 +38,13 @@ $customer = $this->getCustomer();
                 <input type="password" name="cpassword" id="cpassword" class="form-control" data-rule-equalTo="#password" minlength="6" />
             </div>
         </div>
-        <div class="buttons-set">
-            <div class="cell">&nbsp;</div>
-            <div class="cell text-center">
-                <button type="submit" class="btn btn-theme">
-                    <span><?php echo $this->translate('Submit') ?></span>
-                </button>
-            </div>
+    </div>
+    <div class="buttons-set">
+        <div class="cell">&nbsp;</div>
+        <div class="cell text-center">
+            <button type="submit" class="btn btn-theme">
+                <span><?php echo $this->translate('Submit') ?></span>
+            </button>
         </div>
     </div>
 </form>

@@ -640,6 +640,14 @@ function s4() {
             .substring(1);
 }
 
+function changeTag(){
+	$("#save_html .function-tag").each(function(){
+		$(this).html("{{"+$(this).attr('data-tag')+'}}');
+	});
+	//console.log($("#save_html").html());
+	return $("#save_html").html();
+}
+
 (function ($) {
     $.fn.assignId = function () {
         var  _self = $(this);

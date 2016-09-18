@@ -173,6 +173,15 @@ retailer_product:
                     -
                         method: setTitle
                         params: Retailer Product
+                    -
+                        method: addLink
+                        params: frontend/css/jquery-ui.min.css
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
             content:
                 children:
                     main:

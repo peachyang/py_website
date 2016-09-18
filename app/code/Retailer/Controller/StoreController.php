@@ -132,10 +132,11 @@ class StoreController extends AuthActionController
 	{
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
+		$store_id = $data['store_id'];
 		$data['store_id'] = $segment->get('customer')['store_id'];
 		$model = new StoreTemplate();
         
-        if($data['template_id']=='0')
+        if($data['template_id']=='0' || $store_id == '0' )
 		{
         	$model->setData($data);	
 			$model->save();
@@ -149,7 +150,7 @@ class StoreController extends AuthActionController
 			$model->save();
 		}
 
-		$result = ['status'=>true,'id'=>$template_id];	
+		$result = ['status'=>true,'id'=>$template_id,'store_id'=>$data['store_id']];	
 		echo json_encode($result);
 	}
 	

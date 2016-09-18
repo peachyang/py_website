@@ -110,6 +110,7 @@ class ProductController extends AuthActionController
         return $root;
     }
     
+    
     /** 
     * saveAction  
     * Save new product
@@ -172,7 +173,7 @@ class ProductController extends AuthActionController
                 $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
-        return $this->response($result, 'retailer/products/release/');
+        return $this->response($result, 'retailer/product/release/');
     }
     
 

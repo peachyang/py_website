@@ -221,6 +221,7 @@
                 }
             });
         });
+        $("#add_time_from, #add_time_to").datepicker();
     });
 }));
 

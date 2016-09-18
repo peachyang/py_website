@@ -534,6 +534,10 @@ dl.options dd{float:left;margin-left:4px}
 }
 .order-dashboard .tbnotes span {color: #f60; font-weight: 700;}
 
+.product-pic{display: inline-block; float: left; width: 50px;}
+.product-pic img{width: 50px;}
+.product-title{margin-left: 60px;}
+
 .tabs-container {margin: 20px 0; position: relative;}
 .tabs-container .tabs-nav {left: 20px; position: absolute; z-index: 50;}
 .tabs-container .tabs-nav li {background: rgba(0, 0, 0, 0) url("../images/tabview_bg.gif") no-repeat scroll 0 6px;  cursor: pointer; display: inline; float: left; height: 30px; line-height: 21px; margin-right: 3px; padding-top: 8px; text-align: center; width: 130px;}
@@ -582,6 +586,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit label.invalid::after {-moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #000 transparent -moz-use-text-color; border-image: none; border-style: solid solid none; border-width: 3px 3px medium; content: " "; left: 50%; position: absolute; top: 100%;}
 .product-edit input.form-control{height: auto;}
 .product-edit .control-label{display: inline-block; margin-right: 2px; vertical-align: top; width: auto;}
+
 
 
 /*=E Stone's CSS end' */

@@ -206,7 +206,7 @@ class Product extends Entity
 
     protected function beforeSave()
     {
-        if (is_array($this->storage['images'])) {
+        if (isset($this->storage['images']) && is_array($this->storage['images'])) {
             $images = [];
             foreach ($this->storage['images'] as $order => $id) {
                 if ($id) {
@@ -219,7 +219,7 @@ class Product extends Entity
             }
             $this->storage['images'] = json_encode($images);
         }
-        if (is_array($this->storage['additional'])) {
+        if (isset($this->storage['additional']) && is_array($this->storage['additional'])) {
             $this->storage['additional'] = json_encode(array_combine($this->storage['additional']['key'], $this->storage['additional']['value']));
         }
         parent::beforeSave();

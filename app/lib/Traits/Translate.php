@@ -14,12 +14,13 @@ trait Translate
      * @param string $message
      * @param array $parameters
      * @param string $domain
+     * @param string $locale
      * @return string
      */
-    protected function translate($message, $parameters = [], $domain = null)
+    protected function translate($message, $parameters = [], $domain = null, $locale = null)
     {
         try {
-            return $this->getContainer()->get('translator')->translate($message, $parameters, $domain);
+            return $this->getContainer()->get('translator')->translate($message, $parameters, $domain, $locale);
         } catch (\Exception $e) {
             return vsprintf($message, $parameters);
         }

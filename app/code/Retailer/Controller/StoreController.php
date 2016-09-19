@@ -199,6 +199,15 @@ class StoreController extends AuthActionController
 		
 	}
 	
+	public function funcAction(){
+		$functions = $this->getRequest()->getQuery('functions');
+		$part_id = $this->getRequest()->getQuery('part_id');		
+		$root = $this->getLayout('decorationFunc_'.$functions);
+		$root->getChild('main', true)->setVariable('data_tag', $functions);
+		$root->getChild('main', true)->setVariable('part_id', $part_id);
+		return $root;
+	}
+	
 	
 	
 

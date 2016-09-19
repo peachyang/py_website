@@ -715,6 +715,45 @@ decoration_list:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationList
+
+decorationFunc:
+    update: default
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/bootstrap.min.css
+                    -
+                        method: addLink
+                        params: frontend/css/bootstrap.css
+                    -
+                        method: addLink
+                        params: frontend/css/font-awesome.css
+                    -
+                        method: addLink
+                        params: frontend/css/styles.css
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.js
+
+decorationFunc_hot_product:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: hot_product
+
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/hot_product
+
 admin_retailer_apply_list:
     update: grid
     root:

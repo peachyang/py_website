@@ -1,0 +1,20 @@
+<?php
+$data_tag = $this->getVariable("data_tag");
+$part_id = $this->getVariable("part_id");
+ ?>
+<div>
+this is a good things!123
+<input type="text" id="hot_text">
+	
+<script>
+var data_tag = '<?php echo $data_tag; ?>';
+var part_id = '<?php echo $part_id; ?>';
+$(document).ready(function(){
+	
+  var temps = $("title", parent.document).html();
+  $("#hot_text").val(data_tag+part_id);
+});	
+</script>
+</div>
+
+

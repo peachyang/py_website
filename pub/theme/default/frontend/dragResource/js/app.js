@@ -127,6 +127,24 @@ function _init() {
     });
 
     $(document).on('click', 'a.settings', function (e) {
+    	var  _s = $(this);
+        var  part_id = _s.parent().parent().assignId();
+        $obj = $(this).closest('.box.box-element.ui-draggable').find('.view').find(".content.function-tag");
+        var data_tag = $obj.attr("data-tag");
+        var data_name = $obj.attr("data-name");
+        layer.open({
+        	id:'iframe_layer',
+  			type: 2,
+  			area: ['700px', '530px'],
+  			title:data_name+" 属性",
+  			fix: true, //不固定
+  			maxmin: true,
+  			content: '/retailer/store/func?functions='+data_tag+'&part_id='+part_id
+		});
+        
+        
+        return;
+        // --- original method 
         e.preventDefault();
         var  _s = $(this);
 

@@ -57,7 +57,7 @@ class Import extends Edit
                     'csv' => 'CSV (.csv)',
                     'xls' => 'Excel5 (.xls)',
                     'xlsx' => 'Excel2007 (.xlsx)',
-                    'odt' => 'OpenDocument (.odt)'
+                    'ods' => 'OpenDocument (.ods)'
                 ]
             ],
             'truncate' => [
@@ -65,8 +65,8 @@ class Import extends Edit
                 'label' => 'Truncate Data',
                 'required' => 'required',
                 'options' => [
-                    'Yes',
-                    'No'
+                    1 => 'Yes',
+                    0 => 'No'
                 ],
                 'comment' => 'Whether existed data would be truncated before importing or not.'
             ],

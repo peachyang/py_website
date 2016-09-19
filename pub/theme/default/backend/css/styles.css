@@ -77,6 +77,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .modal-footer .btn-block + .btn-block{margin-left:0}
 .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
 .alert .close{display:none}
+.alert+.alert{margin-top:10px}
 .image-body-list{height:450px;overflow-y:scroll}
 .image-body-list img{max-width:100px;max-height:100px}
 .image-body-list-b{text-align:right}
@@ -265,12 +266,13 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .page-title{font-size:1.125rem;line-height:3.33333333;padding:0 0 0 30px;background:#fafafa}
 .admin .edit .page-title:before{content:'\f040';margin:0 10px;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .admin .tab-pane{padding:10px 0 0 30px}
-.admin .edit .tab-pane.active{display:table}
-.admin .edit .tab-pane .input-box{display:table-row}
-.admin .edit .tab-pane .input-box .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
-.admin .edit .tab-pane .input-box .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px;vertical-align:top}
-.admin .edit .tab-pane .input-box .cell .form-control{max-width:320px}
-.admin .edit .tab-pane .input-box .input-box:first-child .control-label,.admin .edit .tab-pane .input-box .input-box:first-child .cell{padding-top:0}
+.admin .edit .tab-pane.active{display:block}
+.admin .edit .tab-pane.table.active{display:table}
+.admin .edit .tab-pane.table .input-box{display:table-row}
+.admin .edit .tab-pane.table .input-box .control-label{display:table-cell;white-space:nowrap;width:1px;padding:4px;vertical-align:top}
+.admin .edit .tab-pane.table .input-box .cell{display:table-cell;position:relative;padding:4px;line-height:2;font-size:13px;vertical-align:top}
+.admin .edit .tab-pane.table .input-box .cell .form-control{max-width:320px}
+.admin .edit .tab-pane.table .input-box .input-box:first-child .control-label,.admin .edit .tab-pane.table .input-box .input-box:first-child .cell{padding-top:0}
 .admin .edit dl+dl{margin-top:30px}
 .admin .edit dd:nth-child(even){background:#fafafa}
 .admin .edit .table td{vertical-align:middle}

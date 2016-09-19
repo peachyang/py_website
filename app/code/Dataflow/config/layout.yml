@@ -22,9 +22,37 @@ dataflow_product_import:
                                 method: setVariable
                                 params:
                                     - save_url
-                                    - 'dataflow_product/importprocess/'
+                                    - 'dataflow_product/prepareimport/'
                             -
                                 method: setVariable
                                 params:
                                     - tmpl_url
                                     - 'dataflow_product/template/'
+dataflow_product_prepare_import:
+    update: admin
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Import Products
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/dataflow.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/dataflow/import
+                        action:
+                            -
+                                method: setVariable
+                                params:
+                                    - title
+                                    - Import Products
+                            -
+                                method: setVariable
+                                params:
+                                    - import_url
+                                    - 'dataflow_product/processimport/'

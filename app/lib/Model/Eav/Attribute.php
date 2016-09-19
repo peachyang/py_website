@@ -24,10 +24,10 @@ class Attribute extends AbstractModel
             $select->join('eav_attribute_option_label', 'eav_attribute_option_label.option_id=eav_attribute_option.id', ['label'], 'left')
                     ->order('sort_order')
                     ->columns(['id', 'sort_order'])
-                    ->where([
-                        'attribute_id' => $this->getId(),
-                        'eav_attribute_option.id' => is_array($option) ? $option['id'] : $option
-            ]);
+                    ->where(['attribute_id' => $this->getId()] +
+                            (is_numeric($option) || !is_scalar($option) ?
+                                    ['eav_attribute_option.id' => is_scalar($option) ? $option : $option['id']] :
+                                    ['eav_attribute_option_label.label' => $option]));
             if (!$language) {
                 $languageId = Bootstrap::getLanguage()->getId();
             } else {
@@ -36,7 +36,7 @@ class Attribute extends AbstractModel
             $select->where(['language_id' => $languageId]);
             $result = $tableGateway->selectWith($select)->toArray();
             if (count($result)) {
-                return $result[0]['label'];
+                return is_numeric($option) || !is_scalar($option) ? $result[0]['label'] : $result[0]['id'];
             }
         }
         return '';

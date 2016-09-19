@@ -3,6 +3,16 @@
         <li class="col-xs-8 col-sm-8 text-right"><?php echo $this->translate('%d item(s)', [$this->getCart()->getQty()]) ?></li>
         <li class="col-xs-4 col-sm-4"><?php echo $this->translate('Subtotal') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['subtotal']) ?></span></li>
     </ul>
+    <div class="grand-total">
+        <ul class="col-xs-9 col-sm-9 text-right">
+            <li >
+                <?php echo $this->translate('Grand Total') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+            </li>
+        </ul>
+        <ul class="col-xs-3 col-sm-3 buttons-set">
+            <li><button type="button" class="btn btn-checkout"><?php echo $this->translate('Place Order') ?></button></li>
+        </ul>
+    </div>
     <?php
     if ((float) $this->getCart()['tax']):
         ?>

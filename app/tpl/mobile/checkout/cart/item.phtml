@@ -37,12 +37,12 @@ $inventory = $item->getInventory();
                     endforeach;
                     ?>
                 </dl>
-            <?php endif; ?>
-            <div class="price" data-price="<?php echo $item['price'] ?>">
-                <p><?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?></p>    
-            </div> 
+            <?php endif; ?> 
         </div>
     </li>
+    <div class="price" data-price="<?php echo $item['price'] ?>">
+        <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>   
+    </div>
     <li class="col-xs-3 col-sm-2 qty">
         <div class="text-nowrap">
             <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>

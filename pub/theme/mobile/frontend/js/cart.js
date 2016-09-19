@@ -1,8 +1,8 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(["jquery"], factory);
+        define(['jquery','app'], factory);
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory(require("jquery"));
+        module.exports = factory(require('app'));
     } else {
         factory(jQuery);
     }
@@ -12,14 +12,14 @@
         var collateTotals = function () {
             var t = 0;
             var q = 0;
-            $('#cart tbody [type=checkbox][name]:checked').each(function () {
+            $('#cart [type=checkbox][name]:checked').each(function () {
                 var p = $(this).parent();
                 var tq = parseFloat($(p).siblings('.qty').find('.form-control').val());
                 q += tq;
                 t += $(p).siblings('.price').data('price') * tq;
             });
-            $('#cart tfoot .selected').text(q);
-            $('#cart tfoot .total').text(formatPrice(t));
+            $('#cart .selected').text(q);
+            $('#cart .total').text(formatPrice(t));
             if (q) {
                 $(".btn-checkout").removeAttr('disabled');
             } else {

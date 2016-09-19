@@ -1,5 +1,5 @@
 <section class="section review">
-    <div class="order">
+    <div class="table order">
         <?php
         $stores = [];
         $subtotal = [];
@@ -21,9 +21,13 @@
                         </li>
                     </ul>
                 <?php endif ?>
+
                 <ul class="col-xs-12 col-sm-12 store">
-                    <li class="col-xs-12 col-sm-12">
+                    <li class="col-xs-6 col-sm-6 text-left">
                         <?php echo $item['store']['name'] ?>
+                    </li>
+                    <li class="col-xs-6 col-sm-6 text-right">
+                        <div class="dropdown coupon" data-store="<?php echo $item['store_id'] ?>"><?php echo $this->getChild('coupon')->setVariable('store', $item['store_id']) ?></div>
                     </li>
                 </ul>
                 <?php
@@ -48,15 +52,5 @@
             </li>
         </ul>
     </div>
+
 </section>
-<section class="section" style="padding-top:10px;padding-bottom:10px;">
-    <div class="dropdown coupon" data-store="<?php echo $item['store_id'] ?>"><?php echo $this->getChild('coupon')->setVariable('store', $item['store_id']) ?></div>
-</section>
-<ul  class="col-xs-12 col-sm-12 grand-total">
-    <li class="col-xs-9 col-sm-9 text-right">
-        <?php echo $this->translate('Grand Total') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
-    </li>
-    <li class="col-xs-3 col-sm-3 buttons-set">
-        <button type="button" class="btn btn-checkout"><?php echo $this->translate('Place Order') ?></button>
-    </li>
-</ul>

@@ -1,5 +1,10 @@
-<?php
-$currency = $this->getCurrency();
-?>
-<span class="label total-title"><?php echo $this->translate('Total') ?>:</span>
-<span class="total"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+<ul class="col-xs-12 col-sm-12 text-right">
+    <?php
+    $currency = $this->getCurrency();
+    ?>
+    <li class="col-xs-9 col-sm-9">
+        <span class="selected"><?php echo $this->getQty() ?></span>
+        <span class="label"><?php echo $this->translate('Item(s) Selected') ?></span>
+        <span class="label total-title"><?php echo $this->translate('Total') ?>:</span>
+        <span class="total"><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></span>
+    </li>

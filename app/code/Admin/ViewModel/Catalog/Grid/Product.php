@@ -12,6 +12,7 @@ class Product extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $messAction = ['getExportAction'];
     protected $translateDomain = 'catalog';
 
     public function getEditAction($item)
@@ -28,6 +29,13 @@ class Product extends PGrid
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>');
+    }
+
+    public function getExportAction()
+    {
+        return '<a href="javascript:void(0);" onclick="var id=\'\';$(\'.grid .table [type=checkbox][value]:checked\').each(function(){id+=$(this).val()+\',\';});location.href=\'' .
+                $this->getAdminUrl('dataflow_product/export/?id=') . '\'+id.replace(/\,$/,\'\');" title="' . $this->translate('Export') .
+                '"><span>' . $this->translate('Export') . '</span></a>';
     }
 
     public function getEditUrl()

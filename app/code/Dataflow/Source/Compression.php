@@ -16,9 +16,6 @@ class Compression implements SourceInterface
         if (extension_loaded('bz2')) {
             $result['bz2'] = 'BZip2';
         }
-        if (extension_loaded('lzf')) {
-            $result['lzf'] = 'LZF';
-        }
         return $result;
     }
 

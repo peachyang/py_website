@@ -4,7 +4,6 @@ namespace Seahinet\Admin\ViewModel\Customer\Grid;
 
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
-use Seahinet\Lib\Session\Segment;
 
 class Manage extends PGrid
 {
@@ -12,6 +11,7 @@ class Manage extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $messAction = ['getExportAction'];
     protected $translateDomain = 'customer';
 
     public function getEditAction($item)
@@ -27,6 +27,13 @@ class Manage extends PGrid
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
+    }
+
+    public function getExportAction()
+    {
+        return '<a href="javascript:void(0);" onclick="var id=\'\';$(\'.grid .table [type=checkbox][value]:checked\').each(function(){id+=$(this).val()+\',\';});location.href=\'' .
+                $this->getAdminUrl('dataflow_customer/export/?id=') . '\'+id.replace(/\,$/,\'\');" title="' . $this->translate('Export') .
+                '"><span>' . $this->translate('Export') . '</span></a>';
     }
 
     public function getEditUrl()

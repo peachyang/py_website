@@ -16,7 +16,9 @@ if ($this->hasTitle()):
                 ?>
             </div>
             <div class="buttons-set">
-                <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
+                <?php if ($this->getSaveUrl()): ?>
+                    <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
+                <?php endif ?>
                 <?php if ($this->getDeleteUrl()): ?>
                     <button type="submit" name="success_url" value="<?php echo $this->getUri() ?>" class="btn btn-submit"><span><?php echo $this->translate('Save and Continue Edit') ?></span></button>
                 <?php endif ?>

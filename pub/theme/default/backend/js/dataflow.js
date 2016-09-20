@@ -21,10 +21,22 @@
                 }
             });
         };
+        var doExport = function (url, data, processer) {
+            $.post(url + (processer ? ('?p=' + processer) : ''), data).success(function (response) {
+                if (response.finish >= 0) {
+                    doExport(url, data, response.finish + 1);
+                } else if (response.url) {
+                    window.open(response.url);
+                }
+            });
+        };
         $('#btn-start-import').click(function () {
             $(this).before('<span class="fa fa-spinner fa-spin fa-2x"></span>');
             doImport($(this).data('import'), 0);
             $(this).remove();
+        });
+        $('#btn-start-export').click(function () {
+            doExport($(this).attr('formaction'), $(this.form).serialize(), 0);
         });
     });
 }));

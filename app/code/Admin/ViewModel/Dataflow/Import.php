@@ -11,11 +11,6 @@ class Import extends Edit
 
     protected $hasUploadingFile = true;
 
-    public function getSaveUrl()
-    {
-        return $this->getAdminUrl($this->getVariable('save_url'));
-    }
-
     public function getTitle()
     {
         return $this->getVariable('title');

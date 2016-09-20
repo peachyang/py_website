@@ -7,7 +7,7 @@ if ($order && $order->getId()):
     <div class="panel order">
         <div class="panel-heading">
             <h3 class="panel-title"><span class="fa fa-check-circle" aria-hidden="true"></span><?php echo $this->translate('Latest Order') ?>
-                <a href="<?php echo $this->getBaseUrl()?>sales/order/list/" class="fa fa-chevron-right text-right" aria-hidden="true"></a>
+                <a href="<?php echo $this->getBaseUrl() ?>sales/order/list/" class="fa fa-chevron-right text-right" aria-hidden="true"></a>
             </h3>
         </div>
         <div class="panel-info">
@@ -41,4 +41,17 @@ if ($order && $order->getId()):
         <h3 class="panel-title"><span class="fa fa-dot-circle-o" aria-hidden="true"></span><?php echo $this->translate('Address Administration') ?><a href="<?php echo $this->getBaseUrl() ?>customer/account/address/" class="fa fa-chevron-right text-right" aria-hidden="true"></a>
         </h3>
     </div>
+</div>
+<div class="profile-foot">
+    <ul class="col-xs-12 col-sm-12">
+        <li class="col-xs-4 col-sm-4 text-center">
+            <a href="<?php echo $this->getBaseUrl() ?>clothes.html"><?php echo $this->translate('Shopping'); ?></a>
+        </li>
+        <li class="col-xs-4 col-sm-4 text-center">
+            <a href="#"><?php echo $this->translate('Enter the Store Center'); ?></a>
+        </li>
+        <li class="col-xs-4 col-sm-4 text-center">
+            <a href="<?php echo $this->getBaseUrl() ?>customer/account/logout/"><?php echo $this->translate('Log out'); ?></a>
+        </li>
+    </ul>
 </div>

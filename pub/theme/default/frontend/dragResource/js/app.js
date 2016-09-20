@@ -85,7 +85,8 @@ function _init() {
            
         }
     });
-
+	
+	var data_id = 0;
     $(".sidebar-nav .box").draggable({
         connectToSortable: ".column",
         helper: "clone",
@@ -94,12 +95,13 @@ function _init() {
         	var obj = t.helper;
         	var dataType = $(obj).attr('data-type');
         	var showType = $(obj).attr('show-type');
-        	//console.log($("#hot_product").html());
+   
         	if(showType=="1")
         	{
         		var htmls = template(dataType);
         		
-        		$(".box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+        		$(".sidebar-nav .box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+        		data_id = $(".sidebar-nav .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag").dataId();
         		$(obj).find(".view").html('模块');
  			}
         	
@@ -109,11 +111,42 @@ function _init() {
             
         },
         stop: function (e, t) {
-			//console.log(t.helper);
+						
 			if($(".htmlpage .lyrow").length<=0)
-			alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+			{
+				alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+				return;
+			}
+			var obj = t.helper;
+        	var dataType = $(obj).attr('data-type');
+        	var showType = $(obj).attr('show-type');
+			
+			var final_obj = $(".htmlpage .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag[data-id='"+data_id+"']");
+			final_obj.closest(".box.box-element[data-type='"+dataType+"']").attr('id',data_id);
+			call_ajax_data(data_id,dataType);
         }
     });
+    
+    function call_ajax_data(dataID,dataType){
+    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").attr("data-param");
+    	    	$.ajax({
+                url: site_path+'retailer/store/getTemplateData',
+                type: "post",
+                dataType: 'json',
+                data:{dataID:dataID,dataTag:dataType,dataParam:dataParam},
+                beforeSend:function(){
+                    layer.load(1, {shade: [0.1,'#fff'] });	
+                },
+                success: function (data) {
+                	$("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").html(data.view);
+					layer.closeAll();
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
+    }
 
     $(document).on('click', 'a.clone', function (e) {
         e.preventDefault();
@@ -139,7 +172,22 @@ function _init() {
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,
-  			content: '/retailer/store/func?functions='+data_tag+'&part_id='+part_id
+  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
+  			btn: ['保存', '取消'],
+  			yes:function(){
+  				layer.load(2);
+  				var id = $('#iframe_layer').find('iframe').attr("name");
+				$("#focusBtn",window.frames[id].document).trigger("click");
+					
+				setTimeout(function(){
+					layer.closeAll();
+					call_ajax_data(part_id,data_tag);
+				},600);
+					
+  			},
+  			btn2:function(){
+  				layer.closeAll();
+  			}
 		});
         
         
@@ -149,7 +197,6 @@ function _init() {
         var  _s = $(this);
 
         var  part_id = _s.parent().parent().assignId();
-
         var  part = _s.parent().parent();
         var  column = _s.parent().parent().parent('.column');
         var  row = _s.parent().parent().parent().parent('.row');
@@ -660,7 +707,7 @@ function s4() {
 
 function changeTag(){
 	$("#save_html .function-tag").each(function(){
-		$(this).html("{{"+$(this).attr('data-tag')+'}}');
+		$(this).html("{{"+$(this).attr('data-tag')+':'+$(this).attr('data-param')+'}}');
 	});
 	//console.log($("#save_html").html());
 	return $("#save_html").html();
@@ -673,6 +720,16 @@ function changeTag(){
         if (typeof id === typeof undefined || id === false) {
             id = s4() + '-' + s4() + '-' + s4() + '-' + s4();
             _self.attr('id', id);
+        }
+        return id;
+    };
+    
+    $.fn.dataId = function () {
+        var  _self = $(this);
+        var  id = _self.attr('id');
+        if (typeof id === typeof undefined || id === false) {
+            id = s4() + '-' + s4() + '-' + s4() + '-' + s4();
+            _self.attr('data-id', id);
         }
         return id;
     };

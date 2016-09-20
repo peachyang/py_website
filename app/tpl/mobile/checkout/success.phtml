@@ -6,12 +6,12 @@
     </div>
     <div class="text-center">
         <div class="trading-success">
-            <h3 class="title"><span class="fa fa-check"></span><?php echo $this->translate('Your order has been received.') ?></h3>
-            <h4 class="sub-title"><?php echo $this->translate('We are appreciated that you can choose our products.') ?></h4>
-            <ul class="list-inline">
+            <h3 class="title line-height-30"><span class="fa fa-check"></span><?php echo $this->translate('Your order has been received.') ?></h3>
+            <h4 class="sub-title line-height-30"><?php echo $this->translate('We are appreciated that you can choose our products.') ?></h4>
+            <ul class="list-inline line-height-30">
                 <li><a href="<?php echo $this->getBaseUrl(); ?>"><?php echo $this->translate('Continue Shopping'); ?></a></li>
                 <?php if ($this->hasLoggedIn()): ?>
-                    <li><a href="<?php echo $this->getBaseUrl('customer/order/'); ?>"><?php echo $this->translate('View Order'); ?></a></li>
+                <li><a href="<?php echo $this->getBaseUrl('customer/order/'); ?>"><?php echo $this->translate('View Order'); ?></a></li>
                 <?php endif ?>
             </ul>
         </div>

@@ -2,19 +2,38 @@
 $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
  ?>
-<div>
-this is a good things!123
-<input type="text" id="hot_text">
-	
-<script>
-var data_tag = '<?php echo $data_tag; ?>';
-var part_id = '<?php echo $part_id; ?>';
-$(document).ready(function(){
-	
-  var temps = $("title", parent.document).html();
-  $("#hot_text").val(data_tag+part_id);
-});	
-</script>
+<div style="margin:20px" >
+第一属性：<input type="text" id="hot_text" class="params" > <br><br>
+第二属性: 
+<select id='hot_select' class="params"  >
+<option value=1 >玩具</option>
+<option value=2 >食品</option>		
+</select>
+<input type="hidden" id='focusBtn' >	
 </div>
+<script>
+	var data_tag = '<?php echo $data_tag; ?>';
+	var part_id = '<?php echo $part_id; ?>';
+	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
+	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
+	$(document).ready(function(){	
+  		var temps = $("title", parent.document).html();
+  		$("#hot_text").val();
+  		for (key in data_param) {
+  			$("#"+key).val(data_param[key]);
+  		}
+	});	
+
+	$('#focusBtn').click(function(){
+		data_param = {};
+		$('.params').each(function(){
+			var tempID = $(this).attr('id');
+			var tempVal = $(this).val();
+			data_param[tempID] = tempVal; 
+		});
+		data_param = encodeURIComponent(JSON.stringify(data_param));
+		obj.attr('data-param',data_param);
+	});
+</script>
 
 

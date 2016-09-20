@@ -139,7 +139,21 @@ function _init() {
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,
-  			content: '/retailer/store/func?functions='+data_tag+'&part_id='+part_id
+  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
+  			btn: ['保存', '取消'],
+  			yes:function(){
+  				layer.load(2);
+  				var id = $('#iframe_layer').find('iframe').attr("name");
+				$("#focusBtn",window.frames[id].document).trigger("click");
+					
+				setTimeout(function(){
+					layer.closeAll();	
+				},600);
+					
+  			},
+  			btn2:function(){
+  				layer.closeAll();
+  			}
 		});
         
         
@@ -149,7 +163,6 @@ function _init() {
         var  _s = $(this);
 
         var  part_id = _s.parent().parent().assignId();
-
         var  part = _s.parent().parent();
         var  column = _s.parent().parent().parent('.column');
         var  row = _s.parent().parent().parent().parent('.row');
@@ -660,7 +673,7 @@ function s4() {
 
 function changeTag(){
 	$("#save_html .function-tag").each(function(){
-		$(this).html("{{"+$(this).attr('data-tag')+'}}');
+		$(this).html("{{"+$(this).attr('data-tag')+':'+$(this).attr('data-param')+'}}');
 	});
 	//console.log($("#save_html").html());
 	return $("#save_html").html();

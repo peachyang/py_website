@@ -13,13 +13,6 @@
         <form action="<?php echo $this->getBaseUrl('checkout/cart/update/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <div class="table" id="cart">
-                <ul class="col-xs-12 col-sm-12 selectall clearfix">
-                    <li class="col-xs-1 col-sm-1 text-left"><input type="checkbox" checked="checked" id="head-selectall" /></li>
-                    <li class="col-xs-11 col-sm-11 text-left"><label for="head-selectall">
-                            <?php echo $this->translate('Select All') ?>
-                        </label>
-                    </li>
-                </ul>
                 <?php
                 $stores = [];
                 foreach ($this->getItems() as $item) {

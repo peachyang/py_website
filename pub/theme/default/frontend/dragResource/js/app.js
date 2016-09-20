@@ -123,8 +123,30 @@ function _init() {
 			
 			var final_obj = $(".htmlpage .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag[data-id='"+data_id+"']");
 			final_obj.closest(".box.box-element[data-type='"+dataType+"']").attr('id',data_id);
+			call_ajax_data(data_id,dataType);
         }
     });
+    
+    function call_ajax_data(dataID,dataType){
+    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+data_id+"']").attr("data-param");
+    	    	$.ajax({
+                url: site_path+'retailer/store/getTemplateData',
+                type: "post",
+                dataType: 'json',
+                data:{dataID:dataID,dataTag:dataType,dataParam:dataParam},
+                beforeSend:function(){
+                    layer.load(1, {shade: [0.1,'#fff'] });	
+                },
+                success: function (data) {
+                	$("#"+dataID).find(".view").find(".content.function-tag[data-id='"+data_id+"']").html(data.view);
+					layer.closeAll();
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
+    }
 
     $(document).on('click', 'a.clone', function (e) {
         e.preventDefault();
@@ -158,7 +180,8 @@ function _init() {
 				$("#focusBtn",window.frames[id].document).trigger("click");
 					
 				setTimeout(function(){
-					layer.closeAll();	
+					layer.closeAll();
+					call_ajax_data(part_id,data_tag);
 				},600);
 					
   			},

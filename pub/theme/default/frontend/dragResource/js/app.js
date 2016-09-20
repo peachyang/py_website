@@ -128,7 +128,7 @@ function _init() {
     });
     
     function call_ajax_data(dataID,dataType){
-    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+data_id+"']").attr("data-param");
+    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").attr("data-param");
     	    	$.ajax({
                 url: site_path+'retailer/store/getTemplateData',
                 type: "post",
@@ -138,7 +138,7 @@ function _init() {
                     layer.load(1, {shade: [0.1,'#fff'] });	
                 },
                 success: function (data) {
-                	$("#"+dataID).find(".view").find(".content.function-tag[data-id='"+data_id+"']").html(data.view);
+                	$("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").html(data.view);
 					layer.closeAll();
                 },
                 error: function (msg) {

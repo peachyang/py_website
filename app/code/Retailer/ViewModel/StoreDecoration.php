@@ -104,7 +104,7 @@ class StoreDecoration extends Template
 	 * 
 	*/
 	
-	private function template_long_search($params=''){
+	public function template_long_search($params=''){
 		$content = '<label class="search-label">本店搜索</label>
                 <input class="keyword" type="text" name="keyword" value="" />&nbsp;&nbsp;
                 <input class="price-from" type="text" name="price-from" value="" />
@@ -114,7 +114,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 	
-	private function template_short_search($params=''){
+	public function template_short_search($params=''){
 		$content = '<div class="title"><h2>本店搜索</h2></div>
                 <div class="search-table">
                     <table>
@@ -140,7 +140,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	private function template_product_class($params=''){
+	public function template_product_class($params=''){
 		$content = '<ul class="category_list">
                         <li><a href="">查看所有分类&gt;&gt;</a></li>
                         <li><a href="">按销量</a>&nbsp;<a href="">按价格</a>&nbsp;<a href="">按评价</a>&nbsp;<a href="">按新品</a></li>
@@ -166,7 +166,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 	
-	private function template_sales_amount($params=''){
+	public function template_sales_amount($params=''){
 		$content = '<ul>
                         <li>
                             <div class="col-md-4">
@@ -184,9 +184,14 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	private function template_hot_product($params=''){
-		$params = urldecode($params);
-		$params = json_decode($params,true);
+	public function template_hot_product($params=''){
+		
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
 		$content = '<ul>';
        	for($i=0;$i<4;$i++)
 		{
@@ -194,7 +199,7 @@ class StoreDecoration extends Template
                             <div>
                                 <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
                                 <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
-                                <h3 class="product-name"><a href="">'.$params['hot_text'].'雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <h3 class="product-name"><a href="">'.(empty($params)? "" :$params['hot_text']).'雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
                                 <p class="paid-count">1999人付款</p>
                             </div>
                         </li>';
@@ -203,7 +208,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	private function template_store_recommend($params=''){
+	public function template_store_recommend($params=''){
 		$content ='';
 		for($i=0;$i<3;$i++)
 		{
@@ -233,7 +238,7 @@ class StoreDecoration extends Template
 		
 	}
 
-	private function template_product_recommend($params=''){
+	public function template_product_recommend($params=''){
 		$content = '<ul>';
        	for($i=0;$i<4;$i++)
 		{

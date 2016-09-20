@@ -8,6 +8,7 @@ use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
 
 /**
  * Retailer submenu store management controller
@@ -206,6 +207,15 @@ class StoreController extends AuthActionController
 		$root->getChild('main', true)->setVariable('data_tag', $functions);
 		$root->getChild('main', true)->setVariable('part_id', $part_id);
 		return $root;
+	}
+	
+	public function getTemplateDataAction(){
+		$dataParam = $this->getRequest()->getPost('dataParam');
+		$dataTag = $this->getRequest()->getPost('dataTag');
+	    $storeDecoration = new SDViewModel();
+		$function_name = 'template_'.$dataTag;
+		$view = $storeDecoration->$function_name($dataParam);
+		echo json_encode(array('status'=>true,'view'=>$view));
 	}
 	
 	

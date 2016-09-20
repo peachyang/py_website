@@ -295,7 +295,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .review .grand-total .text-left{color:#007ecc;font-size:16px;font-weight:bold}
 .col-xs-3{display:inline-block}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
-.customer-account-address .sub-add{width:100%;color:#ffffff;position:fixed;bottom:0;z-index:1000;color:#ffffff}
+.customer-account-address .sub-add{width:100%;color:#ffffff;color:#ffffff}
 .customer-account-address .address-list li{background:#ffffff;margin-bottom:10px;padding:10px 10px}
 .customer-account-address .btn{padding:5px 0;margin:0}
 .customer-account-address .sub-add .btn-add{width:100%;background:#007ecc}

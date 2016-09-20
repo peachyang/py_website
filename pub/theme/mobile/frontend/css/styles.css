@@ -237,6 +237,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 #cart .product-list .product-img{float:left;width:26%}
 #cart .product-list .product-name{float:left;width:72%;margin-right:2%}
 #cart .checkout{background:#ffffff;height:50px;line-height:50px;position:fixed;bottom:0;z-index:10}
+#cart .checkout li{line-height:50px}
 #cart .checkout .btn-checkout{background:#ffb900;color: #fff;font-size:16px;text-align:center}
 #cart .checkout .btn{background:#ffb900}
 #cart .checkout .btn.active, .btn:active{box-shadow:none}
@@ -248,22 +249,24 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
 .checkout-order .checkout-steps .payment{margin-bottom:60px}
 .checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold}
-.checkout-order .checkout-steps .address .list li label{width:92%}
-.checkout-order .checkout-steps .address .list li p{clear:both;line-height:30px;width:90%;margin:0 5%}
-.checkout-order .checkout-steps .address .list li p span{display:inline-block}
-.checkout-order .checkout-steps .address .list li p .default{width:50%}
-.checkout-order .checkout-steps .address .list li p .edit,.delete{width: 23%;text-align:right}
-.checkout-order .checkout-steps .address .more{line-height: 30px;color: #007ecc}
-.checkout-order .checkout-steps .address .more .fa{margin-left:5px;}
+.checkout-order .address .list{height:60px;line-height:60px;overflow-y:hidden}
+.checkout-order .address .list li{display:inline-block;line-height:30px}
+.checkout-order .address .list li input{float:left;margin-top: 26px}
+.checkout-order .address .list li label{width:90%}
+.checkout-order .address .list li .fa{float:right;color:#b5b5b5;line-height:60px}
 .checkout-order .checkout-steps .payment li{margin-right:10px}
 
 .checkout-order .coupon a{position:relative;z-index: 10;display:inline-block; background: url(../images/bg-coupon-yellow.png) left top,url(../images/bg-coupon-yellow.png) right top; background-repeat: repeat-y;background-color: #f7bc44;color: #fff;font-size: 12px;padding: 0 9px;line-height:30px}
 .checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff}
 .checkout-order .coupon .dropdown-menu label{padding:0 .5em;display:block}
-.open>.dropdown-menu{position:relative;z-index: 1001}
-.dropdown-menu{border:none;background: none;color:#ffffff;box-shadow:none}
+.product-info .open>.dropdown-menu{position:relative;z-index: 1001}
+.checkout-cart p a{color:#007ecc}
+.checkout-order-success h3,h4,li{line-height:30px}
+.checkout-order-success li{margin:0 10px}
+.product-info .list-inline .dropdown-menu{background: none;color:#ffffff}
 .checkout-steps .review .order{overflow:hidden}
 .checkout-steps .review .order .store{height:40px;line-height:40px;border-bottom:1px solid #e3e5eb}
+.checkout-steps .review .order .store li{height:40px;line-height:40px}
 .checkout-steps .review .order .product-list{padding:15px 0 0 0;border-bottom:1px solid #e3e5eb}
 .checkout-steps .review .order .product-list .product-img{float:left;width:26%}
 .checkout-steps .review .order .product-list .product-name{float:left;width:72%;margin-right:2%}
@@ -274,15 +277,17 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-steps .review .order .product-list .product-name .options dd{float:left;margin-right:5px}
 .checkout-steps .review .order .product-list .price{color:#007ecc;font-weight:bold}
 .checkout-steps .review .order .product-list .qty{color:#000;line-height:26px;text-align:right}
+.checkout-order .review .order .shipping{padding-top:5px}
 .checkout-steps .review .order .shipping,.subtotal{line-height:40px;width:100%;overflow:hidden}
-.checkout-steps .review .order .text-nowrap{margin-right:8px}
 .checkout-steps .review .order .total .table{overflow: hidden}
 .checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}
-.checkout-steps .grand-total{background:#ffffff;height:50px;line-height: 50px;position:fixed;z-index: 1000;bottom: 0;left:-5px;width:105%}
-.checkout-steps .grand-total span{color: #007ecc;font-weight:bold;margin-right:10px}
-.checkout-steps .grand-total .buttons-set{background:#ffb900;color:#fff;text-align:center}
-.checkout-steps .grand-total .buttons-set .btn{background:#ffb900;text-align:center;padding:0}
-.checkout-steps .grand-total .buttons-set .btn.active,.btn:active{box-shadow: none}
+.checkout-steps .grand-total li{height:50px;line-height:50px}
+.checkout-order .review .tfoot .buttons-set{background:#ffffff;position:fixed;bottom:0;z-index:1001;margin-left:-5px}
+.checkout-order .review .tfoot .buttons-set p{width:70%;height: 50px;line-height:50px;float:left;margin-bottom:0}
+.checkout-order .review .tfoot .buttons-set p span{color: #007ecc;font-size:20px;font-weight:bold}
+.checkout-order .review .tfoot .buttons-set .btn{background:#ffb900;text-align:center;padding:0}
+.checkout-order .review .tfoot .buttons-set .btn.active,.btn:active{box-shadow: none}
+.checkout-order .review .tfoot .buttons-set button{background:#ffb900;color:#fff;text-align:center;width:30%;left:70%;height:50px;line-height:50px}
 .col-xs-3{display:inline-block}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
 .customer-account-address .sub-add{width:100%;color:#ffffff;position:fixed;bottom:0;z-index:1000;color:#ffffff}
@@ -293,3 +298,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account-address .modal-dialog .modal-body .input-box label{width:21%;float:left;text-align:right}
 .customer-account-address .modal-dialog .modal-body .input-box .cell{width:79%;float:left}
 .modal-dialog .modal-footer .btn{;width:49%;float:left;background:#007ecc;color:#ffffff}
+.page-not-found .notice{width:100%;overflow:hidden;text-align:center}
+.page-not-found .notice dt,dd{line-height:26px}
+.page-not-found .notice dd a{color:#007ecc}

@@ -39,18 +39,24 @@
         }
         ?>
         <ul class="col-xs-12 col-sm-12 shipping">
-            <li class="col-xs-2 col-sm-2 text-nowrap text-right">
+            <li class="col-xs-6 col-sm-6 text-nowrap text-left">
                 <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
-            </li>
-            <li class="col-xs-9 col-sm-9">
                 <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
             </li>
+            <li class="col-xs-6 col-sm-6 text-nowrap text-right">
+                <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
+            </li>         
         </ul>
+    </div>
+    <div class="tfoot">
         <ul class="col-xs-12 col-sm-12 subtotal">
-            <li class="text-right total">
+            <li class="col-xs-12 col-sm-12 text-right total">
                 <?php echo $this->getChild('total') ?>
+            </li>
+            <li class="col-xs-12 col-sm-12 text-right buttons-set">
+                <p><?php echo $this->translate('Grand Total') ?>:<span><?php echo $this->getCurrency()->format($this->getCart()['total']) ?><span></p>
+                <button type="button" class="btn btn-checkout"><?php echo $this->translate('Place Order') ?></button>
             </li>
         </ul>
     </div>
-
 </section>

@@ -85,7 +85,8 @@ function _init() {
            
         }
     });
-
+	
+	var data_id = 0;
     $(".sidebar-nav .box").draggable({
         connectToSortable: ".column",
         helper: "clone",
@@ -94,12 +95,13 @@ function _init() {
         	var obj = t.helper;
         	var dataType = $(obj).attr('data-type');
         	var showType = $(obj).attr('show-type');
-        	//console.log($("#hot_product").html());
+   
         	if(showType=="1")
         	{
         		var htmls = template(dataType);
         		
-        		$(".box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+        		$(".sidebar-nav .box.box-element[data-type='"+dataType+"']").find(".view").html(htmls);
+        		data_id = $(".sidebar-nav .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag").dataId();
         		$(obj).find(".view").html('模块');
  			}
         	
@@ -109,9 +111,18 @@ function _init() {
             
         },
         stop: function (e, t) {
-			//console.log(t.helper);
+						
 			if($(".htmlpage .lyrow").length<=0)
-			alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+			{
+				alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+				return;
+			}
+			var obj = t.helper;
+        	var dataType = $(obj).attr('data-type');
+        	var showType = $(obj).attr('show-type');
+			
+			var final_obj = $(".htmlpage .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag[data-id='"+data_id+"']");
+			final_obj.closest(".box.box-element[data-type='"+dataType+"']").attr('id',data_id);
         }
     });
 
@@ -686,6 +697,16 @@ function changeTag(){
         if (typeof id === typeof undefined || id === false) {
             id = s4() + '-' + s4() + '-' + s4() + '-' + s4();
             _self.attr('id', id);
+        }
+        return id;
+    };
+    
+    $.fn.dataId = function () {
+        var  _self = $(this);
+        var  id = _self.attr('id');
+        if (typeof id === typeof undefined || id === false) {
+            id = s4() + '-' + s4() + '-' + s4() + '-' + s4();
+            _self.attr('data-id', id);
         }
         return id;
     };

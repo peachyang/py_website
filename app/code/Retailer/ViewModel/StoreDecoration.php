@@ -26,6 +26,7 @@ class StoreDecoration extends Template
 			if($id!='-1')
 			{		
 				$template = new StoreTemplate();
+				
 				$templateView = $template->load($id);
 			}
 		}else{
@@ -63,9 +64,11 @@ class StoreDecoration extends Template
 	   		'product_recommend');
 			
 	   foreach ($tempParams as $value) {
-	   	   $params = $this->divideParam($value,$final_view);
-		   $func = 'template_'.$value;
-		   $final_view = str_replace('{{'.$value.':'.$params.'}}', $this->$func($params), $final_view);
+	   		$params = $this->divideParam($value,$final_view);
+			foreach ($params as $key1 => $value1) {		
+				$func = 'template_'.$value;
+				$final_view = str_replace('{{'.$value.':'.$value1.'}}', $this->$func($value1), $final_view);
+			}
 	   }
 
        return $final_view;
@@ -73,8 +76,8 @@ class StoreDecoration extends Template
 	
 	public function divideParam($value,$str){
 	
-		preg_match("|{{".$value.":([^^]*?)}}|u", $str, $matches);
-		return empty($matches[1])? "" : $matches[1];
+		preg_match_all("|{{".$value.":([^^]*?)}}|u", $str, $matches);
+		return $matches[1];
 	}
 	
 	/**  

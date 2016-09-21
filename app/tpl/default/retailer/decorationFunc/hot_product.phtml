@@ -27,8 +27,7 @@ $part_id = $this->getVariable("part_id");
 	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
 	$(document).ready(function(){	
-  		var temps = $("title", parent.document).html();
-  		$("#hot_text").val();
+
   		for (key in data_param) {
   			$("#"+key).val(data_param[key]);
   		}

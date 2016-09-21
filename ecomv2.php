@@ -1137,7 +1137,7 @@ CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_TEXT` BEFORE UPDATE ON `address_value_t
 
 INSERT INTO `eav_entity_type` VALUES (3, 'category', 'category_entity', 'category_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 3, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Infomation', 0, CURRENT_TIMESTAMP, NULL),
+INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Information', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 3, 'Display Settings', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (13,3,'name','varchar','text','',1,'',0,NULL,NULL,0,1,0,0,NULL,NULL),
@@ -1298,9 +1298,9 @@ INSERT INTO `category_value_varchar` VALUES (13,1,1,'Default Category',NULL);
 
 INSERT INTO `eav_entity_type` VALUES (4, 'product', 'product_entity', 'product_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 4, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Infomation', 0, CURRENT_TIMESTAMP, NULL),
+INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Information', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 4, 'Price', 0, CURRENT_TIMESTAMP, NULL),
-(NULL, 4, 'Meta Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Meta Information', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 4, 'Images', 1, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (26,4,'name','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),

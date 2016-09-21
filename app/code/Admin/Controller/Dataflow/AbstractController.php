@@ -6,6 +6,7 @@ use Exception;
 use PHPExcel;
 use Seahinet\Dataflow\Exception\InvalidCellException;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Http\Stream;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Session\Segment;
@@ -49,8 +50,7 @@ abstract class AbstractController extends AuthActionController
         'Attribute Set' => 'getAttributeSet',
         'Store' => 'getStore'
     ];
-    
-    
+
     public function prepareImportAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -83,7 +83,7 @@ abstract class AbstractController extends AuthActionController
         return $this->notFoundAction();
     }
 
-    protected function doImport($processer, $modelName, $table, $type)
+    protected function doImport($processer, $modelName, $table, $type = '')
     {
         touch(BP . 'maintence');
         $segment = new Segment('dataflow');
@@ -97,12 +97,16 @@ abstract class AbstractController extends AuthActionController
             $excel = $reader->load(BP . 'var/import/' . $segment->get('file'));
             $skip = (int) $segment->get('skip', 0) + 50 * $processer;
             $sheet = $excel->setActiveSheetIndex(0);
-            $attributes = new Attribute;
-            $attributes->withLabel($segment->get('language_id'))
-                    ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                    ->where(['eav_entity_type.code' => $type])
-                    ->order('eav_attribute.id');
-            $attributes->load();
+            if ($type) {
+                $attributes = new Attribute;
+                $attributes->withLabel($segment->get('language_id'))
+                        ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+                        ->where(['eav_entity_type.code' => $type])
+                        ->order('eav_attribute.id');
+                $attributes->load();
+            } else {
+                $attributes = [];
+            }
             $count = 0;
             foreach ($sheet->getRowIterator($skip + 1, $skip + 50) as $row) {
                 $model = new $modelName($segment->get('language_id'));
@@ -113,7 +117,7 @@ abstract class AbstractController extends AuthActionController
                     if (!is_null($value)) {
                         $model->setData($col < count($this->columns) ?
                                         (isset($this->handler[$this->columns[$col]]) ?
-                                                $this->{$this->handler[$this->columns[$col]]}($value, $type) : $value) :
+                                                $this->{$this->handler[$this->columns[$col]]}($value, $type) : $this->columnsKey[$col]) :
                                         (in_array($attributes[$col - count($this->columns)]['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                                 $this->getAttributeValue($attributes[$col - count($this->columns)], $value, $segment->get('language_id')) :
                                                 $attributes[$col - count($this->columns)]['code']), $value);
@@ -124,7 +128,7 @@ abstract class AbstractController extends AuthActionController
                 if ($flag) {
                     break;
                 }
-                $model->save([], true);
+                $model->save([], (bool) $segment->get('truncate'));
                 $count ++;
             }
             $this->commit();
@@ -147,32 +151,37 @@ abstract class AbstractController extends AuthActionController
         }
     }
 
-    protected function doExport($processer, $collectionName, $type)
+    protected function doExport($processer, $collectionName, $type = '')
     {
         $data = $this->getRequest()->getPost();
         $result = $this->validateForm($data, ['language_id', 'zip', 'format']);
         if ($result['error'] === 0) {
             $language = new Language;
             $language->load($data['language_id']);
-            $collection = new $collectionName($data['language_id']);
+            $collection = is_object($collectionName) ? $collectionName : new $collectionName($data['language_id']);
             $select = $collection->limit(50)->offset($processer * 50);
             if (!empty($data['id'])) {
                 $select->where->in('id', explode(',', $data['id']));
             }
+            $collection->load(false);
             $segment = new Segment('dataflow');
-            if ($collection->count()) {
-                $attributes = new Attribute;
-                $attributes->withLabel($data['language_id'])
-                        ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                        ->where(['eav_entity_type.code' => $type])
-                        ->order('eav_attribute.id');
+            if ($collection->count() || $processer == 0) {
+                if ($type) {
+                    $attributes = new Attribute;
+                    $attributes->withLabel($data['language_id'])
+                            ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+                            ->where(['eav_entity_type.code' => $type])
+                            ->order('eav_attribute.id');
+                } else {
+                    $attributes = [];
+                }
                 $row = $processer * 50 + 1;
                 if ($processer === 0) {
                     $excel = new PHPExcel;
                     $sheet = $excel->setActiveSheetIndex(0);
                     $col = 0;
                     foreach ($this->columns as $label) {
-                        $sheet->setCellValue($this->getColumn($col++, true) . '1', $this->translate($label, [], null, $language['locale']));
+                        $sheet->setCellValue($this->getColumn($col++, true) . '1', $this->translate($label, [], null, $language['code']));
                     }
                     foreach ($attributes as $attribute) {
                         $sheet->setCellValue($this->getColumn($col++, true) . '1', $attribute['label']);
@@ -216,7 +225,7 @@ abstract class AbstractController extends AuthActionController
         }
     }
 
-    protected function getTemplate($type)
+    protected function getTemplate($type = '')
     {
         $data = $this->getRequest()->getQuery();
         if (!isset($data['language_id'])) {
@@ -229,16 +238,20 @@ abstract class AbstractController extends AuthActionController
         $format = isset($data['format']) && isset($this->writer[$data['format']]) ? $data['format'] : 'csv';
         $name = 'template-' . static::NAME . '-' . $data['language_id'] . gmdate('-Y-m-d-H.') . $format;
         if (!file_exists(BP . 'var/export/' . $name)) {
-            $attributes = new Attribute;
-            $attributes->withLabel($data['language_id'])
-                    ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
-                    ->where(['eav_entity_type.code' => $type])
-                    ->order('eav_attribute.id');
+            if ($type) {
+                $attributes = new Attribute;
+                $attributes->withLabel($data['language_id'])
+                        ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+                        ->where(['eav_entity_type.code' => $type])
+                        ->order('eav_attribute.id');
+            } else {
+                $attributes = [];
+            }
             $excel = new PHPExcel;
             $sheet = $excel->setActiveSheetIndex(0);
             $col = 0;
             foreach ($this->columns as $label) {
-                $sheet->setCellValue($this->getColumn($col++, true) . '1', $this->translate($label, [], null, $language['locale']));
+                $sheet->setCellValue($this->getColumn($col++, true) . '1', $this->translate($label, [], null, $language['code']));
             }
             foreach ($attributes as $attribute) {
                 $sheet->setCellValue($this->getColumn($col++, true) . '1', $attribute['label']);

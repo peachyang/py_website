@@ -26,7 +26,7 @@ class Export extends Edit
 
     protected function prepareElements($columns = [])
     {
-        return [
+        $columns = [
             'csrf' => [
                 'type' => 'csrf'
             ],
@@ -52,14 +52,17 @@ class Export extends Edit
                     'xlsx' => 'Excel2007 (.xlsx)',
                     'ods' => 'OpenDocument (.ods)'
                 ]
-            ],
-            'id' => [
+            ]
+        ];
+        if ($this->getVariable('filter', true)) {
+            $columns['id'] = [
                 'type' => 'text',
                 'label' => 'ID',
                 'comment' => 'Comma-separated.',
                 'value' => $this->getRequest()->getQuery('id', '')
-            ]
-        ];
+            ];
+        }
+        return $columns;
     }
 
 }

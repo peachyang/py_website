@@ -13,12 +13,12 @@ dataflow:
             title: Export Products
             priority: 11
         -
-            link: dataflow_product_attribute/import/
-            title: Import Product Attributes
+            link: dataflow_stock/import/
+            title: Import Product Stocks
             priority: 15
         -
-            link: dataflow_product_attribute/export/
-            title: Export Product Attributes
+            link: dataflow_stock/export/
+            title: Export Product Stocks
             priority: 16
         -
             link: dataflow_customer/import/
@@ -29,10 +29,10 @@ dataflow:
             title: Export Customers
             priority: 21
         -
-            link: dataflow_customer_attribute/import/
-            title: Import Customer Attributes
-            priority: 25
+            link: dataflow_address/import/
+            title: Import Customer Addresses
+            priority: 20
         -
-            link: dataflow_customer_attribute/export/
-            title: Export Customer Attributes
-            priority: 26
+            link: dataflow_address/export/
+            title: Export Customer Addresses
+            priority: 21

@@ -2,6 +2,7 @@
 
 namespace Seahinet\Catalog\Model;
 
+use Seahinet\Catalog\Model\Collection\Warehouse\Inventory;
 use Seahinet\Lib\Model\AbstractModel;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -16,22 +17,13 @@ class Warehouse extends AbstractModel
     public function getInventory($productId, $sku = '')
     {
         if ($this->getId()) {
-            $cache = $this->getContainer()->get('cache');
-            $key = $this->getId() . '_' . $productId . '_' . $sku;
-            $result = $cache->fetch($key, 'INVENTORY_');
-            if (!$result) {
-                $tableGateway = new TableGateway('warehouse_inventory', $this->getContainer()->get('dbAdapter'));
-                $result = $tableGateway->select([
-                            'warehouse_id' => $this->getId(),
-                            'product_id' => $productId,
-                            'sku' => $sku
-                        ])->toArray();
-                if (count($result)) {
-                    $result = $result[0];
-                }
-                $cache->save($key, $result, 'INVENTORY_');
-            }
-            return $result;
+            $inventory = new Inventory;
+            $inventory->where([
+                'warehouse_id' => $this->getId(),
+                'product_id' => $productId,
+                'sku' => $sku
+            ]);
+            return $inventory[0];
         }
         return null;
     }
@@ -39,11 +31,10 @@ class Warehouse extends AbstractModel
     public function setInventory(array $inventory)
     {
         if ($this->getId() || isset($inventory['warehouse_id'])) {
-            $cache = $this->getContainer()->get('cache');
-            $id = $this->getId()? : $inventory['warehouse_id'];
+            $id = $this->getId() ?: $inventory['warehouse_id'];
             $tableGateway = new TableGateway('warehouse_inventory', $this->getContainer()->get('dbAdapter'));
             $constraint = [
-                'warehouse_id' => $this->getId()? : $inventory['warehouse_id'],
+                'warehouse_id' => $this->getId() ?: $inventory['warehouse_id'],
                 'product_id' => $inventory['product_id'],
                 'sku' => $inventory['sku']
             ];
@@ -52,7 +43,7 @@ class Warehouse extends AbstractModel
                 'min_qty' => 1, 'max_qty' => 1, 'is_decimal' => 1,
                 'backorders' => 1, 'increment' => 1, 'status' => 1
                     ]), $constraint, $tableGateway);
-            $cache->save($id . '_' . $inventory['product_id'] . '_' . $inventory['sku'], $inventory + ['warehouse_id' => $this->getId()], 'INVENTORY_');
+            $this->flushList('warehouse_inventory');
             $this->flushList('warehouse');
         }
         return $this;

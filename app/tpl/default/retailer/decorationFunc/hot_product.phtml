@@ -3,12 +3,22 @@ $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
  ?>
 <div style="margin:20px" >
-第一属性：<input type="text" id="hot_text" class="params" > <br><br>
-第二属性: 
-<select id='hot_select' class="params"  >
-<option value=1 >玩具</option>
-<option value=2 >食品</option>		
-</select>
+关键字：<input type="text" id="hot_text" class="params" > <br><br>
+共几行: 
+<select id='select_row' class="params"  >
+<option value=1 >1 行</option>
+<option value=2 >2 行</option>		
+</select> <br><br>
+	
+一行几列: 
+<select id='select_column' class="params"  >
+<option value=4 >4列</option>
+<option value=3 >3列</option>
+<option value=2 >2列</option>		
+</select> <br><br>
+价格范围:
+<input class="params" type="text" value="" id="price_from"> - <input class="params" type="text" value="" id="price_to"> 	
+
 <input type="hidden" id='focusBtn' >	
 </div>
 <script>
@@ -17,8 +27,7 @@ $part_id = $this->getVariable("part_id");
 	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
 	$(document).ready(function(){	
-  		var temps = $("title", parent.document).html();
-  		$("#hot_text").val();
+
   		for (key in data_param) {
   			$("#"+key).val(data_param[key]);
   		}

@@ -3,6 +3,7 @@
 namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Retailer\ViewModel\SalesProducts;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Lib\Session\Segment;
@@ -192,15 +193,48 @@ class StoreDecoration extends Template
 			$params = json_decode($params,true);
 		}
 		
+		
+		$hot_text = empty($params) ? "" : $params['hot_text'];
+		$price_from = empty($params) ? "" : $params['price_from'];
+		$price_to = empty($params) ? "" : $params['price_to'];
+		$select_row = empty($params) ? 1 : $params['select_row'];
+		$select_column = empty($params) ? 4 : (int)$params['select_column'];
+		$select_col_md = 'col-md-3';
+		switch ($select_column) {
+			case 3:
+				$select_col_md = 'col-md-4';
+				break;
+			case 2:
+				$select_col_md = 'col-md-6';
+				break;			
+			default:
+				$select_col_md = 'col-md-3';
+				break;
+		}
+		
+		$condition['name'] = $hot_text;
+		$condition['limit'] = $select_column*$select_row;
+		$condition['price_from'] = $price_from;
+		$condition['price_to'] = $price_to;
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition);
+		
+		
 		$content = '<ul>';
-       	for($i=0;$i<4;$i++)
-		{
-			$content .= '<li class="col-md-3">
+       	foreach ($productsData as $key => $value) {
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
-                                <h3 class="product-name"><a href="">'.(empty($params)? "" :$params['hot_text']).'雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-                                <p class="paid-count">1999人付款</p>
+                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
+                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <p class="paid-count"></p>
                             </div>
                         </li>';
 		}                

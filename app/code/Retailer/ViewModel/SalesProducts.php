@@ -19,9 +19,9 @@ class SalesProducts extends Template
     * @return object 
     */ 
 	
-	public function getRetailerSalesProducts()
+	public function getRetailerSalesProducts($params = array())
 	{
-		$condition = $this->getQuery();
+		$condition = !empty($params) ? $params : $this->getQuery();
         $sales_products = new Pcollection;
 		$sales_products = $sales_products->withInSales();
 		$where = new \Zend\Db\Sql\Where();
@@ -37,7 +37,7 @@ class SalesProducts extends Template
         }
 		
 		$sales_products->where($where);		
-		return $this->prepareCollection($sales_products);
+		return $this->prepareCollection($sales_products,$condition);
 		
 	}
 	
@@ -104,12 +104,12 @@ class SalesProducts extends Template
      * @param AbstractCollection $collection
      * @return AbstractCollection
      */
-    protected function prepareCollection($collection = null)
+    protected function prepareCollection($collection = null,$params = array())
     {
         if (is_null($collection)) {
             return [];
         }
-        $condition = $this->getQuery();
+        $condition = !empty($params) ? $params : $this->getQuery();
         $limit = isset($condition['limit']) ? $condition['limit'] : 20;
         if (isset($condition['page'])) {
             $collection->offset(($condition['page'] - 1) * $limit);

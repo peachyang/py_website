@@ -86,7 +86,7 @@ $currency = $order->getCurrency();
                                         foreach ($product->getOptions() as $option):
                                             if (isset($options[$option->getId()])):
                                                 ?>
-                                                <dt><?php echo $option['title'] ?></dt>
+                                                <dt><?php echo $option['title'] ?>:</dt>
                                                 <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd>
                                                 <?php
                                             endif;
@@ -106,12 +106,12 @@ $currency = $order->getCurrency();
                     <tr>
                         <td colspan="6">
                             <dl class="dl-horizontal pull-right">
-                                <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
+                                <dt><?php echo $this->translate('Subtotal', [], 'sales') ?>:</dt>
                                 <dd><?php echo $currency->format($order->offsetGet('subtotal')) ?></dd>
-                                <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
+                                <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?>:</dt>
                                 <dd><?php echo $currency->format($order->offsetGet('shipping')) ?></dd>
                                 <?php if ((float) $order->offsetGet('tax')): ?>
-                                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
+                                    <dt><?php echo $this->translate('Tax', [], 'sales') ?>:</dt>
                                     <dd><?php echo $currency->format($order->offsetGet('tax')) ?></dd>
                                 <?php endif ?>
                                 <?php
@@ -119,16 +119,16 @@ $currency = $order->getCurrency();
                                     $discount = json_decode($order->offsetGet('discount_detail'), true);
                                     foreach ($discount as $type => $price):
                                         ?>
-                                        <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?></dt>
+                                        <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?>:</dt>
                                         <dd><?php echo $currency->convert($price, true) ?></dd>
                                         <?php
                                     endforeach;
                                 endif;
                                 ?>
-                                <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
+                                <dt><?php echo $this->translate('Grand Total', [], 'sales') ?>:</dt>
                                 <dd><?php echo $currency->format($order->offsetGet('total')) ?></dd>
                                 <?php if ((float) $order->offsetGet('total_refunded')): ?>
-                                    <dt><?php echo $this->translate('Total Refunded', [], 'sales') ?></dt>
+                                    <dt><?php echo $this->translate('Total Refunded', [], 'sales') ?>:</dt>
                                     <dd><?php echo $currency->format($order->offsetGet('total_refunded')) ?></dd>
                                 <?php endif ?>
                             </dl>

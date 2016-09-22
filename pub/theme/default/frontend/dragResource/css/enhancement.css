@@ -1,0 +1,24 @@
+		.carousel_wrap li{
+		    list-style: none;
+		}
+		.carousel_wrap li img{
+		    display: block;
+		    margin: 0 auto;
+		    width:100%
+		}
+		.carousel_wrap{
+		    width: 100%;
+		    min-width: 260px;
+		    background: #fefefe;
+		}
+		.carousel_wrap .hiSlider{
+		    overflow: hidden;
+		    height: 100%;
+		    width: 500px;
+		    background: #eee;
+		}
+		.carousel_wrap .hiSlider-item{
+		    float: left;
+		}
+		.hiSlider-pages a.active{border:0px}
+		.hiSlider-title{background:rgba(0,0,0,.2)}

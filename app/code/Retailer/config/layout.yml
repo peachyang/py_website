@@ -593,6 +593,18 @@ view_store:
                     -
                         method: addLink
                         params: frontend/dragResource/css/store_view.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
             content:
                 children:
                     main:
@@ -673,6 +685,12 @@ decoration_store:
                         method: addLink
                         params: frontend/dragResource/css/bootstrap-colorselector.css
                     -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
                         method: addScript
                         params: frontend/dragResource/js/tinymce.min.js
                     -
@@ -693,6 +711,12 @@ decoration_store:
                     -
                         method: addScript
                         params: frontend/dragResource/js/layer/layer.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
                     -
                         method: setTitle
                         params: Retailer Store

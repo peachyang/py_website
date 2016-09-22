@@ -73,7 +73,7 @@ final class Head extends Template implements Singleton
     }
 
     /**
-     * Add meta information
+     * Add meta infomation
      * 
      * @param string $name
      * @param string $content
@@ -151,7 +151,7 @@ final class Head extends Template implements Singleton
     }
 
     /**
-     * Add script information
+     * Add script infomation
      * 
      * @param string|array $script
      * @param string $condition
@@ -187,7 +187,7 @@ final class Head extends Template implements Singleton
     }
 
     /**
-     * Add link information
+     * Add link infomation
      * 
      * @param string $link
      * @param string $type

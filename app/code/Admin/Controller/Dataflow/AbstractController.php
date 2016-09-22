@@ -48,6 +48,7 @@ abstract class AbstractController extends AuthActionController
         'Attribute Set' => 'getAttributeSet',
         'Store' => 'getStore'
     ];
+    protected $exportData = [];
 
     public function prepareImportAction()
     {
@@ -113,12 +114,18 @@ abstract class AbstractController extends AuthActionController
                 foreach ($row->getCellIterator() as $cell) {
                     $value = $cell->getValue();
                     if (!is_null($value)) {
-                        $model->setData($col < count($this->columns) ?
-                                        (isset($this->handler[$this->columns[$col]]) ?
-                                                $this->{$this->handler[$this->columns[$col]]}($value, $type) : $this->columnsKey[$col]) :
-                                        (in_array($attributes[$col - count($this->columns)]['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                                $this->getAttributeValue($attributes[$col - count($this->columns)], $value, $segment->get('language_id')) :
-                                                $attributes[$col - count($this->columns)]['code']), $value);
+                        if ($col < count($this->columns)) {
+                            $model->setData(isset($this->handler[$this->columns[$col]]) ?
+                                            $this->{$this->handler[$this->columns[$col]]}($value, $type, $model) :
+                                            $this->columnsKey[$col], $value);
+                        } else {
+                            $attribute = $attributes[$col - count($this->columns)];
+                            $code = $attribute['code'];
+                            $model->setData(isset($this->handler[$code]) ? $this->handler[$code]($value, $attribute) :
+                                            (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                    $this->getAttributeValue($attribute, $value, $segment->get('language_id')) :
+                                                    $code), $value);
+                        }
                         $flag = false;
                     }
                     $col ++;
@@ -196,7 +203,7 @@ abstract class AbstractController extends AuthActionController
                 foreach ($collection as $item) {
                     $col = 0;
                     foreach ($this->columns as $key => $label) {
-                        $sheet->setCellValue($this->getColumn($col++, true) . $row, $item[$this->columnsKey[$key]]);
+                        $sheet->setCellValue($this->getColumn($col++, true) . $row, isset($this->exportData[$label]) ? $this->{$this->exportData[$label]}($item) : $item[$this->columnsKey[$key]]);
                     }
                     foreach ($attributes as $attribute) {
                         $sheet->setCellValue($this->getColumn($col++, true) . $row, $item[$attribute['code']]);

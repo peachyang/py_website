@@ -62,7 +62,8 @@ class StoreDecoration extends Template
 	   		'sales_amount',
 	   		'hot_product',
 	   		'store_recommend',
-	   		'product_recommend');
+	   		'product_recommend',
+	   		'pic_carousel');
 			
 	   foreach ($tempParams as $value) {
 	   		$params = $this->divideParam($value,$final_view);
@@ -285,6 +286,18 @@ class StoreDecoration extends Template
                         </li>';
 		}                
         $content .= '</ul>';
+		return $content;
+		
+	}
+	
+	
+	public function template_pic_carousel($params=''){
+		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
+       	for($i=1;$i<6;$i++)
+		{
+			$content .= '<li class="hiSlider-item"><img src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/'.$i.'.jpg').'" alt="11111"></li>';
+		}                
+        $content .= '</ul></div>';
 		return $content;
 		
 	}

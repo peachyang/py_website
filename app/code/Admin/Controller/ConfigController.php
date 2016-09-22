@@ -8,8 +8,6 @@ use Seahinet\Lib\Session\Segment;
 class ConfigController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
-
     protected $key = null;
     protected $config = null;
 

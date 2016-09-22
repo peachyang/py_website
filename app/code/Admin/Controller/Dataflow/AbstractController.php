@@ -14,8 +14,6 @@ use Seahinet\Lib\Session\Segment;
 abstract class AbstractController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
-
     protected $writer = [
         'csv' => '\PHPExcel_Writer_CSV',
         'xls' => '\PHPExcel_Writer_Excel5',

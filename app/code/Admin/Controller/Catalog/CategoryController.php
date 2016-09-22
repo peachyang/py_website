@@ -14,8 +14,6 @@ use Seahinet\Lib\Session\Segment;
 class CategoryController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
-
     public function indexAction()
     {
         $root = $this->getLayout('admin_catalog_category_list');

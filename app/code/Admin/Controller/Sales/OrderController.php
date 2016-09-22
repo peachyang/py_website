@@ -16,8 +16,6 @@ use TCPDF;
 class OrderController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
-
     public function chartAction()
     {
         $filter = $this->getRequest()->getQuery('filter', 'd');

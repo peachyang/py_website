@@ -8,7 +8,6 @@ use Seahinet\Sales\Model\Rma;
 class RefundController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
     public function indexAction()
     {
         $root = $this->getLayout('admin_refund_list');

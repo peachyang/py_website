@@ -15,8 +15,6 @@ use TCPDF;
 class InvoiceController extends AuthActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
-
     public function indexAction()
     {
         $root = $this->getLayout('admin_sales_invoice_list');

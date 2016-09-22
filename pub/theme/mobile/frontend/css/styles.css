@@ -28,6 +28,9 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-create .main-container .input-box{margin:8px 0}
 .customer-account-create .main-container .additional{margin-top:50px;padding-left:14px}
 .customer-account-create .main-container button{background:#05a0e9;width:100%}
+@media(min-width:768px){
+    .customer-account-create .container{width:746px}
+}
 .customer-account-login .main-container .input-box{margin:18px 0}
 .customer-account-login .header-m{background:#3a3a3b;height:40px}
 .customer-account-login .header-m .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}

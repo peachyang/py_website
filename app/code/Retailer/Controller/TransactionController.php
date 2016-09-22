@@ -44,7 +44,7 @@ class TransactionController extends AuthActionController
     
     /** 
     * orderviewAction  
-    * View the order information
+    * View the order infomation
     * 
     * @access public 
     * @return object 
@@ -61,7 +61,7 @@ class TransactionController extends AuthActionController
     
     /** 
     * commentAction  
-    * View the comment information
+    * View the comment infomation
     * 
     * @access public 
     * @return object 
@@ -74,7 +74,7 @@ class TransactionController extends AuthActionController
     
     /** 
     * commentAction  
-    * View the comment information
+    * View the comment infomation
     * 
     * @access public 
     * @return object 
@@ -87,7 +87,7 @@ class TransactionController extends AuthActionController
     
     /** 
     * afterviewAction  
-    * View the after service information
+    * View the after service infomation
     * 
     * @access public 
     * @return object 

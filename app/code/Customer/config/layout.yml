@@ -19,7 +19,7 @@ customer_account:
                                 params: [{label:'My Following',priority:30,icon:'star'}]
                             -
                                 method: addGroup
-                                params: [{label:'Account Information',priority:0,icon:'th-list'}]
+                                params: [{label:'Account Infomation',priority:0,icon:'th-list'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/wishlist/',label:'My Wishlist',group:'My Following'}]
@@ -28,10 +28,10 @@ customer_account:
                                 params: [{link:'customer/history/',label:'Browsing History',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/edit/',label:'Account Information',group:'Account Information'}]
+                                params: [{link:'customer/account/edit/',label:'Account Infomation',group:'Account Infomation'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/address/',label:'Address Book',group:'Account Information'}]
+                                params: [{link:'customer/account/address/',label:'Address Book',group:'Account Infomation'}]
 #                            -                                   
 #                                method: addGroup
 #                                params: [{label:'Asset',priority:10,icon:'money'}]
@@ -86,14 +86,14 @@ customer_account_edit:
                 action:
                     -
                         method: setTitle
-                        params: Edit Account Information
+                        params: Edit Account Infomation
             content:
                 action:
                     -
                         method: setVariable
                         params:
                             - title
-                            - Account Information
+                            - Account Infomation
                 children:
                     main:
                         type: Seahinet\Customer\ViewModel\Edit

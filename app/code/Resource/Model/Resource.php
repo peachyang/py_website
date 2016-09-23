@@ -3,11 +3,8 @@
 namespace Seahinet\Resource\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Imagine\Image\Box;
+use Seahinet\Resource\Model\Collection\Resource as Collection;
 
-/**
- * System backend user
- */
 class Resource extends AbstractModel
 {
 

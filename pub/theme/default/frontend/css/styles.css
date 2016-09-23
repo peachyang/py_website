@@ -699,6 +699,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_left .menus li{padding:9px 0;margin-left:7px}
 .page-home #myTabContent #two li{width:100%}
 .page-home .menu .menu_left .menus li a{padding:0;margin-left:3px}
+.page-home .menu .menu_left .menus li a:hover{color:#007dc6}
 .page-home .menu .menu_contre_top{margin:8px 0}
 .page-home .menu .menu_contre_bt{margin:10px 0}
 .page-home .menu .menu_contre_bt .menu_bt_a{border:1px solid #eee;float:left}
@@ -711,8 +712,8 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
 .page-home .menu .menu_right img{width:170px;height:247px}
 .page-home .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}
-.page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space: nowrap;}
-.page-home .menu .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px}
+.page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space: nowrap;font-size:12px}
+.page-home .menu .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px;font-size:12px}
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
 .page-home .menu .nav-tabs{border-bottom:1px solid #fdcb60}
 .page-home .menu .nav-tabs a{font-size:14px}
@@ -732,26 +733,27 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .clothing .clothing_left img{border:1px solid #eee;width:145px;height:197px}
 .page-home .clothing .clothing_tilte{display:inline-block;position:absolute;margin-left:150px;top: 0}
 .page-home .clothing .clothing_tilte li{list-style:square;padding:0 18px 0 2px;float: left;}
-.page-home .clothing_ct{float:left;}
+.page-home .clothing_ct{float:left;padding:0 28px}
 .page-home .clothing_left_t{}
 .page-home .clothing_ct img{border:1px solid #eee;width: 262px;height: 402px}
 .page-home .clothing .clothing_left img{border:1px solid #eee;margin:2px 0}
 .page-home .border_rg{border-right:none!important}
 .page-home .border_lt{border-left:none!important}
 .page-home .clothing .img_two{}
-.page-home .clothing_right{height:197px;padding: 5px 0 0 15px;border:1px solid #eee;width: 154px}
+.page-home .clothing_right{margin-top: 2px;height:197px;padding: 5px 0 0 15px;border:1px solid #eee;width: 154px}
 .page-home .clothing_right li{float:left;padding:1px 0}
-.page-home .clothing_right li a{}
+.page-home .clothing_right li a{font-size:12px;padding:0 6px}
 .page-home .font-color{color:red}
 .page-home .electron_left{float:left}
 .page-home .electron .electron_left img{border:1px solid #eee}
-.page-home .electron_menu{width:295px;height:212px;border:1px solid #eee;text-align:center;background-color:#fbfbfb;margin-top:10px;display:inline-block}
+.page-home .electron_menu{width:295px;height:212px;border:1px solid #eee;background-color:#fbfbfb;margin-top:10px;display:inline-block}
 .page-home .electron_menu li a{padding:10px;color:#79797a;vertical-align:middle}
 .page-home .electron_menu_ul .menu_top{margin-top:10px}
 .page-home .electron_menu_ul .menu_top li{float: left;margin:0 8px}
-.page-home .electron_menu_ul .menu_bt li{padding:0 50px}
+.page-home .electron_menu_ul .menu_bt li{padding-left:10px}
 .page-home .electron_ct_top{overflow:hidden;}
 .page-home .elct_top_l,.elct_top_r{}
+.page-home .font{font-family:STSong}
 .page-home .elct_top_r img{margin:2px 0;border:1px solid #eee}
 .page-home .elct_top_l{padding-left:10px; margin-right: 15px;}
 .page-home .electron_ct_bt li{border:1px solid #eee;}
@@ -781,8 +783,9 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .brand .brand_right td{text-align: center;}
 .page-home .brand .brand_right td img {vertical-align:middle;}
 .page-home .clothing_txt{width: 143px}
-.page-home .menu_ad .price{text-decoration:line-through;}
-@media (max-width: 768px){.page-home .brand_right td {padding:1.5px}.page-home .clothing .clothing_left {float: left;padding:0 30px}.elct_top_r {text-align: center;}.page-home .electron_ct_bt {float: left;margin: 0 13px;}.page-home .elct_top_l {padding: 0 13px;}}
+.page-home .menu_ad .price{text-decoration:line-through;font-family:STSong}
+@media (min-width:769px) and (max-width:1190px){.page-home .elct_top_l {padding-left: 10px;margin-right: 26px;}}
+@media (max-width: 768px){.page-home .brand_right td {padding:1.5px}.page-home .clothing .clothing_left {float: left;}.elct_top_r {text-align: center;}.page-home .electron_ct_bt {float: left;margin: 0 13px;}.page-home .elct_top_l {padding: 0 13px;margin-right:0}.page-home .clothing_left_t {padding: 0 25px;}
 @media (min-width: 1190px) {.page-home .menu_border{border-right: none;}.page-home .clothing_left_t {width: 530px;margin: 0 auto; }}
 @media (max-width: 1190px) and (min-width: 991px){.page-home .electron_ct_bt  li{padding-right:18px;}.page-home .menu .menu_contre {width: 100%;}.page-home .menu_contre_top img{width: 100%;}}
 @media (max-width: 990px) and (min-width: 560px){.page-home .menu .menu_contre_bt .menu_bt_a {text-align: center; }}

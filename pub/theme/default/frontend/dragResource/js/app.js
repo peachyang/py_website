@@ -82,7 +82,6 @@ function _init() {
         },
         stop: function (e, t) {
             $(".htmlpage .column").sortable({opacity: .35, connectWith: ".column"});
-           
         }
     });
 	
@@ -128,33 +127,7 @@ function _init() {
         }
     });
     
-    function call_ajax_data(dataID,dataType){
-    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").attr("data-param");
-    	    	$.ajax({
-                url: site_path+'retailer/store/getTemplateData',
-                type: "post",
-                dataType: 'json',
-                data:{dataID:dataID,dataTag:dataType,dataParam:dataParam},
-                beforeSend:function(){
-                    layer.load(1, {shade: [0.1,'#fff'] });	
-                },
-                success: function (data) {
-                	var obj = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']");
-                	obj.html(data.view);
-					if(obj.hasClass('component'))
-					{	
-						var func = dataType+"_init";
-						var f = eval(func);
-						f(obj);
-					}
-					layer.closeAll();
-                },
-                error: function (msg) {
-                  
-                }
 
-        });
-    }
     
 
 
@@ -185,14 +158,14 @@ function _init() {
   			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
   			btn: ['保存', '取消'],
   			yes:function(){
-  				layer.load(2);
+
   				var id = $('#iframe_layer').find('iframe').attr("name");
 				$("#focusBtn",window.frames[id].document).trigger("click");
 					
-				setTimeout(function(){
-					layer.closeAll();
-					call_ajax_data(part_id,data_tag);
-				},600);
+//				setTimeout(function(){
+//					layer.closeAll();
+//					call_ajax_data(part_id,data_tag);
+//				},600);
 					
   			},
   			btn2:function(){

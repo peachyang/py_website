@@ -187,7 +187,7 @@ class Rule extends AbstractModel
                 ];
             }
             uasort($array, function($a, $b) {
-                return $a['pid'] == $b['pid'] ? 0 : ($a['pid'] > $b['pid'] ? 1 : -1);
+                return $a['pid'] <=> $b['pid'];
             });
         }
         return $array;

@@ -3,7 +3,6 @@
 namespace Seahinet\I18n\Model;
 
 use BadMethodCallException;
-use Zend\Db\TableGateway\TableGateway;
 
 class Locate
 {
@@ -15,7 +14,7 @@ class Locate
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . $id, 'I18N_');
         if (!$result) {
-            $tableGateway = new TableGateway('i18n_' . $part, $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('i18n_' . $part);
             $select = $tableGateway->getSql()->select();
             $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
             if ($id) {
@@ -45,7 +44,7 @@ class Locate
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . 'c' . $id, 'I18N_');
         if (!$result) {
-            $tableGateway = new TableGateway('i18n_' . $part, $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('i18n_' . $part);
             $select = $tableGateway->getSql()->select();
             $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
             if ($id) {

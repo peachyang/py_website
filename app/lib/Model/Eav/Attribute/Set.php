@@ -3,7 +3,6 @@
 namespace Seahinet\Lib\Model\Eav\Attribute;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Set extends AbstractModel
 {
@@ -22,7 +21,7 @@ class Set extends AbstractModel
     protected function afterSave()
     {
         parent::afterSave();
-        $tableGateway = new TableGateway('eav_entity_attribute', $this->getContainer()->get('dbAdapter'));
+        $tableGateway = $this->getTableGateway('eav_entity_attribute');
         $tableGateway->delete(['attribute_set_id' => $this->getId()]);
         if (!empty($this->storage['attributes'])) {
             foreach ($this->storage['attributes'] as $groupId => $attributes) {

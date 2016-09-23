@@ -5,7 +5,6 @@ namespace Seahinet\Cms\Model;
 use Seahinet\Cms\Model\Collection\Category as Collection;
 use Seahinet\Cms\Model\Collection\Page as PageCollection;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Category extends AbstractModel
 {
@@ -18,7 +17,6 @@ class Category extends AbstractModel
     public function getParentCategory()
     {
         if (!empty($this->storage['parent_id'])) {
-
             $navgiation = new Category;
             $navgiation->load($this->storage['parent_id']);
             return $navgiation;
@@ -57,7 +55,7 @@ class Category extends AbstractModel
     {
         parent::afterSave();
         if (isset($this->storage['name'])) {
-            $tableGateway = new TableGateway('cms_category_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('cms_category_language');
             foreach ((array) $this->storage['name'] as $language_id => $name) {
                 $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
             }

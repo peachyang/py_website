@@ -2,7 +2,6 @@
 
 namespace Seahinet\Promotion\Model\Condition;
 
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\Operator;
 
 class Category implements ConditionInterface
@@ -13,7 +12,7 @@ class Category implements ConditionInterface
     public function match($model, $condition, $storeId)
     {
         if ($condition['identifier'] === 'category') {
-            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_in_category');
             $select = $tableGateway->getSql()->select();
             $select->where(new Operator('category_id', preg_replace('/[^\<\>\=\!]/', '', $condition['operator']), $condition['value']));
             $where = '(';

@@ -4,10 +4,9 @@ namespace Seahinet\Customer\Model;
 
 use Seahinet\Customer\Model\Collection\Group;
 use Seahinet\Lib\Model\Eav\Entity;
+use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
-use Seahinet\Lib\Model\Store;
-use Zend\Db\TableGateway\TableGateway;
 
 class Customer extends Entity
 {
@@ -45,7 +44,7 @@ class Customer extends Entity
     {
         parent::afterSave();
         if (isset($this->storage['group_id'])) {
-            $tableGateway = new TableGateway('customer_in_group', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('customer_in_group');
             $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
             foreach ($groups as $id) {
                 $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);

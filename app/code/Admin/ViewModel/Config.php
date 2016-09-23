@@ -45,7 +45,7 @@ class Config extends Edit
             if (!isset($b['priority'])) {
                 $b['priority'] = 0;
             }
-            return $a['priority'] == $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+            return $a['priority'] <=> $b['priority'];
         });
         return $this->elements;
     }

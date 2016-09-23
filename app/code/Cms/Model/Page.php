@@ -4,7 +4,6 @@ namespace Seahinet\Cms\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Resource\Model\Collection\Resource;
-use Zend\Db\TableGateway\TableGateway;
 
 class Page extends AbstractModel
 {
@@ -24,14 +23,14 @@ class Page extends AbstractModel
     protected function afterSave()
     {
         if (isset($this->storage['language_id'])) {
-            $tableGateway = new TableGateway('cms_page_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('cms_page_language');
             $tableGateway->delete(['page_id' => $this->getId()]);
             foreach ($this->storage['language_id'] as $language_id) {
                 $tableGateway->insert(['page_id' => $this->getId(), 'language_id' => $language_id]);
             }
         }
         if (isset($this->storage['category_id'])) {
-            $tableGateway = new TableGateway('cms_category_page', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('cms_category_page');
             $tableGateway->delete(['page_id' => $this->getId()]);
             foreach ($this->storage['category_id'] as $category_id) {
                 $tableGateway->insert(['page_id' => $this->getId(), 'category_id' => $category_id]);

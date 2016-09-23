@@ -8,6 +8,7 @@ use Seahinet\Catalog\Model\Product;
 use Seahinet\Catalog\Model\Product\Type;
 use Seahinet\Dataflow\Exception\InvalidCellException;
 use Seahinet\Lib\Http\UploadedFile;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Resource\Model\Resource;
 
 class ProductController extends AbstractController

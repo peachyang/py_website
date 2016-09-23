@@ -2,11 +2,14 @@
 
 namespace Seahinet\Lib\Model;
 
+use NumberFormatter;
 use Exception;
 use Zend\Db\Sql\Where;
 
 class Language extends AbstractModel
 {
+
+    protected $numberFormatter = null;
 
     protected function construct()
     {
@@ -21,6 +24,14 @@ class Language extends AbstractModel
             return $merchant;
         }
         return null;
+    }
+
+    public function formatNumber($number)
+    {
+        if (is_null($this->numberFormatter)) {
+            $this->numberFormatter = new NumberFormatter($this->storage['code'], NumberFormatter::DECIMAL);
+        }
+        return $this->numberFormatter->format($number);
     }
 
     protected function beforeSave()

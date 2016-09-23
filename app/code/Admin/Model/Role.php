@@ -4,7 +4,6 @@ namespace Seahinet\Admin\Model;
 
 use Seahinet\Admin\Model\Collection\Role as Collection;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Permissions\Rbac\Role as RbacRole;
 
 class Role extends AbstractModel
@@ -55,14 +54,14 @@ class Role extends AbstractModel
     protected function afterSave()
     {
         if (!empty($this->storage['child_id'])) {
-            $tableGateway = new TableGateway('admin_role_recursive', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('admin_role_recursive');
             $tableGateway->delete(['role_id' => $this->getId()]);
             foreach ($this->storage['child_id'] as $childId) {
                 $tableGateway->insert(['role_id' => $this->getId(), 'child_id' => $childId]);
             }
         }
         if (!empty($this->storage['operation_id'])) {
-            $tableGateway = new TableGateway('admin_permission', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('admin_permission');
             $tableGateway->delete(['role_id' => $this->getId()]);
             if (in_array(-1, $this->storage['operation_id'])) {
                 $this->storage['operation_id'] = [-1];

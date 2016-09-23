@@ -6,7 +6,6 @@ use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\TableGateway\TableGateway;
 
 class Crosssell extends Link
 {
@@ -23,7 +22,7 @@ class Crosssell extends Link
             if (!count($ids)) {
                 return [];
             }
-            $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_link');
             $select = $tableGateway->getSql()->select();
             $select->columns(['linked_product_id'])
                     ->where

@@ -2,10 +2,14 @@
 
 namespace Seahinet\I18n\Model;
 
+use NumberFormatter;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Bootstrap;
 
 class Currency extends AbstractModel
 {
+
+    protected $numberFormatter = null;
 
     protected function construct()
     {
@@ -28,6 +32,11 @@ class Currency extends AbstractModel
     {
         if (isset($this->storage['format'])) {
             return sprintf($this->storage['format'], $this->storage['symbol'], $price);
+        } else if (extension_loaded('intl')) {
+            if (is_null($this->numberFormatter)) {
+                $this->numberFormatter = new NumberFormatter(Bootstrap::getLanguage()['code'], NumberFormatter::CURRENCY);
+            }
+            return $this->numberFormatter->formatCurrency($price, $this->storage['symbol']);
         }
         return $price;
     }

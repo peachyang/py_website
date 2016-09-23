@@ -81,11 +81,6 @@ final class Bootstrap
      */
     public static function run($server)
     {
-        if (file_exists(BP . 'maintence')) {
-            header('HTTP/1.1 503 Service Temporarily Unavailable');
-            header('Status: 503 Service Temporarily Unavailable');
-            die();
-        }
         if (is_null(static::$container)) {
             static::init($server);
         }
@@ -136,7 +131,7 @@ final class Bootstrap
                     if (!isset($b['priority'])) {
                         $b['priority'] = 0;
                     }
-                    return $a['priority'] > $b['priority'] ? 1 : $a['priority'] == $b['priority'] ? 0 : -1;
+                    return $a['priority'] <=> $b['priority'];
                 });
                 foreach ($events as $event) {
                     static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);

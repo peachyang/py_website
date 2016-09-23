@@ -2,9 +2,7 @@
 
 namespace Seahinet\Catalog\Model\Product;
 
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Review extends AbstractModel
 {
@@ -23,9 +21,8 @@ class Review extends AbstractModel
 
     protected function afterSave()
     {
-        $adapter = $this->getContainer()->get('dbAdapter');
         if (!empty($this->storage['rating'])) {
-            $tableGateway = new TableGateway('review_rating', $adapter);
+            $tableGateway = $this->getTableGateway('review_rating');
             foreach ((array) $this->storage['rating'] as $id => $value) {
                 $this->upsert(['value' => $value], ['review_id' => $this->getId(), 'rating_id' => $id], $tableGateway);
             }

@@ -33,7 +33,7 @@ class Navigation extends Template
         if (!empty($b['children'])) {
             uasort($b['children'], [$this, 'sortItems']);
         }
-        return $a['priority'] == $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+        return $a['priority'] <=> $b['priority'];
     }
 
     public function getMenuItems()

@@ -4,7 +4,6 @@ namespace Seahinet\Catalog\Model;
 
 use Seahinet\Catalog\Model\Collection\Warehouse\Inventory;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Warehouse extends AbstractModel
 {
@@ -31,8 +30,7 @@ class Warehouse extends AbstractModel
     public function setInventory(array $inventory)
     {
         if ($this->getId() || isset($inventory['warehouse_id'])) {
-            $id = $this->getId() ?: $inventory['warehouse_id'];
-            $tableGateway = new TableGateway('warehouse_inventory', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('warehouse_inventory');
             $constraint = [
                 'warehouse_id' => $this->getId() ?: $inventory['warehouse_id'],
                 'product_id' => $inventory['product_id'],

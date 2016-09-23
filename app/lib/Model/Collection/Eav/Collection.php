@@ -5,7 +5,6 @@ namespace Seahinet\Lib\Model\Collection\Eav;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
 
 abstract class Collection extends AbstractCollection
@@ -82,7 +81,7 @@ abstract class Collection extends AbstractCollection
 
     protected function loadFromDb()
     {
-        $tableGateway = new TableGateway('eav_entity_type', $this->getContainer()->get('dbAdapter'));
+        $tableGateway = $this->getTableGateway('eav_entity_type');
         $select = $tableGateway->getSql()->select();
         $select->where(['eav_entity_type.code' => static::ENTITY_TYPE]);
         $result = $tableGateway->selectWith($select)->toArray();
@@ -90,7 +89,7 @@ abstract class Collection extends AbstractCollection
             $entityTable = $result[0]['entity_table'];
             $valueTablePrefix = $result[0]['value_table_prefix'];
         }
-        $tableGateway = new TableGateway($entityTable, $this->getContainer()->get('dbAdapter'));
+        $tableGateway = $this->getTableGateway($entityTable);
         $select = $tableGateway->getSql()->select();
         $select->join('eav_attribute', 'eav_attribute.type_id=' . $entityTable . '.type_id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
                 ->join($valueTablePrefix . '_int', 'eav_attribute.id=' . $valueTablePrefix . '_int.attribute_id', ['value_int' => 'value'], 'left')

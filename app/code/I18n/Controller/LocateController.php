@@ -45,7 +45,7 @@ class LocateController extends ActionController
         }
         uasort($result, function($a, $b) {
             $result = strnatcmp($a['code'], $b['code']);
-            return $result > 0 ? 1 : ($result < 0 ? -1 : 0);
+            return $result <=> 0;
         });
         if (isset($default)) {
             array_unshift($result, $default);

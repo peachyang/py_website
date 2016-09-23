@@ -3,8 +3,6 @@
 namespace Seahinet\Resource\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Session\Segment;
-use Zend\Db\TableGateway\TableGateway;
 
 /**
  * System backend Resource category
@@ -25,7 +23,7 @@ class Category extends AbstractModel
     protected function afterSave(){
         parent::afterSave();
         if (isset($this->storage['name'])) {
-            $tableGateway = new TableGateway('resource_category_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('resource_category_language');
             foreach ((array) $this->storage['name'] as $language_id => $name) {
                 $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
             }

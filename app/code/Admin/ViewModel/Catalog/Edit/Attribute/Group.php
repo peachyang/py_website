@@ -14,7 +14,7 @@ class Group extends Template
     protected $deleteUrl = '';
     protected $saveUrl = '';
 
-    public function getGroups()
+    public function getGroups(): Collection
     {
         $collection = new Collection;
         $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_group.type_id', [], 'left')
@@ -22,7 +22,7 @@ class Group extends Template
         return $collection;
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         $attributes = new Attribute;
         $attributes->withLabel(Bootstrap::getLanguage()->getId())
@@ -38,12 +38,12 @@ class Group extends Template
             if (!isset($result[$gid])) {
                 $result[$gid] = [];
             }
-            $result[$gid][] = $attribute;
+            $result[$gid][$attribute['id']] = $attribute;
         }
         return $result;
     }
 
-    public function getDeleteUrl()
+    public function getDeleteUrl(): string
     {
         if (!$this->deleteUrl) {
             $this->deleteUrl = $this->getAdminUrl('catalog_attribute_group/delete/');
@@ -51,7 +51,7 @@ class Group extends Template
         return $this->deleteUrl;
     }
 
-    public function getSaveUrl()
+    public function getSaveUrl(): string
     {
         if (!$this->saveUrl) {
             $this->saveUrl = $this->getAdminUrl('catalog_attribute_group/save/');

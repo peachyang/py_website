@@ -78,7 +78,7 @@ class ProductController extends AuthActionController
                 if (!isset($data['id']) || (int) $data['id'] === 0) {
                     $model->setId(null);
                 }
-                if (!isset($data['uri_key']) || !$data['uri_key']) {
+                if (empty($data['uri_key']) && !empty($data['name'])) {
                     $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
                 }
                 $type = new Type;

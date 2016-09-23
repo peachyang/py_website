@@ -227,7 +227,8 @@ class Product extends Entity
     protected function afterSave()
     {
         if (!empty($this->storage['category'])) {
-            $this->getTableGateway('product_in_category')->delete(['product_id' => $this->getId()]);
+            $tableGateway = $this->getTableGateway('product_in_category');
+            $tableGateway->delete(['product_id' => $this->getId()]);
             foreach ((array) $this->storage['category'] as $category) {
                 $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
             }
@@ -254,7 +255,8 @@ class Product extends Entity
             }
         }
         if (isset($this->storage['product_link'])) {
-            $this->getTableGateway('product_link')->delete(['product_id' => $this->getId()]);
+            $tableGateway = $this->getTableGateway('product_link');
+            $tableGateway->delete(['product_id' => $this->getId()]);
             foreach ($this->storage['product_link'] as $type => $link) {
                 foreach ($link as $order => $id) {
                     $tableGateway->insert([

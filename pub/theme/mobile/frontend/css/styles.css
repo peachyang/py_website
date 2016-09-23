@@ -20,33 +20,99 @@ select[multiple],select[size],textarea{resize:vertical}
 .table th{font-weight:normal}
 .header,.footer{display:none}
 .main-container .container .col-left,.col-xs-3,.clo-sm-3,.col-md-2{display:none}
+/*create user*/
+.customer-account-create .main-container{padding:10px 11px 0 11px}
 .customer-account .main-container .message-box{margin-top:0}
 .customer-account-create .header-m{background:#3a3a3b;height:40px}
 .customer-account-create .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
 .customer-account-create .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
-.customer-account-create .main-container{padding:40px 11px 0 11px}
 .customer-account-create .main-container .input-box{margin:8px 0}
-.customer-account-create .main-container .additional{margin-top:50px;padding-left:14px}
-.customer-account-create .main-container button{background:#05a0e9;width:100%}
+.customer-account-create .main-container button{background:#05a0e9;width:100%;color:#fff}
+.customer-account-create .text-center .text-left p{line-height:30px}  
+.customer-account-create .text-center p a{color:#007ecc}
 @media(min-width:768px){
     .customer-account-create .container{width:746px}
 }
 @media(min-width:1024px){
     .customer-account-create .container{width:1002px}
 }
-
+/*login*/
+.customer-account-login .main-container{padding:10px 11px 0 11px}
+.customer-account-login .main-container .message-box{margin-top: 0}
 .customer-account-login .main-container .input-box{margin:18px 0}
 .customer-account-login .header-m{background:#3a3a3b;height:40px}
 .customer-account-login .header-m .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
 .customer-account-login .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
-.customer-account-login .main-container button{background:#05a0e9;width:100%}
-.customer-account-login .main-container .additional{margin-top:50px;padding-left:14px}
+.customer-account-login .register{height: 30px;margin-top:10px;font-size:12px;color:#00a2f0}
+.customer-account-login .main-container button{background:#05a0e9;width:100%;color:#ffffff}
+.customer-account-login .main-container .additional{line-height:30px}
 .customer-account-login .input-group-addon{color: #fff;border-radius:0;height:20px;font-size:18px}
-.customer-account-login .main-container .pull-right{padding:0 10px}
 .customer-account-login label.invalid{position:absolute;top:100%;line-height:1.5;font-size:12px;left:6px}
-.customer-account-login .register{margin:10px;font-size:12px;color:#00a2f0}
-.customer-account-login .pull-right{margin:0 5px}
 .customer-account-login .text-color{color:#000}
+@media(min-width:768px){
+    .customer-account-login .container{width:746px}
+}
+@media(min-width:1024px){
+    .customer-account-login .container{width:1002px}
+}
+/*customer-account-forgotpwd*/
+.customer-account-forgotpwd fieldset{margin:10px 10px}
+.customer-account-forgotpwd label{height: 30px;line-height: 30px}
+.customer-account-forgotpwd .buttons-set{width:100%;background:#007ecc;color:#fff;margin: 10px 0}
+.customer-account-forgotpwd .buttons-set button{width:100%;background:#007ecc}
+.customer-account-forgotpwd .header-m{background:#3a3a3b;height:40px}
+.customer-account-forgotpwd .header-m .headimg-left{color:#747475;font-size:30px;float:left;margin-left:4%;width:6%;line-height:40px}
+.customer-account-forgotpwd .header-m .container{color:#fff;font-size:20px;float:left;width:80%;text-align:center;line-height:40px}
+/*sales-refund*/
+.sales-refund .col-main{padding:10px}
+.sales-refund .fieldset .input-box label{text-align:right}
+.sales-refund .buttons-set{width:100%}
+.sales-refund .fieldset .input-box{width:100%;overflow:hidden;line-height:40px;}
+.sales-refund .fieldset .input-box .cell{float:right}
+@media(min-width:768px){
+    .sales-refund .form-inline .form-control{width:100%}
+}
+@media(min-width:1024px){
+    .sales-refund .form-inline .form-control{width:100%}
+}
+/*customer-account-edit*/
+.customer-account-edit .fieldset{padding:0}
+.customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
+.customer-account-edit .buttons-set{width:100%;margin:10px 0}
+.customer-account-edit .buttons-set .btn{width: 100%;background:#007ecc;color:#ffffff}
+.customer-account-edit .col-main{padding:10px}
+.customer-account-edit .fieldset .input-box{line-height:30px;width:100%;overflow:hidden;margin: 5px 0}
+.customer-account-edit .fieldset .input-box label{text-align:right;float:left}
+.customer-account-edit .fieldset .input-box .cell{text-align:left;float:left}
+.customer-account-edit .fieldset .input-box .cell input{width:100%;text-align:left}
+@media(min-width:768px){
+.customer-account-edit .fieldset .input-box label{width:15%;text-align:right;float:left}
+.customer-account-edit .fieldset .input-box .cell {width:85%;text-align:left;float:left}
+.customer-account-edit .fieldset .input-box .cell input{width:100%;text-align:left}
+}
+@media(min-width:1024px){
+.customer-account-edit .fieldset .input-box label{width:15%;text-align:right;float:left}
+.customer-account-edit .fieldset .input-box .cell {width:85%;text-align:left;float:left}
+.customer-account-edit .fieldset .input-box .cell input{width:100%;text-align:left}
+}
+/*customer-account-address*/
+.customer-account-address .col-main{padding: 10px}
+.customer-account-address .sub-add{width:100%;color:#ffffff;color:#ffffff}
+.customer-account-address .address-list li{background:#ffffff;margin-bottom:10px;padding:10px 10px;box-shadow: 0 5px 10px rgba(0,0,0,.150)}
+.customer-account-address .address-list .action{color: #007ecc} 
+.customer-account-address .btn{padding:5px 0;margin:0}
+.customer-account-address .sub-add .btn-add{width:100%;background:#007ecc}
+.customer-account-address .modal-dialog .modal-body .input-box{width:100%;overflow:hidden;line-height: 40px}
+.customer-account-address .modal-dialog .modal-body .input-box label{width:21%;float:left;text-align:right}
+.customer-account-address .modal-dialog .modal-body .input-box .cell{width:79%;float:left}
+/*catalog-product*/
+.catalog-product .related .carousel-inner>.active, .related .carousel-inner>.next, .carousel-inner>.prev{display:block}
+@media(min--width:375px){
+    .catalog-product .related .products-grid .item .col-xs-4 a{
+        width:115px;
+        display: block
+    }
+}
 .customer-account-dashboard .header-m{background:#007ecc;height:40px;border-width:0 0 1px;border-style:solid;border-color:#57aadd}
 .customer-account-dashboard .col-main{width:100%;overflow:hidden;margin-bottom:50px}
 .customer-account-dashboard .profile{background:#007ecc;color:#fff;width:100%;overflow:hidden}
@@ -108,9 +174,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-dashboard .content-box .fa-credit-card-alt{font-size:22px}
 .customer-account-dashboard .num-span{color:#2387cf}
 .customer-account-dashboard .badge{position:absolute;margin-left:5px;display:inline-block;background:#fdbb30;font-size:12px;line-height:14px;padding:0 5px;border-radius:2px;color:#fff}
-.customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
-.customer-account-edit .buttons-set{width:100%;position:fixed;bottom:0}
-.sales-refund .buttons-set{width:100%;position:fixed;bottom:0}
+
 .customer-account-dashboard .badge:after{content:" ";display:block;width:0;height:0;border-width:2px;border-style:solid;border-color:#fdbb30 transparent transparent #fdbb30;position:absolute;top:100%;left:8px}
 .customer-account .profile .info .name .badge{background: #fdbb30;font-size: 12px;line-height: 20px;padding: 0 5px;border-radius: 2px;color: #fff;width:20px;height:20px}
 .customer-account .profile .info .name .level{position:relative;z-index:1}
@@ -118,13 +182,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account .header-m{width:100%;height:50px;line-height:50px;background:#007ecc;color:#ffffff}
 .customer-account .header-m a{height:50px;line-height:50px}
 .customer-account .header-m .container{font-size:20px;line-height:50px}
-.customer-account .fieldset{padding:0 10px}
-.customer-account .fieldset .input-box{width:100%;overflow:hidden;line-height:40px;}
-.customer-account .fieldset .input-box input{margin-top:3px}
-.customer-account .fieldset .input-box label{width:23%;text-align:right}
-.customer-account .fieldset .input-box .cell{width:77%;float:right}
 .sales-refund .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
-.customer-account-edit .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
+
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
 .wrapperhovertree {text-align:right;min-height: 100%;height:auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
@@ -164,12 +223,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
     .product-essential .price-box .share .dropdown-menu{border:none;background:#fff;left:30%;right:15px}
     .product-essential .price-box .share .dropdown-menu>li>a{padding:3px 10px}
 }
-@media(min--width:375px){
-    .catalog-product .related .products-grid .item .col-xs-4 a{
-        width:115px;
-        display: block
-    }
-}
+
 .product-essential .product-info .selected{border-top:12px solid #e7e7e7;border-bottom:12px solid #e7e7e7;background:#fff;margin-top: 30px}
 .product-essential .product-info .selected span{text-align:right;float:right;color:#b5b4b4}
 .product-essential .product-info .selected a{width:90%;margin:0 5%;padding: 10px 0;display:inline-block}
@@ -204,7 +258,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 @media(min-width:768px) {
     .product-store{position:fixed;bottom:0;z-index:100;height:50px;background:#ffffff;width:100%;left:0}    
 }
-.catalog-product .related .carousel-inner>.active, .related .carousel-inner>.next, .carousel-inner>.prev{display:block}
+
 .product-store li{line-height:16px;height:50px;text-align:center;color:#9b9a9a;font-size:10px}
 .product-store span{display:block;padding-top:10px}
 .product-store .fa{color:#ff8a00;font-size:20px;}
@@ -239,8 +293,8 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .related .carousel-inner>.item{text-align:center;box-shadow: 0 5px 10px rgba(0,0,0,.150);width:31%;background:#ffffff;padding: 1% 1%;margin: 1%}
 .related .carousel-inner>.item li img{width:100%}
 @media(min-width:1024px){
-   .related .carousel-inner>.item{text-align:center;box-shadow: 0 5px 10px rgba(0,0,0,.150);width:23%;background:#ffffff;padding: 1% 1%;margin: 1%}
-   .related .carousel-inner>.item li img{width:100%}
+    .related .carousel-inner>.item{text-align:center;box-shadow: 0 5px 10px rgba(0,0,0,.150);width:23%;background:#ffffff;padding: 1% 1%;margin: 1%}
+    .related .carousel-inner>.item li img{width:100%}
 }
 .products-grid .item .product-name{font-size:1em;border-bottom:1px solid #d7d7d7;height:30px;line-height: 30px;overflow-y:hidden;padding:0 1%}
 .products-grid .item .price-box{color:#ff8a00;font-size:16px;text-align:left;font-weight:bold;line-height:30px}
@@ -279,7 +333,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .product-info .selected a{font-size:16px;color:#9b9a9a;font-weight:normal}
 #cart,.order .col-xs-3{display:block}
 #cart .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4;border-left:none;border-right:none;width:40%;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
-
 #cart .product-list .product-img{float:left;width:26%}
 #cart .product-list .product-name{float:left;width:72%;margin-right:2%}
 #cart .checkout{background:#ffffff;height:50px;line-height:50px;position:fixed;bottom:0;z-index:10}
@@ -305,7 +358,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .address .list li label{width:90%}
 .checkout-order .address .list li .fa{float:right;color:#b5b5b5;line-height:60px}
 .checkout-order .checkout-steps .payment li{margin-right:10px}
-
 .checkout-order .coupon a{position:relative;z-index: 10;display:inline-block; background: url(../images/bg-coupon-yellow.png) left top,url(../images/bg-coupon-yellow.png) right top; background-repeat: repeat-y;background-color: #f7bc44;color: #fff;font-size: 12px;padding: 0 9px;line-height:30px}
 .checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff}
 .checkout-order .coupon .dropdown-menu label{padding:0 .5em;display:block}
@@ -355,13 +407,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .review .grand-total .text-left{color:#007ecc;font-size:16px;font-weight:bold}
 .col-xs-3{display:inline-block}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
-.customer-account-address .sub-add{width:100%;color:#ffffff;color:#ffffff}
-.customer-account-address .address-list li{background:#ffffff;margin-bottom:10px;padding:10px 10px}
-.customer-account-address .btn{padding:5px 0;margin:0}
-.customer-account-address .sub-add .btn-add{width:100%;background:#007ecc}
-.customer-account-address .modal-dialog .modal-body .input-box{width:100%;overflow:hidden;line-height: 40px}
-.customer-account-address .modal-dialog .modal-body .input-box label{width:21%;float:left;text-align:right}
-.customer-account-address .modal-dialog .modal-body .input-box .cell{width:79%;float:left}
 .modal-dialog .modal-footer .btn{;width:49%;float:left;background:#007ecc;color:#ffffff}
 .page-not-found .notice{width:100%;overflow:hidden;text-align:center}
 .page-not-found .notice dt,dd{line-height:20px}

@@ -6,8 +6,8 @@ $default = $this->getDefaultOrder();
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <div class="fieldset">
         <div class="input-box">
-            <label for="order" class="control-label"><?php echo $this->translate('Order ID') ?></label>
-            <div class="cell">
+            <label for="order" class="control-label col-xs-2 col-sm-2 col-md-1"><?php echo $this->translate('Order ID') ?>:</label>
+            <div class="cell col-xs-10 col-sm-10 col-md-11">
                 <?php if (empty($orders)): ?>
                     <input type="text" name="order_id" id="order" class="form-control required" />
                 <?php else: ?>
@@ -21,20 +21,20 @@ $default = $this->getDefaultOrder();
             </div>
         </div>
         <div class="input-box">
-            <label for="reason" class="control-label"><?php echo $this->translate('Reason') ?></label>
-            <div class="cell">
+            <label for="reason" class="control-label col-xs-2 col-sm-2 col-md-1"><?php echo $this->translate('Reason') ?>:</label>
+            <div class="cell col-xs-10 col-sm-10 col-md-11">
                 <textarea class="form-control required" name="comment" id="reason"></textarea>
             </div>
         </div>
         <div class="input-box">
-            <label for="carrier" class="control-label"><?php echo $this->translate('Carrier') ?></label>
-            <div class="cell">
+            <label for="carrier" class="control-label col-xs-2 col-sm-2 col-md-1"><?php echo $this->translate('Carrier') ?>:</label>
+            <div class="cell col-xs-10 col-sm-10 col-md-11">
                 <input type="text" name="carrier" class="form-control" id="carrier" />
             </div>
         </div>
         <div class="input-box">
-            <label for="track-number" class="control-label"><?php echo $this->translate('Track Number') ?></label>
-            <div class="cell">
+            <label for="track-number" class="control-label col-xs-2 col-sm-2 col-md-1"><?php echo $this->translate('Track Number') ?>:</label>
+            <div class="cell col-xs-10 col-sm-10 col-md-11">
                 <input type="text" name="track_number" id="track-number" class="form-control" />
             </div>
         </div> 

@@ -768,7 +768,9 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .brand .brand_right td{text-align:center}
 .page-home .brand .brand_right td img{vertical-align:middle}
 .page-home .clothing_txt{width:143px}
+.page-home .electron_menu  li a:hover{color:#23527c}
 .page-home .menu_ad .price{text-decoration:line-through;font-family:STSong}
+
 @media (min-width:769px) and (max-width:1190px){.page-home .elct_top_l{padding-left:10px;margin-right:26px}}
 @media (max-width:768px){.page-home .brand_right td{padding:1.5px}.page-home .clothing .clothing_left{float:left}.elct_top_r{text-align:center}.page-home .electron_ct_bt{float:left;margin:0 13px}.page-home .elct_top_l{padding:0 13px;margin-right:0}.page-home .clothing_left_t{padding:0 25px}}
 @media (min-width:1190px){.page-home .menu_border{border-right:none}.page-home .clothing_left_t{width:530px;margin:0 auto}}

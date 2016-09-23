@@ -55,7 +55,7 @@ class ApplyController extends AuthActionController
                             'store_id' => $store->getId()
                         ])->save();
                     }
-                }
+                }, true
         );
     }
 

@@ -67,7 +67,7 @@ final class Bootstrap
         }
         $config = static::prepareConfig();
         static::handleConfig($config);
-        date_default_timezone_set($config['global/locale/timezone']? : 'UTC');
+        date_default_timezone_set($config['global/locale/timezone'] ?: 'UTC');
         $segment = new Session\Segment('core');
         $language = static::getLanguage($server, $segment);
         static::$container['language'] = $language;
@@ -81,6 +81,11 @@ final class Bootstrap
      */
     public static function run($server)
     {
+        if (file_exists(BP . 'maintence')) {
+            header('HTTP/1.1 503 Service Temporarily Unavailable');
+            header('Status: 503 Service Temporarily Unavailable');
+            die();
+        }
         if (is_null(static::$container)) {
             static::init($server);
         }
@@ -149,9 +154,9 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? :
+            $code = $segment->get('language') ?:
                     (isset($_COOKIE['language']) ? $_COOKIE['language'] :
-                            (isset($server['language']) ? $server['language'] : null));
+                    (isset($server['language']) ? $server['language'] : null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -180,8 +185,8 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('store') ? : (isset($_COOKIE['store']) ?
-                            $_COOKIE['store'] : (isset($server['store']) ? : null));
+            $code = $segment->get('store') ?: (isset($_COOKIE['store']) ?
+                    $_COOKIE['store'] : (isset($server['store']) ?: null));
             if (is_string($code)) {
                 $store = new Store;
                 $store->load($code, 'code');
@@ -217,7 +222,7 @@ final class Bootstrap
                 static::$merchant = new Merchant();
                 static::$merchant->load(static::$store['merchant_id']);
             } else {
-                $code = $segment->get('merchant') ? : (isset($server['merchant']) ? : null);
+                $code = $segment->get('merchant') ?: (isset($server['merchant']) ?: null);
                 if (is_string($code)) {
                     $merchant = new Merchant;
                     $merchant->load($code, 'code');

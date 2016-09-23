@@ -55,7 +55,6 @@ class AccountController extends AuthActionController
                 $model = new Application($data);
                 try {
                     $model->setData([
-                        'id' => null,
                         'customer_id' => (new Segment('customer'))->get('customer')->getId(),
                         'lisence_1' => $files['id1']->getStream()->getContents(),
                         'lisence_2' => $files['id2']->getStream()->getContents(),

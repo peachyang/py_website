@@ -3,7 +3,7 @@ payment:
     label: Payment Method
     children:
         payment_free:
-            label: No Payment Information Required
+            label: No Payment Infomation Required
             scope: [merchant]
             children:
                 label:
@@ -11,7 +11,7 @@ payment:
                     label: Label
                     required: required
                     priority: 1
-                    default: No Payment Information Required
+                    default: No Payment Infomation Required
                 model:
                     type: hidden
                     scope: merchant

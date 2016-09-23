@@ -28,18 +28,16 @@ class ResourceController extends AuthActionController
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 try {
-                    $path = BP . Model::$options['path'];
-                    $mode = Model::$options['dir_mode'];
                     foreach ($files as $file) {
                         $name = $file->getClientFilename();
-                        $info = $this->moveFile($file, $path, $mode);
                         $model = new Model();
-                        $model->setData($info + [
-                            'store_id' => $store ? $store->getId() : (isset($data['store_id']) && $data['store_id'] ? $data['store_id'] : null),
-                            'uploaded_name' => $name,
-                            'file_type' => $file->getClientMediaType(),
-                            'category_id' => isset($data['category_id']) && $data['category_id'] ? $data['category_id'] : null
-                        ])->save();
+                        $model->moveFile($file)
+                                ->setData([
+                                    'store_id' => $store ? $store->getId() : (isset($data['store_id']) && $data['store_id'] ? $data['store_id'] : null),
+                                    'uploaded_name' => $name,
+                                    'file_type' => $file->getClientMediaType(),
+                                    'category_id' => isset($data['category_id']) && $data['category_id'] ? $data['category_id'] : null
+                                ])->save();
                         $result['message'][] = ['message' => $this->translate('%s has been uploaded successfully.', [$name], 'resource'), 'level' => 'success'];
                     }
                 } catch (Exception $e) {
@@ -91,37 +89,6 @@ class ResourceController extends AuthActionController
     public function popupAction()
     {
         return $this->getLayout('admin_popup_images_list');
-    }
-
-    /**
-     * 
-     * @param \Seahinet\Lib\Http\UploadedFile $file
-     * @param string $path
-     * @param int $mode
-     * @return array
-     * @throws Exception
-     */
-    protected function moveFile($file, $path, $mode)
-    {
-        $newName = $file->getClientFilename();
-        $type = substr($file->getClientMediaType(), 0, strpos($file->getClientMediaType(), '/') + 1);
-        if (!is_dir($path . $type)) {
-            mkdir($path . $type, $mode, true);
-        }
-        $md5 = md5($file->getStream()->getContents());
-        $collection = new Collection;
-        $collection->where(['md5' => $md5])->limit(1);
-        if (count($collection)) {
-            return ['md5' => $md5, 'real_name' => $collection[0]['real_name']];
-        }
-        while (file_exists($path . $type . $newName)) {
-            $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
-            if (strlen($newName) >= 120) {
-                throw new Exception('The file is existed.');
-            }
-        }
-        $file->moveTo($path . $type . $newName);
-        return ['md5' => $md5, 'real_name' => $newName];
     }
 
 }

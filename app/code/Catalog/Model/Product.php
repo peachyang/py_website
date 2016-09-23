@@ -10,7 +10,6 @@ use Seahinet\Catalog\Model\Warehouse;
 use Seahinet\Resource\Model\Resource;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Entity;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
 use Seahinet\Catalog\Model\Collection\Product\Review;
 use Seahinet\Lib\Session\Segment;
@@ -49,7 +48,7 @@ class Product extends Entity
     {
         if ($this->getId()) {
             $category = new Categories($this->languageId);
-            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_in_category');
             $result = $tableGateway->select(['product_id' => $this->getId()])->toArray();
             $valueSet = [];
             array_walk($result, function($item) use (&$valueSet) {
@@ -109,7 +108,7 @@ class Product extends Entity
     {
         if ($this->getId()) {
             $products = new Collection($this->languageId);
-            $tableGateway = new TableGateway('product_link', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_link');
             $result = $tableGateway->select(['product_id' => $this->getId(), 'type' => substr($type, 0, 1)])->toArray();
             $valueSet = [];
             array_walk($result, function($item) use (&$valueSet) {
@@ -227,10 +226,8 @@ class Product extends Entity
 
     protected function afterSave()
     {
-        $adapter = $this->getContainer()->get('dbAdapter');
         if (!empty($this->storage['category'])) {
-            $tableGateway = new TableGateway('product_in_category', $adapter);
-            $tableGateway->delete(['product_id' => $this->getId()]);
+            $this->getTableGateway('product_in_category')->delete(['product_id' => $this->getId()]);
             foreach ((array) $this->storage['category'] as $category) {
                 $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
             }
@@ -256,9 +253,8 @@ class Product extends Entity
                 }
             }
         }
-        if (!empty($this->storage['product_link'])) {
-            $tableGateway = new TableGateway('product_link', $adapter);
-            $tableGateway->delete(['product_id' => $this->getId()]);
+        if (isset($this->storage['product_link'])) {
+            $this->getTableGateway('product_link')->delete(['product_id' => $this->getId()]);
             foreach ($this->storage['product_link'] as $type => $link) {
                 foreach ($link as $order => $id) {
                     $tableGateway->insert([
@@ -270,11 +266,12 @@ class Product extends Entity
                 }
             }
         }
-        if (!empty($this->storage['options'])) {
+        if (isset($this->storage['options'])) {
+            $this->getTableGateway('product_option')->delete(['product_id' => $this->getId()]);
             $option = new OptionModel;
             foreach ($this->storage['options']['label'] as $id => $label) {
                 $option->setData([
-                    'id' => $id < 1 ? null : $id,
+                    'id' => null,
                     'product_id' => $this->getId(),
                     'label' => $label,
                     'input' => $this->storage['options']['input'][$id],

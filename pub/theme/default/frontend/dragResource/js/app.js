@@ -123,7 +123,8 @@ function _init() {
 			
 			var final_obj = $(".htmlpage .box.box-element[data-type='"+dataType+"']").find(".view").find(".content.function-tag[data-id='"+data_id+"']");
 			final_obj.closest(".box.box-element[data-type='"+dataType+"']").attr('id',data_id);
-			call_ajax_data(data_id,dataType);
+			if(final_obj.length>0)
+				call_ajax_data(data_id,dataType);
         }
     });
     
@@ -138,7 +139,14 @@ function _init() {
                     layer.load(1, {shade: [0.1,'#fff'] });	
                 },
                 success: function (data) {
-                	$("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").html(data.view);
+                	var obj = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']");
+                	obj.html(data.view);
+					if(obj.hasClass('component'))
+					{	
+						var func = dataType+"_init";
+						var f = eval(func);
+						f(obj);
+					}
 					layer.closeAll();
                 },
                 error: function (msg) {
@@ -147,6 +155,8 @@ function _init() {
 
         });
     }
+    
+
 
     $(document).on('click', 'a.clone', function (e) {
         e.preventDefault();
@@ -269,6 +279,7 @@ function _init() {
         $(this).addClass("active");
         $('.htmlpage .column').css('padding','39px 19px 24px');
         $(".htmlpage .box .view").css('padding','7px');
+        component_reset()
         return false
     });
 
@@ -289,6 +300,7 @@ function _init() {
         $(this).addClass("active");
         $(".htmlpage .box .view").css('padding','0px');
         $('.htmlpage .column').css('padding','11px');
+        component_reset();
         return false
     });
 

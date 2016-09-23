@@ -459,7 +459,7 @@ sales_order_view:
                         method: setVariable
                         params:
                             - title
-                            - Order Information
+                            - Order Infomation
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -481,7 +481,7 @@ sales_order_invoice:
                         method: setVariable
                         params:
                             - title
-                            - Order Information
+                            - Order Infomation
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -503,7 +503,7 @@ sales_order_shipment:
                         method: setVariable
                         params:
                             - title
-                            - Order Information
+                            - Order Infomation
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
@@ -525,7 +525,7 @@ sales_order_creditmemo:
                         method: setVariable
                         params:
                             - title
-                            - Order Information
+                            - Order Infomation
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template

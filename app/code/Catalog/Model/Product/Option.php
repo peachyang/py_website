@@ -4,7 +4,6 @@ namespace Seahinet\Catalog\Model\Product;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Option extends AbstractModel
 {
@@ -27,7 +26,7 @@ class Option extends AbstractModel
     public function getLabel($languageId = null)
     {
         if ($this->getId()) {
-            $tableGateway = new TableGateway('product_option_title', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_option_title');
             $result = $tableGateway->select([
                         'option_id' => $this->getId(),
                         'language_id' => is_null($languageId) ? $languageId : $this->getLanguageId()
@@ -41,7 +40,7 @@ class Option extends AbstractModel
         if ($this->storage['id']) {
             if (!isset($this->storage['value'])) {
                 if (in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
-                    $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
+                    $tableGateway = $this->getTableGateway('product_option_value');
                     $select = $tableGateway->getSql()->select();
                     $select->where(['option_id' => $this->getId()]);
                     $select->join('product_option_value_title', 'product_option_value.id=product_option_value_title.value_id', ['title'], 'left')
@@ -60,7 +59,7 @@ class Option extends AbstractModel
     {
         if ($this->storage['id']) {
             if (in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
-                $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
+                $tableGateway = $this->getTableGateway('product_option_value');
                 $select = $tableGateway->getSql()->select();
                 $select->where(['option_id' => $this->getId(), 'product_option_value.id' => $value]);
                 $select->join('product_option_value_title', 'product_option_value.id=product_option_value_title.value_id', ['title'], 'left')
@@ -95,36 +94,25 @@ class Option extends AbstractModel
 
     protected function afterSave()
     {
-        $adapter = $this->getContainer()->get('dbAdapter');
         $languageId = Bootstrap::getLanguage()->getId();
         if ($this->storage['label']) {
-            $tableGateway = new TableGateway('product_option_title', $adapter);
+            $tableGateway = $this->getTableGateway('product_option_title');
             $this->upsert(['title' => $this->storage['label']], ['option_id' => $this->getId(), 'language_id' => $languageId], $tableGateway);
         }
         if ($this->storage['value']) {
-            $tableGateway = new TableGateway('product_option_value', $adapter);
-            $titleGateway = new TableGateway('product_option_value_title', $adapter);
+            $tableGateway = $this->getTableGateway('product_option_value');
+            $titleGateway = $this->getTableGateway('product_option_value_title');
             foreach ($this->storage['value']['sku'] as $order => $sku) {
                 if ($this->storage['value']['label'][$order]) {
-                    if ($this->storage['value']['id'][$order]) {
-                        $tableGateway->update([
-                            'sku' => $sku,
-                            'price' => (float) $this->storage['value']['price'][$order],
-                            'is_fixed' => $this->storage['value']['is_fixed'][$order],
-                            'sort_order' => $order,
-                            'option_id' => $this->getId()
-                                ], ['id' => $this->storage['value']['id'][$order]]);
-                        $valueId = $this->storage['value']['id'][$order];
-                    } else {
-                        $tableGateway->insert([
-                            'sku' => $sku,
-                            'price' => (float) $this->storage['value']['price'][$order],
-                            'is_fixed' => $this->storage['value']['is_fixed'][$order],
-                            'sort_order' => $order,
-                            'option_id' => $this->getId()
-                        ]);
-                        $valueId = $tableGateway->getLastInsertValue();
-                    }
+                    $tableGateway->insert([
+                        'id' => null,
+                        'sku' => $sku,
+                        'price' => (float) $this->storage['value']['price'][$order],
+                        'is_fixed' => $this->storage['value']['is_fixed'][$order],
+                        'sort_order' => $order,
+                        'option_id' => $this->getId()
+                    ]);
+                    $valueId = $tableGateway->getLastInsertValue();
                     $this->upsert(['title' => $this->storage['value']['label'][$order]], ['value_id' => $valueId, 'language_id' => $languageId], $titleGateway);
                 }
             }

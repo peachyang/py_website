@@ -42,7 +42,7 @@ class MarketingController extends AuthActionController
     
     /** 
     * viewActivityAction  
-    * Show more information about activity
+    * Show more infomation about activity
     * 
     * @access public 
     * @return object 
@@ -68,7 +68,7 @@ class MarketingController extends AuthActionController
     
     /** 
     * viewPromotionAction  
-    * Show detail information about promotion
+    * Show detail infomation about promotion
     * 
     * @access public 
     * @return object 
@@ -94,7 +94,7 @@ class MarketingController extends AuthActionController
     
     /** 
     * memberDetailAction  
-    * Show member's detail information
+    * Show member's detail infomation
     * 
     * @access public 
     * @return object 

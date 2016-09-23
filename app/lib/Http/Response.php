@@ -23,7 +23,7 @@ class Response extends Message implements ResponseInterface
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
-        203 => 'Non-Authoritative Information',
+        203 => 'Non-Authoritative Infomation',
         204 => 'No Content',
         205 => 'Reset Content',
         206 => 'Partial Content',

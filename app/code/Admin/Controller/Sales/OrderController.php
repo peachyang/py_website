@@ -393,7 +393,7 @@ class OrderController extends AuthActionController
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
             $root = $this->getLayout('admin_sales_order_print');
             $root->getChild('main', true)->setVariable('pdf', $pdf);
-            $pdf->SetTitle($this->translate('Type Information'));
+            $pdf->SetTitle($this->translate('Type Infomation'));
             $pdf->SetMargins(15, 27, 15);
             $pdf->setImageScale(1.25);
             $pdf->AddPage();

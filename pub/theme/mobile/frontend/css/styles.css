@@ -113,6 +113,36 @@ select[multiple],select[size],textarea{resize:vertical}
         display: block
     }
 }
+.catalog-product .products-grid .item{box-shadow: 0 5px 10px rgba(0,0,0,.150);background:#fff;padding:1%;margin:1%;width:31%}
+.catalog-product .products-grid .item img{width: 100%}
+.catalog-product .related .product-link {padding-bottom: 30px}
+.catalog-product .carousel-indicators li{background:#ffffff;border: 1px solid #ffffff}
+.catalog-product .carousel-indicators .active{background: #ff8a00;border: 1px solid #ff8a00}
+/*checkout-cart*/
+.checkout-cart .additional{width: 100%;overflow: hidden}
+.checkout-cart #cart{margin-bottom: 10px}
+.checkout-cart .additional .nav-tabs{height: 50px;line-height:50px;background: #ffffff;margin-bottom:10px}
+.checkout-cart .additional .nav-tabs li.active{background:#f1f1f1}
+.checkout-cart .additional .tab-content{width: 100%;overflow: hidden;margin-bottom:50px;padding-bottom: 30px}
+.checkout-cart .additional .tab-content .products-grid .item{box-shadow: 0 5px 10px rgba(0,0,0,.150);background:#fff;padding:1%;margin:1%;width:31%}
+.checkout-cart .additional .tab-content .products-grid .item img{width: 100%}
+.checkout-cart .additional .tab-content .carousel-indicators{bottom:-20px}
+.checkout-cart .additional .tab-content .carousel-indicators li{background:#ffffff;border:#ffffff 1px solid}
+.checkout-cart .additional .tab-content .carousel-indicators .active{background:#ff8a00;border:#ff8a00 1px solid}
+/*breadcrumb-m*/
+.wrapperhovertree {text-align:right;min-height: 100%;height:auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
+                   -o-background-size: 100% 100%;background-size: 100% 100%;}
+.wrapperhovertree {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box}
+.wrapperhovertree .container{position: relative;z-index: 1000;height:100%;width: 100%}
+div.slide-mask {position: absolute;z-index: 1000;left: 0;top: 0;width: 30%;height: 100%;-webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out;display: none;}
+aside.slide-wrapper {position: absolute;z-index: 10001;left: 0;top: 50px;width: 30%;-webkit-transform: translate3d(-100%, 0, 0);
+                     -moz-transform: translate3d(-100%, 0, 0);-ms-transform: translate3d(-100%, 0, 0); -o-transform: translate3d(-100%, 0, 0);
+                     transform: translate3d(-100%, 0, 0); -webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out}
+aside.slide-wrapper > div {background-color: #ffffff;min-height: 100%}
+aside.slide-wrapper.moved {-webkit-transform: translate3d(0, 0, 0);-moz-transform: translate3d(0, 0, 0);-ms-transform: translate3d(0, 0, 0);-o-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0)}
+aside.slide-wrapper li > a {padding: 10px 10px;border-bottom: 1px solid #e1e1e1;display: block;color: #333}
+aside.slide-wrapper li.current > a {background-color: #f1f1f1}
+
 .customer-account-dashboard .header-m{background:#007ecc;height:40px;border-width:0 0 1px;border-style:solid;border-color:#57aadd}
 .customer-account-dashboard .col-main{width:100%;overflow:hidden;margin-bottom:50px}
 .customer-account-dashboard .profile{background:#007ecc;color:#fff;width:100%;overflow:hidden}
@@ -186,18 +216,6 @@ select[multiple],select[size],textarea{resize:vertical}
 
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
-.wrapperhovertree {text-align:right;min-height: 100%;height:auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
-                   -o-background-size: 100% 100%;background-size: 100% 100%;}
-.wrapperhovertree {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box}
-.wrapperhovertree .container{position: relative;z-index: 1000;height:100%;width: 100%}
-div.slide-mask {position: absolute;z-index: 1000;left: 0;top: 0;width: 30%;height: 100%;-webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out;display: none;}
-aside.slide-wrapper {position: absolute;z-index: 10001;left: 0;top: 50px;width: 30%;-webkit-transform: translate3d(-100%, 0, 0);
-                     -moz-transform: translate3d(-100%, 0, 0);-ms-transform: translate3d(-100%, 0, 0); -o-transform: translate3d(-100%, 0, 0);
-                     transform: translate3d(-100%, 0, 0); -webkit-transition: all 0.3s ease-out;-moz-transition: all 0.3s ease-out;-ms-transition: all 0.3s ease-out;-o-transition: all 0.3s ease-out;transition: all 0.3s ease-out}
-aside.slide-wrapper > div {background-color: #ffffff;min-height: 100%}
-aside.slide-wrapper.moved {-webkit-transform: translate3d(0, 0, 0);-moz-transform: translate3d(0, 0, 0);-ms-transform: translate3d(0, 0, 0);-o-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0)}
-aside.slide-wrapper li > a {padding: 10px 10px;border-bottom: 1px solid #e1e1e1;display: block;color: #333}
-aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .main-container .breadcrumb-m .fa{color:#a7a7a7;line-height:50px}
 .main-container .breadcrumb-m .content-list{line-height:50px;text-align:center}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
@@ -298,7 +316,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 }
 .products-grid .item .product-name{font-size:1em;border-bottom:1px solid #d7d7d7;height:30px;line-height: 30px;overflow-y:hidden;padding:0 1%}
 .products-grid .item .price-box{color:#ff8a00;font-size:16px;text-align:left;font-weight:bold;line-height:30px}
-.filters{border:1px solid #fff;padding:0 15px}
+.catalog-category .open .filters{border:1px solid #fff;padding:0 15px;width: 100%}
 .filters dt{clear:both;padding:15px 0;text-align:center}
 .filters dd{padding:15px 0;display:table}
 .filters dd+dt,.filters dd+dt+dd{border-top:1px solid #fff}

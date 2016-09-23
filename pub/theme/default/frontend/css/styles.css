@@ -795,4 +795,4 @@ dl.options dd{float:left;margin-left:4px}
 @media (min-width: 1190px) {.page-home .menu_border{border-right: none;}.page-home .clothing_left_t {width: 530px;margin: 0 auto; }}
 @media (max-width: 1190px) and (min-width: 991px){.page-home .electron_ct_bt  li{padding-right:18px;}.page-home .menu .menu_contre {width: 100%;}.page-home .menu_contre_top img{width: 100%;}}
 @media (max-width: 990px) and (min-width: 560px){.page-home .menu .menu_contre_bt .menu_bt_a {text-align: center; }}
-.page-home .electron_menu_ul_2{margin-left: 30px;}
+.page-home .electron_menu_ul_2{margin-left: 30px;} 

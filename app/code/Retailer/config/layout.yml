@@ -96,6 +96,11 @@ retailer_account:
                             -
                                 method: addHandledSegment
                                 params: customer
+                            -
+                                method: setVariable
+                                params:
+                                    - inline
+                                    - 1
 retailer_account_dashboard:
     update: retailer_account
     root:

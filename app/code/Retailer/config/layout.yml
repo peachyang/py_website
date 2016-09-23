@@ -766,6 +766,9 @@ decorationFunc:
                     -
                         method: addScript
                         params: frontend/js/jquery.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/layer/layer.js
 
 decorationFunc_hot_product:
     update: decorationFunc
@@ -782,6 +785,21 @@ decorationFunc_hot_product:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationFunc/hot_product
+decorationFunc_pic_carousel:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: pic_carousel
+
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/pic_carousel
 
 admin_retailer_apply_list:
     update: grid

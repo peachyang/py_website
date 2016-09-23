@@ -42,6 +42,7 @@ $part_id = $this->getVariable("part_id");
 		});
 		data_param = encodeURIComponent(JSON.stringify(data_param));
 		obj.attr('data-param',data_param);
+		window.parent.call_ajax_data(part_id,data_tag);
 	});
 </script>
 

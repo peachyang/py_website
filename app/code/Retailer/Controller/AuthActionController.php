@@ -19,7 +19,7 @@ abstract class AuthActionController extends ActionController
         } else {
             $model = new Application;
             $model->load($session->get('customer')->getId());
-            if (in_array($action, ['apply', 'reapply', 'processing'])) {
+            if (in_array($action, ['apply', 'applypost', 'reapply', 'processing'])) {
                 if ($model->offsetGet('status')) {
                     return $this->redirect('retailer/account/');
                 } else if ($action === 'apply' && $model->getId()) {

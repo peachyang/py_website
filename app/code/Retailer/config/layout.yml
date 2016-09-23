@@ -756,7 +756,7 @@ decorationFunc:
                         params: frontend/dragResource/css/bootstrap.min.css
                     -
                         method: addLink
-                        params: frontend/css/bootstrap.css
+                        params: frontend/dragResource/css/enhancement.css                   
                     -
                         method: addLink
                         params: frontend/css/font-awesome.css
@@ -769,6 +769,9 @@ decorationFunc:
                     -
                         method: addScript
                         params: frontend/dragResource/js/layer/layer.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/bootstrap.min.js
 
 decorationFunc_hot_product:
     update: decorationFunc

@@ -105,6 +105,11 @@ class StoreDecoration extends Template
 	 * 
 	 * 
 	*/
+	public function template_paragraph($params=''){
+		$content = '<p> <br><br>可以在此模块中通过编辑器自由输入文字以及编排格式<br><br> </p>';
+		return $content;
+	
+	}
 	
 	public function template_long_search($params=''){
 		$content = '<label class="search-label">本店搜索</label>

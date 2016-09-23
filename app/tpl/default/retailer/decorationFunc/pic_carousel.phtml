@@ -2,7 +2,16 @@
 $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
  ?>
-<div style="margin:20px" >
+
+
+<ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
+      <li class="active"><a href="#basic">基本属性</a></li> 
+      <li><a href="#uploadPic">上传图片</a></li> 
+ </ul> 
+       
+ <div class="tab-content"> 
+      <div class="tab-pane active" id="basic" >
+      <div style="margin:20px" >
 是否显示标题框：
 <select id='show_column' class="params"  >
 <option value=1 >显示</option>
@@ -18,11 +27,26 @@ $part_id = $this->getVariable("part_id");
 <input type="text"  id="heightSet" class="params" disabled="true" value="0" >
 
  <br><br>
-上传图片: 
 
-
-<input type="hidden" id='focusBtn' >	
 </div>
+      	</div> 
+   <div class="tab-pane" id="uploadPic" >
+   	<div style="margin:26px">
+   	上传图片:
+   	</div>
+   	 </div> 
+</div> 
+  <input type="hidden" id='focusBtn' >	     
+    <script> 
+      $(function () { 
+      $('#myTab a:first').tab('show');
+        $('#myTab a').click(function (e) {          
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content
+ 
+        }) 
+      }) 
+    </script>
 <script>
 	var data_tag = '<?php echo $data_tag; ?>';
 	var part_id = '<?php echo $part_id; ?>';

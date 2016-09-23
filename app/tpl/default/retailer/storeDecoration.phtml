@@ -144,6 +144,7 @@
                         <ul class="nav nav-list">
                             <li class="nav-header"><i class="fa fa-html5"></i>&nbsp; 功能模块 </li>
                             <li class="boxes" id="elmBase">
+                                <!--
                                 <div class="box box-element" data-type="header">
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
@@ -153,18 +154,20 @@
                                     <div class="view">
                                         <h2>HEADER TITLE</h2> </div>
                                 </div>
+                                -->
                                 
-                                <div class="box box-element" data-type="paragraph">
+                                <div class="box box-element" data-type="paragraph" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa fa-font fa-2x"></i>
-                                        <div class="element-desc">Paragraph</div>
+                                        <div class="element-desc">文字段落</div>
                                     </div>
                                     <div class="view">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                   
                                     </div>
                                 </div>
                                 
+                                <!--
                                 <div class="box box-element" data-type="image">
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
@@ -173,6 +176,7 @@
                                     </div>
                                     <div class="view"> <img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/dragResource/images/text.png') ?>" class="img-responsive" title="default title" /> </div>
                                 </div>
+                            
                                 
                                 <div class="box box-element" data-type="button">
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
@@ -193,7 +197,7 @@
                                     </div>
                                     <div class="view"> i'm html code, change me </div>
                                 </div>
-                                
+                                -->
                                 <div class="box box-element" data-type="long_search" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
@@ -789,8 +793,16 @@
 
 
 <div id='save_html' style="display:none">
-	
+	  
 </div>
+
+
+<script id="paragraph" type="text/html">
+  <div class="content function-tag" data-tag='paragraph' data-name='文字段落' data-param='' > 
+
+  </div>
+</script>
+
 <script id="long_search" type="text/html">
 <div class="search content function-tag" data-tag='long_search' data-name='本店搜索' data-param='' >
  

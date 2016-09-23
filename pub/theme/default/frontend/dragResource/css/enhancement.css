@@ -22,3 +22,5 @@
 		}
 		.hiSlider-pages a.active{border:0px}
 		.hiSlider-title{background:rgba(0,0,0,.2)}
+		.nav-tabs>li>a{border:1px solid rgb(214, 213, 213)}
+		.page-home .menu .nav-tabs>li.active>a,.nav-tabs>li.active>a,.nav-tabs>li.active>a{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}

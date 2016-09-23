@@ -685,14 +685,18 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_contre_bt .menu_bt_a{border:1px solid #eee;float:left}
 .page-home .menu .menu_contre_bt .menu_ad{float:left;padding:20px 0  10px 10px}
 .page-home .menu .menu_contre_bt .menu_ad h4{font-size:16px;color:#007dc6;padding:3px 0}
-.page-home .menu .menu_contre_bt .menu_ad h5{color:#d42f53}
+.page-home .menu .menu_contre_bt .menu_ad h5{color:#d42f53;font-family: STSong;}
 .page-home .menu .menu_contre_bt .menu_ad_img{padding-top:5px}
 .page-home .menu .menu_right{float:left;margin-top:10px}
 .page-home .menu .menu_right .menu_rg_top{width:170px;height:240px}
 .page-home .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
 .page-home .menu .menu_right img{width:170px;height:247px}
 .page-home .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}
+
+.page-home .menu .menu_right .menu_rg_bt li{font-family: STSong;list-style:disc;text-overflow:ellipsis;white-space: nowrap;font-size:12px}
+
 .page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+
 .page-home .menu .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px;font-size:12px}
 .page-home .menu .nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
 .page-home .menu .nav-tabs{border-bottom:1px solid #fdcb60}
@@ -720,7 +724,8 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .border_rg{border-right:none!important}
 .page-home .border_lt{border-left:none!important}
 .page-home .clothing .img_two{}
-.page-home .clothing_right{margin-top:2px;height:197px;padding:5px 0 0 15px;border:1px solid #eee;width:154px}
+.page-home .clothing_right{margin-top: 2px;height:197px;padding: 5px 0 0 8px;border:1px solid #eee;width: 154px}
+.page-home .clothing_right{margin-top:2px;height:197px;padding:5px 0 0 8px;border:1px solid #eee;width:154px}
 .page-home .clothing_right li{float:left;padding:1px 0}
 .page-home .clothing_right li a{font-size:12px;padding:0 6px}
 .page-home .font-color{color:red}
@@ -734,6 +739,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .electron_ct_top{overflow:hidden}
 .page-home .elct_top_l,.elct_top_r{}
 .page-home .font{font-family:STSong}
+.page-home .electron_menu .menu_bt li a{padding-right:55px}
 .page-home .elct_top_r img{margin:2px 0;border:1px solid #eee}
 .page-home .elct_top_l{padding-left:10px;margin-right:15px}
 .page-home .electron_ct_bt li{border:1px solid #eee}
@@ -762,7 +768,9 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .brand .brand_right td{text-align:center}
 .page-home .brand .brand_right td img{vertical-align:middle}
 .page-home .clothing_txt{width:143px}
+.page-home .electron_menu  li a:hover{color:#23527c}
 .page-home .menu_ad .price{text-decoration:line-through;font-family:STSong}
+
 @media (min-width:769px) and (max-width:1190px){.page-home .elct_top_l{padding-left:10px;margin-right:26px}}
 @media (max-width:768px){.page-home .brand_right td{padding:1.5px}.page-home .clothing .clothing_left{float:left}.elct_top_r{text-align:center}.page-home .electron_ct_bt{float:left;margin:0 13px}.page-home .elct_top_l{padding:0 13px;margin-right:0}.page-home .clothing_left_t{padding:0 25px}}
 @media (min-width:1190px){.page-home .menu_border{border-right:none}.page-home .clothing_left_t{width:530px;margin:0 auto}}

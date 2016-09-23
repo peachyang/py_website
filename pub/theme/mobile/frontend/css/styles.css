@@ -361,7 +361,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 #cart .qty .spin{font-size: 18px;line-height: 22px;border:1px solid #d4d4d4;width:30%;height: 28px;text-align: center;color: #cbcbcb;background: #ededed}
 #cart .store{padding-right:5%}
 .tab-content .products-grid .item{text-align:center}
-.tab-content .products-grid .item p{height:20px;overflow-y:hidden;margin:0 5%}
+.tab-content .products-grid .item p{height:20px;line-height:20px;overflow-y:hidden;margin:0 5%}
 .checkout-order .message-box{margin-top:50px}
 .checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
 .checkout-order .checkout-steps .payment{margin-bottom:60px}

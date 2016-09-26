@@ -24,3 +24,11 @@
 		.hiSlider-title{background:rgba(0,0,0,.2)}
 		.nav-tabs>li>a{border:1px solid rgb(214, 213, 213)}
 		.page-home .menu .nav-tabs>li.active>a,.nav-tabs>li.active>a,.nav-tabs>li.active>a{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
+		#uploadPic div.rows{margin-bottom:13px}
+		#uploadPic .picList,#uploadPic .picList li{margin:0px;padding:0px;list-style: none;}
+		#uploadPic .picList li{padding:11px 0px;float:left}
+		#uploadPic .picList li div{float:left;margin:0px 11px}
+		#uploadPic .picList li div.title{width:160px}
+		#uploadPic .picList li div.url{width:260px}
+		#uploadPic .picList li div.url input{width:230px}
+		#uploadPic .picList li div.adjust{padding-top:20px}

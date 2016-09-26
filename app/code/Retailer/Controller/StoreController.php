@@ -5,8 +5,12 @@ namespace Seahinet\Retailer\Controller;
 use Exception;
 use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Retailer\Model\StoreTemplate;
+use Seahinet\Retailer\Model\StorePicinfo;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
+use Seahinet\Retailer\Model\Collection\StorePicInfoCollectionCollection;
+use Seahinet\Resource\Model\Collection\Category;
 use Seahinet\Customer\Model\Customer as Cmodel;
+use Seahinet\Resource\Model\Resource as Model;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
 
@@ -218,7 +222,54 @@ class StoreController extends AuthActionController
 		echo json_encode(array('status'=>true,'view'=>$view));
 	}
 	
-	
+	public function decorationUploadAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+        	$segment = new Segment('customer');
+            $data = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getUploadedFile()['files'];
+            $store = $segment->get('customer')['store_id'];
+            $result = $this->validateForm($data);
+            if ($result['error'] === 0) {
+                $categoryCollection = new Category();
+				$categorys =  $categoryCollection->getCategoryByCode($data['resource_category_code']);
+				$category = empty($categorys) ? null : $categorys[0]['id'];		
+                try {
+                    foreach ($files as $file) {
+                        $name = $file->getClientFilename();
+                        $model = new Model();
+                        $model->moveFile($file)
+                                ->setData([
+                                    'store_id' => $store,
+                                    'uploaded_name' => $name,
+                                    'file_type' => $file->getClientMediaType(),
+                                    'category_id' => isset($data['category_id']) && $data['category_id'] ? $data['category_id'] : $category
+                                ])->save();
+                        $result['message'][] = ['message' => $this->translate('%s has been uploaded successfully.', [$name], 'resource'), 'level' => 'success'];
+                    }
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                }
+            }
+        	if($result['error'] === 0){
+				$storePicinfo = new StorePicinfo();
+				$storePicinfo->setData([
+						'store_id' => $store,
+						'pic_title' => $data['pic_title'],
+						'url' => $data['url'],
+						'resource_category_code' => $data['resource_category_code'],
+						'resource_id' => $model->getID()
+					]);		
+				$storePicinfo->save();
+			}
+		}
+
+
+		$result['status'] = $result['error'];
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
 	
 
 }

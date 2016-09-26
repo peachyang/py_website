@@ -6,12 +6,12 @@ $part_id = $this->getVariable("part_id");
 
 <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
       <li class="active"><a href="#basic">基本属性</a></li> 
-      <li><a href="#uploadPic">上传图片</a></li> 
+      <li><a href="#uploadPic">轮播图片</a></li> 
  </ul> 
        
  <div class="tab-content"> 
       <div class="tab-pane active" id="basic" >
-      <div style="margin:20px" >
+<div style="margin:20px" >
 是否显示标题框：
 <select id='show_column' class="params"  >
 <option value=1 >显示</option>
@@ -30,14 +30,31 @@ $part_id = $this->getVariable("part_id");
 
 </div>
       	</div> 
-   <div class="tab-pane" id="uploadPic" >
-   	<div style="margin:26px">
-   	上传图片:
-   	</div>
-   	 </div> 
+<div class="tab-pane" id="uploadPic" >
+<div style="margin:26px">
+<form id=uploadForm onsubmit="return false" >
+<input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+<input type="hidden" name="resource_category_code" value="store_carousel" />
+ <div class="rows">
+  图片标题: &nbsp;<input type="text" id='pic_title' name="pic_title" placeholder="" > &nbsp; 图片链接: &nbsp;<input type="text" id='url' name="url" placeholder="http://" style="width:260px" > 
+ </div>
+ <div class="rows" >   
+   上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">增 加</button>
+</div>
+</form>
+<hr width="99%"> 
+<div class="rows">
+	<ul class="picList">
+
+	
+	</ul> 	
+</div>
+</div>
 </div> 
   <input type="hidden" id='focusBtn' >	     
-    <script> 
+    
+    
+ <script> 
       $(function () { 
       $('#myTab a:first').tab('show');
         $('#myTab a').click(function (e) {          
@@ -73,8 +90,32 @@ $part_id = $this->getVariable("part_id");
 			else
 				$("#heightSet").attr('disabled',true);
 		});
+		
+		$('.picList').html(template('li_carousel'));
 	    
 	});	
+	
+	
+	function doUpload() {  
+     var formData = new FormData($( "#uploadForm" )[0]);  
+     $.ajax({  
+          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUpload') ?>' ,  
+          type: 'POST',  
+          data: formData,  
+          async: false,  
+          cache: false,  
+          contentType: false,  
+          processData: false,  
+          success: function (json) {  
+        	if(json.status){
+        		$('.picList').html(template('li_carousel'));	
+        	}
+          },  
+          error: function (json) {  
+           
+          }  
+     });  
+} 
 
 	$('#focusBtn').click(function(){
 		data_param = {};
@@ -102,4 +143,12 @@ $part_id = $this->getVariable("part_id");
 	});
 </script>
 
-
+<script id="li_carousel" type="text/html" >
+	<li>
+	<div><img src='<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg'); ?>' width=100 height=70 ></div>
+	<div class='title adjust' ><input type="text" name='pic_title' ></div>
+	<div class="url adjust"  ><input type="text" name='url' > http://wefefefef.coefn.efsheg dfefsdfefd ebsdf efsdthsdfnef  </div>
+	<div class='adjust' ><button class="btn btn-warning btn-xs" >删 除</button></div>
+	<div style="clear:both"></div>			
+	</li>
+</script>

@@ -42,5 +42,11 @@ class Category extends AbstractCollection
         }
         parent::afterLoad($result);
     }
+    
+    public function getCategoryByCode($code)
+    {
+        $this->select->where->equalTo('code',$code);
+		return $this;
+    }
 
 }

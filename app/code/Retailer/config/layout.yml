@@ -797,6 +797,9 @@ decorationFunc_pic_carousel:
                     -
                         method: setTitle
                         params: pic_carousel
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
 
             content:
                 children:

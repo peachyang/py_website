@@ -184,7 +184,7 @@ class Translator implements Singleton
             $result = vsprintf($message, $parameters);
         }
         if (extension_loaded('mbstring') && ($in = mb_detect_encoding($result)) !== 'UTF-8') {
-            $result = iconv($in, 'UTF-8', $result);
+            $result = mb_convert_encoding($result, 'UTF-8');
         }
         return $result;
     }

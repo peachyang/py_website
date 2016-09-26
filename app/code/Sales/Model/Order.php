@@ -46,9 +46,9 @@ class Order extends AbstractModel
         $coupon = $cartArray['coupon'] ? json_decode($cartArray['coupon'], true) : [];
         $this->setData($cartArray)
                 ->setData([
-                    'coupon' => isset($coupon[$storeId]) ? $coupon[$storeId] : '',
+                    'coupon' => $coupon[$storeId] ?? '',
                     'shipping_method' => json_decode($cartArray['shipping_method'], true)[$storeId],
-                    'customer_note' => isset($note[$storeId]) ? $note[$storeId] : '',
+                    'customer_note' => $note[$storeId] ?? '',
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
                     'language_id' => Bootstrap::getLanguage()->getId(),

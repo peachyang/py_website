@@ -93,14 +93,14 @@ class Uri implements UriInterface
         }
 
         $parts = parse_url($uri);
-        $scheme = isset($parts['scheme']) ? $parts['scheme'] : '';
-        $user = isset($parts['user']) ? $parts['user'] : '';
-        $pass = isset($parts['pass']) ? $parts['pass'] : '';
-        $host = isset($parts['host']) ? $parts['host'] : '';
-        $port = isset($parts['port']) ? $parts['port'] : null;
-        $path = isset($parts['path']) ? $parts['path'] : '';
-        $query = isset($parts['query']) ? $parts['query'] : '';
-        $fragment = isset($parts['fragment']) ? $parts['fragment'] : '';
+        $scheme = $parts['scheme'] ?? '';
+        $user = $parts['user'] ?? '';
+        $pass = $parts['pass'] ?? '';
+        $host = $parts['host'] ?? '';
+        $port = $parts['port'] ?? null;
+        $path = $parts['path'] ?? '';
+        $query = $parts['query'] ?? '';
+        $fragment = $parts['fragment'] ?? '';
 
         return new static($scheme, $host, $port, $path, $query, $fragment, $user, $pass);
     }
@@ -112,12 +112,12 @@ class Uri implements UriInterface
     public static function createFromEnvironment(array $env)
     {
         // Scheme
-        $isSecure = isset($env['HTTPS']) ? $env['HTTPS'] : '';
+        $isSecure = $env['HTTPS'] ?? '';
         $scheme = (empty($isSecure) || $isSecure === 'off') ? 'http' : 'https';
 
         // Authority: Username and password
-        $username = isset($env['PHP_AUTH_USER']) ? $env['PHP_AUTH_USER'] : '';
-        $password = isset($env['PHP_AUTH_PW']) ? $env['PHP_AUTH_PW'] : '';
+        $username = $env['PHP_AUTH_USER'] ?? '';
+        $password = $env['PHP_AUTH_PW'] ?? '';
 
         // Authority: Host
         if (isset($env['HTTP_HOST'])) {

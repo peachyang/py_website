@@ -21,7 +21,7 @@ $parent = $this->getVariable('parent');
                   if (isset($item['attrs'])) {
                       echo $parent->getAttrs($item['attrs']);
                   }
-                  ?>><?php echo isset($item['value']) ? $item['value'] : '' ?></textarea>
+                  ?>><?php echo $item['value'] ?? '' ?></textarea>
                   <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

@@ -72,13 +72,13 @@ class Log
      */
     public function setLogger(array $config = [])
     {
-        $name = isset($config['name']) ? $config['name'] : 'default';
-        $handlers = isset($config['handlers']) ? $config['handlers'] : [
+        $name = $config['name'] ?? 'default';
+        $handlers = $config['handlers'] ?? [
             new StreamHandler(BP . 'var/log/exception.log', Logger::ERROR, false),
             new StreamHandler(BP . 'var/log/info.log', Logger::INFO, false),
             new StreamHandler(BP . 'var/log/debug.log', Logger::DEBUG, false)
         ];
-        $processors = isset($config['processors']) ? $config['processors'] : [];
+        $processors = $config['processors'] ?? [];
         static::$logger = new Logger($name, $handlers, $processors);
     }
 

@@ -14,7 +14,7 @@ class Navigation extends Template
     public function __construct()
     {
         $config = $this->getConfig();
-        $this->items = isset($config['menu']) ? $config['menu'] : [];
+        $this->items = $config['menu'] ?? [];
         $segment = new Segment('admin');
         $this->role = $segment->get('user')->getRole();
     }

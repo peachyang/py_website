@@ -153,7 +153,7 @@ abstract class Entity extends AbstractModel
             }
         }
         if (is_null($key) || $key === $this->primaryKey) {
-            return isset($items[$id]) ? $items[$id] : [];
+            return $items[$id] ?? [];
         } else {
             foreach ($items as $item) {
                 if (isset($item[$key]) && $item[$key] == $id) {
@@ -237,7 +237,7 @@ abstract class Entity extends AbstractModel
                     $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, (isset($index[$this->languageId]) ? $columns + $index[$this->languageId] : $columns), [$this->primaryKey => $this->getId()]);
                 } else {
                     foreach ($languages as $language) {
-                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));
+                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + ($index[$language['id']] ?? []));
                     }
                 }
                 $this->afterSave();

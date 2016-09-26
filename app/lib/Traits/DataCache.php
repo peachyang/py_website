@@ -102,7 +102,7 @@ trait DataCache
         if (!is_null($cacheKey) && !isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
         }
-        return isset($this->cachedData[$cacheKey]['list'][$key]) ? $this->cachedData[$cacheKey]['list'][$key] : false;
+        return $this->cachedData[$cacheKey]['list'][$key] ?? false;
     }
 
     /**

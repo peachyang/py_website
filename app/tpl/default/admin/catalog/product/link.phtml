@@ -14,7 +14,7 @@ $query = $this->getQuery();
             if (!isset($name['type'])) {
                 $name['type'] = 'text';
             }
-            $attr = isset($name['sortby']) ? $name['sortby'] : $attr;
+            $attr = $name['sortby'] ?? $attr;
             if (isset($query[$attr])) {
                 $name['value'] = $query[$attr];
             }
@@ -24,7 +24,7 @@ $query = $this->getQuery();
         <div class="input-box">
             <label class="control-label" for="sortby:limit"><?php echo $this->translate('Item(s) per page') ?></label>
             <div class="cell">
-                <input type="tel" name="limit" id="sortby:limit" class="form-control" value="<?php echo isset($query['limit']) ? $query['limit'] : 20 ?>" />
+                <input type="tel" name="limit" id="sortby:limit" class="form-control" value="<?php echo $query['limit'] ?? 20 ?>" />
             </div>
         </div>
         <div class="buttons-set">
@@ -39,7 +39,7 @@ $query = $this->getQuery();
                 <?php foreach ($attributes as $attr => $name): ?>
                     <th>
                         <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
-                            <a href="<?php echo $this->getOrderByUrl(isset($name['sortby']) ? $name['sortby'] : $attr) ?>"
+                            <a href="<?php echo $this->getOrderByUrl($name['sortby'] ?? $attr) ?>"
                             <?php if (isset($query['asc']) && $query['asc'] === $attr): ?>
                                    class="asc"
                                <?php elseif (isset($query['desc']) && $query['desc'] === $attr): ?>

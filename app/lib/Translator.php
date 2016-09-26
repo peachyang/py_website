@@ -175,18 +175,14 @@ class Translator implements Singleton
         }
         $messages = $this->loadMessages($locale);
         if (empty($messages)) {
-            $result = vsprintf($message, $parameters);
+            return vsprintf($message, $parameters);
         } else if (!is_null($domain) && isset($messages[$domain]) && $messages[$domain]->offsetExists($message)) {
-            $result = vsprintf($messages[$domain]->offsetGet($message), $parameters);
+            return vsprintf($messages[$domain]->offsetGet($message), $parameters);
         } else if ($messages[static::DEFAULT_DOMAIN]->offsetExists($message)) {
-            $result = vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);
+            return vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);
         } else {
-            $result = vsprintf($message, $parameters);
+            return vsprintf($message, $parameters);
         }
-        if (extension_loaded('mbstring') && ($in = mb_detect_encoding($result)) !== 'UTF-8') {
-            $result = mb_convert_encoding($result, 'UTF-8');
-        }
-        return $result;
     }
 
 }

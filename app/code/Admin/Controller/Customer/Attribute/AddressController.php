@@ -78,7 +78,7 @@ class AddressController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], ':ADMIN/customer_address/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], ':ADMIN/customer_address/');
     }
 
 }

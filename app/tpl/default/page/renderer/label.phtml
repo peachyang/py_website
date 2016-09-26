@@ -8,6 +8,6 @@ $item = $this->getVariable('item');
         </label>
     <?php endif ?>
     <div class="cell">
-        <?php echo $this->translate(isset($item['content']) ? $item['content'] : (isset($item['value']) ? $item['value'] : '')) ?>
+        <?php echo $this->translate($item['content'] ?? ($item['value'] ?? '')) ?>
     </div>
 </div>

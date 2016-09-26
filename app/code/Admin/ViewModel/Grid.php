@@ -120,7 +120,7 @@ class Grid extends Template
             return [];
         }
         $condition = $this->getQuery();
-        $limit = isset($condition['limit']) ? $condition['limit'] : 20;
+        $limit = $condition['limit'] ?? 20;
         if (isset($condition['page'])) {
             $collection->offset(($condition['page'] - 1) * $limit);
             unset($condition['page']);

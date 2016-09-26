@@ -32,7 +32,7 @@ $data = $this->getVariable('data', []);
             <div class="input-box">
                 <label class="control-label"><?php echo $this->translate('Phone Number') ?></label>
                 <div class="cell">
-                    <input type="tel" name="phone" class="form-control required digits" value="<?php echo isset($data['phone']) ? $data['phone'] : '' ?>" />
+                    <input type="tel" name="phone" class="form-control required digits" value="<?php echo $data['phone'] ?? '' ?>" />
                 </div>
             </div>
             <div class="input-box">
@@ -47,7 +47,7 @@ $data = $this->getVariable('data', []);
             <div class="input-box">
                 <label class="control-label"><?php echo $this->translate('Product Type') ?></label>
                 <div class="cell">
-                    <input type="text" name="product_type" class="form-control required" value="<?php echo isset($data['product_type']) ? $data['product_type'] : '' ?>" />
+                    <input type="text" name="product_type" class="form-control required" value="<?php echo $data['product_type'] ?? '' ?>" />
                 </div>
             </div>
             <div class="buttons-set">

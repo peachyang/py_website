@@ -14,7 +14,10 @@ class Profile extends Account
         $collection->columns(['id'])
                 ->join('sales_order_status', 'sales_order_status.id=sales_order.status_id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
-                ->where(['sales_order_phase.code' => 'pending_payment'])
+                ->where([
+                    'sales_order_phase.code' => 'pending_payment',
+                    'customer_id' => $this->getCustomer()->getId()
+                ])
                 ->group('id');
         return count($collection);
     }
@@ -27,7 +30,8 @@ class Profile extends Account
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
                 ->where([
                     'sales_order_phase.code' => 'complete',
-                    'sales_order_status.is_default' => 1
+                    'sales_order_status.is_default' => 1,
+                    'customer_id' => $this->getCustomer()->getId()
                 ])->group('id');
         return count($collection);
     }
@@ -40,7 +44,8 @@ class Profile extends Account
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
                 ->where([
                     'sales_order_phase.code' => 'complete',
-                    'sales_order_status.is_default' => 0
+                    'sales_order_status.is_default' => 0,
+                    'customer_id' => $this->getCustomer()->getId()
                 ])->group('id');
         return count($collection);
     }

@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Indexer\Handler;
 
 use InvalidArgumentException;
 use Seahinet\Lib\Model\Collection\Language;
+use Zend\Db\TableGateway\TableGateway;
 
 abstract class AbstractHandler
 {
@@ -20,7 +21,8 @@ abstract class AbstractHandler
             $provider = new $config['indexer'][$this->entityType]['provider'];
         }
         if (!isset($provider) || !$provider->provideStructure($this)) {
-            $tableGateway = $this->getTableGateway('eav_entity_type');
+            $adapter = $this->getContainer()->get('dbAdapter');
+            $tableGateway = new TableGateway('eav_entity_type', $adapter);
             $select = $tableGateway->getSql()->select();
             $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
                     ->where(is_numeric($this->entityType) ? ['eav_entity_type.id' => $this->entityType] : ['eav_entity_type.code' => $this->entityType])

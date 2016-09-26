@@ -38,7 +38,7 @@ class LocateController extends ActionController
             } else if ((empty($enabled) || in_array($item['iso2_code'], explode(',', $enabled))) && (empty($disabled) || !in_array($item['iso2_code'], explode(',', $disabled)))) {
                 $result[] = [
                     'value' => $id,
-                    'code' => isset($item['iso2_code']) ? $item['iso2_code'] : $item['code'],
+                    'code' => $item['iso2_code'] ?? $item['code'],
                     'label' => $item->getName($locale)
                 ];
             }

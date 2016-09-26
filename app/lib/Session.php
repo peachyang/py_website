@@ -29,7 +29,7 @@ class Session implements Singleton
     {
         if ($config instanceof Container) {
             $adapter = (array) $config->get('config')['adapter'];
-            $config = isset($adapter['session']) ? $adapter['session'] : [];
+            $config = $adapter['session'] ?? [];
         }
         $this->setOptions($config);
         $this->cookie_params = session_get_cookie_params();

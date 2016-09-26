@@ -64,7 +64,7 @@ class ShipmentController extends AuthActionController
                 $shipment->setData($order->toArray())->setData([
                     'increment_id' => '',
                     'order_id' => $data['order_id'],
-                    'comment' => isset($data['comment']) ? $data['comment'] : ''
+                    'comment' => $data['comment'] ?? ''
                 ]);
                 $this->beginTransaction();
                 $shipment->setId(null)->save();

@@ -404,12 +404,12 @@ final class Cart extends AbstractModel implements Singleton
         $this->setData([
             'base_total' => $this->storage['base_subtotal'] +
             $this->storage['base_shipping'] +
-            (isset($this->storage['base_tax']) ? $this->storage['base_tax'] : 0) +
-            (isset($this->storage['base_discount']) ? $this->storage['base_discount'] : 0),
+            ($this->storage['base_tax'] ?? 0) +
+            ($this->storage['base_discount'] ?? 0),
             'total' => $this->storage['subtotal'] +
             $this->storage['shipping'] +
-            (isset($this->storage['tax']) ? $this->storage['tax'] : 0) +
-            (isset($this->storage['discount']) ? $this->storage['discount'] : 0)
+            ($this->storage['tax'] ?? 0) +
+            ($this->storage['discount'] ?? 0)
         ]);
         $this->save();
         return $this;

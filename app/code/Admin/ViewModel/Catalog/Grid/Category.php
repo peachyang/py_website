@@ -108,7 +108,7 @@ class Category extends PGrid
         if (empty($this->categoryTree)) {
             $this->prepareCategoryTree();
         }
-        return isset($this->categoryTree[$pid]) ? $this->categoryTree[$pid] : [];
+        return $this->categoryTree[$pid] ?? [];
     }
 
     public function renderCategory($category, $level = 1)

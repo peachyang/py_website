@@ -62,7 +62,7 @@ class Level extends AbstractModel
         if (is_null($languageId)) {
             $languageId = Bootstrap::getLanguage()->getId();
         }
-        return isset($this->storage['name'][$languageId]) ? $this->storage['name'][$languageId] : 0;
+        return $this->storage['name'][$languageId] ?? 0;
     }
 
 }

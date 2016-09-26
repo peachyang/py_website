@@ -241,15 +241,15 @@ class Product extends Entity
                         'warehouse_id' => $warehouseId,
                         'product_id' => $this->getId(),
                         'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
-                        'barcode' => isset($inventory['barcode'][$order]) ? $inventory['barcode'][$order] : '',
+                        'barcode' => $inventory['barcode'][$order] ?? '',
                         'qty' => $qty,
-                        'reserve_qty' => isset($inventory['reserve_qty'][$order]) ? $inventory['reserve_qty'][$order] : null,
-                        'min_qty' => isset($inventory['min_qty'][$order]) ? $inventory['min_qty'][$order] : null,
-                        'max_qty' => isset($inventory['max_qty'][$order]) ? $inventory['max_qty'][$order] : null,
-                        'is_decimal' => isset($inventory['is_decimal'][$order]) ? $inventory['is_decimal'][$order] : null,
-                        'backorders' => isset($inventory['backorders'][$order]) ? $inventory['backorders'][$order] : null,
-                        'increment' => isset($inventory['increment'][$order]) ? $inventory['increment'][$order] : null,
-                        'status' => isset($inventory['status'][$order]) ? $inventory['status'][$order] : null
+                        'reserve_qty' => $inventory['reserve_qty'][$order] ?? null,
+                        'min_qty' => $inventory['min_qty'][$order] ?? null,
+                        'max_qty' => $inventory['max_qty'][$order] ?? null,
+                        'is_decimal' => $inventory['is_decimal'][$order] ?? null,
+                        'backorders' => $inventory['backorders'][$order] ?? null,
+                        'increment' => $inventory['increment'][$order] ?? null,
+                        'status' => $inventory['status'][$order] ?? null
                     ]);
                 }
             }
@@ -282,7 +282,7 @@ class Product extends Entity
                     'price' => (float) $this->storage['options']['price'][$id],
                     'is_fixed' => $this->storage['options']['is_fixed'][$id],
                     'sku' => $this->storage['options']['sku'][$id],
-                    'value' => isset($this->storage['options']['value'][$id]) ? $this->storage['options']['value'][$id] : null
+                    'value' => $this->storage['options']['value'][$id] ?? null
                 ])->save();
             }
         }

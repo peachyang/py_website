@@ -58,7 +58,7 @@ class InvoiceController extends AuthActionController
                 $invoice->setData($order->toArray())->setData([
                     'increment_id' => '',
                     'order_id' => $data['order_id'],
-                    'comment' => isset($data['comment']) ? $data['comment'] : ''
+                    'comment' => $data['comment'] ?? ''
                 ]);
                 if (!isset($data['include_shipping']) || !$data['include_shipping']) {
                     $invoice->setData([

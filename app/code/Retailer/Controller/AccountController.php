@@ -70,7 +70,7 @@ class AccountController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'retailer/account/processing/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/processing/', 'customer');
     }
 
     public function processingAction()

@@ -36,7 +36,7 @@ class Event extends SymfonyEvent implements ArrayAccess, Serializable
 
     public function offsetGet($offset)
     {
-        return isset($this->storage[$offset]) ? $this->storage[$offset] : null;
+        return $this->storage[$offset] ?? null;
     }
 
     public function offsetSet($offset, $value)

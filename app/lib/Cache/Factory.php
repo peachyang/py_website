@@ -116,7 +116,7 @@ abstract class Factory
     private static function prepareRedis($config)
     {
         $client = new Redis;
-        $client->connect((isset($config['host']) ? $config['host'] : 'localhost'), (isset($config['port']) ? $config['port'] : 6379));
+        $client->connect(($config['host'] ?? 'localhost'), ($config['port'] ?? 6379));
         $pool = new DoctrineCache\RedisCache();
         $pool->setRedis($client);
         return $pool;
@@ -129,9 +129,9 @@ abstract class Factory
     private static function preparePredis($config)
     {
         $server = [
-            'scheme' => isset($config['scheme']) ? $config['scheme'] : 'tcp',
-            'host' => isset($config['host']) ? $config['host'] : '127.0.0.1',
-            'port' => isset($config['port']) ? $config['port'] : 6379,
+            'scheme' => $config['scheme'] ?? 'tcp',
+            'host' => $config['host'] ?? '127.0.0.1',
+            'port' => $config['port'] ?? 6379,
         ];
         $client = new Predis($server);
         $pool = new DoctrineCache\PredisCache($client);
@@ -144,7 +144,7 @@ abstract class Factory
      */
     private static function prepareFilesystem($config)
     {
-        $pool = new DoctrineCache\FilesystemCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.dat', 0);
+        $pool = new DoctrineCache\FilesystemCache(($config['directory'] ?? BP . 'var/cache'), '.dat', 0);
         return $pool;
     }
 
@@ -154,7 +154,7 @@ abstract class Factory
      */
     private static function preparePHPFile($config)
     {
-        $pool = new DoctrineCache\PHPFileCache((isset($config['directory']) ? $config['directory'] : BP . 'var/cache'), '.php', 0);
+        $pool = new DoctrineCache\PHPFileCache(($config['directory'] ?? BP . 'var/cache'), '.php', 0);
         return $pool;
     }
 
@@ -169,11 +169,11 @@ abstract class Factory
             $server = $config['server'];
             unset($config['server']);
         } else if (isset($config['host'])) {
-            $server = 'mongodb://' . $config['host'] . (isset($config['port']) ? $config['port'] : 27017);
+            $server = 'mongodb://' . $config['host'] . ($config['port'] ?? 27017);
             unset($config['host']);
             unset($config['port']);
         }
-        $db = isset($config['db']) ? $config['db'] : 'seahinet';
+        $db = $config['db'] ?? 'seahinet';
         unset($config['db']);
         $client = new MongoClient($server, $config);
         $collection = new MongoCollection($client->selectDB($db), 'cache');
@@ -204,7 +204,7 @@ abstract class Factory
                 $auth = '';
             }
             if (isset($config['host'])) {
-                $server = 'mongodb://' . $auth . $config['host'] . (isset($config['port']) ? $config['port'] : 27017);
+                $server = 'mongodb://' . $auth . $config['host'] . ($config['port'] ?? 27017);
                 unset($config['host']);
                 unset($config['port']);
             } else if (isset($config['socket'])) {
@@ -213,7 +213,7 @@ abstract class Factory
             }
         }
 
-        $db = isset($config['db']) ? $config['db'] : 'seahinet';
+        $db = $config['db'] ?? 'seahinet';
         unset($config['db']);
         $manager = new MongoDBManager($server, $config);
         $collection = new MongoDBCollection($manager, $db, 'cache');
@@ -227,7 +227,7 @@ abstract class Factory
      */
     private static function prepareSQLite3($config)
     {
-        $client = new SQLite3(isset($config['filename']) ? $config['filename'] : BP . 'var/cache/sqlite3.dat');
+        $client = new SQLite3($config['filename'] ?? BP . 'var/cache/sqlite3.dat');
         $pool = new DoctrineCache\SQLite3Cache($client, 'cache');
         return $pool;
     }

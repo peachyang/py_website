@@ -28,7 +28,7 @@ class RefundController extends AuthActionController
             $refund->load($post['id']);
             $refund->setData('status', $post['status'])->save();
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'admin/sales_refund/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'admin/sales_refund/');
     }
     
     

@@ -62,7 +62,7 @@ class RouteMatch implements ArrayAccess
 
     public function offsetGet($offset)
     {
-        return isset($this->options[$offset]) ? $this->options[$offset] : null;
+        return $this->options[$offset] ?? null;
     }
 
     public function offsetSet($offset, $value)

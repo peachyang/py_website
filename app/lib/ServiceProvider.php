@@ -24,7 +24,7 @@ class ServiceProvider implements ServiceProviderInterface
             $container['config'] = $config;
         }
         if (!$container->has('cache')) {
-            $container['cache'] = Cache::instance(isset($config['adapter']['cache']) ? $config['adapter']['cache'] : $container);
+            $container['cache'] = Cache::instance($config['adapter']['cache'] ?? $container);
         }
         if (!$container->has('indexer')) {
             $container['indexer'] = function($container) {
@@ -55,7 +55,7 @@ class ServiceProvider implements ServiceProviderInterface
             $container['response'] = $response;
         }
         if (!$container->has('session')) {
-            $container['session'] = Session::instance(isset($config['adapter']['session']) ? $config['adapter']['session'] : $container);
+            $container['session'] = Session::instance($config['adapter']['session'] ?? $container);
         }
         if (!$container->has('currency')) {
             $container['currency'] = function($container) {

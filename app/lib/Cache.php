@@ -52,7 +52,7 @@ final class Cache implements ArrayAccess, Singleton
         }
         if (empty($config)) {
             $adapterObject = $this->getContainer()->get('config')['adapter'];
-            $config = isset($adapterObject['cache']) ? $adapterObject['cache'] : [];
+            $config = $adapterObject['cache'] ?? [];
         }
         $this->pool = Factory::getCachePool($config);
         if (isset($config['persistent'])) {

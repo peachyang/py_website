@@ -1,4 +1,4 @@
 <?php
 $item = $this->getVariable('item');
 ?>
-<input type="hidden" name="<?php echo $this->getVariable('key') ?>" value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" />
+<input type="hidden" name="<?php echo $this->getVariable('key') ?>" value="<?php echo $item['value'] ?? '' ?>" />

@@ -74,7 +74,7 @@ class Stream implements StreamInterface
             return $this->meta;
         }
 
-        return isset($this->meta[$key]) ? $this->meta[$key] : null;
+        return $this->meta[$key] ?? null;
     }
 
     /**
@@ -152,7 +152,7 @@ class Stream implements StreamInterface
     {
         if (!$this->size && $this->isAttached() === true) {
             $stats = fstat($this->stream);
-            $this->size = isset($stats['size']) ? $stats['size'] : null;
+            $this->size = $stats['size'] ?? null;
         }
 
         return $this->size;

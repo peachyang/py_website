@@ -97,7 +97,7 @@ final class Bootstrap
     private static function prepareConfig()
     {
         $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
-        $cache = Cache::instance(isset($adapter['cache']) ? $adapter['cache'] : ['adapter' => '']);
+        $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
         $config = $cache->fetch('SYSTEM_CONFIG');
         if (!$config) {
             $config = Config::instance();
@@ -134,7 +134,7 @@ final class Bootstrap
                     return $a['priority'] <=> $b['priority'];
                 });
                 foreach ($events as $event) {
-                    static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
+                    static::$eventDispatcher->addListener($name, ($event['listener'] ?? $event), $event['priority'] ?? 0);
                 }
             }
         }
@@ -150,8 +150,8 @@ final class Bootstrap
                 $segment = new Session\Segment('core');
             }
             $code = $segment->get('language') ?:
-                    (isset($_COOKIE['language']) ? $_COOKIE['language'] :
-                    (isset($server['language']) ? $server['language'] : null));
+                    ($_COOKIE['language'] ?? 
+                    ($server['language'] ?? null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');

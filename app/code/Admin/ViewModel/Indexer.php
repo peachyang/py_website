@@ -53,7 +53,7 @@ class Indexer extends Grid
         $config = $this->getConfig();
         if (isset($config['indexer'])) {
             foreach ($config['indexer'] as $code => $info) {
-                $indexers[] = ['code' => isset($info['title']) ? $info['title'] : $code, 'id' => $code];
+                $indexers[] = ['code' => $info['title'] ?? $code, 'id' => $code];
             }
         }
         return $indexers;

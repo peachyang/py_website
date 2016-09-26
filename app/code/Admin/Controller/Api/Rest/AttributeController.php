@@ -54,7 +54,7 @@ class AttributeController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], ':ADMIN/api_rest_attribute/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], ':ADMIN/api_rest_attribute/');
     }
 
 }

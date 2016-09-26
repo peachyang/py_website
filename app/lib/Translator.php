@@ -49,7 +49,7 @@ class Translator implements Singleton
             $this->setContainer($locale);
             $locale = null;
         }
-        $this->setLocale($locale ? : $this->getContainer()->get('config')['locale']);
+        $this->setLocale($locale ?: $this->getContainer()->get('config')['locale']);
     }
 
     public static function instance($locale = null)
@@ -94,7 +94,7 @@ class Translator implements Singleton
      */
     public function getLocale()
     {
-        return $this->locale? : static::getDefaultLocale();
+        return $this->locale ?: static::getDefaultLocale();
     }
 
     /**
@@ -175,14 +175,18 @@ class Translator implements Singleton
         }
         $messages = $this->loadMessages($locale);
         if (empty($messages)) {
-            return vsprintf($message, $parameters);
+            $result = vsprintf($message, $parameters);
         } else if (!is_null($domain) && isset($messages[$domain]) && $messages[$domain]->offsetExists($message)) {
-            return vsprintf($messages[$domain]->offsetGet($message), $parameters);
+            $result = vsprintf($messages[$domain]->offsetGet($message), $parameters);
         } else if ($messages[static::DEFAULT_DOMAIN]->offsetExists($message)) {
-            return vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);
+            $result = vsprintf($messages[static::DEFAULT_DOMAIN]->offsetGet($message), $parameters);
         } else {
-            return vsprintf($message, $parameters);
+            $result = vsprintf($message, $parameters);
         }
+        if (extension_loaded('mbstring') && ($in = mb_detect_encoding($result)) !== 'UTF-8') {
+            $result = iconv($in, 'UTF-8', $result);
+        }
+        return $result;
     }
 
 }

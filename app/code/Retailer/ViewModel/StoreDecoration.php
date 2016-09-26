@@ -100,6 +100,10 @@ class StoreDecoration extends Template
 		
 	}
 	
+	public function getStorePicInfo(){
+		
+	}
+	
 	/*
 	 * template content 
 	 * 

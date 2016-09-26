@@ -226,9 +226,10 @@ class StoreController extends AuthActionController
     {
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
+        	$segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $store = (new Segment('admin'))->get('user')->getStore();
+            $store = $segment->get('customer')['store_id'];
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 $categoryCollection = new Category();
@@ -240,7 +241,7 @@ class StoreController extends AuthActionController
                         $model = new Model();
                         $model->moveFile($file)
                                 ->setData([
-                                    'store_id' => $store ? $store->getId() : (isset($data['store_id']) && $data['store_id'] ? $data['store_id'] : null),
+                                    'store_id' => $store,
                                     'uploaded_name' => $name,
                                     'file_type' => $file->getClientMediaType(),
                                     'category_id' => isset($data['category_id']) && $data['category_id'] ? $data['category_id'] : $category
@@ -252,8 +253,20 @@ class StoreController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                 }
             }
-        }
-		
+        	if($result['error'] === 0){
+				$storePicinfo = new StorePicinfo();
+				$storePicinfo->setData([
+						'store_id' => $store,
+						'pic_title' => $data['pic_title'],
+						'url' => $data['url'],
+						'resource_category_code' => $data['resource_category_code'],
+						'resource_id' => $model->getID()
+					]);		
+				$storePicinfo->save();
+			}
+		}
+
+
 		$result['status'] = $result['error'];
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }

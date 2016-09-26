@@ -36,7 +36,7 @@ $part_id = $this->getVariable("part_id");
 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
 <input type="hidden" name="resource_category_code" value="store_carousel" />
  <div class="rows">
-  图片标题: &nbsp;<input type="text" id='pic_title' placeholder="" > &nbsp; 图片链接: &nbsp;<input type="text" id='url' placeholder="http://" style="width:260px" > 
+  图片标题: &nbsp;<input type="text" id='pic_title' name="pic_title" placeholder="" > &nbsp; 图片链接: &nbsp;<input type="text" id='url' name="url" placeholder="http://" style="width:260px" > 
  </div>
  <div class="rows" >   
    上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">增 加</button>

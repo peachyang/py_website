@@ -1,11 +1,48 @@
 
 
 <?php $templateView = $this->getTemplateView(); ?>
+<header class="header clearfix">
+<nav class="nav-main  store_menu">
+<ul class="nav nav-pills container">
+	<li class="dropdown"><a class="dropdown-toggle" href="javascript:void(0);">全部商品分类</a><ul class="dropdown-menu">
+            <li>
+            <a href="http://project.zm.com/clothes.html">服装城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/digital.html">数码城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/food.html">美食城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/market.html">蓝海超市</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/group-buying.html">团购</a>
+                    </li>
+    </ul>
+</li>
+	<li><a href="http://project.zm.com/">首页</a></li>
+	<li><a href="http://project.zm.com/">服装城</a></li>
+	<li><a href="http://project.zm.com/">数码城</a></li>
+	<li><a href="http://project.zm.com/">美食城</a></li>
+	<li><a href="http://project.zm.com/">蓝海超市</a></li>
+	<li><a href="http://project.zm.com/">团购</a></li>
+</ul>
+</nav>
+</header>
 <div class="container">
     <div class="retailer-store">    
 
         <?php echo !empty($templateView) ? $templateView['src_model'] : ''; ?>
 	</div>
 </div>
+
+<script>
+ $(function(){
+ 	$('.header .nav-main').hide();
+ 	$('.header .nav-main.store_menu').show();
+ });
+</script>
 
 

@@ -309,9 +309,13 @@ class StoreDecoration extends Template
 	
 	public function template_pic_carousel($params=''){
 		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
-       	for($i=1;$i<6;$i++)
-		{
-			$content .= '<li class="hiSlider-item"><img src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/'.$i.'.jpg').'" alt="11111"></li>';
+		$result = $this->getStorePicInfo('store_carousel');
+       	foreach ($result as $key => $value)
+		{	
+			if(trim($value['url'])!="")
+				$content .= '<li class="hiSlider-item"><a href="'.$value['url'].'" target=_blank ><img src="'.$this->getBaseUrl('/pub/resource/image/'.$value['real_name']).'" alt="'.$value['pic_title'].'"></a></li>';
+			else
+				$content .= '<li class="hiSlider-item"><img src="'.$this->getBaseUrl('/pub/resource/image/'.$value['real_name']).'" alt="'.$value['pic_title'].'"></li>';
 		}                
         $content .= '</ul></div>';
 		return $content;

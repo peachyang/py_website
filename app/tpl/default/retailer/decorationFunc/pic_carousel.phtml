@@ -21,9 +21,10 @@ $picInfo = json_encode($picInfos);
 <option value=0 >不显示</option>	
 </select> <br><br>
 标题文字:
-<input type="text" id='title' class="params" > 
+<input type="text" id='title' class="params" value="图片轮播" > 
  <br><br>
-
+最佳宽度: 1080px
+ <br><br> 
 高度设置:
 <input type="radio" name="heightSetType" value="0" checked="checked" > 自适应
 <input type="radio" name="heightSetType" value="1" > 自行设置
@@ -128,7 +129,41 @@ $picInfo = json_encode($picInfos);
 }
 
 	function modify(obj){
-
+		$li = $(obj).closest("li");
+		$li.find('div.adjust').find('span').hide();
+		$li.find('div.adjust').find('input').show();
+		$li.find('button.mod').hide();
+		$li.find('button.save').show();
+		
+	}
+	
+	function save(obj,id){
+		$li = $(obj).closest("li");
+		var pic_title = $li.find('div.adjust').find("input[name='pic_title']").val();
+		var url = $li.find('div.adjust').find("input[name='url']").val();
+		$.ajax({  
+          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadSave') ?>' ,  
+          type: 'POST',  
+          data: {id:id,pic_title:pic_title,url:url,resource_category_code:'store_carousel'},  
+          beforeSend:function(){
+            layer.load(1, {shade: [0.1,'#fff'] });	
+          },  
+          success: function (json) {  
+        	if(json.status==0){
+        		$li.find('div.adjust').find("span[name='pic_title']").html(pic_title);
+        		$li.find('div.adjust').find("span[name='url']").html(url);
+				$li.find('div.adjust').find('span').show();
+				$li.find('div.adjust').find('input').hide();
+				$li.find('button.mod').show();
+				$(obj).hide();	
+        	}
+        	layer.closeAll();
+          },  
+          error: function (json) {  
+           
+          }  
+    });
+				
 	}
 	
 	function deleteUpload(id,resource_id){
@@ -193,7 +228,7 @@ $picInfo = json_encode($picInfos);
 	<div><img src='<?php echo $this->getBaseUrl('/pub/resource/image/'); ?>{{value.real_name }}' width=100 height=70 ></div>
 	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.pic_title}}" style="display:none" ><span name='pic_title'>{{value.pic_title}}</span></div>
 	<div class="url adjust"  ><input type="text" name='url' value="{{value.url}}" style="display:none" ><span name='url'>{{value.url}}</span></div>
-	<div class='adjust' ><button class="btn btn-success btn-xs" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs" onclick="save(this)" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteUpload({{value.id}},{{value.resource_id}})' >删 除</button></div>
+	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteUpload({{value.id}},{{value.resource_id}})' >删 除</button></div>
 	<div style="clear:both"></div>			
 	</li>
 	 {{/each}}

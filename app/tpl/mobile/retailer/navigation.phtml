@@ -1,0 +1,27 @@
+<div class="nav">
+    <h2 class="page-title">
+        <a href="<?php echo $this->getBaseUrl('retailer/account/') ?>">
+            <span class="fa fa-user" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Retailer Center') ?></span>
+        </a>
+    </h2>
+    <nav>    		
+        <dl>
+            <?php foreach ($this->getGroups() as $group): ?>
+                <dt>
+                    <span class="fa fa-fw fa-<?php echo $group['icon'] ?>" aria-hidden="true"></span>
+                    <span><?php echo $this->translate($group['label']) ?></span>
+                </dt>
+                <?php foreach ($this->getLinks() as $link): ?>
+                    <?php if ($link['group'] == $group['label']): ?>
+                        <dd>
+                            <a href="<?php echo $this->getBaseUrl($link['link']) ?>">
+                                <span><?php echo $this->translate($link['label']) ?></span>
+                            </a>
+                        </dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>                
+            <?php endforeach; ?>              
+        </dl>
+    </nav>
+</div>

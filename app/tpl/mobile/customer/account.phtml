@@ -9,12 +9,12 @@
     <?php if ($this->getSegment('customer')->get('hasLoggedIn')): ?>
         <div class="col-left col-md-2 hidden-xs">
             <?php echo $this->getChild('nav') ?>
-        </div>
+        </div> 
         <main class="col-main col-xs-12 col-sm-12 col-md-12">
         <?php else: ?>
             <main class="col-main col-xs-12 col-sm-12">
-            <?php endif ?>
+        <?php endif ?>
             <?php echo $this->getChild('messages'), $this->getChild('main') ?>
+            </main>
         </main>
-    </main>
 </div>

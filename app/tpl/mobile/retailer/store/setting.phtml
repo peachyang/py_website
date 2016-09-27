@@ -1,0 +1,82 @@
+<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+    <h3><?php echo $this->translate('Store Settings') ?></h3>
+    
+    <div>
+        <div>
+            <p>
+                <img width="120" height="120" ectype="store_logo" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>" />
+            </p>
+            <b>
+                <span><input type="file" ectype="change_store_logo" hidefocus="true" maxlength="0" size="1"></span>
+                <div>更换店标</div>
+            </b>
+        </div>
+        <div>
+            <p>
+                <img width="607" height="120" ectype="store_banner" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>">
+            </p>
+            <b>
+                <span><input type="file" ectype="change_store_banner" hidefocus="true" maxlength="0" size="1"></span>
+                <div>更换店铺条幅</div>
+            </b>
+        </div>
+    </div>
+    <br /><br />
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th >店铺名称:&nbsp;</th>
+                <td>
+                    <p><input type="text" value="" name="store_name" id="store_name"><b>*</b></p>
+                </td>
+            </tr>
+            <tr>
+                <th>所在地区:&nbsp;</th>
+                <td>
+                    <div id="region">
+                        <select>
+                            <option>请选择...</option>
+                            <option value="1">中国</option>
+                        </select>
+                        <select>
+                            <option>请选择...</option>
+                            <option value="2">山东</option>
+                        </select>
+                        <select>
+                            <option>请选择...</option>
+                            <option value="3">青岛</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>详细地址:&nbsp;</th>
+                <td>
+                    <p><input type="text" value="" id="address"  name="address"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>联系电话:&nbsp;</th>
+                <td><input type="text" value="" id="tel" name="tel"></td>
+            </tr>
+            <tr>
+                <th>联系QQ:&nbsp;</th>
+                <td><input type="text" value="" id="im_qq" name="im_qq"></td>
+            </tr>
+            <tr>
+                <th>阿里旺旺:&nbsp;</th>
+                <td><input type="text" value="" id="im_ww" name="im_ww"></td>
+            </tr>
+            <tr>
+                <th>店铺简介&nbsp;</th>
+                <td>
+                    <div class="editor">
+                        <textarea  id="description" name="description"></textarea>
+                    </div>
+                    <div><input type="submit" value="提交" class="btn"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+</div>

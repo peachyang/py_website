@@ -1,0 +1,69 @@
+<?php
+$data_tag = $this->getVariable("data_tag");
+$part_id = $this->getVariable("part_id");
+ ?>
+ 
+ <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
+      <li><a href="#basic">基本属性</a></li> 
+ </ul> 
+ 
+ <div class="tab-content"> 
+  <div class="tab-pane" id="basic" >
+<div style="margin:20px" >
+关键字：<input type="text" id="hot_text" class="params" > <br><br>
+共几行: 
+<select id='select_row' class="params"  >
+<option value=1 >1 行</option>
+<option value=2 >2 行</option>		
+</select> <br><br>
+	
+一行几列: 
+<select id='select_column' class="params"  >
+<option value=4 >4列</option>
+<option value=3 >3列</option>
+<option value=2 >2列</option>		
+</select> <br><br>
+价格范围:
+<input class="params" type="text" value="" id="price_from"> - <input class="params" type="text" value="" id="price_to"> 	
+</div>
+   </div> 
+ </div> 	
+ <input type="hidden" id='focusBtn' >	
+
+<script> 
+      $(function () { 
+      $('#myTab a:first').tab('show');
+        $('#myTab a').click(function (e) {          
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content
+ 
+        }) 
+      }) 
+</script>
+
+<script>
+	var data_tag = '<?php echo $data_tag; ?>';
+	var part_id = '<?php echo $part_id; ?>';
+	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
+	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
+	$(document).ready(function(){	
+
+  		for (key in data_param) {
+  			$("#"+key).val(data_param[key]);
+  		}
+	});	
+
+	$('#focusBtn').click(function(){
+		data_param = {};
+		$('.params').each(function(){
+			var tempID = $(this).attr('id');
+			var tempVal = $(this).val();
+			data_param[tempID] = tempVal; 
+		});
+		data_param = encodeURIComponent(JSON.stringify(data_param));
+		obj.attr('data-param',data_param);
+		window.parent.call_ajax_data(part_id,data_tag);
+	});
+</script>
+
+

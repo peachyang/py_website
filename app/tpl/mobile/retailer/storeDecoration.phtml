@@ -1,0 +1,973 @@
+<?php $templateView = $this->getTemplateView(); ?>       
+        <style>
+            .lyrow {
+                margin-bottom: 10px;
+            }
+            .col-md-41{padding:0px}
+            .col-md-61{padding:0px}
+            .navbar-brand{margin-left:11px;color:#FFFFFF;font-size:20px}
+            .navbar-inverse .navbar-brand{color:#FFFFFF;}
+        </style>
+        <script type="text/javascript">
+            var path = '';
+            var site_path = '<?php echo $this->getBaseUrl();  ?>';
+            var template_id = <?php echo empty($templateView) ? 0 : $templateView['id'] ?>;
+            var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
+            var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
+        </script>
+
+      
+      <div class="retailer-store">
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
+            <div class="navbar-header">
+                <a class="navbar-brand" sty href="/">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) || $templateView['store_id']==0 ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav" id="menu-htmleditor">
+                    <li>
+                        <div class="btn-group" data-toggle="buttons-radio">
+                            <button type="button" id="edit" class="active btn btn-primary"><i class="glyphicon glyphicon-edit "></i> 编辑</button>
+                            <button type="button" class="btn btn-primary" id="sourcepreview"><i class="glyphicon-eye-open glyphicon"></i> 预览</button>
+                            <button type="button" id="save" class="btn btn-warning float-right"><i class="fa fa-save"></i>&nbsp;保存</button>
+                            <button type="button" id="returns" class="btn btn-danger float-right" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decorationList') ?>'" ><i class="fa fa-arrow-right"></i>&nbsp;返回</button>
+                        </div> &nbsp;
+                        <div class="btn-group" data-toggle="buttons-radio" id='add' style='display: none;'>
+                            <button type="button" class="active btn btn-default" id="pc"><i class="fa fa-laptop"></i> Desktop</button>
+                            <button type="button" class="btn btn-default" id="tablet"><i class="fa fa-tablet"></i> Tablet</button>
+                            <button type="button" class="btn btn-default" id="mobile"><i class="fa fa-mobile"></i> Mobile</button> </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="edit container">
+            <div class="row">
+                <div class="">
+                    <div class="sidebar-nav">
+                        <ul class="nav nav-list ">
+                            <li class="nav-header"> <i class="fa fa fa-th"> </i>&nbsp; 表格元素 </li>
+                            <li class="rows" id="estRows">
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="12" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-12 column"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="6 6" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-6 column"></div>
+                                            <div class="col-md-6 column"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="8 4" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-8 column"></div>
+                                            <div class="col-md-4 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="4 8" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-4 column"></div>
+                                            <div class="col-md-8 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="3 9" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 column"></div>
+                                            <div class="col-md-9 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="9 3" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-9 column"></div>
+                                            <div class="col-md-3 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="4 4 4" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-4 column"></div>
+                                            <div class="col-md-4 column"></div>
+                                            <div class="col-md-4 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                                
+                                <div class="lyrow">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon-remove glyphicon"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a>
+                                    <div class="preview"><input type="text" value="3 3 3 3" class="form-control"></div>
+                                    <div class="view">
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 column"></div>
+                                            <div class="col-md-3 column"></div>
+                                            <div class="col-md-3 column"></div>
+                                            <div class="col-md-3 column"></div>
+                                        </div> <br> </div>
+                                </div>
+                            </li>
+                        </ul> <br>
+                        
+                        <ul class="nav nav-list">
+                            <li class="nav-header"><i class="fa fa-html5"></i>&nbsp; 功能模块 </li>
+                            <li class="boxes" id="elmBase">
+                                <!--
+                                <div class="box box-element" data-type="header">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa fa-header fa-2x"></i>
+                                        <div class="element-desc">header</div>
+                                    </div>
+                                    <div class="view">
+                                        <h2>HEADER TITLE</h2> </div>
+                                </div>
+                                -->
+                                
+                                <div class="box box-element" data-type="paragraph" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa fa-font fa-2x"></i>
+                                        <div class="element-desc">文字段落</div>
+                                    </div>
+                                    <div class="view">
+                                   
+                                    </div>
+                                </div>
+                                
+                                <!--
+                                <div class="box box-element" data-type="image">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa fa-picture-o fa-2x"></i>
+                                        <div class="element-desc">Image</div>
+                                    </div>
+                                    <div class="view"> <img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/dragResource/images/text.png') ?>" class="img-responsive" title="default title" /> </div>
+                                </div>
+                            
+                                
+                                <div class="box box-element" data-type="button">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa  fa-hand-pointer-o fa-2x"></i>
+                                        <div class="element-desc">Button</div>
+                                    </div>
+                                    <div class="view">
+                                        <a class="btn btn-default" href="#">Click Me !</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="box box-element" data-type="code">
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings" href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa">< ></i>
+                                        <div class="element-desc">Code</div>
+                                    </div>
+                                    <div class="view"> i'm html code, change me </div>
+                                </div>
+                                -->
+                                <div class="box box-element" data-type="long_search" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">长搜索条</div>
+                                    </div>
+                                    <div class="view"></div>
+                                </div>
+                                
+                                 <div class="box box-element" data-type="short_search" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">短搜索条</div>
+                                    </div>
+                                    <div class="view">
+                    
+            				        </div>
+                                </div>
+                                
+                  				<div class="box box-element" data-type="product_class" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">商品分类</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="sales_amount" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">销 售 量</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="hot_product" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">热卖商品</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div> 
+            					
+            					<div class="box box-element" data-type="store_recommend" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">店长推荐</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="product_recommend" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">商品推荐</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>
+            					
+            					<div class="box box-element" data-type="pic_carousel" show-type=1 >
+                                    <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">图片轮播</div>
+                                    </div>
+                                    <div class="view">
+                                    	   
+            						</div>
+            					</div>                 
+                          
+                           
+                           
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="htmlpage" style="width:1100px;margin:0px auto;margin-top:35px" > 
+                 
+                 <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>              
+                </div>
+            </div>
+            
+            <div class="modal fade" id="download" tabindex="-1" role="dialog" aria-labelledby="download" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><i class='fa fa-save'></i>&nbsp;Save as </h4>
+                        </div>
+                        <div class="modal-body" id='sourceCode'>
+                            <textarea id="src" rows="10"></textarea>
+                            <textarea id="model" rows="10" class="form-control"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <i class='fa fa-close'></i>&nbsp;Close
+                            </button>
+                            <button type="button" class="btn btn-success" id="srcSave">
+                                <i class='fa fa-save'></i>&nbsp;Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="preferences" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="preferencesTitle"></h4>
+                        </div>
+                        <div class="modal-body" id="preferencesContent">
+                            <div id="mediagallery" style="overflow:auto;height:400px; display:none">
+                                <input type="text" name="nome" value="" placeholder="name of images"><input class="btn btn-info" type="submit" value="search">
+                                <div id="contenutoimmagini"></div>
+                                <form enctype="multipart/form-data" id="form-id"> <input name="nomefile" type="file" />
+                                <input class="button" type="button" value="Upload" />
+                                </form>
+                                <progress value="0"></progress> <br>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('.button').click(function() {
+                                            var  formx = document.getElementById('form-id');
+                                            var  formData = new FormData(formx);
+                                            $.ajax({
+                                                url: 'media-popup.php?op=newfile',
+                                                type: 'POST',
+                                                xhr: function() {
+                                                    var  myXhr = $.ajaxSettings.xhr();
+                                                    if(myXhr.upload) {
+                                                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+                                                    }
+                                                    return myXhr;
+                                                },
+                                                success: completeHandler,
+                                                error: errorHandler,
+                                                data: formData,
+                                                cache: false,
+                                                contentType: false,
+                                                processData: false
+                                            });
+
+                                            function completeHandler() {
+                                                //loadimages();
+                                            }
+
+                                            function errorHandler() {
+                                                alert('errore caricamento');
+                                            }
+
+                                            function progressHandlingFunction(e) {
+                                                if(e.lengthComputable) {
+                                                    $('progress').attr({
+                                                        value: e.loaded,
+                                                        max: e.total
+                                                    });
+                                                }
+                                            }
+                                        });
+                                        //loadimages();
+                                    });
+
+                                    function inserisci(elemento) {
+                                        var link = $(elemento);
+                                        var image = link.data('image');
+                                        $('#img-url').val(image);
+                                        $('#imgContent').children('img').attr('src', image);
+                                        $('#mediagallery').slideUp();
+                                        $('#thepref').slideDown();
+                                    }
+
+                                    function loadimages() {
+                                        var request = $.ajax({
+                                            url: "media-popup.php?immagini=1",
+                                            method: "POST",
+                                            data: {
+                                                nome: ''
+                                            },
+                                            dataType: "html"
+                                        });
+                                        request.done(function(msg) {
+                                            $("#contenutoimmagini").html(msg);
+                                        });
+                                    }
+                                </script>
+                                <a class="btn btn-info" href="javascript:;" onclick="$('#mediagallery').hide();$('#thepref').show();">Return to image settings</a>
+                            </div>
+                            
+                            <div id="thepref">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#Settings" aria-controls="Settings" role="tab" data-toggle="tab">Settings</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#CellSettings" aria-controls="profile" role="tab" data-toggle="tab">Cell settings</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#RowSettings" aria-controls="messages" role="tab" data-toggle="tab">Row settings</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="Settings">
+                                        <div class="panel panel-body">
+                                            <div id="ht" style="display: none;"> <textarea id="html5editorLite"></textarea> </div>
+                                            <!-- fine header -->
+                                            <div id="text" style="display: none;"> <textarea id="html5editor"></textarea> </div>
+                                            <div id="image" style="display:none">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div id="imgContent"> </div>
+                                                        <a class="btn btn-default form-control" href="#" id="gallery"><i class="icon-upload-alt"></i>&nbsp;Browse ...</a>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group"> <label for="img-url">Url :</label> <input type="text" value="" id="img-url" class="form-control" /> </div>
+                                                        <div class="form-group"> <label for="img-url">Click Url:</label> <input type="text" value="" id="img-clickurl" class="form-control" /> </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group"> <label for="img-width">Width :</label> <input type="text" value="" id="img-width" class="form-control" /> </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group"> <label for="img-height">Height :</label> <input type="text" value="" id="img-height" class="form-control" /> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group"> <label for="img-title">Title : </label> <input type="text" value="" id="img-title" class="form-control" /> </div>
+                                                        <div class="form-group"> <label for="img-rel">Rel :</label> <input type="text" value="" id="img-rel" class="form-control" /> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- fine settaggi immagine -->
+                                            <div id="buttons" style="display:none">
+                                                <div id="buttonContainer"></div> <br>
+                                                <div class="form-group"> <label> Label :  </label> <input type="text" class="form-control" id="buttonLabel" /> </div>
+                                                <div class="form-group"> <label> Href :  </label> <input type="text" class="form-control" id="buttonHref" /> </div> <span class="btn-group btn-group-xs"> <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">Styles <span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-default">Default</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-primary">Primary</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-success">Success</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-info">Info</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-warning">Warning</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-danger">Danger</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropa" rel="btn-link">Link</a>
+                                                    </li>
+                                                </ul>
+                                                </span>
+                                                <span class="btn-group btn-group-xs"> <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">Size <span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="">
+                                                        <a href="#" class="btnpropb" rel="btn-lg">Large</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropb" rel="btn-default">Default</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropb" rel="btn-sm">Small</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="#" class="btnpropb" rel="btn-xs">Mini</a>
+                                                    </li>
+                                                </ul>
+                                                </span>
+                                                <span class="btn-group btn-group-xs"> <a class="btn btn-xs btn-default btnprop" href="#" rel="btn-block">Block</a> <a class="btn btn-xs btn-default btnprop" href="#" rel="active">Active</a> <a class="btn btn-xs btn-default btnprop" href="#" rel="disabled">Disabled</a>
+                                                    
+                                                </span> <br><br>
+                                                <div class="form-group">
+                                                    <label> Custom width / height / font-size / padding top :  </label> <br>
+                                                    <span class="btn-group"> <input type="text"  id="custombtnwidth" style="width:20%"/> <input type="text"  id="custombtnheight" style="width:20%"/> <input type="text"  id="custombtnfont" style="width:20%"/> <input type="text"  id="custombtnpaddingtop" style="width:20%"/> </span>
+                                                </div>
+                                                <div class="form-group"> <label> Align:  </label> <br> <span class="btn-group"> <select id="btnalign"> <option value="center">center</option> <option value="left">left</option> <option value="right">right</option> </select> </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Custom background color :</label>
+                                                    <input type="text" class="form-control" id="colbtn" />
+                                                    <select id="colorselectorbtn">
+                                                        <option value="1" data-value="1" data-color="#A0522D">sienna</option>
+                                                        <option value="2" data-value="2" data-color="#CD5C5C">indianred</option>
+                                                        <option value="3" data-value="3" data-color="#FF4500">orangered</option>
+                                                        <option value="4" data-value="4" data-color="#008B8B">darkcyan</option>
+                                                        <option value="5" data-value="5" data-color="#B8860B">darkgoldenrod</option>
+                                                        <option value="6" data-value="6" data-color="#32CD32">limegreen</option>
+                                                        <option value="7" data-value="7" data-color="#FFD700">gold</option>
+                                                        <option value="8" data-value="8" data-color="#48D1CC">mediumturquoise</option>
+                                                        <option value="9" data-value="9" data-color="#87CEEB">skyblue</option>
+                                                        <option value="10" data-value="10" data-color="#FF69B4">hotpink</option>
+                                                        <option value="11" data-value="11" data-color="#87CEFA">lightskyblue</option>
+                                                        <option value="12" data-value="12" data-color="#6495ED">cornflowerblue</option>
+                                                        <option value="13" data-value="13" data-color="#DC143C">crimson</option>
+                                                        <option value="14" data-value="14" data-color="#FF8C00">darkorange</option>
+                                                        <option value="15" data-value="15" data-color="#C71585">mediumvioletred</option>
+                                                        <option value="16" data-value="16" data-color="#000000">black</option>
+                                                        <option value="17" data-value="17" data-color="#575757">grigio scuro</option>
+                                                        <option value="18" data-value="18" data-color="#f2f2f2">grigio chiaro</option>
+                                                        <option value="19" data-value="19" data-color="#efefef">marroncino</option>
+                                                        <option value="20" data-value="20" data-color="#e7e0d8">marrone</option>
+                                                        <option value="21" data-value="21" data-color="#d7d0c6">marrone scuro</option>
+                                                        <option value="22" data-value="22" data-color="#263459">blu scuro</option>
+                                                        <option value="23" data-value="23" data-color="#ffffff">bianco</option>
+                                                    </select>
+                                                    <script type="text/javascript">
+                                                        $('#colorselectorbtn').colorselector({
+                                                            callback: function(value, color, title) {
+                                                                $("#colbtn").val(color);
+                                                            }
+                                                        });
+                                                    </script>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Custom text color :</label>
+                                                    <input type="text" class="form-control" id="colbtncol" />
+                                                    <select id="colorselectorbtncol">
+                                                        <option value="1" data-value="1" data-color="#A0522D">sienna</option>
+                                                        <option value="2" data-value="2" data-color="#CD5C5C">indianred</option>
+                                                        <option value="3" data-value="3" data-color="#FF4500">orangered</option>
+                                                        <option value="4" data-value="4" data-color="#008B8B">darkcyan</option>
+                                                        <option value="5" data-value="5" data-color="#B8860B">darkgoldenrod</option>
+                                                        <option value="6" data-value="6" data-color="#32CD32">limegreen</option>
+                                                        <option value="7" data-value="7" data-color="#FFD700">gold</option>
+                                                        <option value="8" data-value="8" data-color="#48D1CC">mediumturquoise</option>
+                                                        <option value="9" data-value="9" data-color="#87CEEB">skyblue</option>
+                                                        <option value="10" data-value="10" data-color="#FF69B4">hotpink</option>
+                                                        <option value="11" data-value="11" data-color="#87CEFA">lightskyblue</option>
+                                                        <option value="12" data-value="12" data-color="#6495ED">cornflowerblue</option>
+                                                        <option value="13" data-value="13" data-color="#DC143C">crimson</option>
+                                                        <option value="14" data-value="14" data-color="#FF8C00">darkorange</option>
+                                                        <option value="15" data-value="15" data-color="#C71585">mediumvioletred</option>
+                                                        <option value="16" data-value="16" data-color="#000000">black</option>
+                                                        <option value="17" data-value="17" data-color="#575757">grigio scuro</option>
+                                                        <option value="18" data-value="18" data-color="#f2f2f2">grigio chiaro</option>
+                                                        <option value="19" data-value="19" data-color="#efefef">marroncino</option>
+                                                        <option value="20" data-value="20" data-color="#e7e0d8">marrone</option>
+                                                        <option value="21" data-value="21" data-color="#d7d0c6">marrone scuro</option>
+                                                        <option value="22" data-value="22" data-color="#263459">blu scuro</option>
+                                                        <option value="23" data-value="23" data-color="#ffffff">bianco</option>
+                                                    </select>
+                                                    <script type="text/javascript">
+                                                        $('#colorselectorbtncol').colorselector({
+                                                            callback: function(value, color, title) {
+                                                                $("#colbtncol").val(color);
+                                                            }
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                            <!-- fine bottone-->
+                                            <div id="code" style="display:none"> </div>
+                                            <!-- fine code -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label> ID :  </label>
+                                                        <input type="text" readonly class="form-control" id="id" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="class"> Css class :  </label>
+                                                        <input type="text" name="class" id="class" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="CellSettings">
+                                        <div class="panel panel-body">
+                                            <table width="100%" cellpadding="5" cellspacing="0" style="border:1px solid #cccccc" id="tabCol">
+                                                <tr>
+                                                    <td>&nbsp;Margin</td>
+                                                    <td></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-top" /></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td bgcolor="#f2f2f2">Padding</td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-top" /></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-left"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-left"></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-right"></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-bottom"></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-bottom"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Background color :</label>
+                                                        <input type="text" class="form-control" id="colbg" />
+                                                        <select id="colorselectorbg">
+                                                            <option value="1" data-value="1" data-color="#A0522D">sienna</option>
+                                                            <option value="2" data-value="2" data-color="#CD5C5C">indianred</option>
+                                                            <option value="3" data-value="3" data-color="#FF4500">orangered</option>
+                                                            <option value="4" data-value="4" data-color="#008B8B">darkcyan</option>
+                                                            <option value="5" data-value="5" data-color="#B8860B">darkgoldenrod</option>
+                                                            <option value="6" data-value="6" data-color="#32CD32">limegreen</option>
+                                                            <option value="7" data-value="7" data-color="#FFD700">gold</option>
+                                                            <option value="8" data-value="8" data-color="#48D1CC">mediumturquoise</option>
+                                                            <option value="9" data-value="9" data-color="#87CEEB">skyblue</option>
+                                                            <option value="10" data-value="10" data-color="#FF69B4">hotpink</option>
+                                                            <option value="11" data-value="11" data-color="#87CEFA">lightskyblue</option>
+                                                            <option value="12" data-value="12" data-color="#6495ED">cornflowerblue</option>
+                                                            <option value="13" data-value="13" data-color="#DC143C">crimson</option>
+                                                            <option value="14" data-value="14" data-color="#FF8C00">darkorange</option>
+                                                            <option value="15" data-value="15" data-color="#C71585">mediumvioletred</option>
+                                                            <option value="16" data-value="16" data-color="#000000">black</option>
+                                                            <option value="17" data-value="17" data-color="#575757">grigio scuro</option>
+                                                            <option value="18" data-value="18" data-color="#f2f2f2">grigio chiaro</option>
+                                                            <option value="19" data-value="19" data-color="#efefef">marroncino</option>
+                                                            <option value="20" data-value="20" data-color="#e7e0d8">marrone</option>
+                                                            <option value="21" data-value="21" data-color="#d7d0c6">marrone scuro</option>
+                                                            <option value="22" data-value="22" data-color="#263459">blu scuro</option>
+                                                            <option value="23" data-value="23" data-color="#ffffff">bianco</option>
+                                                        </select>
+                                                        <script type="text/javascript">
+                                                            $('#colorselectorbg').colorselector({
+                                                                callback: function(value, color, title) {
+                                                                    $("#colbg").val(color);
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Css class :</label>
+                                                        <input type="text" class="form-control" id="colcss" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="RowSettings">
+                                        <div class="panel panel-body">
+                                            <table width="100%" cellpadding="5" cellspacing="0" style="border:1px solid #cccccc" id="tabRow">
+                                                <tr>
+                                                    <td>&nbsp;Margin</td>
+                                                    <td></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-top" /></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td bgcolor="#f2f2f2">Padding</td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-top" /></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-left"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-left"></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-right"></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td bgcolor="#f2f2f2"><input type="text" size="4" class="form-control text-center" data-ref="padding-bottom"></td>
+                                                    <td bgcolor="#f2f2f2"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><input type="text" size="4" class="form-control text-center" data-ref="margin-bottom"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Background color :</label>
+                                                        <input type="text" class="form-control" id="rowbg" />
+                                                        <select id="colorselectorrowbg">
+                                                            <option value="1" data-value="1" data-color="#A0522D">sienna</option>
+                                                            <option value="2" data-value="2" data-color="#CD5C5C">indianred</option>
+                                                            <option value="3" data-value="3" data-color="#FF4500">orangered</option>
+                                                            <option value="4" data-value="4" data-color="#008B8B">darkcyan</option>
+                                                            <option value="5" data-value="5" data-color="#B8860B">darkgoldenrod</option>
+                                                            <option value="6" data-value="6" data-color="#32CD32">limegreen</option>
+                                                            <option value="7" data-value="7" data-color="#FFD700">gold</option>
+                                                            <option value="8" data-value="8" data-color="#48D1CC">mediumturquoise</option>
+                                                            <option value="9" data-value="9" data-color="#87CEEB">skyblue</option>
+                                                            <option value="10" data-value="10" data-color="#FF69B4">hotpink</option>
+                                                            <option value="11" data-value="11" data-color="#87CEFA">lightskyblue</option>
+                                                            <option value="12" data-value="12" data-color="#6495ED">cornflowerblue</option>
+                                                            <option value="13" data-value="13" data-color="#DC143C">crimson</option>
+                                                            <option value="14" data-value="14" data-color="#FF8C00">darkorange</option>
+                                                            <option value="15" data-value="15" data-color="#C71585">mediumvioletred</option>
+                                                            <option value="16" data-value="16" data-color="#000000">black</option>
+                                                            <option value="17" data-value="17" data-color="#575757">grigio scuro</option>
+                                                            <option value="18" data-value="18" data-color="#f2f2f2">grigio chiaro</option>
+                                                            <option value="19" data-value="19" data-color="#efefef">marroncino</option>
+                                                            <option value="20" data-value="20" data-color="#e7e0d8">marrone</option>
+                                                            <option value="21" data-value="21" data-color="#d7d0c6">marrone scuro</option>
+                                                            <option value="22" data-value="22" data-color="#263459">blu scuro</option>
+                                                            <option value="23" data-value="23" data-color="#ffffff">bianco</option>
+                                                        </select>
+                                                        <script type="text/javascript">
+                                                            $('#colorselectorrowbg').colorselector({
+                                                                callback: function(value, color, title) {
+                                                                    $("#rowbg").val(color);
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Css class :</label>
+                                                        <input type="text" class="form-control" id="rowcss" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Background image :</label>
+                                                <input type="text" class="form-control" id="rowbgimage" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    <i class='fa fa-close'></i>&nbsp;Close
+                                </button>
+                                <button type="button" class="btn btn-primary" id="applyChanges">
+                                    <i class='fa fa-check'></i>&nbsp;Apply changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="download-layout">
+                    <div class="container"></div>
+                </div>
+            </div>
+
+</div>
+
+</div>
+
+
+<div id='save_html' style="display:none">
+	  
+</div>
+
+
+<script id="paragraph" type="text/html">
+  <div class="content function-tag" data-tag='paragraph' data-name='文字段落' data-param='' > 
+
+  </div>
+</script>
+
+<script id="long_search" type="text/html">
+<div class="search content function-tag" data-tag='long_search' data-name='本店搜索' data-param='' >
+ 
+</div> 
+</script>
+
+<script id="short_search" type="text/html">
+<div class="local-search content function-tag" data-tag='short_search' data-name='本店搜索' data-param='' >
+
+</div>
+</script>
+
+<script id="product_class" type="text/html">
+            <div class="category">
+                <div class="title"><h2>商品分类</h2></div>
+                <div class="content function-tag" data-tag='product_class' data-name='商品分类' data-param='' >
+
+                </div>
+            </div>
+</script>
+
+<script id="sales_amount" type="text/html">
+            <div class="statics">
+                <div class="title"><h2>销售量</h2></div>
+                <div class="content function-tag" data-tag='sales_amount' data-name='销售量' data-param='' >
+
+                </div>
+            </div>
+</script>
+
+<script id="hot_product" type="text/html">
+            <div class="hot-product">
+                <div class="title"><h2>热卖商品</h2></div>
+                <div class="content function-tag" data-tag='hot_product' data-name='热卖商品' data-param=''   >
+
+                </div>
+            </div>
+</script> 
+
+<script id="store_recommend" type="text/html">
+             <div class="retailer-prompt">
+                <div class="title"><h2>店长推荐</h2><span class="more">更多&gt;</span></div>
+                <div class="content function-tag" data-tag='store_recommend' data-name='店长推荐' data-param='' >
+
+            </div>
+            </div>
+</script>
+
+<script id="product_recommend" type="text/html">
+            <div class="products">
+                <div class="title"><h2>商品推荐</h2></div>
+                <div class="content function-tag" data-tag='product_recommend' data-name='商品推荐' data-param='' >
+
+                </div>
+            </div>
+</script>
+
+<script id="pic_carousel" type="text/html">
+            <div class="pic_carousel" >
+                <div class="title"><h2>图片轮播</h2></div>
+                <div class="content function-tag component" data-tag='pic_carousel' data-name='图片轮播' data-param='' >	
+                </div>
+            </div>
+</script>
+
+
+
+<script>
+	function saveData(){
+    	var htmls = $.trim($(".htmlpage").html());
+    	if(htmls=="")
+    	{   layer.msg('亲, 请装修您的店铺吧, 加个表格试试先', {shade: [0.3,'#fff'],time: 2000});
+    		return;
+    	}
+    	if(!$("#edit").hasClass("active"))
+		{
+			$('.htmlpage .column').css('padding','39px 19px 24px');
+			htmls = $(".htmlpage").html();
+			$('.htmlpage .column').css('padding','11px');		
+		}
+		$("#save_html").html(htmls);
+    	var code_model = changeTag();
+    	$("#download-layout .container .column").css("padding","7px");
+    	var src_model = style_html($("#download-layout .container").html());
+    	$("#save_html").html(src_model);
+    	src_model = changeTag();
+    	
+    	var titles = template_id == 0 || store_id == 0 ?'请输入模版名称':'请修改模板名称';
+    	layer.prompt({
+  			title: titles,
+  			value:template_name,
+  			formType: 0 //prompt风格，支持0-2
+			}, 
+			function(pass){
+  				saveDataFinal(code_model,src_model,pass);	
+			});
+    	    	
+    }
+    
+    function saveDataFinal(code_model,src_model,template_names){
+    	$.ajax({
+                url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
+                type: "post",
+                dataType: 'json',
+                data:{code_model:code_model,src_model:src_model,template_name:template_names,template_id:template_id,store_id:store_id},
+                beforeSend:function(){
+                	layer.msg(' 保存中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
+                },
+                success: function (data) {
+					layer.closeAll();
+					var messages = "";
+					if(template_id == 0 || store_id == 0)
+					{
+						
+						template_id = data.id;
+						template_name = template_names;
+						store_id = data.store_id;
+						messages = '您已经保存了新的店铺模版,接下来您要';
+					}
+					else{
+						messages = '您已经修改了当前的店铺模版,接下来您要';
+					}
+					$(".store_template_name").html(' - ' + template_name);
+					layer.confirm(messages, {
+  						btn: ['继续店铺装修','查看当前装修的店铺'] 
+						}, function(){
+							layer.closeAll();
+						}, function(){
+  							layer.closeAll();
+  							window.open('<?php echo $this->getBaseUrl('/retailer/store/view') ?>?id='+data.id);
+					});
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
+    }
+    
+    function call_ajax_data(dataID,dataType){
+    			layer.closeAll();
+    	    	var dataParam = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']").attr("data-param");
+    	    	$.ajax({
+                url: site_path+'retailer/store/getTemplateData',
+                type: "post",
+                dataType: 'json',
+                data:{dataID:dataID,dataTag:dataType,dataParam:dataParam},
+                beforeSend:function(){
+                    layer.load(1, {shade: [0.1,'#fff'] });	
+                },
+                success: function (data) {
+                	var obj = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']");
+                	obj.html(data.view);
+					if(obj.hasClass('component'))
+					{	
+						var func = dataType+"_init";
+						var f = eval(func);
+						f(obj);
+					}
+					layer.closeAll();
+                },
+                error: function (msg) {
+                  
+                }
+
+        });
+    }
+</script>

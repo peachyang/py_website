@@ -176,5 +176,17 @@ class ProductController extends AuthActionController
         return $this->response($result, 'retailer/product/release/');
     }
     
+    /** 
+    * popupAction  
+    * Popup resource management window
+    * 
+    * @access public 
+    * @return object 
+    */
+    public function popupAction()
+    {
+        return $this->getLayout('retailer_popup_images_list');
+    }
+    
 
 }

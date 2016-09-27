@@ -43,7 +43,7 @@ class PageController extends AuthActionController
                             throw new \Exception('Not allowed to save.');
                         }
                         $model->setData('store_id', $user->getStore()->getId());
-                    } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
+                    } else if (empty($data['store_id'])) {
                         $model->setData('store_id', null);
                     }
                 }

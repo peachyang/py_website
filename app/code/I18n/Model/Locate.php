@@ -7,7 +7,8 @@ use BadMethodCallException;
 class Locate
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB;
 
     public function getLabel($part, $id = '', $pid = '')
     {

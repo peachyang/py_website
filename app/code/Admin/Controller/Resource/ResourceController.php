@@ -32,10 +32,10 @@ class ResourceController extends AuthActionController
                         $model = new Model();
                         $model->moveFile($file)
                                 ->setData([
-                                    'store_id' => $store ? $store->getId() : (isset($data['store_id']) && $data['store_id'] ? $data['store_id'] : null),
+                                    'store_id' => $store ? $store->getId() : (empty($data['store_id']) ? null : $data['store_id']),
                                     'uploaded_name' => $name,
                                     'file_type' => $file->getClientMediaType(),
-                                    'category_id' => isset($data['category_id']) && $data['category_id'] ? $data['category_id'] : null
+                                    'category_id' => empty($data['category_id']) ? null : $data['category_id']
                                 ])->save();
                         $result['message'][] = ['message' => $this->translate('%s has been uploaded successfully.', [$name], 'resource'), 'level' => 'success'];
                     }

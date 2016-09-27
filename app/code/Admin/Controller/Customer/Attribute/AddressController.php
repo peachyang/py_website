@@ -49,12 +49,12 @@ class AddressController extends AuthActionController
                     $this->beginTransaction();
                     $type = new Type;
                     $type->load(Address::ENTITY_TYPE, 'code');
-                    if (!isset($data['id']) || (int) $data['id'] === 0) {
+                    if (empty($data['id'])) {
                         $model->setId(null);
                     }
                     $model->setData('type_id', $type->getId());
                     $model->save();
-                    if (!isset($data['id']) || (int) $data['id'] === 0) {
+                    if (empty($data['id'])) {
                         $set = new Set;
                         $set->load($type->getId(), 'type_id');
                         $group = new Group;

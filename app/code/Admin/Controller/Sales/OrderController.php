@@ -79,7 +79,7 @@ class OrderController extends AuthActionController
                         $keys[$key] = 1;
                     }
                     if ($ts >= $from2 && $ts <= $to2) {
-                        if (!isset($result['compared'][$key]) || is_null($result['compared'][$key])) {
+                        if (!isset($result['compared'][$key])) {
                             $result['compared'][$key] = 0;
                         }
                         $result['compared'][$key] ++;

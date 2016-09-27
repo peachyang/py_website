@@ -2,6 +2,7 @@
 
 namespace Seahinet\I18n\Controller;
 
+use Collator;
 use Seahinet\I18n\Model\Locate;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\ActionController;
@@ -43,10 +44,17 @@ class LocateController extends ActionController
                 ];
             }
         }
-        uasort($result, function($a, $b) {
-            $result = strnatcmp($a['code'], $b['code']);
-            return $result <=> 0;
-        });
+        if (extension_loaded('intl')) {
+            $collator = new Collator($locale);
+            $value_compare_func = function($str1, $str2) use ($collator) {
+                return $collator->compare($str1, $str2);
+            };
+        } else {
+            $value_compare_func = function($str1, $str2) {
+                return strnatcmp($str1, $str2);
+            };
+        }
+        uasort($result, $value_compare_func);
         if (isset($default)) {
             array_unshift($result, $default);
         }

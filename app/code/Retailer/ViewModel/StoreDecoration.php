@@ -6,6 +6,7 @@ use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
+use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Lib\Session\Segment;
 use Zend\Db\Sql\Expression;
 
@@ -26,12 +27,12 @@ class StoreDecoration extends Template
 		if(!empty($id)){
 			if($id!='-1')
 			{		
-				$template = new StoreTemplate();
+				$template = new StoreTemplate;
 				
 				$templateView = $template->load($id);
 			}
 		}else{
-				$template = new StoreTemplateCollection();
+				$template = new StoreTemplateCollection;
 				$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
 				if(!empty($templateViewCollection))
 					$templateView = $templateViewCollection[0];
@@ -91,7 +92,7 @@ class StoreDecoration extends Template
     */ 
 	public function getTemplateList($judge=0){
 		$segment = new Segment('customer');
-		$template = new StoreTemplateCollection();
+		$template = new StoreTemplateCollection;
 		if($judge==0)
 			$template->storeTemplateList($segment->get('customer')['store_id']);
 		else
@@ -100,7 +101,13 @@ class StoreDecoration extends Template
 		
 	}
 	
-	public function getStorePicInfo(){
+	public function getStorePicInfo($code){
+		$segment = new Segment('customer');
+		$Scollection = new StorePicInfoCollection;
+		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$segment->get('customer')['store_id']])
+		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
+	
+		return $Scollection;
 		
 	}
 	
@@ -283,7 +290,7 @@ class StoreDecoration extends Template
 	}
 
 	public function template_product_recommend($params=''){
-		$content = '<ul>';
+		$content = '<ul>';       	
        	for($i=0;$i<4;$i++)
 		{
 			$content .= '<li class="col-md-3">
@@ -294,7 +301,7 @@ class StoreDecoration extends Template
                             </div>
                         </li>';
 		}                
-        $content .= '</ul>';
+        $content .= '</ul>';		
 		return $content;
 		
 	}

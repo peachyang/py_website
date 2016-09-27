@@ -260,14 +260,56 @@ class StoreController extends AuthActionController
 						'pic_title' => $data['pic_title'],
 						'url' => $data['url'],
 						'resource_category_code' => $data['resource_category_code'],
-						'resource_id' => $model->getID()
+						'resource_id' => $model->getID(),
+						'orderid' => $model->getID()
 					]);		
 				$storePicinfo->save();
 			}
 		}
-
-
+		
+		$storeDecoration = new SDViewModel();
+		$result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
 		$result['status'] = $result['error'];
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+
+    public function decorationUploadDeleteAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+		$segment = new Segment('customer');
+            $data = $this->getRequest()->getPost();
+            if ($result['error'] === 0) {
+                try {
+                    $path = BP . Model::$options['path'];
+
+                        $model = new Model;
+                        $model->load($data['resource_id']);
+                        if ($model->getId()) {
+                            $type = $model['file_type'];
+                            if ($model['store_id']==$segment->get('customer')['store_id']) {
+                            	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
+                                if(file_exists($files))
+                                	unlink($files);
+								$model->remove();
+                            }
+                        
+							$storePicinfo = new StorePicinfo;
+							$storePicinfo->load($data['id']);
+							if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+								$storePicinfo->remove();
+						
+						}
+             
+
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+
+                    $result['error'] = 1;
+                }
+            }
+		$storeDecoration = new SDViewModel();
+		$result['status'] = $result['error'];
+		$result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 	

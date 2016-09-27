@@ -312,6 +312,36 @@ class StoreController extends AuthActionController
 		$result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
+
+	public function decorationUploadSaveAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+		$segment = new Segment('customer');
+            $data = $this->getRequest()->getPost();
+            if ($result['error'] === 0) {
+                try {
+					$storePicinfo = new StorePicinfo;
+					$storePicinfo->load($data['id']);
+					if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+					{
+						$storePicinfo->setData([
+							'pic_title'=>$data['pic_title'],
+							'url'=>$data['url']	
+						]);
+						$storePicinfo->save();
+					}
+
+
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+
+                    $result['error'] = 1;
+                }
+            }
+
+		$result['status'] = $result['error'];
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
 	
 
 }

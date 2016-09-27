@@ -7,6 +7,7 @@
             .col-md-61{padding:0px}
             .navbar-brand{margin-left:11px;color:#FFFFFF;font-size:20px}
             .navbar-inverse .navbar-brand{color:#FFFFFF;}
+            .header .nav.container{width:1060px;margin:0px auto}
         </style>
         <script type="text/javascript">
             var path = '';
@@ -15,7 +16,36 @@
             var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
             var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
-
+<header class="header clearfix">
+<nav class="nav-main">
+<ul class="nav nav-pills container">
+	<li class="dropdown"><a class="dropdown-toggle" href="javascript:void(0);">全部商品分类</a><ul class="dropdown-menu">
+            <li>
+            <a href="http://project.zm.com/clothes.html">服装城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/digital.html">数码城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/food.html">美食城</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/market.html">蓝海超市</a>
+                    </li>
+            <li>
+            <a href="http://project.zm.com/group-buying.html">团购</a>
+                    </li>
+    </ul>
+</li>
+	<li><a href="http://project.zm.com/">首页</a></li>
+	<li><a href="http://project.zm.com/">服装城</a></li>
+	<li><a href="http://project.zm.com/">数码城</a></li>
+	<li><a href="http://project.zm.com/">美食城</a></li>
+	<li><a href="http://project.zm.com/">蓝海超市</a></li>
+	<li><a href="http://project.zm.com/">团购</a></li>
+</ul>
+</nav>
+</header>
       
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
@@ -291,7 +321,7 @@
                     </div>
                 </div>
 
-                <div class="htmlpage" style="width:1100px;margin:0px auto;margin-top:35px" > 
+                <div class="htmlpage" style="width:1100px;margin:0px auto;margin-top:11px" > 
                  
                  <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>              
                 </div>

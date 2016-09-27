@@ -162,10 +162,6 @@ function _init() {
   				var id = $('#iframe_layer').find('iframe').attr("name");
 				$("#focusBtn",window.frames[id].document).trigger("click");
 					
-//				setTimeout(function(){
-//					layer.closeAll();
-//					call_ajax_data(part_id,data_tag);
-//				},600);
 					
   			},
   			btn2:function(){

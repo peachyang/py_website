@@ -1,6 +1,9 @@
 <?php
 $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
+$picInfos = $this->getStorePicInfo("store_carousel");
+$picInfo = json_encode($picInfos);
+
  ?>
 
 
@@ -42,7 +45,7 @@ $part_id = $this->getVariable("part_id");
    上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">增 加</button>
 </div>
 </form>
-<hr width="99%"> 
+<hr width="99%" style="border-color:#e8c7b6" > 
 <div class="rows">
 	<ul class="picList">
 
@@ -69,6 +72,7 @@ $part_id = $this->getVariable("part_id");
 	var part_id = '<?php echo $part_id; ?>';
 	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
+	var picInfo = {pics1:JSON.parse(<?php echo $picInfo ?>)};
 	$(document).ready(function(){
 
   		for (key in data_param) {
@@ -91,7 +95,7 @@ $part_id = $this->getVariable("part_id");
 				$("#heightSet").attr('disabled',true);
 		});
 		
-		$('.picList').html(template('li_carousel'));
+		$('.picList').html(template('li_carousel',picInfo));
 	    
 	});	
 	
@@ -105,17 +109,49 @@ $part_id = $this->getVariable("part_id");
           async: false,  
           cache: false,  
           contentType: false,  
-          processData: false,  
+          processData: false,
+          beforeSend:function(){
+            layer.load(1, {shade: [0.1,'#fff'] });	
+          },  
           success: function (json) {  
-        	if(json.status){
-        		$('.picList').html(template('li_carousel'));	
+        	if(json.status==0){
+        		picInfo.pics1 = JSON.parse(json.picInfo);
+        		$('.picList').html(template('li_carousel',picInfo));	
         	}
+        	$("#uploadForm")[0].reset();
+        	layer.closeAll();
           },  
           error: function (json) {  
            
           }  
      });  
-} 
+}
+
+	function modify(obj){
+
+	}
+	
+	function deleteUpload(id,resource_id){
+	$.ajax({  
+          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadDelete') ?>' ,  
+          type: 'POST',  
+          data: {id:id,resource_id:resource_id,resource_category_code:'store_carousel'},  
+          beforeSend:function(){
+            layer.load(1, {shade: [0.1,'#fff'] });	
+          },  
+          success: function (json) {  
+        	if(json.status==0){
+        		picInfo.pics1 = JSON.parse(json.picInfo);
+        		$('.picList').html(template('li_carousel',picInfo));	
+        	}
+        	layer.closeAll();
+          },  
+          error: function (json) {  
+           
+          }  
+    });
+		
+	} 
 
 	$('#focusBtn').click(function(){
 		data_param = {};
@@ -145,10 +181,20 @@ $part_id = $this->getVariable("part_id");
 
 <script id="li_carousel" type="text/html" >
 	<li>
-	<div><img src='<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg'); ?>' width=100 height=70 ></div>
-	<div class='title adjust' ><input type="text" name='pic_title' ></div>
-	<div class="url adjust"  ><input type="text" name='url' > http://wefefefef.coefn.efsheg dfefsdfefd ebsdf efsdthsdfnef  </div>
-	<div class='adjust' ><button class="btn btn-warning btn-xs" >删 除</button></div>
+	<div style="width:100px;text-align: center;">图 片</div>
+	<div class='title' style="text-align: center;" >标 题</div>
+	<div class="url" style="text-align: center;"  >链 接</div>
+	<div style="text-align: center;width:80px"  >操 作</div>
 	<div style="clear:both"></div>			
 	</li>
+	
+	{{each pics1 as value i}}
+	<li>
+	<div><img src='<?php echo $this->getBaseUrl('/pub/resource/image/'); ?>{{value.real_name }}' width=100 height=70 ></div>
+	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.pic_title}}" style="display:none" ><span name='pic_title'>{{value.pic_title}}</span></div>
+	<div class="url adjust"  ><input type="text" name='url' value="{{value.url}}" style="display:none" ><span name='url'>{{value.url}}</span></div>
+	<div class='adjust' ><button class="btn btn-success btn-xs" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs" onclick="save(this)" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteUpload({{value.id}},{{value.resource_id}})' >删 除</button></div>
+	<div style="clear:both"></div>			
+	</li>
+	 {{/each}}
 </script>

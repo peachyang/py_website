@@ -4,7 +4,7 @@ namespace Seahinet\Checkout\ViewModel\Cart;
 
 use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
-use Seahinet\Customer\Model\Collection\Wishlist\Item;
+use Seahinet\Customer\Model\Collection\Wishlist\Item as WishlistItem;
 use Seahinet\Lib\Session\Segment;
 use Zend\Db\Sql\Predicate\In;
 
@@ -15,7 +15,7 @@ class Wishlist extends Link
     {
         $segment = new Segment('customer');
         if ($segment->get('hasLoggedIn')) {
-            $items = new Item;
+            $items = new WishlistItem;
             $items->join('wishlist', 'wishlist.id=wishlist_item.wishlist_id', [], 'left')
                     ->columns(['product_id'])
                     ->where(['wishlist.customer_id' => $segment->get('customer')->getId()])

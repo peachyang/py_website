@@ -1,4 +1,8 @@
-<?php $templateView = $this->getTemplateView(); ?>       
+<?php 
+$templateView = $this->getTemplateView();
+$menuView = $this->template_menu();
+ ?>
+	       
         <style>
             .lyrow {
                 margin-bottom: 10px;
@@ -18,8 +22,10 @@
         </script>
 <header class="header clearfix">
 <nav class="nav-main">
-<ul class="nav nav-pills container">
-	<li class="dropdown"><a class="dropdown-toggle" href="javascript:void(0);">全部商品分类</a><ul class="dropdown-menu">
+<ul class="nav nav-pills container stable_top notice">
+	<a href="javascript:void(0)" class="stable" data-tag='menu' data-name='店铺导航菜单' data-param='' ><button class="btn btn-warning btn-sm sets" >编辑导航菜单</button></a>
+	<li class="dropdown"><a class="dropdown-toggle" href="javascript:void(0);">全部商品分类</a>
+		<ul class="dropdown-menu">
             <li>
             <a href="http://project.zm.com/clothes.html">服装城</a>
                     </li>
@@ -35,14 +41,10 @@
             <li>
             <a href="http://project.zm.com/group-buying.html">团购</a>
                     </li>
-    </ul>
-</li>
-	<li><a href="http://project.zm.com/">首页</a></li>
-	<li><a href="http://project.zm.com/">服装城</a></li>
-	<li><a href="http://project.zm.com/">数码城</a></li>
-	<li><a href="http://project.zm.com/">美食城</a></li>
-	<li><a href="http://project.zm.com/">蓝海超市</a></li>
-	<li><a href="http://project.zm.com/">团购</a></li>
+    	</ul>
+	</li>
+	<?php echo $menuView; ?>
+          
 </ul>
 </nav>
 </header>
@@ -992,6 +994,13 @@
 						var f = eval(func);
 						f(obj);
 					}
+					
+					if(dataType=="menu"){
+						$("#"+dataID).closest('ul').find("li.menu").remove();
+						$("#"+dataID).closest('ul').append(data.view);
+					}
+					
+					
 					layer.closeAll();
                 },
                 error: function (msg) {

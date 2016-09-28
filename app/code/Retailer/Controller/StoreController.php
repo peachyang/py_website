@@ -222,6 +222,53 @@ class StoreController extends AuthActionController
 		echo json_encode(array('status'=>true,'view'=>$view));
 	}
 	
+	public function decorationInfoAddAction(){
+		$result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+        	$segment = new Segment('customer');
+        	$data = $this->getRequest()->getPost();
+			$store = $segment->get('customer')['store_id'];
+			$storePicinfo = new StorePicinfo();
+			try{
+				$storePicinfo->setData([
+						'store_id' => $store,
+						'pic_title' => $data['title'],
+						'url' => $data['url'],
+						'resource_category_code' => $data['resource_category_code'],
+						'resource_id' => 0,
+						'orderid' => 0
+					]);		
+				$storePicinfo->save();
+			} catch (Exception $e) {
+				$result['error'] = 1;
+			}
+			$storePicinfo->setData(['orderid'=>$storePicinfo->getID()]);
+			$storePicinfo->save();	
+		}
+		$storeDecoration = new SDViewModel();
+		$result['status'] = $result['error'];
+		$result['Info'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
+ 		return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+	}
+	
+	public function decorationInfoDeleteAction(){
+	    $result = ['error' => 0, 'message' => []];
+        if ($this->getRequest()->isPost()) {
+        	$segment = new Segment('customer');
+        	$data = $this->getRequest()->getPost();
+			$storePicinfo = new StorePicinfo;
+			$storePicinfo->load($data['id']);
+			if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+				$storePicinfo->remove();
+			else
+				$result['error'] = 1;
+		}
+		$storeDecoration = new SDViewModel();
+		$result['status'] = $result['error'];
+		$result['Info'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
+ 		return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));	
+	}
+	
 	public function decorationUploadAction()
     {
         $result = ['error' => 0, 'message' => []];

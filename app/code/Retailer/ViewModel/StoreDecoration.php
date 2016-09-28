@@ -111,11 +111,32 @@ class StoreDecoration extends Template
 		
 	}
 	
+	
+	
 	/*
 	 * template content 
 	 * 
 	 * 
 	*/
+	public function template_logo_top($params=''){
+		$content = '<img style="width:1128px;height:200px" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
+		return $content;
+	}
+	
+	
+	public function template_menu($params=''){
+		$result = $this->getStorePicInfo('menu');
+		$content = "";
+		foreach ($result as $key => $value) {
+			if(trim($value['url'])!="")
+				$content .= '<li class="menu" ><a target=_blank href="'.$value['url'].'">'.$value['pic_title'].'</a></li>';
+			else
+				$content .= '<li class="menu" ><a  href="javascript:void(0)">'.$value['pic_title'].'</a></li>';
+		}
+		return $content;
+	}
+	
+	
 	public function template_paragraph($params=''){
 		$content = '<p> <br><br>可以在此模块中通过编辑器自由输入文字以及编排格式<br><br> </p>';
 		return $content;

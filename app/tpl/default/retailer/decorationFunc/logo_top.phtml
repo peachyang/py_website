@@ -9,27 +9,21 @@ $picInfo = json_encode($picInfos);
 
 <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
       <li class="active"><a href="#basic">基本属性</a></li> 
-      <li><a href="#uploadPic">轮播图片</a></li> 
+      <li><a href="#uploadPic">LOGO图片</a></li> 
  </ul> 
        
  <div class="tab-content"> 
       <div class="tab-pane active" id="basic" >
 <div style="margin:20px" >
-是否显示标题框：
-<select id='show_column' class="params"  >
-<option value=1 >显示</option>
-<option value=0 >不显示</option>	
-</select> <br><br>
-标题文字:
-<input type="text" id='title' class="params" value="图片轮播" > 
- <br><br>
-宽 度: 自适应 
- <br><br> 
-高度设置:
-<input type="radio" name="heightSetType" value="0" checked="checked" > 自适应
-<input type="radio" name="heightSetType" value="1" > 自行设置
-<input type="text"  id="heightSet" class="params" disabled="true" value="0" >
 
+
+宽度设置:
+<input type="radio" name="widthSetType" value="0"  > 自适应100%
+&nbsp; <input type="radio" name="widthSetType" value="1" checked="checked" > 自行设置
+<input type="text"  id="widthSet" class="params"  value="1128" > px
+
+ <br><br> 
+高度设置: <input type="text"  id="heightSet" class="params" value="200" >
  <br><br>
 
 </div>
@@ -73,7 +67,7 @@ $picInfo = json_encode($picInfos);
 	var part_id = '<?php echo $part_id; ?>';
 	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
-	var picInfo = {pics1:JSON.parse(<?php echo $picInfo ?>)};
+
 	$(document).ready(function(){
 
   		for (key in data_param) {
@@ -82,21 +76,20 @@ $picInfo = json_encode($picInfos);
 		
 		if(!$.isEmptyObject(data_param))
 		{   
-			$("input:radio[name='heightSetType'][value='"+data_param.heightSetType+"']").attr("checked",true);
-			if(data_param.heightSetType==1)
-				$("#heightSet").attr('disabled',false);
+			$("input:radio[name='widthSetType'][value='"+data_param.widthSetType+"']").attr("checked",true);
+			if(data_param.widthSetType==1)
+				$("#widthSet").attr('disabled',false);
 			else
-				$("#heightSet").attr('disabled',true);
+				$("#widthSet").attr('disabled',true);
 		}
 		
-		$("input:radio[name='heightSetType']").click(function(){
+		$("input:radio[name='widthSetType']").click(function(){
 			if($(this).val()=="1")
-				$("#heightSet").attr('disabled',false);
+				$("#widthSet").attr('disabled',false);
 			else
-				$("#heightSet").attr('disabled',true);
+				$("#widthSet").attr('disabled',true);
 		});
 		
-		$('.picList').html(template('li_carousel',picInfo));
 	    
 	});	
 	
@@ -127,43 +120,8 @@ $picInfo = json_encode($picInfos);
      });  
 }
 
-	function modify(obj){
-		$li = $(obj).closest("li");
-		$li.find('div.adjust').find('span').hide();
-		$li.find('div.adjust').find('input').show();
-		$li.find('button.mod').hide();
-		$li.find('button.save').show();
-		
-	}
+
 	
-	function save(obj,id){
-		$li = $(obj).closest("li");
-		var pic_title = $li.find('div.adjust').find("input[name='pic_title']").val();
-		var url = $li.find('div.adjust').find("input[name='url']").val();
-		$.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadSave') ?>' ,  
-          type: 'POST',  
-          data: {id:id,pic_title:pic_title,url:url,resource_category_code:'store_carousel'},  
-          beforeSend:function(){
-            layer.load(1, {shade: [0.1,'#fff'] });	
-          },  
-          success: function (json) {  
-        	if(json.status==0){
-        		$li.find('div.adjust').find("span[name='pic_title']").html(pic_title);
-        		$li.find('div.adjust').find("span[name='url']").html(url);
-				$li.find('div.adjust').find('span').show();
-				$li.find('div.adjust').find('input').hide();
-				$li.find('button.mod').show();
-				$(obj).hide();	
-        	}
-        	layer.closeAll();
-          },  
-          error: function (json) {  
-           
-          }  
-    });
-				
-	}
 	
 	function deleteUpload(id,resource_id){
 	$.ajax({  
@@ -213,22 +171,3 @@ $picInfo = json_encode($picInfos);
 	});
 </script>
 
-<script id="li_carousel" type="text/html" >
-	<li>
-	<div style="width:100px;text-align: center;">图 片</div>
-	<div class='title' style="text-align: center;" >标 题</div>
-	<div class="url" style="text-align: center;"  >链 接</div>
-	<div style="text-align: center;width:80px"  >操 作</div>
-	<div style="clear:both"></div>			
-	</li>
-	
-	{{each pics1 as value i}}
-	<li>
-	<div><img src='<?php echo $this->getBaseUrl('/pub/resource/image/'); ?>{{value.real_name }}' width=100 height=70 ></div>
-	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.pic_title}}" style="display:none" ><span name='pic_title'>{{value.pic_title}}</span></div>
-	<div class="url adjust"  ><input type="text" name='url' value="{{value.url}}" style="display:none" ><span name='url'>{{value.url}}</span></div>
-	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteUpload({{value.id}},{{value.resource_id}})' >删 除</button></div>
-	<div style="clear:both"></div>			
-	</li>
-	 {{/each}}
-</script>

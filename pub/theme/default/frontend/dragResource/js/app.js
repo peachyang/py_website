@@ -142,6 +142,36 @@ function _init() {
 
     });
 
+    $(document).on('click', 'a.stable', function (e) {     
+        $obj =  $(this);
+        var data_tag = $obj.attr("data-tag");
+        var data_name = $obj.attr("data-name");
+        var part_id = $obj.assignId();
+        layer.open({
+        	id:'iframe_layer',
+  			type: 2,
+  			area: ['700px', '530px'],
+  			title:data_name+" 属性",
+  			fix: true, //不固定
+  			maxmin: true,
+  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
+  			btn: ['保存', '取消'],
+  			yes:function(){
+
+  				var id = $('#iframe_layer').find('iframe').attr("name");
+				$("#focusBtn",window.frames[id].document).trigger("click");
+					
+					
+  			},
+  			btn2:function(){
+  				layer.closeAll();
+  			}
+		});
+        
+    });
+    
+    
+    
     $(document).on('click', 'a.settings', function (e) {
     	var  _s = $(this);
         var  part_id = _s.parent().parent().assignId();
@@ -170,17 +200,17 @@ function _init() {
 		});
         
         
-        return;
+
         // --- original method 
-        e.preventDefault();
-        var  _s = $(this);
-
-        var  part_id = _s.parent().parent().assignId();
-        var  part = _s.parent().parent();
-        var  column = _s.parent().parent().parent('.column');
-        var  row = _s.parent().parent().parent().parent('.row');
-
-        prepareEditor(part, row, column);
+//      e.preventDefault();
+//      var  _s = $(this);
+//
+//      var  part_id = _s.parent().parent().assignId();
+//      var  part = _s.parent().parent();
+//      var  column = _s.parent().parent().parent('.column');
+//      var  row = _s.parent().parent().parent().parent('.row');
+//
+//      prepareEditor(part, row, column);
     });
 
     $('a.btnpropa').on('click', function () {
@@ -248,7 +278,9 @@ function _init() {
         $(this).addClass("active");
         $('.htmlpage .column').css('padding','39px 19px 24px');
         $(".htmlpage .box .view").css('padding','7px');
-        component_reset()
+        component_reset();
+        $(".stable_top").addClass("notice");
+        $(".stable_top").find("button.sets").show();
         return false
     });
 
@@ -269,6 +301,8 @@ function _init() {
         $(this).addClass("active");
         $(".htmlpage .box .view").css('padding','0px');
         $('.htmlpage .column').css('padding','11px');
+        $(".stable_top").removeClass("notice");
+        $(".stable_top").find("button.sets").hide();
         component_reset();
         return false
     });

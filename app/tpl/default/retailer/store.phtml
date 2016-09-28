@@ -1,6 +1,13 @@
+<?php 
+$templateView = $this->getTemplateView(); 
+$menuView = $this->template_menu();
+$logo_topView = $this->template_logo_top();
+?>
 
+<div class="decoration_logo_top stable_top">
 
-<?php $templateView = $this->getTemplateView(); ?>
+<?php echo $logo_topView; ?>
+</div>
 <header class="header clearfix">
 <nav class="nav-main  store_menu">
 <ul class="nav nav-pills container">
@@ -22,12 +29,7 @@
                     </li>
     </ul>
 </li>
-	<li><a href="http://project.zm.com/">首页</a></li>
-	<li><a href="http://project.zm.com/">服装城</a></li>
-	<li><a href="http://project.zm.com/">数码城</a></li>
-	<li><a href="http://project.zm.com/">美食城</a></li>
-	<li><a href="http://project.zm.com/">蓝海超市</a></li>
-	<li><a href="http://project.zm.com/">团购</a></li>
+	<?php echo $menuView; ?>
 </ul>
 </nav>
 </header>

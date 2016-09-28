@@ -161,7 +161,7 @@ trait DataCache
     {
         if (!isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
-        }var_dump($cacheKey,$key,$list);
+        }
         if (!empty($list)) {
             $this->cachedData[$cacheKey]['list'][$key] = $list;
             $this->writeCache($cacheKey);

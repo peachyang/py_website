@@ -71,15 +71,16 @@ trait DataCache
     {
         if (!is_null($cacheKey) && !isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
+        } else if (is_null($cacheKey) && is_callable([$this, 'getCacheKey'])) {
+            $cacheKey = $this->getCacheKey();
         }
-        if(is_object($id)){
+        if (is_object($id)) {
             $id = $id['id'];
         }
         if (is_null($key)) {
-            return isset($this->cachedData[$cacheKey]['row'][$id]) ?
-                    $this->cachedData[$cacheKey]['row'][$id] : false;
+            return $this->cachedData[$cacheKey]['row'][$id] ?? false;
         } else if (isset($this->cachedData[$cacheKey]['key'][$key . '=' . $id])) {
-            $result = $this->fetchRow($this->cachedData[$cacheKey]['key'][$key . '=' . $id]);
+            $result = $this->fetchRow($this->cachedData[$cacheKey]['key'][$key . '=' . $id], null, $cacheKey);
             if ($result === false) {
                 unset($this->cachedData[$cacheKey]['key'][$key . '=' . $id]);
                 $this->writeCache($cacheKey);
@@ -160,14 +161,14 @@ trait DataCache
     {
         if (!isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
-        }
+        }var_dump($cacheKey,$key,$list);
         if (!empty($list)) {
             $this->cachedData[$cacheKey]['list'][$key] = $list;
             $this->writeCache($cacheKey);
         }
     }
 
-    protected function addCacheAlias($key, $id, $cacheKey)
+    protected function addCacheAlias($key, string $id, $cacheKey)
     {
         if (!isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);

@@ -9,7 +9,7 @@ class Upsells extends Link
     {
         $products = $this->getVariable('product')->getLinkedProducts('u');
         if ($this->getLimit() && is_object($products)) {
-            $products->limit($this->getLimit());
+            $products->where(['status' => 1])->limit($this->getLimit());
         }
         return $products;
     }

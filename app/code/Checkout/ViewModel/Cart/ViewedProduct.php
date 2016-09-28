@@ -5,7 +5,6 @@ namespace Seahinet\Checkout\ViewModel\Cart;
 use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
-use Zend\Db\Sql\Predicate\In;
 
 class ViewedProduct extends Link
 {
@@ -22,10 +21,10 @@ class ViewedProduct extends Link
             if (!count($ids)) {
                 return [];
             }
-            $ids = array_diff(explode(',', trim($this->getRequest()->getCookie('log_view'), ',')), $ids);
+            $ids = array_diff(explode(',', trim($this->getRequest()->getCookie('viewed_product'), ',')), $ids);
             if (count($ids)) {
                 $products = new Product;
-                $products->where(new In('id', $ids));
+                $products->where(['status' => 1])->where->in('id', $ids);
                 $this->products = $products;
             } else {
                 $this->products = [];

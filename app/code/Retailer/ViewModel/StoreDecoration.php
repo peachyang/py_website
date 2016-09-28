@@ -118,6 +118,11 @@ class StoreDecoration extends Template
 	 * 
 	 * 
 	*/
+	public function template_logo_top($params=''){
+		$content = '<img style="width:1128px;height:200px" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
+		return $content;
+	}
+	
 	
 	public function template_menu($params=''){
 		$result = $this->getStorePicInfo('menu');
@@ -130,6 +135,7 @@ class StoreDecoration extends Template
 		}
 		return $content;
 	}
+	
 	
 	public function template_paragraph($params=''){
 		$content = '<p> <br><br>可以在此模块中通过编辑器自由输入文字以及编排格式<br><br> </p>';

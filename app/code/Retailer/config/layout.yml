@@ -821,6 +821,21 @@ decorationFunc_menu:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationFunc/menu
+decorationFunc_logo_top:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: logo
+
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/logo_top
 
 admin_retailer_apply_list:
     update: grid

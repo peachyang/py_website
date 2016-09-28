@@ -60,7 +60,7 @@ class WishlistController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/wishlist/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/wishlist/', 'customer');
     }
 
     public function deleteAction()
@@ -80,7 +80,7 @@ class WishlistController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/wishlist/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/wishlist/', 'customer');
     }
 
 }

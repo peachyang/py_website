@@ -19,7 +19,7 @@ class Tabs extends Template
     public function getTabs()
     {
         uasort($this->tabs, function($a, $b) {
-            return $a['priority'] === $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+            return $a['priority'] <=> $b['priority'];
         });
         $tab = [];
         foreach ($this->tabs as $id => $item) {

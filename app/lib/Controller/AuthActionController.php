@@ -84,17 +84,17 @@ class AuthActionController extends ActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
+        return $this->response($result ?? ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
-    protected function doSave($modelName, $redirect = null, $required = [], $beforeSave = null, $transaction = false)
+    protected function doSave($modelName, $redirect = null, $required = [], callable $beforeSave = null, $transaction = false)
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 if (is_subclass_of($modelName, '\\Seahinet\\Lib\\Model\\Eav\\Entity')) {
-                    $model = new $modelName(isset($data['language_id']) ? $data['language_id'] : Bootstrap::getLanguage()->getId(), $data);
+                    $model = new $modelName($data['language_id'] ?? Bootstrap::getLanguage()->getId(), $data);
                 } else {
                     $model = new $modelName($data);
                 }
@@ -104,7 +104,7 @@ class AuthActionController extends ActionController
                 if ($transaction) {
                     $this->beginTransaction();
                 }
-                if ($beforeSave instanceof Closure) {
+                if (is_callable($beforeSave)) {
                     $beforeSave($model, $data);
                 }
                 try {
@@ -124,7 +124,7 @@ class AuthActionController extends ActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
+        return $this->response($result ?? ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
 }

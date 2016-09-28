@@ -30,10 +30,8 @@ class Route implements ListenerInterface
             foreach ($routers as $router) {
                 if (isset($router['route'])) {
                     $collector->addRoute(
-                            (isset($router['method']) ? $router['method'] : ['GET', 'POST']), $router['route'], (isset($router['controller']) ?
-                                    $router['controller'] : (
-                                    isset($router['namespace']) ? $router['namespace'] :
-                                            $routers['default']['controller'])), (isset($router['priority']) ? $router['priority'] : 0)
+                            ($router['method'] ?? ['GET', 'POST']), $router['route'], ($router['controller'] ?? ($router['namespace'] ??
+                                            $routers['default']['controller'])), ($router['priority'] ?? 0)
                     );
                 }
             }
@@ -55,15 +53,15 @@ class Route implements ListenerInterface
         if (isset($routeMatch['namespace'])) {
             $className = $routeMatch['namespace'] . '\\' .
                     (isset($routeMatch['controller']) ?
-                            (strpos($routeMatch['controller'], 'Controller') ?
-                                    $routeMatch['controller'] :
-                                    str_replace(' ', '\\', ucwords(str_replace('_', ' ', $routeMatch['controller']))) . 'Controller'
-                            ) :
-                            'IndexController');
+                    (strpos($routeMatch['controller'], 'Controller') ?
+                    $routeMatch['controller'] :
+                    str_replace(' ', '\\', ucwords(str_replace('_', ' ', $routeMatch['controller']))) . 'Controller'
+                    ) :
+                    'IndexController');
         } else {
-            $className = isset($routeMatch['controller']) ? $routeMatch['controller'] : 'IndexController';
+            $className = $routeMatch['controller'] ?? 'IndexController';
         }
-        if(!class_exists($className)){
+        if (!class_exists($className)) {
             $routeMatch = $routers['default'];
             $className = $routeMatch['controller'];
         }

@@ -52,10 +52,11 @@ class ApplyController extends AuthActionController
                         $retailer = new Model\Retailer;
                         $retailer->setData([
                             'customer_id' => $data['customer_id'],
-                            'store_id' => $store->getId()
+                            'store_id' => $store->getId(),
+                            'name' => $customer['username']
                         ])->save();
                     }
-                }
+                }, true
         );
     }
 

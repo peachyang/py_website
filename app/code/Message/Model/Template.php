@@ -3,7 +3,6 @@
 namespace Seahinet\Message\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Template extends AbstractModel
 {
@@ -23,7 +22,7 @@ class Template extends AbstractModel
     protected function afterSave()
     {
         if (isset($this->storage['language_id'])) {
-            $tableGateway = new TableGateway('message_template_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('message_template_language');
             $tableGateway->delete(['template_id' => $this->getId()]);
             foreach ($this->storage['language_id'] as $language_id) {
                 $tableGateway->insert(['template_id' => $this->getId(), 'language_id' => $language_id]);

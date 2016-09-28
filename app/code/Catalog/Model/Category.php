@@ -6,7 +6,6 @@ use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
 use Seahinet\Catalog\Model\Collection\Category as Collection;
 use Seahinet\Lib\Model\Eav\Entity;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\TableGateway\TableGateway;
 
 class Category extends Entity
 {
@@ -24,7 +23,7 @@ class Category extends Entity
     {
         if ($this->getId()) {
             $products = new ProductCollection($this->languageId);
-            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_in_category');
             $result = $tableGateway->select(['category_id' => $this->getId()])->toArray();
             $valueSet = [];
             array_walk($result, function($item) use (&$valueSet) {

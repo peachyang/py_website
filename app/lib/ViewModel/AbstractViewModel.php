@@ -163,7 +163,7 @@ abstract class AbstractViewModel implements Serializable
      */
     public function getVariable($key, $default = '')
     {
-        return isset($this->variables[$key]) ? $this->variables[$key] : $default;
+        return $this->variables[$key] ?? $default;
     }
 
     /**
@@ -292,7 +292,7 @@ abstract class AbstractViewModel implements Serializable
         if (is_null($this->query)) {
             $this->query = $this->getRequest()->getQuery();
         }
-        return is_null($key) ? $this->query : (isset($this->query[$key]) ? $this->query[$key] : $default);
+        return is_null($key) ? $this->query : ($this->query[$key] ?? $default);
     }
 
     /**

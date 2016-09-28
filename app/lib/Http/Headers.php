@@ -51,7 +51,7 @@ class Headers implements ArrayAccess, IteratorAggregate
 
     public function offsetGet($offset)
     {
-        return isset($this->headers[$offset]) ? $this->headers[$offset] : (isset($this->headers['HTTP_' . $offset]) ? $this->headers['HTTP_' . $offset] : '');
+        return $this->headers[$offset] ?? ($this->headers['HTTP_' . $offset] ?? '');
     }
 
     public function offsetSet($offset, $value)

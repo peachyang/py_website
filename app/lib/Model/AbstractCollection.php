@@ -140,7 +140,7 @@ abstract class AbstractCollection extends ArrayObject
      * 
      * @param callable $callback
      */
-    public function walk($callback, ...$params)
+    public function walk(callable $callback, ...$params)
     {
         if (!$this->isLoaded) {
             $this->load();

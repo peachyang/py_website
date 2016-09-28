@@ -4,7 +4,6 @@ namespace Seahinet\Cms\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Language;
-use Zend\Db\TableGateway\TableGateway;
 use Seahinet\Lib\Bootstrap;
 use Zend\Db\Sql\Predicate\In;
 
@@ -48,7 +47,7 @@ class Page extends AbstractCollection
                     $data[$item['page_id']]['language'][$item['language_id']] = $item['language'];
                 }
             }
-            $tableGateway = new TableGateway('cms_category_page', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('cms_category_page');
             $select = $tableGateway->getSql()->select();
             $select->join('cms_category_language', 'cms_category_page.category_id=cms_category_language.category_id', ['name'], 'left')
                     ->where(new In('page_id', $ids))

@@ -97,8 +97,7 @@ class Category extends PGrid
                     if (!isset($b['sort_order'])) {
                         $b['sort_order'] = 0;
                     }
-                    return $a['sort_order'] == $b['sort_order'] ? 0 :
-                            ($a['sort_order'] > $b['sort_order'] ? 1 : -1);
+                    return $a['sort_order'] <=> $b['sort_order'];
                 });
             }
         }
@@ -109,7 +108,7 @@ class Category extends PGrid
         if (empty($this->categoryTree)) {
             $this->prepareCategoryTree();
         }
-        return isset($this->categoryTree[$pid]) ? $this->categoryTree[$pid] : [];
+        return $this->categoryTree[$pid] ?? [];
     }
 
     public function renderCategory($category, $level = 1)

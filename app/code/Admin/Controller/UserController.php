@@ -65,7 +65,7 @@ class UserController extends AuthActionController
                 $result['error'] = 1;
             } else if ($result['error'] === 0) {
                 $model = new Model($data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (empty($data['id'])) {
                     $model->setId(null);
                 }
                 try {

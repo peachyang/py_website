@@ -6,6 +6,7 @@ use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
+use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Lib\Session\Segment;
 use Zend\Db\Sql\Expression;
 
@@ -26,12 +27,12 @@ class StoreDecoration extends Template
 		if(!empty($id)){
 			if($id!='-1')
 			{		
-				$template = new StoreTemplate();
+				$template = new StoreTemplate;
 				
 				$templateView = $template->load($id);
 			}
 		}else{
-				$template = new StoreTemplateCollection();
+				$template = new StoreTemplateCollection;
 				$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
 				if(!empty($templateViewCollection))
 					$templateView = $templateViewCollection[0];
@@ -91,7 +92,7 @@ class StoreDecoration extends Template
     */ 
 	public function getTemplateList($judge=0){
 		$segment = new Segment('customer');
-		$template = new StoreTemplateCollection();
+		$template = new StoreTemplateCollection;
 		if($judge==0)
 			$template->storeTemplateList($segment->get('customer')['store_id']);
 		else
@@ -100,11 +101,26 @@ class StoreDecoration extends Template
 		
 	}
 	
+	public function getStorePicInfo($code){
+		$segment = new Segment('customer');
+		$Scollection = new StorePicInfoCollection;
+		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$segment->get('customer')['store_id']])
+		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
+	
+		return $Scollection;
+		
+	}
+	
 	/*
 	 * template content 
 	 * 
 	 * 
 	*/
+	public function template_paragraph($params=''){
+		$content = '<p> <br><br>可以在此模块中通过编辑器自由输入文字以及编排格式<br><br> </p>';
+		return $content;
+	
+	}
 	
 	public function template_long_search($params=''){
 		$content = '<label class="search-label">本店搜索</label>
@@ -274,7 +290,7 @@ class StoreDecoration extends Template
 	}
 
 	public function template_product_recommend($params=''){
-		$content = '<ul>';
+		$content = '<ul>';       	
        	for($i=0;$i<4;$i++)
 		{
 			$content .= '<li class="col-md-3">
@@ -285,7 +301,7 @@ class StoreDecoration extends Template
                             </div>
                         </li>';
 		}                
-        $content .= '</ul>';
+        $content .= '</ul>';		
 		return $content;
 		
 	}
@@ -293,9 +309,13 @@ class StoreDecoration extends Template
 	
 	public function template_pic_carousel($params=''){
 		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
-       	for($i=1;$i<6;$i++)
-		{
-			$content .= '<li class="hiSlider-item"><img src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/'.$i.'.jpg').'" alt="11111"></li>';
+		$result = $this->getStorePicInfo('store_carousel');
+       	foreach ($result as $key => $value)
+		{	
+			if(trim($value['url'])!="")
+				$content .= '<li class="hiSlider-item"><a href="'.$value['url'].'" target=_blank ><img src="'.$this->getBaseUrl('/pub/resource/image/'.$value['real_name']).'" alt="'.$value['pic_title'].'"></a></li>';
+			else
+				$content .= '<li class="hiSlider-item"><img src="'.$this->getBaseUrl('/pub/resource/image/'.$value['real_name']).'" alt="'.$value['pic_title'].'"></li>';
 		}                
         $content .= '</ul></div>';
 		return $content;

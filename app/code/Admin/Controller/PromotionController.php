@@ -5,8 +5,10 @@ namespace Seahinet\Admin\Controller;
 use Exception;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Promotion\Model\Coupon;
-use Seahinet\Promotion\Model\Rule as Model;
+use Seahinet\Promotion\Model\{
+    Coupon,
+    Rule as Model
+};
 use Zend\Math\Rand;
 
 class PromotionController extends AuthActionController
@@ -45,13 +47,13 @@ class PromotionController extends AuthActionController
                             throw new \Exception('Not allowed to save.');
                         }
                         $model->setData('store_id', $user->getStore()->getId());
-                    } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
+                    } else if (empty($data['store_id'])) {
                         $model->setData('store_id', null);
                     }
-                    if (!isset($data['from_date']) || strtotime($data['from_date']) > 0) {
+                    if (!isset($data['from_date']) || strtotime($data['from_date']) === false) {
                         $model->setData('from_date', null);
                     }
-                    if (!isset($data['to_date']) || strtotime($data['from_date']) > 0) {
+                    if (!isset($data['to_date']) || strtotime($data['to_date']) === false) {
                         $model->setData('to_date', null);
                     }
                 }

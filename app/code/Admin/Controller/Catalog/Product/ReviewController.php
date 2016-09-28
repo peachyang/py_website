@@ -39,8 +39,8 @@ class ReviewController extends AuthActionController
                     if ($data['customer_id'] === '') {
                         $model['customer_id'] = null;
                     }
-                    if (!isset($data['id']) || !$data['id']) {
-                        $data['id'] = null;
+                    if (empty($data['id'])) {
+                        $model->setId(null);
                     }
                 }
         );

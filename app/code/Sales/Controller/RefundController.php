@@ -43,7 +43,7 @@ class RefundController extends ActionController
                     $refund = new Rma($data);
                     $refund->setData([
                         'order_id' => $order['id'],
-                        'customer_id' => isset($customerId) ? $customerId : null
+                        'customer_id' => $customerId ?? null
                     ]);
                     try {
                         $this->beginTransaction();
@@ -65,7 +65,7 @@ class RefundController extends ActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'sales/refund/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'sales/refund/', 'customer');
     }
 
 }

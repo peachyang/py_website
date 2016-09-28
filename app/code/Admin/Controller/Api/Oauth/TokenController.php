@@ -35,7 +35,7 @@ class TokenController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'api_oauth_token/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'api_oauth_token/');
     }
 
     public function grantAction()
@@ -60,7 +60,7 @@ class TokenController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'api_oauth_token/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'api_oauth_token/');
     }
 
     public function deleteAction()

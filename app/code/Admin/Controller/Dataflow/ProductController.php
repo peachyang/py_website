@@ -8,6 +8,7 @@ use Seahinet\Catalog\Model\Product;
 use Seahinet\Catalog\Model\Product\Type;
 use Seahinet\Dataflow\Exception\InvalidCellException;
 use Seahinet\Lib\Http\UploadedFile;
+use Seahinet\Lib\Session\Segment;
 use Seahinet\Resource\Model\Resource;
 
 class ProductController extends AbstractController
@@ -124,8 +125,9 @@ class ProductController extends AbstractController
             $value = explode(',', $value);
         }
         $result = [];
+        $languageId = (new Segment('dataflow'))->get('language_id');
         foreach ((array) $value as $v) {
-            $category = new Category;
+            $category = new Category($languageId);
             $category->load($v);
             if ($category->getId()) {
                 $result[] = $category->getId();
@@ -146,17 +148,83 @@ class ProductController extends AbstractController
 
     protected function getRelatedProducts($value, $type, $model)
     {
-        
+        if (strpos($value, ',')) {
+            $value = explode(',', $value);
+        }
+        $result = [];
+        $languageId = (new Segment('dataflow'))->get('language_id');
+        foreach ((array) $value as $v) {
+            $product = new Product($languageId);
+            $product->load($v);
+            if ($product->getId()) {
+                $result[] = $product->getId();
+            } else {
+                $product->load($v, 'uri_key');
+                if ($product->getId()) {
+                    $result[] = $product->getId();
+                } else {
+                    $product->load($v, 'name');
+                    if ($product->getId()) {
+                        $result[] = $product->getId();
+                    }
+                }
+            }
+        }
+        return ['product_link' => ['related' => $result] + (array) $model->offsetGet('product_link')];
     }
 
-    protected function getUpSells()
+    protected function getUpSells($value, $type, $model)
     {
-        
+        if (strpos($value, ',')) {
+            $value = explode(',', $value);
+        }
+        $result = [];
+        $languageId = (new Segment('dataflow'))->get('language_id');
+        foreach ((array) $value as $v) {
+            $product = new Product($languageId);
+            $product->load($v);
+            if ($product->getId()) {
+                $result[] = $product->getId();
+            } else {
+                $product->load($v, 'uri_key');
+                if ($product->getId()) {
+                    $result[] = $product->getId();
+                } else {
+                    $product->load($v, 'name');
+                    if ($product->getId()) {
+                        $result[] = $product->getId();
+                    }
+                }
+            }
+        }
+        return ['product_link' => ['upsells' => $result] + (array) $model->offsetGet('product_link')];
     }
 
-    protected function getCrossSells()
+    protected function getCrossSells($value, $type, $model)
     {
-        
+        if (strpos($value, ',')) {
+            $value = explode(',', $value);
+        }
+        $result = [];
+        $languageId = (new Segment('dataflow'))->get('language_id');
+        foreach ((array) $value as $v) {
+            $product = new Product($languageId);
+            $product->load($v);
+            if ($product->getId()) {
+                $result[] = $product->getId();
+            } else {
+                $product->load($v, 'uri_key');
+                if ($product->getId()) {
+                    $result[] = $product->getId();
+                } else {
+                    $product->load($v, 'name');
+                    if ($product->getId()) {
+                        $result[] = $product->getId();
+                    }
+                }
+            }
+        }
+        return ['product_link' => ['crosssells' => $result] + (array) $model->offsetGet('product_link')];
     }
 
     protected function processCategory($product)

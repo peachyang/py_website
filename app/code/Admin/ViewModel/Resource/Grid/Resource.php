@@ -46,17 +46,17 @@ class Resource extends PGrid
         $user = (new Segment('admin'))->get('user');
         return [
             'store_id' => ($user->getStore() ? [
-                'use4popupfilter' => false,
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId(),
-                'use4sort' => false,
-                'use4filter' => false
-                    ] : [
-                'type' => 'select',
-                'use4popupfilter' => false,
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store'
-                    ]),
+        'use4popupfilter' => false,
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId(),
+        'use4sort' => false,
+        'use4filter' => false
+            ] : [
+        'type' => 'select',
+        'use4popupfilter' => false,
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store'
+            ]),
             'category_id' => [
                 'type' => 'select',
                 'options' => (new Category)->getSourceArray(),
@@ -88,6 +88,9 @@ class Resource extends PGrid
         $collection = new Collection;
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        if (!$collection->getRawState('order')) {
+            $collection->order('created_at DESC');
         }
         return parent::prepareCollection($collection);
     }

@@ -49,15 +49,15 @@ class CreditmemoController extends AuthActionController
                 $memo->setData($order->toArray())->setData([
                     'increment_id' => '',
                     'order_id' => $data['order_id'],
-                    'comment' => isset($data['comment']) ? $data['comment'] : ''
+                    'comment' => $data['comment'] ?? ''
                 ]);
-                if (!isset($data['include_shipping']) || !$data['include_shipping']) {
+                if (empty($data['include_shipping'])) {
                     $memo->setData([
                         'base_shipping' => 0,
                         'shipping' => 0
                     ]);
                 }
-                if (!isset($data['include_tax']) || !$data['include_tax']) {
+                if (empty($data['include_tax'])) {
                     $memo->setData([
                         'base_tax' => 0,
                         'tax' => 0

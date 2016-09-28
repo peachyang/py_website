@@ -44,7 +44,7 @@ class RoleController extends AuthActionController
                 $result['error'] = 1;
             } else {
                 $model = new Model($data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (empty($data['id'])) {
                     $model->setId(null);
                 }
                 try {

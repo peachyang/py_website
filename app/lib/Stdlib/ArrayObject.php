@@ -152,7 +152,6 @@ class ArrayObject implements ArrayAccess, Countable, JsonSerializable, Serializa
      * Unserialize an ArrayObject
      *
      * @param  string $data
-     * @return void
      */
     public function unserialize($data)
     {
@@ -200,7 +199,7 @@ class ArrayObject implements ArrayAccess, Countable, JsonSerializable, Serializa
      * 
      * @param callable $callback
      */
-    public function walk($callback, ...$params)
+    public function walk(callable $callback, ...$params)
     {
         array_walk($this->storage, $callback, $params);
     }

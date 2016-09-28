@@ -3,7 +3,6 @@
 namespace Seahinet\Cms\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Block extends AbstractModel
 {
@@ -23,7 +22,7 @@ class Block extends AbstractModel
     protected function afterSave()
     {
         if (isset($this->storage['language_id'])) {
-            $tableGateway = new TableGateway('cms_block_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('cms_block_language');
             $tableGateway->delete(['block_id' => $this->getId()]);
             foreach ($this->storage['language_id'] as $language_id) {
                 $tableGateway->insert(['block_id' => $this->getId(), 'language_id' => $language_id]);

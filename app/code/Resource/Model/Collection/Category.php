@@ -5,10 +5,6 @@ namespace Seahinet\Resource\Model\Collection;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\Predicate\In;
-use Zend\Db\Sql\Select;
-use Zend\Db\TableGateway\TableGateway;
-use Seahinet\Lib\Session\Segment;
-use Seahinet\Lib\Bootstrap;
 
 /**
  * System backend Resource category
@@ -45,6 +41,12 @@ class Category extends AbstractCollection
             $result = array_values($data);
         }
         parent::afterLoad($result);
+    }
+    
+    public function getCategoryByCode($code)
+    {
+        $this->select->where->equalTo('code',$code);
+		return $this;
     }
 
 }

@@ -432,9 +432,6 @@ retailer_products_product_edit:
             head:
                 action:
                     -
-                        method: addScript
-                        params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
-                    -
                         method: addLink
                         params: backend/css/jquery-ui.min.css
                     -
@@ -451,10 +448,10 @@ retailer_products_product_edit:
                         params: backend/js/jquery.ui/sortable.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/core.js
+                        params: frontend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/config.js
+                        params: frontend/js/jquery.fileupload/config.js
                     -
                         method: addScript
                         params: backend/js/product.js
@@ -580,8 +577,8 @@ retailer_products_product_edit:
             extra:
                 children:
                     modal:
-                        type: Seahinet\Admin\ViewModel\Resource\Modal
-                        template: resource/modal
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: retailer/resource/modal
 retailer_products_product_edit_1:
     update: retailer_products_product_edit
 retailer_products_product_edit_2:
@@ -756,7 +753,7 @@ decorationFunc:
                         params: frontend/dragResource/css/bootstrap.min.css
                     -
                         method: addLink
-                        params: frontend/css/bootstrap.css
+                        params: frontend/dragResource/css/enhancement.css                   
                     -
                         method: addLink
                         params: frontend/css/font-awesome.css
@@ -766,6 +763,12 @@ decorationFunc:
                     -
                         method: addScript
                         params: frontend/js/jquery.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/layer/layer.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/bootstrap.min.js
 
 decorationFunc_hot_product:
     update: decorationFunc
@@ -782,6 +785,24 @@ decorationFunc_hot_product:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationFunc/hot_product
+decorationFunc_pic_carousel:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: pic_carousel
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
+
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/pic_carousel
 
 admin_retailer_apply_list:
     update: grid
@@ -817,3 +838,15 @@ admin_retailer_apply_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Retailer\Edit
+retailer_popup_images_list:
+    update: grid
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    grid:
+                        type: Seahinet\Retailer\ViewModel\Resource\Resource
+                        template: retailer/resource/gridpopup

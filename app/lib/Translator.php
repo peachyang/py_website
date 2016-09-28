@@ -49,7 +49,7 @@ class Translator implements Singleton
             $this->setContainer($locale);
             $locale = null;
         }
-        $this->setLocale($locale ? : $this->getContainer()->get('config')['locale']);
+        $this->setLocale($locale ?: $this->getContainer()->get('config')['locale']);
     }
 
     public static function instance($locale = null)
@@ -94,7 +94,7 @@ class Translator implements Singleton
      */
     public function getLocale()
     {
-        return $this->locale? : static::getDefaultLocale();
+        return $this->locale ?: static::getDefaultLocale();
     }
 
     /**

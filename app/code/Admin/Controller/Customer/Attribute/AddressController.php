@@ -8,7 +8,6 @@ use Seahinet\Lib\Model\Eav\Attribute as Model;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Model\Eav\Attribute\Group;
 use Seahinet\Lib\Model\Eav\Attribute\Set;
-use Zend\Db\TableGateway\TableGateway;
 
 class AddressController extends AuthActionController
 {
@@ -46,23 +45,21 @@ class AddressController extends AuthActionController
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 $model = new Model($data);
-                $adapter = $this->getContainer()->get('dbAdapter');
-                $connection = $adapter->getDriver()->getConnection();
                 try {
-                    $connection->beginTransaction();
+                    $this->beginTransaction();
                     $type = new Type;
                     $type->load(Address::ENTITY_TYPE, 'code');
-                    if (!isset($data['id']) || (int) $data['id'] === 0) {
+                    if (empty($data['id'])) {
                         $model->setId(null);
                     }
                     $model->setData('type_id', $type->getId());
                     $model->save();
-                    if (!isset($data['id']) || (int) $data['id'] === 0) {
+                    if (empty($data['id'])) {
                         $set = new Set;
                         $set->load($type->getId(), 'type_id');
                         $group = new Group;
                         $group->load($type->getId(), 'type_id');
-                        $tableGateway = new TableGateway('eav_entity_attribute', $adapter);
+                        $tableGateway = $this->getTableGateway('eav_entity_attribute');
                         $tableGateway->insert([
                             'attribute_set_id' => $set->getId(),
                             'attribute_group_id' => $group->getId(),
@@ -70,18 +67,18 @@ class AddressController extends AuthActionController
                             'sort_order' => 0
                         ]);
                     }
-                    $connection->commit();
+                    $this->commit();
                     $result['data'] = $model->getArrayCopy();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
-                    $connection->rollback();
+                    $this->rollback();
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], ':ADMIN/customer_address/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], ':ADMIN/customer_address/');
     }
 
 }

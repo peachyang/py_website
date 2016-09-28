@@ -104,7 +104,7 @@ class Edit extends Template
                 foreach ($tableColumns as $column) {
                     $columns[$column] = [
                         'type' => 'text',
-                        'value' => isset($values[$column]) ? $values[$column] : '',
+                        'value' => $values[$column] ?? '',
                         'label' => $column
                     ];
                 }
@@ -112,7 +112,7 @@ class Edit extends Template
                 $values = $model->getArrayCopy();
                 foreach ($columns as $key => $column) {
                     if (!isset($columns[$key]['value'])) {
-                        $columns[$key]['value'] = isset($values[$key]) ? $values[$key] : '';
+                        $columns[$key]['value'] = $values[$key] ?? '';
                     } else if (strpos($key, '[]') && isset($values[substr($key, 0, -2)])) {
                         $columns[$key]['value'] = $values[substr($key, 0, -2)];
                     }

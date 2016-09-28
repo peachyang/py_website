@@ -36,7 +36,7 @@ class CategoryController extends AuthActionController
     public function saveAction()
     {
         $response = $this->doSave('\\Seahinet\\Cms\\Model\\Category', ':ADMIN/cms_category/', ['language_id', 'uri_key', 'name'], function($model, $data) {
-            if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
+            if (empty($data['parent_id'])) {
                 $model->setData('parent_id', null);
             }
         }

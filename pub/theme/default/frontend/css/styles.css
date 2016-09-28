@@ -568,6 +568,33 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
 .product-edit input.form-control{height:auto}
 .product-edit .control-label{display:inline-block;margin-right:2px;vertical-align:top;width:auto}
+
+#resource-modal .modal-dialog {margin: 10px; position: relative; width: auto;}
+#resource-modal .tab-pane {padding: 10px 0 0 30px;}
+#resource-modal .nav-tabs {margin-left: 30px; padding: 0; width: calc(100% - 30px); border-bottom: 1px solid #cce0e9; margin-top: 10px;}
+#resource-modal .nav-tabs ~ .tab-pane.active {display: block;}
+#resource-modal .grid .filters {background: #fafafa none repeat scroll 0 0; border-bottom: 1px solid #cce0e9; padding: 8px 0;}
+#resource-modal .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
+#resource-modal .grid .filters .buttons-set {display: inline-block; margin: 0; padding: 10px 0 8px; vertical-align: top;}
+#resource-modal .grid .filters .control-label {color: #6c6c6c; display: inline-block !important; font-size: 12px; line-height: 21px; padding: 0 !important; width: auto !important;}
+#resource-modal  .grid .filters .cell {display: inline-block !important; padding: 0 !important;}
+#resource-modal  .grid .filters .form-control {height: 21px; line-height: 21px; width: 99px;display: inline-block;vertical-align: top;font-size: 12px; padding: 0 0.42em;}
+#resource-modal  .grid .filters .form-control[type="file"] {line-height: 16px; width: auto; border: none;}
+#resource-modal .grid .filters .buttons-set .btn {background: #02a0e9 none repeat scroll 0 0; border-radius: 3px; box-shadow: 0 0 4px 1px #0286c4 inset; color: #fff; font-size: 14px; line-height: 1; margin-left: 36px; padding: 5px 10px; text-decoration: none;}
+#resource-modal .image-body-list {height: 450px; overflow-y: scroll;}
+#resource-modal .nav-tabs ~ .tab-pane {display: none;}
+#resource-modal .grid .table tfoot {color: #02a0e9;}
+#resource-modal .grid td { padding: 7px 8px; text-align: left;}
+#resource-modal .grid .table tfoot .pager {display: inline-block;}
+#resource-modal .grid .table tfoot .pager .current{color: #02A0E9; padding: 0;}
+#resource-modal .grid .table tfoot .pager .current::before {content: "[";}
+#resource-modal .grid .table tfoot .pager .current::after {content: "]";}
+#resource-modal .grid .table tfoot .pager li {font-size: 12px; padding: 0 4px; display: inline;}
+#resource-modal .grid .table tfoot .pager li  a{font-size: 12px; color: #02a0e9; padding: 0; border: none;}
+#resource-modal .grid .table tfoot .pager li.jump{color: #000;}
+#resource-modal .grid .table tfoot .pager li.jump .btn{border: none; background-color: #fff;}
+#resource-modal .buttons-set {background: #f7f8fa none repeat scroll 0 0; padding: 20px 0;}
+
 /*=E Stone's CSS end' */
 /* sales products css - ammon */
 .sales-products .control-right{color:#6699ff}

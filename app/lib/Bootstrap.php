@@ -67,7 +67,7 @@ final class Bootstrap
         }
         $config = static::prepareConfig();
         static::handleConfig($config);
-        date_default_timezone_set($config['global/locale/timezone']? : 'UTC');
+        date_default_timezone_set($config['global/locale/timezone'] ?: 'UTC');
         $segment = new Session\Segment('core');
         $language = static::getLanguage($server, $segment);
         static::$container['language'] = $language;
@@ -97,7 +97,7 @@ final class Bootstrap
     private static function prepareConfig()
     {
         $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
-        $cache = Cache::instance(isset($adapter['cache']) ? $adapter['cache'] : ['adapter' => '']);
+        $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
         $config = $cache->fetch('SYSTEM_CONFIG');
         if (!$config) {
             $config = Config::instance();
@@ -131,10 +131,10 @@ final class Bootstrap
                     if (!isset($b['priority'])) {
                         $b['priority'] = 0;
                     }
-                    return $a['priority'] > $b['priority'] ? 1 : $a['priority'] == $b['priority'] ? 0 : -1;
+                    return $a['priority'] <=> $b['priority'];
                 });
                 foreach ($events as $event) {
-                    static::$eventDispatcher->addListener($name, (isset($event['listener']) ? $event['listener'] : $event), isset($event['priority']) ? $event['priority'] : 0);
+                    static::$eventDispatcher->addListener($name, ($event['listener'] ?? $event), $event['priority'] ?? 0);
                 }
             }
         }
@@ -149,9 +149,9 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('language')? :
-                    (isset($_COOKIE['language']) ? $_COOKIE['language'] :
-                            (isset($server['language']) ? $server['language'] : null));
+            $code = $segment->get('language') ?:
+                    ($_COOKIE['language'] ?? 
+                    ($server['language'] ?? null));
             if (is_string($code)) {
                 $language = new Language;
                 $language->load($code, 'code');
@@ -180,8 +180,8 @@ final class Bootstrap
             if (is_null($segment)) {
                 $segment = new Session\Segment('core');
             }
-            $code = $segment->get('store') ? : (isset($_COOKIE['store']) ?
-                            $_COOKIE['store'] : (isset($server['store']) ? : null));
+            $code = $segment->get('store') ?: (isset($_COOKIE['store']) ?
+                    $_COOKIE['store'] : (isset($server['store']) ?: null));
             if (is_string($code)) {
                 $store = new Store;
                 $store->load($code, 'code');
@@ -217,7 +217,7 @@ final class Bootstrap
                 static::$merchant = new Merchant();
                 static::$merchant->load(static::$store['merchant_id']);
             } else {
-                $code = $segment->get('merchant') ? : (isset($server['merchant']) ? : null);
+                $code = $segment->get('merchant') ?: (isset($server['merchant']) ?: null);
                 if (is_string($code)) {
                     $merchant = new Merchant;
                     $merchant->load($code, 'code');

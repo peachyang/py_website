@@ -60,7 +60,7 @@ class ManageController extends AuthActionController
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 $model = new Model($data['language_id'], $data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (empty($data['id'])) {
                     $model->setId(null);
                 }
                 $type = new Type;

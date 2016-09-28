@@ -14,7 +14,7 @@ class CustomerGroup implements ConditionInterface
             if ($condition['value'] === '0') {
                 return !$model->offsetGet('customer_id');
             }
-            $tableGateway = new TableGateway('customer_in_group', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('customer_in_group');
             $select = $tableGateway->getSql()->select();
             $select->where(new Operator('group_id', preg_replace('/[^\<\>\=\!]/', '', $condition['operator']), $condition['value']))
                     ->where(['customer_id' => $model->offsetGet('customer_id')]);

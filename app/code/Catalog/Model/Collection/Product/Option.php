@@ -4,7 +4,6 @@ namespace Seahinet\Catalog\Model\Collection\Product;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
-use Zend\Db\TableGateway\TableGateway;
 
 class Option extends AbstractCollection
 {
@@ -32,7 +31,7 @@ class Option extends AbstractCollection
 
     public function afterLoad(&$result)
     {
-        $tableGateway = new TableGateway('product_option_value', $this->getContainer()->get('dbAdapter'));
+        $tableGateway = $this->getTableGateway('product_option_value');
         foreach ($result as &$item) {
             if (in_array($item['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                 $select = $tableGateway->getSql()->select();

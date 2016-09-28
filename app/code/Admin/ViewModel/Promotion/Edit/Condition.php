@@ -23,10 +23,11 @@ class Condition extends Template
             $collection->where(['promotion_id' => $this->getQuery('id')]);
             $result = [];
             foreach ($collection as $item) {
-                if (!isset($result[(int) $item->offsetGet('parent_id')])) {
-                    $result[(int) $item->offsetGet('parent_id')] = [];
+                $pid = (int) $item->offsetGet('parent_id');
+                if (!isset($result[$pid])) {
+                    $result[$pid] = [];
                 }
-                $result[(int) $item->offsetGet('parent_id')][] = $item->toArray();
+                $result[$pid][] = $item->toArray();
             }
             return $result;
         }

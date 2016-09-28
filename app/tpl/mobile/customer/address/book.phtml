@@ -1,6 +1,7 @@
 <?php
 $addresses = $this->getAddress();
 $attributes = $this->getAddressAttribute();
+if(count($addresses)>=1) :
 ?>
 <ul class="address-list">
     <?php foreach ($addresses as $address): ?>
@@ -24,3 +25,15 @@ $attributes = $this->getAddressAttribute();
         <span><?php echo $this->translate('Add New Address') ?></span>
     </button>
 </div>
+<?php
+else :
+    ?>
+<div class="btn sub-add">
+    <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
+        <span class="fa fa-plus" aria-hidden="true"></span>
+        <span><?php echo $this->translate('Add New Address') ?></span>
+    </button>
+</div>
+<?php
+endif;
+?>

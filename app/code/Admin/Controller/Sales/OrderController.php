@@ -79,7 +79,7 @@ class OrderController extends AuthActionController
                         $keys[$key] = 1;
                     }
                     if ($ts >= $from2 && $ts <= $to2) {
-                        if (!isset($result['compared'][$key]) || is_null($result['compared'][$key])) {
+                        if (!isset($result['compared'][$key])) {
                             $result['compared'][$key] = 0;
                         }
                         $result['compared'][$key] ++;
@@ -249,8 +249,8 @@ class OrderController extends AuthActionController
                         'admin_id' => $user->getId(),
                         'order_id' => $data['id'],
                         'status' => $flag,
-                        'is_customer_notified' => isset($data['is_customer_notified']) ? 1 : 0,
-                        'is_visible_on_front' => isset($data['is_visible_on_front']) ? 1 : 0
+                        'is_customer_notified' => (int) isset($data['is_customer_notified']),
+                        'is_visible_on_front' => (int) isset($data['is_visible_on_front'])
                     ]);
                 }
         );
@@ -337,7 +337,7 @@ class OrderController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : [], ':ADMIN/sales_order/');
+        return $this->response($result ?? [], ':ADMIN/sales_order/');
     }
 
     public function saveDiscountAction()
@@ -382,7 +382,7 @@ class OrderController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : [], ':ADMIN/sales_order/');
+        return $this->response($result ?? [], ':ADMIN/sales_order/');
     }
 
     public function printAction()

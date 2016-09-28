@@ -23,7 +23,7 @@ $parent = $this->getVariable('parent');
                     echo $parent->getAttrs($item['attrs']);
                 }
                 ?>>
-            <option value=""><?php echo $this->translate(isset($item['empty_string']) ? $item['empty_string'] : 'Please Select') ?></option>
+            <option value=""><?php echo $this->translate($item['empty_string'] ?? 'Please Select') ?></option>
         </select>
         <input type="text" name="<?php echo $key ?>" pattern="^\D" id="<?php echo $id ?>-text"<?php if (isset($item['value'])): ?> value="<?php echo $item['value'] ?>"<?php
         endif;

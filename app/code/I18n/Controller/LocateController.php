@@ -2,6 +2,7 @@
 
 namespace Seahinet\I18n\Controller;
 
+use Collator;
 use Seahinet\I18n\Model\Locate;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\ActionController;
@@ -38,15 +39,22 @@ class LocateController extends ActionController
             } else if ((empty($enabled) || in_array($item['iso2_code'], explode(',', $enabled))) && (empty($disabled) || !in_array($item['iso2_code'], explode(',', $disabled)))) {
                 $result[] = [
                     'value' => $id,
-                    'code' => isset($item['iso2_code']) ? $item['iso2_code'] : $item['code'],
+                    'code' => $item['iso2_code'] ?? $item['code'],
                     'label' => $item->getName($locale)
                 ];
             }
         }
-        uasort($result, function($a, $b) {
-            $result = strnatcmp($a['code'], $b['code']);
-            return $result > 0 ? 1 : ($result < 0 ? -1 : 0);
-        });
+        if (extension_loaded('intl')) {
+            $collator = new Collator($locale);
+            $value_compare_func = function($str1, $str2) use ($collator) {
+                return $collator->compare($str1, $str2);
+            };
+        } else {
+            $value_compare_func = function($str1, $str2) {
+                return strnatcmp($str1, $str2);
+            };
+        }
+        uasort($result, $value_compare_func);
         if (isset($default)) {
             array_unshift($result, $default);
         }

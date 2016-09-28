@@ -29,7 +29,7 @@ class Condition extends AbstractModel
             $identifier = $this->storage['identifier'];
         }
         $className = '\\Seahinet\\Promotion\\Model\\Condition\\' . str_replace(' ', '', ucwords(str_replace('_', ' ', $identifier)));
-        if (class_exists($className) && is_subclass_of($className, '\\Seahinet\\Promotion\\Model\\Condition\\ConditionInterface')) {
+        if (is_subclass_of($className, '\\Seahinet\\Promotion\\Model\\Condition\\ConditionInterface')) {
             return new $className;
         }
         return null;

@@ -87,7 +87,7 @@ class CategoryController extends AuthActionController
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (empty($data['id'])) {
                     $model->setId(null);
                 }
                 $type = new Type;

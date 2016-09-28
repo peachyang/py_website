@@ -87,7 +87,7 @@ body {
 .edit .htmlpage .lyrow .clone { top:5px; right:56px; z-index:10; }
 .edit .htmlpage .lyrow .drag { top:5px; right:28px; z-index:10; }
 .edit .htmlpage .column .box .drag { top:5px; }
-.edit .htmlpage .column .box .configuration {position: absolute; top: 5px; line-height: 8px; right: 56px;white-space:nowrap; }
+.edit .htmlpage .column .box .configuration {position: absolute; top: 5px; line-height: 8px; right: 56px;white-space:nowrap;z-index:10 }
 .edit .htmlpage .column .box .configuration:hover { z-index:1001;}
 
 .edit .htmlpage .column .navbar-fixed-top {top: 33px; left: 180px;}

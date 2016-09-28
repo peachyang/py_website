@@ -24,7 +24,7 @@ class Indexer implements Stdlib\Singleton
         }
         if (empty($config)) {
             $adapterObject = $this->getContainer()->get('config')['adapter'];
-            $config = isset($adapterObject['indexer']) ? $adapterObject['indexer'] : [];
+            $config = $adapterObject['indexer'] ?? [];
         }
         $this->config = $config;
     }

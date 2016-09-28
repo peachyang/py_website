@@ -123,9 +123,7 @@ final class Config extends ArrayObject implements Singleton
                 'm' => 'm' . Bootstrap::getMerchant()->getId()
             ];
         }
-        $result = isset($array[$this->keys['s']]) ? $array[$this->keys['s']] :
-                (isset($array[$this->keys['m']]) ?
-                        $array[$this->keys['m']] : $array);
+        $result = $array[$this->keys['s']] ?? ($array[$this->keys['m']] ?? $array);
         return $result;
     }
 

@@ -4,7 +4,6 @@ namespace Seahinet\Customer\Model;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
-use Zend\Db\TableGateway\TableGateway;
 
 class Level extends AbstractModel
 {
@@ -24,7 +23,7 @@ class Level extends AbstractModel
     {
         parent::afterSave();
         if (isset($this->storage['name'])) {
-            $tableGateway = new TableGateway('customer_level_language', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('customer_level_language');
             foreach ((array) $this->storage['name'] as $language_id => $name) {
                 $this->upsert(['name' => $name], ['level_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
             }
@@ -63,7 +62,7 @@ class Level extends AbstractModel
         if (is_null($languageId)) {
             $languageId = Bootstrap::getLanguage()->getId();
         }
-        return isset($this->storage['name'][$languageId]) ? $this->storage['name'][$languageId] : 0;
+        return $this->storage['name'][$languageId] ?? 0;
     }
 
 }

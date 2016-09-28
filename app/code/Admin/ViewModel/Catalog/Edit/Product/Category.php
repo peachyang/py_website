@@ -17,10 +17,11 @@ class Category extends Tab
             $collection->order('parent_id ASC, sort_order DESC');
             $this->categories = [];
             foreach ($collection as $item) {
-                if (!isset($this->categories[(int) $item['parent_id']])) {
-                    $this->categories[(int) $item['parent_id']] = [];
+                $pid = (int) $item['parent_id'];
+                if (!isset($this->categories[$pid])) {
+                    $this->categories[$pid] = [];
                 }
-                $this->categories[(int) $item['parent_id']][] = $item;
+                $this->categories[$pid][] = $item;
             }
         }
         return $this->categories;

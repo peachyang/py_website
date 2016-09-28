@@ -45,7 +45,7 @@ class Config extends Edit
             if (!isset($b['priority'])) {
                 $b['priority'] = 0;
             }
-            return $a['priority'] == $b['priority'] ? 0 : ($a['priority'] > $b['priority'] ? 1 : -1);
+            return $a['priority'] <=> $b['priority'];
         });
         return $this->elements;
     }
@@ -111,7 +111,7 @@ class Config extends Edit
             $item['options'] = (new $item['source'])->getSourceArray($item);
         }
         $config = $this->getConfig()[$prefix . '/' . $key];
-        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config : (isset($item['default']) ? (string) $item['default'] : '');
+        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config : (string) ($item['default'] ?? '');
         return $item;
     }
 

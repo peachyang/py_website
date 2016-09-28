@@ -175,7 +175,7 @@ abstract class ActionController extends AbstractController
             if ($result['error']) {
                 $response = $this->redirectReferer($url);
             } else {
-                $response = $this->redirect(isset($result['success_url']) ? $result['success_url'] : $url);
+                $response = $this->redirect($result['success_url'] ?? $url);
             }
             if (isset($result['cookie'])) {
                 foreach ($result['cookie'] as $cookie) {

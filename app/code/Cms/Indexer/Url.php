@@ -62,7 +62,7 @@ class Url implements Provider
             foreach ($categories as $category) {
                 $tree[$category['id']] = [
                     'object' => $category,
-                    'pid' => (int) isset($category['parent_id']) ? $category['parent_id'] : 0
+                    'pid' => (int) ($category['parent_id'] ?? 0)
                 ];
             }
             foreach ($categories as $category) {

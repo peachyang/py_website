@@ -33,7 +33,7 @@ class CategoryController extends AuthActionController
     public function saveAction()
     {
         return $this->doSave('\\Seahinet\\Resource\\Model\\Category', ':ADMIN/resource_category/', ['language_id', 'code', 'name'], function($model, $data) {
-                    if (!isset($data['parent_id']) || (int) $data['parent_id'] === 0) {
+                    if (empty($data['parent_id'])) {
                         $model->setData('parent_id', null);
                     }
                     $user = (new Segment('admin'))->get('user');
@@ -42,7 +42,7 @@ class CategoryController extends AuthActionController
                             throw new \Exception('Not allowed to save.');
                         }
                         $model->setData('store_id', $user->getStore()->getId());
-                    } else if (!isset($data['store_id']) || (int) $data['store_id'] === 0) {
+                    } else if (empty($data['store_id'])) {
                         $model->setData('store_id', null);
                     }
                 }

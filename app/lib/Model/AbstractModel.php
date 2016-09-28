@@ -74,7 +74,7 @@ abstract class AbstractModel extends ArrayObject
      */
     public function getId()
     {
-        return isset($this->storage[$this->primaryKey]) ? $this->storage[$this->primaryKey] : null;
+        return $this->storage[$this->primaryKey] ?? null;
     }
 
     /**

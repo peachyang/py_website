@@ -86,7 +86,7 @@ class Request extends Message implements RequestInterface
             }
             parse_str($this->uri->getQuery(), $this->queryParams);
         }
-        return is_null($key) ? $this->queryParams : (isset($this->queryParams[$key]) ? $this->queryParams[$key] : $default);
+        return is_null($key) ? $this->queryParams : ($this->queryParams[$key] ?? $default);
     }
 
     /**
@@ -123,7 +123,7 @@ class Request extends Message implements RequestInterface
                 $this->post = $parsed;
             }
         }
-        return is_null($key) ? $this->post : (isset($this->post[$key]) ? $this->post[$key] : $default);
+        return is_null($key) ? $this->post : ($this->post[$key] ?? $default);
     }
 
     /**
@@ -194,7 +194,7 @@ class Request extends Message implements RequestInterface
      */
     public function getCookie($key, $default = '')
     {
-        return isset($this->cookies[$key]) ? $this->cookies[$key] : $default;
+        return $this->cookies[$key] ?? $default;
     }
 
     /**

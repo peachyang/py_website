@@ -29,7 +29,7 @@ class Handler extends AbstractModel
             $identifier = $this->storage['identifier'];
         }
         $className = '\\Seahinet\\Promotion\\Model\\Handler\\' . str_replace(' ', '', ucwords(str_replace('_', ' ', $identifier)));
-        if (class_exists($className) && is_subclass_of($className, '\\Seahinet\\Promotion\\Model\\Handler\\HandlerInterface')) {
+        if (is_subclass_of($className, '\\Seahinet\\Promotion\\Model\\Handler\\HandlerInterface')) {
             return new $className;
         }
         return null;

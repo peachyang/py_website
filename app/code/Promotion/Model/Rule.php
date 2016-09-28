@@ -107,7 +107,7 @@ class Rule extends AbstractModel
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
             foreach ($this->prepareTree($this->storage['condition']) as $id => $data) {
-                $pid = isset($pids[$data['pid']]) ? $pids[$data['pid']] : null;
+                $pid = $pids[$data['pid']] ?? null;
                 $model = new Condition;
                 $model->setData(['parent_id' => $pid, 'promotion_id' => $this->getId()] + $data)->save();
                 $pids[$id] = $model->getId();
@@ -118,7 +118,7 @@ class Rule extends AbstractModel
             $tableGateway->delete(['promotion_id' => $this->getId()]);
             $pids = [];
             foreach ($this->prepareTree($this->storage['handler']) as $id => $data) {
-                $pid = isset($pids[$data['pid']]) ? $pids[$data['pid']] : null;
+                $pid = $pids[$data['pid']] ?? null;
                 $model = new Handler;
                 $model->setData(['parent_id' => $pid, 'promotion_id' => $this->getId()] + $data)->save();
                 $pids[$id] = $model->getId();
@@ -180,14 +180,14 @@ class Rule extends AbstractModel
         if (count($tree['identifier']) > 1) {
             foreach ($tree['identifier'] as $key => $identifier) {
                 $array[$key] = [
-                    'pid' => isset($tree['pid'][$key]) ? (int) $tree['pid'][$key] : null,
+                    'pid' => (int) $tree['pid'][$key] ?? null,
                     'identifier' => $identifier,
                     'operator' => $tree['operator'][$key],
                     'value' => isset($tree['value'][$key]) && $tree['value'][$key] !== '' ? $tree['value'][$key] : null
                 ];
             }
             uasort($array, function($a, $b) {
-                return $a['pid'] == $b['pid'] ? 0 : ($a['pid'] > $b['pid'] ? 1 : -1);
+                return $a['pid'] <=> $b['pid'];
             });
         }
         return $array;

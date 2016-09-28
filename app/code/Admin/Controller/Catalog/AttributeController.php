@@ -41,7 +41,10 @@ class AttributeController extends AuthActionController
         return $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute', ':ADMIN/catalog_attribute/', [], function($model, $data) {
                     $type = new Type;
                     $type->load(Product::ENTITY_TYPE, 'code');
-                    $model->setData('type_id', $type->getId());
+                    $model->setData([
+                        'code' => trim(preg_replace('/\W+/', '_', strtolower($data['code'])), '_'),
+                        'type_id' => $type->getId()
+                    ]);
                 }
         );
     }

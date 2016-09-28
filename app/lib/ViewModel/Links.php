@@ -60,7 +60,7 @@ class Links extends Template
         uasort($this->links, function($a, $b) {
             $pa = is_scalar($a) || !isset($a['priority']) ? 0 : (int) $a['priority'];
             $pb = is_scalar($b) || !isset($b['priority']) ? 0 : (int) $b['priority'];
-            return $pa === $pb ? 0 : ($pa > $pb ? 1 : -1);
+            return $pa <=> $pb;
         });
         return $this->links;
     }

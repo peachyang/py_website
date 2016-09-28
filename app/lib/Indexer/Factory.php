@@ -74,7 +74,7 @@ abstract class Factory
                     $auth = '';
                 }
                 if (isset($config['host'])) {
-                    $server = 'mongodb://' . $auth . $config['host'] . (isset($config['port']) ? $config['port'] : 27017);
+                    $server = 'mongodb://' . $auth . $config['host'] . ($config['port'] ?? 27017);
                     unset($config['host']);
                     unset($config['port']);
                 } else if (isset($config['socket'])) {
@@ -82,7 +82,7 @@ abstract class Factory
                     unset($config['socket']);
                 }
             }
-            $db = isset($config['db']) ? $config['db'] : 'seahinet';
+            $db = $config['db'] ?? 'seahinet';
             unset($config['db']);
             $manager = new MongoDBManager($server, $config);
             return new Handler\MongoDB($manager, $db, $entityType);

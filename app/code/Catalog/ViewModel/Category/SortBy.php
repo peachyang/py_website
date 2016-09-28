@@ -32,8 +32,7 @@ class SortBy extends Toolbar
     public function getCurrentSorter()
     {
         $query = $this->getQuery();
-        return isset($query['asc']) ? $query['asc'] : (isset($query['desc']) ?
-                        $query['desc'] : ($this->getVariable('category') ?
+        return $query['asc'] ?? ($query['desc'] ?? ($this->getVariable('category') ?
                                 $this->getVariable('category')['default_sortable'] : ''));
     }
 

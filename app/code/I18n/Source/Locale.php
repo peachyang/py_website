@@ -7,7 +7,7 @@ use Seahinet\Lib\Source\SourceInterface;
 class Locale implements SourceInterface
 {
 
-    protected $code = [
+    protected static $code = [
         'af-ZA' => 'Afrikaans (Suid-Afrika)',
         'az-AZ' => 'Azərbaycan (Azərbaycan)',
         'id-ID' => 'Bahasa Indonesia (Indonesia)',
@@ -93,7 +93,7 @@ class Locale implements SourceInterface
 
     public function getSourceArray($code = null)
     {
-        return is_null($code) ? $this->code : (isset($this->code[$code]) ? $this->code[$code] : null);
+        return is_null($code) ? static::$code : (static::$code[$code] ?? null);
     }
 
 }

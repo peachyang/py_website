@@ -17,7 +17,7 @@ $parent = $this->getVariable('parent');
                    if (isset($item['class'])) {
                        echo $item['class'];
                    }
-                   ?>"<?php endif ?> value="<?php echo isset($item['value']) ? $item['value'] : '' ?>" <?php
+                   ?>"<?php endif ?> value="<?php echo $item['value'] ?? '' ?>" <?php
                if (isset($item['attrs'])) {
                    echo $parent->getAttrs($item['attrs']);
                }

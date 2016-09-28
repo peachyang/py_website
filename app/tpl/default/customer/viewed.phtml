@@ -7,52 +7,56 @@ $products = $this->getProducts();
         $current = '';
         foreach ($products as $item):
             $product = $item['product'];
-            $date = date('Y-m-d', strtotime($item['updated_at']));
+            $date = date('Y-m-d', strtotime($item['updated_at'] ?: $item['created_at']));
             $thumbnail = $product->getThumbnail();
             if ($current !== $date):
-                ?>
-                <dt>
-                    <span class="fa fa-circle-o" aria-hidden="true"></span>
-                    <span><?php echo $date ?></span>
-                </dt>
-                <?php
-                $current = $date;
-            endif;
-            ?>
+                if ($current !== ''):
+                    ?>
+                </ul>
+                </dd>
+            <?php endif ?>
+            <dt>
+                <span class="fa fa-circle-o" aria-hidden="true"></span>
+                <span><?php echo $date ?></span>
+            </dt>
             <dd>
                 <ul class="clearfix">
-                    <li class="item col-xs-6 col-sm-4 col-md-3">
-                        <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
-                            <?php if (strpos($thumbnail, 'http') !== false): ?>
-                                <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
-                            <?php elseif ($thumbnail): ?>
-                                <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php
-                                echo $this->getResourceUrl('image/resized/213x/'), $thumbnail
-                                ?>" data-bttrlazyloading-md-src="<?php
-                                     echo $this->getResourceUrl('image/resized/182x/'), $thumbnail
-                                     ?>" data-bttrlazyloading-sm-src="<?php
-                                     echo $this->getResourceUrl('image/resized/167x/'), $thumbnail
-                                     ?>" data-bttrlazyloading-xs-src="<?php
-                                     echo $this->getResourceUrl('image/resized/240x/'), $thumbnail
-                                     ?>" alt="<?php echo $product->offsetGet('name') ?>" />
-                                 <?php else: ?>
-                                <img src="<?php echo $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
-                            <?php endif ?>
+                    <?php
+                    $current = $date;
+                endif;
+                ?>
+                <li class="item col-xs-6 col-sm-4 col-md-3">
+                    <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
+                        <?php if (strpos($thumbnail, 'http') !== false): ?>
+                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
+                        <?php elseif ($thumbnail): ?>
+                            <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php
+                            echo $this->getResourceUrl('image/resized/213x/'), $thumbnail
+                            ?>" data-bttrlazyloading-md-src="<?php
+                                 echo $this->getResourceUrl('image/resized/182x/'), $thumbnail
+                                 ?>" data-bttrlazyloading-sm-src="<?php
+                                 echo $this->getResourceUrl('image/resized/167x/'), $thumbnail
+                                 ?>" data-bttrlazyloading-xs-src="<?php
+                                 echo $this->getResourceUrl('image/resized/240x/'), $thumbnail
+                                 ?>" alt="<?php echo $product->offsetGet('name') ?>" />
+                             <?php else: ?>
+                            <img src="<?php echo $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php endif ?>
+                    </a>
+                    <h3 class="product-name">
+                        <a href="<?php echo $product->getUrl() ?>">
+                            <?php echo $product['name'] ?>
                         </a>
-                        <h3 class="product-name">
-                            <a href="<?php echo $product->getUrl() ?>">
-                                <?php echo $product['name'] ?>
-                            </a>
-                        </h3>
-                        <div class="price-box">
-                            <?php echo $this->getChild('price')->setVariable('product', $product) ?>
-                        </div>
-                    </li>
-                </ul>
-            </dd>
-            <?php
-        endforeach;
-        ?>
+                    </h3>
+                    <div class="price-box">
+                        <?php echo $this->getChild('price')->setVariable('product', $product) ?>
+                    </div>
+                </li>
+                <?php
+            endforeach;
+            ?>
+        </ul>
+    </dd>
     </dl>
     <?php
 else :

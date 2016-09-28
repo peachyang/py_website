@@ -2,7 +2,6 @@
 
 namespace Seahinet\Promotion\Model\Handler;
 
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\Operator;
 
 class Category implements HandlerInterface
@@ -14,7 +13,7 @@ class Category implements HandlerInterface
     {
         $result = [];
         if ($handler['identifier'] === 'category') {
-            $tableGateway = new TableGateway('product_in_category', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('product_in_category');
             $select = $tableGateway->getSql()->select();
             $select->where(new Operator('category_id', preg_replace('/[^\<\>\=\!]/', '', $handler['operator']), $handler['value']));
             $where = '(';

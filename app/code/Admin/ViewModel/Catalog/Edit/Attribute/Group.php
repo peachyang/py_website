@@ -38,7 +38,7 @@ class Group extends Template
             if (!isset($result[$gid])) {
                 $result[$gid] = [];
             }
-            $result[$gid][] = $attribute;
+            $result[$gid][$attribute['id']] = $attribute;
         }
         return $result;
     }

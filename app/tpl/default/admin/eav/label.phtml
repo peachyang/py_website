@@ -15,7 +15,7 @@ $options = $model->getOptions();
                 </label>
                 <div class="cell">
                     <input type="text" name="label[<?php echo $id ?>]" id="label-<?php echo $id ?>"
-                           class="form-control required" value="<?php echo isset($label[$id]) ? $label[$id] : '' ?>"/>
+                           class="form-control required" value="<?php echo $label[$id] ?? '' ?>"/>
                 </div>
             </div>
         <?php endforeach ?>
@@ -42,7 +42,7 @@ $options = $model->getOptions();
                             <?php echo $name ?>
                         </label>
                         <div class="cell">
-                            <input type="text" name="option[<?php echo $id ?>][]" class="form-control" value="<?php echo isset($option[$id]) ? $option[$id] : '' ?>"/>
+                            <input type="text" name="option[<?php echo $id ?>][]" class="form-control" value="<?php echo $option[$id] ?? '' ?>"/>
                         </div>
                         <?php if ($j++ === 0): ?>
                             <a href="javascript:void(0);" class="delete">
@@ -57,7 +57,7 @@ $options = $model->getOptions();
                         <?php echo $this->translate('Sort Order') ?>
                     </label>
                     <div class="cell">
-                        <input type="text" name="option-order[]" class="form-control digits" value="<?php echo isset($options['order'][$key]) ? $options['order'][$key] : '' ?>"/>
+                        <input type="text" name="option-order[]" class="form-control digits" value="<?php echo $options['order'][$key] ?? '' ?>"/>
                     </div>
                 </div>
             </div>

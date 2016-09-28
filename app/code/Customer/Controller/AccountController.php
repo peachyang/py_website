@@ -142,7 +142,7 @@ class AccountController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : '/customer/account/create/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], $url ?? '/customer/account/create/', 'customer');
     }
 
     public function loginPostAction()
@@ -181,7 +181,7 @@ class AccountController extends AuthActionController
                 $segment->set('fail2login', 0);
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], isset($url) ? $url : 'customer/account/login/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], $url ?? 'customer/account/login/', 'customer');
     }
 
     public function forgotPwdPostAction()
@@ -221,7 +221,7 @@ class AccountController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
     }
 
     public function logoutAction()
@@ -302,7 +302,7 @@ class AccountController extends AuthActionController
                 $result['message'][] = ['message' => $this->translate('An error detected. Please try again later.'), 'level' => 'danger'];
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/account/login/', 'customer');
     }
 
     public function indexAction()
@@ -344,7 +344,7 @@ class AccountController extends AuthActionController
                 $url = 'customer/account/';
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], $url, 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], $url, 'customer');
     }
 
     public function addressAction()
@@ -369,7 +369,7 @@ class AccountController extends AuthActionController
                 }
             }
         }
-        return $this->response(isset($result) ? $result : ['error' => 0, 'message' => []], 'customer/account/address/', 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/account/address/', 'customer');
     }
 
     public function saveAddressAction()

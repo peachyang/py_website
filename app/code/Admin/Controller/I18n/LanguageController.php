@@ -6,7 +6,6 @@ use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Type;
 use Seahinet\Lib\Model\Language;
 use Seahinet\I18n\Source\Locale;
-use Zend\Db\TableGateway\TableGateway;
 
 class LanguageController extends AuthActionController
 {
@@ -39,8 +38,7 @@ class LanguageController extends AuthActionController
             }
         });
         if (!$this->getRequest()->getPost('id') && $this->responseData['error'] === 0) {
-            $adapter = $this->getContainer()->get('dbAdapter');
-            $tableGateway = new TableGateway('eav_attribute_label', $adapter);
+            $tableGateway = $this->getTableGateway('eav_attribute_label');
             $select = $tableGateway->getSql()->select();
             $select->order('language_id ASC');
             $result = $tableGateway->selectWith($select)->toArray();
@@ -60,7 +58,7 @@ class LanguageController extends AuthActionController
             $prefixes->columns(['code', 'value_table_prefix']);
             foreach ($prefixes as $prefix) {
                 foreach (['int', 'decimal', 'varchar', 'text', 'datetime'] as $type) {
-                    $tableGateway = new TableGateway($prefix['value_table_prefix'] . '_' . $type, $adapter);
+                    $tableGateway = $this->getTableGateway($prefix['value_table_prefix'] . '_' . $type);
                     $result = $tableGateway->select();
                     foreach ($result as $item) {
                         if ($item['language_id'] == $id) {

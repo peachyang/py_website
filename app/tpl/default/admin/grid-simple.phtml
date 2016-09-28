@@ -13,7 +13,7 @@ $query = $this->getQuery();
                 <?php foreach ($attributes as $attr => $name): ?>
                     <th>
                         <?php if (!isset($name['use4sort']) || $name['use4sort']): ?>
-                            <a href="<?php echo $this->getOrderByUrl(isset($name['sortby']) ? $name['sortby'] : $attr) ?>"
+                            <a href="<?php echo $this->getOrderByUrl($name['sortby'] ?? $attr) ?>"
                             <?php if (isset($query['asc']) && $query['asc'] === $attr): ?>
                                    class="asc"
                                <?php elseif (isset($query['desc']) && $query['desc'] === $attr): ?>

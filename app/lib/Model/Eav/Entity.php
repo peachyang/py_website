@@ -9,7 +9,6 @@ use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\In;
 
 abstract class Entity extends AbstractModel
@@ -93,7 +92,7 @@ abstract class Entity extends AbstractModel
     protected function getEntityTable()
     {
         if (!$this->entityTable) {
-            $tableGateway = new TableGateway('eav_entity_type', $this->getContainer()->get('dbAdapter'));
+            $tableGateway = $this->getTableGateway('eav_entity_type');
             $select = $tableGateway->getSql()->select();
             $select->where(['eav_entity_type.code' => static::ENTITY_TYPE]);
             $result = $tableGateway->selectWith($select)->toArray();
@@ -154,7 +153,7 @@ abstract class Entity extends AbstractModel
             }
         }
         if (is_null($key) || $key === $this->primaryKey) {
-            return isset($items[$id]) ? $items[$id] : [];
+            return $items[$id] ?? [];
         } else {
             foreach ($items as $item) {
                 if (isset($item[$key]) && $item[$key] == $id) {
@@ -195,7 +194,7 @@ abstract class Entity extends AbstractModel
                 foreach ($this->attributes as $attr) {
                     $attribute = @$attributes[$attr['code']];
                     if (!isset($tableGateways[$attr['type']])) {
-                        $tableGateways[$attr['type']] = new TableGateway($this->valueTablePrefix . '_' . $attr['type'], $adapter);
+                        $tableGateways[$attr['type']] = $this->getTableGateway($this->valueTablePrefix . '_' . $attr['type']);
                     }
                     if (is_array($attribute)) {
                         foreach ($attribute as $id => $value) {
@@ -238,7 +237,7 @@ abstract class Entity extends AbstractModel
                     $this->getContainer()->get('indexer')->update(static::ENTITY_TYPE, $this->languageId, (isset($index[$this->languageId]) ? $columns + $index[$this->languageId] : $columns), [$this->primaryKey => $this->getId()]);
                 } else {
                     foreach ($languages as $language) {
-                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + (isset($index[$language['id']]) ? $index[$language['id']] : []));
+                        $this->getContainer()->get('indexer')->insert(static::ENTITY_TYPE, $language['id'], [$this->primaryKey => $this->getId()] + $columns + ($index[$language['id']] ?? []));
                     }
                 }
                 $this->afterSave();

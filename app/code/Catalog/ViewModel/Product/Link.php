@@ -7,6 +7,8 @@ use Seahinet\Catalog\ViewModel\Category\ProductList;
 abstract class Link extends ProductList
 {
 
+    use \Seahinet\Lib\Traits\DB;
+    
     protected $limit = null;
 
     public function getLimit()

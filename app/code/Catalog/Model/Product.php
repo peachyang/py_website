@@ -117,7 +117,7 @@ class Product extends Entity
             $attribute = new Attribute;
             $attribute->load($idOrCode, is_numeric($idOrCode) ? 'id' : 'code');
             if ($attribute->getId()) {
-                if(is_null($option)){
+                if(!is_null($option)){
                     return $attribute->getOption($option, $this->languageId);
                 }
                 return $attribute;

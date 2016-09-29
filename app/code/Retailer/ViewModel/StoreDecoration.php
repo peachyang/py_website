@@ -5,6 +5,8 @@ namespace Seahinet\Retailer\ViewModel;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
 use Seahinet\Retailer\Model\StoreTemplate;
+use Seahinet\Retailer\Model\Retailer;
+use Seahinet\Retailer\Model\Collection\RetailerCollection;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Lib\Session\Segment;
@@ -45,6 +47,7 @@ class StoreDecoration extends Template
 		{
 			$templateView['code_model'] = $this->changeModel($templateView['code_model']);
 			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
+			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params']);
 		}
 		
 		if( !empty($templateView) && $templateView['store_id'] != $segment->get('customer')['store_id'] && $templateView['store_id']!=0 )
@@ -75,6 +78,12 @@ class StoreDecoration extends Template
 	   }
 
        return $final_view;
+	}
+	
+	public function changeStableParams($params){
+		$params = urldecode($params);
+		$params = json_decode($params,true);
+		return $params;		
 	}
 	
 	public function divideParam($value,$str){
@@ -111,6 +120,15 @@ class StoreDecoration extends Template
 		
 	}
 	
+	public function getStoreBanner(){
+		$segment = new Segment('customer');		
+		$retailer = new RetailerCollection;
+		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$segment->get('customer')['store_id']])
+		->join('resource','retailer.photo = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
+		//return $segment->get('customer');
+		return empty($retailer) ? [] : $retailer[0] ;
+	}
+	
 	
 	
 	/*
@@ -119,7 +137,23 @@ class StoreDecoration extends Template
 	 * 
 	*/
 	public function template_logo_top($params=''){
-		$content = '<img style="width:1128px;height:200px" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
+		if(!empty($params))
+		{
+			if($params['widthSetType'] == "1")
+				$width = $params['widthSet']."px";
+			else
+				$width = '100%';
+			$height = $params['heightSet']."px";
+				
+		}else{
+			$width = '1128px';
+			$height = '200px';
+		}
+		$retailer = $this->getStoreBanner();
+		if(!empty($retailer['real_name']))
+			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
+		else
+			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
 		return $content;
 	}
 	

@@ -150,7 +150,7 @@ function _init() {
         layer.open({
         	id:'iframe_layer',
   			type: 2,
-  			area: ['700px', '530px'],
+  			area: ['720px', '560px'],
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,
@@ -722,7 +722,8 @@ function s4() {
 
 function changeTag(){
 	$("#save_html .function-tag").each(function(){
-		$(this).html("{{"+$(this).attr('data-tag')+':'+$(this).attr('data-param')+'}}');
+		if($(this).attr('data-tag')!="paragraph")
+			$(this).html("{{"+$(this).attr('data-tag')+':'+$(this).attr('data-param')+'}}');
 	});
 	//console.log($("#save_html").html());
 	return $("#save_html").html();

@@ -830,12 +830,34 @@ decorationFunc_logo_top:
                     -
                         method: setTitle
                         params: logo
-
             content:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationFunc/logo_top
+decorationFunc_paragraph:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: paragraph
+                    -
+                        method: addScript
+                        params: frontend/dragResource/editor/ueditor.config.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/editor/ueditor.all.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/editor/lang/zh-cn/zh-cn.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/paragraph
 
 admin_retailer_apply_list:
     update: grid

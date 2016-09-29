@@ -27,12 +27,6 @@ class Navigation extends Template
         if (!isset($b['priority'])) {
             $b['priority'] = 0;
         }
-        if (!empty($a['children'])) {
-            usort($a['children'], [$this, 'sortItems']);
-        }
-        if (!empty($b['children'])) {
-            usort($b['children'], [$this, 'sortItems']);
-        }
         return (int) $a['priority'] <=> (int) $b['priority'];
     }
 

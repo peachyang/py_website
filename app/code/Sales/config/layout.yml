@@ -369,14 +369,14 @@ admin_refund_list:
                 action:
                     -
                         method: setTitle
-                        params: Refund Rights / Sales
+                        params: Return &amp; Refund / Sales
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/sales_refund/',label:'Refund Rights'}]
+                                params: [{link:':ADMIN/sales_refund/',label:'Return &amp; Refund'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Sales\Grid\Refund
                         template: admin/grid
@@ -388,14 +388,14 @@ admin_refund_view:
                 action:
                     -
                         method: setTitle
-                        params: Refund Rights / Sales
+                        params: Return &amp; Refund / Sales
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/sales_refund/',label:'Refund Rights'}]
+                                params: [{link:':ADMIN/sales_refund/',label:'Return &amp; Refund'}]
                             -
                                 method: addCrumb
                                 params: [{label:'View'}]

@@ -100,7 +100,7 @@
 "Please use only letters (a-z or A-Z) or numbers (0-9) in this field. No spaces or other characters are allowed. Similar looking characters (e.g. ""i"", ""l"", ""1"") decrease chance of correct recognition by customer.","请只使用字母(a-z或A-Z)或数字(0-9)，不允许使用空格或其他字符。相似的字符(如：""i"",""l"",""1"")将降低验证码辨识度。"
 "QQ Login","QQ登录"
 "Reason","原因"
-"Redirect to Account Dashboard after Logging in","登录后重定向到顾客中心"
+"Redirect Customer to Account Dashboard after Logging in","登录后重定向到顾客中心"
 "Return &amp; Refund","退换货申请"
 "Register","注册"
 "Registion Options","注册选项"

@@ -30,5 +30,5 @@ sales:
             priority: 60
         -
             link: 'sales_refund/'
-            title: Refund Rights
+            title: Return &amp; Refund
             priority: 70

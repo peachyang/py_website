@@ -390,5 +390,98 @@ class StoreController extends AuthActionController
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 	
+	public function decorationUploadForBannerAction(){
+		$this->decorationDeleteForBanner();
+		$result = ['error' => 0, 'message' => []];
+		$name ='';
+        if ($this->getRequest()->isPost()) {
+        	$segment = new Segment('customer');
+            $data = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getUploadedFile()['files'];
+            $store = $segment->get('customer')['store_id'];
+            if ($result['error'] === 0) {	
+                try {
+                    foreach ($files as $file) {
+                        $name = $file->getClientFilename();
+                        $model = new Model();
+                        $model->moveFile($file)
+                                ->setData([
+                                    'store_id' => $store,
+                                    'uploaded_name' => $name,
+                                    'file_type' => $file->getClientMediaType(),
+                                    'category_id' => null
+                                ])->save();
+						$name = $model['real_name'];
+                        $result['message'][] = ['message' => $this->translate('%s has been uploaded successfully.', [$name], 'resource'), 'level' => 'success'];
+                    }
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
+                }
+            }
+        	if($result['error'] === 0){
+				$Rmodel = new Rmodel;
+				$Rmodel->load($data['retailer_id']);
+				if($Rmodel['store_id'] == $store )
+				{
+					$Rmodel->setData(['photo'=>$model->getID()]);
+					$Rmodel->save();
+				}						
+				
+			}
+		}
+		
+		$result['picInfo'] = $name;
+		$result['status'] = $result['error'];
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+		
+	
+	public function decorationUploadDeleteForBannerAction()
+    {
+       	$result = $this->decorationDeleteForBanner();
+		return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+	
+	public function decorationDeleteForBanner(){
+		
+		$result = ['error' => 0, 'message' => []];
+		$segment = new Segment('customer');
+            $data = $this->getRequest()->getPost();
+            if ($result['error'] === 0) {
+            	$storeDecoration = new SDViewModel();	
+            	$retailer = $storeDecoration->getStoreBanner();
+				if(!empty($retailer['photo']))
+				{
+                try {
+                    $path = BP . Model::$options['path'];
+
+                        $model = new Model;
+                        $model->load($retailer['photo']);
+                        if ($model->getId()) {
+                            $type = $model['file_type'];
+                            if ($model['store_id']==$segment->get('customer')['store_id']) {
+                            	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
+                                if(file_exists($files))
+                                	unlink($files);
+								$model->remove();
+                            }						
+						}
+						$Rmodel = new Rmodel;
+						$Rmodel->load($retailer['id']);
+						$Rmodel->setData(['photo'=>0]);
+						$Rmodel->save();
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+
+                    $result['error'] = 1;
+                }
+                }
+            }
+		$result['status'] = $result['error'];
+		return $result;
+		
+	}
+	
 
 }

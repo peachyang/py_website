@@ -5,9 +5,8 @@ $logo_topView = $this->template_logo_top(!empty($templateView['stable_params']['
 $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heightSet']) ? $templateView['stable_params']['logo_top']['heightSet'] + 4 : 200;
 ?>
 
-<div class="decoration_logo_top stable_top" style="height:<?php echo $logo_top_outerHeight;  ?>px" >
+<div class="decoration_logo_top stable_top" style="height:<?php echo $logo_top_outerHeight;  ?>px;background-image:url(<?php echo $logo_topView;  ?>" >
 
-<?php echo $logo_topView; ?>
 </div>
 <header class="header clearfix">
 <nav class="nav-main  store_menu">

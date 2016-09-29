@@ -28,10 +28,10 @@ class Navigation extends Template
             $b['priority'] = 0;
         }
         if (!empty($a['children'])) {
-            uasort($a['children'], [$this, 'sortItems']);
+            usort($a['children'], [$this, 'sortItems']);
         }
         if (!empty($b['children'])) {
-            uasort($b['children'], [$this, 'sortItems']);
+            usort($b['children'], [$this, 'sortItems']);
         }
         return (int) $a['priority'] <=> (int) $b['priority'];
     }

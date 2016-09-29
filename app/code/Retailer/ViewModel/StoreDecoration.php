@@ -139,10 +139,10 @@ class StoreDecoration extends Template
 	public function template_logo_top($params=''){
 		if(!empty($params))
 		{
-			if($params['widthSetType'] == "1")
-				$width = $params['widthSet']."px";
-			else
-				$width = '100%';
+//			if($params['widthSetType'] == "1")
+//				$width = $params['widthSet']."px";
+//			else
+//				$width = '100%';
 			$height = $params['heightSet']."px";
 				
 		}else{
@@ -150,10 +150,14 @@ class StoreDecoration extends Template
 			$height = '200px';
 		}
 		$retailer = $this->getStoreBanner();
+//		if(!empty($retailer['real_name']))
+//			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
+//		else
+//			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
 		if(!empty($retailer['real_name']))
-			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
+			$content = $this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']);
 		else
-			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
+			$content = $this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg');
 		return $content;
 	}
 	

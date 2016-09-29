@@ -3,7 +3,7 @@ $item = $this->getVariable('item');
 $key = $this->getVariable('key');
 $id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
-if (is_string($item['value'])) {
+if (isset($item['value']) && is_string($item['value'])) {
     $value = json_decode($item['value']);
     if (!$value) {
         $value = explode(',', $item['value']);

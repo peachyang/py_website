@@ -28,9 +28,9 @@
         "symfony/finder": "~3.1.0",
         "symfony/yaml": "~3.1.0",
         "tijsverkoyen/akismet": "~1.1",
-        "zendframework/zend-crypt": "~2.6||~3.0.0",
+        "zendframework/zend-crypt": "~3.1.0",
         "zendframework/zend-db": "~2.8||~3.0.0",
-        "zendframework/zend-math": "~2.7||~3.0.0",
+        "zendframework/zend-math": "~3.0.0",
         "zendframework/zend-permissions-rbac": "~2.5||~3.0.0",
         "zendframework/zend-stdlib": "~3.0.0"
     },

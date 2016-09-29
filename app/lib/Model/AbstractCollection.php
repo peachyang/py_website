@@ -88,6 +88,16 @@ abstract class AbstractCollection extends ArrayObject
     }
 
     /**
+     * Get Select instance
+     * 
+     * @return Select
+     */
+    public function getSelect()
+    {
+        return $this->select;
+    }
+
+    /**
      * Get cache key
      * 
      * @return string
@@ -116,10 +126,10 @@ abstract class AbstractCollection extends ArrayObject
                     $this->beforeLoad();
                     $result = $this->getTableGateway($this->tableName)->selectWith($this->select)->toArray();
                     if (count($result)) {
-                        $this->afterLoad($result);
                         if ($useCache) {
                             $this->addCacheList($cacheKey, $result, $this->getCacheKey());
                         }
+                        $this->afterLoad($result);
                     }
                 } else {
                     $this->afterLoad($result);

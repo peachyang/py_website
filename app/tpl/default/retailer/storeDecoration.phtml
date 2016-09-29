@@ -1,6 +1,7 @@
 <?php 
 $templateView = $this->getTemplateView();
 $menuView = $this->template_menu();
+$logo_topView = $this->template_logo_top();
  ?>
 	       
         <style>
@@ -11,7 +12,7 @@ $menuView = $this->template_menu();
             .col-md-61{padding:0px}
             .navbar-brand{margin-left:11px;color:#FFFFFF;font-size:20px}
             .navbar-inverse .navbar-brand{color:#FFFFFF;}
-            .header .nav.container{width:1060px;margin:0px auto}
+            .header .nav.container{width:1150px;margin:0px auto}
         </style>
         <script type="text/javascript">
             var path = '';
@@ -20,6 +21,10 @@ $menuView = $this->template_menu();
             var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
             var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
+<div class="decoration_logo_top stable_top notice">
+	<a href="javascript:void(0)" class="stable" data-tag='logo_top' data-name='店铺头部LOGO' data-param='' ><button class="btn btn-warning btn-sm sets" >编辑头部LOGO</button></a>
+<?php echo $logo_topView; ?>
+</div>
 <header class="header clearfix">
 <nav class="nav-main">
 <ul class="nav nav-pills container stable_top notice">
@@ -323,7 +328,7 @@ $menuView = $this->template_menu();
                     </div>
                 </div>
 
-                <div class="htmlpage" style="width:1100px;margin:0px auto;margin-top:11px" > 
+                <div class="htmlpage" style="width:1160px;margin:0px auto;margin-top:5px" > 
                  
                  <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>              
                 </div>

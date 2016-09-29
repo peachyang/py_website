@@ -18,7 +18,7 @@ class CategoryController extends ActionController
             $category = new Category;
             $category->load($this->getOption('category_id'));
             $root = $this->getLayout('catalog_category');
-            $root->getChild('head')->setTitle($category['meta_title']? : $category['name'])
+            $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
                     ->setDescription($category['meta_description'])
                     ->setKeywords($category['meta_keywords']);
             $content = $root->getChild('content');
@@ -32,62 +32,65 @@ class CategoryController extends ActionController
         return $this->notFoundAction();
     }
 
-    protected function prepareCollection($collection, $category = null)
+    protected function prepareCollection(\Seahinet\Lib\Model\AbstractCollection $collection, $category = null)
     {
         $condition = $this->getRequest()->getQuery();
         $config = $this->getContainer()->get('config');
         $mode = $condition['mode'] ?? 'grid';
         unset($condition['q'], $condition['type'], $condition['mode']);
+        $select = $collection->getSelect();
         if (isset($condition['limit']) && $condition['limit'] === 'all' && $config['catalog/frontend/allowed_all_products']) {
-            $collection->reset('limit')->reset('offset');
+            $select->reset('limit')->reset('offset');
         } else {
             $limit = isset($condition['limit']) && in_array($condition['limit'], explode(',', trim($config['catalog/frontend/allowed_per_page_' . $mode], ','))) ?
                     $condition['limit'] : $config['catalog/frontend/default_per_page_' . $mode];
             if (isset($condition['page'])) {
-                $collection->offset(($condition['page'] - 1) * $limit);
+                $select->offset(($condition['page'] - 1) * $limit);
                 unset($condition['page']);
             }
-            $collection->limit((int) $limit);
+            $select->limit((int) $limit);
         }
         unset($condition['limit']);
         if (isset($condition['asc'])) {
-            $collection->order((strpos($condition['asc'], ':') ?
+            $select->order((strpos($condition['asc'], ':') ?
                             str_replace(':', '.', $condition['asc']) :
                             $condition['asc']) . ' ASC');
             unset($condition['asc'], $condition['desc']);
         } else if (isset($condition['desc'])) {
-            $collection->order((strpos($condition['desc'], ':') ?
+            $select->order((strpos($condition['desc'], ':') ?
                             str_replace(':', '.', $condition['desc']) :
                             $condition['desc']) . ' DESC');
             unset($condition['desc']);
         } else if ($category && $default = $category['default_sortable']) {
-            $collection->order($default);
+            $select->order($default);
         }
-        if (!empty($condition)) {
-            foreach ($condition as $key => $value) {
-                if (trim($value) === '') {
-                    unset($condition[$key]);
-                } else if (strpos($key, ':')) {
-                    if (strpos($value, '%') !== false) {
-                        $collection->where(new Like(str_replace(':', '.', $key), $value));
-                    } else {
-                        $condition[str_replace(':', '.', $key)] = $value;
-                    }
-                    unset($condition[$key]);
-                } else if (strpos($value, '%') !== false) {
-                    $collection->where(new Like($key, $value));
-                    unset($condition[$key]);
+        foreach ($condition as $key => $value) {
+            if (trim($value) === '') {
+                unset($condition[$key]);
+            } else if (strpos($key, ':')) {
+                if (strpos($value, '%') !== false) {
+                    $select->where(new Like(str_replace(':', '.', $key), $value));
                 } else {
-                    $attribute = new Attribute;
-                    $attribute->load($key, 'code');
-                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
-                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
-                        unset($condition[$key]);
-                    }
+                    $condition[str_replace(':', '.', $key)] = $value;
+                }
+                unset($condition[$key]);
+            } else if (strpos($value, '%') !== false) {
+                $select->where->like($key, $value);
+                unset($condition[$key]);
+            } else {
+                $attribute = new Attribute;
+                $attribute->load($key, 'code');
+                if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
+                    $select->where('(' . $key . ' LIKE \'' . $value . ',%\' OR '
+                            . $key . ' LIKE \'%,' . $value . '\' OR '
+                            . $key . ' LIKE \'%,' . $value . ',%\' OR '
+                            . $key . ' = \'' . $value . '\')');
+                    unset($condition[$key]);
                 }
             }
-            $collection->where($condition);
         }
+        $condition['status'] = 1;
+        $select->where($condition);
         return $collection;
     }
 

@@ -5,7 +5,6 @@ namespace Seahinet\Checkout\ViewModel\Cart;
 use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\ViewModel\Product\Link;
 use Seahinet\Sales\Model\Cart;
-use Zend\Db\Sql\Predicate\In;
 
 class Crosssell extends Link
 {
@@ -36,7 +35,7 @@ class Crosssell extends Link
             }
             if (count($ids)) {
                 $products = new Product;
-                $products->where(new In('id', array_keys($ids)));
+                $products->where(['status' => 1])->where->in('id', array_keys($ids));
                 $this->products = $products;
             } else {
                 $this->products = [];

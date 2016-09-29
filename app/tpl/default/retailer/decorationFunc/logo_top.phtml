@@ -9,7 +9,7 @@ $picInfo = json_encode($picInfos);
 
 <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
       <li class="active"><a href="#basic">基本属性</a></li> 
-      <li><a href="#uploadPic">LOGO图片</a></li> 
+      <li><a href="#uploadPic">Banner图片</a></li> 
  </ul> 
        
  <div class="tab-content"> 
@@ -31,13 +31,9 @@ $picInfo = json_encode($picInfos);
 <div class="tab-pane" id="uploadPic" >
 <div style="margin:26px">
 <form id=uploadForm onsubmit="return false" >
-<input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-<input type="hidden" name="resource_category_code" value="store_carousel" />
- <div class="rows">
-  图片标题: &nbsp;<input type="text" id='pic_title' name="pic_title" placeholder="" > &nbsp; 图片链接: &nbsp;<input type="text" id='url' name="url" placeholder="http://" style="width:260px" > 
- </div>
+
  <div class="rows" >   
-   上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">增 加</button>
+   上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">设 置</button>
 </div>
 </form>
 <hr width="99%" style="border-color:#e8c7b6" > 
@@ -65,7 +61,7 @@ $picInfo = json_encode($picInfos);
 <script>
 	var data_tag = '<?php echo $data_tag; ?>';
 	var part_id = '<?php echo $part_id; ?>';
-	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
+	var obj = $('#'+part_id,parent.document);
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
 
 	$(document).ready(function(){
@@ -147,13 +143,13 @@ $picInfo = json_encode($picInfos);
 
 	$('#focusBtn').click(function(){
 		data_param = {};
-		data_param['heightSetType'] = $("input:radio[name='heightSetType']:checked").val();
+		data_param['widthSetType'] = $("input:radio[name='widthSetType']:checked").val();
 		
-		if(data_param['heightSetType']=="1")
+		if(data_param['widthSetType']=="1")
 		{
-			if(isNaN($("#heightSet").val()))
+			if(isNaN($("#widthSet").val()))
 			{
-				layer.msg('高度设置请输入数字', {shade: [0.3,'#fff'],time: 2000});
+				layer.msg('宽度设置请输入数字', {shade: [0.3,'#fff'],time: 2000});
 				return;
 			}
 			
@@ -168,6 +164,9 @@ $picInfo = json_encode($picInfos);
 		data_param = encodeURIComponent(JSON.stringify(data_param));
 		obj.attr('data-param',data_param);
 		top.window.call_ajax_data(part_id,data_tag);
+		
+		
+		
 	});
 </script>
 

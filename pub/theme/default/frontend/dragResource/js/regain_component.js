@@ -54,8 +54,10 @@
     function logo_top_init(data_id,view){
 		var data_param = $("#" + data_id).attr("data-param");
 		var obj = $("#" + data_id);
+		obj.closest('.stable_top').find('img').remove();
+	    obj.closest('.stable_top').append(view);
 		if($.trim(data_param)!="")
-	    	{
+	    {
 	    		data_param = JSON.parse(decodeURIComponent(data_param));
 	    	
 	    		if(data_param.widthSetType==1)
@@ -65,6 +67,8 @@
 	    		obj.closest('.stable_top').find('img').css('height',data_param.heightSet+"px");
 	    		obj.closest('.stable_top').css('height',(parseInt(data_param.heightSet)+4)+"px");
 	    }
+
+	    
     }
     
     function component_reset(){

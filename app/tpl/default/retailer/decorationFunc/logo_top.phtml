@@ -4,6 +4,8 @@ $part_id = $this->getVariable("part_id");
 $picInfos = $this->getStorePicInfo("store_carousel");
 $picInfo = json_encode($picInfos);
 
+$retailer = $this->getStoreBanner();
+
  ?>
 
 
@@ -31,16 +33,20 @@ $picInfo = json_encode($picInfos);
 <div class="tab-pane" id="uploadPic" >
 <div style="margin:26px">
 <form id=uploadForm onsubmit="return false" >
-
+<input type="hidden" name='retailer_id' value="<?php echo $retailer['id'] ?>" >
  <div class="rows" >   
    上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">设 置</button>
 </div>
 </form>
 <hr width="99%" style="border-color:#e8c7b6" > 
 <div class="rows">
-	<ul class="picList">
-
-	
+	<ul class="picList" style="text-align: center;"  >
+ <?php if(empty($retailer['photo'])){ ?>
+	<img width="380" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg') ?>">
+<?php } else{  ?>
+	<img width="380" src="<?php echo $this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']) ?>"><br><br>
+		<button class="btn btn-warning btn-xs" onclick="deleteUpload()" >删 除</button>
+<?php } ?>
 	</ul> 	
 </div>
 </div>
@@ -93,7 +99,7 @@ $picInfo = json_encode($picInfos);
 	function doUpload() {  
      var formData = new FormData($( "#uploadForm" )[0]);  
      $.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUpload') ?>' ,  
+          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadForBanner') ?>' ,  
           type: 'POST',  
           data: formData, 
           cache: false,  
@@ -104,8 +110,9 @@ $picInfo = json_encode($picInfos);
           },  
           success: function (json) {  
         	if(json.status==0){
-        		picInfo.pics1 = JSON.parse(json.picInfo);
-        		$('.picList').html(template('li_carousel',picInfo));	
+				var htmls = '<img width="380" src="<?php echo $this->getBaseUrl('/pub/resource/image/') ?>'+ json.picInfo +'">';
+				htmls += '<br><br><button class="btn btn-warning btn-xs" onclick="deleteUpload()" >删 除</button>';
+				$('.picList').html(htmls);
         	}
         	$("#uploadForm")[0].reset();
         	layer.closeAll();
@@ -119,18 +126,18 @@ $picInfo = json_encode($picInfos);
 
 	
 	
-	function deleteUpload(id,resource_id){
+	function deleteUpload(){
 	$.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadDelete') ?>' ,  
+          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadDeleteForBanner') ?>' ,  
           type: 'POST',  
-          data: {id:id,resource_id:resource_id,resource_category_code:'store_carousel'},  
+          data: {},  
           beforeSend:function(){
             layer.load(1, {shade: [0.1,'#fff'] });	
           },  
           success: function (json) {  
         	if(json.status==0){
-        		picInfo.pics1 = JSON.parse(json.picInfo);
-        		$('.picList').html(template('li_carousel',picInfo));	
+        		var htmls = '<img width="380" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg') ?>">';
+				$('.picList').html(htmls);
         	}
         	layer.closeAll();
           },  

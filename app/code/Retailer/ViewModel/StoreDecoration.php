@@ -6,6 +6,7 @@ use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Retailer;
+use Seahinet\Retailer\Model\Collection\RetailerCollection;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Lib\Session\Segment;
@@ -120,8 +121,12 @@ class StoreDecoration extends Template
 	}
 	
 	public function getStoreBanner(){
-		$segment = new Segment('customer');
-		$retailer = new Retailer;
+		$segment = new Segment('customer');		
+		$retailer = new RetailerCollection;
+		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$segment->get('customer')['store_id']])
+		->join('resource','retailer.photo = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
+		//return $segment->get('customer');
+		return empty($retailer) ? [] : $retailer[0] ;
 	}
 	
 	
@@ -144,7 +149,11 @@ class StoreDecoration extends Template
 			$width = '1128px';
 			$height = '200px';
 		}
-		$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
+		$retailer = $this->getStoreBanner();
+		if(!empty($retailer['real_name']))
+			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
+		else
+			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg').'">';
 		return $content;
 	}
 	

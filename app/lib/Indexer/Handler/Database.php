@@ -80,7 +80,7 @@ class Database extends AbstractHandler
                         $column = new Ddl\Column\Text($attr['attr'], 65535, true);
                     }
                     $ddl->addColumn($column);
-                    if ($attr['is_unique']) {
+                    if ($attr['is_unique'] && $attr['type'] !== 'text') {
                         #$ddl->addConstraint(new Ddl\Constraint\UniqueKey($attr['attr'], 'UNQ_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
                         $ddl->addConstraint(new Ddl\Index\Index($attr['attr'], 'IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
                     }

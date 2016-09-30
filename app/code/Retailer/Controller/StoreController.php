@@ -96,6 +96,12 @@ class StoreController extends AuthActionController
         $root = $this->getLayout('view_store');
         return $root;
     }
+	
+	public function viewSearchAction()
+    {
+        $root = $this->getLayout('view_search');
+        return $root;
+    }
 
     /**
      * temporary view

@@ -612,6 +612,35 @@ view_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/store
+view_search:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/store_search
 view_store1:
     update: frontend
     root:

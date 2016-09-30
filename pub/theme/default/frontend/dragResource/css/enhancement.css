@@ -43,6 +43,6 @@
 		#uploadPic .infoList li div.url{width:300px}
 		#uploadPic .infoList li div.url input{width:290px}
 		#uploadPic .infoList li div.adjust{padding-top:20px}
-		
+		.decoration_logo_top{background-repeat: no-repeat;background-position: center;}
 		.decoration_logo_top.notice{border:2px dashed #6699ff}
 		.decoration_logo_top button.sets{position:absolute;right:11px}

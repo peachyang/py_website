@@ -8,6 +8,7 @@
             $hasChildren = isset($item['children']);
             $html = '';
             if ($hasChildren) {
+                usort($item['children'], [$this, 'sortItems']);
                 foreach ($item['children'] as $child) {
                     if (!isset($child['operation']) || $this->hasPermission($child['operation'])) {
                         $html .= '<li role="presentation" class="item"><a href="' . $this->getUrl($child['link']) . '" role="menuitem">' . $this->translate($child['title']) . '</a></li>';

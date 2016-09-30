@@ -7,14 +7,17 @@ use Seahinet\Catalog\Model\Collection\Product as Collection;
 use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
 use Seahinet\Catalog\Model\Product\Option as OptionModel;
 use Seahinet\Catalog\Model\Warehouse;
-use Seahinet\Resource\Model\Resource;
-use Seahinet\Lib\Model\Collection\Eav\Attribute;
-use Seahinet\Lib\Model\Eav\Entity;
-use Zend\Db\Sql\Predicate\In;
+use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
+use Seahinet\Lib\Model\Eav\{
+    Entity,
+    Attribute
+};
 use Seahinet\Catalog\Model\Collection\Product\Review;
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Customer\Model\Customer;
 use Seahinet\I18n\Model\Currency;
+use Seahinet\Lib\Session\Segment;
+use Seahinet\Resource\Model\Resource;
+use Zend\Db\Sql\Predicate\In;
 
 class Product extends Entity
 {
@@ -44,6 +47,21 @@ class Product extends Entity
         return [];
     }
 
+    public function getOption($id, $value = null)
+    {
+        if ($this->getId()) {
+            $options = $this->getOptions(['id' => $idOrCode]);
+            if ($options->count()) {
+                $option = $options[0];
+                if (!is_null($value)) {
+                    return $option->getValue($value);
+                }
+                return $option;
+            }
+        }
+        return null;
+    }
+
     public function getCategories()
     {
         if ($this->getId()) {
@@ -68,7 +86,7 @@ class Product extends Entity
     {
         $result = [];
         if ($this->getId()) {
-            $attributes = new Attribute;
+            $attributes = new AttributeCollection;
             $attributes->withLabel()->withSet()->columns(['id', 'code', 'input'])->where([
                 'eav_attribute_set.id' => $this->storage['attribute_set_id']
             ])->where->notIn('code', [
@@ -91,6 +109,21 @@ class Product extends Entity
             }
         }
         return $result;
+    }
+
+    public function getAttribute($idOrCode, $option = null)
+    {
+        if ($this->getId()) {
+            $attribute = new Attribute;
+            $attribute->load($idOrCode, is_numeric($idOrCode) ? 'id' : 'code');
+            if ($attribute->getId()) {
+                if(!is_null($option)){
+                    return $attribute->getOption($option, $this->languageId);
+                }
+                return $attribute;
+            }
+        }
+        return null;
     }
 
     public function getInventory($warehouse, $sku = null)

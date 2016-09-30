@@ -47,17 +47,17 @@ abstract class Collection extends AbstractCollection
                 if ($useCache && ($result = $this->loadFromCache($cacheKey))) {
                     $this->afterLoad($result);
                 } else if ($result = $this->loadFromIndexer()) {
-                    $this->afterLoad($result);
                     if ($useCache) {
                         $this->addCacheList($cacheKey, $result, $this->getCacheKey());
                     }
+                    $this->afterLoad($result);
                 }
             } catch (BadIndexerException $e) {
                 if ($result = $this->loadFromDb($id, $key)) {
-                    $this->afterLoad($result);
                     if ($useCache) {
                         $this->addCacheList($cacheKey, $result, $this->getCacheKey());
                     }
+                    $this->afterLoad($result);
                 }
             } catch (InvalidQueryException $e) {
                 $this->getContainer()->get('log')->logException($e);

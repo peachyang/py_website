@@ -85,7 +85,7 @@ class Url implements Provider
                         'product_id' => $product['id'],
                         'category_id' => $category['id'],
                         'path' => (isset($data[$language['id']][$category['id']]['path']) ?
-                                ($data[$language['id']][$category['id']]['path'] . '/') : '') .
+                        ($data[$language['id']][$category['id']]['path'] . '/') : '') .
                         $product['uri_key']
                     ];
                 }
@@ -98,8 +98,8 @@ class Url implements Provider
 
     private function getPath($category, $tree)
     {
-        if (isset($this->path[$category['id']])) {
-            return $this->path[$category['id']];
+        if (isset($this->path[$category['id'] . '#' . $category['uri_key']])) {
+            return $this->path[$category['id'] . '#' . $category['uri_key']];
         }
         if (!isset($category['uri_key'])) {
             return '';
@@ -109,7 +109,7 @@ class Url implements Provider
         if ($pid && isset($tree[$pid])) {
             $path = trim($this->getPath($tree[$pid]['object'], $tree) . '/' . $path, '/');
         }
-        $this->path[$category['id']] = $path;
+        $this->path[$category['id'] . '#' . $category['uri_key']] = $path;
         return $path;
     }
 

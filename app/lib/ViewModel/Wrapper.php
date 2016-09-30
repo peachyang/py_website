@@ -15,9 +15,14 @@ class Wrapper extends AbstractViewModel
     public function render()
     {
         try {
-            return implode('', $this->getChild());
+            ob_start();
+            foreach($this->getChild() as $child){
+                echo $child->__toString();
+            }
+            return ob_get_clean();
         } catch (Error $e) {
             $this->getContainer()->get('log')->logError($e);
+            ob_end_clean();
             return '';
         }
     }

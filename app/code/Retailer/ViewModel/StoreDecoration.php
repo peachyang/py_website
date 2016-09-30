@@ -129,7 +129,30 @@ class StoreDecoration extends Template
 		return empty($retailer) ? [] : $retailer[0] ;
 	}
 	
-	
+	public function getSearchProducts(){
+		$condition = $this->getQuery();
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition);
+		$content = "";
+		foreach ($productsData as $key => $value) {
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+			$content .= '<li class="col-md-3" >
+                            <div>
+                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
+                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <p class="paid-count"></p>
+                            </div>
+             			</li>';
+		}
+		return $content;                
+	}
 	
 	/*
 	 * template content 
@@ -182,26 +205,28 @@ class StoreDecoration extends Template
 	}
 	
 	public function template_long_search($params=''){
-		$content = '<label class="search-label">本店搜索</label>
-                <input class="keyword" type="text" name="keyword" value="" />&nbsp;&nbsp;
-                <input class="price-from" type="text" name="price-from" value="" />
+		$content = '<form target=_blank action="'.$this->getBaseUrl('/retailer/store/viewSearch').'"><label class="search-label">本店搜索</label>
+                 <input class="keyword" type="text" name="name" value="" />&nbsp;&nbsp;
+                <input class="price-from" type="text" name="price_from" value="" />
                 &nbsp;-&nbsp;
-                <input class="price-to" type="text" name="price-to" value="" />
-                <button class="search-button">搜索</button>';
+                <input class="price-to" type="text" name="price_to" value="" />
+                <button class="search-button">搜索</button>
+                </form>';
 		return $content;
 	}
 	
 	public function template_short_search($params=''){
 		$content = '<div class="title"><h2>本店搜索</h2></div>
                 <div class="search-table">
+                    <form target=_blank action="'.$this->getBaseUrl('/retailer/store/viewSearch').'">
                     <table>
                         <tr>
                             <td class="label">关键字:</td>
-                            <td><input class="keyword" type="text" name="key" value="" /></td>
+                            <td><input class="keyword" type="text" name="name" value="" /></td>
                         </tr>
                         <tr>
                             <td class="label">价格:</td>
-                            <td><input class="price-from" type="text" name="pri-from" value="" />&nbsp;&nbsp;<input class="price-to" type="text" name="pri-to" value="" />
+                            <td><input class="price-from" type="text" name="price_from" value="" />&nbsp;&nbsp;<input class="price-to" type="text" name="price_to" value="" />
                 </td>
                         </tr>
                         <tr>
@@ -213,6 +238,7 @@ class StoreDecoration extends Template
                             <td><a href="">雄鹰能量棒</a>&nbsp;<a href="">吸入式咖啡</a></td>
                         </tr>
                     </table>
+                    </form>
                 </div>';
 		return $content;
 	}

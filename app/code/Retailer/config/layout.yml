@@ -612,6 +612,35 @@ view_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/store
+view_search:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/store_search
 view_store1:
     update: frontend
     root:
@@ -821,6 +850,90 @@ decorationFunc_menu:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/decorationFunc/menu
+decorationFunc_product_class:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: product_class
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/product_class
+decorationFunc_long_search:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: long_search
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/long_search
+decorationFunc_short_search:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: short_search
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/short_search
+decorationFunc_product_recommend:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: product_recommend
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/product_recommend
+decorationFunc_store_recommend:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: store_recommend
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/store_recommend
+decorationFunc_sales_amount:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: sales_amount
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/sales_amount
 decorationFunc_logo_top:
     update: decorationFunc
     root:

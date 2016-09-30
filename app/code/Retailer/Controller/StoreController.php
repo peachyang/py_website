@@ -430,7 +430,7 @@ class StoreController extends AuthActionController
 				$Rmodel->load($data['retailer_id']);
 				if($Rmodel['store_id'] == $store )
 				{
-					$Rmodel->setData(['photo'=>$model->getID()]);
+					$Rmodel->setData(['banner'=>$model->getID()]);
 					$Rmodel->save();
 				}						
 				
@@ -457,13 +457,13 @@ class StoreController extends AuthActionController
             if ($result['error'] === 0) {
             	$storeDecoration = new SDViewModel();	
             	$retailer = $storeDecoration->getStoreBanner();
-				if(!empty($retailer['photo']))
+				if(!empty($retailer['banner']))
 				{
                 try {
                     $path = BP . Model::$options['path'];
 
                         $model = new Model;
-                        $model->load($retailer['photo']);
+                        $model->load($retailer['banner']);
                         if ($model->getId()) {
                             $type = $model['file_type'];
                             if ($model['store_id']==$segment->get('customer')['store_id']) {
@@ -475,7 +475,7 @@ class StoreController extends AuthActionController
 						}
 						$Rmodel = new Rmodel;
 						$Rmodel->load($retailer['id']);
-						$Rmodel->setData(['photo'=>0]);
+						$Rmodel->setData(['banner'=>0]);
 						$Rmodel->save();
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

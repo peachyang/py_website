@@ -8,7 +8,7 @@ class RetailerCollection extends AbstractCollection
 
     protected function construct()
     {
-       $this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'name', 'address', 'account', 'photo', 'credentials', 'status']);
+       $this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'name', 'address', 'account', 'photo', 'banner','credentials', 'status']);
     }
     	
     

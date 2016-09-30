@@ -269,7 +269,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-essential .product-info{padding:0 30px 0 10px}
 .product-essential .product-info .product-name{font-size:16px;line-height:33px;color:#000;margin:7px 0 22px}
 .product-essential .product-info .price-box{background:#f4f4f4;font-size:0;color:#9b9a9a}
-.product-essential .product-info .price-box .label{display:inline-block;padding:15px 16px 12px 15px;font-size:13px;vertical-align:middle}
+.product-essential .product-info .price-box .label{display:inline-block;padding:15px 16px 12px 15px;font-size:13px;line-height:1;vertical-align:middle}
 .product-essential .product-info .price-box .price{font-size:25px;line-height:42px;vertical-align:middle}
 .product-essential .product-info .price-box .old-price{display:block}
 .product-essential .product-info .price-box .old-price .price{font-size:16px}

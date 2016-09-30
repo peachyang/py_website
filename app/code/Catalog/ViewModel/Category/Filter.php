@@ -3,7 +3,6 @@
 namespace Seahinet\Catalog\ViewModel\Category;
 
 use Seahinet\Catalog\Model\Product;
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 
 class Filter extends Toolbar
@@ -29,7 +28,6 @@ class Filter extends Toolbar
     {
         $result = [];
         if ($this->getCollection()->count()) {
-            $languageId = Bootstrap::getLanguage()->getId();
             if ($this->getVariable('category')) {
                 $ids = [];
                 foreach ($this->getVariable('category')->getChildrenCategories() as $category) {

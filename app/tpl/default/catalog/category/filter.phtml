@@ -5,7 +5,7 @@ $current = $this->getCurrentFilters();
 <dl class="filters clearfix">
     <?php
     foreach ($filters as $key => $filter):
-        if(empty($filter['values'])){
+        if (count($filter['values']) > 1) {
             continue;
         }
         ?>
@@ -20,9 +20,9 @@ $current = $this->getCurrentFilters();
                         <li <?php if (isset($current[$key]) && $current[$key] == $value): ?> class="active"<?php endif ?>>
                             <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
                                 <span><?php echo $values['label'] ?></span>
-                                <?php #if ($this->showCount()): ?>
+                                <?php if ($this->showCount()): ?>
                                     <span class="count"><?php echo $values['count'] ?></span>
-                                <?php #endif ?>
+                                <?php endif ?>
                             </a>
                         </li>
                     <?php endforeach ?>                    

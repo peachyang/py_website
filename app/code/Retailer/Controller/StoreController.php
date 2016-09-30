@@ -144,7 +144,9 @@ class StoreController extends AuthActionController
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
 		$store_id = $data['store_id'];
-		$data['store_id'] = $segment->get('customer')['store_id'];
+		$r = new Rmodel;
+		$r->load($segment->get('customer')->getId(),'customer_id');		
+		$data['store_id'] = $r['store_id'];
 		$model = new StoreTemplate();
         
         if($data['template_id']=='0' || $store_id == '0' )
@@ -168,7 +170,9 @@ class StoreController extends AuthActionController
 	public function delTemplateAction(){
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
-		$store_id = $segment->get('customer')['store_id'];
+		$r = new Rmodel;
+		$r->load($segment->get('customer')->getId(),'customer_id');	
+		$store_id = $r['store_id'];
 		
 		$model = new StoreTemplate();
 		$model->load($data['id']);
@@ -186,7 +190,9 @@ class StoreController extends AuthActionController
 	public function setTemplateAction(){
 		$data = $this->getRequest()->getPost();
 		$segment = new Segment('customer');
-		$store_id = $segment->get('customer')['store_id'];
+		$r = new Rmodel;
+		$r->load($segment->get('customer')->getId(),'customer_id');	
+		$store_id = $r['store_id'];
 		
 		$model = new StoreTemplate();
 		$model->load($data['id']);
@@ -194,7 +200,7 @@ class StoreController extends AuthActionController
 			$result = ['status'=>FALSE];
 		else{
 		    $template = new StoreTemplateCollection();
-		    $template->storeTemplateList($segment->get('customer')['store_id']);
+		    $template->storeTemplateList($store_id);
 			foreach ($template as $key => $value) {
 				$tempModel = new StoreTemplate();
 				$tempModel->load($value['id']);
@@ -233,7 +239,9 @@ class StoreController extends AuthActionController
         if ($this->getRequest()->isPost()) {
         	$segment = new Segment('customer');
         	$data = $this->getRequest()->getPost();
-			$store = $segment->get('customer')['store_id'];
+			$r = new Rmodel;
+			$r->load($segment->get('customer')->getId(),'customer_id');
+			$store = $r['store_id'];
 			$storePicinfo = new StorePicinfo();
 			try{
 				$storePicinfo->setData([
@@ -261,10 +269,12 @@ class StoreController extends AuthActionController
 	    $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
         	$segment = new Segment('customer');
+			$r = new Rmodel;
+			$r->load($segment->get('customer')->getId(),'customer_id');
         	$data = $this->getRequest()->getPost();
 			$storePicinfo = new StorePicinfo;
 			$storePicinfo->load($data['id']);
-			if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+			if($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
 				$storePicinfo->remove();
 			else
 				$result['error'] = 1;
@@ -282,7 +292,9 @@ class StoreController extends AuthActionController
         	$segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $store = $segment->get('customer')['store_id'];
+			$r = new Rmodel;
+			$r->load($segment->get('customer')->getId(),'customer_id');
+            $store = $r['store_id'];
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 $categoryCollection = new Category();
@@ -339,7 +351,9 @@ class StoreController extends AuthActionController
                         $model->load($data['resource_id']);
                         if ($model->getId()) {
                             $type = $model['file_type'];
-                            if ($model['store_id']==$segment->get('customer')['store_id']) {
+							$r = new Rmodel;
+							$r->load($segment->get('customer')->getId(),'customer_id');
+                            if ($model['store_id']==$r['store_id']) {
                             	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
                                 if(file_exists($files))
                                 	unlink($files);
@@ -348,7 +362,7 @@ class StoreController extends AuthActionController
                         
 							$storePicinfo = new StorePicinfo;
 							$storePicinfo->load($data['id']);
-							if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+							if($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
 								$storePicinfo->remove();
 						
 						}
@@ -375,7 +389,9 @@ class StoreController extends AuthActionController
                 try {
 					$storePicinfo = new StorePicinfo;
 					$storePicinfo->load($data['id']);
-					if($storePicinfo->getId() && $storePicinfo['store_id'] == $segment->get('customer')['store_id'])
+					$r = new Rmodel;
+					$r->load($segment->get('customer')->getId(),'customer_id');
+					if($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
 					{
 						$storePicinfo->setData([
 							'pic_title'=>$data['pic_title'],
@@ -404,7 +420,9 @@ class StoreController extends AuthActionController
         	$segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $store = $segment->get('customer')['store_id'];
+			$r = new Rmodel;
+			$r->load($segment->get('customer')->getId(),'customer_id');
+            $store = $r['store_id'];
             if ($result['error'] === 0) {	
                 try {
                     foreach ($files as $file) {
@@ -466,7 +484,9 @@ class StoreController extends AuthActionController
                         $model->load($retailer['banner']);
                         if ($model->getId()) {
                             $type = $model['file_type'];
-                            if ($model['store_id']==$segment->get('customer')['store_id']) {
+							$r = new Rmodel;
+							$r->load($segment->get('customer')->getId(),'customer_id');
+                            if ($model['store_id']==$r['store_id']) {
                             	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
                                 if(file_exists($files))
                                 	unlink($files);

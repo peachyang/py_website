@@ -59,13 +59,15 @@ class Filter extends Toolbar
                     }
                 }
                 foreach ($attributes as $attribute) {
-                    if (!isset($result[$attribute['code']])) {
-                        $result[$attribute['code']] = [
-                            'label' => $attribute['label'],
-                            'values' => []
-                        ];
+                    if ($product[$attribute['code']] !== '') {
+                        if (!isset($result[$attribute['code']])) {
+                            $result[$attribute['code']] = [
+                                'label' => $attribute['label'],
+                                'values' => []
+                            ];
+                        }
+                        $this->statAttributeValue($result[$attribute['code']]['values'], $product[$attribute['code']], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                     }
-                    $this->statAttributeValue($result[$attribute['code']]['values'], $product[$attribute['code']], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                 }
             }
         }

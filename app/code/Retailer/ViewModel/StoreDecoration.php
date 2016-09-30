@@ -194,6 +194,7 @@ class StoreDecoration extends Template
 	public function template_short_search($params=''){
 		$content = '<div class="title"><h2>本店搜索</h2></div>
                 <div class="search-table">
+                    <form target=_blank action="'.$this->getBaseUrl('/retailer/store/viewSearch').'">
                     <table>
                         <tr>
                             <td class="label">关键字:</td>
@@ -213,6 +214,7 @@ class StoreDecoration extends Template
                             <td><a href="">雄鹰能量棒</a>&nbsp;<a href="">吸入式咖啡</a></td>
                         </tr>
                     </table>
+                    </form>
                 </div>';
 		return $content;
 	}

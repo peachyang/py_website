@@ -679,7 +679,7 @@ CREATE TABLE IF NOT EXISTS `store_decoration_template` (
     CONSTRAINT FK_STORE_DECORATION_TEMPLATE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `store_decoration_picinfo` (
+CREATE TABLE IF NOT EXISTS `store_decoration_picinfo` (
     `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Picture ID',
     `store_id` INTEGER NOT NULL COMMENT 'Store ID',
     `resource_id` INTEGER NOT NULL COMMENT 'Resource ID',

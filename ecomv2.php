@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `i18n_currency`(
     `code` CHAR(3) NOT NULL COMMENT 'ISO 4217 currency code',
     `symbol` VARCHAR(10) NOT NULL DEFAULT '$' COMMENT 'Currency symbol',
     `rate` DECIMAL(12,6) NOT NULL DEFAULT 1 COMMENT 'Currency rate',
-    `format` VARCHAR(30) NOT NULL DEFAULT '%s%.2f' COMMENT 'Price format',
+    `format` VARCHAR(30) NULL DEFAULT '%s%.2f' COMMENT 'Price format',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_I18N_CURRENCY_CODE UNIQUE (`code`)
@@ -561,7 +561,7 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
     INDEX IDX_EAV_ATTR_FILTERABLE (`filterable`),
     INDEX IDX_EAV_ATTR_COMPARABLE (`comparable`),
     CONSTRAINT UNQ_EAV_ATTR_TYPE_ID_CODE UNIQUE (`type_id`,`code`),
-    CONSTRAINT CHK_EAV_ATTR_TYPE CHECK (`type` IN ('varchar','int','decimal','text','TIMESTAMP')),
+    CONSTRAINT CHK_EAV_ATTR_TYPE CHECK (`type` IN ('varchar','int','decimal','text','datetime')),
     CONSTRAINT FK_EAV_ATTR_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

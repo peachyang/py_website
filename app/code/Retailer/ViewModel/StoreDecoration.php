@@ -35,7 +35,9 @@ class StoreDecoration extends Template
 			}
 		}else{
 				$template = new StoreTemplateCollection;
-				$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
+				$r = new Retailer;
+				$r->load($segment->get('customer')->getId(),'customer_id');
+				$templateViewCollection = $template->storeTemplateList($r['store_id'],1);
 				if(!empty($templateViewCollection))
 					$templateView = $templateViewCollection[0];
 				else
@@ -49,8 +51,9 @@ class StoreDecoration extends Template
 			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
 			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params']);
 		}
-		
-		if( !empty($templateView) && $templateView['store_id'] != $segment->get('customer')['store_id'] && $templateView['store_id']!=0 )
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		if( !empty($templateView) && $templateView['store_id'] != $r['store_id'] && $templateView['store_id']!=0 )
 			$templateView = [];
 		
 		return $templateView;				 		      
@@ -102,8 +105,10 @@ class StoreDecoration extends Template
 	public function getTemplateList($judge=0){
 		$segment = new Segment('customer');
 		$template = new StoreTemplateCollection;
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
 		if($judge==0)
-			$template->storeTemplateList($segment->get('customer')['store_id']);
+			$template->storeTemplateList($r['store_id']);
 		else
 			$template->storeTemplateList(0);
 		return $template;
@@ -113,7 +118,9 @@ class StoreDecoration extends Template
 	public function getStorePicInfo($code){
 		$segment = new Segment('customer');
 		$Scollection = new StorePicInfoCollection;
-		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$segment->get('customer')['store_id']])
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$r['store_id']])
 		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 	
 		return $Scollection;
@@ -123,7 +130,9 @@ class StoreDecoration extends Template
 	public function getStoreBanner(){
 		$segment = new Segment('customer');		
 		$retailer = new RetailerCollection;
-		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$segment->get('customer')['store_id']])
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$r['store_id']])
 		->join('resource','retailer.banner = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 		//return $segment->get('customer');
 		return empty($retailer) ? [] : $retailer[0] ;

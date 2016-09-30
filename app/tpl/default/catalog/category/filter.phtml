@@ -5,7 +5,7 @@ $current = $this->getCurrentFilters();
 <dl class="filters clearfix">
     <?php
     foreach ($filters as $key => $filter):
-        if (count($filter['values']) > 1) {
+        if (count($filter['values']) <= 1) {
             continue;
         }
         ?>

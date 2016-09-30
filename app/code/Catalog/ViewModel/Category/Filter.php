@@ -46,7 +46,7 @@ class Filter extends Toolbar
                         if (in_array($category['id'], $ids)) {
                             if (!isset($result['category'])) {
                                 $result['category'] = [
-                                    'label' => 'Category',
+                                    'label' => $this->translate('Category'),
                                     'values' => []
                                 ];
                             }

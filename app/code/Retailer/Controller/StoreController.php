@@ -241,7 +241,7 @@ class StoreController extends AuthActionController
 						'pic_title' => $data['title'],
 						'url' => $data['url'],
 						'resource_category_code' => $data['resource_category_code'],
-						'resource_id' => 0,
+						'resource_id' => null,
 						'order_id' => 0
 					]);		
 				$storePicinfo->save();

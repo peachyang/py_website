@@ -124,7 +124,7 @@ class StoreDecoration extends Template
 		$segment = new Segment('customer');		
 		$retailer = new RetailerCollection;
 		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$segment->get('customer')['store_id']])
-		->join('resource','retailer.photo = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
+		->join('resource','retailer.banner = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 		//return $segment->get('customer');
 		return empty($retailer) ? [] : $retailer[0] ;
 	}

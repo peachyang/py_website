@@ -41,7 +41,7 @@ $retailer = $this->getStoreBanner();
 <hr width="99%" style="border-color:#e8c7b6" > 
 <div class="rows">
 	<ul class="picList" style="text-align: center;"  >
- <?php if(empty($retailer['photo'])){ ?>
+ <?php if(empty($retailer['banner'])){ ?>
 	<img width="380" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/dragResource/images/text1.jpg') ?>">
 <?php } else{  ?>
 	<img width="380" src="<?php echo $this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']) ?>"><br><br>

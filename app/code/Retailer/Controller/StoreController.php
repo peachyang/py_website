@@ -241,14 +241,14 @@ class StoreController extends AuthActionController
 						'pic_title' => $data['title'],
 						'url' => $data['url'],
 						'resource_category_code' => $data['resource_category_code'],
-						'resource_id' => 0,
-						'orderid' => 0
+						'resource_id' => null,
+						'order_id' => 0
 					]);		
 				$storePicinfo->save();
 			} catch (Exception $e) {
 				$result['error'] = 1;
 			}
-			$storePicinfo->setData(['orderid'=>$storePicinfo->getID()]);
+			$storePicinfo->setData(['order_id'=>$storePicinfo->getID()]);
 			$storePicinfo->save();	
 		}
 		$storeDecoration = new SDViewModel();
@@ -314,7 +314,7 @@ class StoreController extends AuthActionController
 						'url' => $data['url'],
 						'resource_category_code' => $data['resource_category_code'],
 						'resource_id' => $model->getID(),
-						'orderid' => $model->getID()
+						'order_id' => $model->getID()
 					]);		
 				$storePicinfo->save();
 			}
@@ -430,7 +430,7 @@ class StoreController extends AuthActionController
 				$Rmodel->load($data['retailer_id']);
 				if($Rmodel['store_id'] == $store )
 				{
-					$Rmodel->setData(['photo'=>$model->getID()]);
+					$Rmodel->setData(['banner'=>$model->getID()]);
 					$Rmodel->save();
 				}						
 				
@@ -457,13 +457,13 @@ class StoreController extends AuthActionController
             if ($result['error'] === 0) {
             	$storeDecoration = new SDViewModel();	
             	$retailer = $storeDecoration->getStoreBanner();
-				if(!empty($retailer['photo']))
+				if(!empty($retailer['banner']))
 				{
                 try {
                     $path = BP . Model::$options['path'];
 
                         $model = new Model;
-                        $model->load($retailer['photo']);
+                        $model->load($retailer['banner']);
                         if ($model->getId()) {
                             $type = $model['file_type'];
                             if ($model['store_id']==$segment->get('customer')['store_id']) {
@@ -475,7 +475,7 @@ class StoreController extends AuthActionController
 						}
 						$Rmodel = new Rmodel;
 						$Rmodel->load($retailer['id']);
-						$Rmodel->setData(['photo'=>0]);
+						$Rmodel->setData(['banner'=>0]);
 						$Rmodel->save();
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

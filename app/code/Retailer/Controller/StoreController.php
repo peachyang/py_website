@@ -151,7 +151,7 @@ class StoreController extends AuthActionController
 		{
         	$model->setData($data);	
 			$model->save();
-			$template_id = $model->getID();
+			$template_id = $model->getId();
 		}
 		else{
 			$template_id = $data['template_id'];
@@ -248,7 +248,7 @@ class StoreController extends AuthActionController
 			} catch (Exception $e) {
 				$result['error'] = 1;
 			}
-			$storePicinfo->setData(['order_id'=>$storePicinfo->getID()]);
+			$storePicinfo->setData(['order_id'=>$storePicinfo->getId()]);
 			$storePicinfo->save();	
 		}
 		$storeDecoration = new SDViewModel();
@@ -313,8 +313,8 @@ class StoreController extends AuthActionController
 						'pic_title' => $data['pic_title'],
 						'url' => $data['url'],
 						'resource_category_code' => $data['resource_category_code'],
-						'resource_id' => $model->getID(),
-						'order_id' => $model->getID()
+						'resource_id' => $model->getId(),
+						'order_id' => $model->getId()
 					]);		
 				$storePicinfo->save();
 			}
@@ -430,7 +430,7 @@ class StoreController extends AuthActionController
 				$Rmodel->load($data['retailer_id']);
 				if($Rmodel['store_id'] == $store )
 				{
-					$Rmodel->setData(['banner'=>$model->getID()]);
+					$Rmodel->setData(['banner'=>$model->getId()]);
 					$Rmodel->save();
 				}						
 				

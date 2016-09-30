@@ -4,22 +4,24 @@ namespace Seahinet\Retailer\ViewModel\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
 use Seahinet\Catalog\Model\Product as Model;
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Catalog\Source\Set;
-use Seahinet\Admin\ViewModel\Catalog\Edit\Product as Pview;
+use Seahinet\Lib\Session\Segment;
 
 class Product extends PEdit
 {
+
+    protected $hasUploadingFile = true;
+
     public function __construct()
     {
         $this->setTemplate('retailer/productEdit');
     }
-    
+
     public function getSaveUrl()
     {
         return $this->getBaseUrl('retailer/product/save');
     }
-    
+
     protected function prepareElements($columns = [])
     {
         $user = (new Segment('customer'))->get('customer');
@@ -47,14 +49,14 @@ class Product extends PEdit
                 ]
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'required' => 'required'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'required' => 'required'
+            ]),
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',
@@ -67,4 +69,5 @@ class Product extends PEdit
         ];
         return parent::prepareElements($columns);
     }
+
 }

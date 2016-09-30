@@ -9,17 +9,17 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
 
-/** 
-* Retailer submenu products management controller
-* 
-*/  
+/**
+ * Retailer submenu products management controller
+ * 
+ */
 class ProductController extends AuthActionController
 {
 
     public function indexAction()
     {
         $segment = new Segment('customer');
-        
+
         if ($customerId = $segment->get('customer')->getId()) {
             $customer = new Cmodel;
             $customer->load($customerId);
@@ -29,14 +29,14 @@ class ProductController extends AuthActionController
         }
         return $root;
     }
-    
-    /** 
-    * releaseAction  
-    * Show release product view
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * releaseAction  
+     * Show release product view
+     * 
+     * @access public 
+     * @return object 
+     */
     public function releaseAction()
     {
         $query = $this->getRequest()->getQuery();
@@ -58,14 +58,14 @@ class ProductController extends AuthActionController
         }
         return $root;
     }
-    
-    /** 
-    * salesAction  
-    * Show the list of under sale products
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * salesAction  
+     * Show the list of under sale products
+     * 
+     * @access public 
+     * @return object 
+     */
     public function salesAction()
     {
         $root = $this->getLayout('retailer_sales_products');
@@ -75,14 +75,14 @@ class ProductController extends AuthActionController
         $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('order', $order);
         return $root;
     }
-    
-    /** 
-    * stockAction  
-    * Show the list of products in stock
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * stockAction  
+     * Show the list of products in stock
+     * 
+     * @access public 
+     * @return object 
+     */
     public function stockAction()
     {
         $root = $this->getLayout('retailer_product');
@@ -92,14 +92,14 @@ class ProductController extends AuthActionController
         $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('order', $order);
         return $root;
     }
-    
-    /** 
-    * historyAction  
-    * Show the list of history products record
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * historyAction  
+     * Show the list of history products record
+     * 
+     * @access public 
+     * @return object 
+     */
     public function historyAction()
     {
         $root = $this->getLayout('retailer_product');
@@ -109,15 +109,14 @@ class ProductController extends AuthActionController
         $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('order', $order);
         return $root;
     }
-    
-    
-    /** 
-    * saveAction  
-    * Save new product
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * saveAction  
+     * Save new product
+     * 
+     * @access public 
+     * @return object 
+     */
     public function saveAction()
     {
         $result = ['error' => 0, 'message' => []];
@@ -137,10 +136,10 @@ class ProductController extends AuthActionController
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
-                if (!isset($data['id']) || (int) $data['id'] === 0) {
+                if (empty($data['id'])) {
                     $model->setId(null);
                 }
-                if (!isset($data['uri_key']) || !$data['uri_key']) {
+                if (empty($data['uri_key'])) {
                     $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
                 }
                 $type = new Type;
@@ -173,20 +172,19 @@ class ProductController extends AuthActionController
                 $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
-        return $this->response($result, 'retailer/product/release/');
+        return $this->response($result, 'retailer/product/release/', 'retailer');
     }
-    
-    /** 
-    * popupAction  
-    * Popup resource management window
-    * 
-    * @access public 
-    * @return object 
-    */
+
+    /**
+     * popupAction  
+     * Popup resource management window
+     * 
+     * @access public 
+     * @return object 
+     */
     public function popupAction()
     {
         return $this->getLayout('retailer_popup_images_list');
     }
-    
 
 }

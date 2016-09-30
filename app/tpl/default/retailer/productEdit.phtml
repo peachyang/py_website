@@ -3,7 +3,7 @@ $elements = $this->getVariable('elements');
 if ($this->hasTitle()):
     ?>
     <div class="wishlist">
-        <div class="product-edit">
+        <div class="product-edit edit">
             <h3 class="page-title"><?php echo $this->translate($this->getVariable('title')) ?></h3>
             <form action="<?php echo $this->getSaveUrl() ?>" method="post"<?php if ($this->hasUploadingFile()): ?> enctype="multipart/form-data"<?php endif ?>>
                 <?php echo $this->getChild('tabs') ? $this->getChild('tabs')->setVariable('model', $this->getVariable('model')) : '' ?>

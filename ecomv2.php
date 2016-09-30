@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `i18n_currency`(
     `code` CHAR(3) NOT NULL COMMENT 'ISO 4217 currency code',
     `symbol` VARCHAR(10) NOT NULL DEFAULT '$' COMMENT 'Currency symbol',
     `rate` DECIMAL(12,6) NOT NULL DEFAULT 1 COMMENT 'Currency rate',
-    `format` VARCHAR(30) NOT NULL DEFAULT '%s%.2f' COMMENT 'Price format',
+    `format` VARCHAR(30) NULL DEFAULT '%s%.2f' COMMENT 'Price format',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated time',
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_I18N_CURRENCY_CODE UNIQUE (`code`)
@@ -561,7 +561,7 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
     INDEX IDX_EAV_ATTR_FILTERABLE (`filterable`),
     INDEX IDX_EAV_ATTR_COMPARABLE (`comparable`),
     CONSTRAINT UNQ_EAV_ATTR_TYPE_ID_CODE UNIQUE (`type_id`,`code`),
-    CONSTRAINT CHK_EAV_ATTR_TYPE CHECK (`type` IN ('varchar','int','decimal','text','TIMESTAMP')),
+    CONSTRAINT CHK_EAV_ATTR_TYPE CHECK (`type` IN ('varchar','int','decimal','text','datetime')),
     CONSTRAINT FK_EAV_ATTR_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -721,7 +721,7 @@ CREATE TRIGGER `TGR_UPDATE_EAV_VALUE_TEXT` BEFORE UPDATE ON `eav_value_text` FOR
 
 INSERT INTO `eav_entity_type` VALUES (1, 'customer', 'customer_entity', 'customer_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (1, 1, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (1, 1, 'Account Information', 0, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (1, 1, 'Account Infomation', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (1,1,'username','varchar','text','',1,'',1,NULL,NULL,1,1,1,1,NULL,NULL),
 (2,1,'password','varchar','password','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
@@ -1137,7 +1137,7 @@ CREATE TRIGGER `TGR_UPDATE_ADDRESS_VALUE_TEXT` BEFORE UPDATE ON `address_value_t
 
 INSERT INTO `eav_entity_type` VALUES (3, 'category', 'category_entity', 'category_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 3, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Information', 0, CURRENT_TIMESTAMP, NULL),
+INSERT INTO `eav_attribute_group` VALUES (NULL, 3, 'Category Infomation', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 3, 'Display Settings', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (13,3,'name','varchar','text','',1,'',0,NULL,NULL,0,1,0,0,NULL,NULL),
@@ -1298,9 +1298,9 @@ INSERT INTO `category_value_varchar` VALUES (13,1,1,'Default Category',NULL);
 
 INSERT INTO `eav_entity_type` VALUES (4, 'product', 'product_entity', 'product_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 4, 'Default', CURRENT_TIMESTAMP, NULL);
-INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Information', 0, CURRENT_TIMESTAMP, NULL),
+INSERT INTO `eav_attribute_group` VALUES (NULL, 4, 'Product Infomation', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 4, 'Price', 0, CURRENT_TIMESTAMP, NULL),
-(NULL, 4, 'Meta Information', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 4, 'Meta Infomation', 0, CURRENT_TIMESTAMP, NULL),
 (NULL, 4, 'Images', 1, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute` VALUES 
 (26,4,'name','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
@@ -1309,17 +1309,17 @@ INSERT INTO `eav_attribute` VALUES
 (29,4,'short_description','text','wysiwyg','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (30,4,'sku','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
 (31,4,'weight','decimal','number','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(32,4,'new_start','TIMESTAMP','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(33,4,'new_end','TIMESTAMP','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(32,4,'new_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(33,4,'new_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (34,4,'price','decimal','price','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (35,4,'special_price','decimal','price','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(36,4,'special_price_start','TIMESTAMP','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(37,4,'special_price_end','TIMESTAMP','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(36,4,'special_price_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(37,4,'special_price_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (38,4,'taxable','varchar','select','',0,'',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
 (39,4,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (40,4,'meta_description','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (41,4,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(42,4,'images','varchar','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(42,4,'images','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (43,4,'default_image','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (45,4,'additional','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);

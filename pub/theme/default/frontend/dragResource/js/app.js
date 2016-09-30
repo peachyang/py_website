@@ -29,6 +29,7 @@ if (typeof jQuery === "undefined") {
 $(function () {
     //Set up the object
     _init();
+    
 });
 
 /* ----------------------------------

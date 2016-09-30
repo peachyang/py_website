@@ -12,6 +12,7 @@ class Indexer implements Stdlib\Singleton
 
     use \Seahinet\Lib\Traits\Container;
 
+    protected static $cache = null;
     protected $config = null;
     protected $handler = [];
     protected static $instance = null;
@@ -35,6 +36,19 @@ class Indexer implements Stdlib\Singleton
             static::$instance = new static($config);
         }
         return static::$instance;
+    }
+
+    /**
+     * Get cache handler
+     * 
+     * @return Cache
+     */
+    protected function getCacheInstance()
+    {
+        if (is_null(static::$cache)) {
+            static::$cache = $this->getContainer()->get('cache');
+        }
+        return static::$cache;
     }
 
     /**

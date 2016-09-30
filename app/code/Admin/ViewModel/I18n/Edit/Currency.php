@@ -47,7 +47,6 @@ class Currency extends PEdit
             'format' => [
                 'type' => 'text',
                 'label' => 'Format',
-                'required' => 'required',
                 'comment' => 'For detail please visit <a href="http://php.net/manual/en/function.sprintf.php">sprintf</a>'
             ]
         ];

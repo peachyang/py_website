@@ -2,9 +2,9 @@
 
 namespace Seahinet\Lib\Controller;
 
-use Closure;
 use Exception;
 use Seahinet\Lib\Bootstrap;
+use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Lib\Session\Segment;
 
@@ -62,18 +62,26 @@ class AuthActionController extends ActionController
         return $result;
     }
 
-    protected function doDelete($modelName, $redirect = null)
+    protected function doDelete($modelName, $redirect = null, $beforeDelete = null)
     {
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['id']);
+            if (is_null($beforeDelete)) {
+                $beforeDelete = function($model, $id) {
+                    $model->setId($id);
+                    return true;
+                };
+            }
             if ($result['error'] === 0) {
                 try {
                     $model = is_object($modelName) && $modelName instanceof AbstractModel ? $modelName : new $modelName();
                     $count = 0;
                     foreach ((array) $data['id'] as $id) {
-                        $model->setId($id)->remove();
-                        $count++;
+                        if ($beforeDelete($model, $id)) {
+                            $model->remove();
+                            $count++;
+                        }
                     }
                     $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
                     $result['removeLine'] = (array) $data['id'];

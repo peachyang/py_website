@@ -40,6 +40,8 @@ class ProductController extends AuthActionController
      */
     public function releaseAction()
     {
+        //$user = (new Segment('customer'))->get('customer');
+        //var_dump($user->getRetailer()->offsetGet("store_id"));
         $query = $this->getRequest()->getQuery();
         $model = new Model;
         if (isset($query['id'])) {

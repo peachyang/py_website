@@ -1002,7 +1002,7 @@ retailer_popup_images_list:
     update: grid
     root:
         template: page/ajax
-        unset: [head]
+        unset: [head, beforeContent]
         children:
             content:
                 unset: [breadcrumb,messages]

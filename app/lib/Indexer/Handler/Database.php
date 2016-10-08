@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Indexer\Handler;
 
 use Exception;
 use Seahinet\Lib\Exception\BadIndexerException;
+use Seahinet\Lib\Db\Sql\Ddl\Column\UnsignedInteger;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Ddl;
@@ -47,13 +48,13 @@ class Database extends AbstractHandler
                     'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
             );
             $ddl = new Ddl\CreateTable($table);
-            $ddl->addColumn(new Ddl\Column\Integer('id', false, 0))
-                    ->addColumn(new Ddl\Column\Integer('store_id', false, 0))
+            $ddl->addColumn(new UnsignedInteger('id', false, 0))
+                    ->addColumn(new UnsignedInteger('store_id', false, 0))
                     ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_' . strtoupper($entityTable) . '_ID', 'id', $entityTable, 'id', 'CASCADE', 'CASCADE'))
                     ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'));
             if (!is_null($keys)) {
-                $ddl->addColumn(new Ddl\Column\Integer('attribute_set_id', false, 0))
+                $ddl->addColumn(new UnsignedInteger('attribute_set_id', false, 0))
                         ->addColumn(new Ddl\Column\Boolean('status', true, 1))
                         ->addColumn(new Ddl\Column\Timestamp('created_at', true))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ATTR_SET_ID_EAV_ATTR_SET_ID', 'attribute_set_id', 'eav_attribute_set', 'id', 'CASCADE', 'CASCADE'));

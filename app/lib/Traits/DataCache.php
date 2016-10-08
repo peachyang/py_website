@@ -162,10 +162,8 @@ trait DataCache
         if (!isset($this->cachedData[$cacheKey])) {
             $this->readCache($cacheKey);
         }
-        if (!empty($list)) {
-            $this->cachedData[$cacheKey]['list'][$key] = $list;
-            $this->writeCache($cacheKey);
-        }
+        $this->cachedData[$cacheKey]['list'][$key] = $list;
+        $this->writeCache($cacheKey);
     }
 
     protected function addCacheAlias($key, string $id, $cacheKey)

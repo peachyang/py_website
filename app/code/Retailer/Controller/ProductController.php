@@ -5,6 +5,7 @@ namespace Seahinet\Retailer\Controller;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Catalog\Model\Product as Model;
+use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
@@ -39,6 +40,8 @@ class ProductController extends AuthActionController
      */
     public function releaseAction()
     {
+        //$user = (new Segment('customer'))->get('customer');
+        //var_dump($user->getRetailer()->offsetGet("store_id"));
         $query = $this->getRequest()->getQuery();
         $model = new Model;
         if (isset($query['id'])) {
@@ -54,8 +57,8 @@ class ProductController extends AuthActionController
             });
             $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_products_release' : 'retailer_products_product_edit_' . $query['product_type']);
             $root->getChild('head')->setTitle('Add New Product / Product Management');
-            $root->getChild('content')->getChild('main')->setVariable('model', $model);
         }
+        $root->getChild("content")->getChild("main")->setVariable('model', $model);
         return $root;
     }
 
@@ -148,9 +151,11 @@ class ProductController extends AuthActionController
                     'type_id' => $type->getId()
                 ]);
                 $user = (new Segment('customer'))->get('customer');
-                if ($user->getStore()) {
-                    if ($model->getId() && $model->offsetGet('store_id') == $user->getStore()->getId()) {
-                        $model->setData('store_id', $user->getStore()->getId());
+                $retailer = new Retailer;
+                $retailer->load($user->getId(),'customer_id');
+                if ($retailer['store_id']) {
+                    if ($model->getId() && $model->offsetGet('store_id') == $retailer['store_id']) {
+                        $model->setData('store_id', $retailer['store_id']);
                     }
                 }
                 if (empty($data['parent_id'])) {

@@ -5,6 +5,7 @@ namespace Seahinet\Catalog\Indexer;
 use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Catalog\Model\Product as ProductModel;
 use Seahinet\Catalog\Model\Collection\Category;
+use Seahinet\Lib\Db\Sql\Ddl\Column\UnsignedInteger;
 use Seahinet\Lib\Indexer\Handler\AbstractHandler;
 use Seahinet\Lib\Indexer\Handler\Database;
 use Seahinet\Lib\Indexer\Provider;
@@ -31,8 +32,8 @@ class Url implements Provider
                         'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
                 );
                 $ddl = new Ddl\CreateTable($table);
-                $ddl->addColumn(new Ddl\Column\Integer('product_id', true, 0))
-                        ->addColumn(new Ddl\Column\Integer('category_id', false, 0))
+                $ddl->addColumn(new UnsignedInteger('product_id', true, 0))
+                        ->addColumn(new UnsignedInteger('category_id', false, 0))
                         ->addColumn(new Ddl\Column\Varchar('path', 255, false))
                         ->addConstraint(new Ddl\Constraint\UniqueKey(['category_id', 'product_id'], 'UNQ_' . strtoupper($table) . '_CATEGORY_ID_PRODUCT_ID'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_PRODUCT_ENTITY_ID', 'product_id', 'product_entity', 'id', 'CASCADE', 'CASCADE'))

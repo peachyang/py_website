@@ -1,8 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Eav;
+namespace Seahinet\Retailer\ViewModel\Eav;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
+use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Eav\Attribute as AttributeModel;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
@@ -20,17 +21,19 @@ abstract class Grid extends PGrid
         $attributes->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->where(['eav_entity_type.code' => $collection::ENTITY_TYPE])
-                ->where('(filterable=1 OR sortable=1)')
-                ->order('eav_attribute.id');
-        $user = (new Segment('admin'))->get('user');
+                ->where('(filterable=1 OR sortable=1)');
+        //$user = (new Segment('admin'))->get('user');
+        $user = (new Segment('customer'))->get('customer');
+        $retailer = new Retailer;
+        $retailer->load($user->getId(),'customer_id');
         if (empty($columns)) {
             $columns = [
                 'id' => [
                     'label' => 'ID',
                 ],
-                'store_id' => ($user->getStore() ? [
+                'store_id' => ($retailer['store_id'] ? [
                     'type' => 'hidden',
-                    'value' => $user->getStore()->getId(),
+                    'value' => $retailer['store_id'],
                     'use4sort' => false,
                     'use4filter' => false
                         ] : [
@@ -66,9 +69,11 @@ abstract class Grid extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $user = (new Segment('admin'))->get('user');
-        if ($user->getStore()) {
-            $collection->where(['store_id' => $user->getStore()->getId()]);
+        $user = (new Segment('customer'))->get('customer');
+        $retailer = new Retailer;
+        $retailer->load($user->getId(),'customer_id');
+        if ($retailer['store_id']) {
+            $collection->where(['store_id' => $retailer['store_id']]);
         }
         return parent::prepareCollection($collection);
     }

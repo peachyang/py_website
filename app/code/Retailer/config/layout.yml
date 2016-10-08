@@ -466,19 +466,11 @@ retailer_products_product_edit:
                         params: backend/ckeditor.js
             content:
                 children:
-                    breadcrumb:
-                        action:
-                            -
-                                method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
-                            -
-                                method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/edit/',label:'Edit'}]
                     main:
-                        type: Seahinet\Retailer\ViewModel\Edit\Product
+                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product
                         children:
                             tabs:
-                                type: Seahinet\Admin\ViewModel\Tabs
+                                type: Seahinet\Retailer\ViewModel\Tabs
                                 action:
                                     -
                                         method: setMainTabLabel
@@ -533,16 +525,16 @@ retailer_products_product_edit:
                                             - 170
                                 children:
                                     images:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Tab
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Tab
                                         template: admin/catalog/product/images
                                     category:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Category
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Category
                                         template: admin/catalog/product/category
                                     inventory:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Inventory
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Inventory
                                         template: admin/catalog/product/inventory
                                     related_products:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -551,7 +543,7 @@ retailer_products_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     up_sells:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -560,7 +552,7 @@ retailer_products_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     cross_sells:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -569,10 +561,10 @@ retailer_products_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     custom_options:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Options
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Options
                                         template: admin/catalog/product/options
                                     additional:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Additional
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Additional
                                         template: admin/catalog/product/additional
             extra:
                 children:
@@ -1010,7 +1002,7 @@ retailer_popup_images_list:
     update: grid
     root:
         template: page/ajax
-        unset: [head]
+        unset: [head, beforeContent]
         children:
             content:
                 unset: [breadcrumb,messages]

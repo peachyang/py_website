@@ -33,7 +33,11 @@ class Attribute extends AbstractModel
                 $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
             }
             $select->where(['language_id' => $languageId]);
-            $result = $tableGateway->selectWith($select)->toArray();
+            $sql = md5($select->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform()));
+            if (!($result = $this->fetchList($sql, 'eav_attribute_option'))) {
+                $result = $tableGateway->selectWith($select)->toArray();
+                $this->addCacheList($sql, $result, 'eav_attribute_option');
+            }
             if (count($result)) {
                 return is_numeric($option) || !is_scalar($option) ? $result[0]['label'] : $result[0]['id'];
             }
@@ -45,7 +49,7 @@ class Attribute extends AbstractModel
     {
         if ($this->getId() && isset($this->storage['input']) && in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
             if (empty($this->storage['source']) || !is_subclass_of($this->storage['source'], '\\Seahinet\\Lib\\Source\\SourceInterface')) {
-                $tableGateway = $this->getTableGateway('eav_attribute_option', $this->getContainer()->get('dbAdapter'));
+                $tableGateway = $this->getTableGateway('eav_attribute_option');
                 $select = $tableGateway->getSql()->select();
                 $select->join('eav_attribute_option_label', 'eav_attribute_option_label.option_id=eav_attribute_option.id', ['label', 'language_id'], 'left')
                         ->order('sort_order')
@@ -55,7 +59,11 @@ class Attribute extends AbstractModel
                     $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
                     $select->where(['language_id' => $languageId]);
                 }
-                $result = $tableGateway->selectWith($select)->toArray();
+                $sql = md5($select->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform()));
+                if (!($result = $this->fetchList($sql, 'eav_attribute_option'))) {
+                    $result = $tableGateway->selectWith($select)->toArray();
+                    $this->addCacheList($sql, $result, 'eav_attribute_option');
+                }
                 $options = $language ? [] : ['order' => []];
                 foreach ($result as $item) {
                     if ($language === false) {
@@ -138,6 +146,7 @@ class Attribute extends AbstractModel
                         $labelGateway->insert(['option_id' => $optionId, 'language_id' => $id, 'label' => $value]);
                     }
                 }
+                $this->flushList('eav_attribute_option');
             }
             $this->commit();
         } catch (Exception $e) {

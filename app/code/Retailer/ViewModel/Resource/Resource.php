@@ -45,10 +45,10 @@ class Resource extends PGrid
         $model = new Model;
         $user = (new Segment('customer'))->get('customer');
         return [
-            'store_id' => ($user['store_id']? [
+            'store_id' => ($user->getRetailer()? [
         'use4popupfilter' => false,
         'type' => 'hidden',
-        'value' => $user['store_id'],
+        'value' => $user->getRetailer()->offsetGet('store_id'),
         'use4sort' => false,
         'use4filter' => false
             ] : [
@@ -86,8 +86,8 @@ class Resource extends PGrid
     {
         $user = (new Segment('customer'))->get('customer');
         $collection = new Collection;
-        if (!empty($user['store_id'])) {
-            $collection->where(['store_id' => $user['store_id']]);
+        if ($user->getRetailer()) {
+            $collection->where(['store_id' => $user->getRetailer()->offsetGet("store_id")]);
         }
         if (!$collection->getRawState('order')) {
             $collection->order('created_at DESC');

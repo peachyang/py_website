@@ -96,17 +96,38 @@ final class Bootstrap
      */
     private static function prepareConfig()
     {
-        $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
-        $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
-        $config = $cache->fetch('SYSTEM_CONFIG');
+        if (extension_loaded('shmop')) {
+            $ftok = function_exists('ftok') ? 'ftok' : function($pathname, $proj) {
+                $st = @stat($pathname);
+                if (!$st) {
+                    return -1;
+                }
+                $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
+                return $key;
+            };
+            $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, 524288);
+            $data = trim(shmop_read($shmid, 0, 524288));
+            $config = $data ? json_decode($data, true) : false;
+        } else {
+            $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
+            $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
+            $config = $cache->fetch('SYSTEM_CONFIG');
+        }
         if (!$config) {
             $config = Config::instance();
             static::getContainer();
             $config->loadFromDB();
-            $cache->save('SYSTEM_CONFIG', $config);
+            if (isset($shmid)) {
+                shmop_write($shmid, json_encode($config->getArrayCopy()), 0);
+            } else {
+                $cache->save('SYSTEM_CONFIG', $config->getArrayCopy());
+            }
         } else {
-            Config::instance($config);
+            $config = Config::instance($config);
             static::getContainer();
+        }
+        if (isset($shmid)) {
+            shmop_close($shmid);
         }
         return $config;
     }
@@ -150,7 +171,7 @@ final class Bootstrap
                 $segment = new Session\Segment('core');
             }
             $code = $segment->get('language') ?:
-                    ($_COOKIE['language'] ?? 
+                    ($_COOKIE['language'] ??
                     ($server['language'] ?? null));
             if (is_string($code)) {
                 $language = new Language;

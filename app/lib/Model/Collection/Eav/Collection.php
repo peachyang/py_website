@@ -5,7 +5,6 @@ namespace Seahinet\Lib\Model\Collection\Eav;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
-use Zend\Db\Sql\Predicate\In;
 
 abstract class Collection extends AbstractCollection
 {
@@ -148,7 +147,7 @@ abstract class Collection extends AbstractCollection
                     $attributes[$item['attribute_set_id']]->withSet()
                             ->columns(['code'])
                             ->where(['eav_attribute_set.id' => $item['attribute_set_id']])
-                            ->where(new In('input', ['multiselect', 'checkbox']));
+                            ->where->in('input', ['multiselect', 'checkbox']);
                 }
                 foreach ($attributes[$item['attribute_set_id']] as $attribute) {
                     if (is_string($item[$attribute['code']])) {

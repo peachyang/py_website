@@ -122,13 +122,13 @@ abstract class AbstractCollection extends ArrayObject
                 } else {
                     $result = false;
                 }
-                if (!$result) {
+                if (!is_array($result) && empty($result)) {
                     $this->beforeLoad();
                     $result = $this->getTableGateway($this->tableName)->selectWith($this->select)->toArray();
+                    if ($useCache) {
+                        $this->addCacheList($cacheKey, $result, $this->getCacheKey());
+                    }
                     if (count($result)) {
-                        if ($useCache) {
-                            $this->addCacheList($cacheKey, $result, $this->getCacheKey());
-                        }
                         $this->afterLoad($result);
                     }
                 } else {

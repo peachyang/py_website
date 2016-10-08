@@ -2,6 +2,7 @@
 "All caches have been flushed successfully.","成功清空了所有缓存。"
 "DATA","数据缓存"
 "I18N","国际化"
+"INDEX","索引缓存"
 "INVENTORY","产品库存"
 "LAYOUT_RENDERED","布局缓存"
 "OAUTH","OAuth"

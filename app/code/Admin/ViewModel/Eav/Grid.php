@@ -20,7 +20,8 @@ abstract class Grid extends PGrid
         $attributes->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->where(['eav_entity_type.code' => $collection::ENTITY_TYPE])
-                ->where('(filterable=1 OR sortable=1)');
+                ->where('(filterable=1 OR sortable=1)')
+                ->order('eav_attribute.id');
         $user = (new Segment('admin'))->get('user');
         if (empty($columns)) {
             $columns = [

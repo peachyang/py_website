@@ -73,8 +73,6 @@ final class Cache implements ArrayAccess, Singleton
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }
     }
-    
-    
 
     /**
      * @param array $config
@@ -104,7 +102,7 @@ final class Cache implements ArrayAccess, Singleton
      * @param string $prefix
      * @return bool
      */
-    public function delete($id, $prefix = '')
+    public function delete($id = '', $prefix = '')
     {
         if ($prefix) {
             if (in_array($prefix, $this->persistentPrefix)) {
@@ -129,7 +127,7 @@ final class Cache implements ArrayAccess, Singleton
                 $this->pool->save('CACHE_LIST', gzencode(serialize($list)));
             }
         }
-        return $this->pool->delete($prefix . $id);
+        return $id ? true : $this->pool->delete($prefix . $id);
     }
 
     /**

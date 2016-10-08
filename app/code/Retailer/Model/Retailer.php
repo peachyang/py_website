@@ -2,11 +2,14 @@
 
 namespace Seahinet\Retailer\Model;
 
-use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\{
+    AbstractModel,
+    Store
+};
 
 class Retailer extends AbstractModel
 {
-    
+
     protected $store = null;
 
     protected function construct()

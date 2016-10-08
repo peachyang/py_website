@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Retailer\ViewModel\Edit;
+namespace Seahinet\Retailer\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
 use Seahinet\Catalog\Model\Product as Model;
@@ -48,9 +48,9 @@ class Product extends PEdit
                     'onchange' => 'location.href=\'' . $this->getUri()->withQuery(http_build_query($query = array_diff_key($this->getQuery(), ['attribute_set' => '']))) . (empty($query) ? '?' : '&') . 'attribute_set=\'+this.value;'
                 ]
             ],
-            'store_id' => ($user->getStore() ? [
+            'store_id' => ($user['store_id'] ? [
         'type' => 'hidden',
-        'value' => $user->getStore()->getId()
+        'value' => $user['store_id']
             ] : [
         'type' => 'select',
         'options' => (new Store)->getSourceArray(),

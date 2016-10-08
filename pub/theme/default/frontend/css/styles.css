@@ -185,7 +185,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav .page-title .fa{color:#007dc6;font-size:20px}
 .col-left .nav dt{padding-left:36px;font-size:14px;line-height:30px;color:#000;font-weight:bold;margin-top:1em}
 .col-left .nav dt .fa{font-size:20px;vertical-align:middle}
-.col-left .nav dl a{display:block;text-indent:65px;font-size:12px;line-height:24px;color:#8b8a8a}
+.col-left .nav dl a{display:block;text-indent:50px;font-size:12px;line-height:24px;color:#8b8a8a}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}

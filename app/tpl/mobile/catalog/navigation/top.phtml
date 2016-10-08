@@ -10,9 +10,9 @@ $root = $this->getRootCategory();
                 $children = $category->getChildrenCategories(1);
                 $count = $children->count();
                 ?>
-                <li><a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a>
+            <li class="clearfix"><a href="<?php echo $category->getUrl() ?>"><?php echo $category['name'] ?></a>
                     <?php if ($count): ?>
-                        <dl>
+                <dl>
                             <?php
                             foreach ($children as $child):
                                 $grandChildren = $child->getChildrenCategories(1);

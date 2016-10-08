@@ -29,7 +29,7 @@ $stores = $this->getStore();
                 </div>
                 <div class="tab-pane" id="upload-resource">
                     <div class="grid">
-                        <form id="upload-form" class="form-inline" action="<?php echo $this->getBaseUrl('admin/resource_resource/upload/') ?>" method="post" enctype="multipart/form-data">
+                        <form id="upload-form" class="form-inline" action="<?php echo $this->getBaseUrl('retailer/resource/upload/') ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                             <div class="filters">
                                 <?php if (is_array($stores)): ?>
@@ -64,7 +64,7 @@ $stores = $this->getStore();
                                 <div class="input-box">
                                     <label class="control-label" for="file-upload"><?php echo $this->translate('Select Resource') ?></label>
                                     <div class="cell">
-                                        <input id="upload-element" type="file" name="files[]" class="form-control" data-url="<?php echo $this->getBaseUrl('admin/resource_resource/upload/') ?>" multiple />
+                                        <input id="upload-element" type="file" name="files[]" class="form-control" data-url="<?php echo $this->getBaseUrl('retailer/resource/upload/') ?>" multiple />
                                     </div>
                                 </div>
                             </div>

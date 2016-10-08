@@ -48,9 +48,9 @@ class Product extends PEdit
                     'onchange' => 'location.href=\'' . $this->getUri()->withQuery(http_build_query($query = array_diff_key($this->getQuery(), ['attribute_set' => '']))) . (empty($query) ? '?' : '&') . 'attribute_set=\'+this.value;'
                 ]
             ],
-            'store_id' => ($user['store_id'] ? [
+            'store_id' => ($user->getRetailer() ? [
         'type' => 'hidden',
-        'value' => $user['store_id']
+        'value' => $user->getRetailer()->offsetGet('store_id')
             ] : [
         'type' => 'select',
         'options' => (new Store)->getSourceArray(),

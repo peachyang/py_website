@@ -125,9 +125,13 @@ final class Cache implements ArrayAccess, Singleton
                     $list = [];
                 }
                 $this->pool->save('CACHE_LIST', gzencode(serialize($list)));
+            } else if (!$id) {
+                foreach ($list as $key => $value) {
+                    $this->pool->delete($prefix . $key);
+                }
             }
         }
-        return $id ? true : $this->pool->delete($prefix . $id);
+        return $id ? $this->pool->delete($prefix . $id) : true;
     }
 
     /**

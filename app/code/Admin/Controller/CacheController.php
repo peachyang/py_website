@@ -20,20 +20,19 @@ class CacheController extends AuthActionController
         $eventDispatcher = $this->getContainer()->get('eventDispatcher');
         if ($code) {
             $count = 0;
-            if (!is_array($code)) {
-                $code = [$code];
-            }
-            foreach ($code as $prefix) {
-                $list = $cache->fetch('CACHE_LIST_' . $prefix);
-                $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
-                if ($list) {
-                    foreach ((array) $list as $key => $value) {
-                        $cache->delete($key, $prefix);
-                    }
-                } else if ($prefix === 'SYSTEM_CONFIG') {
+            foreach ((array) $code as $prefix) {
+                if ($prefix === 'SYSTEM_CONFIG') {
                     $this->flushShmop();
                 } else {
-                    $cache->delete('', $prefix);
+                    $list = $cache->fetch('CACHE_LIST_' . $prefix);
+                    $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
+                    if ($list) {
+                        foreach ((array) $list as $key => $value) {
+                            $cache->delete($key, $prefix);
+                        }
+                    } else {
+                        $cache->delete('', $prefix);
+                    }
                 }
                 $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
                 $count ++;

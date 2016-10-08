@@ -28,7 +28,7 @@ customer_account:
                                 params: [{link:'customer/history/',label:'Browsing History',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/edit/',label:'Account Infomation',group:'Account Infomation'}]
+                                params: [{link:'customer/account/edit/',label:'Account Infomation/Password Edit',group:'Account Infomation'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/address/',label:'Address Book',group:'Account Infomation'}]

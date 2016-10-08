@@ -28,15 +28,12 @@ class CacheController extends AuthActionController
                 $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
                 if ($list) {
                     foreach ((array) $list as $key => $value) {
-                        if ($key === 'SYSTEM_CONFIG') {
-                            $this->flushShmop();
-                        } else {
-                            $cache->delete($key, $prefix);
-                        }
+                        $cache->delete($key, $prefix);
                     }
+                } else if ($prefix === 'SYSTEM_CONFIG') {
+                    $this->flushShmop();
                 } else {
                     $cache->delete('', $prefix);
-                    $this->flushShmop();
                 }
                 $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
                 $count ++;
@@ -45,6 +42,7 @@ class CacheController extends AuthActionController
         } else {
             $eventDispatcher->trigger('allcache.delete.before');
             $cache->flushAll();
+            $this->flushShmop();
             $eventDispatcher->trigger('allcache.delete.after');
             $result['message'][] = ['message' => $this->translate('All caches have been flushed successfully.'), 'level' => 'success'];
         }
@@ -62,9 +60,11 @@ class CacheController extends AuthActionController
                 $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
                 return $key;
             };
-            $shmid = shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, 524288);
-            shmop_delete($shmid);
-            shmop_close($shmid);
+            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, 524288);
+            if ($shmid) {
+                shmop_delete($shmid);
+                shmop_close($shmid);
+            }
         }
     }
 

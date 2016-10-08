@@ -230,7 +230,7 @@
         $('a.slide-menu').on('click', function (e) {
             var wh = $('div.wrapperhove' + 'rtree').height();
             $('div.slide-mask').css('height', wh).show();
-            $('aside.slide-wrapper').css('height', wh).addClass('moved');
+            $('aside.slide-wrapper').addClass('moved');
         });
 
         $('div.slide-mask').on('click', function () {

@@ -143,13 +143,13 @@ abstract class Entity extends AbstractModel
                 }
             }
             if ($record['attr']) {
-                $items[$record['id']][$record['attr']] = $record['value_int']? : (
-                        $record['value_varchar']? : (
-                                $record['value_decimal']? : (
-                                        $record['value_text']? : (
-                                                $record['value_datetime']? :
-                                                        $record['value_blob']
-                                                ))));
+                $items[$record['id']][$record['attr']] = $record['value_int'] ?: (
+                        $record['value_varchar'] ?: (
+                        $record['value_decimal'] ?: (
+                        $record['value_text'] ?: (
+                        $record['value_datetime'] ?:
+                        $record['value_blob']
+                        ))));
             }
         }
         if (is_null($key) || $key === $this->primaryKey) {
@@ -330,7 +330,7 @@ abstract class Entity extends AbstractModel
         $attributes = new AttributeCollection;
         $attributes->withSet()->columns(['code'])->where(['eav_attribute_set.id' => $this->storage['attribute_set_id']])->where(new In('input', ['multiselect', 'checkbox']));
         foreach ($attributes as $attribute) {
-            if (is_array($this->storage[$attribute['code']])) {
+            if (!empty($this->storage[$attribute['code']]) && is_array($this->storage[$attribute['code']])) {
                 $this->storage[$attribute['code']] = implode(',', $this->storage[$attribute['code']]);
             }
         }

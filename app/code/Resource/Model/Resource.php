@@ -43,7 +43,7 @@ class Resource extends AbstractModel
 
     protected function construct()
     {
-        $this->init('resource', 'id', ['id', 'store_id', 'real_name', 'uploaded_name', 'md5', 'file_type', 'category_id']);
+        $this->init('resource', 'id', ['id', 'store_id', 'real_name', 'uploaded_name', 'md5', 'file_type', 'category_id', 'size', 'sort_order']);
     }
 
     /**
@@ -74,7 +74,7 @@ class Resource extends AbstractModel
             }
             $file->moveTo($path . $type . $newName);
         }
-        $this->setData(['md5' => $md5, 'real_name' => $newName]);
+        $this->setData(['md5' => $md5, 'real_name' => $newName, 'size' => (int) $file->getSize()]);
         return $this;
     }
 
@@ -86,7 +86,7 @@ class Resource extends AbstractModel
                 $type = $this->storage['file_type'];
                 $collection = new Collection;
                 $collection->where(['md5' => $this->storage['md5']])
-                        ->where->notEqualTo('id', $this->getId());
+                ->where->notEqualTo('id', $this->getId());
                 if (count($collection) === 0) {
                     unlink(static::$options['path'] . substr($type, 0, strpos($type, '/') + 1) . $this->storage['real_name']);
                 }

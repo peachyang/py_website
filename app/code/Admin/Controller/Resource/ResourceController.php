@@ -37,7 +37,6 @@ class ResourceController extends AuthActionController
                                     'file_type' => $file->getClientMediaType(),
                                     'category_id' => empty($data['category_id']) ? null : $data['category_id']
                                 ])->save();
-                        $result['message'][] = ['message' => $this->translate('%s has been uploaded successfully.', [$name], 'resource'), 'level' => 'success'];
                     }
                 } catch (Exception $e) {
                     $result['error'] = 1;

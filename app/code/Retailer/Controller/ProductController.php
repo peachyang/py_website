@@ -143,7 +143,11 @@ class ProductController extends AuthActionController
                     $model->setId(null);
                     $back_url = 'retailer/product/release/';
                 }else{
-                    $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
+                    if(empty($data['backurl'])){
+                        $back_url = 'retailer/product/release/';
+                    }else{
+                        $back_url = $data['backurl'];
+                    }
                 }
                 if (empty($data['uri_key'])) {
                     $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));

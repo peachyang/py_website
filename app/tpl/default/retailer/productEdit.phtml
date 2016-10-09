@@ -31,6 +31,7 @@ endif;
                     echo $this->getAdditionalButtons();
                     ?>
                 </div>
+                <input type="hidden" name="backurl" value="<?php echo $this->getRequest()->getHeader('HTTP_REFERER'); ?>"  />
             </form>
         </div>
     </div>

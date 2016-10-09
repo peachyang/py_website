@@ -36,7 +36,7 @@ class SalesProducts extends Template
             $where->lessThanOrEqualTo('price',$condition['price_to']);
         }
 		
-		$sales_products->where($where);		
+		$sales_products->where($where)->order(['created_at'=>'DESC']);		
 		return $this->prepareCollection($sales_products,$condition);
 		
 	}

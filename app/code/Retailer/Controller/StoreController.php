@@ -354,9 +354,6 @@ class StoreController extends AuthActionController
 							$r = new Rmodel;
 							$r->load($segment->get('customer')->getId(),'customer_id');
                             if ($model['store_id']==$r['store_id']) {
-                            	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
-                                if(file_exists($files))
-                                	unlink($files);
 								$model->remove();
                             }
                         
@@ -487,9 +484,6 @@ class StoreController extends AuthActionController
 							$r = new Rmodel;
 							$r->load($segment->get('customer')->getId(),'customer_id');
                             if ($model['store_id']==$r['store_id']) {
-                            	$files = $path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name'];
-                                if(file_exists($files))
-                                	unlink($files);
 								$model->remove();
                             }						
 						}

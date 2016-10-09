@@ -114,7 +114,8 @@ function _init() {
 						
 			if($(".htmlpage .lyrow").length<=0)
 			{
-				alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+				//alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
+				layer.msg('功能模块必须拖入表格内容区<br>请先拖入表格内容区', {shade: [0.3,'#fff'],time: 2200});
 				return;
 			}
 			var obj = t.helper;
@@ -582,18 +583,35 @@ function gridSystemGenerator() {
 function removeElm() {
     $(".htmlpage").delegate(".remove", "click", function (e) {
         var  b = $(this).parent().css('border');
-        $(this).parent().css('border', '2px solid red');
-
-        if (confirm("确定要删除吗?")) {
-            e.preventDefault();
-            $(this).parent().remove();
-
-            if (!$(".htmlpage .lyrow").length > 0) {
+        //$(this).parent().css('border', '2px solid red');
+		var obj = $(this);
+		layer.confirm('确定要删除吗？', {
+			title:'提示',
+  			btn: ['确定','取消'] //按钮
+			}, function(){
+    			e.preventDefault();
+            	obj.parent().remove();
+            	layer.closeAll();
+				if (!$(".htmlpage .lyrow").length > 0) {
                 clearDemo();
-            }
-        } else {
-            $(this).parent().css('border', b);
-        }
+            	}
+			}, function(){
+  				obj.parent().css('border', b);
+			}
+			);
+        
+        
+        
+//      if (confirm("确定要删除吗?")) {
+//          e.preventDefault();
+//          $(this).parent().remove();
+//
+//          if (!$(".htmlpage .lyrow").length > 0) {
+//              clearDemo();
+//          }
+//      } else {
+//          $(this).parent().css('border', b);
+//      }
     })
 }
 

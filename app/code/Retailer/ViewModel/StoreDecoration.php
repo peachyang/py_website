@@ -311,15 +311,19 @@ class StoreDecoration extends Template
 		$select_row = empty($params) ? 1 : $params['select_row'];
 		$select_column = empty($params) ? 4 : (int)$params['select_column'];
 		$select_col_md = 'col-md-3';
+		$pic_height = '225px';
 		switch ($select_column) {
 			case 3:
 				$select_col_md = 'col-md-4';
+				$pic_height = '313px';
 				break;
 			case 2:
 				$select_col_md = 'col-md-6';
+				$pic_height = '490px';
 				break;			
 			default:
 				$select_col_md = 'col-md-3';
+				$pic_height = '225px';
 				break;
 		}
 		
@@ -335,14 +339,14 @@ class StoreDecoration extends Template
        	foreach ($productsData as $key => $value) {
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
-				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
 			}else {
 				$picURL = $thumbnail;
 			}
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <a href="javascript:void(0)"><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
                                 <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>

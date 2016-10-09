@@ -46,7 +46,7 @@ class ProductController extends AuthActionController
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root = $this->getLayout('admin_catalog_product_edit_' . $model['product_type_id']);
+            $root = $this->getLayout('retailer_products_product_edit_' . $model['product_type_id']);
             $root->getChild('head')->setTitle('Edit Product / Product Management');
         } else {
             $model->setData('attribute_set_id', function() {
@@ -141,6 +141,13 @@ class ProductController extends AuthActionController
                 $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
                 if (empty($data['id'])) {
                     $model->setId(null);
+                    $back_url = 'retailer/product/release/';
+                }else{
+                    if(empty($data['backurl'])){
+                        $back_url = 'retailer/product/release/';
+                    }else{
+                        $back_url = $data['backurl'];
+                    }
                 }
                 if (empty($data['uri_key'])) {
                     $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
@@ -177,7 +184,7 @@ class ProductController extends AuthActionController
                 $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
-        return $this->response($result, 'retailer/product/release/', 'retailer');
+        return $this->response($result, $back_url, 'retailer');
     }
 
     /**

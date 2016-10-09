@@ -21,11 +21,16 @@ class SalesProducts extends Template
 	
 	public function getRetailerSalesProducts($params = array())
 	{
+	    $user = (new Segment('customer'))->get('customer');
 		$condition = !empty($params) ? $params : $this->getQuery();
         $sales_products = new Pcollection;
 		$sales_products = $sales_products->withInSales();
 		$where = new \Zend\Db\Sql\Where();
-
+        $where->equalTo('status', 1);
+        if($user->getRetailer()){
+            $where->equalTo('store_id', $user->getRetailer()->offsetGet('store_id'));
+        }
+        
         if(!empty($condition['name'])){
             $where->like('name', '%'.$condition['name'].'%');
         }
@@ -35,8 +40,8 @@ class SalesProducts extends Template
 		if(!empty($condition['price_to'])){
             $where->lessThanOrEqualTo('price',$condition['price_to']);
         }
-		
-		$sales_products->where($where);		
+        
+		$sales_products->where($where)->order(['created_at'=>'DESC']);
 		return $this->prepareCollection($sales_products,$condition);
 		
 	}
@@ -130,9 +135,6 @@ class SalesProducts extends Template
         }
         return $collection;
     }
-    
-
-
 
     
 }

@@ -99,6 +99,7 @@ class Indexer implements Stdlib\Singleton
     public function reindex($entityType)
     {
         $this->getHandler($entityType)->reindex();
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
     /**

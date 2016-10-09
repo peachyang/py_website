@@ -37,7 +37,7 @@ class Wishlist extends AbstractModel
             'product_name' => $data['product_name'] ?? $product['name'],
             'description' => preg_replace('/\<[^\>]+\>/', '', $product['description']),
             'price' => $data['base_price'] ?? $product->getFinalPrice($data['qty'], false),
-            'options' => is_scalar($data['options']) ? $data['options'] : json_encode($data['options'])
+            'options' => isset($data['options']) ? (is_scalar($data['options']) ? $data['options'] : json_encode($data['options'])) : null
         ]);
         $item->save();
         $this->flushList('wishlist');

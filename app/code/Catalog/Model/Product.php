@@ -117,7 +117,7 @@ class Product extends Entity
             $attribute = new Attribute;
             $attribute->load($idOrCode, is_numeric($idOrCode) ? 'id' : 'code');
             if ($attribute->getId()) {
-                if(!is_null($option)){
+                if (!is_null($option)) {
                     return $attribute->getOption($option, $this->languageId);
                 }
                 return $attribute;
@@ -241,13 +241,20 @@ class Product extends Entity
         if (isset($this->storage['images']) && is_array($this->storage['images'])) {
             $images = [];
             foreach ($this->storage['images'] as $order => $id) {
-                if ($id) {
-                    $images[] = [
+                if ($id && !isset($images[$id])) {
+                    $images[$id] = [
                         'id' => $id,
                         'label' => $this->storage['images-label'][$order],
                         'group' => $this->storage['images-group'][$order]
                     ];
                 }
+            }
+            $images = array_values($images);
+            if (empty($this->storage['default_image'])) {
+                $this->storage['default_image'] = $images[0]['id'];
+            }
+            if (empty($this->storage['thumbnail'])) {
+                $this->storage['thumbnail'] = $images[0]['id'];
             }
             $this->storage['images'] = json_encode($images);
         }

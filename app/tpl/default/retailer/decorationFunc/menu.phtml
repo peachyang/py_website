@@ -68,6 +68,11 @@ $Info = json_encode($Infos);
 	function doAdd() {  
      var title = $('#title').val();
      var url = $('#url').val(); 
+     if($.trim(title)=="")
+     {
+     	layer.msg('请输入标题', {shade: [0.3,'#fff'],time: 1200});
+		return;
+     }
      var resource_category_code = $('#resource_category_code').val(); 
      $.ajax({  
           url: '<?php echo $this->getBaseUrl('retailer/store/decorationInfoAdd') ?>' ,  
@@ -78,7 +83,7 @@ $Info = json_encode($Infos);
           },  
           success: function (json) {  
         	if(json.status==0){
-        		console.log(111222);
+        		
         		Info.info1 = JSON.parse(json.Info);
         		$('.infoList').html(template('li_menu',Info));	
         	}

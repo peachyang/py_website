@@ -35,7 +35,7 @@ $retailer = $this->getStoreBanner();
 <form id=uploadForm onsubmit="return false" >
 <input type="hidden" name='retailer_id' value="<?php echo $retailer['id'] ?>" >
  <div class="rows" >   
-   上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">设 置</button>
+   上传图片: &nbsp;<input type="file" name="files[]" id=myuploadfile style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">设 置</button>
 </div>
 </form>
 <hr width="99%" style="border-color:#e8c7b6" > 
@@ -96,7 +96,9 @@ $retailer = $this->getStoreBanner();
 	});	
 	
 	
-	function doUpload() {  
+	function doUpload() {
+	 if($.trim($('#myuploadfile').val())=="")
+	 	return;  
      var formData = new FormData($( "#uploadForm" )[0]);  
      $.ajax({  
           url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadForBanner') ?>' ,  

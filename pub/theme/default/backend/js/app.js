@@ -9,7 +9,7 @@
 }(function ($) {
     $(function () {
         "use strict";
-        window.formatPrice = function(price){
+        window.formatPrice = function (price) {
             return GLOBAL.FORMAT.replace(/\%(?:\d\$)?(?:\.\d+)?[fd]/, parseFloat(price).toFixed(GLOBAL.FORMAT.indexOf('.') === -1 ? 0 : GLOBAL.FORMAT.replace(/^.+\.(\d+)[fd]$/, '$1')))
         };
         $('#nav-toggle').click(function () {
@@ -269,6 +269,15 @@
         });
         $('.pager .btn').click(function () {
             location.href = $(this).data('url') + $(this).siblings('input').val();
+        });
+        $('[type=checkbox][name][value]').change(function () {
+            var t = $('[type=checkbox][name="' + $(this).attr('name') + '"][value="' + $(this).attr('value') + '"]').not(this);
+            var f = this.checked;
+            if (t.length) {
+                $(t).each(function () {
+                    this.checked = f;
+                });
+            }
         });
     });
 }));

@@ -335,7 +335,7 @@ class StoreDecoration extends Template
        	foreach ($productsData as $key => $value) {
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
-				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
 			}else {
 				$picURL = $thumbnail;
 			}

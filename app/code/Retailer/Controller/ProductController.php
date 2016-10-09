@@ -141,6 +141,9 @@ class ProductController extends AuthActionController
                 $model = new Model($this->getRequest()->getQuery('language_id', Bootstrap::getLanguage()->getId()), $data);
                 if (empty($data['id'])) {
                     $model->setId(null);
+                    $back_url = 'retailer/product/release/';
+                }else{
+                    $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 }
                 if (empty($data['uri_key'])) {
                     $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
@@ -177,7 +180,7 @@ class ProductController extends AuthActionController
                 $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
-        return $this->response($result, 'retailer/product/release/', 'retailer');
+        return $this->response($result, $back_url, 'retailer');
     }
 
     /**

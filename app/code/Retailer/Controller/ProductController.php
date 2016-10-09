@@ -46,7 +46,7 @@ class ProductController extends AuthActionController
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root = $this->getLayout('admin_catalog_product_edit_' . $model['product_type_id']);
+            $root = $this->getLayout('retailer_products_product_edit_' . $model['product_type_id']);
             $root->getChild('head')->setTitle('Edit Product / Product Management');
         } else {
             $model->setData('attribute_set_id', function() {

@@ -81,6 +81,7 @@ customer_account_dashboard:
 customer_account_edit:
     update: customer_account
     root:
+    
         children:
             head:
                 action:

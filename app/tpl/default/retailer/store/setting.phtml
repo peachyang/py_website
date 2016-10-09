@@ -1,13 +1,13 @@
 <div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
     <h3><?php echo $this->translate('Store Settings') ?></h3>
     
-    <div>
+    <div class="StoreSettings">
         <div>
             <p>
                 <img width="120" height="120" ectype="store_logo" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>" />
             </p>
             <b>
-                <span><input type="file" ectype="change_store_logo" hidefocus="true" maxlength="0" size="1"></span>
+                <span><input type="file" ectype="change_store_logo" hidefocus="true" maxlength="0" size="1"></span><br>
                 <div>更换店标</div>
             </b>
         </div>
@@ -16,7 +16,7 @@
                 <img width="607" height="120" ectype="store_banner" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png')?>">
             </p>
             <b>
-                <span><input type="file" ectype="change_store_banner" hidefocus="true" maxlength="0" size="1"></span>
+                <span><input type="file" ectype="change_store_banner" hidefocus="true" maxlength="0" size="1"></span><br>
                 <div>更换店铺条幅</div>
             </b>
         </div>
@@ -73,7 +73,7 @@
                     <div class="editor">
                         <textarea  id="description" name="description"></textarea>
                     </div>
-                    <div><input type="submit" value="提交" class="btn"></div>
+                    <div class="shop_sub"><input type="submit" value="提交" class="btn"></div>
                 </td>
             </tr>
         </table>

@@ -8,7 +8,7 @@ $sales_products = $this->getRetailerSalesProducts();
 
     <div class="myfilters" >
         <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
-            <div >
+            <div class="sell">
                 <ul>
                     <li><span>商品名称:</span> <input class="form-control " type="text" value="" name="name"></li>
                     <li><span>商家编码:</span> <input class="form-control " type="text" value="" name="id"></li>
@@ -126,7 +126,7 @@ $sales_products = $this->getRetailerSalesProducts();
 
                             <div>
                                 <p class="text-center">
-                                    <span class="control-right" >编辑商品</span>
+                                    <span class="control-right" ><a href="">编辑商品</a></span>
                                 </p>
                                 <p class="text-center">
                                     <a target="_blank" class="control-right" >复制链接</a>

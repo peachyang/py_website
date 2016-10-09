@@ -1,6 +1,9 @@
 <?php
 $orders = $this->getOrders();
 ?>
+
+
+
 <table class="table table-hover table-striped table-no-border text-center">
     <thead class="sort-by">
         <tr>
@@ -9,8 +12,13 @@ $orders = $this->getOrders();
             <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Status'); ?></th>
             <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Ordered Date'); ?></th>
             <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Action'); ?></th>
+            
         </tr>
+       
+        
     </thead>
+
+    
     <?php if (count($orders)): ?>
         <tbody>
             <?php foreach ($orders as $order): ?>  
@@ -32,3 +40,4 @@ $orders = $this->getOrders();
         </tfoot>
     <?php endif ?>
 </table>
+

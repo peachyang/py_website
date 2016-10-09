@@ -66,8 +66,10 @@ class Role extends AbstractModel
             if (in_array(-1, $this->storage['operation_id'])) {
                 $this->storage['operation_id'] = [-1];
             }
+            $unique = [];
             foreach ($this->storage['operation_id'] as $operationId) {
-                if ($operationId) {
+                if ($operationId && !isset($unique[$operationId])) {
+                    $unique[$operationId] = 1;
                     $tableGateway->insert(['role_id' => $this->getId(), 'operation_id' => $operationId]);
                 }
             }

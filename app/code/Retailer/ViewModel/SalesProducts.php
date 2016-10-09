@@ -130,9 +130,6 @@ class SalesProducts extends Template
         }
         return $collection;
     }
-    
-
-
 
     
 }

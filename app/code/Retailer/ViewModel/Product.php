@@ -92,7 +92,9 @@ class Product extends Template
 
         //Combine product list to sales order
         foreach($sales_order_collection as &$order){
-            $order["items"] = $product_list[$order['id']];
+            if(!empty($product_list[$order['id']])){
+                $order["items"] = $product_list[$order['id']];
+            }
         }
 
         //return $segment->get('customer');

@@ -5,12 +5,13 @@ namespace Seahinet\Catalog\Controller;
 use Seahinet\Catalog\Model\Category;
 use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Controller\ActionController;
-use Zend\Db\Sql\Predicate\Like;
+use Zend\Db\Sql\Expression;
 
 class CategoryController extends ActionController
 {
 
-    use \Seahinet\Catalog\Traits\Breadcrumb;
+    use \Seahinet\Catalog\Traits\Breadcrumb,
+        \Seahinet\Lib\Traits\DB;
 
     public function indexAction()
     {
@@ -39,6 +40,22 @@ class CategoryController extends ActionController
         $mode = $condition['mode'] ?? 'grid';
         unset($condition['q'], $condition['type'], $condition['mode']);
         $select = $collection->getSelect();
+        if ($category && isset($condition['category'])) {
+            $tableGateway = $this->getTableGateway('product_in_category');
+            $tmpselect = $tableGateway->getSql()->select();
+            $tmpselect->columns(['product_id', 'count' => new Expression('count(category_id)')])
+                    ->where(['category_id' => $condition['category']], 'OR')
+                    ->where(['category_id' => $category['id']], 'OR')
+                    ->group(['product_id'])
+                    ->having('count>1');
+            $set = $tableGateway->selectWith($tmpselect);
+            $ids = [];
+            foreach($set as $row){
+                $ids[$row['product_id']] = 1;
+            }
+            $select->where->in('id', array_keys($ids));
+            unset($condition['category']);
+        }
         if (isset($condition['limit']) && $condition['limit'] === 'all' && $config['catalog/frontend/allowed_all_products']) {
             $select->reset('limit')->reset('offset');
         } else {
@@ -69,7 +86,7 @@ class CategoryController extends ActionController
                 unset($condition[$key]);
             } else if (strpos($key, ':')) {
                 if (strpos($value, '%') !== false) {
-                    $select->where(new Like(str_replace(':', '.', $key), $value));
+                    $select->where->like(str_replace(':', '.', $key), $value);
                 } else {
                     $condition[str_replace(':', '.', $key)] = $value;
                 }

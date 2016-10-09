@@ -91,8 +91,14 @@
             </table>
         </form>
     <?php else: ?>
-        <h2><?php echo $this->translate('Shopping Cart Is Empty') ?></h2>
-        <p><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
+    <div class="empty_cart">
+        <div class="cart_img">
+            <img src="<?php echo $this->getBaseUrl()?>pub/theme/default/frontend/images/shopping_cart.jpg">
+        </div>
+        <ul>
+            <li><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></li>
+        </ul>
+    </div>
     <?php endif; ?>
     <?php
     $countC = count($this->getChild('crosssell')->getProducts());

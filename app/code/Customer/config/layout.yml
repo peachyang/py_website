@@ -28,7 +28,7 @@ customer_account:
                                 params: [{link:'customer/history/',label:'Browsing History',group:'My Following'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/edit/',label:'Account Infomation',group:'Account Infomation'}]
+                                params: [{link:'customer/account/edit/',label:'Account Infomation/Password Edit',group:'Account Infomation'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/account/address/',label:'Address Book',group:'Account Infomation'}]
@@ -127,6 +127,30 @@ customer_account_address:
                     modal:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address/modal
+customer_account_coupon:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: My Coupons
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - My Coupons
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Wrapper
+                        children:
+                            coupon:
+                                type: Seahinet\Customer\ViewModel\Dashboard\Coupon
+                                template: customer/dashboard/coupon_1
+    
 customer_wishlist:
     update: customer_account
     root:

@@ -119,7 +119,7 @@ class UploadedFile implements UploadedFileInterface
     public function getStream()
     {
         if ($this->moved) {
-            throw new \RuntimeException(sprintf('Uploaded file %1s has already been moved', $this->name));
+            throw new RuntimeException(sprintf('Uploaded file %1s has already been moved', $this->name));
         }
         if ($this->stream === null) {
             $this->stream = new Stream(fopen($this->file, 'r'));

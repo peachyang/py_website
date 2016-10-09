@@ -68,6 +68,11 @@ $Info = json_encode($Infos);
 	function doAdd() {  
      var title = $('#title').val();
      var url = $('#url').val(); 
+     if($.trim(title)=="")
+     {
+     	layer.msg('请输入标题', {shade: [0.3,'#fff'],time: 1200});
+		return;
+     }
      var resource_category_code = $('#resource_category_code').val(); 
      $.ajax({  
           url: '<?php echo $this->getBaseUrl('retailer/store/decorationInfoAdd') ?>' ,  
@@ -78,7 +83,7 @@ $Info = json_encode($Infos);
           },  
           success: function (json) {  
         	if(json.status==0){
-        		console.log(111222);
+        		
         		Info.info1 = JSON.parse(json.Info);
         		$('.infoList').html(template('li_menu',Info));	
         	}
@@ -129,11 +134,11 @@ $Info = json_encode($Infos);
 				
 	}
 	
-	function deleteInfo(id,resource_id){
+	function deleteInfo(id){
 	$.ajax({  
           url: '<?php echo $this->getBaseUrl('retailer/store/decorationInfoDelete') ?>' ,  
           type: 'POST',  
-          data: {id:id,resource_id:resource_id,resource_category_code:'menu'},  
+          data: {id:id,resource_category_code:'menu'},  
           beforeSend:function(){
             layer.load(1, {shade: [0.1,'#fff'] });	
           },  
@@ -181,7 +186,7 @@ $Info = json_encode($Infos);
 	<li>
 	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.pic_title}}" style="display:none" ><span name='pic_title'>{{value.pic_title}}</span></div>
 	<div class="url adjust"  ><input type="text" name='url' value="{{value.url}}" style="display:none" ><span name='url'>{{value.url}}</span></div>
-	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteInfo({{value.id}},{{value.resource_id}})' >删 除</button></div>
+	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteInfo({{value.id}})' >删 除</button></div>
 	<div style="clear:both"></div>			
 	</li>
 	 {{/each}}

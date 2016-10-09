@@ -3,7 +3,6 @@
 namespace Seahinet\Catalog\ViewModel\Category;
 
 use Seahinet\Catalog\Model\Product;
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 
 class Filter extends Toolbar
@@ -29,7 +28,6 @@ class Filter extends Toolbar
     {
         $result = [];
         if ($this->getCollection()->count()) {
-            $languageId = Bootstrap::getLanguage()->getId();
             if ($this->getVariable('category')) {
                 $ids = [];
                 foreach ($this->getVariable('category')->getChildrenCategories() as $category) {
@@ -46,7 +44,7 @@ class Filter extends Toolbar
                         if (in_array($category['id'], $ids)) {
                             if (!isset($result['category'])) {
                                 $result['category'] = [
-                                    'label' => 'Category',
+                                    'label' => $this->translate('Category'),
                                     'values' => []
                                 ];
                             }
@@ -59,13 +57,15 @@ class Filter extends Toolbar
                     }
                 }
                 foreach ($attributes as $attribute) {
-                    if (!isset($result[$attribute['code']])) {
-                        $result[$attribute['code']] = [
-                            'label' => $attribute['label'],
-                            'values' => []
-                        ];
+                    if ($product[$attribute['code']] !== '') {
+                        if (!isset($result[$attribute['code']])) {
+                            $result[$attribute['code']] = [
+                                'label' => $attribute['label'],
+                                'values' => []
+                            ];
+                        }
+                        $this->statAttributeValue($result[$attribute['code']]['values'], $product[$attribute['code']], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                     }
-                    $this->statAttributeValue($result[$attribute['code']]['values'], $product[$attribute['code']], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                 }
             }
         }

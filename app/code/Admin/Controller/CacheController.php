@@ -20,18 +20,19 @@ class CacheController extends AuthActionController
         $eventDispatcher = $this->getContainer()->get('eventDispatcher');
         if ($code) {
             $count = 0;
-            if (!is_array($code)) {
-                $code = [$code];
-            }
-            foreach ($code as $prefix) {
-                $list = $cache->fetch('CACHE_LIST_' . $prefix);
-                $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
-                if ($list) {
-                    foreach ((array) $list as $key => $value) {
-                        $cache->delete($key, $prefix);
-                    }
+            foreach ((array) $code as $prefix) {
+                if ($prefix === 'SYSTEM_CONFIG') {
+                    $this->flushShmop();
                 } else {
-                    $cache->delete($prefix);
+                    $list = $cache->fetch('CACHE_LIST_' . $prefix);
+                    $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
+                    if ($list) {
+                        foreach ((array) $list as $key => $value) {
+                            $cache->delete($key, $prefix);
+                        }
+                    } else {
+                        $cache->delete('', $prefix);
+                    }
                 }
                 $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
                 $count ++;
@@ -40,10 +41,30 @@ class CacheController extends AuthActionController
         } else {
             $eventDispatcher->trigger('allcache.delete.before');
             $cache->flushAll();
+            $this->flushShmop();
             $eventDispatcher->trigger('allcache.delete.after');
             $result['message'][] = ['message' => $this->translate('All caches have been flushed successfully.'), 'level' => 'success'];
         }
         return $this->response($result, ':ADMIN/cache/');
+    }
+
+    public function flushShmop()
+    {
+        if (extension_loaded('shmop')) {
+            $ftok = function_exists('ftok') ? 'ftok' : function($pathname, $proj) {
+                $st = @stat($pathname);
+                if (!$st) {
+                    return -1;
+                }
+                $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
+                return $key;
+            };
+            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, 524288);
+            if ($shmid) {
+                shmop_delete($shmid);
+                shmop_close($shmid);
+            }
+        }
     }
 
 }

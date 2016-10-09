@@ -35,7 +35,9 @@ class StoreDecoration extends Template
 			}
 		}else{
 				$template = new StoreTemplateCollection;
-				$templateViewCollection = $template->storeTemplateList($segment->get('customer')['store_id'],1);
+				$r = new Retailer;
+				$r->load($segment->get('customer')->getId(),'customer_id');
+				$templateViewCollection = $template->storeTemplateList($r['store_id'],1);
 				if(!empty($templateViewCollection))
 					$templateView = $templateViewCollection[0];
 				else
@@ -49,8 +51,9 @@ class StoreDecoration extends Template
 			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
 			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params']);
 		}
-		
-		if( !empty($templateView) && $templateView['store_id'] != $segment->get('customer')['store_id'] && $templateView['store_id']!=0 )
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		if( !empty($templateView) && $templateView['store_id'] != $r['store_id'] && $templateView['store_id']!=0 )
 			$templateView = [];
 		
 		return $templateView;				 		      
@@ -102,8 +105,10 @@ class StoreDecoration extends Template
 	public function getTemplateList($judge=0){
 		$segment = new Segment('customer');
 		$template = new StoreTemplateCollection;
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
 		if($judge==0)
-			$template->storeTemplateList($segment->get('customer')['store_id']);
+			$template->storeTemplateList($r['store_id']);
 		else
 			$template->storeTemplateList(0);
 		return $template;
@@ -113,7 +118,9 @@ class StoreDecoration extends Template
 	public function getStorePicInfo($code){
 		$segment = new Segment('customer');
 		$Scollection = new StorePicInfoCollection;
-		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$segment->get('customer')['store_id']])
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$r['store_id']])
 		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 	
 		return $Scollection;
@@ -123,7 +130,9 @@ class StoreDecoration extends Template
 	public function getStoreBanner(){
 		$segment = new Segment('customer');		
 		$retailer = new RetailerCollection;
-		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$segment->get('customer')['store_id']])
+		$r = new Retailer;
+		$r->load($segment->get('customer')->getId(),'customer_id');
+		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$r['store_id']])
 		->join('resource','retailer.banner = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 		//return $segment->get('customer');
 		return empty($retailer) ? [] : $retailer[0] ;
@@ -302,15 +311,19 @@ class StoreDecoration extends Template
 		$select_row = empty($params) ? 1 : $params['select_row'];
 		$select_column = empty($params) ? 4 : (int)$params['select_column'];
 		$select_col_md = 'col-md-3';
+		$pic_height = '225px';
 		switch ($select_column) {
 			case 3:
 				$select_col_md = 'col-md-4';
+				$pic_height = '313px';
 				break;
 			case 2:
 				$select_col_md = 'col-md-6';
+				$pic_height = '490px';
 				break;			
 			default:
 				$select_col_md = 'col-md-3';
+				$pic_height = '225px';
 				break;
 		}
 		
@@ -326,14 +339,14 @@ class StoreDecoration extends Template
        	foreach ($productsData as $key => $value) {
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
-				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
 			}else {
 				$picURL = $thumbnail;
 			}
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <a href="javascript:void(0)"><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
                                 <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>

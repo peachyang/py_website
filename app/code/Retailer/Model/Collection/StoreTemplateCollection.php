@@ -1,6 +1,7 @@
 <?php
 namespace Seahinet\Retailer\Model\Collection;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractCollection;
 
 class StoreTemplateCollection extends AbstractCollection

@@ -75,6 +75,7 @@ class Indexer implements Stdlib\Singleton
     public function delete($entityType, $languageId, $constraint = [])
     {
         $this->getHandler($entityType)->delete($languageId, $constraint);
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
     /**
@@ -87,6 +88,7 @@ class Indexer implements Stdlib\Singleton
     public function insert($entityType, $languageId, $values)
     {
         $this->getHandler($entityType)->insert($languageId, $values);
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
     /**
@@ -97,6 +99,7 @@ class Indexer implements Stdlib\Singleton
     public function reindex($entityType)
     {
         $this->getHandler($entityType)->reindex();
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
     /**
@@ -109,7 +112,13 @@ class Indexer implements Stdlib\Singleton
      */
     public function select($entityType, $languageId, $constraint = [])
     {
-        return $this->getHandler($entityType)->select($languageId, $constraint);
+        $key = md5($entityType . $languageId . serialize($constraint));
+        $result = $this->getCacheInstance()->fetch($key, 'INDEX_');
+        if (!is_array($result) && empty($result)) {
+            $result = $this->getHandler($entityType)->select($languageId, $constraint);
+            $this->getCacheInstance()->save($key, $result, 'INDEX_');
+        }
+        return $result;
     }
 
     /**
@@ -123,6 +132,7 @@ class Indexer implements Stdlib\Singleton
     public function update($entityType, $languageId, $values, $constraint = [])
     {
         $this->getHandler($entityType)->update($languageId, $values, $constraint);
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
     /**
@@ -136,6 +146,7 @@ class Indexer implements Stdlib\Singleton
     public function upsert($entityType, $languageId, $values, $constraint = [])
     {
         $this->getHandler($entityType)->upsert($languageId, $values, $constraint);
+        $this->getCacheInstance()->delete('', 'INDEX_');
     }
 
 }

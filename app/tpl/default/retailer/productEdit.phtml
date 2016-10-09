@@ -9,7 +9,7 @@ if ($this->hasTitle()):
                 <?php echo $this->getChild('tabs') ? $this->getChild('tabs')->setVariable('model', $this->getVariable('model')) : '' ?>
                 <div class="page-content table tab-pane fade active in" id="main-tab">
                     <?php
-                endif;
+endif;
                 foreach ($elements as $key => $item) {
                     echo $this->getInputBox($key, $item);
                 }
@@ -31,6 +31,7 @@ if ($this->hasTitle()):
                     echo $this->getAdditionalButtons();
                     ?>
                 </div>
+                <input type="hidden" name="backurl" value="<?php echo $this->getRequest()->getHeader('HTTP_REFERER'); ?>"  />
             </form>
         </div>
     </div>

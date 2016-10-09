@@ -5,6 +5,7 @@ namespace Seahinet\Cms\Indexer;
 use Seahinet\Cms\Model\Collection\Category;
 use Seahinet\Cms\Model\Collection\Page;
 use Seahinet\Cms\Model\Page as PageModel;
+use Seahinet\Lib\Db\Sql\Ddl\Column\UnsignedInteger;
 use Seahinet\Lib\Indexer\Handler\AbstractHandler;
 use Seahinet\Lib\Indexer\Handler\Database;
 use Seahinet\Lib\Indexer\Provider;
@@ -31,8 +32,8 @@ class Url implements Provider
                         'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
                 );
                 $ddl = new Ddl\CreateTable($table);
-                $ddl->addColumn(new Ddl\Column\Integer('page_id', true, 0))
-                        ->addColumn(new Ddl\Column\Integer('category_id', true, 0))
+                $ddl->addColumn(new UnsignedInteger('page_id', true, 0))
+                        ->addColumn(new UnsignedInteger('category_id', true, 0))
                         ->addColumn(new Ddl\Column\Varchar('path', 255, false))
                         ->addConstraint(new Ddl\Constraint\UniqueKey(['category_id', 'page_id'], 'UNQ_' . strtoupper($table) . '_CATEGORY_ID_PAGE_ID'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_CMS_PAGE_ID', 'page_id', 'cms_page', 'id', 'CASCADE', 'CASCADE'))

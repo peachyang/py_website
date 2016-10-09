@@ -3,7 +3,12 @@ $filters = $this->getFilters();
 $current = $this->getCurrentFilters();
 ?>
 <dl class="filters clearfix">
-    <?php foreach ($filters as $key => $filter): ?>
+    <?php
+    foreach ($filters as $key => $filter):
+        if (count($filter['values']) <= 1) {
+            continue;
+        }
+        ?>
         <dt class="col-xs-12 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
         <dd class="col-xs-12 col-sm-10 col-md-11">
             <a href="<?php echo $this->getInitFilterUrl($key) ?>" class="init" rel="nofollow">

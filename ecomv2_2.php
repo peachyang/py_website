@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 CREATE TABLE IF NOT EXISTS `sales_order_phase` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Phase ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Phase ID',
     `code` VARCHAR(20) NOT NULL COMMENT 'Phase code',
     `name` VARCHAR(20) DEFAULT '' COMMENT 'Phase name',
     PRIMARY KEY (`id`),
@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `sales_order_phase` (
 );
 
 CREATE TABLE IF NOT EXISTS `sales_order_status` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Status ID',
-    `phase_id` INTEGER NOT NULL COMMENT 'Phase ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Status ID',
+    `phase_id` INTEGER UNSIGNED NOT NULL COMMENT 'Phase ID',
     `name` VARCHAR(20) DEFAULT '' COMMENT 'Status name',
     `is_default` BOOLEAN DEFAULT 1 COMMENT 'Is default',
     PRIMARY KEY (`id`),
@@ -37,10 +37,10 @@ INSERT INTO `sales_order_status` VALUES
 (NULL,7,'On Hold',1);
 
 CREATE TABLE IF NOT EXISTS `sales_cart` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Order ID',
-    `customer_id` INTEGER DEFAULT NULL COMMENT 'Customer ID',
-    `billing_address_id` INTEGER DEFAULT NULL COMMENT 'Billing address ID',
-    `shipping_address_id` INTEGER DEFAULT NULL COMMENT 'Shipping address ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Order ID',
+    `customer_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Customer ID',
+    `billing_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Billing address ID',
+    `shipping_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Shipping address ID',
     `billing_address` TEXT COMMENT 'Billing address',
     `shipping_address` TEXT COMMENT 'Billing address',
     `is_virtual` BOOLEAN DEFAULT 0 COMMENT 'Is order virtual',
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `sales_cart` (
     `customer_note` TEXT COMMENT 'Customer note',
     `status` BOOLEAN DEFAULT 1 COMMENT 'Is active',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_CART_STATUS (`status`),
     INDEX IDX_SALES_CART_CUSTOMER_ID (`customer_id`),
@@ -76,14 +76,12 @@ CREATE TABLE IF NOT EXISTS `sales_cart` (
     CONSTRAINT FK_SALES_CART_SHIPPING_ADDR_ID_ADDR_ENTITY_ID FOREIGN KEY (`shipping_address_id`) REFERENCES `address_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_CART` BEFORE UPDATE ON `sales_cart` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_cart_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Order item ID',
-    `cart_id` INTEGER NOT NULL COMMENT 'Cart ID',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
-    `warehouse_id` INTEGER DEFAULT NULL COMMENT 'Warehouse ID',
-    `product_id` INTEGER COMMENT 'Product ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Order item ID',
+    `cart_id` INTEGER UNSIGNED NOT NULL COMMENT 'Cart ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `warehouse_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Warehouse ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
     `options` VARCHAR(255) NULL COMMENT 'Options',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
@@ -101,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `sales_cart_item` (
     `weight` DECIMAL(12,4) NOT NULL COMMENT 'Total weight',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is active',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_CART_ITEM_WAREHOUSE_ID (`warehouse_id`),
     INDEX IDX_SALES_CART_ITEM_STORE_ID (`store_id`),
@@ -114,18 +112,16 @@ CREATE TABLE IF NOT EXISTS `sales_cart_item` (
     CONSTRAINT FK_SALES_CART_ITEM_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_CART_ITEM` BEFORE UPDATE ON `sales_cart_item` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Order ID',
-    `status_id` INTEGER NOT NULL COMMENT 'Status ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Order ID',
+    `status_id` INTEGER UNSIGNED NOT NULL COMMENT 'Status ID',
     `increment_id` VARCHAR(255) NOT NULL COMMENT 'Increment ID',
-    `customer_id` INTEGER DEFAULT NULL COMMENT 'Customer ID',
-    `billing_address_id` INTEGER DEFAULT NULL COMMENT 'Billing address ID',
-    `shipping_address_id` INTEGER DEFAULT NULL COMMENT 'Shipping address ID',
-    `warehouse_id` INTEGER DEFAULT NULL COMMENT 'Warehouse ID',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
-    `language_id` INTEGER DEFAULT NULL COMMENT 'Language ID',
+    `customer_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Customer ID',
+    `billing_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Billing address ID',
+    `shipping_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Shipping address ID',
+    `warehouse_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Warehouse ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `language_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Language ID',
     `billing_address` TEXT COMMENT 'Billing address',
     `shipping_address` TEXT COMMENT 'Billing address',
     `is_virtual` BOOLEAN DEFAULT 0 COMMENT 'Is order virtual',
@@ -153,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `sales_order` (
     `additional` TEXT COMMENT 'Additional info',
     `customer_note` TEXT COMMENT 'Customer note',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_STATUS_ID (`status_id`),
     INDEX IDX_SALES_ORDER_INCREMENT_ID (`increment_id`),
@@ -172,12 +168,10 @@ CREATE TABLE IF NOT EXISTS `sales_order` (
     CONSTRAINT FK_SALES_ORDER_SHIPPING_ADDR_ID_ADDR_ENTITY_ID FOREIGN KEY (`shipping_address_id`) REFERENCES `address_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER` BEFORE UPDATE ON `sales_order` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Order item ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
-    `product_id` INTEGER COMMENT 'Product ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Order item ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
     `options` VARCHAR(255) NULL COMMENT 'Options',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
@@ -194,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_item` (
     `total` DECIMAL(12,4) NOT NULL COMMENT 'Total',
     `weight` DECIMAL(12,4) NOT NULL COMMENT 'Total weight',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_ITEM_ORDER_ID (`order_id`),
     INDEX IDX_SALES_ORDER_ITEM_PRODUCT_ID (`product_id`),
@@ -202,13 +196,11 @@ CREATE TABLE IF NOT EXISTS `sales_order_item` (
     CONSTRAINT FK_SALES_ORDER_ITEM_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_ITEM` BEFORE UPDATE ON `sales_order_item` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_invoice` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Invoice ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Invoice ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
     `increment_id` VARCHAR(255) NOT NULL COMMENT 'Increment ID',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
@@ -224,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice` (
     `total` DECIMAL(12,4) NOT NULL COMMENT 'Total',
     `comment` TEXT COMMENT 'Comment',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_INVOICE_INCREMENT_ID (`increment_id`),
     INDEX IDX_SALES_ORDER_INVOICE_STORE_ID (`store_id`),
@@ -233,13 +225,11 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice` (
     CONSTRAINT FK_SALES_ORDER_INVOICE_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_INVOICE` BEFORE UPDATE ON `sales_order_invoice` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_invoice_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
-    `item_id` INTEGER COMMENT 'Order item ID',
-    `invoice_id` INTEGER NOT NULL COMMENT 'Invoice ID',
-    `product_id` INTEGER COMMENT 'Product ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
+    `item_id` INTEGER UNSIGNED COMMENT 'Order item ID',
+    `invoice_id` INTEGER UNSIGNED NOT NULL COMMENT 'Invoice ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
     `options` VARCHAR(255) NULL COMMENT 'Options',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
@@ -253,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice_item` (
     `base_total` DECIMAL(12,4) NOT NULL COMMENT 'Base total',
     `total` DECIMAL(12,4) NOT NULL COMMENT 'Total',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_INVOICE_ITEM_ITEM_ID (`item_id`),
     INDEX IDX_SALES_ORDER_INVOICE_ITEM_INVOICE_ID (`invoice_id`),
@@ -263,24 +253,22 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice_item` (
     CONSTRAINT FK_SALES_ORDER_INVOICE_ITEM_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_INVOICE_ITEM` BEFORE UPDATE ON `sales_order_invoice_item` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_shipment` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Shipment ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Shipment ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
     `increment_id` VARCHAR(255) NOT NULL COMMENT 'Increment ID',
-    `customer_id` INTEGER DEFAULT NULL COMMENT 'Customer ID',
+    `customer_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Customer ID',
     `shipping_method` VARCHAR(255) DEFAULT NULL COMMENT 'Shipping method',
-    `billing_address_id` INTEGER DEFAULT NULL COMMENT 'Billing address ID',
-    `shipping_address_id` INTEGER DEFAULT NULL COMMENT 'Shipping address ID',
-    `warehouse_id` INTEGER DEFAULT NULL COMMENT 'Warehouse ID',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
+    `billing_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Billing address ID',
+    `shipping_address_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Shipping address ID',
+    `warehouse_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Warehouse ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
     `billing_address` TEXT COMMENT 'Billing address',
     `shipping_address` TEXT COMMENT 'Shipping address',
     `comment` TEXT COMMENT 'Comment',
     `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_SHIPMENT_INCREMENT_ID (`increment_id`),
     INDEX IDX_SALES_ORDER_SHIPMENT_STORE_ID (`store_id`),
@@ -297,20 +285,18 @@ CREATE TABLE IF NOT EXISTS `sales_order_shipment` (
     CONSTRAINT FK_SALES_ORDER_SHIPMENT_SHIPPING_ADDR_ID_ADDR_ENTITY_ID FOREIGN KEY (`shipping_address_id`) REFERENCES `address_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_SHIPMENT` BEFORE UPDATE ON `sales_order_shipment` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_shipment_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
-    `item_id` INTEGER COMMENT 'Order item ID',
-    `shipment_id` INTEGER NOT NULL COMMENT 'Shipment ID',
-    `product_id` INTEGER COMMENT 'Product ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
+    `item_id` INTEGER UNSIGNED COMMENT 'Order item ID',
+    `shipment_id` INTEGER UNSIGNED NOT NULL COMMENT 'Shipment ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
     `options` VARCHAR(255) NULL COMMENT 'Options',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
     `sku` VARCHAR(255) NOT NULL COMMENT 'Sku',
     `weight` DECIMAL(12,4) NOT NULL COMMENT 'Weight',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_SHIPMENT_ITEM_ITEM_ID (`item_id`),
     INDEX IDX_SALES_ORDER_SHIPMENT_ITEM_SHIPMENT_ID (`shipment_id`),
@@ -320,12 +306,10 @@ CREATE TABLE IF NOT EXISTS `sales_order_shipment_item` (
     CONSTRAINT FK_SALES_ORDER_SHIPMENT_ITEM_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_SHIPMENT_ITEM` BEFORE UPDATE ON `sales_order_shipment_item` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_shipment_track` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Track ID',
-    `shipment_id` INTEGER NOT NULL COMMENT 'Shipment ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Track ID',
+    `shipment_id` INTEGER UNSIGNED NOT NULL COMMENT 'Shipment ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
     `carrier` VARCHAR(255) NOT NULL COMMENT 'Carrier',
     `carrier_code` VARCHAR(32) DEFAULT '' COMMENT 'Carrier code',
     `track_number` VARCHAR(255) NOT NULL COMMENT 'Track number',
@@ -339,11 +323,11 @@ CREATE TABLE IF NOT EXISTS `sales_order_shipment_track` (
 );
 
 CREATE TABLE IF NOT EXISTS `sales_order_creditmemo` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Credit memo ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Credit memo ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
     `increment_id` VARCHAR(255) NOT NULL COMMENT 'Increment ID',
-    `warehouse_id` INTEGER DEFAULT NULL COMMENT 'Warehouse ID',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
+    `warehouse_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Warehouse ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
@@ -359,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_creditmemo` (
     `comment` TEXT COMMENT 'Comment',
     `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_MEMO_INCREMENT_ID (`increment_id`),
     INDEX IDX_SALES_ORDER_MEMO_STORE_ID (`store_id`),
@@ -370,13 +354,11 @@ CREATE TABLE IF NOT EXISTS `sales_order_creditmemo` (
     CONSTRAINT FK_SALES_ORDER_MEMO_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_CREDITMEMO` BEFORE UPDATE ON `sales_order_creditmemo` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_creditmemo_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
-    `item_id` INTEGER COMMENT 'Order item ID',
-    `creditmemo_id` INTEGER NOT NULL COMMENT 'Credit memo ID',
-    `product_id` INTEGER COMMENT 'Product ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Item ID',
+    `item_id` INTEGER UNSIGNED COMMENT 'Order item ID',
+    `creditmemo_id` INTEGER UNSIGNED NOT NULL COMMENT 'Credit memo ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
     `options` VARCHAR(255) NULL COMMENT 'Options',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
@@ -390,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_creditmemo_item` (
     `base_total` DECIMAL(12,4) NOT NULL COMMENT 'Base total',
     `total` DECIMAL(12,4) NOT NULL COMMENT 'Total',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_SALES_ORDER_MEMO_ITEM_ITEM_ID (`item_id`),
     INDEX IDX_SALES_ORDER_MEMO_ITEM_MEMO_ID (`creditmemo_id`),
@@ -400,13 +382,11 @@ CREATE TABLE IF NOT EXISTS `sales_order_creditmemo_item` (
     CONSTRAINT FK_SALES_ORDER_MEMO_ITEM_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TRIGGER `TGR_UPDATE_SALES_ORDER_CREDITMEMO_ITEM` BEFORE UPDATE ON `sales_order_creditmemo_item` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
-
 CREATE TABLE IF NOT EXISTS `sales_order_status_history` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'History ID',
-    `admin_id` INTEGER COMMENT 'Admin ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
-    `status_id` INTEGER COMMENT 'Status ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'History ID',
+    `admin_id` INTEGER UNSIGNED COMMENT 'Admin ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
+    `status_id` INTEGER UNSIGNED COMMENT 'Status ID',
     `status` VARCHAR(255) COMMENT 'Status',
     `is_customer_notified` BOOLEAN DEFAULT 0 COMMENT 'Is Customer Notified',
     `is_visible_on_front` BOOLEAN  DEFAULT 0 COMMENT 'Is Visible On Front',
@@ -423,20 +403,20 @@ CREATE TABLE IF NOT EXISTS `sales_order_status_history` (
 );
 
 CREATE TABLE IF NOT EXISTS `wishlist` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Wishlist ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Wishlist ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_WISHLIST_CUSTOMER_ID UNIQUE (`customer_id`),
     CONSTRAINT FK_WISHLIST_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `wishlist_item` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Wishlist item ID',
-    `wishlist_id` INTEGER NOT NULL COMMENT 'Wishlist ID',
-    `product_id` INTEGER COMMENT 'Product ID',
-    `warehouse_id` INTEGER COMMENT 'Warehouse ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Wishlist item ID',
+    `wishlist_id` INTEGER UNSIGNED NOT NULL COMMENT 'Wishlist ID',
+    `product_id` INTEGER UNSIGNED COMMENT 'Product ID',
+    `warehouse_id` INTEGER UNSIGNED COMMENT 'Warehouse ID',
     `product_name` VARCHAR(255) COMMENT 'Product Name',
-    `store_id` INTEGER DEFAULT NULL COMMENT 'Store ID',
+    `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
     `description` TEXT COMMENT 'Description',
     `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
     `options` VARCHAR(255) NULL COMMENT 'Options',
@@ -452,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `wishlist_item` (
 );
 
 CREATE TABLE IF NOT EXISTS `social_media` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Social Media ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Social Media ID',
     `label` VARCHAR(255) NOT NULL COMMENT 'Social Media Name',
     `link` VARCHAR(255) NOT NULL COMMENT 'Social Media Link',
     `icon` VARCHAR(20) NOT NULL COMMENT 'Social Media Icon Name',
@@ -460,9 +440,9 @@ CREATE TABLE IF NOT EXISTS `social_media` (
 );
 
 CREATE TABLE IF NOT EXISTS `social_media_share` (
-    `media_id` INTEGER NOT NULL COMMENT 'Social Media ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
-    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `media_id` INTEGER UNSIGNED NOT NULL COMMENT 'Social Media ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`media_id`,`customer_id`,`product_id`),
     INDEX IDX_SOCIAL_MEDIA_SHARE_CUSTOMER_ID (`customer_id`),
@@ -474,8 +454,8 @@ CREATE TABLE IF NOT EXISTS `social_media_share` (
 
 CREATE TABLE IF NOT EXISTS `log_viewed_product` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
-    `product_id` INTEGER NOT NULL COMMENT 'Product ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     `updated_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at',
     PRIMARY KEY (`id`),
@@ -489,22 +469,28 @@ CREATE TABLE IF NOT EXISTS `log_viewed_product` (
 CREATE TRIGGER `TGR_UPDATE_LOG_VIEWED_PRODUCT` BEFORE UPDATE ON `log_viewed_product` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS `retailer`(
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Retailer ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
-    `store_id` INTEGER NULL DEFAULT NULL COMMENT 'Store ID',
-    `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'Retailer Name',
-    `address` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Retailer Address',
-    `account` VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'Retailer Account',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Retailer ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
+    `address` TEXT COMMENT 'Address',
+    `tel` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Telephone',
+    `description` TEXT COMMENT 'Description',
+    `profile` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Profile',
+    `banner` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Banner',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`id`),
+    INDEX IDX_RETAILER_PROFILE (`profile`),
+    INDEX IDX_RETAILER_BANNER (`banner`),
     CONSTRAINT UNQ_RETAILER_CUSTOMER_ID UNIQUE (`customer_id`),
     CONSTRAINT UNQ_RETAILER_STORE_ID UNIQUE (`store_id`),
     CONSTRAINT FK_RETAILER_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_RETAILER_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_RETAILER_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_RETAILER_PROFILE_RESOURCE_ID FOREIGN KEY (`profile`) REFERENCES `resource` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT FK_RETAILER_BANNER_RESOURCE_ID FOREIGN KEY (`banner`) REFERENCES `resource` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `retailer_application`(
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
     `lisence_1` MEDIUMBLOB COMMENT 'Lisence 1',
     `lisence_2` MEDIUMBLOB COMMENT 'Lisence 2',
     `phone` VARCHAR(20) NOT NULL COMMENT 'Phone',
@@ -517,7 +503,7 @@ CREATE TABLE IF NOT EXISTS `retailer_application`(
 );
 
 CREATE TABLE IF NOT EXISTS `persistent`(
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
     `key` CHAR(32) NOT NULL COMMENT 'Cookie Key',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`customer_id`),
@@ -529,9 +515,9 @@ CREATE TABLE IF NOT EXISTS `persistent`(
 CREATE TRIGGER `TGR_UPDATE_PERSOSTEMT` BEFORE UPDATE ON `persistent` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS `rma` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'RMA ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
-    `customer_id` INTEGER NULL DEFAULT NULL COMMENT 'Customer ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'RMA ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
+    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Customer ID',
     `carrier` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Carrier name',
     `track_number` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Track number',
     `comment` TEXT COMMENT 'Comment',
@@ -548,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `rma` (
 CREATE TRIGGER `TGR_UPDATE_RMA` BEFORE UPDATE ON `rma` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS `promotion`(
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Promotion ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Promotion ID',
     `name` VARCHAR(255) NOT NULL COMMENT 'Promotion name',
     `description` TEXT COMMENT 'Promotion description',
     `use_coupon` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Use coupon',
@@ -572,8 +558,8 @@ CREATE TABLE IF NOT EXISTS `promotion`(
 CREATE TRIGGER `TGR_UPDATE_PROMOTION` BEFORE UPDATE ON `promotion` FOR EACH ROW SET NEW.`updated_at`=CURRENT_TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS `promotion_in_store`(
-    `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `promotion_id` INTEGER UNSIGNED NOT NULL COMMENT 'Promotion ID',
+    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
     PRIMARY KEY (`promotion_id`,`store_id`),
     INDEX IDX_PROMOTION_STORE_ID (`store_id`),
     CONSTRAINT FK_PROMOTION_IN_STORE_PROMOTION_ID_PROMOTION_ID FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -581,9 +567,9 @@ CREATE TABLE IF NOT EXISTS `promotion_in_store`(
 );
 
 CREATE TABLE IF NOT EXISTS `promotion_condition`(
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Condition ID',
-    `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Condition ID',
+    `promotion_id` INTEGER UNSIGNED NOT NULL COMMENT 'Promotion ID',
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent ID',
     `identifier` VARCHAR(50) NOT NULL COMMENT 'Identifier',
     `operator` VARCHAR(20) NOT NULL COMMENT 'Operator',
     `value` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Value',
@@ -595,9 +581,9 @@ CREATE TABLE IF NOT EXISTS `promotion_condition`(
 );
 
 CREATE TABLE IF NOT EXISTS `promotion_handler`(
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Handler ID',
-    `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `parent_id` INTEGER NULL DEFAULT NULL COMMENT 'Parent ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Handler ID',
+    `promotion_id` INTEGER UNSIGNED NOT NULL COMMENT 'Promotion ID',
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent ID',
     `identifier` VARCHAR(50) NOT NULL COMMENT 'Identifier',
     `operator` VARCHAR(20) NOT NULL COMMENT 'Operator',
     `value` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Value',
@@ -609,11 +595,11 @@ CREATE TABLE IF NOT EXISTS `promotion_handler`(
 );
 
 CREATE TABLE IF NOT EXISTS `promotion_coupon`(
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Coupon ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Coupon ID',
     `code` VARCHAR(50) NOT NULL COMMENT 'Coupon code',
-    `promotion_id` INTEGER NOT NULL COMMENT 'Promotion ID',
-    `uses_per_coupon` INTEGER NOT NULL DEFAULT 0 COMMENT 'Uses per coupon',
-    `uses_per_customer` INTEGER NOT NULL DEFAULT 1 COMMENT 'Uses per customer',
+    `promotion_id` INTEGER UNSIGNED NOT NULL COMMENT 'Promotion ID',
+    `uses_per_coupon` INTEGER UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Uses per coupon',
+    `uses_per_customer` INTEGER UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Uses per customer',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     `expired_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Expired at',
@@ -624,11 +610,20 @@ CREATE TABLE IF NOT EXISTS `promotion_coupon`(
     CONSTRAINT FK_PROMOTION_COUPON_PROMOTION_ID FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `promotion_coupon_apply`(
+    `coupon_id` INTEGER UNSIGNED NOT NULL COMMENT 'Coupon ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    PRIMARY KEY (`coupon_id`,`customer_id`),
+    INDEX IDX_PROMOTION_COUPON_APPLY_CUSTOMER_ID (`customer_id`),
+    CONSTRAINT FK_PROMOTION_COUPON_APPLY_COUPON_ID_PROMOTION_COUPON_ID FOREIGN KEY (`coupon_id`) REFERENCES `promotion_coupon` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PROMOTION_COUPON_APPLY_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `promotion_coupon_log`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Log ID',
-    `coupon_id` INTEGER NOT NULL COMMENT 'Coupon ID',
-    `order_id` INTEGER NOT NULL COMMENT 'Order ID',
-    `customer_id` INTEGER NULL DEFAULT NULL COMMENT 'Customer ID',
+    `coupon_id` INTEGER UNSIGNED NOT NULL COMMENT 'Coupon ID',
+    `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
+    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Customer ID',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
     PRIMARY KEY (`id`),
     INDEX IDX_PROMOTION_COUPON_LOG_COUPON_ID (`coupon_id`),
@@ -641,8 +636,8 @@ CREATE TABLE IF NOT EXISTS `promotion_coupon_log`(
 
 CREATE TABLE IF NOT EXISTS `reward_points`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Log ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
-    `order_id` INTEGER NULL DEFAULT NULL COMMENT 'Order ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    `order_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Order ID',
     `count` DECIMAL(12,4) NOT NULL COMMENT 'Count',
     `comment` TEXT COMMENT 'Comment',
     `status` BOOLEAN DEFAULT 1 NOT NULL COMMENT 'Status',
@@ -656,7 +651,7 @@ CREATE TABLE IF NOT EXISTS `reward_points`(
 
 CREATE TABLE IF NOT EXISTS `customer_balance`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Log ID',
-    `customer_id` INTEGER NOT NULL COMMENT 'Customer ID',
+    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
     `amount` DECIMAL(12,4) NOT NULL COMMENT 'Count',
     `comment` TEXT COMMENT 'Comment',
     `status` BOOLEAN DEFAULT 1 NOT NULL COMMENT 'Status',
@@ -667,8 +662,8 @@ CREATE TABLE IF NOT EXISTS `customer_balance`(
 );
 
 CREATE TABLE IF NOT EXISTS `store_decoration_template` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Template ID',
-    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Template ID',
+    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
     `stable_params` TEXT COMMENT 'Stable parameters',
     `template_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Template name',
     `code_model` TEXT COMMENT 'Code model',
@@ -680,20 +675,19 @@ CREATE TABLE IF NOT EXISTS `store_decoration_template` (
 );
 
 CREATE TABLE IF NOT EXISTS `store_decoration_picinfo` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Picture ID',
-    `store_id` INTEGER NOT NULL COMMENT 'Store ID',
-    `resource_id` INTEGER NOT NULL COMMENT 'Resource ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Picture ID',
+    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
+    `resource_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Resource ID',
     `pic_title` VARCHAR(255) DEFAULT NULL COMMENT 'Picture title',
     `url` VARCHAR(255) DEFAULT NULL COMMENT 'Picture url',
     `resource_category_code` VARCHAR(255) NOT NULL COMMENT 'Resource category code',
-    `order_id` INTEGER DEFAULT NULL COMMENT 'Order ID',
+    `sort_order` INTEGER DEFAULT NULL COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_STORE_DECORATION_PICINFO_STORE_ID (`store_id`),
     INDEX IDX_STORE_DECORATION_PICINFO_RESOURCE_ID (`resource_id`),
-    INDEX IDX_STORE_DECORATION_PICINFO_ORDER_ID (`order_id`),
+    INDEX IDX_STORE_DECORATION_PICINFO_SORT_ORDER (`sort_order`),
     CONSTRAINT FK_STORE_DECORATION_PICINFO_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_STORE_DECORATION_PICINFO_RESOURCE_ID_RESOURCE_ID FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_STORE_DECORATION_PICINFO_ORDER_ID_SALES_ORDER_ID FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_STORE_DECORATION_PICINFO_RESOURCE_ID_RESOURCE_ID FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 SET FOREIGN_KEY_CHECKS=1;

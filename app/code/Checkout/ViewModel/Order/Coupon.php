@@ -11,14 +11,15 @@ class Coupon extends Template
 
     public function getCurrent()
     {
-        return $this->getVariable('store') ? json_decode(Cart::instance()->offsetGet('coupon'), true)[$this->getVariable('store')] : '';
+        $coupons = $this->getVariable('store') ? json_decode(Cart::instance()->offsetGet('coupon'), true) : [];
+        return $coupons[$this->getVariable('store')] ?? '';
     }
 
     public function getCoupons()
     {
         $time = time();
         $rules = new Rule;
-        $rules->where([ 'use_coupon' => 1, 'status' => 1])
+        $rules->where(['use_coupon' => 1, 'status' => 1])
                 ->order('sort_order');
         $result = [];
         $storeId = $this->getVariable('store');

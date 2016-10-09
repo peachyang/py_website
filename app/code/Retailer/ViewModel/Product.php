@@ -25,10 +25,11 @@ class Product extends Template
     {
         $condition = $this->getQuery();
         $segment = new Segment('customer');
+        $retailer = $segment->get('customer')->getRetailer();
         
         //Sub query to select order id from sales_order table
        $sales_order_id_collection = new Ocollection;
-       $order_id_select = $sales_order_id_collection->columns(['id'])->where(['sales_order.store_id' => $segment->get('customer')['store_id']]);
+       $order_id_select = $sales_order_id_collection->columns(['id'])->where(['sales_order.store_id' => $retailer->offsetGet('store_id')]);
             
         if($sales_order_id_collection->count() <= 0){
             return [];
@@ -92,10 +93,11 @@ class Product extends Template
 
         //Combine product list to sales order
         foreach($sales_order_collection as &$order){
-            $order["items"] = $product_list[$order['id']];
+            if(!empty($product_list[$order['id']])){
+                $order["items"] = $product_list[$order['id']];
+            }
         }
 
-        //return $segment->get('customer');
         return $sales_order_collection;
     }
 

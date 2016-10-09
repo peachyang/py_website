@@ -96,6 +96,9 @@ $sales_status = $this->getAllSalesStatus();
                         <td>&nbsp;</td>
                     </tr>
                 </table>
+                <?php
+                    if(!empty($transaction['items'])){
+                ?>
                 <table class="list-info">
                     <?php
                     foreach ($transaction['items'] as $key => $item) {
@@ -193,10 +196,13 @@ $sales_status = $this->getAllSalesStatus();
                     }
                     ?>
                 </table>
+                 <?php
+                    }
+                ?>
             </div>
             <?php
-        }
-        ?>
+                }
+            ?>
 
         <div>
             <div>

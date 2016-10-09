@@ -314,6 +314,11 @@ dl.options dd{float:left;margin-left:4px}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
 .checkout-cart .main-container .table input[type="checkbox"]{cursor:pointer}
+.checkout-cart .empty_cart{width:100%;overflow:hidden;padding: 100px 260px;margin-bottom:100px}
+.checkout-cart .empty_cart .cart_img{float: left;margin-right:30px}
+.checkout-cart .empty_cart ul{float:left}
+.checkout-cart .empty_cart li{line-height:30px;margin-top: 50%}
+.checkout-cart .empty_cart li a{color:#007ecc}
 .checkout-flow{text-align:center;border:1px solid #e1e1e1;margin:42px 0;overflow:hidden}
 .checkout-flow .item{font-size:18px;line-height:40px;color:#000;position:relative}
 .checkout-flow .item.active{background:#f1f1f1;color:#007dc6}

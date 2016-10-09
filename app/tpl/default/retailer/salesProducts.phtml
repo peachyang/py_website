@@ -94,7 +94,7 @@ $sales_products = $this->getRetailerSalesProducts();
                             <div class="product-pic">
                                 <a href="">
                                     <?php if (strpos($thumbnail, 'http') === false) { ?>
-                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
+                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } else { ?>
                                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } ?>
@@ -121,9 +121,8 @@ $sales_products = $this->getRetailerSalesProducts();
                             </div>
                         </td>
                         <td class="border-right" style="width: 11%;">&nbsp; </td>
-                        <td class="border-right" style="width: 15%;"><?php echo $sales_product['created_at'] ?></td>
+                        <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
-
                             <div>
                                 <p class="text-center">
                                     <span class="control-right" >编辑商品</span>
@@ -132,11 +131,8 @@ $sales_products = $this->getRetailerSalesProducts();
                                     <a target="_blank" class="control-right" >复制链接</a>
                                 </p>
                             </div>
-
                         </td>
-
                     </tr>
-
                 </table>
             </div>
             <?php

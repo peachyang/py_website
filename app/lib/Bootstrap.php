@@ -86,7 +86,7 @@ final class Bootstrap
         }
         static::$eventDispatcher->trigger('route', ['routers' => static::getContainer()->get('config')['route']]);
         static::$eventDispatcher->trigger('render', ['response' => static::getContainer()->get('response')->getData()]);
-        static::$eventDispatcher->trigger('respond', ['response' => static::getContainer()->get('response')]);
+        static::$eventDispatcher->trigger('respond');
     }
 
     /**

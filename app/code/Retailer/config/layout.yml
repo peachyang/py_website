@@ -166,11 +166,17 @@ retailer_store_setting:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Store Setting
+                        params: Store Infomation
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Store Infomation
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Retailer\ViewModel\Store
                         template: retailer/store/setting
 retailer_product:
     update: retailer_account

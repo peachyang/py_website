@@ -15,4 +15,16 @@ class Review extends Cart
         return $row;
     }
 
+    public function getItems()
+    {
+        $items = parent::getItems();
+        $result = [];
+        foreach ($items as $item) {
+            if ($item['status']) {
+                $result[] = $item;
+            }
+        }
+        return $result;
+    }
+
 }

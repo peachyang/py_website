@@ -10,7 +10,10 @@ abstract class Route implements RouteInterface
 
     public function serialize()
     {
-        return serialize(get_object_vars($this));
+        return serialize(array_filter(get_object_vars($this), function($value) {
+                    return !is_object($value);
+                })
+        );
     }
 
     public function unserialize($serialized)

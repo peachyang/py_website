@@ -23,6 +23,7 @@ $flag = true;
                             <?php if ($coupon['price']): ?>
                                 <div class="col-xs-12 price">
                                     <?php echo $coupon['is_fixed'] ? $this->getCurrency()->convert($coupon['price'], true) : (100 * $coupon['price'] . '%') ?>
+                            		<span class=" receive  text-right "><button style="font-size:12px"><?php echo $this->translate('Get it right now') ?></button><div class="txt"><?php echo $this->translate('The shop general') ?></div></span>
                                 </div>
                             <?php else: ?>
                                 <div class="col-xs-12 free-shipping">
@@ -58,11 +59,11 @@ $flag = true;
         <?php endif ?>
     </div>
     <a class="left carousel-control" href="#carousel-coupon" role="button" data-slide="prev">
-        <span class="fa fa-chevron-left" aria-hidden="true"></span>
+<!--         <span class="fa fa-chevron-left" aria-hidden="true"></span> -->
         <span class="sr-only">&lt;</span>
     </a>
     <a class="right carousel-control" href="#carousel-coupon" role="button" data-slide="next">
-        <span class="fa fa-chevron-right" aria-hidden="true"></span>
+<!--         <span class="fa fa-chevron-right" aria-hidden="true"></span> -->
         <span class="sr-only">&gt;</span>
     </a>
 </div>

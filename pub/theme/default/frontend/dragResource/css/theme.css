@@ -63,6 +63,7 @@ body {
 .sidebar-nav .box { /*line-height:26px; width:160px; height:26px;*/ display: inline-block; width: 75px; background: #fff;padding:3px; text-align: center; border : 1px solid #bbb; border-radius: 4px; margin-top: 2px; }
 .sidebar-nav .preview .element-desc { margin: 0px; padding: 1px; text-align: center; line-height: 8px;font-size: 9px; cursor: move  }
 
+.sidebar-nav .hideRanges{width:200px;height:20px}
 .sidebar-nav .preview { display: block; color:#666; font-size:13px; line-height:20px;}
 .sidebar-nav .preview input { width:130px; padding:0 10px; background:#bbb; font-size:10px; color:#999; line-height:20px; height:20px; position:relative; top:-1px; }
 .sidebar-nav .view { display: none; }

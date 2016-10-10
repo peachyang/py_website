@@ -29,26 +29,28 @@ abstract class Grid extends PGrid
                     'label' => 'ID',
                 ],
                 'store_id' => ($user->getStore() ? [
-                    'type' => 'hidden',
-                    'value' => $user->getStore()->getId(),
-                    'use4sort' => false,
-                    'use4filter' => false
-                        ] : [
-                    'type' => 'select',
-                    'options' => (new Store)->getSourceArray(),
-                    'label' => 'Store'
-                        ])
+            'type' => 'hidden',
+            'value' => $user->getStore()->getId(),
+            'use4sort' => false,
+            'use4filter' => false
+                ] : [
+            'type' => 'select',
+            'options' => (new Store)->getSourceArray(),
+            'label' => 'Store'
+                ])
             ];
         }
         foreach ($attributes as $attribute) {
-            $columns[$attribute['code']] = [
-                'label' => $attribute['label'],
-                'type' => $attribute['input'],
-                'class' => $attribute['validation'],
-                'view_model' => $attribute['view_model'],
-                'use4sort' => $attribute['sortable'],
-                'use4filter' => $attribute['filterable']
-            ];
+            if (!isset($columns[$attribute['code']])) {
+                $columns[$attribute['code']] = [
+                    'label' => $attribute['label'],
+                    'type' => $attribute['input'],
+                    'class' => $attribute['validation'],
+                    'view_model' => $attribute['view_model'],
+                    'use4sort' => $attribute['sortable'],
+                    'use4filter' => $attribute['filterable']
+                ];
+            }
             if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                 $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);
             }

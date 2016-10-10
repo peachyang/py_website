@@ -11,31 +11,27 @@ $sales_products = $this->getRetailerSalesProducts();
             <div class="sell">
                 <ul>
                     <li><span>商品名称:</span> <input class="form-control " type="text" value="" name="name"></li>
-                    <li><span>商家编码:</span> <input class="form-control " type="text" value="" name="id"></li>
-                    <li><span>商品类目:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
+                    <li><span>商品编码:</span> <input class="form-control " type="text" value="" name="sku"></li>
+                    <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="" name="price_to"> </li>
+                     <li><span>商品类目:</span> 
+                        <select class="form-control " id="catalog" name="catalog">
                             <option value="">全部</option>
+                            <?php echo $this->renderCategory(); ?>
                         </select>
                     </li>
-                    <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="" name="price_to"> </li>
-                    <li><span>总 &nbsp;销 &nbsp;量:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
                     <li><span>商品分类:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
+                        <select class="form-control " id="category" name="category">
                             <option value="">全部</option>
                         </select>
                     </li>
                     <li><span>橱窗推荐:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
+                        <select class="form-control " id="recomend_status" name="recomend_status">
                             <option value="">全部</option>
-
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </li>
-                    <li><span>商品设置:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
-                            <option value="">全部</option>
-                        </select>
-                    </li>
-                    <li><span>清空条件</span> 
+                    <li><button type="reset">清空条件</button> 
                         &nbsp;&nbsp; <button >搜 索</button>
                     </li>	
                 </ul>
@@ -49,31 +45,22 @@ $sales_products = $this->getRetailerSalesProducts();
     <div class="products-content">
         <table class="table table-title">
             <tr>
-                <td style="width: 34%;">商品名称</td>
+                <td style="width: 45%;">商品名称</td>
                 <td style="width: 14%;">价 格</td>
                 <td style="width: 11%;"><span><a href=>库 存</a></span></td>
-                <td style="width: 11%;"><span><a href=>总销量</a></span></td>
                 <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
                 <td style="width: 15%;">操 作</td>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
-                <td colspan="5" style="text-align: left;" >
-                    <input type="checkbox" data-cbtype="all">
+                <td colspan="6" style="text-align: left;" >
+                    <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement">删 除</button>
                     <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
                     <button class="btn-options enhancement">橱窗推荐</button>
                     <button class="btn-options enhancement">取消推荐</button>
-                    <button class="btn-options enhancement">设置VIP</button>
-                    <button class="btn-options enhancement">评论有礼</button>
-
                 </td>
-                <td class="control-right">更多操作</td>
             </tr>
-
-
-
         </table>
         <div class="clearfix mg-bottom-10"></div>
         <?php
@@ -85,9 +72,9 @@ $sales_products = $this->getRetailerSalesProducts();
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
                     ?>
                     <tr>
-                        <td style="width: 34%;">
+                        <td style="width: 45%;">
                             <div class="recommend">
-                                <input type="checkbox">	已推荐
+                                <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">	已推荐
                             </div>
 
                             <div class="product-pic">
@@ -119,7 +106,6 @@ $sales_products = $this->getRetailerSalesProducts();
                                 <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
                             </div>
                         </td>
-                        <td class="border-right" style="width: 11%;">&nbsp; </td>
                         <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
                             <div>
@@ -127,9 +113,6 @@ $sales_products = $this->getRetailerSalesProducts();
 
                                     <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" >编辑商品</a></span>
 
-                                </p>
-                                <p class="text-center">
-                                    <a target="_blank" class="control-right" >复制链接</a>
                                 </p>
                             </div>
                         </td>
@@ -144,21 +127,14 @@ $sales_products = $this->getRetailerSalesProducts();
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">
                     <td  style="text-align: left;" >
-                        <input type="checkbox" data-cbtype="all">
+                        <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement">删 除</button>
                         <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
                         <button class="btn-options enhancement">橱窗推荐</button>
                         <button class="btn-options enhancement">取消推荐</button>
-                        <button class="btn-options enhancement">设置VIP</button>
-                        <button class="btn-options enhancement">评论有礼</button>
-
                     </td>
                 </tr>
-
-
-
             </table>
         </div>
         <div class="page-block">

@@ -9,8 +9,7 @@ $default = (int) $product->offsetGet('default_image');
             <?php
             foreach ($images as $key => $image):
                 ?>
-                <li data-target="#product-media" data-slide-to="<?php echo $key ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php $default = true;
-        endif; ?>>
+                <li data-target="#product-media" data-slide-to="<?php echo $key ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php $default = true; endif; ?>>
                     <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/45x/'), $image['src'] ?>" width="45" height="45" alt="" data-label="<?php echo $image['label'] ?>" data-group="<?php echo $image['group'] ?>" />
                 </li>
     <?php endforeach ?>
@@ -20,12 +19,11 @@ $default = (int) $product->offsetGet('default_image');
             $default = (int) $product->offsetGet('default_image');
             foreach ($images as $key => $image):
                 ?>
-                <div class="item<?php if (!$default || (int) $image['id'] === $default): ?> active<?php $default = true;
-                endif; ?>">
-                    <img class="bttrlazyloading magnifying" data-bttrlazyloading-lg-src="<?php
-                         echo $this->getBaseUrl('pub/resource/image/resized/704x/'),
-                         $image['src']
-                                 ?>" alt="<?php echo $product->offsetGet('name') ?>" width="100%">
+                <div class="item<?php if (!$default || (int) $image['id'] === $default): ?> active<?php $default = true; endif; ?>">
+                    <img class="bttrlazyloading magnifying" data-bttrlazyloading-xs-src="<?php
+                    echo $this->getBaseUrl('pub/resource/image/resized/704x/'),
+                    $image['src']
+                            ?>" alt="<?php echo $product->offsetGet('name') ?>" width="100%" />
                 </div>
         <?php endforeach ?>
         </div>

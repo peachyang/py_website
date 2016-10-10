@@ -129,7 +129,7 @@ final class Cart extends AbstractModel implements Singleton
 
     public function getItem($id)
     {
-        if(is_null($this->items)){
+        if (is_null($this->items)) {
             $this->getItems();
         }
         if (isset($this->items[$id])) {
@@ -373,11 +373,13 @@ final class Cart extends AbstractModel implements Singleton
         $baseSubtotal = 0;
         $storeId = [];
         foreach ($items as $item) {
-            $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
-            if (!isset($storeId[$item['store_id']])) {
-                $storeId[$item['store_id']] = [];
+            if ($item->offsetGet('status')) {
+                $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
+                if (!isset($storeId[$item['store_id']])) {
+                    $storeId[$item['store_id']] = [];
+                }
+                $storeId[$item['store_id']][] = $item;
             }
-            $storeId[$item['store_id']][] = $item;
         }
         $shipping = 0;
         if (!$this->offsetGet('free_shipping') && !$this->offsetGet('is_virtual')) {

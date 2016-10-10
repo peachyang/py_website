@@ -207,6 +207,9 @@ retailer_sales_products:
                     -
                         method: setTitle
                         params: Retailer Sales
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
             content:
                 children:
                     main:

@@ -699,7 +699,7 @@ function getIndent(level) {
 }
 
 function style_html(html) {
-    html = html.trim();
+    html = $.trim(html);
     var  result = '',
             indentLevel = 0,
             tokens = html.split(/</);

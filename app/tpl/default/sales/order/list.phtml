@@ -2,6 +2,7 @@
 $orders = $this->getOrders();
 if ($orders):
 $flag = true;
+// var_dump($orders->toArray());
 ?>
 
 
@@ -13,14 +14,9 @@ $flag = true;
     <?php if (count($orders)): ?>
     
             <?php foreach ($orders as $order): ?>  
-                        
-            <?php endforeach; ?>
-        
-        
-    <?php endif ?>
-
+                      
         <caption>
-            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <span class="fa fa-qq"></span></div>
+            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <a href=""><span class="fa fa-qq"></span> </a></div>
             <div class="col-xs-6 text-right list_right">
                 <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
                 <span><?php echo $order['increment_id'] ?></span>
@@ -106,6 +102,22 @@ $flag = true;
                 ?>
             </tr>
             <?php endforeach ?>
-        </tbody>
+        </tbody>  
+            <?php endforeach; ?>
+        
+        
+    <?php endif ?>
+
     </table>
+    <div class="book_page">
+	<ul class="pagination pull-right">
+		<li><a href="#">&laquo;</a></li>
+		<li class="active"><a href="#">1</a></li>
+		<li class=""><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li><a href="#">&raquo;</a></li>
+	</ul>
+</div>
     <?php endif;?>

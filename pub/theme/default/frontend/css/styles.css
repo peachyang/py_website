@@ -78,7 +78,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .nav-main .dropdown .dropdown{position:static}
 .header .nav-main .dropdown .dropdown>.dropdown-menu{left:100%;top:0;min-height:100%}
 .breadcrumb .clearfix{display:none}
-.col-left+.col-main{padding:15px 0 0 40px}
+.col-left+.col-main{padding:15px 0 100px 40px}
 .customer-account-login .input-box+.input-box{margin-top:25px}
 .customer-account-login .header,.customer-account-create .header{padding:0;background:none;box-shadow:none;margin:0 auto;border-bottom:1px solid #d0dfe8}
 .customer-account-login .header .logo,.customer-account-create .header .logo{padding:24px 0 22px}
@@ -183,8 +183,8 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav{background:#f6f6f9;border:1px solid #dfe1e8;margin:15px 0}
 .col-left .nav .page-title{height:50px;border-bottom:1px solid #dfe1e8;padding-left:23%;line-height:50px;font-size:18px;font-weight:bold;background:#eeeeee;color:#000000}
 .col-left .nav .page-title .fa{color:#007dc6;font-size:20px}
-.col-left .nav dt{padding-left:36px;font-size:14px;line-height:30px;color:#000;font-weight:bold;margin-top:1em}
-.col-left .nav dt .fa{font-size:20px;vertical-align:middle}
+.col-left .nav dt{padding-left:5px;font-size:14px;line-height:30px;color:#000;font-weight:bold;margin-top:1em}
+.col-left .nav dt .fa{font-size:20px;vertical-align:middle;margin-right:6px}
 .col-left .nav dl a{display:block;text-indent:50px;font-size:12px;line-height:24px;color:#8b8a8a}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}

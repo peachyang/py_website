@@ -36,7 +36,7 @@ $flag = true;
     <?php endif ?>
 
         <caption>
-            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <span class="fa fa-qq"></span></div>
+            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <a href=""><span class="fa fa-qq"></span></a></div>
             <div class="col-xs-6 text-right list_right">
                 <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
                 <span><?php echo $order['increment_id'] ?></span>

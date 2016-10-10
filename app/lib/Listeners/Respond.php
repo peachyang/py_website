@@ -10,9 +10,11 @@ use Traversable;
 class Respond implements ListenerInterface
 {
 
+    use \Seahinet\Lib\Traits\Container;
+
     public function respond($event)
     {
-        $response = $event['response'];
+        $response = $this->getContainer()->get('response');
         if (!headers_sent()) {
             header($response->renderStatusLine());
             foreach ($response->getHeaders() as $name => $values) {
@@ -30,13 +32,30 @@ class Respond implements ListenerInterface
         }
 
         $body = $response->getBody();
-        if ($body->isSeekable()) {
-            $body->rewind();
-        }
         $chunkSize = 4096;
-        $contentLength = $response->getHeaderLine('Content-Length');
+        $contentLength = $response->getHeader('Content-Length');
         if (!$contentLength) {
             $contentLength = $body->getSize();
+        }
+        if ($body->isSeekable()) {
+            if ($response->getStatusCode() === 206 && $range = $this->getContainer()->get('request')->getHeader('RANGE')) {
+                header('Accept-Ranges: bytes');
+                preg_match('/^bytes\=(?P<start>\d*)\-(?P<end>\d*)$/', $range, $matches);
+                $start = (int) $matches['start'];
+                $end = (int) $matches['end'];
+                if ($matches['start'] === '') {
+                    $body->seek(-$end, SEEK_END);
+                } else {
+                    $body->seek((int) $matches['start']);
+                }
+                if ($end < $start) {
+                    $end = (int) $contentLength;
+                }
+                header('Content-Range: bytes ' . $start . '-' . $end . '/' . $contentLength);
+                $contentLength = $end - $start;
+            } else {
+                $body->rewind();
+            }
         }
         if (isset($contentLength)) {
             $totalChunks = ceil($contentLength / $chunkSize);

@@ -14,17 +14,17 @@ trait Container
     /**
      * @var ContainerInterface
      */
-    protected $container = null;
+    protected static $container = null;
 
     /**
      * @return ContainerInterface
      */
     protected function getContainer()
     {
-        if (is_null($this->container)) {
-            $this->container = Bootstrap::getContainer();
+        if (is_null(self::$container)) {
+            self::$container = Bootstrap::getContainer();
         }
-        return $this->container;
+        return self::$container;
     }
 
     /**
@@ -33,7 +33,7 @@ trait Container
      */
     protected function setContainer(ContainerInterface $container)
     {
-        $this->container = $container;
+        self::$container = $container;
         return $this;
     }
 

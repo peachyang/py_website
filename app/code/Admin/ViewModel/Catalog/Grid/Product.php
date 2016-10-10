@@ -5,6 +5,7 @@ namespace Seahinet\Admin\ViewModel\Catalog\Grid;
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
 use Seahinet\Catalog\Model\Collection\Product as Collection;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Lib\Source\Store;
 
 class Product extends PGrid
 {
@@ -56,9 +57,28 @@ class Product extends PGrid
 
     protected function prepareColumns($columns = [])
     {
+        $user = (new Segment('admin'))->get('user');
         return parent::prepareColumns([
                     'id' => [
                         'label' => 'ID',
+                    ],
+                    'store_id' => ($user->getStore() ? [
+                'type' => 'hidden',
+                'value' => $user->getStore()->getId(),
+                'use4sort' => false,
+                'use4filter' => false
+                    ] : [
+                'type' => 'select',
+                'options' => (new Store)->getSourceArray(),
+                'label' => 'Store'
+                    ]),
+                    'name' => [
+                        'label' => 'Name',
+                        'type' => 'text'
+                    ],
+                    'sku' => [
+                        'label' => 'SKU',
+                        'type' => 'text'
                     ]
         ]);
     }

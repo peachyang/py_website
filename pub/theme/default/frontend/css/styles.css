@@ -197,8 +197,8 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
 .customer-account .headimages{margin-top:20px}
 .customer-account  .btn-Address{background: #cbecfe;color: #007dc6;padding: 5px 20px;border:1px solid #007dc6}
-.customer-account .table{border:1px solid #eee;margin:10px 0 50px 0}
-.customer-account .table_head{background:#eee}
+.customer-account .table{margin:30px 0 50px 0;border: 1px solid #eee;}
+.customer-account .table_head{background:#fbfbfb}
 .customer-account .headimages .headimg{margin-right:15px}
 .customer-account .imgsize{color:#ccc;font-size:12px;margin-left:15px}
 .customer-account .fa-button{padding-right:10px}
@@ -223,6 +223,14 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .profile .count{font-size:13px;color:#007dc6;font-weight:bold}
 .customer-account-dashboard .profile span:not(.label)+span{margin-left:10px}
 .customer-account-dashboard .coupon .panel-body{margin-top:25px}
+.list_table{border:1px solid #e1e3e9}
+.list_table caption {color: #272323;text-align: left;font-size: 14px}
+.list_table caption .fa-qq{font-size:18px;color:#007dc6;padding-left:10px}
+.list_table .list_right{font-size:13px}
+.list_table .list_time{padding:0 15px}
+.list_table  .list_delete{color:#007dc6}
+.list_table .Thumbnail{width:88px;height:95px}
+.customer-account-dashboard .order tbody .text-nowrap{border-bottom:1px solid #e1e3e9 }
 .customer-account-dashboard .coupon .carousel-control{width:25px;color:#007dc6}
 .customer-account-dashboard .coupon .carousel-control .fa{position:absolute;top:50%;margin-top:-10px;display:block}
 .customer-account-dashboard .coupon .item .content{padding:0 25px;color:#dcf0fb;font-size:12px;line-height:18px}
@@ -238,14 +246,18 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .coupon .store:empty,.customer-account-dashboard .coupon .date:empty{height:18px}
  .coupon .store:empty,.coupon .date:empty{height:18px}
 .customer-account-dashboard .order .store{font-weight:bold;color:#000}
-.customer-account-dashboard .order tbody td{border-color:#e1e3e9;padding:24px 12px}
-.customer-account-dashboard .order tbody td:first-child{border-left:1px solid #e1e3e9;padding-left:24px}
+.customer-account-dashboard .order tbody td,.list_table tbody tr td{border-color:#e1e3e9;padding:24px 12px}
+.list_table tbody td .total,.list_table tbody td .status{color:#007dc6}
+.customer-account-dashboard .order tbody td:first-child,.list_table tbody td:first-child {border-left:1px solid #e1e3e9;padding-left:24px}
 .customer-account-dashboard .order tbody td[rowspan]:last-child{border-right:1px solid #e1e3e9;padding-right:24px}
 .customer-account-dashboard .order tbody td span:not(.label):not(.price){display:block}
+.list_table tbody td span:not(.label):not(.price){display:block}
 .customer-account-dashboard .order tbody tr:last-child td{border-bottom:1px solid #e1e3e9}
 .customer-account-dashboard .order .price-box .old-price .label{display:inline}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
-.customer-account-dashboard .order .options{font-size:12px}
+.list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
+.customer-account-dashboard .order .options,.list_table .options{font-size:12px}
+.list_table td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
 .customer-account-address .btn-add{margin:30px 0 26px 0;}

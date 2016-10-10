@@ -1,19 +1,31 @@
 <?php
-$order = $this->getOrder();
-if ($order && $order->getId()):
+$orders = $this->getOrders();
+if ($orders):
 $flag = true;
 ?>
-<div class="panel order">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?php echo $this->translate('Latest Order') ?></h3>
-    </div>
-    <table class="panel-body table">
+
+
+
+<table class="table   table-no-border list_table">
+
+
+    
+    <?php if (count($orders)): ?>
+    
+            <?php foreach ($orders as $order): ?>  
+                        
+            <?php endforeach; ?>
+        
+        
+    <?php endif ?>
+
         <caption>
-            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?></div>
-            <div class="col-xs-6 text-right">
+            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <span class="fa fa-qq"></span></div>
+            <div class="col-xs-6 text-right list_right">
                 <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
                 <span><?php echo $order['increment_id'] ?></span>
-                <span><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
+                <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
+                 <span class="list_delete"><a href=""><?php echo $this->translate('Delete') ?></a></span>
             </div>
         </caption>
         <tbody>
@@ -25,7 +37,7 @@ $flag = true;
             ?>
             <tr>
                 <td>
-                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                    <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
                 </td>
                 <td class="text-vtop">
                     <h4 class="product-name"><?php echo $product['name'] ?></h4>
@@ -96,7 +108,4 @@ $flag = true;
             <?php endforeach ?>
         </tbody>
     </table>
-</div>
-<?php endif; ?>
-
-
+    <?php endif;?>

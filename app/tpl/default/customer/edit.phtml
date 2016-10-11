@@ -8,6 +8,14 @@ $customer = $this->getCustomer();
     <div>
     <span><?php echo $this->translate('Avatar Image') ?></span>
      <span class="imgsize"><?php echo $this->translate('Large picture recommended size'); ?>：490*420px</span>
+     <div class="title_img">
+ 		    <div type="button" class="btn amend " data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="选择资源">
+                        
+                        <img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/135.jpg" alt="">
+                        <div type="button"  data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="选择资源" class="header_images btn btn_img"><?php echo $this->translate('Modify the Head portrait image') ?></div>
+                        <div class="Modifyimage"><?php echo $this->translate('Modify the image') ?></div>
+            </div>
+                  
     
     </div>
         <div class="input-box">

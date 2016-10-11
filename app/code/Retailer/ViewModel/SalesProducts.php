@@ -2,6 +2,7 @@
 
 namespace Seahinet\Retailer\ViewModel;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Catalog\Model\Product as Pmodel;
@@ -23,18 +24,51 @@ class SalesProducts extends Template
     * @return object 
     */ 
 	
-	public function getRetailerSalesProducts($params = array())
+	public function getRetailerSalesProducts($params=[])
 	{
-	    $user = (new Segment('customer'))->get('customer');
-		$condition = !empty($params) ? $params : $this->getQuery();
-        $sales_products = new Pcollection;
-		$sales_products = $sales_products->withInSales();
-		$where = new \Zend\Db\Sql\Where();
-        $where->equalTo('status', 1);
+	    $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 1, 1);
+	}
+    
+    /** 
+    * getRetailerStockProducts  
+    * Get retailer's products in sales record by search condition
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    
+    public function getRetailerStockProducts($params=[])
+    {
+        $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 1, 0);
+    }
+    
+    /** 
+    * fetchRetailerProducts
+    * Get retailer product form database
+    * 
+    *@param $delete_status  status in product_1_index
+    *@param $stock_status   status in warehouse_inventory
+    * @access protected 
+    * @return object 
+    */ 
+    public function  fetchRetailerProducts($params, $delete_status, $stock_status){
+        $storeid = null;
+        $table_name = "product_". Bootstrap::getLanguage()->getId() . '_index';
+        $user = (new Segment('customer'))->get('customer');
         if($user->getRetailer()){
-            $where->equalTo('store_id', $user->getRetailer()->offsetGet('store_id'));
+            $storeid = $user->getRetailer()->offsetGet('store_id');
         }
-        
+        $condition = !empty($params) ? $params : $this->getQuery();
+        $sales_products = new Pcollection;
+        $where = new \Zend\Db\Sql\Where();
+        $where->equalTo($table_name.'.status', $delete_status);
+        $where->nest->isNull('new_end')->or->greaterThanOrEqualTo('new_end', date('Y-m-d H:i:s'))->unnest;
+        if($storeid){
+            $where->equalTo('store_id', $storeid);
+        }
+        //Search condition
         if(!empty($condition['name'])){
             $where->like('name', '%'.$condition['name'].'%');
         }
@@ -44,7 +78,7 @@ class SalesProducts extends Template
         if(!empty($condition['price_from'])){
             $where->greaterThanOrEqualTo('price',$condition['price_from']);
         }
-		if(!empty($condition['price_to'])){
+        if(!empty($condition['price_to'])){
             $where->lessThanOrEqualTo('price',$condition['price_to']);
         }
         if(isset($condition['catalog']) && $condition['catalog'] != ''){
@@ -56,9 +90,15 @@ class SalesProducts extends Template
             $where->equalTo('recommend',$condition['recomend_status']);
         }
         
-		$sales_products->where($where)->order(['created_at'=>'DESC']);
-		return $this->prepareCollection($sales_products,$condition);
-	}
+        $stock_status_option = ($stock_status == 0) ? '=' : '>=';
+        $sales_products
+        ->where($where)
+        ->join(['wi' => 'warehouse_inventory'], 'wi.product_id = id', ['sales_status' => new Expression('SUM(wi.status)')], 'left')
+        ->group('id')
+        ->having(['sales_status '. $stock_status_option . ' ' . $stock_status])
+        ->order(['created_at'=>'DESC']);
+        return $this->prepareCollection($sales_products,$condition);
+    }
 
     /** 
     * unidimensional
@@ -106,12 +146,19 @@ class SalesProducts extends Template
         return $this->categories;
     }
     
-    public function renderCategory($level = 0, $class=0)
+    public function renderCategory($level = 0, $class=0, $current_id = null)
     {
         $html = '';
+        $selected = '';
         if (!empty($this->getCategories()[$level])) {
             foreach ($this->getCategories()[$level] as $category) {
-                $html .= '<option  value="' .$category['id'] . '">' .str_repeat('&nbsp;&nbsp;', $class). $category['name'] . '</option>'.(isset($this->getCategories()[$category['id']]) ? $this->renderCategory($category['id'], $class+1)  : '') ;
+                if($category['id'] ==  $current_id){
+                    $selected = "selected='selected'";
+                }
+                $html .= '<option  value="' .$category['id'] . '" '.$selected. '>';
+                $html .= str_repeat('&nbsp;&nbsp;', $class) . $category['name'];
+                $html .= '</option>';
+                $html .= (isset($this->getCategories()[$category['id']]) ? $this->renderCategory($category['id'], $class+1, $current_id)  : '') ;
             }
         }
         return $html;

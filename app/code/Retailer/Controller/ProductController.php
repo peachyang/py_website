@@ -9,6 +9,9 @@ use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
+use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Model\Collection\Language as Lcollection;
+
 
 /**
  * Retailer submenu products management controller
@@ -72,10 +75,7 @@ class ProductController extends AuthActionController
     public function salesAction()
     {
         $root = $this->getLayout('retailer_sales_products');
-        $order = Array(
-            'type' => 'sales'
-        );
-        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
 
@@ -88,11 +88,8 @@ class ProductController extends AuthActionController
      */
     public function stockAction()
     {
-        $root = $this->getLayout('retailer_product');
-        $order = Array(
-            'type' => 'stock'
-        );
-        $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('order', $order);
+        $root = $this->getLayout('retailer_stock_products');
+        $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
 
@@ -198,5 +195,64 @@ class ProductController extends AuthActionController
     {
         return $this->getLayout('retailer_popup_images_list');
     }
+    
+    /**
+     * statusAction  
+     * Ajax to change product status.
+     * Change the data of status in table warehouse_inventory status field
+     * 
+     * @access public 
+     * @return object 
+     */
+     public function statusAction()
+     {
+         $form_data = $this->getRequest()->getPost();
+         $result = [];
+         if(empty($form_data) || empty($form_data['product_ids'])){
+             $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
+             return $result;
+         }
+         
+        $warehouse_inventory = new TableGateway(array('wi' => 'warehouse_inventory'), $this->getContainer()->get('dbAdapter'));
+        $update = $warehouse_inventory->update(['status'=>0], ['product_id'=> $form_data['product_ids']]);
+        if($update > 0){
+            $result['message'][] = ['message' => $this->translate('%d product(s) have been off store successfully.', [$update]), 'level' => 'success'];
+        }
+        echo json_encode($result);
+     }
+     
+    /**
+     * recommendAction  
+     * Ajax to change product status.
+     * Change the data of status in table warehouse_inventory status field
+     * 
+     * @access public 
+     * @return object 
+     */
+    public function recommendAction()
+    {
+        $form_data = $this->getRequest()->getPost();
+        $result = [];
+        if(empty($form_data) || empty($form_data['product_ids'])){
+            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
+            return $result;
+        }
+        $products_count = count($form_data['product_ids']);
+        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
+         
+        $languages = new Lcollection;
+        foreach($languages as $language){
+            $table_name = 'product_'.$language['id'].'_index';
+            $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
+            $product->update(['recommend'=>$form_data['type']], ['id'=> $form_data['product_ids']]);
+        }
+        if($form_data['type'] == 1){
+            $message = '%d product(s) have been recommended successfully.';
+        }else{
+            $message = '%d product(s) have been unrecommended successfully.';
+        }
+        $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
+        echo json_encode($result);
+     }
 
 }

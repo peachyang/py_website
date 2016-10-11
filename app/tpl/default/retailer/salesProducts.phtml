@@ -56,9 +56,9 @@ $filter = $this->getVariable('filter');
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement">橱窗推荐</button>
-                    <button class="btn-options enhancement">取消推荐</button>
+                    <button class="btn-options enhancement product_status">下 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
+                    <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
                 </td>
             </tr>
         </table>
@@ -66,7 +66,7 @@ $filter = $this->getVariable('filter');
         <?php
         foreach ($sales_products as $sales_product) {
             ?>
-            <div class="transaction-list-sales">
+            <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
                 <table class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
@@ -74,7 +74,8 @@ $filter = $this->getVariable('filter');
                     <tr>
                         <td style="width: 45%;">
                             <div class="recommend">
-                                <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">	已推荐
+                                <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
+                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
                             </div>
 
                             <div class="product-pic">

@@ -897,18 +897,32 @@ dl.options dd{float:left;margin-left:4px}
 .modal-open .modal-dialog{
     width: 1000px
 }}
-.modal-open .modal-dialog .modal-body .nav .text-right input{float:right}
+.modal-open .modal-dialog .modal-body .nav .text-right input{float:right;border:1px solid #dddddd}
 .modal-open .modal-dialog .modal-body .nav .text-right a{float:right}
 .modal-open .modal-dialog .modal-body{overflow:hidden}
-.modal-open .modal-dialog .modal-body .cue{width:100%;overflow:hidden;border-top:1px solid #e2e4ea;color:#333333}
+.modal-open .modal-dialog .modal-body .cue{width:100%;overflow:hidden;border-top:1px solid #cbdfe9;color:#333333}
 .modal-open .modal-dialog .modal-body .cue p,li{line-height:30px}
 .modal-open .modal-dialog .modal-body .content-right li{float:left;text-align:center}
-.modal-open .modal-dialog .modal-body .content-right{padding-left:0px;border-left:1px solid #ececec}
+.modal-open .modal-dialog .modal-body .content-right{padding-left:0px;border-left:1px solid #cbdfe9}
 .modal-open .modal-dialog .modal-body .content-right .heading{background:#f3f3f3;line-height: 26px}
 .modal-open .modal-dialog .modal-footer li{float:left;margin: 0 5px}
 .modal-open .modal-dialog .modal-footer a{color:#007ecc}
+.modal-open .modal-dialog .modal-footer input{border:1px solid #dddddd}
 .retailer-store-photo .page-content .filters .input-box{display: inline-block!important;margin: 0;vertical-align: top}
 .retailer-store-photo .page-content .filters .control-label {display: inline-block!important;width: auto!important;padding: 0!important;
     line-height: 21px;font-size: 12px;color: #6c6c6c}
 .retailer-store-photo .page-content .filters .form-control {width: 99px;height: 21px;line-height: 21px;padding:0}
 .retailer-store-photo .page-content .filters .buttons-set{float: right;margin-top:15px}
+.retailer-store-photo .page-content .nav-tabs{border-bottom:1px solid #cbdfe9}
+.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;
+    border: none;
+    border-bottom-color: transparent;
+    font-size: 14px;
+}
+.retailer-store-photo .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #cbdfe9;
+    border-bottom-color: transparent;
+}

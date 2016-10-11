@@ -1,37 +1,37 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$order = $this->getVariable("order");
 $sales_products = $this->getRetailerSalesProducts();
+$filter = $this->getVariable('filter');
 ?>
 <div class="wishlist sales-products">
     <h3><?php echo $this->translate($subtitle); ?></h3>
 
     <div class="myfilters" >
-        <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
+        <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="sell">
                 <ul>
-                    <li><span>商品名称:</span> <input class="form-control " type="text" value="" name="name"></li>
-                    <li><span>商品编码:</span> <input class="form-control " type="text" value="" name="sku"></li>
-                    <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="" name="price_to"> </li>
+                    <li><span>商品名称:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
+                    <li><span>商品编码:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
+                    <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
                      <li><span>商品类目:</span> 
-                        <select class="form-control " id="catalog" name="catalog">
+                        <select class="form-control " id="catalog" name="catalog" value="">
                             <option value="">全部</option>
-                            <?php echo $this->renderCategory(); ?>
+                            <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
                         </select>
                     </li>
                     <li><span>商品分类:</span> 
-                        <select class="form-control " id="category" name="category">
+                        <select class="form-control " id="category" name="category" value="<?php echo $filter['category']; ?>">
                             <option value="">全部</option>
                         </select>
                     </li>
                     <li><span>橱窗推荐:</span> 
                         <select class="form-control " id="recomend_status" name="recomend_status">
                             <option value="">全部</option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
+                            <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>>是</option>
+                            <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
                         </select>
                     </li>
-                    <li><button type="reset">清空条件</button> 
+                    <li><a href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
                         &nbsp;&nbsp; <button >搜 索</button>
                     </li>	
                 </ul>

@@ -72,10 +72,7 @@ class ProductController extends AuthActionController
     public function salesAction()
     {
         $root = $this->getLayout('retailer_sales_products');
-        $order = Array(
-            'type' => 'sales'
-        );
-        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
 

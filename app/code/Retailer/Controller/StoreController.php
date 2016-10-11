@@ -7,7 +7,7 @@ use Seahinet\Retailer\Model\Retailer as Rmodel;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\StorePicinfo;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
-use Seahinet\Retailer\Model\Collection\StorePicInfoCollectionCollection;
+use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Resource\Model\Collection\Category;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Resource\Model\Resource as Model;

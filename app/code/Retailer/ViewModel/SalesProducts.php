@@ -24,24 +24,51 @@ class SalesProducts extends Template
     * @return object 
     */ 
 	
-	public function getRetailerSalesProducts($params = array())
+	public function getRetailerSalesProducts($params=[])
 	{
-	    $storeid = null;
+	    $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 1, 1);
+	}
+    
+    /** 
+    * getRetailerStockProducts  
+    * Get retailer's products in sales record by search condition
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    
+    public function getRetailerStockProducts($params=[])
+    {
+        $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 1, 0);
+    }
+    
+    /** 
+    * fetchRetailerProducts
+    * Get retailer product form database
+    * 
+    *@param $delete_status  status in product_1_index
+    *@param $stock_status   status in warehouse_inventory
+    * @access protected 
+    * @return object 
+    */ 
+    public function  fetchRetailerProducts($params, $delete_status, $stock_status){
+        $storeid = null;
         $table_name = "product_". Bootstrap::getLanguage()->getId() . '_index';
-	    $user = (new Segment('customer'))->get('customer');
+        $user = (new Segment('customer'))->get('customer');
         if($user->getRetailer()){
             $storeid = $user->getRetailer()->offsetGet('store_id');
         }
-		$condition = !empty($params) ? $params : $this->getQuery();
+        $condition = !empty($params) ? $params : $this->getQuery();
         $sales_products = new Pcollection;
         $where = new \Zend\Db\Sql\Where();
-        
+        $where->equalTo($table_name.'.status', $delete_status);
         $where->nest->isNull('new_end')->or->greaterThanOrEqualTo('new_end', date('Y-m-d H:i:s'))->unnest;
         if($storeid){
             $where->equalTo('store_id', $storeid);
-            $where->equalTo($table_name.'.status', 1);
         }
-		//Search condition
+        //Search condition
         if(!empty($condition['name'])){
             $where->like('name', '%'.$condition['name'].'%');
         }
@@ -51,7 +78,7 @@ class SalesProducts extends Template
         if(!empty($condition['price_from'])){
             $where->greaterThanOrEqualTo('price',$condition['price_from']);
         }
-		if(!empty($condition['price_to'])){
+        if(!empty($condition['price_to'])){
             $where->lessThanOrEqualTo('price',$condition['price_to']);
         }
         if(isset($condition['catalog']) && $condition['catalog'] != ''){
@@ -63,14 +90,15 @@ class SalesProducts extends Template
             $where->equalTo('recommend',$condition['recomend_status']);
         }
         
-		$sales_products
-		->where($where)
-		->join(['wi' => 'warehouse_inventory'], 'wi.product_id = id', ['sales_status' => new Expression('SUM(wi.status)')], 'left')
+        $stock_status_option = ($stock_status == 0) ? '=' : '>=';
+        $sales_products
+        ->where($where)
+        ->join(['wi' => 'warehouse_inventory'], 'wi.product_id = id', ['sales_status' => new Expression('SUM(wi.status)')], 'left')
         ->group('id')
-        ->having(['sales_status > 0'])
-		->order(['created_at'=>'DESC']);
-		return $this->prepareCollection($sales_products,$condition);
-	}
+        ->having(['sales_status '. $stock_status_option . ' ' . $stock_status])
+        ->order(['created_at'=>'DESC']);
+        return $this->prepareCollection($sales_products,$condition);
+    }
 
     /** 
     * unidimensional

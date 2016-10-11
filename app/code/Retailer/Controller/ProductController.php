@@ -8,6 +8,7 @@ use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
+use Seahinet\Lib\Model\Eav\Type;
 use Zend\Db\TableGateway\TableGateway;
 use Seahinet\Lib\Model\Collection\Language as Lcollection;
 
@@ -87,11 +88,8 @@ class ProductController extends AuthActionController
      */
     public function stockAction()
     {
-        $root = $this->getLayout('retailer_product');
-        $order = Array(
-            'type' => 'stock'
-        );
-        $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('order', $order);
+        $root = $this->getLayout('retailer_stock_products');
+        $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
 

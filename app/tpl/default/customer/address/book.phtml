@@ -36,11 +36,12 @@ $attributes = $this->getAddressAttribute();
      	<a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>">
                  <?php echo $this->translate('Delete') ?>
         </a>
+        /
        
        
       </td>
-     <td class="">
-     	 <?php if (!$address->offsetGet('is_default')): ?>
+     <td class="default_book">
+  <?php if (!$address->offsetGet('is_default')): ?>
                     <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='), $address->getId() ?>"><?php echo $this->translate('Set as Default') ?></a>
                 <?php else: ?>
                     <span class="btn-Address"><?php echo $this->translate('Default Address') ?></span>

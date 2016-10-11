@@ -193,8 +193,14 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset,.retailer-account .fieldset{width:100%;margin-top:20px;margin-left:25px}
 .customer-account  .fieldset .Modifyimage{background:#000;color:#fff;font-size:12px;text-align:center;width:100px;margin-top:-15px;padding:2px 0}
 .customer-account  .fieldset .title_img img{position:relative;z-index:-1}
+.customer-account .fieldset .input-box{margin:6px 0}
+.customer-account .fieldset .newpasswora_input_1{width:281px}
+.customer-account .fieldset .newpasswora_input_2{width:266px}
+.customer-account .fieldset .email{width:268px}
 .customer-account  .fieldset .header_images{background: #f9f7f7;border: 1px solid #ccc;padding: 5px 10px;font-size: 12px;color: #807E7E;margin-left: 20px;}
-.customer-account .fieldset .input-box,.retailer-account .fieldset .input-box{display:table-row;height:50px}
+.retailer-account .fieldset .input-box{display:table-row;height:50px}
+.customer-account .fieldset .password_input{width:240px}
+.customer-account .fieldset .username_input{width:281px}
 .customer-account .fieldset .cell,.retailer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px;padding-bottom:6px}
 .customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap;width:1%}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
@@ -208,13 +214,14 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .headimages .headimg{margin-right:15px}
 .customer-account .imgsize{color:#ccc;font-size:12px;margin-left:15px}
 .customer-account .fa-button{padding-right:10px}
-.male,.female{padding:0 10px 0 0}
+.male,.female{padding:0 10px 0 10px}
 .male input,.female input{margin-right:10px}
 .check{margin:15px 0}
 .customer-account .btn-theme{background:#00A0E9;color:#fff;    padding: 10px 30px;border-radius: 0;margin: 20px 0 50px 0;}
 .customer-account  .add-address{height:60px}
 .customer-account .address-list .add-address{font-size:13px}
 .customer-account .address-list .modify_book{color:#007dc6}
+.customer-account .address-list .default_book {color: #818589;}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
 .head_img .bg1{width:100px;height:30px;position:absolute;left:0;bottom:0;background:#000;opacity:0.8;z-index:3;}
@@ -589,8 +596,9 @@ dl.options dd{float:left;margin-left:4px}
 .order-dashboard .bd{background:#fffcf3 none repeat scroll 0 0;border:1px solid #f7e4a5;padding:20px 30px}
 .order-dashboard .tbnotes{border-top:1px solid #ddd;line-height:21px;margin-top:15px;padding-top:5px;
 }
+
 .order-dashboard .tbnotes span{color:#f60;font-weight:700}
-.product-pic{display:inline-block;float:left;width:50px}
+.product-pic{display:inline-block;float:left;width:50px;margin-right:20px}
 .product-pic img{width:50px}
 .product-title{margin-left:60px}
 .tabs-container{margin:20px 0;position:relative}

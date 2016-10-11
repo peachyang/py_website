@@ -1,6 +1,6 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$sales_products = $this->getRetailerSalesProducts();
+$sales_products = $this->getRetailerHistoryProducts( );
 $filter = $this->getVariable('filter');
 ?>
 <div class="wishlist sales-products">
@@ -40,7 +40,7 @@ $filter = $this->getVariable('filter');
     </div>
     <div style="clear:both"></div>
 
-    <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
+    <div class="seperation-title">共有 <span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
    <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
@@ -56,9 +56,7 @@ $filter = $this->getVariable('filter');
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                    <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
+                    <button class="btn-options enhancement product_remove" data-type=1>恢 复</button>
                 </td>
             </tr>
         </table>
@@ -75,7 +73,6 @@ $filter = $this->getVariable('filter');
                         <td style="width: 45%;">
                             <div class="recommend">
                                 <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
-                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
                             </div>
 
                             <div class="product-pic">
@@ -131,9 +128,7 @@ $filter = $this->getVariable('filter');
                         <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                        <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
+                        <button class="btn-options enhancement product_remove" data-type=1>恢 复</button>
                     </td>
                 </tr>
             </table>

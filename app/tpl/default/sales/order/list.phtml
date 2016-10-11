@@ -5,7 +5,18 @@ $flag = true;
 // var_dump($orders->toArray());
 ?>
 
-
+<table class="table address-list text-center">
+<thead style="border:1px solid #eee">
+    <tr class="table_head ">
+      <th  class="col-md-4 text-center"><?php echo $this->translate('commodity') ?></th>
+      <th  class="col-md-2 text-right"><?php echo $this->translate('Amount of the transaction') ?></th>
+      <th  class="text-center"><?php echo $this->translate('quantity') ?></th>
+      <th  class="text-center"><?php echo $this->translate('trading status') ?></th>
+      
+      <th></th>
+    </tr>
+  </thead>
+</table>
 
 <table class="table   table-no-border list_table">
 
@@ -61,7 +72,7 @@ $flag = true;
                     <?php endif ?>
                 </td>
                 <td>
-                    <div class="price-box text-center">
+                    <div class="price-box text-right">
                         <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
                         <span class="regular-price">
                             <span class="label"><?php echo $this->translate('Price') ?></span>

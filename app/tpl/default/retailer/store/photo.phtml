@@ -6,27 +6,25 @@
         </ol>
         <div class="buttons-set col-lg-6 col-md-6 text-right">
             <button data-toggle="modal" data-target="#modal-upload"><?php echo $this->translate('Upload'); ?></button>
-
         </div>
-
     </div>
     <div class="filters">
         <form action="" method="get" class="form-inline">
             <div class="input-box">
-                <label for="category_id" class="control-label"><?php echo $this->translate('Category');?></label>
+                <label for="category_id" class="control-label"><?php echo $this->translate('Category'); ?></label>
                 <div class="cell">
                     <select name="category_id" id="category_id" class="form-control ">
-                        <option value=""><?php echo $this->translate('(NULL)');?></option>
+                        <option value=""><?php echo $this->translate('(NULL)'); ?></option>
                         <option value="1">心机小物</option>
                         <option value="2">杯子</option>
                     </select>
                 </div>
             </div>
             <div class="input-box">
-                <label for="file_type" class="control-label"><?php echo $this->translate('File Type');?></label>
+                <label for="file_type" class="control-label"><?php echo $this->translate('File Type'); ?></label>
                 <div class="cell">
                     <select name="file_type" id="file_type" class="form-control ">
-                        <option value=""><?php echo $this->translate('Please Select');?></option>
+                        <option value=""><?php echo $this->translate('Please Select'); ?></option>
                         <option value="image/gif">image/gif</option>
                         <option value="image/jpeg">image/jpeg</option>
                         <option value="image/png">image/png</option>
@@ -34,26 +32,26 @@
                 </div>
             </div>
             <div class="input-box">
-                <label for="uploaded_name" class="control-label"><?php echo $this->translate('Uploaded Name');?></label>
+                <label for="uploaded_name" class="control-label"><?php echo $this->translate('Uploaded Name'); ?></label>
                 <div class="cell">
                     <input type="text" name="uploaded_name" id="uploaded_name" class="form-control " value="">
                 </div>
             </div>
             <div class="input-box">
-                <label for="real_name" class="control-label"><?php echo $this->translate('Real Name');?></label>
+                <label for="real_name" class="control-label"><?php echo $this->translate('Real Name'); ?></label>
                 <div class="cell">
                     <input type="text" name="real_name" id="real_name" class="form-control " value="">
                 </div>
             </div>
             <div class="input-box">
-                <label class="control-label" for="sortby:limit"><?php echo $this->translate('Item(s) per page');?></label>
+                <label class="control-label" for="sortby:limit"><?php echo $this->translate('Item(s) per page'); ?></label>
                 <div class="cell">
                     <input type="tel" name="limit" id="sortby:limit" class="form-control" value="20">
                 </div>
             </div>
             <div class="buttons-set">
-                <button type="submit" class="btn"><?php echo $this->translate('Search');?></button>
-                <button type="reset" class="btn"><?php echo $this->translate('Reset');?></button>
+                <button type="submit" class="btn"><?php echo $this->translate('Search'); ?></button>
+                <button type="reset" class="btn"><?php echo $this->translate('Reset'); ?></button>
             </div>
         </form>
     </div>
@@ -125,13 +123,13 @@
                 </div>
                 <div class="modal-body">
                     <ul class="nav nav-tabs clearfix" role="tablist">
-                        <li role="presentation" class="">
-                            <a href="#select-resource" aria-controls="select-resource" role="tab" data-toggle="tab" aria-expanded="false">
+                        <li role="presentation" class="active">
+                            <a href="#select-resource" aria-controls="select-resource" role="tab" data-toggle="tab">
                                 <?php echo $this->translate('Select Resource'); ?>
                             </a>
                         </li>
-                        <li role="presentation" class="active">
-                            <a href="#upload-resource" aria-controls="upload-resource" role="tab" data-toggle="tab" aria-expanded="true">
+                        <li role="presentation">
+                            <a href="#upload-resource" aria-controls="upload-resource" role="tab" data-toggle="tab">
                                 <?php echo $this->translate('Upload Resource'); ?>                        
                             </a>
                         </li>
@@ -139,61 +137,88 @@
                             <a href="#"><?php echo $this->translate('Search'); ?></a><input type="text" name="search">
                         </li>
                     </ul>
-                    <div class="col-lg-12 col-md-12">
-                        <div class="content-left" style="width:179px;float:left">
-                            <h3><?php echo $this->translate('Resource Management'); ?></h3>
-                            <dl>
-                                <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo'); ?></dt>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
-                                <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo1'); ?></dt>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>   
-                            </dl>
+                    <div class="col-lg-12 col-md-12 tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="select-resource">
+                            <div class="content-left" style="width:179px;float:left">
+                                <h3><?php echo $this->translate('Resource Management'); ?></h3>
+                                <dl>
+                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo'); ?></dt>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
+                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo1'); ?></dt>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>   
+                                </dl>
+                            </div>
+                            <div class="content-right" style="width:788px;float:left">
+                                <ul class="col-lg-12 col-md-12 heading">
+                                    <li class="col-lg-2 col-md-2"><?php echo $this->translate('Images'); ?></li>
+                                    <li class="col-lg-6 col-md-6"><?php echo $this->translate('File Name'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Size'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Import'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Status'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Delete'); ?></li>
+                                </ul>  
+                            </div>                          
                         </div>
-                        <div class="content-right" style="width:788px;float:left">
-                            <ul class="col-lg-12 col-md-12 heading">
-                                <li class="col-lg-2 col-md-2"><?php echo $this->translate('Images'); ?></li>
-                                <li class="col-lg-6 col-md-6"><?php echo $this->translate('File Name'); ?></li>
-                                <li class="col-lg-1 col-md-1"><?php echo $this->translate('Size'); ?></li>
-                                <li class="col-lg-1 col-md-1"><?php echo $this->translate('Import'); ?></li>
-                                <li class="col-lg-1 col-md-1"><?php echo $this->translate('Status'); ?></li>
-                                <li class="col-lg-1 col-md-1"><?php echo $this->translate('Delete'); ?></li>
-                            </ul>  
-                        </div>                      
+                        <div class="tab-pane" role="tabpanel" id="upload-resource">
+                            <div class="content-left" style="width:179px;float:left">
+                                <h3><?php echo $this->translate('Resource Management'); ?></h3>
+                                <dl>
+                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo'); ?></dt>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
+                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo1'); ?></dt>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
+                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
+                                </dl>
+                            </div>
+                            <div class="content-right" style="width:788px;float:left">
+                                <ul class="col-lg-12 col-md-12 heading">
+                                    <li class="col-lg-2 col-md-2"><?php echo $this->translate('Images'); ?></li>
+                                    <li class="col-lg-6 col-md-6"><?php echo $this->translate('File Name'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Size'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Import'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Status'); ?></li>
+                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Delete'); ?></li>
+                                </ul>  
+                            </div>
+                            <div class="cue clearfix">
+                                <p>小提示:</p>
+                                <ul>
+                                    <li>1. 图片单张大小支持2M以下, 超过无法上传</li>
+                                    <li>2. 自动压缩和宽度调整可能会使图片失真</li>
+                                    <li>3. 支持的图片格式: jpg、jpeg、png、gif</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <ul class="col-lg-4 col-md-4">
+                                    <li><label><?php echo $this->translate('Add Categorey'); ?></label></li>
+                                    <li><input type="text"></li>
+                                    <li><a href=""><?php echo $this->translate('New'); ?></a></li>
+                                </ul>
+                                <ul class="col-lg-4 col-md-4">
+                                    <li>
+                                        <label><?php echo $this->translate('Select Resource'); ?></label>
+                                    </li>
+                                    <li>
+                                        <select name="resource">
+                                            <option><?php echo $this->translate('Select File'); ?></option>
+                                        </select>
+                                    </li>
+                                </ul>
+                                <div class="col-lg-4 col-md-4">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary"><?php echo $this->translate('Upload'); ?></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="cue clearfix">
-                        <p>小提示:</p>
-                        <ul>
-                            <li>1. 图片单张大小支持2M以下, 超过无法上传</li>
-                            <li>2. 自动压缩和宽度调整可能会使图片失真</li>
-                            <li>3. 支持的图片格式: jpg、jpeg、png、gif</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <ul class="col-lg-4 col-md-4">
-                        <li><label><?php echo $this->translate('Add Categorey'); ?></label></li>
-                        <li><input type="text"></li>
-                        <li><a href=""><?php echo $this->translate('New'); ?></a></li>
-                    </ul>
-                    <ul class="col-lg-4 col-md-4">
-                        <li>
-                            <label><?php echo $this->translate('Select Resource'); ?></label>
-                        </li>
-                        <li>
-                            <select name="resource">
-                                <option><?php echo $this->translate('Select File'); ?></option>
-                            </select>
-                        </li>
-                    </ul>
 
-                    <div class="col-lg-4 col-md-4">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary"><?php echo $this->translate('Upload');?></button>
-                    </div>
                 </div>
             </div>
         </div>

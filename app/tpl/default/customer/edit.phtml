@@ -8,13 +8,22 @@ $customer = $this->getCustomer();
     <div>
     <span><?php echo $this->translate('Avatar Image') ?></span>
      <span class="imgsize"><?php echo $this->translate('Large picture recommended size'); ?>：490*420px</span>
+     <div class="title_img">
+ 		    <div type="button" class="btn amend " data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="选择资源">
+                        
+                        <img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/135.jpg" alt="">
+                        <div type="button"  data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25" title="选择资源" class="header_images btn btn_img"><?php echo $this->translate('Modify the Head portrait image') ?></div>
+                        <div class="Modifyimage"><?php echo $this->translate('Modify the image') ?></div>
+            </div>
+                  
     
     </div>
         <div class="input-box">
         	
             <label class="control-label"><?php echo $this->translate('Username') ?></label>
             <div class="cell">
-                <span><?php echo $customer->offsetGet('username') ?></span>
+               
+                <input type="txt" class="form-control  username_input"  value="<?php echo $customer->offsetGet('username') ?>" >
                
             </div>
         </div>
@@ -22,8 +31,10 @@ $customer = $this->getCustomer();
           <div class="input-box">
         
             <label class="control-label"><?php echo $this->translate('Gender') ?></label>
-            <span class="male"> <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><?php echo $this->translate('Male') ?></span>
-           	<span class="female"><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked><?php echo $this->translate('Female') ?></span>
+            <div class="cell">
+            	 <span class="male"> <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><?php echo $this->translate('Male') ?></span>
+           		<span class="female"><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked><?php echo $this->translate('Female') ?></span>
+            </div>
             
           
         </div>
@@ -37,7 +48,7 @@ $customer = $this->getCustomer();
           <div class="input-box">
             <label class="control-label required" for="crpassword"><?php echo $this->translate('The current user password') ?></label>
             <div class="cell">
-                <input type="password" name="crpassword" id="crpassword" class="form-control required" minlength="6"/>
+                <input type="password" name="crpassword" id="crpassword" class="form-control required  password_input" minlength="6"/>
             </div>
         </div>
      
@@ -45,14 +56,14 @@ $customer = $this->getCustomer();
         <div class="input-box">
             <label class="control-label" for="password"><?php echo $this->translate('New Password') ?></label>
             <div class="cell">
-                <input type="password" name="password" id="password" class="form-control" minlength="6" />
+                <input type="password" name="password" id="password" class="form-control newpasswora_input_1 " minlength="6" />
             </div>
         </div>
        
         <div class="input-box">
             <label class="control-label" for="cpassword"><?php echo $this->translate('Confirm Password') ?></label>
             <div class="cell">
-                <input type="password" name="cpassword" id="cpassword" class="form-control" data-rule-equalTo="#password" minlength="6" />
+                <input type="password" name="cpassword" id="cpassword" class="form-control newpasswora_input_2" data-rule-equalTo="#password" minlength="6" />
             </div>
         </div>
          <div class="check">

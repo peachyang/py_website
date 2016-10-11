@@ -28,10 +28,16 @@ $attributes = $this->getAddressAttribute();
       <td><?php echo $address['address']?></td>
       <td><?php echo $address['postcode']?></td>
      
-      <td>
+      <td class="modify_book">
+       <a href="">
+                 <?php echo $this->translate('Modify') ?>
+        </a>
+         /
      	<a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>">
                  <?php echo $this->translate('Delete') ?>
         </a>
+       
+       
       </td>
      <td class="">
      	 <?php if (!$address->offsetGet('is_default')): ?>

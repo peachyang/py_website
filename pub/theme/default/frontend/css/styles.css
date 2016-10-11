@@ -198,6 +198,9 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .cell,.retailer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px;padding-bottom:6px}
 .customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap;width:1%}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
+.customer-account .fieldset .btn{border-radius: 1px;margin:20px 0}
+.customer-account .fieldset .amend{padding:6px 0}
+.customer-account .fieldset .btn_img{padding:6px 12px;margin:0 18px}
 .customer-account .headimages{margin-top:20px}
 .customer-account  .btn-Address{background: #cbecfe;color: #007dc6;padding: 5px 20px;border:1px solid #007dc6}
 .customer-account .address-list{margin:60px 0 30px 0;border: 1px solid #eee;}
@@ -210,6 +213,8 @@ dl.options dd{float:left;margin-left:4px}
 .check{margin:15px 0}
 .customer-account .btn-theme{background:#00A0E9;color:#fff;    padding: 10px 30px;border-radius: 0;margin: 20px 0 50px 0;}
 .customer-account  .add-address{height:60px}
+.customer-account .address-list .add-address{font-size:13px}
+.customer-account .address-list .modify_book{color:#007dc6}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
 .head_img .bg1{width:100px;height:30px;position:absolute;left:0;bottom:0;background:#000;opacity:0.8;z-index:3;}
@@ -258,7 +263,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .order tbody tr:last-child td{border-bottom:1px solid #e1e3e9}
 .customer-account-dashboard .order .price-box .old-price .label{display:inline}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
-.list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden;width:200px;margin-left:-30px}
+.list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden;width:200px;margin-left:-20px}
 .customer-account-dashboard .order .options,.list_table .options{font-size:12px}
 .list_table td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
@@ -266,7 +271,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-address .btn-add{margin:30px 0 26px 0;}
 .customer-account-address .address-list li{padding:0 6px;line-height:34px;font-size:14px}
 .customer-account-address .address-list li:hover{background:#f5f5f5}
-.list_table tbody tr td{width:70px}
+.list_table tbody tr td{width:100px}
 .customer-account-address .address-list .inline{overflow:hidden;text-overflow:ellipse;white-space:nowrap}
 .customer-account-address .address-list .inline a{display:block}
 .customer-account-address .address-list .action{text-align:right}

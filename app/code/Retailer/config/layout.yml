@@ -224,6 +224,46 @@ retailer_sales_products:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+retailer_stock_products:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Stock
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\SalesProducts
+                        template: retailer/stockProducts
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+retailer_history_products:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Stock
+                    -
+                        method: addScript
+                        params: frontend/js/retailer_goods.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\SalesProducts
+                        template: retailer/historyProducts
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 retailer_order_view:
     update: frontend
     root:

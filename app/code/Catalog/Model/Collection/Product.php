@@ -28,16 +28,13 @@ class Product extends Collection
     * @access public
     * @return object 
     */ 	
-	public function withInSales($store = null)
+	public function withInSales($storeid = null)
     {
-        if (is_null($store)) {
-            $store = Bootstrap::getStore()->getId();
-        } else if (is_object($store) || is_array($store)) {
-            $store = $store['id'];
-        }
-
+echo $storeid;
 		$this->select->where->nest->isNull('new_end')->or->greaterThanOrEqualTo('new_end', date('Y-m-d H:i:s'))->unnest;
-		$this->select->where->equalTo('store_id',$store);
+        if (!empty($storeid)) {
+            $this->select->where->equalTo('store_id', $storeid);
+        }
 		$this->select->where->equalTo('status',1);
         return $this;
     }

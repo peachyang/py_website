@@ -79,7 +79,7 @@ class ProductController extends AuthActionController
                     $model->setId(null);
                 }
                 if (empty($data['uri_key']) && !empty($data['name'])) {
-                    $model->setData('uri_key', strtolower(preg_replace('/\W/', '-', $data['name'])));
+                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', rawurlencode($data['name']))), '-'));
                 }
                 $type = new Type;
                 $type->load(Model::ENTITY_TYPE, 'code');

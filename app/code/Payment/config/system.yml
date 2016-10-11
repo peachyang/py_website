@@ -127,7 +127,7 @@ payment:
                     default: ''
                     priority: 51
         cash_on_delivery:
-            label: Cash On Delivery
+            label: Cash on Delivery
             scope: [merchant,store]
             children:
                 enable:
@@ -208,6 +208,13 @@ payment:
                     source: Seahinet\Sales\Source\Order\Status
                     default: 1
                     priority: 5
+                cctype:
+                    type: multiselect
+                    label: Credit Card Type
+                    priority: 10
+                    required: required
+                    source: Seahinet\Payment\Source\CcType
+                    default: AE,VI,MC,DI
                 country:
                     type: multiselect
                     label: Available Countries

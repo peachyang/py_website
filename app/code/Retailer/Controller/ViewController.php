@@ -12,4 +12,9 @@ class ViewController extends AbstractController
         
     }
 
+    public function categoryAction()
+    {
+        
+    }
+
 }

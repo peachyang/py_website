@@ -106,7 +106,7 @@ class CategoryController extends AuthActionController
                 if (empty($data['parent_id'])) {
                     $model->setData('parent_id', null);
                 } else if (empty($data['uri_key'])) {
-                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', $data['name']))), '-');
+                    $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', rawurlencode($data['name'])))), '-');
                 }
                 try {
                     $model->save();

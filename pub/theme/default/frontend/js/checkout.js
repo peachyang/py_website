@@ -185,6 +185,7 @@
         });
         $('.section.payment').on('click', '[name=payment_method]', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/selectpayment/';
+            $(this).siblings('[data-toggle=tab]').tab('show');
             if (GLOBAL.AJAX[url]) {
                 GLOBAL.AJAX[url].abort();
             }

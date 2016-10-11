@@ -184,6 +184,9 @@ class Product extends Entity
             return $this->getBaseUrl($this->storage['path'][$constraint['category_id']]);
         }
         $result = $this->getContainer()->get('indexer')->select('catalog_url', $this->languageId, $constraint);
+        if (!count($result)) {
+            return '#';
+        }
         if (is_null($category)) {
             $this->storage['path'][0] = $result[0]['path'] . '.html';
         } else if (isset($constraint['category_id'])) {

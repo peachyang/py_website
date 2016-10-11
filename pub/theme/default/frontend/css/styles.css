@@ -402,9 +402,9 @@ dl.options dd{float:left;margin-left:4px}
 .checkout-order .page-title{font-size:16px;line-height:40px}
 .checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e1e1e1;padding:30px 0}
 .checkout-order .section .title{font-weight:bold;margin-bottom:26px;font-size:16px;color:#000;padding-right:15px}
-.checkout-order .payment label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
-.checkout-order .payment input{display:none}
-.checkout-order .payment input:checked+label{background:#f1f2f4}
+.checkout-order .payment li>label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
+.checkout-order .payment li>input{display:none}
+.checkout-order .payment li>input:checked+label{background:#f1f2f4}
 .checkout-order .address .form-edit-address{max-width:585px}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
 .checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}

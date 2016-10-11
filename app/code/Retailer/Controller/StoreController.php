@@ -19,7 +19,10 @@ use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
  * 
  */
 class StoreController extends AuthActionController
-{
+{   private $page_types = [
+                '首页'=> 0,
+                '产品详情页' => 1
+                ];
 
     public function indexAction()
     {
@@ -153,6 +156,7 @@ class StoreController extends AuthActionController
     public function decorationAction()
     {
         $root = $this->getLayout('decoration_store');
+        $root->getChild('main', true)->setVariable('page_types', $this->page_types);
         return $root;
     }
 

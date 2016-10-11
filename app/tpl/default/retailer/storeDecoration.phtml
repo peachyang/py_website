@@ -1,4 +1,5 @@
-<?php 
+<?php
+$page_types = $this->getVariable("page_types"); 
 $templateView = $this->getTemplateView();
 $menuView = $this->template_menu();
 $logo_topView = $this->template_logo_top(!empty($templateView['stable_params']['logo_top']) ? $templateView['stable_params']['logo_top'] : '' );
@@ -58,7 +59,19 @@ $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heigh
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
             <div class="navbar-header">
-                <a class="navbar-brand" sty href="/">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) || $templateView['store_id']==0 ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span></a>
+                <a class="navbar-brand" href="javascript:void(0)">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) || $templateView['store_id']==0 ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span>
+                &nbsp;&nbsp; | </a> 
+                <a class="navbar-brand" href="javascript:void(0)">
+                	<span class="decoration_position"> 当前装修页面  &nbsp; 
+                		<select class="page_type_select" id='page_type' >
+                		<?php foreach ($page_types as $key => $value) { ?>
+                		<option value="<?php echo $value; ?>" ><?php echo $key; ?></option>
+                		<?php } ?>
+                		<option value="-1" >自定义页面</option>
+                		</select>
+                		</span> 
+                &nbsp; <button class="btn btn-success btn-sm" >自定义页面管理</button>		
+                		</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav" id="menu-htmleditor">
@@ -206,7 +219,7 @@ $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heigh
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
-                                        <div class="element-desc">文字段落</div>
+                                        <div class="element-desc">自由编辑</div>
                                     </div>
                                     <div class="view">
                                    
@@ -356,7 +369,7 @@ $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heigh
 
 
 <script id="paragraph" type="text/html">
-  <div class="content function-tag" data-tag='paragraph' data-name='文字段落' data-param='' > 
+  <div class="content function-tag" data-tag='paragraph' data-name='自由编辑' data-param='' > 
 
   </div>
 </script>

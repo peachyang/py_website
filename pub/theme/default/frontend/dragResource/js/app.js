@@ -1,25 +1,7 @@
 /* global path */
 
-$.cssHooks.backgroundColor = {
-    get: function (elem) {
-        if (elem.currentStyle)
-            var  bg = elem.currentStyle["background-color"];
-        else if (window.getComputedStyle)
-            var  bg = document.defaultView.getComputedStyle(elem,
-                    null).getPropertyValue("background-color");
-        if (bg.search("rgb") == -1)
-            return bg;
-        else {
-            bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-            function hex(x) {
-                return ("0" + parseInt(x).toString(16)).slice(-2);
-            }
 
-        }
-    }
-}
-
-'use strict';
+//'use strict';
 //Make sure jQuery has been loaded before app.js
 if (typeof jQuery === "undefined") {
     throw new Error("HtmlEditor requires jQuery");
@@ -44,32 +26,6 @@ function _init() {
         $(".htmlpage").css("min-height", $(window).height() - 160)
     });
 
-    tinymce.init({
-        menubar: false,
-        force_p_newlines: true,
-        extended_valid_elements : "*[*]",
-        valid_elements: "*[*]",
-        selector: "#html5editor",
-        plugins: [
-            "advlist autolink lists link charmap anchor",
-            "visualblocks code ",
-            "insertdatetime  table contextmenu paste textcolor colorpicker"
-        ],
-        toolbar: "styleselect | bold italic |  forecolor backcolor |alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link code",
-    });
-
-    tinymce.init({
-        menubar: false,
-        force_br_newlines: false,
-        force_p_newlines: false,
-        forced_root_block: '',
-        extended_valid_elements : "*[*]",
-    valid_elements: "*[*]",
-        selector: "#html5editorLite",
-        plugins: [
-        ],
-        toolbar: "forecolor backcolor | alignleft aligncenter alignright alignjustify code",
-    });
 
     $("body").css("min-height", $(window).height() - 90);
     $(".htmlpage").css("min-height", $(window).height() - 160);

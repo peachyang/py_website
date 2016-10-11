@@ -45,6 +45,20 @@ class SalesProducts extends Template
     }
     
     /** 
+    * getRetailerHistoryProducts  
+    * Get retailer's products history by search condition
+    * 
+    * @access public 
+    * @return object 
+    */ 
+    
+    public function getRetailerHistoryProducts($params=[])
+    {
+        $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 0, -1);
+    }
+    
+    /** 
     * fetchRetailerProducts
     * Get retailer product form database
     * 

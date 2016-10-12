@@ -191,7 +191,7 @@
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
-                data: $(this).serialize() + '&csrf=' + csrf,
+                data: $('.section.payment').find('input:not([type=radio],[type=checkbox]),[type=radio]:checked,[type=checkbox]:checked,select,textarea').not(':disabled').serialize() + '&csrf=' + csrf,
                 success: function () {
                     GLOBAL.AJAX[url] = null;
                     loadReview();

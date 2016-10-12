@@ -44,10 +44,11 @@ $flag = true;
             ?>
             <tr>
                 <td>
-                    <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                	<a href=""><img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" /></a>
+                    
                 </td>
                 <td class="text-vtop">
-                    <h4 class="product-name"><?php echo $product['name'] ?></h4>
+                    <h4 class="product-name"><a href=""><?php echo $product['name'] ?></a></h4>
                     <?php
                     $options = json_decode($item['options'], true);
                     if ($item['product_id'] && count($options)):

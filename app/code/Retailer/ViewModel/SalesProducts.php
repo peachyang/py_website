@@ -24,10 +24,10 @@ class SalesProducts extends Template
     * @return object 
     */ 
 	
-	public function getRetailerSalesProducts($params=[])
+	public function getRetailerSalesProducts($params=[],$current_store_id = null)
 	{
 	    $params = !empty($params) ? $params : $this->getQuery();
-        return $this->fetchRetailerProducts($params, 1, 1);
+        return $this->fetchRetailerProducts($params, 1, 1,$current_store_id);
 	}
     
     /** 
@@ -67,12 +67,17 @@ class SalesProducts extends Template
     * @access protected 
     * @return object 
     */ 
-    public function  fetchRetailerProducts($params, $delete_status, $stock_status){
+    public function  fetchRetailerProducts($params, $delete_status, $stock_status, $current_store_id = null){
         $storeid = null;
         $table_name = "product_". Bootstrap::getLanguage()->getId() . '_index';
-        $user = (new Segment('customer'))->get('customer');
-        if($user->getRetailer()){
-            $storeid = $user->getRetailer()->offsetGet('store_id');
+        if(empty($current_store_id))
+        {
+            $user = (new Segment('customer'))->get('customer');
+            if($user->getRetailer()){
+                $storeid = $user->getRetailer()->offsetGet('store_id');
+            }
+        }else{
+            $storeid = $current_store_id;
         }
         $condition = !empty($params) ? $params : $this->getQuery();
         $sales_products = new Pcollection;

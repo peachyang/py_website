@@ -33,8 +33,11 @@ class CategoryController extends ActionController
         return $this->notFoundAction();
     }
 
-    protected function prepareCollection(\Seahinet\Lib\Model\AbstractCollection $collection, $category = null)
+    protected function prepareCollection($collection, $category = null)
     {
+        if (!is_object($collection)) {
+            return $collection;
+        }
         $condition = $this->getRequest()->getQuery();
         $config = $this->getContainer()->get('config');
         $mode = $condition['mode'] ?? 'grid';
@@ -50,7 +53,7 @@ class CategoryController extends ActionController
                     ->having('count>1');
             $set = $tableGateway->selectWith($tmpselect);
             $ids = [];
-            foreach($set as $row){
+            foreach ($set as $row) {
                 $ids[$row['product_id']] = 1;
             }
             $select->where->in('id', array_keys($ids));

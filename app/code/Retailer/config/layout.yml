@@ -275,7 +275,7 @@ retailer_order_view:
                         params: Retailer Order View
                     -
                         method: addScript
-                        params: frontend/js/retailer_products.js
+                        params: frontend/js/retailer_goods.js
             content:
                 children:
                     main:

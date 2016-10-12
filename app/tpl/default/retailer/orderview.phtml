@@ -1,5 +1,8 @@
 <?php
     $transactions = $this->getRetailerTransaction();
+    $transaction = isset($transactions[0]) ? $transactions[0] : null;
+    $sales_statuses = $this->getAllSalesStatus($transaction['status_id']);
+    $sales_status = isset($sales_statuses[0]) ? $sales_statuses[0] : null;
 ?>
 <div class="container">
     <div class="col-md-12">
@@ -7,7 +10,9 @@
             <div class="bd">
                 <div class="trade-status">
                     <strong>当前订单状态：<span class="wait">
-                     交易成功
+                        <?php
+                            echo ($sales_status) ? $this->translate($sales_status['name']) : '';
+                        ?>
                     </span>
                     </strong>
                 </div>
@@ -19,7 +24,7 @@
         </div>
         
         <?php
-            foreach($transactions as $transaction){
+            if($transaction){
         ?>
         <div class="tabs-container">
             <ul class="tabs-nav">
@@ -32,11 +37,11 @@
                         <table>
                             <tbody class="contact-info">
                                 <tr>
-                                    <th colspan="7"><h4>买家信息</h4></th>
+                                    <th colspan="6"><h4>买家信息</h4></th>
                                 </tr>
                                 <tr>
                                     <td colspan="2">昵称：<span class="nickname"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></span></td>
-                                    <td colspan="6"></td>
+                                    <td colspan="4"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">所在地区：<span class="city"> (未知)</span></td>
@@ -44,18 +49,16 @@
                                 </tr>
                                 <tr>
                                     <td valign="top" colspan="2">邮件：<span><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->email; ?></span></td>
-                                    <td colspan="6">&nbsp;</td>
+                                    <td colspan="4">&nbsp;</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="table"
+                        <table class="table">
                             <!-- 订单信息 -->
                             <tbody class="order">
                                 <tr class="order-hd">
                                     <th class="item" style="width: 260px;">商品</th>
                                     <th class="sku">商品属性</th>
-                                    <th class="status">状态</th>
-                                    <th class="service">服务</th>
                                     <th class="price">单价(元)</th>
                                     <th class="num">数量</th>
                                     <th class="discount">优惠</th>
@@ -71,7 +74,7 @@
                                             <div class="pic s50">
                                                 <a target="_blank" href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
                                                 <?php if (strpos($thumbnail, 'http') === false){ ?>
-                                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
+                                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
                                                 <?php }else{ ?>
                                                     <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
                                                 <?php } ?>
@@ -80,18 +83,27 @@
                                         </div>
                                         <div class="txt-info">
                                             <div class="desc">
-                                                <span class="name"><a target="_blank" title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name'] ?></a></span>
+                                                <span class="name"><a target="_blank" title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="sku border-right">(未知)</td>
-                                    <td class="status border-right"><?php echo $this->translate($transaction['status_name']); ?></td>
-                                    <td class="service border-right"> (未知)</td>
+                                    <td class="options border-right">
+                                    <?php
+                                        $options = $this->getProductOptions($item['product_id'], $item['options']);
+                                        if(!empty($options)){
+                                            foreach($options as $oitem){
+                                                echo $oitem['title'] . ' : ' . $oitem['option_value'].'<br />';
+                                            }
+                                        }else{
+                                            echo '';
+                                        }
+                                    ?>
+                                    </td>
                                     <td class="price border-right"><?php echo $this->getCurrency()->format($item['price']); ?></td>
                                     <td class="num border-right"><?php echo $this->translate('%d', [$item['qty']]); ?></td>
                                     <td class="discount border-right">
                                         <ul>
-                                        <li>农村创业:省 14.10 元(未知)</li>
+                                        <li>(未知)</li>
                                         </ul>
                                     </td>
                                     <?php
@@ -109,7 +121,7 @@
                                     }
                                 ?>
                             <tr class="order-ft">
-                                <td colspan="8">
+                                <td colspan="6">
                                     <div colspan="6" class="get-money">实收款：<strong><?php echo $this->getCurrency()->format($item['total']); ?></strong></div>
                                 </td>
                             </tr>
@@ -120,30 +132,24 @@
                         <!-- 其它信息 -->
                         <tbody class="misc-info">
                             <tr class="sep-row">
-                                <td colspan="8"></td>
+                                <td colspan="6"></td>
                             </tr>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="6">
                                     <span class="label">订单编号:</span>
                                     <span class="order-num"><?php echo $transaction['increment_id']; ?></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="6">
                                     <span class="label">创建时间:</span>
                                     <span class="trade-time"><?php echo $transaction['created_at']; ?></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="6">
                                     <span class="label">付款时间:</span>
-                                    <span class="pay-time">2016-07-14 16:37:48(未知)</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="8">
-                                    <span class="label">成交时间:</span>
-                                    <span class="confirm-time">2016-07-25 20:51:32(未知)</span>
+                                    <span class="pay-time"><?php echo $transaction['created_at']; ?></span>
                                 </td>
                             </tr>
                         </tbody>
@@ -183,6 +189,5 @@
             <?php
                 }
             ?>
-        
     </div>
 </div>

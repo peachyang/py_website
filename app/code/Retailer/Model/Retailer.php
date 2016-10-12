@@ -14,7 +14,7 @@ class Retailer extends AbstractModel
 
     protected function construct()
     {
-        $this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'description', 'address', 'tel', 'profile', 'banner']);
+        $this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'description', 'contact', 'keywords', 'address', 'tel', 'uri_key', 'profile', 'watermark', 'banner']);
     }
 
     public function getStore()

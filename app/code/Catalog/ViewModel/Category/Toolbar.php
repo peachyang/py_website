@@ -17,7 +17,7 @@ class Toolbar extends Template
         return $this->getVariable('category');
     }
 
-    public function setCategory(Category $category)
+    public function setCategory($category)
     {
         $this->variables['category'] = $category;
         return $this;
@@ -35,7 +35,7 @@ class Toolbar extends Template
      * @param Product $collection
      * @return Toolbar
      */
-    public function setCollection(Product $collection)
+    public function setCollection($collection)
     {
         $this->collection = $collection;
         return $this;

@@ -536,12 +536,25 @@ dl.options dd{float:left;margin-left:4px}
 .shop_classify{margin:35px 0}
 .shop_classify button{padding:2px}
 .shop_classify .check{margin-right:5px}
-.shop_classify .add_classify{background:#007dc6}
+.shop_classify .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+.shop_classify .fa-plus{padding:0 8px}
+.mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
+.shop_classify .add_class{padding-right:5px;}
 .shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 4px 13px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
 .Brand_name{margin:10px 0}
+.mg-bottom-40 .category_table{border: 1px solid #eee;}
+.mg-bottom-40 .category_table .table_head{background:#fbfbfb}
+.mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
+.mg-bottom-40  .class_menu{display:inline-table}
+.mg-bottom-40  .class_menu dt{padding:5px 30px}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
+.mg-bottom-40  .class_menu dd{padding:5px 10px 5px 5px; }
+.mg-bottom-40  .dd_left{margin:15px 0  0 40px}
+.mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,

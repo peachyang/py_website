@@ -40,7 +40,7 @@ $filter = $this->getVariable('filter');
     </div>
     <div style="clear:both"></div>
 
-    <div class="seperation-title">共有出售中商品 <span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
+    <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
    <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
@@ -56,7 +56,7 @@ $filter = $this->getVariable('filter');
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement product_status">下 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
                     <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
                     <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
                 </td>
@@ -131,9 +131,9 @@ $filter = $this->getVariable('filter');
                         <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement">橱窗推荐</button>
-                        <button class="btn-options enhancement">取消推荐</button>
+                        <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
+                        <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
+                        <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
                     </td>
                 </tr>
             </table>

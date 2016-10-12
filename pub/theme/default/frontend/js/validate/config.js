@@ -47,8 +47,9 @@
                                 $(t).removeClass('error');
                             }
                         });
+                        $('.nav-tabs>li.error>[data-toggle=tab]').first().tab('show');
                     }
-                    $(error).appendTo($(element).parent());
+                    error.insertAfter(element);
                 },
                 success: function (error, element) {
                     if ($(element).parents('.tab-pane').length) {

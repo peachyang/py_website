@@ -102,11 +102,11 @@ class ProductController extends AuthActionController
      */
     public function historyAction()
     {
-        $root = $this->getLayout('retailer_product');
+        $root = $this->getLayout('retailer_history_products');
         $order = Array(
             'type' => 'history'
         );
-        $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
 
@@ -198,7 +198,7 @@ class ProductController extends AuthActionController
     
     /**
      * statusAction  
-     * Ajax to change product status.
+     * Ajax to change stock status.
      * Change the data of status in table warehouse_inventory status field
      * 
      * @access public 
@@ -212,12 +212,52 @@ class ProductController extends AuthActionController
              $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
              return $result;
          }
+         $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
          
         $warehouse_inventory = new TableGateway(array('wi' => 'warehouse_inventory'), $this->getContainer()->get('dbAdapter'));
-        $update = $warehouse_inventory->update(['status'=>0], ['product_id'=> $form_data['product_ids']]);
-        if($update > 0){
-            $result['message'][] = ['message' => $this->translate('%d product(s) have been off store successfully.', [$update]), 'level' => 'success'];
+        $update = $warehouse_inventory->update(['status'=>$form_data['type']], ['product_id'=> $form_data['product_ids']]);
+        if($form_data['type'] == 1){
+            $message = '%d product(s) have put on shelves successfully.';
+        }else{
+            $message = '%d product(s) have pull off shelves successfully.';
         }
+        if($update > 0){
+            $result['message'][] = ['message' => $this->translate($message, [$update]), 'level' => 'success'];
+        }
+        echo json_encode($result);
+     }
+
+    /**
+     * removeAction  
+     * Ajax to change product status.
+     * Change the data of status in table product_*_index status field
+     * 
+     * @access public 
+     * @return object 
+     */
+     public function removeAction()
+     {
+        $form_data = $this->getRequest()->getPost();
+        $result = [];
+        if(empty($form_data) || empty($form_data['product_ids'])){
+            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
+            return $result;
+        }
+        $products_count = count($form_data['product_ids']);
+        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
+         
+        $languages = new Lcollection;
+        foreach($languages as $language){
+            $table_name = 'product_'.$language['id'].'_index';
+            $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
+            $product->update(['status'=>$form_data['type']], ['id'=> $form_data['product_ids']]);
+        }
+        if($form_data['type'] == 1){
+            $message = '%d product(s) have been recover successfully.';
+        }else{
+            $message = '%d product(s) have been removed successfully.';
+        }
+        $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
         echo json_encode($result);
      }
      

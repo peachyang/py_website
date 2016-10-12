@@ -1,6 +1,6 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$sales_products = $this->getRetailerStockProducts( );
+$sales_products = $this->getRetailerHistoryProducts( );
 $filter = $this->getVariable('filter');
 ?>
 <div class="wishlist sales-products">
@@ -56,8 +56,7 @@ $filter = $this->getVariable('filter');
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement product_status" data-type=1>上 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement product_remove" data-type=0>删除</button>
+                    <button class="btn-options enhancement product_remove" data-type=1>恢 复</button>
                 </td>
             </tr>
         </table>
@@ -129,8 +128,7 @@ $filter = $this->getVariable('filter');
                         <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement" data-type=1>上 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement product_remove" data-type=0>删除</button>
+                        <button class="btn-options enhancement product_remove" data-type=1>恢 复</button>
                     </td>
                 </tr>
             </table>

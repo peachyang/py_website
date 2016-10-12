@@ -43,7 +43,7 @@
         
         $(".product_status").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }
@@ -75,7 +75,7 @@
         
         $(".product_recommend").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }
@@ -103,7 +103,7 @@
         
         $(".product_remove").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }

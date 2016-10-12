@@ -44,6 +44,7 @@ class Product extends Template
         
        //Generate where condition
         $where = new \Zend\Db\Sql\Where();
+        $where->in('order_id', $order_id_select);
         if(!empty($condition['sales_id'])){
             $where->like('sales_order.id', $condition['sales_id']);
         }
@@ -77,13 +78,10 @@ class Product extends Template
 //      echo "</pre>";
 //      exit();
        
-       
-       
        //Get product list in the order
        $item_collection = new Icollection;
        //$item_collection->where(['order_id' => $order_id_select]);
        $item_collection->where($where_order_id);
-       
        
         //Seperate product by order id
         $product_list = array();

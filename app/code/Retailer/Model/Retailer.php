@@ -2,7 +2,7 @@
 
 namespace Seahinet\Retailer\Model;
 
-use Seahinet\Lib\Model\{
+use Seahinet\Lib\Model\ {
     AbstractModel,
     Store
 };

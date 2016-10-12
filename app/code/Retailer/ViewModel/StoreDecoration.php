@@ -41,7 +41,6 @@ class StoreDecoration extends Template
 		$templateView = [];
 		$id = $this->getQuery('id');
 		$store_id = $this->judge_store_id($current_store_id);
-
 		if(!empty($id)){
 			if($id!='-1')
 			{		

@@ -24,7 +24,7 @@ class StoreDecoration extends Template
    	
    	public function judge_store_id($current_store_id = null)
    	{
-   		if(is_null($current_store_id))
+   		if(empty($current_store_id))
 		{
 			$segment = new Segment('customer');
 			$r = new Retailer;

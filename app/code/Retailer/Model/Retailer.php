@@ -2,7 +2,7 @@
 
 namespace Seahinet\Retailer\Model;
 
-use Seahinet\Lib\Model\{
+use Seahinet\Lib\Model\ {
     AbstractModel,
     Store
 };
@@ -27,6 +27,14 @@ class Retailer extends AbstractModel
             }
         }
         return $this->store;
+    }
+
+    public function getStoreUrl()
+    {
+        if (!empty($this->storage['uri_key'])) {
+            return 'store/' . $this->storage['uri_key'] . '.html';
+        }
+        return '';
     }
 
 }

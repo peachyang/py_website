@@ -300,7 +300,7 @@ class OrderController extends ActionController
         }
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        if (!$method->available()) {
+        if (!$method->available($data)) {
             throw new Exception('Invalid payment method');
         }
         return $method;
@@ -344,7 +344,7 @@ class OrderController extends ActionController
                 }
                 $className = $this->getContainer()->get('config')['shipping/' . $data['shipping_method'][$item['store_id']] . '/model'];
                 $result[$item['store_id']] = new $className;
-                if (!$result[$item['store_id']]->available()) {
+                if (!$result[$item['store_id']]->available($data)) {
                     throw new Exception('Invalid shipping method');
                 }
             }

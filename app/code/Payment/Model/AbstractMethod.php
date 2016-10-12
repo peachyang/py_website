@@ -9,9 +9,10 @@ abstract class AbstractMethod
         \Seahinet\Lib\Traits\Url;
 
     /**
+     * @param array $data
      * @return bool
      */
-    public function available()
+    public function available($data = [])
     {
         return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/enable'];
     }

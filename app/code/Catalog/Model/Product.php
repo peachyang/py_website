@@ -15,6 +15,7 @@ use Seahinet\Lib\Model\Eav\{
 use Seahinet\Catalog\Model\Collection\Product\Review;
 use Seahinet\Customer\Model\Customer;
 use Seahinet\I18n\Model\Currency;
+use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Resource\Model\Resource;
 use Zend\Db\Sql\Predicate\In;
@@ -58,6 +59,16 @@ class Product extends Entity
                 }
                 return $option;
             }
+        }
+        return null;
+    }
+
+    public function getStore()
+    {
+        if ($this->getId()) {
+            $store = new Store;
+            $store->load($this->storage['store_id']);
+            return $store;
         }
         return null;
     }

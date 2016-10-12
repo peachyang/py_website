@@ -9,7 +9,7 @@ class ViewController extends AbstractController
 
     public function indexAction()
     {
-        
+        $retailer = $this->getOption('retailer');
     }
 
     public function categoryAction()

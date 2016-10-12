@@ -15,6 +15,36 @@ class Respond implements ListenerInterface
     public function respond($event)
     {
         $response = $this->getContainer()->get('response');
+        $body = $response->getBody();
+        $chunkSize = 4096;
+        $contentLength = $response->getHeader('Content-Length');
+        if (!$contentLength) {
+            $contentLength = $body->getSize();
+        }
+        if ($body->isSeekable()) {
+            if ($response->getStatusCode() === 206 && $range = $this->getContainer()->get('request')->getHeader('RANGE')) {
+                try {
+                    header('Accept-Ranges: bytes');
+                    preg_match('/^bytes\=(?P<start>\d*)\-(?P<end>\d*)$/', $range, $matches);
+                    $start = (int) $matches['start'];
+                    $end = (int) $matches['end'];
+                    if ($matches['start'] === '') {
+                        $body->seek(-$end, SEEK_END);
+                    } else {
+                        $body->seek((int) $matches['start']);
+                    }
+                    if ($end < $start) {
+                        $end = (int) $contentLength;
+                    }
+                    header('Content-Range: bytes ' . $start . '-' . $end . '/' . $contentLength);
+                    $contentLength = $end - $start;
+                } catch (\RuntimeException $e) {
+                    $response->withStatus(416);
+                }
+            } else {
+                $body->rewind();
+            }
+        }
         if (!headers_sent()) {
             header($response->renderStatusLine());
             foreach ($response->getHeaders() as $name => $values) {
@@ -31,32 +61,6 @@ class Respond implements ListenerInterface
             }
         }
 
-        $body = $response->getBody();
-        $chunkSize = 4096;
-        $contentLength = $response->getHeader('Content-Length');
-        if (!$contentLength) {
-            $contentLength = $body->getSize();
-        }
-        if ($body->isSeekable()) {
-            if ($response->getStatusCode() === 206 && $range = $this->getContainer()->get('request')->getHeader('RANGE')) {
-                header('Accept-Ranges: bytes');
-                preg_match('/^bytes\=(?P<start>\d*)\-(?P<end>\d*)$/', $range, $matches);
-                $start = (int) $matches['start'];
-                $end = (int) $matches['end'];
-                if ($matches['start'] === '') {
-                    $body->seek(-$end, SEEK_END);
-                } else {
-                    $body->seek((int) $matches['start']);
-                }
-                if ($end < $start) {
-                    $end = (int) $contentLength;
-                }
-                header('Content-Range: bytes ' . $start . '-' . $end . '/' . $contentLength);
-                $contentLength = $end - $start;
-            } else {
-                $body->rewind();
-            }
-        }
         if (isset($contentLength)) {
             $totalChunks = ceil($contentLength / $chunkSize);
             $lastChunkSize = $contentLength % $chunkSize;

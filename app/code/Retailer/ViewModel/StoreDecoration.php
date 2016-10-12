@@ -14,18 +14,34 @@ use Zend\Db\Sql\Expression;
 
 
 class StoreDecoration extends Template
-{
+{	
     /**  
     * Get store template view
     * 
     * @access public 
     * @return object 
-    */ 
-    public function getTemplateView($model = 0)
+    */
+   	
+   	public function judge_store_id($current_store_id = null)
+   	{
+   		if(is_null($current_store_id))
+		{
+			$segment = new Segment('customer');
+			$r = new Retailer;
+			$r->load($segment->get('customer')->getId(),'customer_id');
+			$store_id = $r['store_id'];
+		}else{
+			$store_id = $current_store_id;
+		}
+		return $store_id;
+   	}
+    
+    public function getTemplateView($current_store_id = null,$model = 0)
     {
 		$templateView = [];
 		$id = $this->getQuery('id');
-		$segment = new Segment('customer');	
+		$store_id = $this->judge_store_id($current_store_id);
+
 		if(!empty($id)){
 			if($id!='-1')
 			{		
@@ -35,9 +51,8 @@ class StoreDecoration extends Template
 			}
 		}else{
 				$template = new StoreTemplateCollection;
-				$r = new Retailer;
-				$r->load($segment->get('customer')->getId(),'customer_id');
-				$templateViewCollection = $template->storeTemplateList($r['store_id'],1);
+
+				$templateViewCollection = $template->storeTemplateList($store_id,1);
 				if(!empty($templateViewCollection))
 					$templateView = $templateViewCollection[0];
 				else
@@ -51,9 +66,8 @@ class StoreDecoration extends Template
 			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
 			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params']);
 		}
-		$r = new Retailer;
-		$r->load($segment->get('customer')->getId(),'customer_id');
-		if( !empty($templateView) && $templateView['store_id'] != $r['store_id'] && $templateView['store_id']!=0 )
+
+		if( !empty($templateView) && $templateView['store_id'] != $store_id && $templateView['store_id']!=0 && is_null($current_store_id) )
 			$templateView = [];
 		
 		return $templateView;				 		      
@@ -115,24 +129,23 @@ class StoreDecoration extends Template
 		
 	}
 	
-	public function getStorePicInfo($code){
-		$segment = new Segment('customer');
+	public function getStorePicInfo($code,$current_store_id = null){
 		$Scollection = new StorePicInfoCollection;
-		$r = new Retailer;
-		$r->load($segment->get('customer')->getId(),'customer_id');
-		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$r['store_id']])
+		
+		$store_id = $this->judge_store_id($current_store_id);
+		
+		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$store_id])
 		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 	
 		return $Scollection;
 		
 	}
 	
-	public function getStoreBanner(){
-		$segment = new Segment('customer');		
+	public function getStoreBanner($current_store_id = null){	
 		$retailer = new RetailerCollection;
-		$r = new Retailer;
-		$r->load($segment->get('customer')->getId(),'customer_id');
-		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$r['store_id']])
+		$store_id = $this->judge_store_id($current_store_id);
+		$segment = new Segment('customer');
+		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$store_id])
 		->join('resource','retailer.banner = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 		//return $segment->get('customer');
 		return empty($retailer) ? [] : $retailer[0] ;
@@ -168,7 +181,7 @@ class StoreDecoration extends Template
 	 * 
 	 * 
 	*/
-	public function template_logo_top($params=''){
+	public function template_logo_top($params='',$current_store_id = null){
 		if(!empty($params))
 		{
 //			if($params['widthSetType'] == "1")
@@ -181,7 +194,7 @@ class StoreDecoration extends Template
 			$width = '1128px';
 			$height = '200px';
 		}
-		$retailer = $this->getStoreBanner();
+		$retailer = $this->getStoreBanner($current_store_id);
 //		if(!empty($retailer['real_name']))
 //			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
 //		else
@@ -194,8 +207,8 @@ class StoreDecoration extends Template
 	}
 	
 	
-	public function template_menu($params=''){
-		$result = $this->getStorePicInfo('menu');
+	public function template_menu($params='',$current_store_id = null){
+		$result = $this->getStorePicInfo('menu',$current_store_id);
 		$content = "";
 		foreach ($result as $key => $value) {
 			if(trim($value['url'])!="")
@@ -207,13 +220,13 @@ class StoreDecoration extends Template
 	}
 	
 	
-	public function template_paragraph($params=''){
+	public function template_paragraph($params='',$current_store_id = null){
 		$content = '<p> <br><br>可以在此模块中通过编辑器自由输入文字以及编排格式<br><br> </p>';
 		return $content;
 	
 	}
 	
-	public function template_long_search($params=''){
+	public function template_long_search($params='',$current_store_id = null){
 		$content = '<form target=_blank action="'.$this->getBaseUrl('/retailer/store/viewSearch').'"><label class="search-label">本店搜索</label>
                  <input class="keyword" type="text" name="name" value="" />&nbsp;&nbsp;
                 <input class="price-from" type="text" name="price_from" value="" />
@@ -224,7 +237,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 	
-	public function template_short_search($params=''){
+	public function template_short_search($params='',$current_store_id = null){
 		$content = '<div class="title"><h2>本店搜索</h2></div>
                 <div class="search-table">
                     <form target=_blank action="'.$this->getBaseUrl('/retailer/store/viewSearch').'">
@@ -252,7 +265,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	public function template_product_class($params=''){
+	public function template_product_class($params='',$current_store_id = null){
 		$content = '<ul class="category_list">
                         <li><a href="">查看所有分类&gt;&gt;</a></li>
                         <li><a href="">按销量</a>&nbsp;<a href="">按价格</a>&nbsp;<a href="">按评价</a>&nbsp;<a href="">按新品</a></li>
@@ -278,7 +291,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 	
-	public function template_sales_amount($params=''){
+	public function template_sales_amount($params='',$current_store_id = null){
 		$content = '<ul>
                         <li>
                             <div class="col-md-4">
@@ -296,7 +309,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	public function template_hot_product($params=''){
+	public function template_hot_product($params='',$current_store_id = null){
 		
 		if(!empty($params))
 		{	
@@ -357,7 +370,7 @@ class StoreDecoration extends Template
 		return $content;
 	}
 
-	public function template_store_recommend($params=''){
+	public function template_store_recommend($params='',$current_store_id = null){
 		$content ='';
 		for($i=0;$i<3;$i++)
 		{
@@ -387,7 +400,7 @@ class StoreDecoration extends Template
 		
 	}
 
-	public function template_product_recommend($params=''){
+	public function template_product_recommend($params='',$current_store_id = null){
 		$content = '<ul>';       	
        	for($i=0;$i<4;$i++)
 		{
@@ -405,9 +418,9 @@ class StoreDecoration extends Template
 	}
 	
 	
-	public function template_pic_carousel($params=''){
+	public function template_pic_carousel($params='',$current_store_id = null){
 		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
-		$result = $this->getStorePicInfo('store_carousel');
+		$result = $this->getStorePicInfo('store_carousel',$current_store_id);
        	foreach ($result as $key => $value)
 		{	
 			if(trim($value['url'])!="")

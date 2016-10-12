@@ -24,6 +24,9 @@ class Review extends Cart
                 $result[] = $item;
             }
         }
+        uasort($result, function($a, $b) {
+            return $a['store_id'] <=> $b['store_id'];
+        });
         return $result;
     }
 

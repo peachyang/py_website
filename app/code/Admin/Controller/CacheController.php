@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\Controller;
 
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class CacheController extends AuthActionController
@@ -59,7 +60,7 @@ class CacheController extends AuthActionController
                 $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
                 return $key;
             };
-            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, 524288);
+            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, Bootstrap::SHMOP_SIZE);
             if ($shmid) {
                 shmop_delete($shmid);
                 shmop_close($shmid);

@@ -21,4 +21,9 @@ class ViewController extends ActionController
        echo "aa";
     }
 
+    public function categoryAction()
+    {
+        
+    }
+
 }

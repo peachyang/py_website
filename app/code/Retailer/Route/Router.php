@@ -25,7 +25,7 @@ class Router extends Route
         }
         $parts = explode('/', $path);
         $count = count($parts);
-        if ($count <= 1 && array_shift($parts) !== 'store') {
+        if ($count <= 1 || array_shift($parts) !== 'store') {
             return false;
         }
         $retailer = new Retailer;

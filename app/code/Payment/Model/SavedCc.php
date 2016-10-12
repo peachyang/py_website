@@ -9,10 +9,12 @@ class SavedCc extends AbstractMethod
 
     const METHOD_CODE = 'saved_cc';
 
-    public function available($data)
+    public function available($data = [])
     {
         if (parent::available($data)) {
-            
+            if (empty($data)) {
+                return true;
+            }
         }
         return false;
     }

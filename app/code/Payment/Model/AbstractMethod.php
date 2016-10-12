@@ -12,7 +12,7 @@ abstract class AbstractMethod
      * @param array $data
      * @return bool
      */
-    public function available($data)
+    public function available($data = [])
     {
         return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/enable'];
     }

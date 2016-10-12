@@ -38,6 +38,11 @@ final class Bootstrap
      * @var Language
      */
     private static $language = null;
+    
+    /**
+     * @var int
+     */
+    const SHMOP_SIZE = 524288;
 
     /**
      * Prepare or get container singleton
@@ -105,8 +110,8 @@ final class Bootstrap
                 $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
                 return $key;
             };
-            $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, 524288);
-            $data = trim(shmop_read($shmid, 0, 524288));
+            $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, self::SHMOP_SIZE);
+            $data = trim(shmop_read($shmid, 0, self::SHMOP_SIZE));
             $config = $data ? json_decode($data, true) : false;
         } else {
             $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));

@@ -64,10 +64,13 @@ class StoreController extends AuthActionController
                         $store->setData('name', $data['store']['name'])->save();
                     }
                     unset($data['store_id'], $data['customer_id']);
-                    $retailer->setData([
-                        'profile' => isset($files['profile']) && !$files['profile']->getError() ? $files['profile']->getStream()->getContents() : null,
-                        'watermark' => isset($files['watermark']) && !$files['watermark']->getError() ? $files['watermark']->getStream()->getContents() : null
-                            ] + $data)->save();
+                    if (isset($files['profile']) && !$files['profile']->getError()) {
+                        $data['profile'] = $files['profile']->getStream()->getContents();
+                    }
+                    if (isset($files['watermark']) && !$files['watermark']->getError()) {
+                        $data['watermark'] = $files['watermark']->getStream()->getContents();
+                    }
+                    $retailer->setData($data)->save();
                     $result['message'][] = ['message' => $this->translate('Store infomation has been updated successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

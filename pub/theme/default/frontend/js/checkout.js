@@ -197,7 +197,19 @@
                     loadReview();
                 }
             });
+        }).on('hide.bs.tab', '[data-toggle=tab]', function () {
+            $($(this).attr('href')).find('input,select,textarea').prop('disabled', true);
+        }).on('show.bs.tab', '[data-toggle=tab]', function () {
+            $($(this).attr('href')).find('input,select,textarea').prop('disabled', false);
+        }).on('change', '[name="payment[data][cc]"]', function () {
+            if ($(this).val()) {
+                $(this).siblings('.credit-card.hidden').addClass('hidden');
+            } else {
+                $(this).siblings('.credit-card.hidden').removeClass('hidden');
+            }
         });
+        $('.section.payment .tab-pane:not(.active) input:not(:disabled),.section.payment .tab-pane:not(.active) select:not(:disabled),.section.payment .tab-pane:not(.active) textarea:not(:disabled)').prop('disabled', true);
+        $('.section.payment .tab-pane.active :disabled').prop('disabled', false);
         $('.section.review .btn-checkout').on('click', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/place/';
             var o = this;

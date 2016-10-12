@@ -5,6 +5,9 @@ $images = $product->offsetGet('images');
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
 $warehouse->load(1);
 $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
+$store = $product->getStore();
+$retailer = new Seahinet\Retailer\Model\Retailer;
+$retailer->load($store->getId(), 'store_id');
 ?>
 <div class="container">
     <form action="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" method="post" enctype="multipart/form-data">
@@ -22,7 +25,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                         <?php echo $this->getPriceBox() ?>
                     </div>
                     <div class="hidden-xs col-sm-2 review">
-                        <span class="count"><?php echo count($product->getReviews())?></span>
+                        <span class="count"><?php echo count($product->getReviews()) ?></span>
                         <span><?php echo $this->translate('Review(s)', [], 'catalog'); ?></span>
                     </div>
                     <div class="hidden-xs col-sm-2 order">
@@ -83,24 +86,26 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
         </div>        
     </form>
     <div class="store_info">
-        <h3><?php echo $product['store_id'];?></h3>
+        <h3><?php echo $store['name'] ?></h3>
         <div class="store_detail">
             <table class="table text-center">
                 <tbody>
-                <tr>
-                    <td rowspan="3"><h4>9.7</h4></td>
-                    <td><?php echo $this->translate('Commodity Evaluation');?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                </tr>
-                <tr>                
-                    <td><?php echo $this->translate('Service Attitude');?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                </tr>
-                <tr>
-                    <td><?php echo $this->translate('Logistics Speed');?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                </tr>   
+                    <tr><td></td></tr>
+                    <tr>
+                        <td rowspan="3"><h4>9.7</h4></td>
+                        <td><?php echo $this->translate('Commodity Evaluation'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr>
+                    <tr>                
+                        <td><?php echo $this->translate('Service Attitude'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->translate('Logistics Speed'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr> 
+                    <tr><td></td></tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2"><a href="" class="store_entry"><span class="fa fa-home" aria-hidden="true"></span>&nbsp;<?php echo $this->translate('Store Entry');?></a></td>
+                        <td colspan="2"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>" class="store_entry"><span class="fa fa-home" aria-hidden="true"></span>&nbsp;<?php echo $this->translate('Store Entry'); ?></a></td>
                     </tr>
                 </tfoot>
             </table>
@@ -116,8 +121,7 @@ $inventory = $warehouse->getInventory($product->getId(), $product['sku']);
                 <?php echo $this->getChild('attribute'), $product->offsetGet('description') ?>
             </div>
             <div role="tabpanel" class="tab-pane" id="review">
-                <?php 
-                echo $this->getChild('review') ?>
+                <?php echo $this->getChild('review') ?>
             </div>
         </div>
     </div>

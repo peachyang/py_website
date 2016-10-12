@@ -35,7 +35,7 @@ class CategoryController extends ActionController
 
     protected function prepareCollection($collection, $category = null)
     {
-        if (!is_object($collection)) {
+        if (!is_callable([$collection, 'getSelect'])) {
             return $collection;
         }
         $condition = $this->getRequest()->getQuery();

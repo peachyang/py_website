@@ -10,6 +10,7 @@ use Seahinet\Sales\Model\Collection\Order\Item as Icollection;
 use Seahinet\Customer\Model\Customer as Cmodel;
 use Seahinet\Catalog\Model\Product as Pmodel;
 use Seahinet\Sales\Model\Collection\Order\Status as Scollection;
+use Seahinet\Catalog\Model\Collection\Product\Option as Pocollection;
 use Zend\Db\Sql\Expression;
 
 class Product extends Template
@@ -45,17 +46,26 @@ class Product extends Template
        //Generate where condition
         $where = new \Zend\Db\Sql\Where();
         $where->in('order_id', $order_id_select);
-        if(!empty($condition['sales_id'])){
-            $where->like('sales_order.id', $condition['sales_id']);
+        if(!empty($condition['order_id'])){
+            $where->like('sales_order.id', $condition['order_id']);
         }
-        if(!empty($condition['id'])){
-            $where->like('sales_order.increment_id', '%'.$condition['id'].'%');
+        if(!empty($condition['increment_id'])){
+            $where->like('sales_order.increment_id', '%'.$condition['increment_id'].'%');
         }
         if(!empty($condition['order_status']) && $condition['order_status'] > 0){
             $where->equalTo('sales_order.status_id', $condition['order_status']);
         }
-        if(!empty($condition['add_time_from']) && !empty($condition['add_time_to'])){
-            $where->between('sales_order.created_at', $condition['add_time_from'], $condition['add_time_to']);
+        if(!empty($condition['receiver'])){
+            $where->like('sales_order.shipping_address', '%'.$condition['receiver'].'%');
+        }
+        if(!empty($condition['receiver_phone'])){
+            $where->like('sales_order.shipping_address', '%'.$condition['receiver_phone'].'%');
+        }
+        if(!empty($condition['add_time_from'])){
+            $where->greaterThanOrEqualTo('sales_order.created_at',date('Y-m-d', strtotime($condition['add_time_from'])));
+        }
+        if(!empty($condition['add_time_to'])){
+            $where->lessThanOrEqualTo('sales_order.created_at', date("Y-m-d 23:59:59", strtotime($condition['add_time_to'])));
         }
         $sales_order_collection = new Ocollection;
         $sales_order_collection
@@ -164,7 +174,52 @@ class Product extends Template
         }else{
             $status_collection->order('id');
         }
-        return $status_collection;
+        return $status_collection->toArray();
+    }
+    
+    /** 
+    * getAllSalesStatus  
+    * Get all sales status list or specific sales status by status id
+    * 
+    * @access public
+    * @param int $statusID sales status id
+    * @return object 
+    */ 
+    public function getProductOptions($product_id, $json_options)
+    {
+        if(is_null($product_id) || is_null($json_options) || empty($json_options)){
+            return [];
+        }
+        $options_array = json_decode($json_options, true);
+        if(!is_array($options_array) || empty($options_array)){
+            return [];
+        }
+        
+        //$sub_where = new \Zend\Db\Sql\Where();
+        $where = new \Zend\Db\Sql\Where();
+        $where->equalTo('product_option.product_id', $product_id);
+        
+        $temp_where = new \Zend\Db\Sql\Where();
+        foreach($options_array as $key => $item){
+            $sub_where = new \Zend\Db\Sql\Where();
+            $sub_where->equalTo('product_option.id', $key);
+            $sub_where->equalTo('povt.value_id', $item);
+            $temp_where->addPredicate($sub_where, \Zend\Db\Sql\Where::OP_OR);
+        }
+        $where->addPredicate($temp_where);
+        $pocollection = new Pocollection;
+        $pocollection
+        ->withLabel()
+        ->join(['pov' => 'product_option_value'], 'product_option.id=pov.option_id', ['pov_id' => 'id'], 'left')
+        ->join(['povt' => 'product_option_value_title'], 'pov.id=povt.value_id', ['option_value' => 'title', 'value_id'], 'left')
+        ->where($where);
+        
+//      $adapter = $this->getContainer()->get('dbAdapter');
+//      $sql = $pocollection->getSqlString($adapter->getPlatform(), $adapter::QUERY_MODE_EXECUTE);
+//      echo "<pre>";
+//      print_r($sql);
+//      echo "</pre>";
+        return $pocollection->toArray();
     }
     
     /**

@@ -21,7 +21,7 @@
                 <thead>
                     <tr>
                         <th colspan="2" class="selectall">
-                            <input type="checkbox" checked="checked" id="head-selectall" />
+                            <input type="checkbox" id="head-selectall" />
                             <label for="head-selectall">
                                 <?php echo $this->translate('Select All') ?>
                             </label>
@@ -51,7 +51,7 @@
                             ?>
                             <tr class="store">
                                 <th>
-                                    <input type="checkbox" checked class="selectall" value="<?php echo $item['store']['id'] ?>">
+                                    <input type="checkbox" class="selectall" value="<?php echo $item['store']['id'] ?>">
                                 </th>
                                 <th colspan="6">
                                     <?php echo $item['store']['name'] ?>
@@ -69,7 +69,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="3" class="selectall">
-                            <input type="checkbox" checked="checked" id="foot-selectall" />
+                            <input type="checkbox" id="foot-selectall" />
                             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                             <label for="foot-selectall">
                                 <?php echo $this->translate('Select All') ?>

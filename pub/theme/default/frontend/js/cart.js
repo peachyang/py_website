@@ -26,13 +26,16 @@
                 $(".btn-checkout").attr('disabled', 'disabled');
             }
         };
+        var recursiveSelect = function (flag) {
+            $(this).find('[type=checkbox]').prop('checked', flag)
+            var next = $(this).next('.product-list');
+            if (next) {
+                recursiveSelect.call(next, flag);
+            }
+        };
         $('#cart').on('check.seahinet', function () {
             $(this).find('.store [type=checkbox]').each(function () {
-                if (this.checked) {
-                    $(this).parents('.store').first().next('.product-list').find('[type=checkbox]:not(:checked)').prop('checked', true);
-                } else {
-                    $(this).parents('.store').first().next('.product-list').find('[type=checkbox]:checked').prop('checked', false);
-                }
+                recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
             });
             $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
                 this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
@@ -47,7 +50,7 @@
                 } else {
                     var p = $(this).parents('.product-list').first();
                     if (this.checked && !$(p).find('[type=checkbox]:not(:checked)').length) {
-                        $(p).prev('.store').find('[type=checkbox]').prop('checked', true);
+                        $(p).prevAll('.store').first().find('[type=checkbox]').prop('checked', true);
                     } else if (!this.checked) {
                         $('#cart .selectall,#cart .selectall [type=checkbox]').prop('checked', false);
                     }

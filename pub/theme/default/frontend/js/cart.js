@@ -28,8 +28,8 @@
         };
         var recursiveSelect = function (flag) {
             $(this).find('[type=checkbox]').prop('checked', flag)
-            var next = $(this).next('.product-list');
-            if (next) {
+            var next = $(this).next();
+            if ($(next).is('.product-list')) {
                 recursiveSelect.call(next, flag);
             }
         };

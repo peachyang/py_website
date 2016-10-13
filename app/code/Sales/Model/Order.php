@@ -24,6 +24,7 @@ class Order extends AbstractModel
 
     protected $items = null;
     protected $phase = null;
+    protected $additional = null;
 
     protected function construct()
     {
@@ -141,6 +142,14 @@ class Order extends AbstractModel
             return $address->getId() ? $address : null;
         }
         return null;
+    }
+
+    public function getAdditional($key = null)
+    {
+        if (is_null($this->additional)) {
+            $this->additional = $this->storage['additional'] ? json_decode($this->storage['additional'], true) : [];
+        }
+        return $key ? $this->additional[$key] : $this->additional;
     }
 
     public function getCoupon()

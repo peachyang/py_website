@@ -22,9 +22,7 @@ class CacheController extends AuthActionController
         if ($code) {
             $count = 0;
             foreach ((array) $code as $prefix) {
-                if ($prefix === 'SYSTEM_CONFIG') {
-                    $this->flushShmop();
-                } else {
+                if ($prefix !== 'SYSTEM_CONFIG' || !$this->flushShmop()) {
                     $list = $cache->fetch('CACHE_LIST_' . $prefix);
                     $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
                     if ($list) {
@@ -32,7 +30,7 @@ class CacheController extends AuthActionController
                             $cache->delete($key, $prefix);
                         }
                     } else {
-                        $cache->delete('', $prefix);
+                        $cache->delete($prefix);
                     }
                 }
                 $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
@@ -65,7 +63,9 @@ class CacheController extends AuthActionController
                 shmop_delete($shmid);
                 shmop_close($shmid);
             }
+            return true;
         }
+        return false;
     }
 
 }

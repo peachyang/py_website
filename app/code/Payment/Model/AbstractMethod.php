@@ -48,7 +48,7 @@ abstract class AbstractMethod
         return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/label'];
     }
 
-    public function saveData(array $data)
+    public function saveData($cart, $data)
     {
         return $this;
     }

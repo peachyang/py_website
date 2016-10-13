@@ -116,8 +116,8 @@ class OrderController extends ActionController
                     $items = $cart->getItems(true);
                     $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
                     $orders = [];
-                    if (isset($data['payment'])) {
-                        $paymentMethod->saveData($data['payment']);
+                    if (isset($data['payment_data'])) {
+                        $paymentMethod->saveData($cart, $data['payment_data']);
                     }
                     $result['redirect'] = $paymentMethod->preparePayment();
                     $items->walk(function($item) use (&$orders, $paymentMethod) {
@@ -300,8 +300,9 @@ class OrderController extends ActionController
         }
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        if (!$method->available($data)) {
-            throw new Exception('Invalid payment method');
+        $result = $method->available($data);
+        if ($result !== true) {
+            throw new Exception(is_string($result) ? $result : 'Invalid payment method');
         }
         return $method;
     }

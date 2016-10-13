@@ -10,11 +10,11 @@ abstract class AbstractMethod
 
     /**
      * @param array $data
-     * @return bool
+     * @return bool|string
      */
     public function available($data = [])
     {
-        return $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/enable'];
+        return (bool) $this->getContainer()->get('config')['payment/' . static::METHOD_CODE . '/enable'];
     }
 
     /**

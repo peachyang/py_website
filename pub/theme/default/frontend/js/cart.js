@@ -48,7 +48,7 @@
                         $('#cart .store [type=checkbox]').prop('checked', this.checked);
                     }
                 } else {
-                    var p = $(this).parents('.product-list').first();
+                    var p = $(this).parents('.product-list').first();console.log($(p).find('[type=checkbox]:not(:checked)').length);
                     if (this.checked && !$(p).find('[type=checkbox]:not(:checked)').length) {
                         $(p).prevAll('.store').first().find('[type=checkbox]').prop('checked', true);
                     } else if (!this.checked) {

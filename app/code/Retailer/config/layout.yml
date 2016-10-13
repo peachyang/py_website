@@ -843,6 +843,22 @@ decorationFunc:
                         method: addScript
                         params: frontend/dragResource/js/bootstrap.min.js
 
+
+decorationFunc_customize:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: customize
+
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/customize
 decorationFunc_hot_product:
     update: decorationFunc
     root:

@@ -38,7 +38,7 @@ class TransactionController extends AuthActionController
         $order = Array(
             'type' => 'sold'
         );
-        $root->getChild('main', true)->setVariable('subtitle', 'Sold Product')->setVariable('order', $order);
+        $root->getChild('main', true)->setVariable('subtitle', 'Sold Product')->setVariable('filter', $this->getRequest()->getQuery());
         return $root;
     }
     
@@ -51,8 +51,8 @@ class TransactionController extends AuthActionController
     */ 
     public function orderviewAction()
     {
-        $sales_id = $this->getRequest()->getQuery('sales_id');
-        if(empty($sales_id) || !is_numeric($sales_id)){
+        $order_id = $this->getRequest()->getQuery('order_id');
+        if(empty($order_id) || !is_numeric($order_id)){
             return $this->redirect('retailer/transaction/products/');
         }
         $root = $this->getLayout('retailer_order_view');

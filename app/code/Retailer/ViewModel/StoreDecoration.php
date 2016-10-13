@@ -24,7 +24,7 @@ class StoreDecoration extends Template
    	
    	public function judge_store_id($current_store_id = null)
    	{
-   		if(is_null($current_store_id))
+   		if(empty($current_store_id))
 		{
 			$segment = new Segment('customer');
 			$r = new Retailer;
@@ -61,9 +61,9 @@ class StoreDecoration extends Template
 		
 		if(!empty($templateView))
 		{
-			$templateView['code_model'] = $this->changeModel($templateView['code_model']);
-			$templateView['src_model'] = $this->changeModel($templateView['src_model']);
-			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params']);
+			$templateView['code_model'] = $this->changeModel($templateView['code_model'],$store_id);
+			$templateView['src_model'] = $this->changeModel($templateView['src_model'],$store_id);
+			$templateView['stable_params'] = $this->changeStableParams($templateView['stable_params'],$store_id);
 		}
 
 		if( !empty($templateView) && $templateView['store_id'] != $store_id && $templateView['store_id']!=0 && is_null($current_store_id) )
@@ -72,7 +72,7 @@ class StoreDecoration extends Template
 		return $templateView;				 		      
     }
 	
-	public function changeModel($view){
+	public function changeModel($view,$current_store_id = null){
        $final_view = $view;
 	   
 	   $tempParams = array(
@@ -89,14 +89,14 @@ class StoreDecoration extends Template
 	   		$params = $this->divideParam($value,$final_view);
 			foreach ($params as $key1 => $value1) {		
 				$func = 'template_'.$value;
-				$final_view = str_replace('{{'.$value.':'.$value1.'}}', $this->$func($value1), $final_view);
+				$final_view = str_replace('{{'.$value.':'.$value1.'}}', $this->$func($value1,$current_store_id), $final_view);
 			}
 	   }
 
        return $final_view;
 	}
 	
-	public function changeStableParams($params){
+	public function changeStableParams($params,$current_store_id = null){
 		$params = urldecode($params);
 		$params = json_decode($params,true);
 		return $params;		
@@ -140,11 +140,19 @@ class StoreDecoration extends Template
 		
 	}
 	
-	public function getStoreBanner($current_store_id = null){	
-		$retailer = new RetailerCollection;
+	public function getStoreBanner($current_store_id = null,$current_retailer = null){	
 		$store_id = $this->judge_store_id($current_store_id);
-		$segment = new Segment('customer');
-		$retailer->where(['retailer.customer_id'=>$segment->get('customer')['id'],'retailer.store_id'=>$store_id])
+		if(empty($current_retailer))
+		{
+			$segment = new Segment('customer');
+			$customer_id = $segment->get('customer')['id'];
+		}
+		else
+		{
+			$customer_id = $current_retailer['customer_id'];
+		}
+		$retailer = new RetailerCollection;
+		$retailer->where(['retailer.customer_id'=>$customer_id,'retailer.store_id'=>$store_id])
 		->join('resource','retailer.banner = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 		//return $segment->get('customer');
 		return empty($retailer) ? [] : $retailer[0] ;
@@ -180,7 +188,7 @@ class StoreDecoration extends Template
 	 * 
 	 * 
 	*/
-	public function template_logo_top($params='',$current_store_id = null){
+	public function template_logo_top($params='',$current_store_id = null,$current_retailer = null){
 		if(!empty($params))
 		{
 //			if($params['widthSetType'] == "1")
@@ -193,7 +201,7 @@ class StoreDecoration extends Template
 			$width = '1128px';
 			$height = '200px';
 		}
-		$retailer = $this->getStoreBanner($current_store_id);
+		$retailer = $this->getStoreBanner($current_store_id,$current_retailer);
 //		if(!empty($retailer['real_name']))
 //			$content = '<img style="width:'.$width.';height:'.$height.'" src="'.$this->getBaseUrl('/pub/resource/image/'.$retailer['real_name']).'">';
 //		else
@@ -344,7 +352,7 @@ class StoreDecoration extends Template
 		$condition['price_from'] = $price_from;
 		$condition['price_to'] = $price_to;
 		$products = new SalesProducts();
-		$productsData = $products->getRetailerSalesProducts($condition);
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
 		
 		
 		$content = '<ul>';

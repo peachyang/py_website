@@ -533,12 +533,28 @@ dl.options dd{float:left;margin-left:4px}
 .border-right{border-right:1px solid #ececec}
 .font-12{font-size:12px!important}
 .word-break-all{word-break:break-all}
-.shop_classify{margin:20px 0}
+.shop_classify{margin:35px 0}
 .shop_classify button{padding:2px}
+.shop_classify .check{margin-right:5px}
+.shop_classify .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+.shop_classify .fa-plus{padding:0 8px}
+.mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
+.shop_classify .add_class{padding-right:5px;}
+.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 4px 13px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
 .Brand_name{margin:10px 0}
+.mg-bottom-40 .category_table{border: 1px solid #eee;}
+.mg-bottom-40 .category_table .table_head{background:#fbfbfb}
+.mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
+.mg-bottom-40  .class_menu{display:inline-table}
+.mg-bottom-40  .class_menu dt{padding:5px 30px}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
+.mg-bottom-40  .class_menu dd{padding:5px 10px 5px 5px; }
+.mg-bottom-40  .dd_left{margin:15px 0  0 40px}
+.mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,
@@ -640,6 +656,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .tab-pane{padding:10px 0 0 30px}
 .product-edit .nav-tabs{border-bottom:1px solid #cce0e9;margin-top:15px}
 .product-edit .nav-tabs ~ .tab-pane{display:none}
+.product-edit .required{width:260px}
 .product-edit .tab-pane.active{display:table}
 .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
 .product-edit .grid .table.category ul{clear:both;padding-left:2em}
@@ -651,7 +668,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .form-control.invalid{border-color:red}
 .product-edit label.invalid{background:#000 none repeat scroll 0 0;border-radius:3px;bottom:100%;color:#fff;display:inline-block;font-size:12px;left:0;margin-bottom:3px;padding:2px 8px;position:absolute;text-align:center}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
-.product-edit input.form-control{height:auto}
+.product-edit input.form-control{height:auto;width:87px}
 .product-edit .control-label{display:inline-block;margin-right:2px;vertical-align:top;width:auto}
 .product-edit  .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
 
@@ -681,6 +698,10 @@ dl.options dd{float:left;margin-left:4px}
 #resource-modal .grid .table tfoot .pager li.jump{color: #000;}
 #resource-modal .grid .table tfoot .pager li.jump .btn{border: none; background-color: #fff;}
 #resource-modal .buttons-set {background: #f7f8fa none repeat scroll 0 0; padding: 20px 0;}
+
+#tab-related_products .filters .input-box .form-control,#tab-up_sells .filters .input-box .form-control,#tab-cross_sells .filters .input-box .form-control{width:145px}
+#tab-related_products .filters .input-box #status,#tab-up_sells .filters .input-box #status,#tab-cross_sells .filters .input-box #status{width:130px}
+
 
 /*=E Stone's CSS end' */
 /* sales products css - ammon */
@@ -932,7 +953,7 @@ dl.options dd{float:left;margin-left:4px}
 .modal-open .modal-dialog .modal-body .nav .text-right a{float:right}
 .modal-open .modal-dialog .modal-body{overflow:hidden}
 .modal-open .modal-dialog .modal-body .cue{width:100%;overflow:hidden;border-top:1px solid #cbdfe9;color:#333333}
-/* .modal-open .modal-dialog .modal-body .cue p,li{line-height:25px} */
+.modal-open .modal-dialog .modal-body .cue p,li{line-height:25px}
 .modal-open .modal-dialog .modal-body .content-right li{float:left;text-align:center}
 .modal-open .modal-dialog .modal-body .content-right{padding-left:0px;border-left:1px solid #cbdfe9}
 .modal-open .modal-dialog .modal-body .content-right .heading{background:#f3f3f3;line-height: 26px}
@@ -954,7 +975,7 @@ dl.options dd{float:left;margin-left:4px}
 .catalog-product .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;
     border: none;
     border-bottom-color: transparent;
-    font-size: 18px;
+    font-size: 14px;
 }
 .retailer-store-photo .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
     color: #555;

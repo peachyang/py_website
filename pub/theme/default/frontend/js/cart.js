@@ -33,9 +33,19 @@
                 recursiveSelect.call(next, flag);
             }
         };
+        var recursiveCheck = function () {
+            var flag = this.checked;
+            if (flag) {
+                var next = $(this).next();
+                if ($(next).is('.product-list')) {
+                    flag = flag && recursiveCheck.call(next, flag);
+                }
+            }
+            return flag;
+        };
         $('#cart').on('check.seahinet', function () {
             $(this).find('.store [type=checkbox]').each(function () {
-                recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
+                this.checked = recursiveCheck.call($(this).parents('.store').first().next('.product-list'));
             });
             $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
                 this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
@@ -44,19 +54,14 @@
         var cartSelectItem = function () {
             if (this) {
                 if ($(this).is('.selectall,.selectall [type=checkbox]')) {
-                    if (!$(this).is('.store [type=checkbox]')) {
+                    if ($(this).is('.store [type=checkbox]')) {
+                        recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
+                    } else {
                         $('#cart .store [type=checkbox]').prop('checked', this.checked);
                     }
-                } else {
-                    var p = $(this).parents('.product-list').first();
-                    if (!this.checked && !$(p).find('[type=checkbox]:not(:checked)').length) {
-                        $(p).prevAll('.store').first().find('[type=checkbox]').prop('checked', true);
-                    } else if (this.checked) {
-                        $('#cart .selectall,#cart .selectall [type=checkbox]').prop('checked', false);
-                    }
                 }
-                $('#cart').trigger('check.seahinet');
             }
+            $('#cart').trigger('check.seahinet');
             collateTotals();
         };
         cartSelectItem();

@@ -339,7 +339,7 @@ class OrderController extends ActionController
         $cart = Cart::instance();
         $result = [];
         foreach ($cart->getItems() as $item) {
-            if (!isset($result[$item['store_id']])) {
+            if ($item['status'] && !isset($result[$item['store_id']])) {
                 if (!isset($data['shipping_method'][$item['store_id']])) {
                     throw new Exception('Invalid shipping method');
                 }

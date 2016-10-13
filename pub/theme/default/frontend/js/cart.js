@@ -30,7 +30,8 @@
             var p = $('#cart');
             if (this && $(this).is('.selectall,.selectall [type=checkbox]')) {
                 var f = this.checked;
-                $($(this).is('.store input') ? $(this).parents('.store').first().next('.product-list') : p).find('[type=checkbox]').each(function () {
+                p = $(this).is('.store input') ? $(this).parents('.store').first().next('.product-list') : p;
+                $(p).find('[type=checkbox]').each(function () {
                     this.checked = f;
                 });
                 if (f && !$(p).find('.product-list [type=checkbox]:not(:checked)').length) {

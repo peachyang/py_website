@@ -35,7 +35,15 @@ class Cart extends Template
 
     public function getItems()
     {
-        return $this->getCart()->getItems();
+        $items = $this->getCart()->getItems();
+        $result = [];
+        foreach ($items as $item) {
+            $result[] = $item;
+        }
+        usort($result, function($a, $b) {
+            return $a['store_id'] <=> $b['store_id'];
+        });
+        return $result;
     }
 
     public function getRow($item)

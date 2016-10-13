@@ -439,7 +439,7 @@ final class Cart extends AbstractModel implements Singleton
     {
         $qty = 0;
         foreach ($this->getItems() as $item) {
-            if (is_null($storeId) || $item->offsetGet('store_id') == $storeId) {
+            if ((is_null($storeId) || $item->offsetGet('store_id') == $storeId) && $item['status']) {
                 $qty += $item['qty'];
             }
         }

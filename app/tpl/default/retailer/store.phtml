@@ -1,10 +1,12 @@
-<?php 
-$templateView = $this->getTemplateView(); 
-$menuView = $this->template_menu();
-$logo_topView = $this->template_logo_top(!empty($templateView['stable_params']['logo_top']) ? $templateView['stable_params']['logo_top'] : '' );
+<?php
+$store_id = $this->getVariable("store_id");
+$retailer = $this->getVariable("retailer");
+$templateView = $this->getTemplateView($store_id);
+$menuView = $this->template_menu(null,$store_id);
+$logo_topView = $this->template_logo_top(!empty($templateView['stable_params']['logo_top']) ? $templateView['stable_params']['logo_top'] : '',$store_id,$retailer );
 $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heightSet']) ? $templateView['stable_params']['logo_top']['heightSet'] + 4 : 200;
 ?>
-
+<?php if(!empty($templateView)){ ?>
 <div class="decoration_logo_top stable_top" style="height:<?php echo $logo_top_outerHeight;  ?>px;background-image:url(<?php echo $logo_topView;  ?>)" >
 
 </div>
@@ -39,7 +41,7 @@ $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heigh
         <?php echo !empty($templateView) ? $templateView['src_model'] : ''; ?>
 	</div>
 </div>
-
+<?php }  ?>
 <script>
  $(function(){
  	$('.header .nav-main').hide();

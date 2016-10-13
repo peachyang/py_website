@@ -1,6 +1,6 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$order = $this->getVariable("order");
+$filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
 ?>
@@ -11,49 +11,36 @@ $sales_status = $this->getAllSalesStatus();
         <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="soldout">
                 <span>订单号:</span>
-                <input class="form-control " type="text" value="" name="id">&nbsp;&nbsp;
-                <span>订单状态:</span>
+                <input class="form-control " type="text" value="<?php echo isset($filter['order_id'])?$filter['order_id']:''; ?>" name="order_id">&nbsp;&nbsp;
+                <span>交易状态:</span>
                 <select class="form-control " id="order_status" name="order_status">
                     <option value="0">全部</option>
                     <?php
                     foreach ($sales_status as $item) {
-                        echo '<option value="' . $item['id'] . '">' . $this->translate($item['name']) . '</option>';
+                        $selected = (isset($filter['order_status']) && $filter['order_status'] == $item['id']) ? 'selected' : '';
+                        echo '<option value="' . $item['id'] . '" '.$selected.'>' . $this->translate($item['name']) . '</option>';
                     }
                     ?>
-                </select>&nbsp;&nbsp;
-                <span>发货状态:</span>
-                <select class="form-control " id="send_status" name="send_status">
-                    <option value="">全部</option>
-                </select>&nbsp;&nbsp;
-                <input type="hidden" value="<?php echo $order['type']; ?>" name="type">
-               <br />
+                </select>
                 <span>运单号:</span>
-                <input class="form-control " type="text" value="" id="send_id" name="send_id">&nbsp;&nbsp;
-                <span>支付状态:</span>
-                <select class="form-control " id="pay_status" name="pay_status">
-                    <option value="">全部</option>
-                </select>&nbsp;&nbsp;
-                <span>售后状态:</span>
-                <select class="form-control " id="sold_status" name="sold_status">
-                    <option value="">全部</option>
-                </select>&nbsp;&nbsp;<br />
-
-                <span>用户名:</span>
-                <input class="form-control " type="text" value="" name="buyer_name">&nbsp;&nbsp;
-                <span>成交时间:</span>
-                <input class="form-control " type="text" value="" id="add_time_from" name="add_time_from">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-control " type="text" value="" name="add_time_to" id="add_time_to">&nbsp;&nbsp;<br />
+                <input class="form-control " type="text" value="<?php echo isset($filter['increment_id'])?$filter['increment_id']:''; ?>" id="increment_id" name="increment_id">&nbsp;&nbsp;<br />
                 <span>收件人:</span>
-                <input class="form-control " type="text" value="" id="receiver" name="receiver" />&nbsp;&nbsp;
+                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver'])?$filter['receiver']:''; ?>" id="receiver" name="receiver" />&nbsp;&nbsp;
+                <span>成交时间:</span>
+                <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from'])?$filter['add_time_from']:''; ?>" readonly="readonly" id="add_time_from" name="add_time_from">&nbsp;&nbsp;&nbsp;<input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to'])?$filter['add_time_to']:''; ?>" name="add_time_to" id="add_time_to">&nbsp;&nbsp;<br />
+                <span>收货人手机:</span>
+                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone'])?$filter['receiver_phone']:''; ?>" id="receiver_phone" name="receiver_phone" />&nbsp;&nbsp;<br />
+                <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">重置</a>&nbsp;&nbsp;
                 <button class="btn" type="submit">搜索</button>
             </div>
         </form>
     </div>
-    <br /><br />
+    <br />
 
     <div class="">
-        <div>
+        <div style="display: none;">
             <div class="pull-left">
-                <div class="batch_button">
+                <div class="batch_button" >
                     <label>
                         <input type="checkbox" data-cbtype="all">
                         <span>全选</span>
@@ -78,7 +65,7 @@ $sales_status = $this->getAllSalesStatus();
                 <td style="width: 11%;">买家</td>
                 <td style="width: 11%;">交易状态</td>
                 <td style="width: 11%;">实收款</td>
-                <td style="width: 8%;">评价</td>
+                <td style="width: 8%;">操作</td>
             </tr>
         </table>
         <div class="clearfix mg-bottom-10"></div>
@@ -110,7 +97,7 @@ $sales_status = $this->getAllSalesStatus();
                                 <div class="product-pic">
                                     <a target="_blank" href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
                                         <?php if (strpos($thumbnail, 'http') === false) { ?>
-                                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
+                                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50px/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
                                         <?php } else { ?>
                                             <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
                                         <?php } ?>
@@ -164,7 +151,7 @@ $sales_status = $this->getAllSalesStatus();
                                             <span ><?php echo $this->translate($transaction['status_name']); ?></span>
                                         </p>
                                         <p class="text-center">
-                                            <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?sales_id=' . $transaction['id']) ?>">详情</a>
+                                            <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?order_id=' . $transaction['id']) ?>">详情</a>
                                         </p>
                                     </div>
                                     <?php
@@ -191,7 +178,7 @@ $sales_status = $this->getAllSalesStatus();
                                 }
                                 ?>
                             </td>
-                            <td style="width: 8%;">&nbsp;</td>
+                            <td style="width: 8%;" class="text-center"><a href="">发货</a></td>
                         </tr>
                         <?php
                     }
@@ -205,7 +192,7 @@ $sales_status = $this->getAllSalesStatus();
                 }
             ?>
 
-        <div>
+        <div style="display: none;">
             <div>
                 <div>
                     <label>

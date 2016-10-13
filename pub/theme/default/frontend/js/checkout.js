@@ -185,18 +185,31 @@
         });
         $('.section.payment').on('click', '[name=payment_method]', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/selectpayment/';
+            $(this).siblings('[data-toggle=tab]').tab('show');
             if (GLOBAL.AJAX[url]) {
                 GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
-                data: $(this).serialize() + '&csrf=' + csrf,
+                data: $('.section.payment').find('input:not([type=radio],[type=checkbox]),[type=radio]:checked,[type=checkbox]:checked,select,textarea').not(':disabled').serialize() + '&csrf=' + csrf,
                 success: function () {
                     GLOBAL.AJAX[url] = null;
                     loadReview();
                 }
             });
+        }).on('hide.bs.tab', '[data-toggle=tab]', function () {
+            $($(this).attr('href')).find('input,select,textarea').prop('disabled', true);
+        }).on('show.bs.tab', '[data-toggle=tab]', function () {
+            $($(this).attr('href')).find('input,select,textarea').prop('disabled', false);
+        }).on('change', '[name="payment[data][cc]"]', function () {
+            if ($(this).val()) {
+                $(this).siblings('.credit-card.hidden').addClass('hidden');
+            } else {
+                $(this).siblings('.credit-card.hidden').removeClass('hidden');
+            }
         });
+        $('.section.payment .tab-pane:not(.active) input:not(:disabled),.section.payment .tab-pane:not(.active) select:not(:disabled),.section.payment .tab-pane:not(.active) textarea:not(:disabled)').prop('disabled', true);
+        $('.section.payment .tab-pane.active :disabled').prop('disabled', false);
         $('.section.review .btn-checkout').on('click', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/place/';
             var o = this;

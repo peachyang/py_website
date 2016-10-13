@@ -20,10 +20,32 @@
         });
         
         if($("#add_time_from").length > 0){
-            $("#add_time_from").datepicker();
+            $("#add_time_from").datepicker({
+                dateFormat:'yy-mm-dd',
+                onSelect: function( startDate ) {
+                    var $startDate = $( "#add_time_from" );
+                    var $endDate = $('#add_time_to');
+                    var endDate = $endDate.datepicker( 'getDate' );
+                    if(endDate < startDate){
+                            $endDate.datepicker('setDate', startDate - 3600*1000*24);
+                    }
+                    $endDate.datepicker( "option", "minDate", startDate );
+                }
+            });
         }
         if($("#add_time_to").length > 0){
-            $("#add_time_to").datepicker();
+            $("#add_time_to").datepicker({
+                dateFormat:'yy-mm-dd',
+                onSelect: function( endDate ) {
+                    var $startDate = $( "#add_time_from" );
+                    var $endDate = $('#add_time_to');
+                    var startDate = $startDate.datepicker( "getDate" );
+                    if(endDate < startDate){
+                        $startDate.datepicker('setDate', startDate + 3600*1000*24);
+                    }
+                    $startDate.datepicker( "option", "maxDate", endDate );
+                }
+            });
         }
         
         $(".products-content").on('click', '[type=checkbox]', function () {
@@ -43,7 +65,7 @@
         
         $(".product_status").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }
@@ -75,7 +97,7 @@
         
         $(".product_recommend").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }
@@ -103,7 +125,7 @@
         
         $(".product_remove").click(function(){
             var  product_ids = new Array();
-            $(".recommend input[type=checkbox").each(function(){
+            $(".recommend input[type=checkbox]").each(function(){
                 if($(this).is(":checked")){
                     product_ids.push($(this).attr("data-id"));
                 }

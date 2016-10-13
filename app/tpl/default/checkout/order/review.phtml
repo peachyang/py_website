@@ -27,8 +27,16 @@
                     $store = $item['store'];
                     ?>
                     <?php if ($current): ?>
-                        <tr>
-                            <th colspan="7" class="text-right text-nowrap subtotal">
+                        <tr class="subtotal">
+                            <th class="text-nowrap text-right">
+                                <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
+                                <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
+                            </th>
+                            <th class="text-nowrap">
+                                <?php echo $this->translate('Message', [], 'checkout') ?>
+                                <input type="text" name="comment[<?php echo $item['store_id'] ?>]" class="form-control" style="display:inline-block" />
+                            </th>
+                            <th colspan="5" class="text-right text-nowrap">
                                 <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
                             </th>
                         </tr>

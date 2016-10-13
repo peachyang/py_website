@@ -35,7 +35,7 @@ class AccountController extends AuthActionController
         return $this->getLayout('customer_account_forgotpwd');
     }
 
-    public function CouponAction()
+    public function couponAction()
     {
         return $this->getLayout('customer_account_coupon');
     }

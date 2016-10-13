@@ -7,7 +7,7 @@ class Free extends AbstractMethod
 
     const METHOD_CODE = 'payment_free';
 
-    public function available()
+    public function available($data)
     {
         return true;
     }

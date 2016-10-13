@@ -6,7 +6,10 @@ use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\Model;
+use Seahinet\Retailer\Model\{
+    Application,
+    Retailer
+};
 
 class ApplyController extends AuthActionController
 {
@@ -21,7 +24,7 @@ class ApplyController extends AuthActionController
     {
         if ($id = $this->getRequest()->getQuery('id')) {
             $root = $this->getLayout('admin_retailer_apply_edit');
-            $model = new Model\Application;
+            $model = new Application;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
             $root->getChild('head')->setTitle('Edit Application');
@@ -49,7 +52,7 @@ class ApplyController extends AuthActionController
                             'is_default' => 0,
                             'status' => 1
                         ])->save();
-                        $retailer = new Model\Retailer;
+                        $retailer = new Retailer;
                         $retailer->setData([
                             'customer_id' => $data['customer_id'],
                             'store_id' => $store->getId(),

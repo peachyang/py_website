@@ -199,7 +199,7 @@ class OrderController extends ActionController
                         'customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null
                     ])->save();
                     if (!$segment->get('hasLoggedIn')) {
-                        $ids = $segment->get('address')? : [];
+                        $ids = $segment->get('address') ?: [];
                         $ids[] = $address->getId();
                         $segment->set('address', $ids);
                     }
@@ -300,7 +300,7 @@ class OrderController extends ActionController
         }
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        if (!$method->available()) {
+        if (!$method->available($data)) {
             throw new Exception('Invalid payment method');
         }
         return $method;
@@ -339,9 +339,12 @@ class OrderController extends ActionController
         $result = [];
         foreach ($cart->getItems() as $item) {
             if (!isset($result[$item['store_id']])) {
+                if (!isset($data['shipping_method'][$item['store_id']])) {
+                    throw new Exception('Invalid shipping method');
+                }
                 $className = $this->getContainer()->get('config')['shipping/' . $data['shipping_method'][$item['store_id']] . '/model'];
                 $result[$item['store_id']] = new $className;
-                if (!$result[$item['store_id']]->available()) {
+                if (!$result[$item['store_id']]->available($data)) {
                     throw new Exception('Invalid shipping method');
                 }
             }

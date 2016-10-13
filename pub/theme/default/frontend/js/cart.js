@@ -1,6 +1,6 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(['jquery','app'], factory);
+        define(['jquery', 'app'], factory);
     } else if (typeof module === "object" && module.exports) {
         module.exports = factory(require('app'));
     } else {
@@ -30,9 +30,18 @@
             var p = $('#cart');
             if (this && $(this).is('.selectall,.selectall [type=checkbox]')) {
                 var f = this.checked;
-                $(p).find('[type=checkbox]').each(function () {
+                $($(this).is('.store input') ? $(this).parents('.store').first().next('.product-list') : p).find('[type=checkbox]').each(function () {
                     this.checked = f;
                 });
+                if (f && !$(p).find('.product-list [type=checkbox]:not(:checked)').length) {
+                    $(p).find('[type=checkbox].selectall:not(:checked),.selectall [type=checkbox]:not(:checked)').each(function () {
+                        this.checked = true;
+                    });
+                } else if (!f && !$(p).find('.product-list [type=checkbox]:checked').length) {
+                    $(p).find('[type=checkbox].selectall:checked,.selectall [type=checkbox]:checked').each(function () {
+                        this.checked = false;
+                    });
+                }
             } else {
                 $(p).find('.selectall,.selectall [type=checkbox]').each(function () {
                     this.checked = $(p).find('[type=checkbox]').not(':checked,.selectall,.selectall [type=checkbox]').length ? false : true;

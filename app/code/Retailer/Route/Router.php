@@ -2,11 +2,11 @@
 
 namespace Seahinet\Retailer\Route;
 
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Route\Route;
 use Seahinet\Lib\Route\RouteMatch;
 use Seahinet\Retailer\Model\Retailer;
+use Seahinet\Retailer\Model\Collection\Category;
 
 class Router extends Route
 {
@@ -24,13 +24,14 @@ class Router extends Route
             return false;
         }
         $parts = explode('/', $path);
-        if (count($parts) <= 1 && $parts[0] !== 'store') {
+        $count = count($parts);
+        if ($count <= 1 || array_shift($parts) !== 'store') {
             return false;
         }
-        $retailer = new Retaler;
-        $retailer->load(rawurldecode($parts[1]), 'uri_key');
+        $retailer = new Retailer;
+        $retailer->load(rawurldecode(array_shift($parts)), 'uri_key');
         if ($retailer->getId()) {
-            if (count($parts) === 2) {
+            if ($count === 2) {
                 return new RouteMatch([
                     'controller' => 'Seahinet\\Retailer\\Controller\\ViewController',
                     'action' => 'index',
@@ -38,11 +39,26 @@ class Router extends Route
                     'retailer' => $retailer
                         ], $request);
             } else {
-                
+                $categories = new Category;
+                $categories->where(['store_id' => $retailer->getStore()->getId()])
+                ->where->in('uri_key', $parts);
+                $last = null;
+                foreach ($parts as $part) {
+                    foreach ($categories as $category) {
+                        if ($category->offsetGet('uri_key') === $part) {
+                            if (is_null($last) || $category->offsetGet('parent_id') === $last->getId()) {
+                                $last = $category;
+                                break;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                }
                 return new RouteMatch([
-                    'controller' => 'Seahinet\\Catalog\\Controller\\CategoryController',
-                    'action' => 'index',
-                    'category_id' => $result[0]['category_id']
+                    'controller' => 'Seahinet\\Retailer\\Controller\\ViewController',
+                    'action' => 'category',
+                    'category' => $last
                         ], $request);
             }
         }

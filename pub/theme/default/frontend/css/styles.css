@@ -125,7 +125,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .filters .all .values ul{height:auto}
 .filters .values.open ul{height:auto}
 .filters .values li{margin-right:20px;padding:1px 0}
-.products-grid{margin-bottom:15px}
+.products-grid{margin:20px 0}
 .products-grid .item{padding:10px;border:1px solid transparent;transition:border .2s ease-in-out}
 .products-grid .item:hover{border-color:#d9d9d9}
 .products-grid .item .product-image img{width:100%}
@@ -283,10 +283,16 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-address .address-list .inline a{display:block}
 .customer-account-address .address-list .action{text-align:right}
 .customer-account-address .address-list .action a{margin-left:4px}
+.customer-wishlist .wishlist{margin:40px 0;border:1px solid #fbf9f9}
+.customer-wishlist .wishlist td{border-top:1px solid  #fbf9f9;padding:10px}
+.customer-wishlist .wishlist .vtop_width{width:250px}
 .customer-wishlist .wishlist .product-name{font-size:14px;line-height:22px;margin-bottom:12px}
+.customer-wishlist .wishlist .collect{width:250px;font-size:13px}
 .customer-wishlist .wishlist .product-name~.form-control{font-size:12px;line-height:24px;margin-top:12px}
-.customer-history .products-grid dt{font-size:14px;line-height:30px;margin-bottom:1.5em}
-.customer-history .products-grid dt .fa{color:#007dc6;font-size:24px;vertical-align:sub}
+.customer-history .products-grid dt{font-size:14px;line-height:30px;}
+.customer-history .products-grid dt .fa{color:#007dc6;font-size:18px;}
+.customer-history .products-grid .viewed_title{font-size:13px}
+/* .customer-history .products-grid .browsinghistory{margin:20px 0} */
 .customer-account .sales-order-view .nav-tabs{margin:2% 0}
 .customer-account .sales-order-view .panel{width:49%;float:left;margin-bottom:2%}
 .customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
@@ -351,8 +357,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-essential .related .title span{display:inline-block;padding:0 25px;background-color:#fd9030;color:#fff;font-size:16px;line-height:44px;text-align:center}
 .product-essential .related .price-box{text-align:left}
 .product-essential .related .price-box .price{color:#cd413c;line-height:26px}
-.product-detail{margin-bottom:50px}
-.product-detail>.nav-tabs{margin-bottom:12px;background:#f4f4f4;border:none}
+.product-detail{width:81%;float: left;margin-bottom:50px;padding-left: 20px}
+.product-detail>.nav-tabs{margin-bottom:12px;background:#f4f4f4;border:none;border-bottom: 1px solid #cbdfe9;}
 .product-detail>.nav-tabs>li>a{padding:18px 25px 16px;font-size:18px;color:#747474;border-radius:0;border:none;line-height:1}
 .product-detail>.nav-tabs>li.active>a{color:#fff;background:#fd9030;margin:0;border:none}
 .product-detail .product-attributes{background:#f1f1f1;color:#747474;font-size:14px;line-height:36px;padding:34px 0;margin-bottom:12px}
@@ -402,9 +408,9 @@ dl.options dd{float:left;margin-left:4px}
 .checkout-order .page-title{font-size:16px;line-height:40px}
 .checkout-order .section{border-width:1px 0 0;border-style:solid;border-color:#e1e1e1;padding:30px 0}
 .checkout-order .section .title{font-weight:bold;margin-bottom:26px;font-size:16px;color:#000;padding-right:15px}
-.checkout-order .payment label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
-.checkout-order .payment input{display:none}
-.checkout-order .payment input:checked+label{background:#f1f2f4}
+.checkout-order .payment li>label{padding:5px 15px;border:1px solid #e1e1e1;margin:0 5px;font-size:14px}
+.checkout-order .payment li>input{display:none}
+.checkout-order .payment li>input:checked+label{background:#f1f2f4}
 .checkout-order .address .form-edit-address{max-width:585px}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
 .checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
@@ -527,12 +533,28 @@ dl.options dd{float:left;margin-left:4px}
 .border-right{border-right:1px solid #ececec}
 .font-12{font-size:12px!important}
 .word-break-all{word-break:break-all}
-.shop_classify{margin:20px 0}
+.shop_classify{margin:35px 0}
 .shop_classify button{padding:2px}
+.shop_classify .check{margin-right:5px}
+.shop_classify .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+.shop_classify .fa-plus{padding:0 8px}
+.mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
+.shop_classify .add_class{padding-right:5px;}
+.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 4px 13px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
 .Brand_name{margin:10px 0}
+.mg-bottom-40 .category_table{border: 1px solid #eee;}
+.mg-bottom-40 .category_table .table_head{background:#fbfbfb}
+.mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
+.mg-bottom-40  .class_menu{display:inline-table}
+.mg-bottom-40  .class_menu dt{padding:5px 30px}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
+.mg-bottom-40  .class_menu dd{padding:5px 10px 5px 5px; }
+.mg-bottom-40  .dd_left{margin:15px 0  0 40px}
+.mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
+
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,
@@ -634,6 +656,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .tab-pane{padding:10px 0 0 30px}
 .product-edit .nav-tabs{border-bottom:1px solid #cce0e9;margin-top:15px}
 .product-edit .nav-tabs ~ .tab-pane{display:none}
+.product-edit .required{width:260px}
 .product-edit .tab-pane.active{display:table}
 .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
 .product-edit .grid .table.category ul{clear:both;padding-left:2em}
@@ -645,7 +668,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .form-control.invalid{border-color:red}
 .product-edit label.invalid{background:#000 none repeat scroll 0 0;border-radius:3px;bottom:100%;color:#fff;display:inline-block;font-size:12px;left:0;margin-bottom:3px;padding:2px 8px;position:absolute;text-align:center}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
-.product-edit input.form-control{height:auto}
+.product-edit input.form-control{height:auto;width:87px}
 .product-edit .control-label{display:inline-block;margin-right:2px;vertical-align:top;width:auto}
 .product-edit  .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
 
@@ -675,6 +698,10 @@ dl.options dd{float:left;margin-left:4px}
 #resource-modal .grid .table tfoot .pager li.jump{color: #000;}
 #resource-modal .grid .table tfoot .pager li.jump .btn{border: none; background-color: #fff;}
 #resource-modal .buttons-set {background: #f7f8fa none repeat scroll 0 0; padding: 20px 0;}
+
+#tab-related_products .filters .input-box .form-control,#tab-up_sells .filters .input-box .form-control,#tab-cross_sells .filters .input-box .form-control{width:145px}
+#tab-related_products .filters .input-box #status,#tab-up_sells .filters .input-box #status,#tab-cross_sells .filters .input-box #status{width:130px}
+
 
 /*=E Stone's CSS end' */
 /* sales products css - ammon */
@@ -786,7 +813,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}
 .page-home .menu .menu_left .menus{background-color:#f5f6f9;width:165px}
-.page-home .menu .menu_left .menus li{padding:9px 0;margin-left:7px}
+.page-home .menu .menu_left .menus li{padding:7px 0;margin-left:7px;line-height:24px;}
 .page-home #myTabContent #two li{width:100%}
 .page-home .menu .menu_left .menus li a{padding:0;margin-left:3px}
 .page-home .menu .menu_left .menus li a:hover{color:#007dc6}
@@ -887,6 +914,20 @@ dl.options dd{float:left;margin-left:4px}
 @media (min-width:1190px){.page-home .menu_border{border-right:none}.page-home .clothing_left_t{width:530px;margin:0 auto}}
 @media (max-width:1190px) and (min-width:991px){.page-home .electron_ct_bt  li{padding-right:18px}.page-home .menu .menu_contre{width:100%}.page-home .menu_contre_top img{width:100%}}
 @media (max-width:990px) and (min-width:560px){.page-home .menu .menu_contre_bt .menu_bt_a{text-align:center}}
+.catalog-product .store_info{width:19%;overflow: hidden;float:left}
+.catalog-product .store_info h3{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
+.catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
+.catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding:0;
+    padding-top: 10px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    border-top:0;
+}
+.catalog-product .store_detail .fa{color: #fd9030}
+.catalog-product .store_detail h4{color:#af0029;font-size:26px;font-weight:bold;text-align:right}
+.catalog-product .store_detail .store_entry{border: 1px solid #d5d5d6;border-radius:2px;padding:10px 40px;background:#f1f1f1}
+.catalog-product .store_detail tfoot .fa{color:#fd9233;font-size:26px}
 .retailer-store-photo .col-left+.col-main{padding:0}
 .retailer-store-photo .page-content{width: 100%;overflow: hidden;margin: 15px 0;color:#8b8a8a}
 .retailer-store-photo .page-content .breadcrumb{width: 100%;overflow: hidden;background:#fafafa;border-bottom:1px solid #efefef;border-top:1px solid #efefef;text-indent:10px}
@@ -906,19 +947,13 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store-photo .page-content .content-right .row .sort-by{border: 1px solid #e2e4ea;padding:0 5px;margin: 0;margin-left: 10px}
 .retailer-store-photo .page-content .content-right .row .sort-by .fa{color: #616161;font-size:18px}
 .retailer-store-photo .page-content ol li{float: left}
-@media (min-width: 768px){
-.modal-open .modal-dialog{
-    width: 748px
-}}
-@media (min-width: 1200px){
-.modal-open .modal-dialog{
-    width: 1000px
-}}
+@media (min-width: 768px){.modal-open .modal-dialog{width: 748px}}
+@media (min-width: 1200px){.modal-open .modal-dialog{width: 1000px}}
 .modal-open .modal-dialog .modal-body .nav .text-right input{float:right;border:1px solid #dddddd}
 .modal-open .modal-dialog .modal-body .nav .text-right a{float:right}
 .modal-open .modal-dialog .modal-body{overflow:hidden}
 .modal-open .modal-dialog .modal-body .cue{width:100%;overflow:hidden;border-top:1px solid #cbdfe9;color:#333333}
-.modal-open .modal-dialog .modal-body .cue p,li{line-height:30px}
+.modal-open .modal-dialog .modal-body .cue p,li{line-height:25px}
 .modal-open .modal-dialog .modal-body .content-right li{float:left;text-align:center}
 .modal-open .modal-dialog .modal-body .content-right{padding-left:0px;border-left:1px solid #cbdfe9}
 .modal-open .modal-dialog .modal-body .content-right .heading{background:#f3f3f3;line-height: 26px}
@@ -931,12 +966,25 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store-photo .page-content .filters .form-control {width: 99px;height: 21px;line-height: 21px;padding:0}
 .retailer-store-photo .page-content .filters .buttons-set{float: right;margin-top:15px}
 .retailer-store-photo .page-content .nav-tabs{border-bottom:1px solid #cbdfe9}
+.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;
     border: none;
     border-bottom-color: transparent;
     font-size: 14px;
 }
+.catalog-product .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;
+    border: none;
+    border-bottom-color: transparent;
+    font-size: 14px;
+}
 .retailer-store-photo .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #cbdfe9;
+    border-bottom-color: transparent;
+}
+.catalog-product .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
     color: #555;
     cursor: default;
     background-color: #fff;

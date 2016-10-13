@@ -26,27 +26,33 @@
                 $(".btn-checkout").attr('disabled', 'disabled');
             }
         };
-        var cartSelectItem = function () {
-            var p = $('#cart');
-            if (this && $(this).is('.selectall,.selectall [type=checkbox]')) {
-                var f = this.checked;
-                p = $(this).is('.store input') ? $(this).parents('.store').first().next('.product-list') : p;
-                $(p).find('[type=checkbox]').each(function () {
-                    this.checked = f;
-                });
-                if (f && !$(p).find('.product-list [type=checkbox]:not(:checked)').length) {
-                    $(p).find('[type=checkbox].selectall:not(:checked),.selectall [type=checkbox]:not(:checked)').each(function () {
-                        this.checked = true;
-                    });
-                } else if (!f && !$(p).find('.product-list [type=checkbox]:checked').length) {
-                    $(p).find('[type=checkbox].selectall:checked,.selectall [type=checkbox]:checked').each(function () {
-                        this.checked = false;
-                    });
+        $('#cart').on('check.seahinet', function () {
+            $(this).find('.store [type=checkbox]').each(function () {
+                if (this.checked) {
+                    $(this).parents('.store').first().next('.product-list').find('[type=checkbox]:not(:checked)').prop('checked', true);
+                } else {
+                    $(this).parents('.store').first().next('.product-list').find('[type=checkbox]:checked').prop('checked', false);
                 }
-            } else {
-                $(p).find('.selectall,.selectall [type=checkbox]').each(function () {
-                    this.checked = $(p).find('[type=checkbox]').not(':checked,.selectall,.selectall [type=checkbox]').length ? false : true;
-                });
+            });
+            $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
+                this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
+            });
+        });
+        var cartSelectItem = function () {
+            if (this) {
+                if ($(this).is('.selectall,.selectall [type=checkbox]')) {
+                    if (!$(this).is('.store [type=checkbox]')) {
+                        $('#cart .store [type=checkbox]').prop('checked', this.checked);
+                    }
+                } else {
+                    var p = $(this).parents('.product-list').first();
+                    if (this.checked && !$(p).find('[type=checkbox]:not(:checked)').length) {
+                        $(p).prev('.store').find('[type=checkbox]').prop('checked', true);
+                    } else if (!this.checked) {
+                        $('#cart .selectall,#cart .selectall [type=checkbox]').prop('checked', false);
+                    }
+                }
+                $('#cart').trigger('check.seahinet');
             }
             collateTotals();
         };

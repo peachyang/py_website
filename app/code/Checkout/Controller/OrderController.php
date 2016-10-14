@@ -119,12 +119,12 @@ class OrderController extends ActionController
                     if (isset($data['payment_data'])) {
                         $paymentMethod->saveData($cart, $data['payment_data']);
                     }
-                    $result['redirect'] = $paymentMethod->preparePayment();
                     $items->walk(function($item) use (&$orders, $paymentMethod) {
                         if (!isset($orders[$item['store_id']]) && $item['status']) {
                             $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
                         }
                     });
+                    $result['redirect'] = $paymentMethod->preparePayment($orders);
                     $cart->abandon();
                     $this->commit();
                     $segment = new Segment('checkout');

@@ -21,7 +21,7 @@ abstract class AbstractMethod
      * @param array $orders
      * @return string
      */
-    public function preparePayment()
+    public function preparePayment($orders)
     {
         return $this->getBaseUrl('checkout/success/');
     }

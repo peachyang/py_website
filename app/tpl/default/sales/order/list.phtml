@@ -38,7 +38,7 @@ if ($orders):
 
                             </td>
                             <td class="text-vtop">
-                                <h4 class="product-name"><a href=""><?php echo $product['name'] ?></a></h4>
+                                <h4 class="product-name"><a href="<?php echo $product->getUrl($this->getCategory()) ?>"><?php echo $product['name'] ?></a></h4>
                                 <?php
                                 $options = json_decode($item['options'], true);
                                 if ($item['product_id'] && count($options)):

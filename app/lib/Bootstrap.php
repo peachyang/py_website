@@ -111,7 +111,7 @@ final class Bootstrap
                 return $key;
             };
             $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, self::SHMOP_SIZE);
-            $data = gzdecode(trim(shmop_read($shmid, 0, self::SHMOP_SIZE)));
+            $data = @gzdecode(trim(shmop_read($shmid, 0, self::SHMOP_SIZE)));
             $config = $data ? json_decode($data, true) : false;
         } else {
             $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));

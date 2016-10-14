@@ -1,9 +1,6 @@
 <?php
-echo "here1";
 $order = $this->getOrder();
-echo "here2";
 $currency = $this->getOrder()->getCurrency();
-echo "here3";
 $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
 ?>
 <div class="view clearfix">

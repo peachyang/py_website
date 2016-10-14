@@ -121,7 +121,9 @@ class OrderController extends ActionController
                     }
                     $result['redirect'] = $paymentMethod->preparePayment();
                     $items->walk(function($item) use (&$orders, $paymentMethod) {
-                        $orders[] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
+                        if (!isset($orders[$item['store_id']]) && $item['status']) {
+                            $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
+                        }
                     });
                     $cart->abandon();
                     $this->commit();

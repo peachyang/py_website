@@ -2,12 +2,13 @@
 
 namespace Seahinet\Admin\Controller;
 
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class CacheController extends AuthActionController
 {
 
+    use \Seahinet\Lib\Traits\Shmop;
+    
     public function indexAction()
     {
         return $this->getLayout('admin_cache');
@@ -45,27 +46,6 @@ class CacheController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('All caches have been flushed successfully.'), 'level' => 'success'];
         }
         return $this->response($result, ':ADMIN/cache/');
-    }
-
-    public function flushShmop()
-    {
-        if (extension_loaded('shmop')) {
-            $ftok = function_exists('ftok') ? 'ftok' : function($pathname, $proj) {
-                $st = @stat($pathname);
-                if (!$st) {
-                    return -1;
-                }
-                $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
-                return $key;
-            };
-            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, Bootstrap::SHMOP_SIZE);
-            if ($shmid) {
-                shmop_delete($shmid);
-                shmop_close($shmid);
-            }
-            return true;
-        }
-        return false;
     }
 
 }

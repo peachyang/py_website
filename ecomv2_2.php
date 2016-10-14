@@ -19,22 +19,22 @@ CREATE TABLE IF NOT EXISTS `sales_order_status` (
 );
 
 INSERT INTO `sales_order_phase` VALUES 
-(NULL,'pending','Pending'),
-(NULL,'pending_payment','Pending Payment'),
-(NULL,'processing','Processing'),
-(NULL,'complete','Complete'),
-(NULL,'canceled','Canceled'),
-(NULL,'closed','Close'),
-(NULL,'holded','On Hold');
+(1,'pending','Pending'),
+(2,'pending_payment','Pending Payment'),
+(3,'processing','Processing'),
+(4,'complete','Complete'),
+(5,'canceled','Canceled'),
+(6,'closed','Close'),
+(7,'holded','On Hold');
 
 INSERT INTO `sales_order_status` VALUES 
-(NULL,1,'Pending',1),
-(NULL,2,'Pending Payment',1),
-(NULL,3,'Processing',1),
-(NULL,4,'Complete',1),
-(NULL,5,'Canceled',1),
-(NULL,6,'Close',1),
-(NULL,7,'On Hold',1);
+(1,1,'Pending',1),
+(2,2,'Pending Payment',1),
+(3,3,'Processing',1),
+(4,4,'Complete',1),
+(5,5,'Canceled',1),
+(6,6,'Close',1),
+(7,7,'On Hold',1);
 
 CREATE TABLE IF NOT EXISTS `sales_cart` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Order ID',

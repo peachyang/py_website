@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Model\Order;
 
+use Exception;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Sales\Model\Collection\Order\Status as Collection;
 
@@ -36,6 +37,23 @@ class Status extends AbstractModel
             ->where->notEqualTo('id', $this->getId());
             foreach ($collection as $status) {
                 $status->setData('is_default', 0)->save();
+            }
+        } else {
+            $collection = new Collection;
+            $collection->where(['phase_id' => $this->storage['phase_id']])
+            ->where->notEqualTo('id', $this->getId());
+            if ($collection->count()) {
+                $flag = true;
+                foreach ($collection as $status) {
+                    if ($status->offsetGet('is_default')) {
+                        $flag = false;
+                    }
+                }
+                if ($flag) {
+                    $collection[0]->setData('is_default', 1)->save();
+                }
+            } else {
+                throw new Exception('There must be another status in the same phase.');
             }
         }
         $this->commit();

@@ -3,6 +3,7 @@ $subtitle = $this->getVariable("subtitle");
 $filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
+
 ?>
 <div class="wishlist">
     <h3><?php echo $this->translate($subtitle); ?></h3>
@@ -124,10 +125,10 @@ $sales_status = $this->getAllSalesStatus();
                                 </div>
                             </td>
                             <td class="border-right" style="width: 8%;">&nbsp; </td>
-                            <td class="border-right" style="width: 11%;">
-                                <?php
+                            <?php
                                 if ($key == 0) {
-                                    ?>
+                            ?>
+                            <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 11%;">
                                     <div>
                                         <p class="text-center word-break-all">
                                             <a href="" target="_blank"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></a><i title="查询该买家订单"></i>
@@ -136,34 +137,28 @@ $sales_status = $this->getAllSalesStatus();
                                             <a title="查询该买家订单" target="_blank" href=""></a>
                                         </p>
                                     </div>
-                                    <?php
-                                } else {
-                                    echo '&nbsp;';
-                                }
-                                ?>
                             </td>
-                            <td class="border-right" style="width: 11%;">
-                                <?php
+                            <?php
+                                }
                                 if ($key == 0) {
-                                    ?>
+                            ?>
+                            <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 11%;">
+                                
                                     <div>
                                         <p class="text-center">
-                                            <span ><?php echo $this->translate($transaction['status_name']); ?></span>
+                                            <span ><?php echo $transaction['status_name'].$this->translate($transaction['status_name']); ?></span>
                                         </p>
                                         <p class="text-center">
                                             <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?order_id=' . $transaction['id']) ?>">详情</a>
                                         </p>
                                     </div>
-                                    <?php
-                                } else {
-                                    echo '&nbsp;';
-                                }
-                                ?>
                             </td>
-                            <td class="border-right" style="width: 11%;">
-                                <?php
+                            <?php
+                                }
                                 if ($key == 0) {
-                                    ?>
+                            ?>
+                            <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 11%;">
+                                
                                     <div>
                                         <p class="text-center">
                                             <strong><span><?php echo $this->getCurrency()->format($item['total']); ?></span></strong>
@@ -172,13 +167,54 @@ $sales_status = $this->getAllSalesStatus();
                                             <span class="font-12">(含快递:<?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span>
                                         </p>
                                     </div>
-                                    <?php
-                                } else {
-                                    echo '&nbsp;';
-                                }
-                                ?>
                             </td>
-                            <td style="width: 8%;" class="text-center"><a href="">发货</a></td>
+                            <?php
+                                }
+                                if ($key == 0) {
+                                    $order_obj = $this->getOrder($transaction['id']);
+                            ?>
+                            <td style="width: 8%;" rowspan="<?php echo count($transaction['items']); ?>"  class="text-center">
+                                <?php if($order_obj->canCancel()){ ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>'))  return false;" class="btn btn-cancel">
+                                    <?php echo $this->translate('Cancel', [], 'sales') ?>
+                                </a><br />
+                                <?php } ?>
+                                <?php if($order_obj->canHold()){  ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/hold/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Hold', [], 'sales') ?>
+                                </a><br />
+                                <?php } ?>
+                                
+                                <?php if($order_obj->canUnhold()){ ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/unhold/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Unhold', [], 'sales') ?>
+                                </a><br />
+                                <?php } ?>
+                                
+                                <?php if($order_obj->canInvoice()){ ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Invoice', [], 'sales') ?>
+                                </a><br />
+                                <?php } ?>
+                                
+                                <?php if($order_obj->canShip()){ ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Ship', [], 'sales') ?>
+                                </a><br />
+                                <?php } ?>
+                                
+                                <?php if($order_obj->canRefund()){ ?>
+                                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Refund', [], 'sales') ?>
+                                </a><br />
+                                <?php  } ?>
+                                
+                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Print', [], 'sales') ?>
+                                </a><br />
+                                
+                            </td>
+                            <?php }  ?>
                         </tr>
                         <?php
                     }

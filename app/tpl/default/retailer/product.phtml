@@ -146,7 +146,7 @@ $sales_status = $this->getAllSalesStatus();
                                 
                                     <div>
                                         <p class="text-center">
-                                            <span ><?php echo $transaction['status_name'].$this->translate($transaction['status_name']); ?></span>
+                                            <span ><?php echo $this->translate($transaction['status_name']); ?></span>
                                         </p>
                                         <p class="text-center">
                                             <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?order_id=' . $transaction['id']) ?>">详情</a>

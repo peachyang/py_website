@@ -8,6 +8,8 @@ use Seahinet\Lib\Session\Segment;
 class ConfigController extends AuthActionController
 {
 
+    use \Seahinet\Lib\Traits\Shmop;
+
     protected $key = null;
     protected $config = null;
 
@@ -57,7 +59,7 @@ class ConfigController extends AuthActionController
                 } else {
                     try {
                         $this->beginTransaction();
-                        $tableGateway = $this->getTableGateway('core_config');
+                        $this->getTableGateway('core_config');
                         foreach ($data as $path => $value) {
                             if (!in_array($path, ['key', 'csrf', 'scope'])) {
                                 $this->upsert(['value' => is_array($value) ? implode(',', $value) : $value], $where + ['path' => $key . '/' . $path]);
@@ -65,7 +67,9 @@ class ConfigController extends AuthActionController
                             }
                         }
                         $this->commit();
-                        $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
+                        if (!$this->flushShmop()) {
+                            $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
+                        }
                         $result['message'][] = ['message' => $this->translate('Configuration saved successfully.'), 'level' => 'success'];
                     } catch (Exception $e) {
                         $this->getContainer()->get('log')->logException($e);

@@ -191,13 +191,13 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
 .customer-account:not(.customer-account-dashboard) .col-main .message-box:not(:empty),.retailer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account .fieldset,.retailer-account .fieldset{width:100%;margin-top:20px;margin-left:25px}
-.customer-account  .fieldset .Modifyimage{background:#000;color:#fff;font-size:12px;text-align:center;width:100px;margin-top:-15px;padding:2px 0}
-.customer-account  .fieldset .title_img img{position:relative;z-index:-1}
+.customer-account  .fieldset .Modifyimage,.retailer-account .fieldset  .Modifyimage{background:#000;color:#fff;font-size:12px;text-align:center;width:100px;margin-top:-15px;padding:2px 0}
+.customer-account  .fieldset .title_img img,.retailer-account .fieldset .title_img img{position:relative;z-index:-1}
 .customer-account .fieldset .input-box{margin:6px 0}
 .customer-account .fieldset .newpasswora_input_1{width:281px}
 .customer-account .fieldset .newpasswora_input_2{width:266px}
 .customer-account .fieldset .email{width:268px}
-.customer-account  .fieldset .header_images{background: #f9f7f7;border: 1px solid #ccc;padding: 5px 10px;font-size: 12px;color: #807E7E;margin-left: 20px;}
+.customer-account  .fieldset .header_images,.retailer-account .fieldset .header_images{background: #f9f7f7;border: 1px solid #ccc;padding: 5px 10px;font-size: 12px;color: #807E7E;margin-left: 20px;}
 .retailer-account .fieldset .input-box{display:table-row;height:50px}
 .customer-account .fieldset .password_input{width:240px}
 .customer-account .fieldset .username_input{width:281px}
@@ -205,14 +205,15 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap;width:1%}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
 .customer-account .fieldset .btn{border-radius: 1px;margin:20px 0}
-.customer-account .fieldset .amend{padding:6px 0}
-.customer-account .fieldset .btn_img{padding:6px 12px;margin:0 18px}
+.retailer-account .fieldset  .btn{border-radius: 1px;padding:9px 50px;border:none;margin:20px 0}
+.customer-account .fieldset .amend,.retailer-account .fieldset .amend{padding:6px 0}
+.customer-account .fieldset .btn_img,.retailer-account .fieldset .btn_img{padding:6px 12px;margin:0 18px}
 .customer-account .headimages{margin-top:20px}
 .customer-account  .btn-Address{background: #cbecfe;color: #007dc6;padding: 5px 20px;border:1px solid #007dc6}
 .customer-account .address-list{margin:60px 0 30px 0;border: 1px solid #eee;}
 .customer-account .table_head{background:#fbfbfb}
 .customer-account .headimages .headimg{margin-right:15px}
-.customer-account .imgsize{color:#ccc;font-size:12px;margin-left:15px}
+.customer-account .imgsize,.retailer-account .fieldset .imgsize {color:#ccc;font-size:12px;margin-left:15px}
 .customer-account .fa-button{padding-right:10px}
 .male,.female{padding:0 10px 0 10px}
 .male input,.female input{margin-right:10px}
@@ -548,6 +549,7 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-40 .category_table{border: 1px solid #eee;}
 .mg-bottom-40 .category_table .table_head{background:#fbfbfb}
 .mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
+.evaluate .down_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 20px;}
 .mg-bottom-40  .class_menu{display:inline-table}
 .mg-bottom-40  .class_menu dt{padding:5px 30px}
 .mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
@@ -715,7 +717,7 @@ dl.options dd{float:left;margin-left:4px}
 .sales-products .myfilters input[type=text].small-text.nomargin{margin-left:0px}
 .sales-products .myfilters select{margin-left:11px;padding:1px 12px;height:26px}
 .sales-products .seperation{width:100%;border:1px solid #6699ff;margin:11px 0px}
-.sales-products .seperation-title{margin-top:18px}
+.sales-products .seperation-title{}
 .sales-products .products-content td{border:0px}
 .sales-products .products-content .table-title{border:0px}
 .sales-products .products-content .function-seperation{color:#CCCCCC;margin:0px 3px}
@@ -727,7 +729,8 @@ dl.options dd{float:left;margin-left:4px}
 .sales-products .products-content .transaction-list-sales .money{color:#fd6a30}
 /* end */
 /* Store decoration */
-.retailer-stor{}
+.retailer-account .fieldset .input-box #description{width:276px;height:100px}
+.retailer-account .fieldset .input-box input{width:276px;border:1px solid #eee;border-radius:0;box-shadow:none}
 .retailer-store .banner{margin:5px auto 20px;text-align:center}
 .retailer-store .hot-product{margin-bottom:10px}
 .retailer-store .hot-product .title{padding:0 0 5px 0;border-bottom:1px solid #FD9030;margin-bottom:10px}
@@ -798,7 +801,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .pic_carousel .title h2{color:#333;font-size:14px;font-weight:bold}
 .retailer-store .pic_carousel .content{overflow:hidden}
 .decoration_logo_top{width:100%;height:204px;text-align:center;margin-bottom:13px;position:relative}
-.decorationlist .title{font-size:18px;color:#FF0000;margin-right:11px}
+.decorationlist .title{font-size:16px;color:#007dc6;margin-right:11px}
 .decorationlist .decoration-content ul{margin:0px;padding:0px}
 .decorationlist .decoration-content li{list-style:none;float:left;width:25%;text-align:center;padding:10px}
 .decorationlist .decoration-content li div.top{width:220px;border:1px solid #CCCCCC;height:220px;background-color:#D0DFE8;position:relative;overflow:hidden}
@@ -808,7 +811,44 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist .decoration-content li div.top .position2{position:absolute;left:133px;top:185px;display:none}
 .decorationlist .decoration-content li div.top .position3{position:absolute;left:10px;top:185px;display:none}
 .decorationlist .decoration-content li div.bottom{width:220px;margin-top:6px;font-size:16px}
+.decorationlist .deccoration_tabs{margin:0 0 30px 0}
+.decorationlist  #myTabContent{margin:30px 0}
+.decorationlist .nav-tabs{background:#e3f4fd}
+.decorationlist  .deccoration_topbg {background: #e3f4fd;width: 100%;height: 20px;border:1px solid #eee;border-bottom:none;margin-top:45px}
+.decorationlist .nav-tabs > li > a{border-radius:0}
+.decorationlist .nav > li > a:hover { background-color: #fff;}
 /* end */
+/*Evaluation Management*/
+.evaluate .down_icon {margin:20px 0 20px 70px}
+.evaluate .details .table{font-size:13px;color:#7e7f7f}
+.evaluate .details .table .buyer{color:#007dc6}
+.evaluate .details .table .price{color:#fc021f}
+.evaluate .down_icon span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
+.evaluate .details .table td{border-top:none}
+.evaluate .details .table .title_img {width:90px}
+.evaluate .details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
+.evaluate .details .table .title_img img{border-radius:50px;width:35px}
+.evaluate .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
+.evaluate .details .table .title_img  .icon_comment{font-size:18px}
+.evaluate .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
+.evaluate .details .table .border_bt {border-bottom: 3px #eee dotted;}
+.evaluate .details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
+.evaluate .details{margin:30px 0}
+/*end*/
+/* after-sales service*/
+.after .table_head{background:#fbfbfb}
+.after .store{color:#000}
+.after .store span{font-size: 18px;color: #007dc6;padding-left: 10px;}
+.after .list_right{font-size:13px}
+.after  .table_content{margin:25px 0;padding:20px 0}
+.after .table_body .Thumbnail{width:65px;height:67px}
+.after .table_body {color:#666;font-size:13px;border:1px solid #eee}
+.after .table_body .product-name{width: 260px;white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;overflow: hidden;}
+.after .text-vtop{padding-top:30px}
+.after .after_color{color:#007dc6}
+.after .after_bt{border: none;padding: 4px 20px;color: #fff;background: #337ab7;margin: 6px 0;}
+.after .table > tbody > tr > td{border-top:0;}
+/**/
 
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}
@@ -825,7 +865,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_contre_bt .menu_ad h5{color:#d42f53;font-family: STSong;}
 .page-home .menu .menu_contre_bt .menu_ad_img{padding-top:5px}
 .page-home .menu .menu_right{float:left;margin-top:10px}
-.page-home .menu .menu_right .menu_rg_top{width:170px;height:240px}
+.page-home .menu .menu_right .menu_rg_top{width:170px;height:240px} 
 .page-home .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
 .page-home .menu .menu_right img{width:170px;height:247px}
 .page-home .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}

@@ -202,7 +202,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .password_input{width:240px}
 .customer-account .fieldset .username_input{width:281px}
 .customer-account .fieldset .cell,.retailer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px;padding-bottom:6px}
-.customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap;width:1%}
+.customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
 .customer-account .fieldset .btn{border-radius: 1px;margin:20px 0}
 .customer-account .fieldset .amend{padding:6px 0}

@@ -283,6 +283,7 @@ class OrderController extends AuthActionController
             $order = new Model;
             $order->load($id);
             if ($order->canRefund()) {
+                echo "<br />here5<br />";
                 $root = $this->getLayout('retailer_sales_creditmemo_edit');
                 //$root = $this->getLayout('retailer_sales_invoice_edit');
                 return $root;

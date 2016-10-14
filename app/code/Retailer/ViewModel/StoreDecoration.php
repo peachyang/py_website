@@ -140,6 +140,13 @@ class StoreDecoration extends Template
 		
 	}
 	
+	public function getCustomizeInfo($template_id,$page_type,$current_store_id = null){
+		$store_id = $this->judge_store_id($current_store_id);
+		$template = new StoreTemplateCollection;
+		$template->storeCustomizeTemplate($store_id,$template_id,$page_type);
+		return $template;
+	}
+	
 	public function getStoreBanner($current_store_id = null,$current_retailer = null){	
 		$store_id = $this->judge_store_id($current_store_id);
 		if(empty($current_retailer))

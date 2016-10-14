@@ -853,7 +853,9 @@ decorationFunc_customize:
                     -
                         method: setTitle
                         params: customize
-
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:

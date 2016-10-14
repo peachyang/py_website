@@ -21,7 +21,7 @@ use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
 class StoreController extends AuthActionController
 {   private $page_types = [
                 '首页'=> 0,
-                '产品详情页' => 1
+                '产品详情页' => 2
                 ];
 
     public function indexAction()
@@ -255,7 +255,7 @@ class StoreController extends AuthActionController
     {
         $functions = $this->getRequest()->getQuery('functions');
         $part_id = $this->getRequest()->getQuery('part_id');
-        $template_id = $this->getRequest()->getQuery('tempalte_id');
+        $template_id = $this->getRequest()->getQuery('template_id');
         $root = $this->getLayout('decorationFunc_' . $functions);
         $root->getChild('main', true)->setVariable('data_tag', $functions);
         $root->getChild('main', true)->setVariable('part_id', $part_id);
@@ -271,6 +271,29 @@ class StoreController extends AuthActionController
         $function_name = 'template_' . $dataTag;
         $view = $storeDecoration->$function_name($dataParam);
         echo json_encode(array('status' => true, 'view' => $view));
+    }
+    
+    public function customizeTemplateAddAction(){
+    	$result = ['error' => 0, 'message' => []];
+    	$data = $this->getRequest()->getPost();
+    	$segment = new Segment('customer');
+        $r = new Rmodel;
+        $r->load($segment->get('customer')->getId(), 'customer_id');
+        $data['store_id'] = $r['store_id'];
+    	$model = new StoreTemplate();
+    	$template_id = 0;
+    	try {    
+    	    $model->setData($data);
+            $model->save();
+            $template_id = $model->getId();
+        } catch (Exception $e) {
+                $result['error'] = 1;
+        }
+        $template = new StoreTemplateCollection();
+        $result['status'] = $result['error'];
+        $result['Info'] = $template->storeCustomizeTemplate($data['store_id'],$data['parent_id'],$data['page_type']);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    
     }
 
     public function decorationInfoAddAction()

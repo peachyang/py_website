@@ -1,6 +1,7 @@
 <?php
 $data_tag = $this->getVariable("data_tag");
-$Infos = $this->getStorePicInfo("menu");
+$template_id = $this->getVariable("template_id");
+$Infos = $this->getCustomizeInfo($template_id,1);
 $Info = json_encode($Infos);
 
  ?>
@@ -14,13 +15,12 @@ $Info = json_encode($Infos);
 <div class="tab-pane" id="uploadPic" >
 <div style="margin:26px">
 
-<form id=uploadForm onsubmit="return false" >
-<input type="hidden" id="resource_category_code" value="menu" />
+
  <div class="rows">
-  导航标题: &nbsp;<input type="text" id='title'  placeholder="" > &nbsp; 链 接: &nbsp;<input type="text" id='url' name="url" placeholder="http://" style="width:260px" >
+  自定义页面名称: &nbsp;<input type="text" id='title'  placeholder="" > &nbsp;
  &nbsp;<button onclick="doAdd()" class="btn btn-danger btn-sm">增 加</button> 
  </div>
-</form>
+
 
 <hr width="99%" style="border-color:#e8c7b6" > 
 <div class="rows">
@@ -47,32 +47,36 @@ $Info = json_encode($Infos);
 </script>
     
 <script>
-	var data_tag = '<?php echo $data_tag; ?>';
 
+	var Info = {info1:JSON.parse(<?php echo $Info ?>)};
+	$(document).ready(function(){		
+		
+		$('.infoList').html(template('li_menu',Info));
+	    
+	});	
+	
 	
 	function doAdd() {  
      var title = $('#title').val();
-     var url = $('#url').val(); 
      if($.trim(title)=="")
      {
-     	layer.msg('请输入标题', {shade: [0.3,'#fff'],time: 1200});
+     	layer.msg('请输入名称', {shade: [0.3,'#fff'],time: 1200});
 		return;
      }
-     var resource_category_code = $('#resource_category_code').val(); 
      $.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationInfoAdd') ?>' ,  
+          url: '<?php echo $this->getBaseUrl('retailer/store/customizeTemplateAdd') ?>' ,  
           type: 'POST',  
-          data: {title:title,url:url,resource_category_code:resource_category_code},  
+          data: {template_name:title,parent_id:'<?php echo $template_id ?>',page_type:1},  
           beforeSend:function(){
             layer.load(1, {shade: [0.1,'#fff'] });	
           },  
           success: function (json) {  
         	if(json.status==0){
-        		
-        		Info.info1 = JSON.parse(json.Info);
+        		Info = {};
+        		Info.info1 = json.Info;
         		$('.infoList').html(template('li_menu',Info));	
         	}
-        	$("#uploadForm")[0].reset();
+ 
         	layer.closeAll();
           },  
           error: function (json) {  
@@ -148,7 +152,7 @@ $Info = json_encode($Infos);
 <script id="li_menu" type="text/html" >
 	<li>
 
-	<div class='title' style="text-align: center;" >标 题</div>
+	<div class='title' style="text-align: center;" >页面名称</div>
 	<div class="url" style="text-align: center;"  >链 接</div>
 	<div style="text-align: center;width:80px"  >操 作</div>
 	<div style="clear:both"></div>			
@@ -156,8 +160,8 @@ $Info = json_encode($Infos);
 	
 	{{each info1 as value i}}
 	<li>
-	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.pic_title}}" style="display:none" ><span name='pic_title'>{{value.pic_title}}</span></div>
-	<div class="url adjust"  ><input type="text" name='url' value="{{value.url}}" style="display:none" ><span name='url'>{{value.url}}</span></div>
+	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.template_name}}" style="display:none" ><span name='pic_title'>{{value.template_name}}</span></div>
+	<div class="url adjust"  ><input type="text" name='url' value="{{value.template_name}}" style="display:none" ><span name='url'>{{value.template_name}}</span></div>
 	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteInfo({{value.id}})' >删 除</button></div>
 	<div style="clear:both"></div>			
 	</li>

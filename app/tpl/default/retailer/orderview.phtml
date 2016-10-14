@@ -1,8 +1,7 @@
 <?php
     $transactions = $this->getRetailerTransaction();
     $transaction = isset($transactions[0]) ? $transactions[0] : null;
-    $sales_statuses = $this->getAllSalesStatus($transaction['status_id']);
-    $sales_status = isset($sales_statuses[0]) ? $sales_statuses[0] : null;
+    $order = $this->getOrder($transaction['id']);
 ?>
 <div class="container">
     <div class="col-md-12">
@@ -10,13 +9,11 @@
             <div class="bd">
                 <div class="trade-status">
                     <strong>当前订单状态：<span class="wait">
-                        <?php
-                            echo ($sales_status) ? $this->translate($sales_status['name']) : '';
-                        ?>
+                        <?php echo $this->translate($transaction['status_name']); ?>
                     </span>
                     </strong>
                 </div>
-                <div class="tbnotes">
+                <div class="tbnotes" style="display: none;">
                 <span>提醒您</span>
                 <p>交易已成功，如果买家提出售后要求，请积极与买家协商，做好售后服务。</p>
                 </div>
@@ -34,22 +31,21 @@
             <div class="tabs-panels">
                 <div class="info-box order-info">
                     <div class="bd">
-                        <table>
+                        <table class="table">
                             <tbody class="contact-info">
                                 <tr>
                                     <th colspan="6"><h4>买家信息</h4></th>
                                 </tr>
                                 <tr>
                                     <td colspan="2">昵称：<span class="nickname"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></span></td>
-                                    <td colspan="4"></td>
+                                    <td colspan="4">邮件：<span><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->email; ?></span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">所在地区：<span class="city"> (未知)</span></td>
-                                    <td class="contact" colspan="3">联系电话：<span class="tel">(未知)</span></td>
-                                </tr>
-                                <tr>
-                                    <td valign="top" colspan="2">邮件：<span><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->email; ?></span></td>
-                                    <td colspan="4">&nbsp;</td>
+                                    <td colspan="6">
+                                    <?php
+                                    echo nl2br($transaction['billing_address']);
+                                    ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -169,16 +165,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>运送方式：</th>
-                            <td>快递(未知)</td>
+                            <th><?php echo $this->translate('Shipping Method', [], 'sales'); ?>：</th>
+                            <td><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></td>
                         </tr>
                         <tr>
-                            <th>物流公司名称：</th>
-                            <td> &mdash;(未知) </td>
+                            <th><?php echo $this->translate('Payment Method', [], 'sales'); ?>：</th>
+                            <td><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
                         </tr>
-                        <tr>
+                        <tr style="display: none;">
                             <th>运单号：</th>
-                            <td>&mdash; (未知)</td>
+                            <td><?php echo $order['increment_id']; ?></td>
                         </tr>
                     </tbody>
                 </table>

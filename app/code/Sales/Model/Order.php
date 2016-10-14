@@ -357,7 +357,12 @@ class Order extends AbstractModel
                     ->order('created_at DESC')
                     ->limit(1)
             ->where->notEqualTo('status_id', $this->storage['status_id']);
-            $userId = (new Segment('admin'))->get('user')->getId();
+            $user = new Segment('admin');
+            if($user->get('user')){
+                $userId = $user->get('user')->getId();
+            }else{
+                $userId = null;
+            }
             if (count($history)) {
                 $statusId = $history[0]->offsetGet('status_id');
                 $statusName = $history[0]->offsetGet('name');

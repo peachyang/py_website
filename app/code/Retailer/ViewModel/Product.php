@@ -4,6 +4,7 @@ namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Sales\Model\Order as Omodel;
 use Seahinet\Retailer\Model\Collection\Product as Collection;
 use Seahinet\Sales\Model\Collection\Order as Ocollection;
 use Seahinet\Sales\Model\Collection\Order\Item as Icollection;
@@ -220,6 +221,14 @@ class Product extends Template
 //      print_r($sql);
 //      echo "</pre>";
         return $pocollection->toArray();
+    }
+
+    public function getOrder($order_id)
+    {
+        if (!empty($order_id)) {
+            return (new Omodel)->load($order_id);
+        }
+        return null;
     }
     
     /**

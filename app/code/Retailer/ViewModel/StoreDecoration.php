@@ -144,6 +144,12 @@ class StoreDecoration extends Template
 		$store_id = $this->judge_store_id($current_store_id);
 		$template = new StoreTemplateCollection;
 		$template->storeCustomizeTemplate($store_id,$template_id,$page_type);
+		$r = new Retailer;
+		$r->load($store_id,'store_id');
+		$url = $this->getBaseUrl().$r->getStoreUrl();
+		foreach ($template as $key => $value) {
+			$template[$key]['url'] = $url."?key=".urlencode(base64_encode($value['id']));
+		}
 		return $template;
 	}
 	

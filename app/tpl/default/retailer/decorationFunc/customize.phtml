@@ -55,6 +55,17 @@ $Info = json_encode($Infos);
 	    
 	});	
 	
+	function changeParentPageSelect(jsons){
+		var obj = $("#page_type_select option[value=-1]",parent.document);
+		var htmls = "";
+		$.each(jsons,function(i,o){
+			htmls += "<option value="+o.id+">&nbsp; |-"+o.template_name+"</option>";
+		});
+		
+		obj.nextAll().remove();
+		obj.after(htmls);
+	}
+	
 	
 	function doAdd() {  
      var title = $('#title').val();
@@ -73,11 +84,12 @@ $Info = json_encode($Infos);
           success: function (json) {  
         	if(json.status==0){
         		Info = {};
-        		Info.info1 = json.Info;
+        		Info.info1 = JSON.parse(json.Info);
         		$('.infoList').html(template('li_menu',Info));	
         	}
  
         	layer.closeAll();
+        	changeParentPageSelect(Info.info1);
           },  
           error: function (json) {  
            
@@ -96,23 +108,25 @@ $Info = json_encode($Infos);
 	
 	function save(obj,id){
 		$li = $(obj).closest("li");
-		var pic_title = $li.find('div.adjust').find("input[name='pic_title']").val();
-		var url = $li.find('div.adjust').find("input[name='url']").val();
+		var template_name = $li.find('div.adjust').find("input[name='template_name']").val();
 		$.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationUploadSave') ?>' ,  
+          url: '<?php echo $this->getBaseUrl('retailer/store/customizeTemplateSave') ?>' ,  
           type: 'POST',  
-          data: {id:id,pic_title:pic_title,url:url,resource_category_code:'menu'},  
+          data: {id:id,template_name:template_name,parent_id:'<?php echo $template_id ?>',page_type:1},
           beforeSend:function(){
             layer.load(1, {shade: [0.1,'#fff'] });	
           },  
           success: function (json) {  
         	if(json.status==0){
-        		$li.find('div.adjust').find("span[name='pic_title']").html(pic_title);
-        		$li.find('div.adjust').find("span[name='url']").html(url);
+        		$li.find('div.adjust').find("span[name='template_name']").html(template_name);
 				$li.find('div.adjust').find('span').show();
 				$li.find('div.adjust').find('input').hide();
 				$li.find('button.mod').show();
-				$(obj).hide();	
+				$(obj).hide();
+				
+				Info.info1 = JSON.parse(json.Info);
+				changeParentPageSelect(Info.info1);
+					
         	}
         	layer.closeAll();
           },  
@@ -125,9 +139,9 @@ $Info = json_encode($Infos);
 	
 	function deleteInfo(id){
 	$.ajax({  
-          url: '<?php echo $this->getBaseUrl('retailer/store/decorationInfoDelete') ?>' ,  
+          url: '<?php echo $this->getBaseUrl('retailer/store/customizeTemplateDelete') ?>' ,  
           type: 'POST',  
-          data: {id:id,resource_category_code:'menu'},  
+          data: {id:id,parent_id:'<?php echo $template_id ?>',page_type:1},
           beforeSend:function(){
             layer.load(1, {shade: [0.1,'#fff'] });	
           },  
@@ -136,6 +150,7 @@ $Info = json_encode($Infos);
  
         		Info.info1 = JSON.parse(json.Info);
         		$('.infoList').html(template('li_menu',Info));	
+        		changeParentPageSelect(Info.info1);
         	}
         	layer.closeAll();
           },  
@@ -160,8 +175,8 @@ $Info = json_encode($Infos);
 	
 	{{each info1 as value i}}
 	<li>
-	<div class='title adjust' ><input type="text" name='pic_title' value="{{value.template_name}}" style="display:none" ><span name='pic_title'>{{value.template_name}}</span></div>
-	<div class="url adjust"  ><input type="text" name='url' value="{{value.template_name}}" style="display:none" ><span name='url'>{{value.template_name}}</span></div>
+	<div class='title adjust' ><input type="text" name='template_name' value="{{value.template_name}}" style="display:none" ><span name='template_name'>{{value.template_name}}</span></div>
+	<div class="url"  ><span name='url'>{{value.url}}</span></div>
 	<div class='adjust' ><button class="btn btn-success btn-xs mod" onclick="modify(this)" >修 改</button> <button class="btn btn-primary btn-xs save" onclick="save(this,{{value.id}})" style="display:none" >保 存</button>  <button class="btn btn-warning btn-xs" onclick='deleteInfo({{value.id}})' >删 除</button></div>
 	<div style="clear:both"></div>			
 	</li>

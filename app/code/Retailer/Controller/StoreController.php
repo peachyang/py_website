@@ -289,11 +289,71 @@ class StoreController extends AuthActionController
         } catch (Exception $e) {
                 $result['error'] = 1;
         }
-        $template = new StoreTemplateCollection();
+
         $result['status'] = $result['error'];
-        $result['Info'] = $template->storeCustomizeTemplate($data['store_id'],$data['parent_id'],$data['page_type']);
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$data['store_id']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     
+    }
+
+    public function customizeTemplateSaveAction(){
+        $result = ['error' => 0, 'message' => []];
+        $segment = new Segment('customer');
+        $data = $this->getRequest()->getPost();
+        $store_id = 0;
+        if ($result['error'] === 0) {
+            try {
+                $template = new StoreTemplate();
+                $template->load($data['id']);
+                $r = new Rmodel;
+                $r->load($segment->get('customer')->getId(), 'customer_id');
+                $store_id = $r['store_id'];
+                if ($template->getId() && $template['store_id'] == $r['store_id']) {
+                    $template->setData([
+                        'template_name' => $data['template_name']
+                    ]);
+                    $template->save();
+                }
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+
+                $result['error'] = 1;
+            }
+        }
+
+        $result['status'] = $result['error'];
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+
+    public function customizeTemplateDeleteAction(){
+        $result = ['error' => 0, 'message' => []];
+        $segment = new Segment('customer');
+        $data = $this->getRequest()->getPost();
+        $store_id = 0;
+        if ($result['error'] === 0) {
+            try {
+                $template = new StoreTemplate();
+                $template->load($data['id']);
+                $r = new Rmodel;
+                $r->load($segment->get('customer')->getId(), 'customer_id');
+                $store_id = $r['store_id'];
+                if ($template->getId() && $template['store_id'] == $r['store_id']) {
+                    $template->remove();
+                }
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+
+                $result['error'] = 1;
+            }
+        }
+
+        $result['status'] = $result['error'];
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 
     public function decorationInfoAddAction()

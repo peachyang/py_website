@@ -260,7 +260,7 @@ payment:
                     label: New Order Status
                     required: required
                     source: Seahinet\Sales\Source\Order\Status
-                    default: 1
+                    default: 2
                     priority: 5
                 description:
                     type: textarea
@@ -284,14 +284,22 @@ payment:
                     scope: [merchant,scope]
                     label: Partner ID
                     required: required
+                    priority: 31
                     attrs:
                         minlength: 16
                         maxlength: 16
+                security_key:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Security Key
+                    required: required
+                    priority: 32
                 seller_type:
                     type: select
                     scope: [merchant,scope]
                     label: Seller ID Type
                     required: required
+                    priority: 35
                     options:
                         seller_id: Seller ID
                         seller_email: Seller Email
@@ -302,8 +310,19 @@ payment:
                     scope: [merchant,scope]
                     label: Seller ID
                     required: required
+                    priority: 36
                     attrs:
                         data-base: "#alipay_direct_pay-enable"
+                anti_phishing:
+                    type: select
+                    scope: [merchant,scope]
+                    label: Anti Phishing Service
+                    priority: 40
+                    required: required
+                    default: 0
+                    options:
+                        - Disabled
+                        - Enabled
                 min_total:
                     type: price
                     label: Minimum Order Total

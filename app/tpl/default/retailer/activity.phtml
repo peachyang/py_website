@@ -1,56 +1,89 @@
-<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
+<div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40 activity_body">
     <h3><?php echo $this->translate('Activity Registration'); ?></h3>
-    <div class="enroll">
-        <button data-toggle="modal" data-target="#modal-activity">可参加的活动</button>
-    </div>
-    <br />
-    <div>
-        <form method="get">
-            <div >
-                <span>活动名称:</span>
-                <input type="text" value="" name="order_sn">
-                <input type="submit" value="搜索" class="btn">
-            </div>
-        </form>
-    </div>
-    <br />
+<div class="activity">
+	<ul id="activity" class="nav nav-tabs">
+		<li class="active">
+			<a href="#listing" data-toggle="tab">活动列表</a>
+		</li>
+		<li>
+			<a href="#enroll" data-toggle="tab">我的报名</a>
+		</li>
+		<li>
+			<a href="#news" data-toggle="tab">消息管理</a>
+		</li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="listing">
+			<div>
+      			<form method="get">
+	           		<div class="activity_search">
+	           			<div>
+		           			<lable>活动名称:</lable>
+		               		<input type="text" value="" name="order_sn">
+	           			</div>
+	           			<div>
+		           			<lable>收费类型:</lable>
+		               		<input type="text" value="" name="order_sn">
+	           			</div>
+	           			<div>
+	           				<input type="submit" value="搜索" class="btn">
+	           			</div>
+	            	</div>
+       			 </form>
+  		  	</div>
+  		  	<div class="activity_list">
+  		  	  <div class="enroll">
+  		  	     <button data-toggle="modal" data-target="#modal-activity" class="whole">全部活动</button>
+       			 <button data-toggle="modal" data-target="#modal-activity" class="filter">可参加的活动</button>
+    		   </div>
+  		  	</div>
+  		  	<div class="activity_table">
+  		  		<table class="table address-list text-center">
+  		  			<thead>
+					    <tr class="table_head ">
+					      <th  class="text-left margin ">活动名称</th>
+					      <th  class="text-left">报名截止</th>
+					      <th  class="text-center">已成功报名</th>
+					      <th  class="text-center">状态</th>
+					      <th  class="text-center">操作</th>
+					      <th></th>
+					    </tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-left margin">特色中国--探秘西藏</td>
+							<td class="text-left">当天结束</td>
+							<td>293个</td>
+							<td>未报名</td>
+							<td ><a class="link" target="_blank" href="<?php echo $this->getBaseUrl('retailer/marketing/viewactivity')?>">查看详情</a></td>
+						</tr>
+						<tr>
+							<td class="text-left margin">特色中国--探秘西藏</td>
+							<td class="text-left">当天结束</td>
+							<td>293个</td>
+							<td>未报名</td>
+							<td ><a class="link" target="_blank" href="<?php echo $this->getBaseUrl('retailer/marketing/viewactivity')?>">查看详情</a></td>
+						</tr>
+						
+					</tbody>
+  		  		</table>
+  		  	</div>
+		</div>
+		<div class="tab-pane fade" id="enroll">
+		b
+		</div>
+		<div class="tab-pane fade" id="news">
+		c
+		</div>
+	</div>
+</div>
     
-    <div class="row">
-        <table class="table table-bordered">
-            <tr>
-                <th>活动名称</th>
-                <th>报名截止</th>
-                <th>已成功报名</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-            <tr>
-                <td>新势力周·秋冬上新·健身招商-单品区</td>
-                <td>当天结束</td>
-                <td>40个</td>
-                <td>已报名</td>
-                <td><a target="_blank" href="<?php echo $this->getBaseUrl('retailer/marketing/viewactivity')?>">查看</a>&nbsp;&nbsp;<a href="javascript:void(0);">撤销</a></td>
-            </tr>
-            <tr>
-                <td>“828全球现场”大促（亚洲会场）</td>
-                <td>当天结束</td>
-                <td>120个</td>
-                <td>已撤销</td>
-                <td><a target="_blank" href="<?php echo $this->getBaseUrl('retailer/marketing/viewactivity')?>">查看</a></td>
-            </tr>
-            <tr>
-                <th colspan="5">
-                    <div class="text-right">
-                        <a>共 2 个项目</a>
-                        <a href="#">上一页</a>
-                        <a href="#">1</a>
-                        <span>1 / 1</span>
-                        <a href="#">下一页</a>
-                    </div>
-                </th>
-            </tr>
-        </table>
-    </div>
+    
+    
+    
+   
+    
+    
     
     <div id="modal-activity" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel">
         <div class="modal-dialog" role="document">

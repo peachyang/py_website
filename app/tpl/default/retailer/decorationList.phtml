@@ -10,7 +10,7 @@
    <!-- tab -->
    <div class="deccoration_topbg" ></div>
    	<div class="deccoration_tabs">
-   		<ul id="Decoration" class="nav nav-tabs">
+   		<ul id="Decoration" class="nav nav-tabs" role="tablist"> 
     		<li class="active">
     			 <a href="#MyTemplates" data-toggle="tab">
            			    <div class="seperation-title"><span class="title">我的模版</span> <span>共有  <?php echo count($templates) ?> 条记录</span></div>
@@ -22,9 +22,32 @@
            		</a>
     		</li>
     	</ul>
+    	
     	<!-- tabcontent -->
-    	<div id="myTabContent" class="tab-content">
-    		<div class="tab-pane fade in active" id="MyTemplates">
+	    <div id="myTabContent" class="tab-content">
+    		<div class="tab-pane active" id="MyTemplates">
+    			<button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
+    			<div class="decoration-content">
+    				<ul>
+    					<?php foreach ($templates as $key => $template) { ?>
+    					<li>
+    						<div class="top <?php echo $template['status']==1 ? 'active' : '' ?>">
+    							<div class="position1">模版1</div>
+    							<div class="position3">
+    								<button class="btn btn-success btn-sm" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id='.$template['id']) ?>'" >修改</button>
+					     			<button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
+									<button class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>' >设为当前模版</button>
+    							</div>
+    						</div>
+    						<div class="bottom"><?php echo $template['template_name'] ?></div>
+    					</li>
+    					 <?php } ?> 
+    				</ul>
+    			</div>
+    		</div>
+    	
+    	
+    	<div class="tab-pane" id="TemplateSubject">
     			<button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
     			<div class="decoration-content">
     				<ul>
@@ -45,30 +68,8 @@
     			</div>
     		</div>
     	</div>
-    	
-    	<div class="tab-pane fade " id="TemplateSubject">
-    			<button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版a</button>
-    			<div class="decoration-content">
-    				<ul>
-    					<?php foreach ($templates as $key => $template) { ?>
-    					<li>
-    						<div class="top <?php echo $template['status']==1 ? 'active' : '' ?>">
-    							<div class="position1">模版1</div>
-    							<div class="position3">
-    								<button class="btn btn-success btn-sm" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id='.$template['id']) ?>'" >修改</button>
-					     			<button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
-									<button class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>' >设为当前模版</button>
-    							</div>
-    						</div>
-    						<div class="bottom"><?php echo $template['template_name'] ?></div>
-    					</li>
-    					 <?php } ?> 
-    				</ul>
-    			</div>
-    		</div>
-    	</div>
    	
-   	</div>
+
    	
     
     
@@ -235,6 +236,10 @@
                 }
 
         });
+		$('#Decoration a').click(function (e) {
+			e.preventDefault()
+			$(this).tab('show')
+		});
 		
 	});
 </script>

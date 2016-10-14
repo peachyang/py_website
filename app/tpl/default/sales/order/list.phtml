@@ -1,7 +1,6 @@
 <?php
 $orders = $this->getOrders();
 if ($orders):
-    $flag = true;
     ?>
     <table class="table address-list text-center">
         <thead style="border:1px solid #eee">
@@ -28,6 +27,7 @@ if ($orders):
                 </caption>
                 <tbody>      
                     <?php
+                    $flag = true;
                     foreach ($order->getItems() as $item):
                         $product = $item['product'];
                         $thumbnail = $product->getThumbnail();
@@ -62,7 +62,7 @@ if ($orders):
                                     </dl>
                                 <?php endif ?>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <div class="price-box text-right">
                                     <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
                                         <span class="regular-price">
@@ -81,7 +81,7 @@ if ($orders):
                                     <?php endif; ?>
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <?php echo (float) $item['qty'] ?>
                             </td>
                             <?php if ($flag): ?>

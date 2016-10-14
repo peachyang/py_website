@@ -114,17 +114,17 @@ class OrderController extends ActionController
                         ]);
                     }
                     $items = $cart->getItems(true);
-                    $items->columns(['warehouse_id', 'store_id'])->group('warehouse_id')->group('store_id');
+                    $items->columns(['warehouse_id', 'store_id', 'status'])->group(['status', 'warehouse_id', 'store_id']);
                     $orders = [];
                     if (isset($data['payment_data'])) {
                         $paymentMethod->saveData($cart, $data['payment_data']);
                     }
-                    $result['redirect'] = $paymentMethod->preparePayment();
                     $items->walk(function($item) use (&$orders, $paymentMethod) {
-                        if (!isset($orders[$item['store_id']]) && $item['status']) {
+                        if ($item['status']) {
                             $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
                         }
                     });
+                    $result['redirect'] = $paymentMethod->preparePayment($orders);
                     $cart->abandon();
                     $this->commit();
                     $segment = new Segment('checkout');

@@ -111,7 +111,7 @@ final class Bootstrap
                 return $key;
             };
             $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, self::SHMOP_SIZE);
-            $data = trim(shmop_read($shmid, 0, self::SHMOP_SIZE));
+            $data = @gzdecode(trim(shmop_read($shmid, 0, self::SHMOP_SIZE)));
             $config = $data ? json_decode($data, true) : false;
         } else {
             $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
@@ -123,7 +123,7 @@ final class Bootstrap
             static::getContainer();
             $config->loadFromDB();
             if (isset($shmid)) {
-                shmop_write($shmid, json_encode($config->getArrayCopy()), 0);
+                shmop_write($shmid, gzencode(json_encode($config->getArrayCopy())), 0);
             } else {
                 $cache->save('SYSTEM_CONFIG', $config->getArrayCopy());
             }

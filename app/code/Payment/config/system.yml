@@ -231,3 +231,105 @@ payment:
                     label: Maximum Order Total
                     default: ''
                     priority: 51
+        alipay_direct_pay:
+            label: Alipay Direct Pay
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Alipay Direct Pay
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\AlipayDirectPay
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 2
+                    priority: 5
+                description:
+                    type: textarea
+                    label: Description
+                    priority: 10
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                gateway:
+                    type: url
+                    scope: merchant
+                    label: Gateway
+                    required: required
+                    default: https://mapi.alipay.com/gateway.do
+                    priority: 30
+                partner:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Partner ID
+                    required: required
+                    priority: 31
+                    attrs:
+                        minlength: 16
+                        maxlength: 16
+                security_key:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Security Key
+                    required: required
+                    priority: 32
+                seller_type:
+                    type: select
+                    scope: [merchant,scope]
+                    label: Seller ID Type
+                    required: required
+                    priority: 35
+                    options:
+                        seller_id: Seller ID
+                        seller_email: Seller Email
+                        seller_account_name: Seller Account Name
+                    default: seller_id
+                seller_id:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Seller ID
+                    required: required
+                    priority: 36
+                    attrs:
+                        data-base: "#alipay_direct_pay-enable"
+                anti_phishing:
+                    type: select
+                    scope: [merchant,scope]
+                    label: Anti Phishing Service
+                    priority: 40
+                    required: required
+                    default: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51

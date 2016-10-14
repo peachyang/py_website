@@ -22,7 +22,7 @@ $params = $this->getVariable('pdf')->serializeTCPDFtagParameters(array($order['i
     .product-total{width:100px;}
     .colspan{width:298px;}
 </style>
-<img src="<?php echo $this->getPubUrl('frontend/images/logo.png') ?>" />
+<!--img src="<?php echo $this->getPubUrl('frontend/images/logo.png') ?>" /-->
 <tcpdf method="write1DBarcode" params="<?php echo $params ?>" />
 <table class="first" cellpadding="4" cellspacing="0">
  <tr class="background">

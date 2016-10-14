@@ -3,6 +3,7 @@ SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE IF NOT EXISTS `core_merchant`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Merchant ID',
     `code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Merchant code',
+    `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Merchant name',
     `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
     `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
@@ -11,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `core_merchant`(
     CONSTRAINT UNQ_CORE_MERCHANT_CODE UNIQUE (`code`)
 );
 
-INSERT INTO `core_merchant`(`code`,`is_default`) VALUES ('default',1);
+INSERT INTO `core_merchant`(`code`,`name`,`is_default`) VALUES ('default','Default',1);
 
 CREATE TABLE IF NOT EXISTS `core_store`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Store ID',

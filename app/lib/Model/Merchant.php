@@ -11,7 +11,7 @@ class Merchant extends AbstractModel
 
     protected function construct()
     {
-        $this->init('core_merchant', 'id', ['id', 'code', 'is_default', 'status']);
+        $this->init('core_merchant', 'id', ['id', 'code', 'name', 'is_default', 'status']);
     }
 
     public function getStore($code = null)

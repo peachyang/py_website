@@ -4,7 +4,7 @@ if ($orders):
     ?>
     <table class="table address-list text-center">
         <thead style="border:1px solid #eee">
-            <tr class="table_head text-center">
+            <tr class="table_head line-height-30">
                 <th  class="col-lg-6 col-md-6 text-center"><?php echo $this->translate('commodity') ?></th>
                 <th  class="col-lg-1 col-md-1"><?php echo $this->translate('Amount of the transaction') ?></th>
                 <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('quantity') ?></th>
@@ -107,5 +107,6 @@ if ($orders):
                 </tbody>  
             </table>
         <?php endforeach; ?>
+<p><?php echo $this->getChild('pager')->setCollection($orders);?></p>
     <?php endif ?>
 <?php endif; ?>

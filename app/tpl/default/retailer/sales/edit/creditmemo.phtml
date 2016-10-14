@@ -1,8 +1,10 @@
 <?php
+echo "here1";
 $order = $this->getOrder();
+echo "here2";
 $currency = $this->getOrder()->getCurrency();
+echo "here3";
 $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
-echo $back_url;
 ?>
 <div class="view clearfix">
     <form action="<?php echo $this->getBaseUrl('retailer/sales_creditmemo/save/') ?>" method="post" class="form-sales">

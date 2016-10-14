@@ -1,64 +1,105 @@
 <form action="<?php echo $this->getBaseUrl('retailer/store/save/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <div class="fieldset">
+			<div class="">
+			  <span>
+			    <?php echo $this->
+			      translate('Avatar Image') ?>
+			  </span>
+			  <span class="imgsize">
+			    <?php echo $this->
+			      translate('Large picture recommended size'); ?>：490*420px
+			  </span>
+			  <div class="title_img">
+			    <div type="button" class="btn amend " data-toggle="modal" data-target="#resource-modal"
+			    data-param="file_type=image%25" title="选择资源">
+			      <img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/135.jpg"
+			      alt="">
+			      <div class="Modifyimage">
+			        <?php echo $this->
+			          translate('Modify the image') ?>
+			      </div>
+			    </div>
+			    <div type="button" data-toggle="modal" data-target="#resource-modal" data-param="file_type=image%25"
+			    title="选择资源" class="header_images btn btn_img">
+			      <?php echo $this->
+			        translate('Modify the Head portrait image') ?>
+			    </div>
+			  </div>
+			</div>
+    
+    
         <div class="input-box">
-            <label class="control-label required" for="store-name"><?php echo $this->translate('Store Name') ?></label>
+            <label class="control-label required" for="store-name"><?php echo $this->translate('Store Name') ?>：</label>
             <div class="cell">
                 <input type="text" name="store[name]" class="form-control required" id="store-name" value="<?php echo $this->getStore()->offsetGet('name') ?>" />
             </div>
         </div>
-        <div class="input-box">
-            <label class="control-label required" for="uri_key"><?php echo $this->translate('Uri Key') ?></label>
+          <div class="input-box">
+            <label class="control-label required" for="uri_key"><?php echo $this->translate('In the area') ?>：</label>
             <div class="cell">
-                <input type="text" name="uri_key" id="uri_key" class="form-control required" value="<?php echo $this->getRetailer()->offsetGet('uri_key') ?>" />
+				<select class="form-control">
+				  <option>请选择</option>
+				  <option>2</option>
+				  <option>3</option>
+				  <option>4</option>
+				  <option>5</option>
+				</select>
+				<select class="form-control">
+				  <option>请选择</option>
+				  <option>2</option>
+				  <option>3</option>
+				  <option>4</option>
+				  <option>5</option>
+				</select>
+				<select class="form-control">
+				  <option>请选择</option>
+				  <option>2</option>
+				  <option>3</option>
+				  <option>4</option>
+				  <option>5</option>
+				</select>
             </div>
         </div>
+      
         <div class="input-box">
-            <label class="control-label" for="address"><?php echo $this->translate('Address') ?></label>
+            <label class="control-label" for="address"><?php echo $this->translate('Detailed address') ?>：</label>
             <div class="cell">
                 <input type="text" name="address" id="address" class="form-control" value="<?php echo $this->getRetailer()->offsetGet('address') ?>" />
             </div>
         </div>
         <div class="input-box">
-            <label class="control-label" for="tel"><?php echo $this->translate('Phone Number') ?></label>
+            <label class="control-label" for="tel"><?php echo $this->translate('Contact phone number') ?>：</label>
             <div class="cell">
                 <input type="tel" name="tel" id="tel" class="form-control" value="<?php echo $this->getRetailer()->offsetGet('tel') ?>" />
             </div>
         </div>
         <div class="input-box">
-            <label class="control-label" for="contact"><?php echo $this->translate('Contact Infomation') ?></label>
+            <label class="control-label" for="tel"><?php echo $this->translate('Contact') ?>：</label>
             <div class="cell">
-                <textarea name="contact" id="contact" class="form-control"><?php echo $this->getRetailer()->offsetGet('contact') ?></textarea>
+                <input type="tel" name="tel" id="tel" class="form-control" value="<?php echo $this->getRetailer()->offsetGet('QQ') ?>" />
             </div>
         </div>
         <div class="input-box">
-            <label class="control-label" for="description"><?php echo $this->translate('Description') ?></label>
+            <label class="control-label" for="contact"><?php echo $this->translate('Ali wangwang') ?>：</label>
+            <div class="cell">
+               <input type="tel" name="tel" id="tel" class="form-control" value="<?php echo $this->getRetailer()->offsetGet('QQ') ?>" />
+            </div>
+        </div>
+        <div class="input-box">
+            <label class="control-label" for="description"><?php echo $this->translate('Introduction') ?>：</label>
             <div class="cell">
                 <textarea name="description" id="description" class="form-control"><?php echo $this->getRetailer()->offsetGet('description') ?></textarea>
             </div>
         </div>
         <div class="input-box">
-            <label class="control-label" for="keywords"><?php echo $this->translate('Keywords') ?></label>
-            <div class="cell">
-                <textarea name="keywords" id="keywords" class="form-control"><?php echo $this->getRetailer()->offsetGet('keywords') ?></textarea>
-            </div>
-        </div>
-        <div class="input-box">
-            <label class="control-label" for="profile"><?php echo $this->translate('Logo') ?></label>
-            <div class="cell">
-                <?php if ($profile = $this->getRetailer()->offsetGet('profile')): ?>
-                    <img src="data:image/png;base64, <?php echo base64_encode($profile) ?>" width="100" alt="" />
-                <?php endif ?>
-                <input type="file" name="profile" id="profile" accept="image/*" class="form-control" />
-            </div>
-        </div>
-        <div class="input-box">
-            <label class="control-label" for="watermark"><?php echo $this->translate('Watermark') ?></label>
-            <div class="cell">
+            <label class="control-label" for="watermark"><?php echo $this->translate('Watermark') ?>：</label>
+            <div class="cell file_form">
                 <?php if ($watermark = $this->getRetailer()->offsetGet('watermark')): ?>
                     <img src="data:image/png;base64, <?php echo base64_encode($watermark) ?>" width="100" alt="" />
                 <?php endif ?>
-                <input type="file" name="watermark" id="watermark" accept="image/*" class="form-control" />
+                <input type="file" name="watermark" id="watermark" accept="image/*" class=" " />
+                
             </div>
         </div>
         <div class="buttons-set">

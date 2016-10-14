@@ -34,7 +34,7 @@
             }
         };
         var recursiveCheck = function () {
-            var flag = this.checked;
+            var flag = $(this).find('[type=checkbox]').prop('checked');
             if (flag) {
                 var next = $(this).next();
                 if ($(next).is('.product-list')) {
@@ -57,7 +57,7 @@
                     if ($(this).is('.store [type=checkbox]')) {
                         recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
                     } else {
-                        $('#cart .store [type=checkbox]').prop('checked', this.checked);
+                        $('#cart [type=checkbox]').prop('checked', this.checked);
                     }
                 }
             }

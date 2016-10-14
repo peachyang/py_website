@@ -50,12 +50,11 @@ class Pager extends Template
     public function setCollection(AbstractCollection $collection)
     {
         $this->collection = clone $collection;
-        $this->limit = (int) $collection->getRawState('limit');
+        $this->limit = (int) $collection->getRawState('limit') ?: 20;
         $this->page = (int) ($collection->getRawState('offset') / $this->limit + 1);
-        $this->collection->columns(['count' => new Expression('count(' . $this->collection->getRawState('table') . '.id)')])
-                ->reset('offset')
-                ->limit(1);
-        $this->total = $this->collection[0]['count'];
+        $this->collection->reset('limit')
+                ->reset('offset');
+        $this->total = $this->collection->count();
         return $this;
     }
 

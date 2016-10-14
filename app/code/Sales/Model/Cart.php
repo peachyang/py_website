@@ -73,12 +73,22 @@ final class Cart extends AbstractModel implements Singleton
 
     public function abandon()
     {
-        if ($this->storage['status']) {
-            $this->setData('status', 0)->save();
+        $items = $this->getItems(true);
+        foreach ($items as $item) {
+            if ($item['status']) {
+                $this->removeItem($item);
+            }
         }
-        $segment = new Segment('customer');
-        $segment->offsetUnset('cart');
-        static::$instance = null;
+        if (count($items)) {
+            $this->collateTotals();
+        } else {
+            if ($this->storage['status']) {
+                $this->setData('status', 0)->save();
+            }
+            $segment = new Segment('customer');
+            $segment->offsetUnset('cart');
+            static::$instance = null;
+        }
     }
 
     public function combine($cart)
@@ -181,6 +191,7 @@ final class Cart extends AbstractModel implements Singleton
         ksort($options);
         $this->getEventDispatcher()->trigger('cart.add.before', [
             'product_id' => $productId,
+            'product' => $product,
             'qty' => $qty,
             'warehouse_id' => $warehouseId,
             'sku' => $sku,
@@ -435,11 +446,11 @@ final class Cart extends AbstractModel implements Singleton
         return null;
     }
 
-    public function getQty($storeId = null)
+    public function getQty($storeId = null, $withDisabled = false)
     {
         $qty = 0;
         foreach ($this->getItems() as $item) {
-            if ((is_null($storeId) || $item->offsetGet('store_id') == $storeId) && $item['status']) {
+            if ((is_null($storeId) || $item->offsetGet('store_id') == $storeId) && ($withDisabled || $item['status'])) {
                 $qty += $item['qty'];
             }
         }

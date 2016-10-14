@@ -57,7 +57,7 @@ class Order extends AbstractModel
                 ])->setId(null)->save();
         $orderId = $this->getId();
         $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId, $orderId) {
-            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId) {
+            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId && $item['status']) {
                 if (is_array($item)) {
                     $item = new Item($item);
                 } else {

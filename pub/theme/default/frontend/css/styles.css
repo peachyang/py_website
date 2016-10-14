@@ -566,15 +566,21 @@ dl.options dd{float:left;margin-left:4px}
 .Brand_name{margin:10px 0}
 .mg-bottom-40 .category_table{border: 1px solid #eee;}
 .mg-bottom-40 .category_table .table_head{background:#fbfbfb}
+.mg-bottom-40 .category_table .table_head th{padding:5px 0}
+
 .mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
 .evaluate .down_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 20px;}
 .mg-bottom-40  .class_menu{display:inline-table}
 .mg-bottom-40  .class_menu dt{padding:5px 30px}
-.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;position: relative;}
+.mg-bottom-40  .class_menu .border_left{border-left: 1px solid #eee;height: 8%;position: absolute;left: 105px;}
+.mg-bottom-40  .class_menu .border_bt{width: 29px;height: 1px;background: #eee;position: absolute;left: 105px;bottom: 177px;right: 0;}
 .mg-bottom-40  .class_menu dd{padding:5px 10px 5px 5px; }
 .mg-bottom-40  .dd_left{margin:15px 0  0 40px}
 .mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
-
+.mg-bottom-40  .class_menu .dd_content{position: relative;}
+.mg-bottom-40  .class_menu  .border_lf{border-left: 1px solid #eee;position: absolute;width: 1px;height: 26px;bottom:12px}
+.mg-bottom-40  .class_menu  .border_bt{width: 40px;height: 1px;background: #eee;position: absolute;top: 20px;left:0}
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,
@@ -835,25 +841,29 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist  .deccoration_topbg {background: #e3f4fd;width: 100%;height: 20px;border:1px solid #eee;border-bottom:none;margin-top:45px}
 .decorationlist .nav-tabs > li > a{border-radius:0}
 .decorationlist .nav > li > a:hover { background-color: #fff;}
-.decorationlist  button{margin:20px 10px}
+.decorationlist  .add_btn{margin:20px 10px}
 
 /* end */
 /*Evaluation Management*/
 .evaluate .down_icon {margin:20px 0 20px 70px}
 .evaluate .details .table{font-size:13px;color:#7e7f7f}
 .evaluate .details .table .buyer{color:#007dc6}
+.evaluate .details .table .star{color:#007dc6}
 .evaluate .details .table .price{color:#fc021f}
+.evaluate .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
 .evaluate .down_icon span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
 .evaluate .details .table td{border-top:none}
 .evaluate .details .table .title_img {width:90px}
 .evaluate .details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
 .evaluate .details .table .title_img img{border-radius:50px;width:35px}
 .evaluate .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
-.evaluate .details .table .title_img  .icon_comment{font-size:18px}
+.evaluate .details .table .title_img  .icon_comment{font-size:22px}
+.evaluate .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;display: table-caption;}
 .evaluate .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
 .evaluate .details .table .border_bt {border-bottom: 3px #eee dotted;}
 .evaluate .details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
-.evaluate .details{margin:30px 0}
+.evaluate .details{margin:30px 0;position:relative}
+.evaluate .details:last-child .border_left{display:none}
 /*end*/
 /* after-sales service*/
 .after .table_head{background:#fbfbfb}

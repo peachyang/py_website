@@ -18,7 +18,7 @@
     		</li>
     		<li>
     			 <a href="#TemplateSubject" data-toggle="tab">
-           			  <div class="seperation-title"><span class="title">主题模版</span> 共有  0 条记录</div>
+           			  <div class="seperation-title"><span class="title">主题模版</span> <span>共有  <?php echo count($templates) ?> 条记录</span></div>
            		</a>
     		</li>
     	</ul>
@@ -26,7 +26,7 @@
     	<!-- tabcontent -->
 	    <div id="myTabContent" class="tab-content">
     		<div class="tab-pane active" id="MyTemplates">
-    			<button class="btn btn-primary" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
+    			<button class="btn btn-primary add_btn" onclick="window.location='<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
     			<div class="decoration-content">
     				<ul>
     					<?php foreach ($templates as $key => $template) { ?>

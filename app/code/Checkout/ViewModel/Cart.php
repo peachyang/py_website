@@ -25,10 +25,10 @@ class Cart extends Template
         return $this->getContainer()->get('currency');
     }
 
-    public function getQty($force = true)
+    public function getQty($withDisabled = false)
     {
         if (is_null(self::$qty)) {
-            self::$qty = $this->getCart()->getQty(null, $force);
+            self::$qty = $this->getCart()->getQty(null, $withDisabled);
         }
         return self::$qty;
     }

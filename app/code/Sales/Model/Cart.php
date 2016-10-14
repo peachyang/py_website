@@ -446,11 +446,11 @@ final class Cart extends AbstractModel implements Singleton
         return null;
     }
 
-    public function getQty($storeId = null, $force = true)
+    public function getQty($storeId = null, $withDisabled = false)
     {
         $qty = 0;
         foreach ($this->getItems() as $item) {
-            if ((is_null($storeId) || $item->offsetGet('store_id') == $storeId) && ($force || $item['status'])) {
+            if ((is_null($storeId) || $item->offsetGet('store_id') == $storeId) && ($withDisabled || $item['status'])) {
                 $qty += $item['qty'];
             }
         }

@@ -520,12 +520,30 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-20{margin-bottom:20px}
 .mg-bottom-30{margin-bottom:30px}
 .mg-bottom-40{margin-bottom:40px}
-.enroll{margin:20px 0}
+/*activity*/
+.activity_body .enroll button{font-size:12px;border: none;padding: 5px 15px;}
+.activity_body .enroll .whole{background: #007dc6;color: #fff;margin:0 15px 0 0}
+.activity_body  .activity_table table{border:1px solid #eee;padding:0 20px}
+.activity_body  .activity_table table .margin{padding-left:15px}
+.activity_body .enroll .filter{background: #b8e5ff;color: #646565;}
+.activity_body  .activity_table thead{border-bottom:1px solid #eee;background: #fbfbfb;}
+.activity_body  .activity_table tr{border-top:1px solid #eee;}
+.activity_body  .activity_table td{border-top:none;padding:30px 0}
+.activity_body  .activity_list {margin:40px 0}
+.activity_body  .activity_table th{padding:10px 0}
+.activity_body .enroll{margin:20px 0;}
+.activity_body  .activity_table  .link{background: #007dc6;padding: 5px 20px;color: #fff;font-size: 13px;}
+.activity_body .nav-tabs > li.active > a{color:#007dc6}
+.activity_body .nav-tabs > li > a{color: #000;font-weight: 700;font-size: 14px;}
 .Promotion{margin:20px 0}
-.enroll button{padding:3px}
+
 .evaluation {margin:20px 0}
  .evaluation_left{display:inline-block;margin:0 15px 10px 0;}
 .evaluation .evaluation_left .btn{margin-left:34px}
+
+.activity_body .activity{margin:30px 0}
+.activity_body  .activity_search div{margin:0 10px;display: inline-table;}
+.activity_body #activity{margin:30px 0}
 .sale{margin:20px 0}
 .shop_img{margin:20px 0}
 .shop_img .shop_button button{border-radius:0;margin:0 10px 10px 0}
@@ -817,6 +835,8 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist  .deccoration_topbg {background: #e3f4fd;width: 100%;height: 20px;border:1px solid #eee;border-bottom:none;margin-top:45px}
 .decorationlist .nav-tabs > li > a{border-radius:0}
 .decorationlist .nav > li > a:hover { background-color: #fff;}
+.decorationlist  button{margin:20px 10px}
+
 /* end */
 /*Evaluation Management*/
 .evaluate .down_icon {margin:20px 0 20px 70px}

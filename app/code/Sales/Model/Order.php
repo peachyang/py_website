@@ -147,9 +147,9 @@ class Order extends AbstractModel
     public function getAdditional($key = null)
     {
         if (is_null($this->additional)) {
-            $this->additional = $this->storage['additional'] ? json_decode($this->storage['additional'], true) : [];
+            $this->additional = empty($this->storage['additional']) ? [] : json_decode($this->storage['additional'], true);
         }
-        return $key ? $this->additional[$key] : $this->additional;
+        return $key ? ($this->additional[$key] ?? '') : $this->additional;
     }
 
     public function getCoupon()
@@ -357,7 +357,12 @@ class Order extends AbstractModel
                     ->order('created_at DESC')
                     ->limit(1)
             ->where->notEqualTo('status_id', $this->storage['status_id']);
-            $userId = (new Segment('admin'))->get('user')->getId();
+            $user = new Segment('admin');
+            if($user->get('user')){
+                $userId = $user->get('user')->getId();
+            }else{
+                $userId = null;
+            }
             if (count($history)) {
                 $statusId = $history[0]->offsetGet('status_id');
                 $statusName = $history[0]->offsetGet('name');

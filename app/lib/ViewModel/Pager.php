@@ -55,6 +55,12 @@ class Pager extends Template
         $this->collection->columns(['count' => new Expression('count(' . $this->collection->getRawState('table') . '.id)')])
                 ->reset('offset')
                 ->limit(1);
+        $joins = $this->collection->getRawState('join');
+        if ($joins) {
+            foreach($joins as &$join){
+                $join['column'] = [];
+            }
+        }
         $this->total = $this->collection[0]['count'];
         return $this;
     }

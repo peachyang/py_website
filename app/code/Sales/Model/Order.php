@@ -147,9 +147,9 @@ class Order extends AbstractModel
     public function getAdditional($key = null)
     {
         if (is_null($this->additional)) {
-            $this->additional = $this->storage['additional'] ? json_decode($this->storage['additional'], true) : [];
+            $this->additional = empty($this->storage['additional']) ? [] : json_decode($this->storage['additional'], true);
         }
-        return $key ? $this->additional[$key] : $this->additional;
+        return $key ? ($this->additional[$key] ?? '') : $this->additional;
     }
 
     public function getCoupon()

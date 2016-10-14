@@ -83,8 +83,6 @@ class CreditMemo extends AbstractModel
             'subtotal' => $currency->convert($this->storage['base_subtotal']),
             'shipping' => $currency->convert($this->storage['base_shipping'])
         ]);
-        $this->getEventDispatcher()->trigger('tax.calc', ['model' => $this]);
-        $this->getEventDispatcher()->trigger('promotion.calc', ['model' => $this]);
         $this->setData([
             'base_total' => $this->storage['base_subtotal'] +
             $this->storage['base_shipping'] +

@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `sales_order_invoice` (
     `order_id` INTEGER UNSIGNED NOT NULL COMMENT 'Order ID',
     `increment_id` VARCHAR(255) NOT NULL COMMENT 'Increment ID',
     `store_id` INTEGER UNSIGNED DEFAULT NULL COMMENT 'Store ID',
+    `coupon` VARCHAR(50) DEFAULT NULL COMMENT 'Coupon',
     `base_currency` CHAR(3) NOT NULL COMMENT 'Base currency code',
     `currency` CHAR(3) NOT NULL COMMENT 'Currency code',
     `base_subtotal` DECIMAL(12,4) DEFAULT 0 COMMENT 'Base subtotal',
@@ -457,7 +458,7 @@ CREATE TABLE IF NOT EXISTS `log_viewed_product` (
     `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
     `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
     PRIMARY KEY (`id`),
     INDEX IDX_LOG_VIEW_CUSTOMER_ID (`customer_id`),
     INDEX IDX_LOG_VIEW_PRODUCT_ID (`product_id`),
@@ -718,7 +719,7 @@ CREATE TABLE IF NOT EXISTS `retailer_category_with_product` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_credit_card` (
-    `id` INTEGER UNSIGNED NOT NULL COMMENT 'Card ID',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Card ID',
     `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Customer ID',
     `name` VARCHAR(255) NOT NULL COMMENT 'Name',
     `type` VARCHAR(255) NOT NULL COMMENT 'Type',

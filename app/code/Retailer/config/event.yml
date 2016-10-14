@@ -1,0 +1,5 @@
+---
+cart.add.before:
+    -
+        listener: [\Seahinet\Retailer\Listeners\Farm, check]
+        priority: 5

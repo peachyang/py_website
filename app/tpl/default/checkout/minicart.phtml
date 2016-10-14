@@ -1,13 +1,12 @@
 <?php
 $csrf = $this->getCsrfKey();
 $items = $this->getItems();
-$item_model = new \Seahinet\Checkout\ViewModel\Cart\Item();
 ?>
 <div class="minicart dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle">
         <span class="fa fa-shopping-cart" aria-hidden="true"></span>
         <span><?php echo $this->translate('Shopping Cart', [], 'checkout') ?></span>
-        <span class="badge"><?php echo $this->getQty() ?></span>
+        <span class="badge"><?php echo $this->getQty(true) ?></span>
     </a>
     <div class="dropdown-menu dropdown-menu-right">
         <ul class="items"><?php

@@ -2,12 +2,13 @@
 
 namespace Seahinet\Admin\Controller;
 
-use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AuthActionController;
 
 class CacheController extends AuthActionController
 {
 
+    use \Seahinet\Lib\Traits\Shmop;
+    
     public function indexAction()
     {
         return $this->getLayout('admin_cache');
@@ -22,9 +23,7 @@ class CacheController extends AuthActionController
         if ($code) {
             $count = 0;
             foreach ((array) $code as $prefix) {
-                if ($prefix === 'SYSTEM_CONFIG') {
-                    $this->flushShmop();
-                } else {
+                if ($prefix !== 'SYSTEM_CONFIG' || !$this->flushShmop()) {
                     $list = $cache->fetch('CACHE_LIST_' . $prefix);
                     $eventDispatcher->trigger($prefix . '.cache.delete.before', ['prefix' => $prefix, 'list' => $list]);
                     if ($list) {
@@ -32,7 +31,7 @@ class CacheController extends AuthActionController
                             $cache->delete($key, $prefix);
                         }
                     } else {
-                        $cache->delete('', $prefix);
+                        $cache->delete($prefix);
                     }
                 }
                 $eventDispatcher->trigger($prefix . '.cache.delete.after', ['prefix' => $prefix]);
@@ -47,25 +46,6 @@ class CacheController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('All caches have been flushed successfully.'), 'level' => 'success'];
         }
         return $this->response($result, ':ADMIN/cache/');
-    }
-
-    public function flushShmop()
-    {
-        if (extension_loaded('shmop')) {
-            $ftok = function_exists('ftok') ? 'ftok' : function($pathname, $proj) {
-                $st = @stat($pathname);
-                if (!$st) {
-                    return -1;
-                }
-                $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
-                return $key;
-            };
-            $shmid = @shmop_open($ftok(BP . 'app/lib/Bootstrap.php', 'R'), 'w', 0644, Bootstrap::SHMOP_SIZE);
-            if ($shmid) {
-                shmop_delete($shmid);
-                shmop_close($shmid);
-            }
-        }
     }
 
 }

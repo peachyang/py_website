@@ -264,10 +264,10 @@ class Product extends Entity
                 }
             }
             $images = array_values($images);
-            if (empty($this->storage['default_image'])) {
+            if (empty($this->storage['default_image']) && !empty($images)) {
                 $this->storage['default_image'] = $images[0]['id'];
             }
-            if (empty($this->storage['thumbnail'])) {
+            if (empty($this->storage['thumbnail']) && !empty($images)) {
                 $this->storage['thumbnail'] = $images[0]['id'];
             }
             $this->storage['images'] = json_encode($images);

@@ -8,7 +8,6 @@
             <div class="item col-sm-4"><?php echo $this->translate('Complate', [], 'checkout') ?></div>
         </div>
         <form action="<?php echo $this->getBaseUrl('checkout/cart/update/') ?>" method="post">
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <table class="table" id="cart">
                 <colgroup>
                     <col width="1" />
@@ -22,7 +21,7 @@
                 <thead>
                     <tr>
                         <th colspan="2" class="selectall">
-                            <input type="checkbox" checked="checked" id="head-selectall" />
+                            <input type="checkbox" id="head-selectall" />
                             <label for="head-selectall">
                                 <?php echo $this->translate('Select All') ?>
                             </label>
@@ -52,7 +51,7 @@
                             ?>
                             <tr class="store">
                                 <th>
-                                    <input type="checkbox" checked class="selectall" value="<?php echo $item['store']['id'] ?>">
+                                    <input type="checkbox" class="selectall" value="<?php echo $item['store']['id'] ?>">
                                 </th>
                                 <th colspan="6">
                                     <?php echo $item['store']['name'] ?>
@@ -66,13 +65,12 @@
                         echo $this->getRow($item);
                     }
                     ?>
-                    <tr><th></th></tr>
-                    <tr><th></th></tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="3" class="selectall">
-                            <input type="checkbox" checked="checked" id="foot-selectall" />
+                            <input type="checkbox" id="foot-selectall" />
+                            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                             <label for="foot-selectall">
                                 <?php echo $this->translate('Select All') ?>
                             </label>
@@ -91,14 +89,14 @@
             </table>
         </form>
     <?php else: ?>
-    <div class="empty_cart">
-        <div class="cart_img">
-            <img src="<?php echo $this->getBaseUrl()?>pub/theme/default/frontend/images/shopping_cart.jpg">
+        <div class="empty_cart">
+            <div class="cart_img">
+                <img src="<?php echo $this->getBaseUrl() ?>pub/theme/default/frontend/images/shopping_cart.jpg">
+            </div>
+            <ul>
+                <li><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></li>
+            </ul>
         </div>
-        <ul>
-            <li><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></li>
-        </ul>
-    </div>
     <?php endif; ?>
     <?php
     $countC = count($this->getChild('crosssell')->getProducts());

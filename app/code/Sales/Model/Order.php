@@ -24,6 +24,7 @@ class Order extends AbstractModel
 
     protected $items = null;
     protected $phase = null;
+    protected $additional = null;
 
     protected function construct()
     {
@@ -56,7 +57,7 @@ class Order extends AbstractModel
                 ])->setId(null)->save();
         $orderId = $this->getId();
         $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId, $orderId) {
-            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId) {
+            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId && $item['status']) {
                 if (is_array($item)) {
                     $item = new Item($item);
                 } else {
@@ -141,6 +142,14 @@ class Order extends AbstractModel
             return $address->getId() ? $address : null;
         }
         return null;
+    }
+
+    public function getAdditional($key = null)
+    {
+        if (is_null($this->additional)) {
+            $this->additional = empty($this->storage['additional']) ? [] : json_decode($this->storage['additional'], true);
+        }
+        return $key ? ($this->additional[$key] ?? '') : $this->additional;
     }
 
     public function getCoupon()
@@ -348,7 +357,12 @@ class Order extends AbstractModel
                     ->order('created_at DESC')
                     ->limit(1)
             ->where->notEqualTo('status_id', $this->storage['status_id']);
-            $userId = (new Segment('admin'))->get('user')->getId();
+            $user = new Segment('admin');
+            if($user->get('user')){
+                $userId = $user->get('user')->getId();
+            }else{
+                $userId = null;
+            }
             if (count($history)) {
                 $statusId = $history[0]->offsetGet('status_id');
                 $statusName = $history[0]->offsetGet('name');

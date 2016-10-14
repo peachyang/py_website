@@ -9,7 +9,7 @@ product.price.calc:
 cart.add.before:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, check]
-        priority: 0
+        priority: 10
 order.place.after:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, decrease]

@@ -204,6 +204,69 @@ retailer_product:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+retailer_sales_shipment_edit:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js', defer:'defer', async:'async'}]
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Sales\Edit\Shipment
+                        template: retailer/sales/edit/shipment
+retailer_sales_shipment_print:
+    update: retailer_account
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Sales\View\Shipment
+                        template: retailer/sales/print/shipment
+retailer_sales_invoice_edit:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Invoice / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Sales\Edit\Invoice
+                        template: retailer/sales/edit/invoice
+retailer_sales_creditmemo_edit:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Credit Memo / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/sales.js',defer:'defer',async:'async'}]
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Sales\Edit\CreditMemo
+                        template: Retailer/sales/edit/creditmemo
 retailer_sales_products:
     update: retailer_account
     root:

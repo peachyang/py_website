@@ -688,3 +688,13 @@ admin_media_edit:
                             icon:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: admin/customer/icon
+admin_customer_creditcard:
+    update: admin
+    root:
+        template: page/empty
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: admin/customer/creditcard

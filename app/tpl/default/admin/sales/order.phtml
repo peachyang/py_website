@@ -101,7 +101,14 @@ $currency = $order->getCurrency();
             <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
         </div>
         <div class="panel-body">
-            <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+            <?php
+            echo $this->translate($order->getPaymentMethod()->getLabel());
+            if ($card = $order->getAdditional('credit_card') && $this->hasPermission('Admin\\Customer\\Creditcard::index')):
+                ?>
+                <a href="javascript:void(0);" onclick="window.open('<?php echo $this->getAdminUrl('customer_creditcard/?id=' . $card) ?>', '', 'status=no,scroll=no,width=600,height=400').focus()"><?php echo $this->translate('View') ?></a>
+            <?php endif ?>
+            <br />
+            <?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
         </div>
     </div>
     <?php if ($this->getCollection()): ?>

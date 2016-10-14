@@ -2,7 +2,10 @@
 
 namespace Seahinet\Lib\ViewModel;
 
-use Seahinet\Lib\Session\Csrf;
+use Seahinet\Lib\Session\{
+    Csrf,
+    Segment
+};
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
 use Serializable;
@@ -140,7 +143,7 @@ abstract class AbstractViewModel implements Serializable
         if (is_callable([$this, $method])) {
             return $this->$method();
         }
-        return $this->getVariable($name)? : $this->getChild($name);
+        return $this->getVariable($name) ?: $this->getChild($name);
     }
 
     /**
@@ -319,6 +322,21 @@ abstract class AbstractViewModel implements Serializable
             self::$isAdmin = in_array('admin', Root::instance()->getBodyClass(true));
         }
         return self::$isAdmin;
+    }
+
+    /**
+     * Whether current role has specific permission
+     * 
+     * @param string $key
+     * @return bool
+     */
+    public function hasPermission($key)
+    {
+        if ($this->isAdminPage()) {
+            $segment = new \Seahinet\Lib\Session\Segment('admin');
+            return $segment->get('user')->getRole()->hasPermission($key);
+        }
+        return false;
     }
 
     /**

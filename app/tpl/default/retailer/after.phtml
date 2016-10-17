@@ -1,92 +1,66 @@
+<?php 
 
+?>
 <div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
-    <h3><?php echo $this->translate('After Service'); ?></h3>
-    
+    <h3><?php echo $this->translate('After Service'); ?></h3>    
     <div id="scarch_order">
         <form method="get">
             <div class="sale">
-            	<div class="evaluation_left">
-            		  <span>订单号:</span>
-               			 <input type="text" value="" name="order_sn">
-            	</div>
-            	<div class="evaluation_left">
-            		  <span>申请时间:</span>
-                	<input type="text" value="" id="apply_time_from" name="apply_time_from"> &ndash; <input type="text" value="" name="apply_time_to" id="apply_time_to">
-            	</div>
-            	<div class="evaluation_left">
-            	
-                <span>买&nbsp;&nbsp;&nbsp;家:</span>
-                <input type="text" value="" name="buyer_name">
-                <input type="submit" value="搜索" class="btn">
-            	</div>
-            	
-              
-             
+                <div class="evaluation_left">
+                    <label for="order_sn">订单号:</span>
+                    <input type="text" value="" name="order_sn">&nbsp;&nbsp;
+                    <label for="apply_time_from">申请时间:</label>
+                    <input type="text" value="" id="apply_time_from" name="apply_time_from"> &ndash; <input type="text" value="" name="apply_time_to" id="apply_time_to">&nbsp;&nbsp;
+                    <label for="buyer_name">买家:</label>
+                    <input type="text" value="" name="buyer_name">
+                    <input type="submit" value="<?php echo $this->translate('Search');?>" class="btn">
+                </div>
             </div>
         </form>
     </div>
-    <br /><br />
-<div class="after">
-<table class="table address-list text-center">
-		<thead style="border:1px solid #eee">
-	    <tr class="table_head ">
-	      <th class="col-md-4 text-center">宝贝</th>
-	      <th class="col-md-2 text-center ">售后编号</th>
-	      <th class="text-right col-md-1">售后原因</th>
-	      <th class="text-center">状态</th>
-	      <th class="text-center">时间</th>
-	      <th class="text-center">操作</th>
-	      
-	      <th></th>
-	    </tr>
-	  </thead>
-</table>
-<table class="table table-no-border table_content">
- 	     <caption>
-            <div class="col-xs-6 store">雄鹰能量棒 <a href=""><span class="fa fa-qq"></span></a></div>
-            <div class="col-xs-6 text-right list_right">
-                <span class="label">订单号：</span>
-                <span>20771553987443</span>
-                <span class="list_time">2016-07-15</span>
-                
-            </div>
-        </caption>
-		<tbody class="table_body">
-
-            <tr>
-                <td>
-                <img class="Thumbnail" src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/TB12zVxHpXXXXbuaXXXXXXXXXXX_!!0-item_pic.jpg" alt="">
-                   
-                </td>
-                <td class="text-vtop ">
-                    <div class="product-name">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒</div> 
-                </td>
-                <td class=" text-left"> <span>20771553987443</span></td>
-                <td class="after_replace  text-center">
-                   <span class="after_color"><a href="">换货申请</a></span>
-               
-                </td>
-                <td "="" class="after_replace text-right after_color"><a href="">买家提出申请</a>
-                </td>
-                <td class="text-right">
-                   <span class="list_time">2016-07-15&nbsp;&nbsp;16:55:34</span>
-                </td>
-              
-                <td class="text-center">
-                    <button class="after_bt">取消</button>
-                    <div><a target="_blank" href="http://127.0.0.1/ecomv2admin/retailer/transaction/afterview">查看详情</a>
-					</div>
-                </td>
-             
-            </tr>
-          
-        </tbody>
-</table>
-</div>
-    
-    
-   
-    
+    <div class="after">
+        <table class="table order-list text-center">
+            <thead>
+                <tr class="table_head">
+                    <th class="col-lg-4 col-md-4  text-center">宝贝</th>
+                    <th class="col-lg-2 col-md-2  text-center">售后编号</th>
+                    <th class="col-lg-2 col-md-2  text-center">售后原因</th>
+                    <th class="col-lg-1 col-md-1  text-center">状态</th>
+                    <th class="col-lg-2 col-md-2  text-center">时间</th>
+                    <th class="col-lg-1 col-md-1  text-center">操作</th>
+                </tr>
+            </thead>
+            <caption>
+                <div class="col-xs-6 store">雄鹰能量棒 <a href=""><span class="fa fa-qq"></span></a></div>
+                <div class="col-xs-6 text-right list_right">
+                    <span class="label">订单号：</span>
+                    <span>20771553987443</span>
+                    <span class="list_time">2016-07-15</span>
+                </div>
+            </caption>
+                <tbody>
+                <tr>
+                    <td class="col-lg-4 col-md-4">
+                        <img class="Thumbnail" src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/TB12zVxHpXXXXbuaXXXXXXXXXXX_!!0-item_pic.jpg" alt="">
+                        <h4>雄鹰能量棒Eagle Energy吸入式咖啡因能量棒</p> 
+                    </td>
+                    <td class="col-lg-2 col-md-2 text-center"> <span>1216100814216147</span></td>
+                    <td class="col-lg-1 col-md-1 text-center">
+                        <span class="after_color"><a href="">换货申请</a></span>
+                    </td>
+                    <td class="col-lg-1 col-md-1 text-center"><a href="">处理中</a></td>
+                    <td class="col-lg-2 col-md-2 text-center">
+                        <span class="list_time">2016-07-15&nbsp;&nbsp;16:55:34</span>
+                    </td>
+                    <td class="col-lg-1 col-md-1 text-center">
+                        <button class="after_bt">取消</button>
+                        <div><a target="_blank" href="http://127.0.0.1/ecomv2admin/retailer/transaction/afterview">查看详情</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -111,7 +85,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="modal-agree" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="agreedModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -147,5 +121,4 @@
             </div>
         </div>
     </div>
-    
 </div>

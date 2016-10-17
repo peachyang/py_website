@@ -1,0 +1,16 @@
+<div class="main_article_content text-center">
+    <p style="max-height:38px;line-height:38px;border-bottom:1px solid #dbdee5"><span style="display:block;text-align:center;max-height:38px;line-height:38px;max-width:110px;max-height:38px;line-height:38px;border-bottom:1px solid #007dc6;font-size:14px;color:#007dc6">订单查询</span></p>
+    <div class="columns">
+        <p>输入你的订单号和账单地址的电子邮箱来查找你的订单。</p>
+
+        <form action="<?php echo $this->getBaseUrl() ?>sales_order/" id="orderStatusForm" method="get" novalidate="novalidate">
+            <fieldset><label class="text-left" for="orderNumber">订单号:</label><br />
+                <input class="required" data-required="true" id="orderNumber" name="orderNumber" type="text" />
+                <div class="error hidden" data-form-error="true">请输入订单号。</div>
+            </fieldset>
+
+            <fieldset><label class="text-left" for="zipEmail">账单地址的电子邮箱 （支付宝订单请使用配送地址邮箱）:</label><br />
+                <input class="required" data-required="true" id="zipEmail" name="zipEmail" type="text" /></fieldset>
+            <button class="button-pink status-submit" type="submit">发送</button></form>
+    </div>
+</div>

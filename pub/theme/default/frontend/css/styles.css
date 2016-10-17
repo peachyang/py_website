@@ -73,10 +73,25 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .minicart:hover .dropdown-menu{display:block}
 .header .nav-main{background:#fff}
 .header .nav-main .nav>li>a{background:none;font-size:16px;line-height:36px;color:#000;padding:0 18px}
+.header .nav-main .nav .dropdown-menu{padding:9px 0;border:none;box-shadow:none}
+.header .nav-main .nav .dropdown-menu a{font-size:14px;line-height:36px}
 .header .nav-main .nav>.dropdown>.dropdown-toggle:after{content:" ";display:inline-block;border:5px solid transparent;border-bottom:none;border-top:8px solid #007dc6;margin-left:8px}
+.header .nav-main .nav>.dropdown>.dropdown-menu{background:#f5f6f9}
+.page-home .header .nav-main .nav>.dropdown>.dropdown-menu{display:block}
+.header .nav-main .dropdown a:hover,.header .nav-main .dropdown a:focus{background:none}
 .header .nav-main .dropdown:hover>.dropdown-menu{display:block;border-radius:0;border-top:none}
-.header .nav-main .dropdown .dropdown{position:static}
-.header .nav-main .dropdown .dropdown>.dropdown-menu{left:100%;top:0;min-height:100%}
+.header .nav-main .dropdown .dropdown{position:static;border:1px solid transparent}
+.header .nav-main .dropdown .dropdown:hover{background:#fff;color:#007dc6;border:1px solid;border-right:none}
+.header .nav-main .dropdown .dropdown ul a:hover{text-decoration:underline}
+.header .nav-main .dropdown .dropdown>.dropdown-menu{left:100%;top:0;min-height:100%;border:1px solid #007dc6;z-index:-1;margin-left:-1px;padding:10px}
+.header .nav-main .dropdown .dropdown img{float:left;max-width:50px;max-height:50px}
+.header .nav-main .dropdown .dropdown img~*{float:right;width:calc(100% - 60px);clear:none}
+.header .nav-main .dropdown-menu.children{width:600px}
+.header .nav-main .dropdown-menu.children>li{height:60px;margin-bottom:10px}
+.header .nav-main .dropdown-menu.children>li>a{font-size:14px;line-height:24px;color:#007dc6;font-weight:bold;padding:0}
+.header .nav-main .dropdown-menu.children ul{font-size:12px;max-height:3em;overflow:hidden;line-height:1.5}
+.header .nav-main .dropdown-menu.children ul li{margin-right:1em;line-height:inherit}
+.header .nav-main .dropdown-menu.children ul a{font-size:inherit;line-height:inherit;color:#444}
 .breadcrumb .clearfix{display:none}
 .col-left+.col-main{padding:15px 0 100px 40px}
 .customer-account-login .input-box+.input-box{margin-top:25px}
@@ -292,7 +307,6 @@ dl.options dd{float:left;margin-left:4px}
 .customer-history .products-grid dt{font-size:14px;line-height:30px;}
 .customer-history .products-grid dt .fa{color:#007dc6;font-size:18px;}
 .customer-history .products-grid .viewed_title{font-size:13px}
-/* .customer-history .products-grid .browsinghistory{margin:20px 0} */
 .customer-account .sales-order-view .nav-tabs{margin:2% 0}
 .customer-account .sales-order-view .panel{width:49%;float:left;margin-bottom:2%}
 .customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
@@ -370,11 +384,9 @@ dl.options dd{float:left;margin-left:4px}
 .qty .spin:hover{color:#000}
 .qty .form-control{display:inline-block;font-size:14px;line-height:26px;border:1px solid #d4d4d4;border-left:none;border-right:none;width:52px;height:28px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
 .checkout-cart .main-container .table input[type="checkbox"]{cursor:pointer}
-.checkout-cart .empty_cart{width:100%;overflow:hidden;padding: 100px 260px;margin-bottom:100px}
-.checkout-cart .empty_cart .cart_img{float: left;margin-right:30px}
-.checkout-cart .empty_cart ul{float:left}
-.checkout-cart .empty_cart li{line-height:30px;margin-top: 50%}
-.checkout-cart .empty_cart li a{color:#007ecc}
+.checkout-cart .empty_cart{width:100%;overflow:hidden;padding:170px 0 170px 50%;background:url(../images/shopping_cart.jpg) 25% center no-repeat}
+.checkout-cart .empty_cart p{line-height:30px}
+.checkout-cart .empty_cart p a{color:#007ecc}
 .checkout-flow{text-align:center;border:1px solid #e1e1e1;margin:42px 0;overflow:hidden}
 .checkout-flow .item{font-size:18px;line-height:40px;color:#000;position:relative}
 .checkout-flow .item.active{background:#f1f1f1;color:#007dc6}
@@ -1068,3 +1080,4 @@ dl.options dd{float:left;margin-left:4px}
 .page-order-status .main_article_content .columns fieldset .text-left{text-align:left}
 .page-order-status .main_article_content .columns button{width: 50%;background:#007ecc;color: #fff;border:none;margin-top:10px;height:36px}
 .sales-order-list .page-content .list_table{margin:10px 0}
+.sales-refund .page-content{margin-top:30px}

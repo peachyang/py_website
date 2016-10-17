@@ -22,6 +22,34 @@ cms_page_with_nav:
                                 template: cms/navigation
                             page:
                                 type: Seahinet\Cms\ViewModel\Page
+cms_help_order_status:
+    update: help_center
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Select Orders
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Select Orders
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: cms/main
+                        children:
+                            navigation:
+                                type: Seahinet\Cms\ViewModel\Navigation
+                                template: cms/navigation
+                            order_status:
+                                type: Seahinet\Cms\ViewModel\Order_status
+                                template: cms/order_status
+                                
 admin_cms_page_list:
     update: grid
     root:

@@ -28,6 +28,18 @@ class Currency extends AbstractModel
         return $format ? $this->format($price) : $price;
     }
 
+    public function rconvert($price)
+    {
+        if (isset($this->storage['rate'])) {
+            if (function_exists('bcmul')) {
+                $price = bcdiv($price, $this->storage['rate']);
+            } else {
+                $price /= $this->storage['rate'];
+            }
+        }
+        return $price;
+    }
+
     public function format($price)
     {
         if (isset($this->storage['format'])) {

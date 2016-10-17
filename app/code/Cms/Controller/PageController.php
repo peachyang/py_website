@@ -31,4 +31,9 @@ class PageController extends ActionController
         return $root;
     }
 
+    public function orderStatusAction()
+    {
+        return $this->getLayout('cms_help_order_status');
+    }
+
 }

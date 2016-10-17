@@ -238,11 +238,15 @@ class StoreDecoration extends Template
 	
 	
 	public function template_menu($params='',$current_store_id = null){
+		$store_id = $this->judge_store_id($current_store_id);
+		$r = new Retailer;
+		$r->load($store_id,'store_id');
+		$url = $this->getBaseUrl().$r->getStoreUrl();		
 		$result = $this->getStorePicInfo('menu',$current_store_id);
-		$content = "";
+		$content = '<li class="menu" ><a  href="'.$url.'">首 页</a></li>';
 		foreach ($result as $key => $value) {
 			if(trim($value['url'])!="")
-				$content .= '<li class="menu" ><a target=_blank href="'.$value['url'].'">'.$value['pic_title'].'</a></li>';
+				$content .= '<li class="menu" ><a  href="'.$value['url'].'">'.$value['pic_title'].'</a></li>';
 			else
 				$content .= '<li class="menu" ><a  href="javascript:void(0)">'.$value['pic_title'].'</a></li>';
 		}

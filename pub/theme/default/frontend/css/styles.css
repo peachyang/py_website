@@ -536,7 +536,7 @@ dl.options dd{float:left;margin-left:4px}
 .activity_body .nav-tabs > li > a{color: #000;font-weight: 700;font-size: 14px;}
 .Promotion{margin:20px 0}
 
-.evaluation {margin:20px 0}
+.evaluation {margin: 40px 0 20px 0;}
  .evaluation_left{display:inline-block;margin:0 15px 10px 0;}
 .evaluation .evaluation_left .btn{margin-left:34px}
 
@@ -568,7 +568,7 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-40 .category_table .table_head th{padding:5px 0}
 
 .mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
-.evaluate .down_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 20px;}
+.evaluate .down_icon i{font-size:18px;color:#c1c1c1;margin: 0 10px 0 20px;}
 .mg-bottom-40  .class_menu{display:inline-table}
 .mg-bottom-40  .class_menu dt{padding:5px 30px}
 .mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;position: relative;}
@@ -617,7 +617,10 @@ dl.options dd{float:left;margin-left:4px}
 .filter-bar{margin:20px 0;background:#fafafa none repeat scroll 0 0;border-bottom:1px solid #cce0e9;padding:8px 0;font-size:13px}
 .filter-bar .form-control{border-color: #eee;border-radius: 0;margin: 0 30px 10px 5px;height:21px;line-height:21px;width:130px;padding:0 .75em}
 .filter-bar select.form-control{padding:0 .42em}
+.filter-bar #receiver_phone{margin-left:-16px}
 .filter-bar .form-inline span{margin:0 15px} 
+.filter-bar .form-inline  .commodity li{display: inline-flex;vertical-align: middle;}
+.filter-bar .form-inline  .commodity_btn{margin:16px 0}
 .filter-bar .btn{background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;margin-left:15px;padding:5px 10px;text-decoration:none}
 .btn-options{background-color:#fff;border:1px solid #dcdcdc;color:#3c3c3c;font-size:12px;height:24px;line-height:22px}
 .table-title{background:#f9f9f9 none repeat scroll 0 0;border:1px solid #ececec;margin-bottom:5px;text-align:center}
@@ -681,7 +684,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .tab-pane{padding:10px 0 0 30px}
 .product-edit .nav-tabs{border-bottom:1px solid #cce0e9;margin-top:15px}
 .product-edit .nav-tabs ~ .tab-pane{display:none}
-.product-edit .required{width:260px}
+/* .product-edit .required{width:260px} */
 .product-edit .tab-pane.active{display:table}
 .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
 .product-edit .grid .table.category ul{clear:both;padding-left:2em}
@@ -691,9 +694,10 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .nav-tabs li a{padding:10px}
 .product-edit .nav-tabs > .error > a{color:red}
 .product-edit .form-control.invalid{border-color:red}
+ #main-tab .input-box #attribute_set_id, #main-tab .input-box #status,.wishlist #main-tab #attribute_set,.wishlist #main-tab #product_type {width:260px;}
 .product-edit label.invalid{background:#000 none repeat scroll 0 0;border-radius:3px;bottom:100%;color:#fff;display:inline-block;font-size:12px;left:0;margin-bottom:3px;padding:2px 8px;position:absolute;text-align:center}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
-.product-edit input.form-control{height:auto;width:87px}
+/* .product-edit input.form-control{height:auto;width:87px} */
 .product-edit .control-label{display:inline-block;margin-right:2px;vertical-align:top;width:auto}
 .product-edit  .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
 
@@ -850,7 +854,7 @@ dl.options dd{float:left;margin-left:4px}
 .evaluate .details .table .star{color:#007dc6}
 .evaluate .details .table .price{color:#fc021f}
 .evaluate .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
-.evaluate .down_icon span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
+.evaluate .down_icon .span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
 .evaluate .details .table td{border-top:none}
 .evaluate .details .table .title_img {width:90px}
 .evaluate .details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}

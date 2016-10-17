@@ -9,7 +9,7 @@ $filter = $this->getVariable('filter');
     <div class="filter-bar" >
         <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="sell">
-                <ul>
+                <ul  class="commodity">
                     <li><span>商品名称:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
                     <li><span>商品编码:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
                     <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
@@ -31,9 +31,11 @@ $filter = $this->getVariable('filter');
                             <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
                         </select>
                     </li>
-                    <li><a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/history/'); ?>">重置</a> 
+                     <div class="commodity_btn">
+                     	<a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/history/'); ?>">重置</a> 
                         &nbsp;&nbsp; <button class="btn">搜 索</button>
-                    </li>	
+                     </div>
+
                 </ul>
             </div>
         </form>

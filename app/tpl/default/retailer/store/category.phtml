@@ -25,7 +25,8 @@
   			<tr>
   				<td class="text-left class_icon">
   					<input type="checkbox" class="check ">
-  					<i class="fa fa-caret-down text-center"></i>
+  					<a href="#" onclick="i_btn($(this))"><i class="fa fa-caret-down text-center"></i></a>
+  					
   					<div class="class_menu">
   						<dl>
 		  				<dt class="dl_border dt_border">家庭收纳用具</dt>
@@ -113,3 +114,16 @@
     </div>
     
 </div>
+<script>
+	function i_btn(env){
+ 		env.next('.class_menu').find('.dd_content').toggle();
+		var btn_i = env.find('i');
+		if(btn_i.is('.fa-caret-down')){
+			btn_i.removeClass();
+			btn_i.addClass('fa fa-caret-up text-center btn_i');
+		}else{
+			btn_i.removeClass();
+			btn_i.addClass('fa fa-caret-down text-center btn_i');
+		}
+	}
+</script>

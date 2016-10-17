@@ -64,12 +64,12 @@ class AlipayDirectPay extends AbstractMethod
         return $config['payment/alipay_direct_pay/gateway'] . '?' . $params;
     }
 
-    public function syncResponse($data)
+    public function syncResponse($data, $log)
     {
         
     }
 
-    public function asyncResponse($data)
+    public function asyncResponse($data, $log)
     {
         
     }

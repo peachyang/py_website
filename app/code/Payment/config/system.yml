@@ -280,7 +280,7 @@ payment:
                     default: https://mapi.alipay.com/gateway.do
                     priority: 30
                 partner:
-                    type: text
+                    type: number
                     scope: [merchant,scope]
                     label: Partner ID
                     required: required

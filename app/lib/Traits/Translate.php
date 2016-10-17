@@ -17,7 +17,7 @@ trait Translate
      * @param string $locale
      * @return string
      */
-    protected function translate(string $message, $parameters = [], $domain = null, $locale = null)
+    protected function translate($message, $parameters = [], $domain = null, $locale = null)
     {
         try {
             return $this->getContainer()->get('translator')->translate($message, $parameters, $domain, $locale);

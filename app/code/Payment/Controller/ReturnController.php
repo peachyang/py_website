@@ -26,7 +26,10 @@ class ReturnController extends ActionController
                 $log = new Payment;
                 $log->load($tradeId, 'trade_id');
                 $method = new $log['method'];
-                $method->syncResponse($data, $log);
+                $response = $method->syncNotice($data);
+                if ($response !== false) {
+                    return strpos($response, '://') ? $this->redirect($response) : $response;
+                }
             }
         }
         return $this->notFoundAction();

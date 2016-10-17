@@ -155,3 +155,12 @@ checkout_order_success:
                     success:
                         type: Seahinet\Checkout\ViewModel\Success
                         template: checkout/success
+checkout_order_failed:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    success:
+                        type: Seahinet\Checkout\ViewModel\Failed
+                        template: checkout/failed

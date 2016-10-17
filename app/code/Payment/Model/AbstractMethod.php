@@ -53,14 +53,14 @@ abstract class AbstractMethod
         return $this;
     }
 
-    public function syncResponse($data, $log)
+    public function syncNotice($data)
     {
-        return $this;
+        return '';
     }
 
-    public function asyncResponse($data, $log)
+    public function asyncNotice($data)
     {
-        return $this;
+        return '';
     }
 
 }

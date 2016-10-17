@@ -881,6 +881,7 @@ dl.options dd{float:left;margin-left:4px}
 .after .after_color{color:#007dc6}
 .after .after_bt{border: none;padding: 4px 20px;color: #fff;background: #337ab7;margin: 6px 0;}
 .after .table > tbody > tr > td{border-top:0;}
+.ui-sortable input[type="radio"]{height:18px;}
 /**/
 
 .page-home .menu .menu_left{float:left}

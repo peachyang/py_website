@@ -32,7 +32,6 @@ class StoreTemplateCollection extends AbstractCollection
     	$this->select->where->equalTo('store_id',$store)->equalTo('parent_id',$template_id)->equalTo('page_type',$page_type);
     	return $this;
     }
-	
-	
+    	
     
 }

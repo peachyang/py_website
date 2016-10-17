@@ -211,7 +211,7 @@ $("#page_type_select").change(function(){
 	  { urls += "retailer/store/decoration?id=" + template_id + "&page_type=" + pageType; }
 	
 	if(pageType=="2")
-	 { urls += "retailer/store/decorationProductDetail?id=" + template_id + "&page_type=" + pageType; }
+	 { urls += "retailer/store/decorationProductDetail?template_id=" + template_id + "&page_type=" + pageType + "&template_name=" + template_name; }
 	 
 	if(pageType=="1")
 	 { urls += "retailer/store/decorationCustomize?id=" + $(this).val() + "&template_name=" + template_name + "&page_type=" + pageType + "&template_id=" + template_id ; }

@@ -42,6 +42,9 @@ class StoreDecoration extends Template
 		$id = $this->getQuery('id');
 		$key = $this->getQuery('key');
 		$store_id = $this->judge_store_id($current_store_id);
+		
+		if($model!=0)
+			$id = $model;
 		if(!empty($id)){
 			if($id!='-1')
 			{		
@@ -136,6 +139,24 @@ class StoreDecoration extends Template
 			$template->storeTemplateList(0);
 		return $template;
 		
+	}
+	
+	public function getProductDetailPageID($template_id){
+		$id = 0;
+	    $store_id = $this->judge_store_id();
+		$template = new StoreTemplateCollection;
+		$template->storeCustomizeTemplate($store_id,$template_id,2);
+		if(count($template))
+		{
+			$id = $template[0]['id'];
+		}else{
+			$template = new StoreTemplate;
+			$data = ['parent_id'=>$template_id,'store_id'=>$store_id,'page_type'=>2];
+			$template->setData($data);
+			$template->save();
+			$id = $template->getId();
+		}
+		return $id;
 	}
 	
 	public function getStorePicInfo($code,$current_store_id = null){
@@ -367,7 +388,11 @@ class StoreDecoration extends Template
 			case 2:
 				$select_col_md = 'col-md-6';
 				$pic_height = '490px';
-				break;			
+				break;
+			case 1:
+				$select_col_md = 'col-md-12';
+				$pic_height = '';
+				break;				
 			default:
 				$select_col_md = 'col-md-3';
 				$pic_height = '225px';

@@ -871,6 +871,9 @@ decoration_store_customize:
             head:
                 action:
                    -
+                        method: addLink
+                        params: frontend/css/style.css
+                   -
                         method: setTitle
                         params: Retailer Store Customize
             content:
@@ -878,7 +881,20 @@ decoration_store_customize:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/storeDecorationCustomize
-
+decoration_store_productdetail:
+    update: decoration_store
+    root:
+        children:
+            head:
+                action:
+                   -
+                        method: setTitle
+                        params: Retailer Store Product
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/storeDecorationProductDetail
 decoration_list:
     update: retailer_account
     root:

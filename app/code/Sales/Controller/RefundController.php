@@ -35,7 +35,7 @@ class RefundController extends ActionController
                         $result['error'] = 1;
                         $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
                     }
-                } else if ($order['customer_id']) {
+                } else if (!$order['customer_id']) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
                 }

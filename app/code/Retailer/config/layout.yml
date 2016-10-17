@@ -366,7 +366,7 @@ retailer_after:
                 action:
                     -
                         method: setTitle
-                        params: Retailer After Service
+                        params: After Service
             content:
                 children:
                     main:

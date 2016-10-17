@@ -863,6 +863,22 @@ decoration_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/storeDecoration
+
+decoration_store_customize:
+    update: decoration_store
+    root:
+        children:
+            head:
+                action:
+                   -
+                        method: setTitle
+                        params: Retailer Store Customize
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/storeDecorationCustomize
+
 decoration_list:
     update: retailer_account
     root:

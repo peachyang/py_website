@@ -178,6 +178,7 @@ $("#customize_button").click(function(){
 			layer.msg('新建模板请先装修首页', {shade: [0.3,'#fff'],time: 2200});
 			return;
 		}
+
 		var data_tag = "customize";
 	    layer.open({
         	id:'iframe_layer',
@@ -192,6 +193,31 @@ $("#customize_button").click(function(){
   				layer.closeAll();
   			}
 		});
+});
+
+$("#page_type_select").change(function(){
+	if(template_id==0 && $(this).attr('page_type')!="0")
+	{
+		layer.msg('新建模板请先装修首页', {shade: [0.3,'#fff'],time: 2200});
+		$(this).find('option[page_type=0]').attr('selected','selected');
+		return;
+	}
+	
+	if($(this).val()=="-1")
+		return;
+	var pageType = $(this).find('option:selected').attr('page_type');
+	var urls = site_path;
+	if(pageType=="0")
+	  { urls += "retailer/store/decoration?id=" + template_id + "&page_type=" + pageType; }
+	
+	if(pageType=="2")
+	 { urls += "retailer/store/decorationProductDetail?id=" + template_id + "&page_type=" + pageType; }
+	 
+	if(pageType=="1")
+	 { urls += "retailer/store/decorationCustomize?id=" + $(this).val() + "&template_name=" + template_name + "&page_type=" + pageType + "&template_id=" + template_id ; }
+	
+	window.location = urls;
+	
 });
 
     $('a.btnpropa').on('click', function () {
@@ -260,8 +286,11 @@ $("#customize_button").click(function(){
         $('.htmlpage .column').css('padding','39px 19px 24px');
         $(".htmlpage .box .view").css('padding','7px');
         component_reset();
+        if(page_type==0)
+        {
         $(".stable_top").addClass("notice");
         $(".stable_top").find("button.sets").show();
+        }
         return false
     });
 

@@ -162,6 +162,19 @@ class StoreController extends AuthActionController
         $root->getChild('main', true)->setVariable('page_types', $this->page_types);
         return $root;
     }
+    
+    public function decorationCustomizeAction()
+    {	
+    	$template_name = $this->getRequest()->getQuery('template_name');
+    	$id = $this->getRequest()->getQuery('id');
+    	$template_id = $this->getRequest()->getQuery('template_id');
+        $root = $this->getLayout('decoration_store_customize');
+        $root->getChild('main', true)->setVariable('template_name', $template_name);
+        $root->getChild('main', true)->setVariable('template_id', $template_id);
+        $root->getChild('main', true)->setVariable('id', $id);
+        $root->getChild('main', true)->setVariable('page_types', $this->page_types);
+        return $root;
+    }
 
     public function decorationListAction()
     {

@@ -59,7 +59,8 @@ $Info = json_encode($Infos);
 		var obj = $("#page_type_select option[value=-1]",parent.document);
 		var htmls = "";
 		$.each(jsons,function(i,o){
-			htmls += "<option value="+o.id+">&nbsp; |-"+o.template_name+"</option>";
+		
+			htmls += "<option value="+o.id+" page_type=1 >&nbsp; |- "+o.template_name+"</option>";
 		});
 		
 		obj.nextAll().remove();

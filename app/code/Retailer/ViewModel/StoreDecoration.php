@@ -40,6 +40,7 @@ class StoreDecoration extends Template
     {
 		$templateView = [];
 		$id = $this->getQuery('id');
+		$key = $this->getQuery('key');
 		$store_id = $this->judge_store_id($current_store_id);
 		if(!empty($id)){
 			if($id!='-1')
@@ -49,13 +50,22 @@ class StoreDecoration extends Template
 				$templateView = $template->load($id);
 			}
 		}else{
-				$template = new StoreTemplateCollection;
+				if(empty($key))
+				{
+					$template = new StoreTemplateCollection;
 
-				$templateViewCollection = $template->storeTemplateList($store_id,1);
-				if(!empty($templateViewCollection))
-					$templateView = $templateViewCollection[0];
-				else
-					$templateView = [];
+					$templateViewCollection = $template->storeTemplateList($store_id,1);
+					if(!empty($templateViewCollection))
+						$templateView = $templateViewCollection[0];
+					else
+						$templateView = [];
+				}else{
+				
+					$key = base64_decode($key);
+					$storeTemplate = new storeTemplate;
+					$templateView = $storeTemplate->load($key);	
+				
+				}
 		}
 			
 		

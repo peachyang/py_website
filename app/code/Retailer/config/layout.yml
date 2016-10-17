@@ -250,7 +250,7 @@ retailer_sales_invoice_edit:
                     main:
                         type: Seahinet\Retailer\ViewModel\Sales\Edit\Invoice
                         template: retailer/sales/edit/invoice
-retailer_sales_creditmemo_edit:
+retailer_sales_creditmemo_edit2:
     update: retailer_account
     root:
         children:
@@ -266,7 +266,7 @@ retailer_sales_creditmemo_edit:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Sales\Edit\CreditMemo
-                        template: retailer/sales/edit/invoice
+                        template: retailer/sales/edit/creditmemo
 retailer_sales_products:
     update: retailer_account
     root:

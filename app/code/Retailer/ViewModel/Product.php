@@ -46,9 +46,9 @@ class Product extends Template
         
        //Generate where condition
         $where = new \Zend\Db\Sql\Where();
-        $where->in('order_id', $order_id_select);
-        if(!empty($condition['order_id'])){
-            $where->like('sales_order.id', $condition['order_id']);
+        $where->in('op.order_id', $order_id_select);
+        if(!empty($condition['track_id'])){
+            $where->like('sost.track_number', $condition['track_id']);
         }
         if(!empty($condition['increment_id'])){
             $where->like('sales_order.increment_id', '%'.$condition['increment_id'].'%');
@@ -74,6 +74,7 @@ class Product extends Template
 //      ->where(['sales_order.store_id' => $segment->get('customer')['store_id']])
         ->join(['sos' => 'sales_order_status'], 'sos.id = sales_order.status_id', ['status_name' => 'name'], 'left')
         ->join(['op' => $order_total_price], 'sales_order.id = op.order_id', ['total_order_price'], 'left')
+        ->join(['sost' =>'sales_order_shipment_track'], 'sales_order.id = sost.order_id', ['track_number'], 'left')
         ->order(['sales_order.created_at'=>'DESC']);
         $sales_order_collection = $this->prepareCollection($sales_order_collection);
 //      if(!empty($condition['limit'])){

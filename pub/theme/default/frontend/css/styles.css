@@ -644,9 +644,9 @@ dl.options dd{float:left;margin-left:4px}
 .page-block .pager .current::after{content:"]"}
 .order-dashboard{background-color:#fff7eb;margin-top:10px}
 .order-dashboard .bd{background:#fffcf3 none repeat scroll 0 0;border:1px solid #f7e4a5;padding:20px 30px}
-.order-dashboard .tbnotes{border-top:1px solid #ddd;line-height:21px;margin-top:15px;padding-top:5px;
-}
-
+.order-dashboard .tbnotes{border-top:1px solid #ddd;line-height:21px;margin-top:15px;padding-top:5px;}
+#modal-reply .reply{display: inline-flex;}
+.modal-body ul li{margin:15px 0}
 .order-dashboard .tbnotes span{color:#f60;font-weight:700}
 .product-pic{display:inline-block;float:left;width:50px;margin-right:20px}
 .product-pic img{width:50px}
@@ -757,7 +757,7 @@ dl.options dd{float:left;margin-left:4px}
 /* end */
 /* Store decoration */
 .retailer-account .fieldset .input-box #description{width:276px;height:100px}
-.retailer-account .fieldset .input-box input{width:276px;border:1px solid #eee;border-radius:0;box-shadow:none}
+.retailer-account .fieldset .input-box input{width:276px;border:1px solid #eee;border-radius:0;box-shadow:none;padding:5px 10px}
 .retailer-store .banner{margin:5px auto 20px;text-align:center}
 .retailer-store .hot-product{margin-bottom:10px}
 .retailer-store .hot-product .title{padding:0 0 5px 0;border-bottom:1px solid #FD9030;margin-bottom:10px}
@@ -842,10 +842,22 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist  #myTabContent{margin:30px 0}
 .decorationlist .nav-tabs{background:#e3f4fd}
 .decorationlist  .deccoration_topbg {background: #e3f4fd;width: 100%;height: 20px;border:1px solid #eee;border-bottom:none;margin-top:45px}
-.decorationlist .nav-tabs > li > a{border-radius:0}
+.decorationlist .nav-tabs > li > a{border-radius:0;padding:5px 15px}
 .decorationlist .nav > li > a:hover { background-color: #fff;}
 .decorationlist  .add_btn{margin:20px 10px}
-
+.decorationlist .after_table_cont{border:1px solid #eee}
+.decorationlist    .after_table_cont thead{display: inline-block;margin: 10px 0 40px 20px;}
+.decorationlist  #order  .after_table_cont .border_after{width: 115px;height: 10px;display: inline-block;margin: 0 0 7px -3px;} 
+.decorationlist  #order  .after_table_cont   .border_after_bg{background: #007dc6;}
+.decorationlist  #order  .after_table_cont  .border_after_bg_2{background: #d4d2d2;margin-left: 0px;}
+.decorationlist  #order  .after_table_cont .fa-circle-o_bg{color:#d4d2d2;font-size:33px}
+.decorationlist    .after_table_cont .fa-circle-o{font-size: 33px;color: #007dc6;}
+.decorationlist   .after_table_cont .fa-caret-right{font-size: 33px;color: #007dc6;}
+.decorationlist  #order  .after_table_cont .fa_left{margin-left:-10px}
+.decorationlist  #order  .after_table_cont .table_tr  td span{text-align: center;}
+.decorationlist  #order  .after_table_cont .table_td{padding-left:100px}
+.decorationlist  #order  .after_table_cont .table_td_1{padding:10px 0}
+.decorationlist  #order  .after_table_cont .text_left{margin-left:15px}
 /* end */
 /*Evaluation Management*/
 .evaluate .down_icon {margin:20px 0 20px 70px}
@@ -1021,11 +1033,13 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store-photo .page-content .content-right .row .sort-by{border: 1px solid #e2e4ea;padding:0 5px;margin: 0;margin-left: 10px}
 .retailer-store-photo .page-content .content-right .row .sort-by .fa{color: #616161;font-size:18px}
 .retailer-store-photo .page-content ol li{float: left}
+
 @media (min-width: 768px){.modal-open .modal-dialog{width: 748px}}
 @media (min-width: 1200px){.modal-open .modal-dialog{width: 1000px}}
 .modal-open .modal-dialog .modal-body .nav .text-right input{float:right;border:1px solid #dddddd}
 .modal-open .modal-dialog .modal-body .nav .text-right a{float:right}
 .modal-open .modal-dialog .modal-body{overflow:hidden}
+
 .modal-open .modal-dialog .modal-body .cue{width:100%;overflow:hidden;border-top:1px solid #cbdfe9;color:#333333}
 .modal-open .modal-dialog .modal-body .cue p,li{line-height:25px}
 .modal-open .modal-dialog .modal-body .content-right li{float:left;text-align:center}

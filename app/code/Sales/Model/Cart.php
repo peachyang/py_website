@@ -480,8 +480,11 @@ final class Cart extends AbstractModel implements Singleton
     public function getShippingMethod($storeId)
     {
         if (isset($this->storage['shipping_method'])) {
-            $className = $this->getContainer()->get('config')['shipping/' . json_decode($this->storage['shipping_method'], true)[$storeId] . '/model'];
-            return new $className;
+            $methods = json_decode($this->storage['shipping_method'], true);
+            if (isset($methods[$storeId])) {
+                $className = $this->getContainer()->get('config')['shipping/' . $methods[$storeId] . '/model'];
+                return new $className;
+            }
         }
         return null;
     }

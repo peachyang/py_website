@@ -12,7 +12,7 @@ class Order extends Account
     {
         $collection = new Collection;
         $collection->where(['customer_id' => $this->getCustomer()->getId()])
-                ->limit(20);
+                ->order('created_at DESC')->limit(10);
         return $collection;
     }
 

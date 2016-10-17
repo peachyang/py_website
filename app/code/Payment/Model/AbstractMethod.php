@@ -21,7 +21,7 @@ abstract class AbstractMethod
      * @param array $orders
      * @return string
      */
-    public function preparePayment()
+    public function preparePayment($orders)
     {
         return $this->getBaseUrl('checkout/success/');
     }
@@ -49,6 +49,16 @@ abstract class AbstractMethod
     }
 
     public function saveData($cart, $data)
+    {
+        return $this;
+    }
+
+    public function syncResponse($data)
+    {
+        return $this;
+    }
+
+    public function asyncResponse($data)
     {
         return $this;
     }

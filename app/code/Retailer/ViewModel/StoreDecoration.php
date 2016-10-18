@@ -4,6 +4,7 @@ namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
+use Seahinet\Catalog\Model\Product;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Retailer\Model\Collection\RetailerCollection;
@@ -424,6 +425,9 @@ class StoreDecoration extends Template
 		
 		$content = '<ul>';
        	foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
 				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
@@ -433,9 +437,9 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
-                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>
                             </div>
                         </li>';

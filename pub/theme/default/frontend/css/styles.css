@@ -804,7 +804,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .local-search .search-table{padding:10px;border:1px solid #ccc}
 .retailer-store .local-search .search-table td{padding:2px 3px}
 .retailer-store .local-search .search-table td.label{color:#666}
-.retailer-store .local-search .search-table input{border:1px solid #eee}
+.retailer-store .local-search .search-table input{border:1px solid #eee;width:90%}
 .retailer-store .local-search .search-table input.price-from{width:40%}
 .retailer-store .local-search .search-table input.price-to{width:40%}
 .retailer-store .category{margin-bottom:10px}
@@ -825,7 +825,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .statics .content ul li h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold}
 .retailer-store .statics .content ul li .paid-count{color:#757474;text-align:left}
 .retailer-store .statics .content ul li .paid-count .sales-num{color:#FD9030;font-size:15px}
-.retailer-store .products{margin-bottom:10px;padding:0 10px}
+.retailer-store .products{margin-bottom:10px;padding:0 0px}
 .retailer-store .products .title{padding:5px 0px 10px 5px;background:#FD9030}
 .retailer-store .products .title h2{color:#fff;font-size:14px;font-weight:bold;display:inline-block;padding-right:50px}
 .retailer-store .products .content{overflow:hidden;padding:10px;text-align:center}
@@ -1014,7 +1014,7 @@ dl.options dd{float:left;margin-left:4px}
 @media (max-width:1190px) and (min-width:991px){.page-home .electron_ct_bt  li{padding-right:18px}.page-home .menu .menu_contre{width:100%}.page-home .menu_contre_top img{width:100%}}
 @media (max-width:990px) and (min-width:560px){.page-home .menu .menu_contre_bt .menu_bt_a{text-align:center}}
 .catalog-product .store_info{width:19%;overflow: hidden;float:left}
-.catalog-product .store_info h3{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
+.catalog-product .store_info h3.tops{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
 .catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
 .catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     padding:0;

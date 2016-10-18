@@ -224,6 +224,9 @@ class StoreDecoration extends Template
 		$productsData = $products->getRetailerSalesProducts($condition);
 		$content = "";
 		foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
 				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
@@ -233,9 +236,9 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="col-md-3" >
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
-                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>
                             </div>
              			</li>';
@@ -365,7 +368,7 @@ class StoreDecoration extends Template
 	public function template_sales_amount($params='',$current_store_id = null){
 		$content = '<ul>
                         <li>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="padding:3px" >
                                 <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
                                 </div>
                                 <div class="col-md-8">
@@ -479,19 +482,86 @@ class StoreDecoration extends Template
 	}
 
 	public function template_product_recommend($params='',$current_store_id = null){
-		$content = '<ul>';       	
-       	for($i=0;$i<4;$i++)
-		{
-			$content .= '<li class="col-md-3">
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		
+		$hot_text = empty($params) ? "" : $params['hot_text'];
+		$price_from = empty($params) ? "" : $params['price_from'];
+		$price_to = empty($params) ? "" : $params['price_to'];
+		$select_row = empty($params) ? 1 : $params['select_row'];
+		$select_column = empty($params) ? 4 : (int)$params['select_column'];
+		$select_col_md = 'col-md-3';
+		$pic_height = '225px';
+		switch ($select_column) {
+			case 3:
+				$select_col_md = 'col-md-4';
+				$pic_height = '313px';
+				break;
+			case 2:
+				$select_col_md = 'col-md-6';
+				$pic_height = '490px';
+				break;
+			case 1:
+				$select_col_md = 'col-md-12';
+				$pic_height = '';
+				break;				
+			default:
+				$select_col_md = 'col-md-3';
+				$pic_height = '225px';
+				break;
+		}
+		
+		$condition['name'] = $hot_text;
+		$condition['limit'] = $select_column*$select_row;
+		$condition['price_from'] = $price_from;
+		$condition['price_to'] = $price_to;
+		$condition['recomend_status'] = "1";
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		
+		
+		$content = '<ul>';
+       	foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
-                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <p class="price"><span class="actural" style="width:80%" >'.$products->getCurrency()->format($value['price']).' </span></p>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
+                       
                             </div>
                         </li>';
 		}                
-        $content .= '</ul>';		
+        $content .= '</ul>';
 		return $content;
+		
+		
+//		$content = '<ul>';       	
+//     	for($i=0;$i<4;$i++)
+//		{
+//			$content .= '<li class="col-md-3">
+//                          <div>
+//                              <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
+//                              <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+//                              <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+//                          </div>
+//                      </li>';
+//		}                
+//      $content .= '</ul>';		
+//		return $content;
 		
 	}
 	

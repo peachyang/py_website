@@ -27,15 +27,17 @@
             });
             while (store.length) {
                 var s = store.pop();
-                var url = GLOBAL.BASE_URL + 'checkout/order/shipping/?store=' + s;
-                if (GLOBAL.AJAX[url]) {
-                    GLOBAL.AJAX[url].abort();
+                var url = GLOBAL.BASE_URL + 'checkout/order/shipping/?store=';
+                if (GLOBAL.AJAX[url + s]) {
+                    GLOBAL.AJAX[url + s].abort();
                 }
-                GLOBAL.AJAX[url] = $.ajax(url, {
+                GLOBAL.AJAX[url + s] = $.ajax(url + s, {
                     type: 'get',
                     success: function (xhr) {
-                        GLOBAL.AJAX[url] = null;
-                        $('.section.review [name="shipping_method[' + s + ']"]').parent().html(xhr);
+                        GLOBAL.AJAX[url + xhr.store] = null;
+                        var t = $('.section.review [name="shipping_method[' + xhr.store + ']"]');
+                        $(t).after(xhr.html);
+                        $(t).remove();
                         if (!store.length) {
                             loadCoupon();
                         }
@@ -51,15 +53,15 @@
             });
             while (store.length) {
                 var s = store.pop();
-                var url = GLOBAL.BASE_URL + 'checkout/order/coupon/?store=' + s;
-                if (GLOBAL.AJAX[url]) {
-                    GLOBAL.AJAX[url].abort();
+                var url = GLOBAL.BASE_URL + 'checkout/order/coupon/?store=';
+                if (GLOBAL.AJAX[url + s]) {
+                    GLOBAL.AJAX[url + s].abort();
                 }
-                GLOBAL.AJAX[url] = $.ajax(url, {
+                GLOBAL.AJAX[url + s] = $.ajax(url + s, {
                     type: 'get',
                     success: function (xhr) {
-                        GLOBAL.AJAX[url] = null;
-                        $('.section.review .coupon[data-store=' + s + ']').html(xhr);
+                        GLOBAL.AJAX[url + xhr.store] = null;
+                        $('.section.review .coupon[data-store=' + xhr.store + ']').html(xhr.html);
                         if (!store.length) {
                             loadPayment();
                             loadReview();
@@ -168,6 +170,7 @@
             } else {
                 var tmpl = $('#tmpl-address-list').html();
                 $('.section.address .list').append(tmpl.replace(/\{id\}/g, json.data.id).replace(/\{content\}/g, json.data.content).replace(/\{json\}/g, JSON.stringify(json.data.json)));
+                $('.section.address .list [data-id=' + json.data.id + ']>[type=radio]').trigger('click');
             }
         });
         $('.section.review').on('change', '[name^=shipping_method]', function () {

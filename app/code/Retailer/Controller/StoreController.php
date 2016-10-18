@@ -19,7 +19,10 @@ use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
  * 
  */
 class StoreController extends AuthActionController
-{
+{   private $page_types = [
+                '首页'=> 0,
+                '产品详情页' => 2
+                ];
 
     public function indexAction()
     {
@@ -156,6 +159,33 @@ class StoreController extends AuthActionController
     public function decorationAction()
     {
         $root = $this->getLayout('decoration_store');
+        $root->getChild('main', true)->setVariable('page_types', $this->page_types);
+        return $root;
+    }
+    
+    public function decorationCustomizeAction()
+    {	
+    	$template_name = $this->getRequest()->getQuery('template_name');
+    	$id = $this->getRequest()->getQuery('id');
+    	$template_id = $this->getRequest()->getQuery('template_id');
+        $root = $this->getLayout('decoration_store_customize');
+        $root->getChild('main', true)->setVariable('template_name', $template_name);
+        $root->getChild('main', true)->setVariable('template_id', $template_id);
+        $root->getChild('main', true)->setVariable('id', $id);
+        $root->getChild('main', true)->setVariable('page_types', $this->page_types);
+        return $root;
+    }
+    
+    public function decorationProductDetailAction(){
+    	$template_name = $this->getRequest()->getQuery('template_name');
+    	$SDViewModel = new SDViewModel;
+    	$template_id = $this->getRequest()->getQuery('template_id');
+    	$id = $SDViewModel->getProductDetailPageID($template_id);
+        $root = $this->getLayout('decoration_store_productdetail');
+        $root->getChild('main', true)->setVariable('template_name', $template_name);
+        $root->getChild('main', true)->setVariable('template_id', $template_id);
+        $root->getChild('main', true)->setVariable('id', $id);
+        $root->getChild('main', true)->setVariable('page_types', $this->page_types);
         return $root;
     }
 
@@ -251,9 +281,11 @@ class StoreController extends AuthActionController
     {
         $functions = $this->getRequest()->getQuery('functions');
         $part_id = $this->getRequest()->getQuery('part_id');
+        $template_id = $this->getRequest()->getQuery('template_id');
         $root = $this->getLayout('decorationFunc_' . $functions);
         $root->getChild('main', true)->setVariable('data_tag', $functions);
         $root->getChild('main', true)->setVariable('part_id', $part_id);
+        $root->getChild('main', true)->setVariable('template_id', $template_id);
         return $root;
     }
 
@@ -265,6 +297,89 @@ class StoreController extends AuthActionController
         $function_name = 'template_' . $dataTag;
         $view = $storeDecoration->$function_name($dataParam);
         echo json_encode(array('status' => true, 'view' => $view));
+    }
+    
+    public function customizeTemplateAddAction(){
+    	$result = ['error' => 0, 'message' => []];
+    	$data = $this->getRequest()->getPost();
+    	$segment = new Segment('customer');
+        $r = new Rmodel;
+        $r->load($segment->get('customer')->getId(), 'customer_id');
+        $data['store_id'] = $r['store_id'];
+    	$model = new StoreTemplate();
+    	$template_id = 0;
+    	try {    
+    	    $model->setData($data);
+            $model->save();
+            $template_id = $model->getId();
+        } catch (Exception $e) {
+                $result['error'] = 1;
+        }
+
+        $result['status'] = $result['error'];
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$data['store_id']);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    
+    }
+
+    public function customizeTemplateSaveAction(){
+        $result = ['error' => 0, 'message' => []];
+        $segment = new Segment('customer');
+        $data = $this->getRequest()->getPost();
+        $store_id = 0;
+        if ($result['error'] === 0) {
+            try {
+                $template = new StoreTemplate();
+                $template->load($data['id']);
+                $r = new Rmodel;
+                $r->load($segment->get('customer')->getId(), 'customer_id');
+                $store_id = $r['store_id'];
+                if ($template->getId() && $template['store_id'] == $r['store_id']) {
+                    $template->setData([
+                        'template_name' => $data['template_name']
+                    ]);
+                    $template->save();
+                }
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+
+                $result['error'] = 1;
+            }
+        }
+
+        $result['status'] = $result['error'];
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+
+    public function customizeTemplateDeleteAction(){
+        $result = ['error' => 0, 'message' => []];
+        $segment = new Segment('customer');
+        $data = $this->getRequest()->getPost();
+        $store_id = 0;
+        if ($result['error'] === 0) {
+            try {
+                $template = new StoreTemplate();
+                $template->load($data['id']);
+                $r = new Rmodel;
+                $r->load($segment->get('customer')->getId(), 'customer_id');
+                $store_id = $r['store_id'];
+                if ($template->getId() && $template['store_id'] == $r['store_id']) {
+                    $template->remove();
+                }
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+
+                $result['error'] = 1;
+            }
+        }
+
+        $result['status'] = $result['error'];
+        $storeDecoration = new SDViewModel();
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 
     public function decorationInfoAddAction()

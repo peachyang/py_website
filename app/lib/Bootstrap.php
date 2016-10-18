@@ -3,10 +3,10 @@
 namespace Seahinet\Lib;
 
 use Interop\Container\ContainerInterface;
-use Symfony\Component\Yaml\Yaml;
 use Seahinet\Lib\Model\Merchant;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Model\Language;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Bootstrap main system

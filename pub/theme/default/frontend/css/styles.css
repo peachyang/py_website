@@ -427,9 +427,10 @@ dl.options dd{float:left;margin-left:4px}
 .checkout-order .payment li>input:checked+label{background:#f1f2f4}
 .checkout-order .address .form-edit-address{max-width:585px}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
-.checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
-.checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
+.checkout-order .address .list .edit,.delete,.default,.btn-Address{margin-left:10px;color:#007dc6}
+.checkout-order .address .list .default,.checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
 .checkout-order .address .list li:hover{background:#F1F2F4}
+.checkout-order .address .list li:hover .default{display:inline}
 .checkout-order .address .list li:hover .edit{display:inline}
 .checkout-order .address .list li:hover .delete{display:inline}
 .checkout-order .address .btn-add{margin-left:20px;margin-top:20px;border-radius:0}
@@ -805,7 +806,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .local-search .search-table{padding:10px;border:1px solid #ccc}
 .retailer-store .local-search .search-table td{padding:2px 3px}
 .retailer-store .local-search .search-table td.label{color:#666}
-.retailer-store .local-search .search-table input{border:1px solid #eee}
+.retailer-store .local-search .search-table input{border:1px solid #eee;width:90%}
 .retailer-store .local-search .search-table input.price-from{width:40%}
 .retailer-store .local-search .search-table input.price-to{width:40%}
 .retailer-store .category{margin-bottom:10px}
@@ -826,7 +827,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .statics .content ul li h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold}
 .retailer-store .statics .content ul li .paid-count{color:#757474;text-align:left}
 .retailer-store .statics .content ul li .paid-count .sales-num{color:#FD9030;font-size:15px}
-.retailer-store .products{margin-bottom:10px;padding:0 10px}
+.retailer-store .products{margin-bottom:10px;padding:0 0px}
 .retailer-store .products .title{padding:5px 0px 10px 5px;background:#FD9030}
 .retailer-store .products .title h2{color:#fff;font-size:14px;font-weight:bold;display:inline-block;padding-right:50px}
 .retailer-store .products .content{overflow:hidden;padding:10px;text-align:center}
@@ -1051,7 +1052,7 @@ dl.options dd{float:left;margin-left:4px}
 @media (max-width:1190px) and (min-width:991px){.page-home .electron_ct_bt  li{padding-right:18px}.page-home .menu .menu_contre{width:100%}.page-home .menu_contre_top img{width:100%}}
 @media (max-width:990px) and (min-width:560px){.page-home .menu .menu_contre_bt .menu_bt_a{text-align:center}}
 .catalog-product .store_info{width:19%;overflow: hidden;float:left}
-.catalog-product .store_info h3{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
+.catalog-product .store_info h3.tops{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
 .catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
 .catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     padding:0;
@@ -1119,3 +1120,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-order-status .main_article_content .columns button{width: 50%;background:#007ecc;color: #fff;border:none;margin-top:10px;height:36px}
 .sales-order-list .page-content .list_table{margin:10px 0}
 .sales-refund .page-content{margin-top:30px}
+.retailer-after .after thead{line-height: 30px;border: 1px solid #ececec;background-color:#eeeeee}
+.retailer-after .after thead th{padding-top:0;padding: 5px 0}
+.retailer-after .after tbody{margin-top:20px}
+.retailer-after .after tfoot h4{font-size: 14px;font-weight:normal}

@@ -40,7 +40,10 @@ class OrderController extends ActionController
     public function shippingAction()
     {
         if ($this->getRequest()->isXmlHttpRequest()) {
-            return $this->getLayout('checkout_order_shipping');
+            $store = $this->getRequest()->getQuery('store');
+            $root = $this->getLayout('checkout_order_shipping');
+            $root->getChild('shipping', true)->setVariable('store_id', $store);
+            return ['store' => $store, 'html' => $root->__toString()];
         }
         return $this->notFoundAction();
     }
@@ -64,9 +67,10 @@ class OrderController extends ActionController
     public function couponAction()
     {
         if ($this->getRequest()->isXmlHttpRequest()) {
+            $store = $this->getRequest()->getQuery('store');
             $root = $this->getLayout('checkout_order_coupon');
-            $root->getChild('coupon', true)->setVariable('store', $this->getRequest()->getQuery('store'));
-            return $root;
+            $root->getChild('coupon', true)->setVariable('store', $store);
+            return ['store' => $store, 'html' => $root->__toString()];
         }
         return $this->notFoundAction();
     }
@@ -223,6 +227,16 @@ class OrderController extends ActionController
             }
         }
         return $this->response($result, 'checkout/order/', 'checkout');
+    }
+
+    public function defaultAddressAction()
+    {
+        $id = $this->getRequest()->getQuery('id');
+        if ($id) {
+            $address = new Address;
+            $address->load($id)->setData('is_default', 1)->save();
+        }
+        return $this->response(['error' => 0, 'message' => []], 'checkout/order/', 'checkout');
     }
 
     public function deleteAddressAction()

@@ -370,7 +370,7 @@ retailer_after:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Retailer\ViewModel\After
                         template: retailer/after
 retailer_after_view:
     update: frontend

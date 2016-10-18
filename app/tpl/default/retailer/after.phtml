@@ -1,5 +1,6 @@
 <?php 
-
+$after = new \Seahinet\Retailer\Model\Collection\After;
+$after = $this->getAfterCollection();
 ?>
 <div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
     <h3><?php echo $this->translate('After Service'); ?></h3>    
@@ -28,36 +29,38 @@
                 <th class="col-lg-3 col-md-3  text-center">时间</th>
                 <th class="col-lg-1 col-md-1  text-center">操作</th>
             </thead>
+            <?php if($after):
+            foreach ($after as $after1):
+            ?>
             <tbody>
                 <tr>
-                    <td class="col-xs-6 store" colspan="3">雄鹰能量棒 <a href=""><span class="fa fa-qq"></span></a></td>
+                    <td class="col-xs-6 store" colspan="3"><a href=""><?php echo $after1['customer_id'];?><span class="fa fa-qq"></span></a></td>
                     <td class="col-xs-6 text-right" colspan="3">
                         <span class="label">订单号：</span>
-                        <span>20771553987443</span>&nbsp;&nbsp;
-                        <span class="list_time">2016-07-15</span>
+                        <span><?php echo $after1['increment_id']?></span>&nbsp;&nbsp;
+                        <span class="list_time"><?php echo date('Y-m-d',strtotime($after1['created_at'])) ?></span>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td class="col-lg-4 col-md-4">
-                        <img class="Thumbnail" src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/TB12zVxHpXXXXbuaXXXXXXXXXXX_!!0-item_pic.jpg" alt="">
+                        <img class="Thumbnail" src="" alt="">
                         <h4>雄鹰能量棒Eagle Energy吸入式咖啡因能量棒</p> 
                     </td>
-                    <td class="col-lg-2 col-md-2 text-center"> <span>1216100814216147</span></td>
-                    <td class="col-lg-1 col-md-1 text-center">
-                        <span class="after_color"><a href="">换货申请</a></span>
-                    </td>
+                    <td class="col-lg-2 col-md-2 text-center"><?php echo $after1['increment_id']?></td>
+                    <td class="col-lg-1 col-md-1 text-center"><a href="">换货申请</a></td>
                     <td class="col-lg-1 col-md-1 text-center"><a href="">处理中</a></td>
-                    <td class="col-lg-2 col-md-2 text-center">
-                        <span class="list_time">2016-07-15&nbsp;&nbsp;16:55:34</span>
-                    </td>
-                    <td class="col-lg-1 col-md-1 text-center">
-                        <button class="after_bt">取消</button>
+                    <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $after1['created_at']?></span></td>
+                    <td class="col-lg-1 col-md-1 text-center"><button class="after_bt">取消</button>
                         <a target="_blank" href="/retailer/transaction/afterview">查看详情</a>
                     </td>
                 </tr>
             </tfoot>
+            <?php
+                        endforeach;
+                    endif;
+            ?>
         </table>
     </div>
     <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">

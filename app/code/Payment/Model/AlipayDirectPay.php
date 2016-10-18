@@ -21,7 +21,8 @@ class AlipayDirectPay extends AbstractMethod
         $params = [
             'service' => 'create_direct_pay_by_user',
             'partner' => $config['payment/alipay_direct_pay/partner'],
-            '_input_charset' => 'UTF-8',
+            'sign_type' => 'MD5',
+            '_input_charset' => 'utf-8',
             'out_trade_no' => '',
             'subject' => Bootstrap::getMerchant()->offsetGet('name'),
             'notify_url' => $this->getBaseUrl('payment/notify/'),

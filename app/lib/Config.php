@@ -20,6 +20,7 @@ final class Config extends ArrayObject implements Singleton
 
     protected static $instance = null;
     protected $keys = [];
+    protected $cache = [];
 
     /**
      * @param array|Container $config
@@ -161,12 +162,15 @@ final class Config extends ArrayObject implements Singleton
 
     public function offsetGet($key)
     {
-        if (strpos($key, '/')) {
+        if (isset($this->cache[$key])) {
+            return $this->cache[$key];
+        } else if (strpos($key, '/')) {
             $path = explode('/', trim($key, '/'));
             $result = $this->getConfigByPath($path);
             if (is_null($result)) {
                 $result = $this->getDefaultConfig($path, $this->storage['system']);
             }
+            $this->cache[$key] = $result;
             return $result;
         } else {
             return parent::offsetGet($key);

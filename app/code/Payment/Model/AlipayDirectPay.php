@@ -89,7 +89,7 @@ class AlipayDirectPay extends AbstractMethod
                     '?service=notify_verify&partner=' .
                     $config['payment/alipay_direct_pay/partner'] .
                     '&notify_id=' . $data['notify_id']);
-            if (!preg_match("/true$/i",$responseText)) {
+            if (!preg_match("/true$/i", $responseText)) {
                 return false;
             }
             $log = new Model;
@@ -146,7 +146,7 @@ class AlipayDirectPay extends AbstractMethod
                 $str .= $key . '=' . $param . '&';
             }
         }
-        return md5($str . $this->getContainer()->get('config')['payment/alipay_direct_pay/security_key']);
+        return md5(trim($str, '&') . $this->getContainer()->get('config')['payment/alipay_direct_pay/security_key']);
     }
 
     public function queryTimestamp()

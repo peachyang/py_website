@@ -20,7 +20,9 @@ if ($this->getCollection() && is_numeric($limit)):
                     </a>
                 </li>
             <?php endif ?>
-            <?php for ($p = 1; $p <= $pages; $p++): ?>
+            <?php
+            for ($p = max($current - 2, 1), $l = min($current + 2, $pages); $p <= $l; $p++):
+                ?>
                 <li>
                     <?php if ($current === $p): ?>
                         <span class="current">

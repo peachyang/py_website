@@ -104,6 +104,9 @@ class Order extends Grid
             'customer_id' => [
                 'label' => 'Customer ID'
             ],
+            'store_id' => [
+                'label' => 'Store ID'
+            ],
             'base_total' => [
                 'label' => 'Total',
                 'type' => 'price',

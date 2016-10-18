@@ -152,7 +152,7 @@ class AlipayDirectPay extends AbstractMethod
     {
         $config = $this->getContainer()->get('config');
         $url = $config['payment/alipay_direct_pay/gateway'] .
-                'service=query_timestamp&partner=' .
+                '?service=query_timestamp&partner=' .
                 $config['payment/alipay_direct_pay/partner'] .
                 '&_input_charset=UTF-8';
         $doc = new DOMDocument();

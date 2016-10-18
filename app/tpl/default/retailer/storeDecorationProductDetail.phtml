@@ -1,13 +1,16 @@
 <?php
 $page_types = $this->getVariable("page_types");
-$templateView = $this->getTemplateView();
+$id = $this->getVariable("id");
+$template_name = $this->getVariable("template_name");
+$template_id = $this->getVariable("template_id");
+$templateView = $this->getTemplateView(null,$id);
 $menuView = $this->template_menu();
 $logo_topView = $this->template_logo_top(!empty($templateView['stable_params']['logo_top']) ? $templateView['stable_params']['logo_top'] : '' );
 $logo_top_params = urlencode(json_encode(!empty($templateView['stable_params']['logo_top']) ? $templateView['stable_params']['logo_top'] : '' ));
 $logo_top_outerHeight = !empty($templateView['stable_params']['logo_top']['heightSet']) ? $templateView['stable_params']['logo_top']['heightSet'] + 4 : 200;
 
 if(!empty($templateView))
-	$customizeTemplates = $this->getCustomizeInfo($templateView['id'],1);
+	$customizeTemplates = $this->getCustomizeInfo($template_id,1);
 else
 	$customizeTemplates = []; 
 ?>
@@ -21,66 +24,41 @@ else
             .navbar-brand{margin-left:11px;color:#FFFFFF;font-size:20px}
             .navbar-inverse .navbar-brand{color:#FFFFFF;}
             .header .nav.container{width:1150px;margin:0px auto}
+            .catalog-product .store_info{width:100%;float:none;margin:0px 0px 9px 0px}
+            input{width:90%;margin-bottom: 5px;}
         </style>
         <script type="text/javascript">
             var path = '';
-            var page_type = 0;
+            var page_type = 1;
             var site_path = '<?php echo $this->getBaseUrl();  ?>';
-            var template_id = <?php echo empty($templateView) ? 0 : $templateView['id'] ?>;
-            var template_name = '<?php echo empty($templateView) ? '' : $templateView['template_name'] ?>';
+            var template_id = <?php echo $template_id; ?>;
+            var template_name = '<?php echo $template_name; ?>';
             var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
-<div class="decoration_logo_top stable_top notice" style="height:<?php echo $logo_top_outerHeight;  ?>px;background-image:url(<?php echo $logo_topView;  ?>)">
-	<a href="javascript:void(0)" class="stable" data-tag='logo_top' data-name='店铺头部Banner' data-param='<?php echo $logo_top_params;  ?>' ><button class="btn btn-warning btn-sm sets" >编辑头部Banner</button></a>
+<div class="decoration_logo_top stable_top " style="height:500px;background-image:url(<?php echo $this->getBaseUrl('pub/theme/default/frontend/dragResource/images/pd-tops.jpg'); ?>)">
+	<a href="javascript:void(0)" class="stable" data-tag='logo_top' data-name='店铺头部Banner' data-param='<?php echo $logo_top_params;  ?>' ></a>
 </div>
-<header class="header clearfix">
-<nav class="nav-main">
-<ul class="nav nav-pills container stable_top notice">
-	<a href="javascript:void(0)" class="stable" data-tag='menu' data-name='店铺导航菜单' data-param='' ><button class="btn btn-warning btn-sm sets" >编辑导航菜单</button></a>
-	<li class="dropdown"><a class="dropdown-toggle" href="javascript:void(0);">全部商品分类</a>
-		<ul class="dropdown-menu">
-            <li>
-            <a href="http://project.zm.com/clothes.html">服装城</a>
-                    </li>
-            <li>
-            <a href="http://project.zm.com/digital.html">数码城</a>
-                    </li>
-            <li>
-            <a href="http://project.zm.com/food.html">美食城</a>
-                    </li>
-            <li>
-            <a href="http://project.zm.com/market.html">蓝海超市</a>
-                    </li>
-            <li>
-            <a href="http://project.zm.com/group-buying.html">团购</a>
-                    </li>
-    	</ul>
-	</li>
-	<?php echo $menuView; ?>
-          
-</ul>
-</nav>
-</header>
+
       
       <div class="retailer-store">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-htmleditor">
             <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:void(0)">装 修 店 铺  <span class="store_template_name"><?php echo empty($templateView) || $templateView['store_id']==0 ? '- 新建模板' : ' - '.$templateView['template_name'] ?></span>
+                <a class="navbar-brand" href="javascript:void(0)">装 修 店 铺  <span class="store_template_name"> - <?php echo $template_name; ?></span>
                 &nbsp;&nbsp; | </a> 
                 <a class="navbar-brand" href="javascript:void(0)">
                 	<span class="decoration_position"> 当前装修页面  &nbsp; 
                 		<select class="page_type_select" id='page_type_select' >
                 		<?php foreach ($page_types as $key => $value) { ?>
-                		<option value="0" page_type='<?php echo $value; ?>' ><?php echo $key; ?></option>
+                		<option value="0" page_type='<?php echo $value; ?>' <?php if($value=='2') echo "selected"; ?> ><?php echo $key; ?></option>
                 		<?php } ?>
                 		<option value="-1" >自定义页面</option>
                 		<?php foreach ($customizeTemplates as $key => $value) { ?>
-                		<option value="<?php echo $value['id']; ?>" page_type=1 >&nbsp; |- <?php echo $value['template_name']; ?></option>	
+                		<option value="<?php echo $value['id']; ?>"  page_type=1 >&nbsp; |- <?php echo $value['template_name']; ?></option>	
                 		<?php } ?>
                 		
                 		</select>
                 		</span> 
-                &nbsp; <button class="btn btn-success btn-sm" id='customize_button' >自定义页面设置</button>		
+                &nbsp; 		
                 		</a>
             </div>
             <div class="collapse navbar-collapse">
@@ -376,9 +354,71 @@ else
 				  <div id="download-layout">
                     <div class="container"></div>
                 </div>
-                <div class="htmlpage" style="width:1160px;margin:0px auto;margin-top:5px" > 
+                <div class="htmlpage catalog-product" style="width:1160px;margin:0px auto;margin-top:5px" > 
                  
-                 <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>              
+                             
+                
+                <div class="lyrow layer_table ui-draggable" info="单行2列表格 列比例 1:4" style="display: block;">
+                                    
+                                    
+                                    <div class="drag hideRanges"></div>
+                                    <div class="preview"></div>
+                                    <div class="view">
+                                        <div class="row catalog-product clearfix">
+                                    
+                                    
+                                    <div class="col-md-2-1 column ui-sortable left_contents" style="padding: 39px 19px 24px;">
+                                    	
+                                   <div class="box box-element ui-draggable" data-type="paragraph" show-type="1" id="c77b-c1da-a86d-8f9c" style="display: block;">
+                                                                         
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">自由编辑</div>
+                                    </div>
+                                    <div class="view" style="padding: 7px;">
+        <div class="content function-tag"  data-tag="left_paragraph" data-name="自由编辑" data-param="" data-id="c77b-c1da-a86d-8f9c">                              	
+        <div class="store_info">
+        <h3 class="tops">My Store</h3>
+        <div class="store_detail">
+            <table class="table text-center">
+                <tbody>
+                    <tr><td></td></tr>
+                    <tr>
+                        <td rowspan="3"><h4>9.7</h4></td>
+                        <td>商品评价&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr>
+                    <tr>                
+                        <td>服务态度&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr>
+                    <tr>
+                        <td>物流速度&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
+                    </tr> 
+                    <tr><td></td></tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><a href="javascript:void(0)" class="store_entry"><span class="fa fa-home" aria-hidden="true"></span>&nbsp;进店逛逛</a></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div></div>
+    
+    </div>
+                                </div>
+     <?php echo empty($templateView) ? '' : $templateView['code_model']; ?>                            
+                                </div>
+                                            <div class="col-md-10-1 column ui-sortable" style="padding: 39px 19px 24px;"><div class="box box-element ui-draggable" data-type="paragraph" show-type="1" id="0dee-da65-cdde-71e8" style="display: block;">
+                                    
+                                     
+                                    <div class="preview"> <i class="fa"> + </i>
+                                        <div class="element-desc">自由编辑</div>
+                                    </div>
+                                    <div class="view" style="padding: 7px;"><div class="content function-tag" data-tag="paragraph" data-name="自由编辑" data-param="" data-id="0dee-da65-cdde-71e8">
+<img src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/dragResource/images/pd-right.jpg'); ?>" style="width:100%"></div></div>
+                                </div></div>
+                                        </div> <br> </div>
+                                </div>
+                
                 </div>
             </div>
             
@@ -433,7 +473,7 @@ else
 <script id="hot_product" type="text/html">
             <div class="hot-product">
                 <div class="title"><h2>热卖商品</h2></div>
-                <div class="content function-tag" data-tag='hot_product' data-name='热卖商品' data-param=''   >
+                <div class="content function-tag" data-tag='hot_product' data-name='热卖商品' data-param="%7B%22hot_text%22%3A%22%22%2C%22select_row%22%3A%223%22%2C%22select_column%22%3A%221%22%2C%22price_from%22%3A%22%22%2C%22price_to%22%3A%22%22%7D"   >
 
                 </div>
             </div>
@@ -451,7 +491,7 @@ else
 <script id="product_recommend" type="text/html">
             <div class="products">
                 <div class="title"><h2>商品推荐</h2></div>
-                <div class="content function-tag" data-tag='product_recommend' data-name='商品推荐' data-param='' >
+                <div class="content function-tag" data-tag='product_recommend' data-name='商品推荐' data-param="%7B%22hot_text%22%3A%22%22%2C%22select_row%22%3A%223%22%2C%22select_column%22%3A%221%22%2C%22price_from%22%3A%22%22%2C%22price_to%22%3A%22%22%2C%22page_type%22%3A%222%22%7D" >
 
                 </div>
             </div>
@@ -482,7 +522,7 @@ else
 
 <script>
 	function saveData(){
-    	var htmls = $.trim($(".htmlpage").html());
+    	var htmls = $.trim($(".htmlpage div.left_contents").html());
     	if(htmls=="")
     	{   layer.msg('亲, 请装修您的店铺吧, 加个表格试试先', {shade: [0.3,'#fff'],time: 2000});
     		return;
@@ -494,9 +534,11 @@ else
 			$('.htmlpage .column').css('padding','11px');		
 		}
 		$("#save_html").html(htmls);
+		$("#save_html").find(".box.box-element.ui-draggable").eq(0).remove();
     	var code_model = changeTag();
     	$("#download-layout .container .column").css("padding","7px");
-    	var src_model = style_html($("#download-layout .container").html());
+    	$("#download-layout .container div.left_contents").find('.content.function-tag').eq(0).remove();
+    	var src_model = style_html($("#download-layout .container div.left_contents").html());
     	$("#save_html").html(src_model);
     	src_model = changeTag();
     	
@@ -514,50 +556,25 @@ else
     	});
     	stable_params = encodeURIComponent(JSON.stringify(stable_params));
     	
-    	var titles = template_id == 0 || store_id == 0 ?'请输入模版名称':'请修改模板名称';
-    	layer.prompt({
-  			title: titles,
-  			value:template_name,
-  			formType: 0 //prompt风格，支持0-2
-			}, 
-			function(pass){
-  				saveDataFinal(code_model,src_model,pass,stable_params);	
-			});
+		//console.log(code_model);
+		//console.log(src_model);
+		saveDataFinal(code_model,src_model,stable_params);	
+
     	    	
     }
     
-    function saveDataFinal(code_model,src_model,template_names,stable_params){
+    function saveDataFinal(code_model,src_model,stable_params){
     	$.ajax({
                 url: '<?php echo $this->getBaseUrl('/retailer/store/addTemplate') ?>',
                 type: "post",
                 dataType: 'json',
-                data:{code_model:code_model,src_model:src_model,template_name:template_names,template_id:template_id,store_id:store_id,stable_params:stable_params},
+                data:{code_model:code_model,src_model:src_model,template_id:<?php echo $id; ?>,store_id:store_id,stable_params:stable_params},
                 beforeSend:function(){
                 	layer.msg(' 保存中 ...', {icon: 16,shade: [0.3,'#fff'],time: -1});      	
                 },
                 success: function (data) {
 					layer.closeAll();
-					var messages = "";
-					if(template_id == 0 || store_id == 0)
-					{
 						
-						template_id = data.id;
-						template_name = template_names;
-						store_id = data.store_id;
-						messages = '您已经保存了新的店铺模版,接下来您要';
-					}
-					else{
-						messages = '您已经修改了当前的店铺模版,接下来您要';
-					}
-					$(".store_template_name").html(' - ' + template_name);
-					layer.confirm(messages, {
-  						btn: ['继续店铺装修','查看当前装修的店铺'] 
-						}, function(){
-							layer.closeAll();
-						}, function(){
-  							layer.closeAll();
-  							window.open('<?php echo $this->getBaseUrl('/retailer/store/view') ?>?id='+data.id);
-					});
                 },
                 error: function (msg) {
                   

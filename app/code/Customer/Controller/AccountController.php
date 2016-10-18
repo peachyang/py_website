@@ -136,7 +136,7 @@ class AccountController extends AuthActionController
                         $mailer = $this->getContainer()->get('mailer');
                         $mailer->send((new TemplateModel($collection[0]))
                                         ->getMessage(['username' => $data['username'], 'confirm' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
-                                        ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                        ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                         ->addTo($data['email'], $data['username']));
                     }
                 } catch (Swift_TransportException $e) {
@@ -210,7 +210,7 @@ class AccountController extends AuthActionController
                         $mailer = $this->getContainer()->get('mailer');
                         $mailer->send((new TemplateModel($collection[0]))
                                         ->getMessage(['username' => $data['username'], 'password' => $password])
-                                        ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                        ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                         ->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
                         $customer->setData('password', $password)->save();
                     }
@@ -272,7 +272,7 @@ class AccountController extends AuthActionController
                         if (count($collection)) {
                             $mailer->send((new TemplateModel($collection[0]))
                                             ->getMessage(['{{username}}' => $customer['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
-                                            ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                            ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                             ->addTo($customer['email'], $customer['username']));
                         }
                     } else {
@@ -286,7 +286,7 @@ class AccountController extends AuthActionController
                         if (count($collection)) {
                             $mailer->send((new TemplateModel($collection[0]))
                                             ->getMessage(['{{username}}' => $customer['username'], '{{confirm}}' => $this->getBaseUrl('customer/account/confirm/?token=' . $token)])
-                                            ->addFrom($config['email/customer/sender_email']? : $config['email/default/sender_email'], $config['email/customer/sender_name']? : $config['email/default/sender_name'])
+                                            ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                             ->addTo($customer['email'], $customer['username']));
                             $customer->setData([
                                 'confirm_token' => $token,
@@ -320,31 +320,28 @@ class AccountController extends AuthActionController
         return $this->getLayout('customer_account_edit');
     }
 
-    public function editPersonalInfoAction()
+    public function saveAction()
     {
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
-            $result = $this->validateForm($data, ['crpassword', 'password']);
-            if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
+            $result = $this->validateForm($data);
+            if ((!empty($data['cpassword']) || !empty($data['password'])) && $data['cpassword'] !== $data['password']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
-                $url = 'customer/account/personalInfo/';
+                $url = 'customer/account/edit/';
             } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
-                $url = 'customer/account/personalInfo/';
+                $url = 'customer/account/edit/';
             } else if ($result['error'] === 0) {
                 $model = new Model;
                 $model->load($customer['id']);
                 $model->setData($data);
                 $model->save();
-                if (isset($data['id']) && $data['id'] == $customer->getId()) {
-                    $customer->setData($data);
-                    $segment->set('customer', clone $customer);
-                }
+                $segment->set('customer', clone $model);
                 $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 $url = 'customer/account/';
             }

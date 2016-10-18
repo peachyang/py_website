@@ -1,25 +1,7 @@
 /* global path */
 
-$.cssHooks.backgroundColor = {
-    get: function (elem) {
-        if (elem.currentStyle)
-            var  bg = elem.currentStyle["background-color"];
-        else if (window.getComputedStyle)
-            var  bg = document.defaultView.getComputedStyle(elem,
-                    null).getPropertyValue("background-color");
-        if (bg.search("rgb") == -1)
-            return bg;
-        else {
-            bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-            function hex(x) {
-                return ("0" + parseInt(x).toString(16)).slice(-2);
-            }
 
-        }
-    }
-}
-
-'use strict';
+//'use strict';
 //Make sure jQuery has been loaded before app.js
 if (typeof jQuery === "undefined") {
     throw new Error("HtmlEditor requires jQuery");
@@ -44,32 +26,6 @@ function _init() {
         $(".htmlpage").css("min-height", $(window).height() - 160)
     });
 
-    tinymce.init({
-        menubar: false,
-        force_p_newlines: true,
-        extended_valid_elements : "*[*]",
-        valid_elements: "*[*]",
-        selector: "#html5editor",
-        plugins: [
-            "advlist autolink lists link charmap anchor",
-            "visualblocks code ",
-            "insertdatetime  table contextmenu paste textcolor colorpicker"
-        ],
-        toolbar: "styleselect | bold italic |  forecolor backcolor |alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link code",
-    });
-
-    tinymce.init({
-        menubar: false,
-        force_br_newlines: false,
-        force_p_newlines: false,
-        forced_root_block: '',
-        extended_valid_elements : "*[*]",
-    valid_elements: "*[*]",
-        selector: "#html5editorLite",
-        plugins: [
-        ],
-        toolbar: "forecolor backcolor | alignleft aligncenter alignright alignjustify code",
-    });
 
     $("body").css("min-height", $(window).height() - 90);
     $(".htmlpage").css("min-height", $(window).height() - 160);
@@ -214,6 +170,55 @@ function _init() {
 //
 //      prepareEditor(part, row, column);
     });
+    
+    
+$("#customize_button").click(function(){
+		if(template_id==0)
+		{
+			layer.msg('新建模板请先装修首页', {shade: [0.3,'#fff'],time: 2200});
+			return;
+		}
+
+		var data_tag = "customize";
+	    layer.open({
+        	id:'iframe_layer',
+  			type: 2,
+  			area: ['720px', '560px'],
+  			title:"自定义页面设置",
+  			fix: true, //不固定
+  			maxmin: true,
+  			content: site_path+'retailer/store/func?functions='+data_tag+"&template_id="+template_id,
+  			btn: ['关 闭'],
+  			btn2:function(){
+  				layer.closeAll();
+  			}
+		});
+});
+
+$("#page_type_select").change(function(){
+	if(template_id==0 && $(this).attr('page_type')!="0")
+	{
+		layer.msg('新建模板请先装修首页', {shade: [0.3,'#fff'],time: 2200});
+		$(this).find('option[page_type=0]').attr('selected','selected');
+		return;
+	}
+	
+	if($(this).val()=="-1")
+		return;
+	var pageType = $(this).find('option:selected').attr('page_type');
+	var urls = site_path;
+	if(pageType=="0")
+	  { urls += "retailer/store/decoration?id=" + template_id + "&page_type=" + pageType; }
+	
+	if(pageType=="2")
+	 { urls += "retailer/store/decorationProductDetail?template_id=" + template_id + "&page_type=" + pageType + "&template_name=" + template_name; }
+	 
+	if(pageType=="1")
+	 { urls += "retailer/store/decorationCustomize?id=" + $(this).val() + "&template_name=" + template_name + "&page_type=" + pageType + "&template_id=" + template_id ; }
+	
+	window.location = urls;
+	
+});
 
     $('a.btnpropa').on('click', function () {
         var  rel = $(this).attr('rel');
@@ -281,8 +286,11 @@ function _init() {
         $('.htmlpage .column').css('padding','39px 19px 24px');
         $(".htmlpage .box .view").css('padding','7px');
         component_reset();
+        if(page_type==0)
+        {
         $(".stable_top").addClass("notice");
         $(".stable_top").find("button.sets").show();
+        }
         return false
     });
 
@@ -343,211 +351,8 @@ function _init() {
 
 }
 
-function loadRowSettings(row) {
-    //RowSettings
-    // paddings
-    $('#tabRow input[data-ref="padding-top"]').val(row.css('padding-top'));
-    $('#tabRow input[data-ref="padding-left"]').val(row.css('padding-left'));
-    $('#tabRow input[data-ref="padding-right"]').val(row.css('padding-right'));
-    $('#tabRow input[data-ref="padding-bottom"]').val(row.css('padding-bottom'));
-    // margin
-    $('#tabRow input[data-ref="margin-top"]').val(row.css('margin-top'));
-    $('#tabRow input[data-ref="margin-left"]').val(row.css('margin-left'));
-    $('#tabRow input[data-ref="margin-right"]').val(row.css('margin-right'));
-    $('#tabRow input[data-ref="margin-bottom"]').val(row.css('margin-bottom'));
-    // backgroundColor
-    $('#rowbg').val(row.css('background-color'));
-    // image
-    $('#rowbgimage').val(row.css('background-image').replace(/^url\(['"]?/,'').replace(/['"]?\)$/,''));
-    // css class
-    $('#rowcss').val(row.attr('class'));
-}
 
-function saveRowSettings(row) {
-    //RowSettings
-    //padding
-    row.css('padding-top', $('#tabRow input[data-ref="padding-top"]').val());
-    row.css('padding-left', $('#tabRow input[data-ref="padding-left"]').val());
-    row.css('padding-right', $('#tabRow input[data-ref="padding-right"]').val());
-    row.css('padding-bottom', $('#tabRow input[data-ref="padding-bottom"]').val());
-    // margin
-    row.css('margin-top', $('#tabRow input[data-ref="margin-top"]').val());
-    row.css('margin-left', $('#tabRow input[data-ref="margin-left"]').val());
-    row.css('margin-right', $('#tabRow input[data-ref="margin-right"]').val());
-    row.css('margin-bottom', $('#tabRow input[data-ref="margin-bottom"]').val());
-    // backgroundColor
-    row.css('background-color', $('#rowbg').val());
-    // image
-    if($("#rowbgimage").val()!="none")
-    row.css('background-image',  'url("'+$("#rowbgimage").val()+'")');
-    // css class
-    row.removeClass();
-    row.addClass($('#rowcss').val());
-    //row.attr('css', $('#rowcss').val());
-}
 
-function loadColumnSettings(column) {
-    // paddings
-    $('#tabCol input[data-ref="padding-top"]').val(column.css('padding-top'));
-    $('#tabCol input[data-ref="padding-left"]').val(column.css('padding-left'));
-    $('#tabCol input[data-ref="padding-right"]').val(column.css('padding-right'));
-    $('#tabCol input[data-ref="padding-bottom"]').val(column.css('padding-bottom'));
-    // margin
-    $('#tabCol input[data-ref="margin-top"]').val(column.css('margin-top'));
-    $('#tabCol input[data-ref="margin-left"]').val(column.css('margin-left'));
-    $('#tabCol input[data-ref="margin-right"]').val(column.css('margin-right'));
-    $('#tabCol input[data-ref="margin-bottom"]').val(column.css('margin-bottom'));
-    // backgroundColor
-    $('#colbg').val(column.css('background-color'));
-    // css class
-    $('#colcss').val(column.attr('class'));
-}
-function saveColumnSettings(column) {
-    //CellSettings
-    //padding
-    column.css('padding-top', $('#tabCol input[data-ref="padding-top"]').val());
-    column.css('padding-left', $('#tabCol input[data-ref="padding-left"]').val());
-    column.css('padding-right', $('#tabCol input[data-ref="padding-right"]').val());
-    column.css('padding-bottom', $('#tabCol input[data-ref="padding-bottom"]').val());
-    // margin
-    column.css('margin-top', $('#tabCol input[data-ref="margin-top"]').val());
-    column.css('margin-left', $('#tabCol input[data-ref="margin-left"]').val());
-    column.css('margin-right', $('#tabCol input[data-ref="margin-right"]').val());
-    column.css('margin-bottom', $('#tabCol input[data-ref="margin-bottom"]').val());
-    // backgroundColor
-    column.css('background-color', $('#colbg').val());
-    // css class
-    column.attr('class', $('#colcss').val());
-}
-
-function prepareEditor(part, row, column) {
-    var  clone = part.clone();
-    var  confirm = $('#applyChanges');
-    $('#preferencesTitle').html(part.data('type'));
-
-    $('.column .box').removeClass('active');
-    part.addClass('active');
-    confirm.unbind('click');
-
-    var  clonedPart = clone.find('div.view').html();
-    var  type = part.data('type');
-    var  panel = $('#Settings');
-
-    loadRowSettings(row);
-    loadColumnSettings(column);
-
-    var  o = part.find('div.view').children();
-    var  oid = o.assignId();
-    $('#id').val(oid);
-    $('#class').val(o.parent().parent().css('class'));
-    $('#class').parent().show();
-    $('#id').parent().show();
-    switch (type) {
-        
-        case 'header':
-            var  editor = tinyMCE.get('html5editorLite');
-            editor.setContent(clonedPart);
-            $('#ht').show();
-
-            confirm.bind('click', function (e) {
-                e.preventDefault();
-                saveRowSettings(row);
-                saveColumnSettings(column);
-                o.html(editor.getContent());
-                o.attr('id', $('#id').val());
-                o.attr('class', $('#class').val());
-            });
-            break;
-        
-        case 'paragraph':
-            var  editor = tinyMCE.get('html5editor');
-            editor.setContent(clonedPart);
-            $('#text').show();
-
-            var  o = part.find('div.view');
-            confirm.bind('click', function (e) {
-                e.preventDefault();
-                saveRowSettings(row);
-                saveColumnSettings(column);
-                o.html(editor.getContent());
-                o.attr('id', $('#id').val());
-            });
-            break;
-
-        case 'image':
-            var  img = part.find('img');
-            $('#imgContent').html(img.clone().attr('width', '200'));
-            $('#img-url').val(img.attr('src'));
-            $('#img-width').val(img.innerWidth());
-            $('#img-height').val(img.innerHeight());
-            $('#img-title').val(img.attr('title'));
-            $('#class').val(img.attr('class'));
-            $('#img-rel').val(img.attr('rel'));
-            $('#img-title').val(img.attr('title'));
-            $('#image').show();
-
-            confirm.bind('click', function (e) {
-                e.preventDefault();
-                saveRowSettings(row);
-                saveColumnSettings(column);
-                img.attr('title', $('#img-title').val());
-                img.attr('src', $('#img-url').val());
-                img.css('width', $('#img-width').val());
-                img.css('height', $('#img-height').val());
-                img.attr('class', $('#class').val());
-                img.attr('rel', $('#img-rel').val());
-                o.attr('id', $('#id').val());
-                o.removeClass();
-                o.addClass($('#class').val());
-            });
-            break;
-
-        case 'code':
-            $('#class').parent().hide();
-            $('#id').parent().hide();
-            var  txt = $('#code');
-            $('#codeeditor').remove();
-            txt.append('<textarea id="codeeditor" style="min-height:150px;width:100%; display:block;">'+style_html(part.find('div.view').html())+'</textarea>');
-            txt.show();
-
-            confirm.bind('click', function (e) {
-                e.preventDefault();
-                saveRowSettings(row);
-                saveColumnSettings(column);
-                part.find('div.view').html($('#codeeditor').val());
-            });
-            break;
-            
-        case 'button' :
-            var  btn = part.find('.view > a.btn');
-            var  btn_id = btn.assignId();
-            var  clone = btn.clone();
-            $('#buttonContainer').html(clone);
-            $('#buttonId').val(btn_id);
-            $('#buttonLabel').val(btn.text());
-            $('#buttonHref').val(btn.attr('href'));
-            $('#buttons').show();
-
-            confirm.bind('click', function (e) {
-                e.preventDefault();
-                saveRowSettings(row);
-                saveColumnSettings(column);
-                btn.text($('#buttonLabel').val());
-                btn.attr('href', $('#buttonHref').val());
-                btn.css('background', $('#colbtn').val());
-                btn.css('width', $('#custombtnwidth').val());
-                btn.css('height', $('#custombtnheight').val());
-                btn.css('font-size', $('#custombtnfont').val());
-                btn.css('padding-top', $('#custombtnpaddingtop').val());
-                btn.css('color', $('#colbtncol').val());
-                o.attr('id', $('#id').val());
-                btn.attr('class', $('#buttonContainer > a.btn').attr('class'));
-                o.attr('class', $('#class').val());
-            });
-            break;
-    }
-    $('#preferences').modal('show').draggable();
-}
 
 function handleSaveLayout() {
     var  e = $(".htmlpage").html();
@@ -680,6 +485,7 @@ function downloadLayoutSrc() {
     //$('#download').modal('show');
 
 }
+
 
 $('#srcSave').click(function () {
     ///   $.post(path + '/save.php', {html: style_html($("#download-layout").html())}, function (data) {       }, 'html');

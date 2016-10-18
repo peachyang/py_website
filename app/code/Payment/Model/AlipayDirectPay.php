@@ -21,7 +21,8 @@ class AlipayDirectPay extends AbstractMethod
         $params = [
             'service' => 'create_direct_pay_by_user',
             'partner' => $config['payment/alipay_direct_pay/partner'],
-            '_input_charset' => 'UTF-8',
+            'sign_type' => 'MD5',
+            '_input_charset' => 'utf-8',
             'out_trade_no' => '',
             'subject' => Bootstrap::getMerchant()->offsetGet('name'),
             'notify_url' => $this->getBaseUrl('payment/notify/'),
@@ -88,7 +89,7 @@ class AlipayDirectPay extends AbstractMethod
                     '?service=notify_verify&partner=' .
                     $config['payment/alipay_direct_pay/partner'] .
                     '&notify_id=' . $data['notify_id']);
-            if (!preg_match("/true$/i",$responseText)) {
+            if (!preg_match("/true$/i", $responseText)) {
                 return false;
             }
             $log = new Model;
@@ -145,14 +146,14 @@ class AlipayDirectPay extends AbstractMethod
                 $str .= $key . '=' . $param . '&';
             }
         }
-        return md5($str . $this->getContainer()->get('config')['payment/alipay_direct_pay/security_key']);
+        return md5(trim($str, '&') . $this->getContainer()->get('config')['payment/alipay_direct_pay/security_key']);
     }
 
     public function queryTimestamp()
     {
         $config = $this->getContainer()->get('config');
         $url = $config['payment/alipay_direct_pay/gateway'] .
-                'service=query_timestamp&partner=' .
+                '?service=query_timestamp&partner=' .
                 $config['payment/alipay_direct_pay/partner'] .
                 '&_input_charset=UTF-8';
         $doc = new DOMDocument();

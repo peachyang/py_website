@@ -34,7 +34,7 @@
                             </th>
                             <th class="text-nowrap">
                                 <?php echo $this->translate('Message', [], 'checkout') ?>
-                                <input type="text" name="comment[<?php echo $item['store_id'] ?>]" class="form-control" style="display:inline-block" />
+                                <input type="text" name="comment[<?php echo $current ?>]" class="form-control" style="display:inline-block" />
                             </th>
                             <th colspan="5" class="text-right text-nowrap">
                                 <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
@@ -71,7 +71,7 @@
                 </th>
                 <th class="text-nowrap">
                     <?php echo $this->translate('Message', [], 'checkout') ?>
-                    <input type="text" name="comment[<?php echo $item['store_id'] ?>]" class="form-control" style="display:inline-block" />
+                    <input type="text" name="comment[<?php echo $current ?>]" class="form-control" style="display:inline-block" />
                 </th>
                 <th colspan="5" class="text-right text-nowrap">
                     <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>

@@ -287,6 +287,8 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
 .list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden;width:200px;margin-left:-20px}
 .customer-account-dashboard .order .options,.list_table .options{font-size:12px}
+.customer-account-dashboard .Arefund button{background:#fff;padding:5px 10px}
+ .Arefund_hide{display:none}
 .list_table td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
@@ -804,7 +806,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .local-search .search-table{padding:10px;border:1px solid #ccc}
 .retailer-store .local-search .search-table td{padding:2px 3px}
 .retailer-store .local-search .search-table td.label{color:#666}
-.retailer-store .local-search .search-table input{border:1px solid #eee}
+.retailer-store .local-search .search-table input{border:1px solid #eee;width:90%}
 .retailer-store .local-search .search-table input.price-from{width:40%}
 .retailer-store .local-search .search-table input.price-to{width:40%}
 .retailer-store .category{margin-bottom:10px}
@@ -825,7 +827,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .statics .content ul li h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold}
 .retailer-store .statics .content ul li .paid-count{color:#757474;text-align:left}
 .retailer-store .statics .content ul li .paid-count .sales-num{color:#FD9030;font-size:15px}
-.retailer-store .products{margin-bottom:10px;padding:0 10px}
+.retailer-store .products{margin-bottom:10px;padding:0 0px}
 .retailer-store .products .title{padding:5px 0px 10px 5px;background:#FD9030}
 .retailer-store .products .title h2{color:#fff;font-size:14px;font-weight:bold;display:inline-block;padding-right:50px}
 .retailer-store .products .content{overflow:hidden;padding:10px;text-align:center}
@@ -858,7 +860,7 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist .nav-tabs > li > a{border-radius:0;padding:5px 15px}
 .decorationlist .nav > li > a:hover { background-color: #fff;}
 .decorationlist  .add_btn{margin:20px 10px}
-.decorationlist .after_table_cont{border:1px solid #eee}
+.decorationlist .after_table_cont{}
 .decorationlist    .after_table_cont thead{display: inline-block;margin: 10px 0 40px 20px;}
 .decorationlist  #order  .after_table_cont .border_after{width: 115px;height: 10px;display: inline-block;margin: 0 0 7px -3px;} 
 .decorationlist  #order  .after_table_cont   .border_after_bg{background: #007dc6;}
@@ -870,28 +872,64 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist  #order  .after_table_cont .table_tr  td span{text-align: center;}
 .decorationlist  #order  .after_table_cont .table_td{padding-left:100px}
 .decorationlist  #order  .after_table_cont .table_td_1{padding:10px 0}
-.decorationlist  #order  .after_table_cont .text_left{margin-left:15px}
+.decorationlist  #order  .after_table_cont .text_left{margin-left:12px}
+.decorationlist  #order  .after_table_cont .after_contact{padding:15px 0 0 50px}
+.decorationlist  #order  .after_table_cont .after_contact span{font-size:13px;color:#b7b7b9}
+.decorationlist  #order  .after_table_cont .after_contact button{background:#cceafc;color:#007dc6;border:1px solid #007dc6;padding:5px 20px}
+.decorationlist  #order  .after_table_cont .padding_top{padding-top:60px;display: inline-block;}
+.decorationlist  #order  .after_table_cont .padding_bottom{padding-bottom:60px;display: block;}
+.decorationlist  #order .border_bottom{border-bottom:1px solid #eee}
+.decorationlist  #order  .after—table{border:1px solid #eee}
+.decorationlist  #order  .after—table .information{display: flex;}
+.decorationlist  #order  .after—table .details{margin:30px}
+.decorationlist  #order .textarea{width: 85%;margin: 50px 0 50px 90px;}
+.decorationlist  #order .btn_sub{margin-left:90px}
+.decorationlist  #order  .img_sub{padding:5px 20px;color:#007dc6;background:#cceafc;border:1px solid #007dc6;margin:0 17px 0 0 }
+.decorationlist  #order .submit_btn{padding:5px 20px;color:#fff;background:#3fb5fa;border:1px solid #007dc6}
+.decorationlist  #order  .table_images img{width: 50px;height: 50px;}
+
+
+
 /* end */
+
+/*details layer*/
+.layer_table{border:1px solid #ccc;margin: 10px 0 40px 0;}
+.details_layer{}
+.details_layer .details_thead{background: #eee;border-bottom: 1px solid #ccc;}
+.details_layer .details_thead th{display: flex;padding: 12px 15px 12px 25px;}
+.details_layer .details_thead lable{padding:5px 0;font-size:16px}
+.details_layer .details_thead select{width:200px}
+.details_layer .details_thead span{padding:12px 0px 0px 15px;}
+.details_layer .details_thead .span_txt{padding:8px}
+.layer_table .input-box{display:flex;margin:40px}
+.color-red{color:red;padding-right:5px}
+.font_color{font-size:12px;color:#ccc}
+.layer_table .input-box .input_width{width:80%}
+.layer_table .input-box .input_img{padding:5px 15px;border:1px solid #eee;background:#fff;font-size:12px;margin-left:20px}
+.layer_table .btn_sub input{padding:5px 15px;background:#007dc6;color:#fff;font-size:16px;border:none;margin:0 20px}
+.layer_table .btn_sub button{padding:5px 15px;background:#fff;font-size:16px;border:1px solid #ccc}
+.layer_table .btn_sub{margin-left:120px}
+/*end*/
 /*Evaluation Management*/
 .evaluate .down_icon {margin:20px 0 20px 70px}
-.evaluate .details .table{font-size:13px;color:#7e7f7f}
+.details .table{font-size:13px;color:#7e7f7f}
 .evaluate .details .table .buyer{color:#007dc6}
 .evaluate .details .table .star{color:#007dc6}
 .evaluate .details .table .price{color:#fc021f}
-.evaluate .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
+ .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
 .evaluate .down_icon .span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
-.evaluate .details .table td{border-top:none}
-.evaluate .details .table .title_img {width:90px}
-.evaluate .details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
-.evaluate .details .table .title_img img{border-radius:50px;width:35px}
-.evaluate .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
-.evaluate .details .table .title_img  .icon_comment{font-size:22px}
-.evaluate .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;display: table-caption;}
-.evaluate .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
-.evaluate .details .table .border_bt {border-bottom: 3px #eee dotted;}
-.evaluate .details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
-.evaluate .details{margin:30px 0;position:relative}
-.evaluate .details:last-child .border_left{display:none}
+ .details .table td{border-top:none}
+ .details .table .title_img {width:90px}
+.details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
+ .details .table .title_img img{border-radius:50px;width:35px}
+ .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
+ .details .table .title_img  .icon_comment{font-size:22px}
+ .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;display: table-caption;}
+ .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
+ .details .table .border_bt {border-bottom: 3px #eee dotted;}
+.details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
+.details{margin:30px 0;position:relative}
+ .details:last-child .border_left{display:none}
 /*end*/
 /* after-sales service*/
 .after .table_head{background:#fbfbfb}
@@ -1014,7 +1052,7 @@ dl.options dd{float:left;margin-left:4px}
 @media (max-width:1190px) and (min-width:991px){.page-home .electron_ct_bt  li{padding-right:18px}.page-home .menu .menu_contre{width:100%}.page-home .menu_contre_top img{width:100%}}
 @media (max-width:990px) and (min-width:560px){.page-home .menu .menu_contre_bt .menu_bt_a{text-align:center}}
 .catalog-product .store_info{width:19%;overflow: hidden;float:left}
-.catalog-product .store_info h3{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
+.catalog-product .store_info h3.tops{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
 .catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
 .catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     padding:0;

@@ -4,6 +4,7 @@ namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
+use Seahinet\Catalog\Model\Product;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Retailer\Model\Collection\RetailerCollection;
@@ -40,7 +41,11 @@ class StoreDecoration extends Template
     {
 		$templateView = [];
 		$id = $this->getQuery('id');
+		$key = $this->getQuery('key');
 		$store_id = $this->judge_store_id($current_store_id);
+		
+		if($model!=0)
+			$id = $model;
 		if(!empty($id)){
 			if($id!='-1')
 			{		
@@ -49,13 +54,22 @@ class StoreDecoration extends Template
 				$templateView = $template->load($id);
 			}
 		}else{
-				$template = new StoreTemplateCollection;
+				if(empty($key))
+				{
+					$template = new StoreTemplateCollection;
 
-				$templateViewCollection = $template->storeTemplateList($store_id,1);
-				if(!empty($templateViewCollection))
-					$templateView = $templateViewCollection[0];
-				else
-					$templateView = [];
+					$templateViewCollection = $template->storeTemplateList($store_id,1);
+					if(!empty($templateViewCollection))
+						$templateView = $templateViewCollection[0];
+					else
+						$templateView = [];
+				}else{
+				
+					$key = base64_decode($key);
+					$storeTemplate = new storeTemplate;
+					$templateView = $storeTemplate->load($key);	
+				
+				}
 		}
 			
 		
@@ -70,6 +84,21 @@ class StoreDecoration extends Template
 			$templateView = [];
 		
 		return $templateView;				 		      
+    }
+    
+    public function getProductDetailTemplateView($store_id){
+    	$template = new StoreTemplateCollection;
+    	$template->storeTemplateList($store_id,1);
+    	$template_id = count($template)>0 ? $template[0]['id'] : -2;
+  		$view = '';
+    	if($template_id>0)
+    	{
+    		$template = new StoreTemplateCollection;
+    		$template->storeCustomizeTemplate($store_id,$template_id,2);
+    		$final_id = count($template)>0 ? $template[0]['id'] : -2;
+    		$view = $this->getTemplateView($store_id,$final_id);
+    	}
+    	return $view;
     }
 	
 	public function changeModel($view,$current_store_id = null){
@@ -128,6 +157,24 @@ class StoreDecoration extends Template
 		
 	}
 	
+	public function getProductDetailPageID($template_id){
+		$id = 0;
+	    $store_id = $this->judge_store_id();
+		$template = new StoreTemplateCollection;
+		$template->storeCustomizeTemplate($store_id,$template_id,2);
+		if(count($template))
+		{
+			$id = $template[0]['id'];
+		}else{
+			$template = new StoreTemplate;
+			$data = ['parent_id'=>$template_id,'store_id'=>$store_id,'page_type'=>2];
+			$template->setData($data);
+			$template->save();
+			$id = $template->getId();
+		}
+		return $id;
+	}
+	
 	public function getStorePicInfo($code,$current_store_id = null){
 		$Scollection = new StorePicInfoCollection;
 		
@@ -138,6 +185,19 @@ class StoreDecoration extends Template
 	
 		return $Scollection;
 		
+	}
+	
+	public function getCustomizeInfo($template_id,$page_type,$current_store_id = null){
+		$store_id = $this->judge_store_id($current_store_id);
+		$template = new StoreTemplateCollection;
+		$template->storeCustomizeTemplate($store_id,$template_id,$page_type);
+		$r = new Retailer;
+		$r->load($store_id,'store_id');
+		$url = $this->getBaseUrl().$r->getStoreUrl();
+		foreach ($template as $key => $value) {
+			$template[$key]['url'] = $url."?key=".urlencode(base64_encode($value['id']));
+		}
+		return $template;
 	}
 	
 	public function getStoreBanner($current_store_id = null,$current_retailer = null){	
@@ -164,6 +224,9 @@ class StoreDecoration extends Template
 		$productsData = $products->getRetailerSalesProducts($condition);
 		$content = "";
 		foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
 				$picURL = $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail); 	
@@ -173,9 +236,9 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="col-md-3" >
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
-                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>
                             </div>
              			</li>';
@@ -215,11 +278,15 @@ class StoreDecoration extends Template
 	
 	
 	public function template_menu($params='',$current_store_id = null){
+		$store_id = $this->judge_store_id($current_store_id);
+		$r = new Retailer;
+		$r->load($store_id,'store_id');
+		$url = $this->getBaseUrl().$r->getStoreUrl();		
 		$result = $this->getStorePicInfo('menu',$current_store_id);
-		$content = "";
+		$content = '<li class="menu" ><a  href="'.$url.'">首 页</a></li>';
 		foreach ($result as $key => $value) {
 			if(trim($value['url'])!="")
-				$content .= '<li class="menu" ><a target=_blank href="'.$value['url'].'">'.$value['pic_title'].'</a></li>';
+				$content .= '<li class="menu" ><a  href="'.$value['url'].'">'.$value['pic_title'].'</a></li>';
 			else
 				$content .= '<li class="menu" ><a  href="javascript:void(0)">'.$value['pic_title'].'</a></li>';
 		}
@@ -301,7 +368,7 @@ class StoreDecoration extends Template
 	public function template_sales_amount($params='',$current_store_id = null){
 		$content = '<ul>
                         <li>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="padding:3px" >
                                 <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
                                 </div>
                                 <div class="col-md-8">
@@ -340,7 +407,11 @@ class StoreDecoration extends Template
 			case 2:
 				$select_col_md = 'col-md-6';
 				$pic_height = '490px';
-				break;			
+				break;
+			case 1:
+				$select_col_md = 'col-md-12';
+				$pic_height = '';
+				break;				
 			default:
 				$select_col_md = 'col-md-3';
 				$pic_height = '225px';
@@ -357,6 +428,9 @@ class StoreDecoration extends Template
 		
 		$content = '<ul>';
        	foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
 			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
 			if (strpos($thumbnail, 'http') === false) {
 				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
@@ -366,9 +440,9 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="javascript:void(0)"><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
-                                <h3 class="product-name"><a href="">'.$value['name'].'</a></h3>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>
                             </div>
                         </li>';
@@ -408,19 +482,86 @@ class StoreDecoration extends Template
 	}
 
 	public function template_product_recommend($params='',$current_store_id = null){
-		$content = '<ul>';       	
-       	for($i=0;$i<4;$i++)
-		{
-			$content .= '<li class="col-md-3">
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		
+		$hot_text = empty($params) ? "" : $params['hot_text'];
+		$price_from = empty($params) ? "" : $params['price_from'];
+		$price_to = empty($params) ? "" : $params['price_to'];
+		$select_row = empty($params) ? 1 : $params['select_row'];
+		$select_column = empty($params) ? 4 : (int)$params['select_column'];
+		$select_col_md = 'col-md-3';
+		$pic_height = '225px';
+		switch ($select_column) {
+			case 3:
+				$select_col_md = 'col-md-4';
+				$pic_height = '313px';
+				break;
+			case 2:
+				$select_col_md = 'col-md-6';
+				$pic_height = '490px';
+				break;
+			case 1:
+				$select_col_md = 'col-md-12';
+				$pic_height = '';
+				break;				
+			default:
+				$select_col_md = 'col-md-3';
+				$pic_height = '225px';
+				break;
+		}
+		
+		$condition['name'] = $hot_text;
+		$condition['limit'] = $select_column*$select_row;
+		$condition['price_from'] = $price_from;
+		$condition['price_to'] = $price_to;
+		$condition['recomend_status'] = "1";
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		
+		
+		$content = '<ul>';
+       	foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-                                <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
-                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <p class="price"><span class="actural" style="width:80%" >'.$products->getCurrency()->format($value['price']).' </span></p>
+                                <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
+                       
                             </div>
                         </li>';
 		}                
-        $content .= '</ul>';		
+        $content .= '</ul>';
 		return $content;
+		
+		
+//		$content = '<ul>';       	
+//     	for($i=0;$i<4;$i++)
+//		{
+//			$content .= '<li class="col-md-3">
+//                          <div>
+//                              <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
+//                              <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
+//                              <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
+//                          </div>
+//                      </li>';
+//		}                
+//      $content .= '</ul>';		
+//		return $content;
 		
 	}
 	

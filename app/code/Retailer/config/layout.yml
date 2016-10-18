@@ -863,6 +863,38 @@ decoration_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/storeDecoration
+
+decoration_store_customize:
+    update: decoration_store
+    root:
+        children:
+            head:
+                action:
+                   -
+                        method: addLink
+                        params: frontend/css/style.css
+                   -
+                        method: setTitle
+                        params: Retailer Store Customize
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/storeDecorationCustomize
+decoration_store_productdetail:
+    update: decoration_store
+    root:
+        children:
+            head:
+                action:
+                   -
+                        method: setTitle
+                        params: Retailer Store Product
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/storeDecorationProductDetail
 decoration_list:
     update: retailer_account
     root:
@@ -906,6 +938,24 @@ decorationFunc:
                         method: addScript
                         params: frontend/dragResource/js/bootstrap.min.js
 
+
+decorationFunc_customize:
+    update: decorationFunc
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: customize
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/decorationFunc/customize
 decorationFunc_hot_product:
     update: decorationFunc
     root:

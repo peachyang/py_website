@@ -28,14 +28,17 @@
             while (store.length) {
                 var s = store.pop();
                 var url = GLOBAL.BASE_URL + 'checkout/order/shipping/?store=' + s;
-                if (GLOBAL.AJAX[url]) {
-                    GLOBAL.AJAX[url].abort();
+                if (GLOBAL.AJAX['shipping_method[' + s + ']']) {
+                    GLOBAL.AJAX['shipping_method[' + s + ']'].abort();
                 }
-                GLOBAL.AJAX[url] = $.ajax(url, {
+                GLOBAL.AJAX['shipping_method[' + s + ']'] = $.ajax(url, {
                     type: 'get',
                     success: function (xhr) {
-                        GLOBAL.AJAX[url] = null;
-                        $('.section.review [name="shipping_method[' + s + ']"]').parent().html(xhr);
+                        var name = $(xhr).attr('name');
+                        GLOBAL.AJAX[name] = null;
+                        var t = $('.section.review [name="' + name + '"]');
+                        $(t).after(xhr);
+                        $(t).remove();
                         if (!store.length) {
                             loadCoupon();
                         }
@@ -168,6 +171,7 @@
             } else {
                 var tmpl = $('#tmpl-address-list').html();
                 $('.section.address .list').append(tmpl.replace(/\{id\}/g, json.data.id).replace(/\{content\}/g, json.data.content).replace(/\{json\}/g, JSON.stringify(json.data.json)));
+                $('.section.address .list [data-id=' + json.data.id + ']>[type=radio]').trigger('click');
             }
         });
         $('.section.review').on('change', '[name^=shipping_method]', function () {

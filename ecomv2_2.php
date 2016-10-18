@@ -664,6 +664,8 @@ CREATE TABLE IF NOT EXISTS `store_decoration_template` (
     `template_name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Template name',
     `code_model` TEXT COMMENT 'Code model',
     `src_model` TEXT COMMENT 'Src model',
+    `parent_id` INTEGER DEFAULT 0 COMMENT 'Parent ID',
+    `page_type` INTEGER DEFAULT 0 COMMENT 'Page type',
     `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
     PRIMARY KEY (`id`),
     INDEX IDX_STORE_DECORATION_TEMPLATE_STORE_ID (`store_id`),

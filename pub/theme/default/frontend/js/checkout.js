@@ -31,7 +31,7 @@
                 if (GLOBAL.AJAX[url + s]) {
                     GLOBAL.AJAX[url + s].abort();
                 }
-                GLOBAL.AJAX[url + s] = $.ajax(url, {
+                GLOBAL.AJAX[url + s] = $.ajax(url + s, {
                     type: 'get',
                     success: function (xhr) {
                         GLOBAL.AJAX[url + xhr.store] = null;

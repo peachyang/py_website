@@ -84,6 +84,21 @@ class StoreDecoration extends Template
 		
 		return $templateView;				 		      
     }
+    
+    public function getProductDetailTemplateView($store_id){
+    	$template = new StoreTemplateCollection;
+    	$template->storeTemplateList($store_id,1);
+    	$template_id = count($template)>0 ? $template[0]['id'] : -2;
+  		$view = '';
+    	if($template_id>0)
+    	{
+    		$template = new StoreTemplateCollection;
+    		$template->storeCustomizeTemplate($store_id,$template_id,2);
+    		$final_id = count($template)>0 ? $template[0]['id'] : -2;
+    		$view = $this->getTemplateView($store_id,$final_id);
+    	}
+    	return $view;
+    }
 	
 	public function changeModel($view,$current_store_id = null){
        $final_view = $view;

@@ -1,5 +1,5 @@
 <?php
-$storeId = $this->getVariable('store_id', $this->getQuery('store'));
+$storeId = $this->getVariable('store_id');
 $methods = $this->getShippingMethods($storeId);
 $current = $this->getCurrentMethod();
 if ($methods):

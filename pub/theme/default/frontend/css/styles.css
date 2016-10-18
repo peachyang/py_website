@@ -425,9 +425,10 @@ dl.options dd{float:left;margin-left:4px}
 .checkout-order .payment li>input:checked+label{background:#f1f2f4}
 .checkout-order .address .form-edit-address{max-width:585px}
 .checkout-order .address .list li{margin-left:5px;padding-right:5px;line-height:40px}
-.checkout-order .address .list .edit,.delete,.default{margin-left:10px;color:#007dc6}
-.checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
+.checkout-order .address .list .edit,.delete,.default,.btn-Address{margin-left:10px;color:#007dc6}
+.checkout-order .address .list .default,.checkout-order .address .list .edit,.checkout-order .address .list .delete{display:none}
 .checkout-order .address .list li:hover{background:#F1F2F4}
+.checkout-order .address .list li:hover .default{display:inline}
 .checkout-order .address .list li:hover .edit{display:inline}
 .checkout-order .address .list li:hover .delete{display:inline}
 .checkout-order .address .btn-add{margin-left:20px;margin-top:20px;border-radius:0}

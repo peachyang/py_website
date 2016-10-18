@@ -21,7 +21,7 @@ if (count($orders) != 0):
                     <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
                     <span><?php echo $order['increment_id'] ?></span>
                     <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
-                    <span class="list_delete"><a href=""><?php echo $this->translate('Delete') ?></a></span>
+                    
                 </div>
             </caption>
             <tbody>      
@@ -83,6 +83,7 @@ if (count($orders) != 0):
                         <td class="text-center">
                             <?php echo (float) $item['qty'] ?>
                         </td>
+                        <td class="Arefund"> <a href=""  data-toggle="modal" data-target="#modal-reply">退货/退款</a></td>
                         <?php if ($flag): ?>
                             <td rowspan="<?php echo count($order->getItems()) ?>" class="text-center text-nowrap">
                                 <span class="total"><?php echo $order->getCurrency()->format($order['total']) ?></span>
@@ -108,3 +109,126 @@ if (count($orders) != 0):
     <?php endforeach; ?>
 <?php endif; ?>
 <p><?php echo $this->getChild('pager')->setCollection($orders); ?></p>
+
+ <div id="modal-reply" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="replyModalLabel">售后详情</h4>
+                </div>
+            
+                <div class="modal-body">
+                	<div class="layer_table">
+                		<table class="table details_layer">
+	                    	<thead>
+	                    		<tr class="details_thead"> 
+	                    		<th>
+	                    			<lable>申请服务：</lable>
+	                    			
+	                    				<select class="form-control select_xl">
+										      <option value="1">仅退款</option>
+										      <option value="2">退货退款</option>
+										 </select>  
+										 <span class="color-red">*</span><span class="span_txt">必选项</span>  
+	                    			</th>
+	                    		</tr>
+	                    		</thead>
+                    		</table>
+                    	<div id="pop-up">
+                    		<div id="Arefund_cont" class="">
+                    			<div class="input-box">
+					            	<label class="control-label"><i class="color-red">*</i>是否收到货：</label>
+					            	<div class="cell">
+						                <span class="male"> <input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">未收到货</span>
+						                <span class="female"><input name="optionsRadios" id="optionsRadios2" value="option2" checked="" type="radio">已收到货</span>
+					           		 </div>
+       							 </div>
+	       						 <div class="input-box">
+						            <label><i class="color-red">*</i><span>备注<span  class="font_color">(0/200字)</span>：</span></label>
+						            <div class="cell input_width">
+						                <textarea name="description" id="description" class="form-control" rows="4"></textarea>
+						            </div>
+						        </div>
+						        <div class="input-box">
+						            <label><i class="color-red">*</i><span>上传凭证：</span></label>
+						            <div class="cell">
+						               <button class="input_img">选择凭证照片</button>
+						            </div>
+						        </div>
+                    		</div>
+                    		
+                    		<div id="goods" class="Arefund_hide" >
+                    			<div class="input-box">
+					            <label class="control-label"><i class="color-red">*</i>退货退款原因：</label>
+					            <div class="cell">
+					                <select class="form-control">
+					                		<option >请选择退货退款原因</option>
+										      <option >买错了重拍</option>
+										      <option >不喜欢</option>
+										      <option >尺码不合适</option>
+									 </select> 
+					            </div>
+       						 </div>
+       						 <div class="input-box">
+					            <label><i class="color-red">*</i><span>订单退款金额：</span></label>
+					            <div class="cell input_width">
+					                <input type="txt" value="不超过订单金额"><lable>元<span>（最多58.00元,含发货邮费0.00元）</span></lable>
+					            </div>
+					        </div>
+					        <div class="input-box">
+					            <label><i class="color-red">*</i><span>备注<span  class="font_color">(0/200字)</span>：</span></label>
+					            <div class="cell input_width">
+					                <textarea name="description" id="description" class="form-control" rows="4"></textarea>
+					            </div>
+					        </div>
+					        <div class="input-box">
+					            <label><i class="color-red">*</i><span>上传凭证：</span></label>
+					            <div class="cell">
+					               <button class="input_img">选择凭证照片</button>
+					            </div>
+					        </div>
+                    		</div>
+					        
+                    		</div>
+                    		
+                    		
+                    		
+                    		
+					         <div class="input-box btn_sub" >
+					           <input type="submit" value="提交申请" />
+					           <button>取消并返回</button>
+					        </div>
+                    		
+                		</div>
+                    
+                    
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   <script type="text/javascript">
+   $(function(){
+	   $('select').change(function(){
+	   var value=$(".select_xl").val();
+	   if(value=='1'){
+	   $('#Arefund_cont').removeClass('Arefund_hide');
+	   $('#goods').addClass('Arefund_hide');
+	   }
+	   if(value=='2'){
+	   $('#goods').removeClass('Arefund_hide');
+	   $('#Arefund_cont').addClass('Arefund_hide');
+	   }
+
+
+	   });
+
+	   });
+
+
+	</script>

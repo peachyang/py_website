@@ -19,26 +19,26 @@
         </form>
     </div>
     <div class="after">
-        <table class="table order-list text-center">
+        <table class="table">
             <thead>
-                <tr class="table_head">
-                    <th class="col-lg-4 col-md-4  text-center">宝贝</th>
-                    <th class="col-lg-2 col-md-2  text-center">售后编号</th>
-                    <th class="col-lg-2 col-md-2  text-center">售后原因</th>
-                    <th class="col-lg-1 col-md-1  text-center">状态</th>
-                    <th class="col-lg-2 col-md-2  text-center">时间</th>
-                    <th class="col-lg-1 col-md-1  text-center">操作</th>
-                </tr>
+                <th class="col-lg-4 col-md-4  text-center">宝贝</th>
+                <th class="col-lg-2 col-md-2  text-center">售后编号</th>
+                <th class="col-lg-1 col-md-1  text-center">售后原因</th>
+                <th class="col-lg-1 col-md-1  text-center">状态</th>
+                <th class="col-lg-3 col-md-3  text-center">时间</th>
+                <th class="col-lg-1 col-md-1  text-center">操作</th>
             </thead>
-            <caption>
-                <div class="col-xs-6 store">雄鹰能量棒 <a href=""><span class="fa fa-qq"></span></a></div>
-                <div class="col-xs-6 text-right list_right">
-                    <span class="label">订单号：</span>
-                    <span>20771553987443</span>
-                    <span class="list_time">2016-07-15</span>
-                </div>
-            </caption>
-                <tbody>
+            <tbody>
+                <tr>
+                    <td class="col-xs-6 store" colspan="3">雄鹰能量棒 <a href=""><span class="fa fa-qq"></span></a></td>
+                    <td class="col-xs-6 text-right" colspan="3">
+                        <span class="label">订单号：</span>
+                        <span>20771553987443</span>&nbsp;&nbsp;
+                        <span class="list_time">2016-07-15</span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
                 <tr>
                     <td class="col-lg-4 col-md-4">
                         <img class="Thumbnail" src="http://ecomv2.seahinet.test1/pub/resource/image/resized/100x/TB12zVxHpXXXXbuaXXXXXXXXXXX_!!0-item_pic.jpg" alt="">
@@ -54,11 +54,10 @@
                     </td>
                     <td class="col-lg-1 col-md-1 text-center">
                         <button class="after_bt">取消</button>
-                        <div><a target="_blank" href="http://127.0.0.1/ecomv2admin/retailer/transaction/afterview">查看详情</a>
-                        </div>
+                        <a target="_blank" href="/retailer/transaction/afterview">查看详情</a>
                     </td>
                 </tr>
-            </tbody>
+            </tfoot>
         </table>
     </div>
     <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">

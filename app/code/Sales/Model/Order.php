@@ -107,7 +107,7 @@ class Order extends AbstractModel
             'base_tax' => 0,
             'tax' => 0
         ])->setData([
-            'subtotal' => $currency->convert($this->storage['subtotal']),
+            'subtotal' => $currency->convert($this->storage['base_subtotal']),
             'shipping' => $currency->convert($this->storage['base_shipping'])
         ]);
         $this->getEventDispatcher()->trigger('tax.calc', ['model' => $this]);

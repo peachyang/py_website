@@ -224,6 +224,15 @@ class OrderController extends ActionController
         }
         return $this->response($result, 'checkout/order/', 'checkout');
     }
+    public function defaultAddressAction()
+    {
+        $id = $this->getRequest()->getQuery('id');
+        if ($id) {
+            $address = new Address;
+            $address->load($id)->setData('is_default', 1)->save();
+        }
+        return $this->response(['error' => 0, 'message' => []], 'checkout/order/','checkout');
+    }
 
     public function deleteAddressAction()
     {

@@ -1081,3 +1081,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-order-status .main_article_content .columns button{width: 50%;background:#007ecc;color: #fff;border:none;margin-top:10px;height:36px}
 .sales-order-list .page-content .list_table{margin:10px 0}
 .sales-refund .page-content{margin-top:30px}
+.retailer-after .after thead{line-height: 30px;border: 1px solid #ececec;background-color:#eeeeee}
+.retailer-after .after thead th{padding-top:0;padding: 5px 0}
+.retailer-after .after tbody{margin-top:20px}
+.retailer-after .after tfoot h4{font-size: 14px;font-weight:normal}

@@ -11,7 +11,10 @@ $products = $this->getProducts();
             <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2 product-list">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
                         <?php if(strpos($thumbnail, 'http') === false): ?>
-                        <img class="bttrlazyloading" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/362x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100%" />
+                        
+                        	<img class="bttrlazyloading" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/362x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>"/>
+                       
+                        
                         <?php else: ?>
                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                         <?php endif ?>
@@ -20,6 +23,11 @@ $products = $this->getProducts();
                         <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>">
                             <?php echo $product['name'] ?>
                         </a>
+                        <div class="Thestore">
+                        	<span class="pull-left store_name">蓝海互联旗舰店</span>
+                       		 <span class="pull-right">999<?php echo $this->translate('People pay') ?></span>
+                        </div>
+                        
                     </h3>
                     <div class="price-box">
                         <?php echo $this->getPriceBox($product) ?>

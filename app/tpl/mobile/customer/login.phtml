@@ -52,7 +52,7 @@
     <div class="register">
         <a href="" class="pull-left fa fa-qq"><span class="text-color"> <?php echo $this->translate('QQ Login') ?></span></a> 
         <a href="" class="pull-left fa fa-wechat"><span class="text-color"> <?php echo $this->translate('WeChat Login') ?></span></a> 
-        <a href="<?php echo $this->getBaseUrl('customer/account/create/'), $success ? '?success_url=' . $success : '' ?>" class="pull-right"><?php echo $this->translate('Create an Account') ?></a> 
-        <a href="<?php echo $this->getBaseUrl('customer/account/forgotpwd/') ?>" class="pull-right"><?php echo $this->translate('Forgot Your Password?') ?></a>&nbsp;&nbsp;
+        <a href="<?php echo $this->getBaseUrl('customer/account/create/'), $success ? '?success_url=' . $success : '' ?>" class="pull-right  logon_news"><?php echo $this->translate('Create an Account') ?></a>
+        <a href="<?php echo $this->getBaseUrl('customer/account/forgotpwd/') ?>" class="pull-right password_wj"><?php echo $this->translate('Forgot Your Password') ?></a>
     </div>
 </div>

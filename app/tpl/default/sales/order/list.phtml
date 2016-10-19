@@ -20,8 +20,7 @@ if (count($orders) != 0):
                 <div class="col-xs-6 text-right list_right">
                     <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
                     <span><?php echo $order['increment_id'] ?></span>
-                    <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
-                    
+                    <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>                
                 </div>
             </caption>
             <tbody>      

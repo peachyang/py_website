@@ -1122,5 +1122,8 @@ dl.options dd{float:left;margin-left:4px}
 .sales-refund .page-content{margin-top:30px}
 .retailer-after .after thead{line-height: 30px;border: 1px solid #ececec;background-color:#eeeeee}
 .retailer-after .after thead th{padding-top:0;padding: 5px 0}
-.retailer-after .after tbody{margin-top:20px}
-.retailer-after .after tfoot h4{font-size: 14px;font-weight:normal}
+.retailer-after .after .table>tbody+tbody{border-top: none;border: 1px solid #e4e5eb}
+.retailer-after .after tbody h4{font-size: 14px;font-weight:normal}
+.retailer-after h4{line-height: 30px;border-bottom:1px solid #e4e5eb;margin-bottom:45px}
+.retailer-after h4 span{color:#007dc6}
+.retailer-after .history_after_sale{color: #bebebe}

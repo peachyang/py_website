@@ -14,7 +14,7 @@ $parent = $this->getVariable('parent');
         <?php foreach ($item['options'] as $value => $label): ?>
             <input type="radio" name="<?php echo $key ?>" id="<?php echo $id, '-', $value ?>"<?php
             if (!isset($item['attrs']['class'])):
-                ?> class="form-control<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                ?> class="<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                        if (isset($item['class'])) {
                            echo $item['class'];
                        }

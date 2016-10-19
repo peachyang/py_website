@@ -3,6 +3,8 @@
 namespace Seahinet\Customer\ViewModel;
 
 use Seahinet\Customer\Model\Customer;
+use Seahinet\Email\Model\Subscriber;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 
 class Edit extends Account
@@ -14,8 +16,15 @@ class Edit extends Account
         $collection->withLabel()
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
                 ->where(['eav_entity_type.code' => Customer::ENTITY_TYPE])
-        ->where->notIn('eav_attribute.code', ['username', 'password']);
-        return $collection;
+        ->where->notIn('eav_attribute.code', ['username', 'password', 'avatar']);
+        $result = [];
+        foreach ($collection as $item) {
+            if (in_array($item->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
+                $item->offsetSet('options', $item->getOptions(Bootstrap::getLanguage()->getId()));
+            }
+            $result[] = $item;
+        }
+        return $result;
     }
 
     public function getInputBox($attr)
@@ -31,6 +40,13 @@ class Edit extends Account
         ]);
         $box->setTemplate('page/renderer/' . $item['input'], false);
         return $box;
+    }
+
+    public function hasSubscribed()
+    {
+        $subscriber = new Subscriber;
+        $subscriber->load($this->getCustomer()->offsetGet('email'), 'email');
+        return (bool) $subscriber->getId();
     }
 
 }

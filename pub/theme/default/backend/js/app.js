@@ -261,10 +261,16 @@
                 }
             };
             for (var i in target) {
-                toggle($(i).val(), target[i]);
-                $(i).change(function () {
-                    toggle($(this).val(), target[i]);
-                });
+                toggle($(i).is('[type=radio],[type=checkbox]') ? i.checked : $(i).val(), target[i]);
+                if ($(i).is('[type=radio],[type=checkbox]')) {
+                    $(i).click(function () {
+                        toggle(this.checked ? this.value : null, target[i]);
+                    });
+                } else {
+                    $(i).change(function () {
+                        toggle($(this).val(), target[i]);
+                    });
+                }
             }
         });
         $('.pager .btn').click(function () {

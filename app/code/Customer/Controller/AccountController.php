@@ -7,7 +7,10 @@ use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
-use Seahinet\Email\Model\Template as TemplateModel;
+use Seahinet\Email\Model\{
+    Template as TemplateModel,
+    Subscriber
+};
 use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
@@ -327,26 +330,44 @@ class AccountController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
-            $result = $this->validateForm($data);
-            if ((!empty($data['cpassword']) || !empty($data['password'])) && $data['cpassword'] !== $data['password']) {
-                $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
-                $result['error'] = 1;
-                $url = 'customer/account/edit/';
-            } else if (!$customer->valid($customer['username'], $data['crpassword'])) {
+            $result = $this->validateForm($data, ['crpassword']);
+            if (!empty($data['edit_password'])) {
+                if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {
+                    $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
+                    $result['error'] = 1;
+                }
+            } else {
+                unset($data['cpassword'], $data['password']);
+            }
+            if (!$customer->valid($customer['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
-                $url = 'customer/account/edit/';
-            } else if ($result['error'] === 0) {
+            }
+            if ($result['error'] === 0) {
+                $files = $this->getRequest()->getUploadedFile();
+                foreach ($files as $key => $file) {
+                    $data[$key] = base64_encode($file->getStream()->getContents());
+                }
                 $model = new Model;
                 $model->load($customer['id']);
                 $model->setData($data);
                 $model->save();
+                $subscriber = new Subscriber;
+                $subscriber->load($data['email'], 'email');
+                if (empty($data['subscribe']) && $subscriber->getId()) {
+                    $subscriber->setData('status', 0)->save();
+                } else if (!empty($data['subscribe'])) {
+                    $subscriber->setData([
+                        'email' => $data['email'],
+                        'language_id' => Bootstrap::getLanguage()->getId(),
+                        'status' => 1
+                    ])->save();
+                }
                 $segment->set('customer', clone $model);
                 $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
-                $url = 'customer/account/';
             }
         }
-        return $this->response($result ?? ['error' => 0, 'message' => []], $url, 'customer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/account/edit/', 'customer');
     }
 
     public function addressAction()

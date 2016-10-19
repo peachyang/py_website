@@ -4,6 +4,7 @@ namespace Seahinet\Sales\Model;
 
 use Exception;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Catalog\Model\Product\Option;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Model\AbstractModel;
@@ -185,10 +186,22 @@ final class Cart extends AbstractModel implements Singleton
     {
         $product = new Product;
         $product->load($productId);
+        ksort($options);
         if (!$sku) {
             $sku = $product['sku'];
+            foreach ($options as $key => $value) {
+                $option = new Option;
+                $option->load($key);
+                if (in_array($option->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
+                    $value = $option->getValue($value, false);
+                    if ($value['sku'] !== '') {
+                        $sku .= '-' . $option->getValue($value, false)['sku'];
+                    }
+                } else if ($value !== '' && $option['sku'] !== '') {
+                    $sku .= '-' . $option['sku'];
+                }
+            }
         }
-        ksort($options);
         $this->getEventDispatcher()->trigger('cart.add.before', [
             'product_id' => $productId,
             'product' => $product,

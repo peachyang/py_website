@@ -8,6 +8,8 @@ use Seahinet\Lib\Model\AbstractModel;
 class Item extends AbstractModel
 {
 
+    protected $product = null;
+
     protected function construct()
     {
         $this->init('sales_order_shipment_item', 'id', [
@@ -21,8 +23,11 @@ class Item extends AbstractModel
         $result = parent::offsetGet($key);
         if (!$result) {
             if ($key === 'product') {
-                $result = new Product;
-                $result->load($this->storage['product_id']);
+                if (is_null($this->product)) {
+                    $this->product = new Product;
+                    $this->product->load($this->storage['product_id']);
+                }
+                $result = $this->product;
             }
         }
         return $result;

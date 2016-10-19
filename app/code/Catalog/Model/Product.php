@@ -295,15 +295,15 @@ class Product extends Entity
                         'warehouse_id' => $warehouseId,
                         'product_id' => $this->getId(),
                         'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
-                        'barcode' => $inventory['barcode'][$order] ?? '',
+                        'barcode' => $inventory['barcode'][$order - 1] ?? '',
                         'qty' => $qty,
-                        'reserve_qty' => $inventory['reserve_qty'][$order] ?? null,
-                        'min_qty' => $inventory['min_qty'][$order] ?? null,
-                        'max_qty' => $inventory['max_qty'][$order] ?? null,
-                        'is_decimal' => $inventory['is_decimal'][$order] ?? null,
-                        'backorders' => $inventory['backorders'][$order] ?? null,
-                        'increment' => $inventory['increment'][$order] ?? null,
-                        'status' => $inventory['status'][$order] ?? null
+                        'reserve_qty' => $inventory['reserve_qty'][$order] ?? ($inventory['reserve_qty'][0] ?? null),
+                        'min_qty' => $inventory['min_qty'][$order] ?? ($inventory['min_qty'][0] ?? null),
+                        'max_qty' => $inventory['max_qty'][$order] ?? ($inventory['max_qty'][0] ?? null),
+                        'is_decimal' => $inventory['is_decimal'][$order] ?? ($inventory['is_decimal'][0] ?? null),
+                        'backorders' => $inventory['backorders'][$order] ?? ($inventory['backorders'][0] ?? null),
+                        'increment' => $inventory['increment'][$order] ?? ($inventory['increment'][0] ?? null),
+                        'status' => $inventory['status'][$order] ?? ($inventory['status'][0] ?? null)
                     ]);
                 }
             }

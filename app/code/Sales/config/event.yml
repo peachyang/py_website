@@ -6,11 +6,11 @@ currency.switch:
 customer.login.after:
     -
         listener: [\Seahinet\Sales\Listeners\Cart, afterLoggedIn]
-        priority: 0
+        priority: 10
 customer.logout.after:
     -
         listener: [\Seahinet\Sales\Listeners\Cart, afterLoggedOut]
-        priority: 0
+        priority: 10
 Seahinet\Sales\Model\Order.model.save.before:
     -
         listener: [\Seahinet\Sales\Listeners\Increment, generate]

@@ -55,7 +55,7 @@ class Option extends AbstractModel
         return [];
     }
 
-    public function getValue($value)
+    public function getValue($value, $titleOnly = true)
     {
         if ($this->storage['id']) {
             if (in_array($this->storage['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
@@ -66,7 +66,7 @@ class Option extends AbstractModel
                         ->where(['product_option_value_title.language_id' => $this->getLanguageId()]);
                 $result = $tableGateway->selectWith($select)->toArray();
                 if ($result) {
-                    return $result[0]['title'];
+                    return $titleOnly ? $result[0]['title'] : $result[0];
                 }
             } else {
                 return $value;

@@ -13,8 +13,9 @@ class Customer extends Entity
 {
 
     const ENTITY_TYPE = 'customer';
-    
+
     protected $retailer = null;
+
     protected function construct()
     {
         $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'open_id', 'confirm_token', 'confirm_token_created_at', 'status']);
@@ -22,15 +23,7 @@ class Customer extends Entity
 
     public function __clone()
     {
-        $storage = [
-            'id' => $this->storage['id'],
-            'store_id' => $this->storage['store_id'],
-            'language_id' => $this->storage['language_id'],
-            'increment_id' => $this->storage['increment_id'],
-            'username' => $this->storage['username'],
-            'password' => $this->storage['password']
-        ];
-        $this->storage = $storage;
+        $this->storage = array_diff_key($this->storage, ['password', 'confirm_token', 'confirm_token_created_at']);
         $this->isLoaded = false;
     }
 
@@ -117,19 +110,12 @@ class Customer extends Entity
         }
         return $this->store;
     }
-    
-    /** 
-    * getRetailer  
-    * Get customer's retailer information
-    * 
-    * @access public 
-    * @return object 
-    */ 
+
     public function getRetailer()
     {
-        if (is_null($this->retailer) && $this->offsetGet('id')) {
+        if (is_null($this->retailer) && $this->getId()) {
             $retailer = new Retailer;
-            $retailer->load($this->offsetGet('id'), 'customer_id');
+            $retailer->load($this->getId(), 'customer_id');
             if ($retailer->getId()) {
                 $this->retailer = $retailer;
             }

@@ -22,7 +22,7 @@ class Warehouse extends AbstractModel
                 'product_id' => $productId,
                 'sku' => $sku
             ]);
-            return $inventory[0];
+            return count($inventory) ? $inventory[0] : [];
         }
         return null;
     }

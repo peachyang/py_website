@@ -43,7 +43,7 @@ class AttributeController extends AuthActionController
                     $type->load(Customer::ENTITY_TYPE, 'code');
                     $model->setData([
                         'code' => trim(preg_replace('/\W+/', '_', strtolower($data['code'])), '_'),
-                        'type_id', $type->getId()
+                        'type_id' => $type->getId()
                     ]);
                 }
         );

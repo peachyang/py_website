@@ -221,6 +221,61 @@
                 }
             });
         });
+        $('[data-base]').each(function () {
+            var o = this;
+            var p = $(o).parents('.input-box').first();
+            $(p).hide();
+            $(o).find('input,select,textarea,button').each(function () {
+                this.disabled = true;
+            });
+            o.disabled = true;
+            var base = $(o).data('base');
+            try {
+                var target = eval('(' + base + ')');
+            } catch (e) {
+                var target = base.indexOf(':') === -1 ? eval('({"' + base + '":"1"})') : eval('({' + base + '})');
+            }
+            var toggle = function (s, t) {
+                if (typeof s !== 'object') {
+                    s = [s];
+                }
+                if (typeof t !== 'object') {
+                    t = [t];
+                }
+                var f = false;
+                for (var i in s) {
+                    if ($.inArray(s[i], t) !== -1) {
+                        f = true;
+                        break;
+                    }
+                }
+                if (f) {
+                    $(p).show();
+                    o.disabled = false;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = false;
+                    });
+                } else {
+                    $(p).hide();
+                    o.disabled = true;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = true;
+                    });
+                }
+            };
+            for (var i in target) {
+                toggle($(i).is('[type=radio],[type=checkbox]') ? i.checked : $(i).val(), target[i]);
+                if ($(i).is('[type=radio],[type=checkbox]')) {
+                    $(i).click(function () {
+                        toggle(this.checked ? this.value : null, target[i]);
+                    });
+                } else {
+                    $(i).change(function () {
+                        toggle($(this).val(), target[i]);
+                    });
+                }
+            }
+        });
     });
 }));
 

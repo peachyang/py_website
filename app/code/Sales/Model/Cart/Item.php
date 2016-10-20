@@ -11,6 +11,9 @@ use Seahinet\Lib\Model\Store;
 class Item extends AbstractModel
 {
 
+    protected $product = null;
+    protected $store = null;
+
     protected function construct()
     {
         $this->init('sales_cart_item', 'id', [
@@ -34,11 +37,17 @@ class Item extends AbstractModel
         $result = parent::offsetGet($key);
         if (!$result) {
             if ($key === 'product') {
-                $result = new Product;
-                $result->load($this->storage['product_id']);
+                if (is_null($this->product)) {
+                    $this->product = new Product;
+                    $this->product->load($this->storage['product_id']);
+                }
+                $result = $this->product;
             } else if ($key === 'store') {
-                $result = new Store;
-                $result->load($this->storage['store_id']);
+                if (is_null($this->store)) {
+                    $this->store = new Store;
+                    $this->store->load($this->storage['store_id']);
+                }
+                $result = $this->store;
             }
         }
         return $result;

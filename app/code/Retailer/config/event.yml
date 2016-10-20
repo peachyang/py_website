@@ -3,3 +3,7 @@ cart.add.before:
     -
         listener: [\Seahinet\Retailer\Listeners\Farm, check]
         priority: 5
+customer.login.after:
+    -
+        listener: [\Seahinet\Retailer\Listeners\Farm, beforeCombine]
+        priority: 9

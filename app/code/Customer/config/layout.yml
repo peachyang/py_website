@@ -122,6 +122,13 @@ customer_account_address:
                     main:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address/book
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: showLabel
+                                        params: false
             extra:
                 children:
                     modal:

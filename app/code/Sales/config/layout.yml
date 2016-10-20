@@ -455,6 +455,20 @@ sales_order_list:
                                     -
                                         method: setDefaultLimit
                                         params: 20
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/refund/form
+sales_order_review:
+    update: customer_account
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Sales\ViewModel\Review
+                        template: sales/order/review
 sales_order_view:
     update: customer_account
     root:

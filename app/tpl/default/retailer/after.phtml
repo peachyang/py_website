@@ -1,32 +1,39 @@
 <?php
 $after = new \Seahinet\Retailer\Model\Collection\After;
 $after = $this->getAfterCollection();
-
-if ($after):
-    ?>
-    <div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
-        <h4><?php echo $this->translate('After Service'); ?><span>(<?php echo count($after); ?>)</span>&nbsp;&nbsp; / &nbsp;&nbsp;<span class="history_after_sale"><a href="#"><?php echo $this->translate('History after Sale Service'); ?></a></span></h4>   
+?>
+<div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
+    <h4><?php echo $this->translate('After Service'); ?><span>(<?php echo count($after); ?>)</span>&nbsp;&nbsp; / &nbsp;&nbsp;
+        <span class="history_after_sale"><a href="#"><?php echo $this->translate('History after Sale Service'); ?></a></span>
+    </h4>
+    <?php
+    if ($after):
+        ?>
         <div class="after">
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="col-lg-4 col-md-4  text-center">宝贝</th>
-                        <th class="col-lg-2 col-md-2  text-center">售后编号</th>
-                        <th class="col-lg-1 col-md-1  text-center">售后原因</th>
-                        <th class="col-lg-1 col-md-1  text-center">状态</th>
-                        <th class="col-lg-3 col-md-3  text-center">时间</th>
-                        <th class="col-lg-1 col-md-1  text-center">操作</th>
+                        <th class="col-lg-3 col-md-3 text-center">宝贝</th>
+                        <th class="col-lg-2 col-md-2 text-center">售后编号</th>
+                        <th class="col-lg-2 col-md-2 text-center">售后原因</th>
+                        <th class="col-lg-1 col-md-1 text-center">状态</th>
+                        <th class="col-lg-3 col-md-3 text-center">时间</th>
+                        <th class="col-lg-1 col-md-1 text-center">操作</th>
                     </tr>
                 </thead>
             </table>
             <?php
             foreach ($after as $after1):
+                $customer = new Seahinet\Customer\Model\Customer;
+                
+                $product = new Seahinet\Catalog\Model\Product;
+                $thumbnail= $product->getThumbnail();           
                 ?>
                 <table class="table">
                     <caption>
                         <tr>
                             <td class="col-xs-6 store" colspan="3">
-                                <a href=""><?php echo $after1->getStore()['name']; ?><span class="fa fa-qq"></span></a>
+                                <a href="" target="_blank"><?php echo $customer['username']; ?><span class="fa fa-qq"></span></a>
                             </td>
                             <td class="col-xs-6 text-right" colspan="3">
                                 <span class="label">订单号：</span>
@@ -37,16 +44,17 @@ if ($after):
                     </caption>
                     <tbody>
                         <tr>
-                            <td class="col-lg-4 col-md-4">
-                                <img class="Thumbnail" src="<?php ?>" alt="">
-                                <p></p> 
+                            <td class="col-lg-3 col-md-3 text-left">
+                                <img class="Thumbnail" src="<?php echo $product->getThumbnail(); ?>" alt="">
+                                <a href="#"><?php echo $product['name']?></a>
                             </td>
-                            <td class="col-lg-2 col-md-2"><?php echo $after1['increment_id'] ?></td>
-                            <td class="col-lg-1 col-md-1"><a href="">换货申请</a></td>
-                            <td class="col-lg-1 col-md-1"><a href="">处理中</a></td>
-                            <td class="col-lg-2 col-md-2"><span class="list_time"><?php echo $after1['created_at'] ?></span></td>
-                            <td class="col-lg-1 col-md-1"><button class="after_bt">取消</button>
-                                <a target="_blank" href="/retailer/transaction/afterview">查看详情</a>
+                            <td class="col-lg-2 col-md-2 text-center"><?php echo $after1['increment_id'] ?></td>
+                            <td class="col-lg-1 col-md-1 text-center"><a href="">换货申请</a></td>
+                            <td class="col-lg-2 col-md-2 text-center"><a href="">买家提出申请</a></td>
+                            <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $after1['created_at'] ?></span>
+                            </td>
+                            <td class="col-lg-1 col-md-1 text-center"><button class="after_bt">取消</button>
+                                <a class="afterview" href="<?php echo $this->getBaseUrl()?>retailer/transaction/afterview">查看详情</a>
                             </td>
                         </tr>
                     </tbody>
@@ -55,67 +63,67 @@ if ($after):
             endforeach;
             ?>
         </div>
-        <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="refusedModalLabel">拒绝申请</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div >
-                            <h1>您确定要拒绝买家的售后申请吗？</h1>
-                            <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888889</span></p>
-                            <dl>
-                                <dt>拒绝原因:</dt>
-                                <dd><textarea name="reason"></textarea></dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">确认</button>
+        <?php
+    endif;
+    ?>
+    <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="refusedModalLabel">拒绝申请</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h1>您确定要拒绝买家的售后申请吗？</h1>
+                        <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888889</span></p>
+                        <dl>
+                            <dt>拒绝原因:</dt>
+                            <dd><textarea name="reason"></textarea></dd>
+                        </dl>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div id="modal-agree" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="agreedModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="agreedModalLabel">同意售后</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>买家:&nbsp;&nbsp;Stone<br>订单号&nbsp;&nbsp;:<strong>88888888889</strong></div>
-                        <div>
-                            <ul>
-                                <li>
-                                    <h3>处理方式</h3>
-                                    <p>
-                                        <select name="agree_method">
-                                            <option value="退款">退款</option>
-                                            <option value="退货">退货</option>
-                                            <option value="补发">补发</option>
-                                        </select>
-                                    </p>
-                                </li>
-                                <li>
-                                    <h3>同意原因</h3>
-                                    <p><textarea name="agree"></textarea></p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">确认</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
                 </div>
             </div>
         </div>
     </div>
-    <?php
-endif;
-?>
+
+    <div id="modal-agree" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="agreedModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="agreedModalLabel">同意售后</h4>
+                </div>
+                <div class="modal-body">
+                    <div>买家:&nbsp;&nbsp;Stone<br>订单号&nbsp;&nbsp;:<strong>88888888889</strong></div>
+                    <div>
+                        <ul>
+                            <li>
+                                <h3>处理方式</h3>
+                                <p>
+                                    <select name="agree_method">
+                                        <option value="退款">退款</option>
+                                        <option value="退货">退货</option>
+                                        <option value="补发">补发</option>
+                                    </select>
+                                </p>
+                            </li>
+                            <li>
+                                <h3>同意原因</h3>
+                                <p><textarea name="agree"></textarea></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

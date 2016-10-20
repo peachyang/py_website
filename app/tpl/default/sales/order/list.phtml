@@ -64,7 +64,7 @@ $orders = $this->getOrders();
                             </td>
                             <td rowspan="<?php echo count($items) ?>">
                                 <?php if ($order->canRefund()): ?>
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal"><?php echo $this->translate('Refund Application') ?></button>
+                                    <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $order->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
                                 <?php endif ?>
                                 <?php if ($order->canReview()): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>"><?php echo $this->translate('Review') ?></a>

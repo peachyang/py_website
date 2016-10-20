@@ -65,6 +65,9 @@ class Resource extends AbstractModel
         $collection->where(['md5' => $md5])->limit(1);
         if (count($collection)) {
             $newName = $collection[0]['real_name'];
+            if (!file_exists($path . $type . $newName)) {
+                $file->moveTo($path . $type . $newName);
+            }
         } else {
             while (file_exists($path . $type . $newName)) {
                 $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);

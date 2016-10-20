@@ -36,7 +36,7 @@
                 return false;
             }
         });
-        $('.product-essential .product-info .options [data-price]').change(function () {
+        $('.product-essential .product-info .options .form-control').change(function () {
             var sum = 0;
             $('.product-essential .product-info .options [data-price]').each(function () {
                 if ($(this).is('[type=radio],[type=checkbox]')) {

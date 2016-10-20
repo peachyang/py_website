@@ -644,7 +644,6 @@ dl.options dd{float:left;margin-left:4px}
 .order-dashboard .bd{background:#fffcf3 none repeat scroll 0 0;border:1px solid #f7e4a5;padding:20px 30px}
 .order-dashboard .tbnotes{border-top:1px solid #ddd;line-height:21px;margin-top:15px;padding-top:5px;}
 #modal-reply .reply{display: inline-flex;}
-.modal-body ul li{margin:15px 0}
 .order-dashboard .tbnotes span{color:#f60;font-weight:700}
 .product-pic{display:inline-block;float:left;width:50px;margin-right:20px}
 .product-pic img{width:50px}
@@ -1049,14 +1048,14 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store-photo .col-left+.col-main{padding:0}
 .retailer-store-photo .page-content{width: 100%;overflow: hidden;margin: 15px 0;color:#8b8a8a}
 .retailer-store-photo .page-content .breadcrumb{width: 100%;overflow: hidden;background:#fafafa;border-bottom:1px solid #efefef;border-top:1px solid #efefef;text-indent:10px}
-.retailer-store-photo .page-content .filters{background:#fafafa;border: none;line-height: 30px;border-bottom:1px solid #efefef}
+.retailer-store-photo .page-content .filters{background:#fafafa;border: none;line-height: 30px;padding-bottom:10px;border-bottom:1px solid #efefef}
 .retailer-store-photo .page-content .content-left h3,dl{line-height:50px;text-indent: 10px}
 .retailer-store-photo .page-content .content-left h3{font-size:18px}
 .retailer-store-photo .page-content .content-left .fa{color: #ffd54a;margin-right:10px}
 .retailer-store-photo .page-content .content-left dd{margin-left:20px;line-height: 30px}
 .retailer-store-photo .page-content .content-right {padding-left: 10px;height: 530px;border-left:1px solid #ececec}
 .retailer-store-photo .page-content .content-right .row{margin: 0}
-.retailer-store-photo .page-content .content-right .background{background:#fafafa;border-bottom:1px solid #efefef;border-top:1px solid #efefef;height:42px;line-height:38px;padding-top:3px}
+.retailer-store-photo .page-content .content-right .background{background:#fafafa;border-bottom:1px solid #efefef;border-top:1px solid #efefef;height:42px;line-height:38px;padding-top:6px}
 .retailer-store-photo .page-content .content-right .height-50{margin: 10px auto;padding: 17px 0 0 0}
 .retailer-store-photo .page-content .content-right .file-panel li .fa{font-size:60px;color: #ffd54a;text-align:center}
 .retailer-store-photo .page-content .content-right .row .fa{color: #007ecc;margin-right:5px}
@@ -1068,7 +1067,7 @@ dl.options dd{float:left;margin-left:4px}
 
 @media (min-width: 768px){.modal-open .modal-dialog{width: 748px}}
 @media (min-width: 1200px){.modal-open .modal-dialog{width: 1000px}}
-.modal-open .modal-dialog .modal-body .nav .text-right input{float:right;border:1px solid #dddddd}
+.modal-open .modal-dialog .modal-body .nav .text-right input{float:right;border:1px solid #dddddd;margin-top:8px}
 .modal-open .modal-dialog .modal-body .nav .text-right a{float:right}
 .modal-open .modal-dialog .modal-body{overflow:hidden}
 
@@ -1081,10 +1080,12 @@ dl.options dd{float:left;margin-left:4px}
 .modal-open .modal-dialog .modal-footer a{color:#007ecc}
 .modal-open .modal-dialog .modal-footer input{border:1px solid #dddddd}
 .retailer-store-photo .page-content .filters .input-box{display: inline-block!important;margin: 0;vertical-align: top}
-.retailer-store-photo .page-content .filters .control-label {display: inline-block!important;width: auto!important;padding: 0!important;
-    line-height: 21px;font-size: 12px;color: #6c6c6c}
+.retailer-store-photo .page-content .filters .control-label {display: inline-block!important;width: auto!important;padding: 0!important;line-height: 21px;color: #6c6c6c}
+.retailer-store-photo .page-content .filters .input-box label{float:left;margin:5px 5px 5px 0}
+.retailer-store-photo .page-content .filters .input-box .cell{float:left}
+.retailer-store-photo .page-content .filters .input-box{margin-right:10px}
 .retailer-store-photo .page-content .filters .form-control {width: 99px;height: 21px;line-height: 21px;padding:0}
-.retailer-store-photo .page-content .filters .buttons-set{float: right;margin-top:15px}
+.retailer-store-photo .page-content .filters .buttons-set{display:inline-block}
 .retailer-store-photo .page-content .nav-tabs{border-bottom:1px solid #cbdfe9}
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;
@@ -1110,4 +1111,3 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-after .history_after_sale{color: #bebebe}
 .retailer-after .after .table a{color: #007dc6}
 .retailer-after .after .table .afterview{color:#8b8a8a}
-.modal-open .modal-body ul li{margin: 0 auto}

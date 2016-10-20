@@ -88,7 +88,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
         </div>        
     </form>
     <div class="store_info retailer-store">
-        <h3 class="tops"><?php echo $store['name'] ?></h3>
+        <h3 class="tops"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>"><?php echo $store['name'] ?></a></h3>
         <div class="store_detail" style="margin-bottom:9px">
             <table class="table text-center">
                 <tbody>

@@ -373,7 +373,7 @@ retailer_after:
                         type: Seahinet\Retailer\ViewModel\After
                         template: retailer/after
 retailer_after_view:
-    update: frontend
+    update: retailer_after
     root:
         children:
             head:
@@ -384,8 +384,10 @@ retailer_after_view:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/afterview
+                        children:
+                            afterview:
+                                type: Seahinet\Retailer\ViewModel\Afterview
+                                template: retailer/afterview
 retailer_products_release:
     update: retailer_account
     root:

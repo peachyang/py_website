@@ -23,6 +23,5 @@ class After extends Template
                     'store_id' => $retailer->offsetGet('store_id'),
                 ])->order('created_at DESC')->where->isNotNull('rma.order_id');
         return $collection;
-    }
-
+    } 
 }

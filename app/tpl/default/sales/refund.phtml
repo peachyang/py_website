@@ -1,106 +1,138 @@
 <?php
 $orders = $this->getOrders();
 $default = $this->getDefaultOrder();
+if ($orders):
+$flag = true;
 ?>
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">换货申请</a></li>
-    <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">退货申请</a></li>
-</ul>
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
-        <form action="<?php echo $this->getBaseUrl('/sales/refund/save/') ?>" method="post" class="form-inline">
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <div class="fieldset">
-                <div class="input-box">
-                    <label for="order" class="control-label"><?php echo $this->translate('Order ID') ?></label>
-                    <div class="cell">
-                        <?php if (empty($orders)): ?>
-                            <input type="text" name="order_id" id="order" class="form-control required" />
-                        <?php else: ?>
-                            <select name="order_id" id="order" class="form-control required">
-                                <option value=""><?php echo $this->translate('Please Select') ?></option>
-                                <?php foreach ($orders as $order): ?>  
-                                    <option value="<?php echo $order['id'] ?>"<?php if ($order->getId() == $default || $order['increment_id'] == $default): ?> selected="selected"<?php endif ?>><?php echo $order['increment_id'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif ?>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label for="reason" class="control-label"><?php echo $this->translate('Reason') ?></label>
-                    <div class="cell">
-                        <textarea class="form-control required" name="comment" id="reason"></textarea>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label for="carrier" class="control-label"><?php echo $this->translate('Carrier') ?></label>
-                    <div class="cell">
-                        <input type="text" name="carrier" class="form-control" id="carrier" />
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label for="track-number" class="control-label"><?php echo $this->translate('Track Number') ?></label>
-                    <div class="cell">
-                        <input type="text" name="track_number" id="track-number" class="form-control" />
-                    </div>
-                </div>
-                <div class="buttons-set">
-                    <div class="cell">&nbsp;</div>
-                    <div class="cell">
-                        <button type="submit" class="btn btn-theme">
-                            <?php echo $this->translate('Submit') ?>
-                        </button>
-                    </div>
-                </div>
+<table class="table address-list text-center">
+<thead style="border:1px solid #eee">
+    <tr class="table_head ">
+      <th  class="col-md-3 text-center"><?php echo $this->translate('commodity') ?></th>
+      <th  class="col-md-2 text-right"><?php echo $this->translate('Amount of the transaction') ?></th>
+      <th  class="text-right"><?php echo $this->translate('Refund amount') ?></th>
+      <th  class="text-right"><?php echo $this->translate('application time') ?></th>
+      <th  class="text-right"><?php echo $this->translate('Service type') ?></th>
+      <th  class="text-right"><?php echo $this->translate('Refund status') ?></th>
+      <th  class="text-right"><?php echo $this->translate('Transaction operation') ?></th>
+      <th></th>
+    </tr>
+  </thead>
+</table>
+
+
+
+
+<table class="table   table-no-border list_table">
+
+
+    
+    <?php if (count($orders)): ?>
+    
+            <?php foreach ($orders as $order): ?>  
+                        
+            <?php endforeach; ?>
+        
+        
+    <?php endif ?>
+
+        <caption>
+            <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <a href=""><span class="fa fa-qq"></span></a></div>
+            <div class="col-xs-6 text-right list_right">
+                <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
+                <span><?php echo $order['increment_id'] ?></span>
+                <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
+                
             </div>
-        </form>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="profile">
-        <form action="<?php echo $this->getBaseUrl('/sales/refund/save/') ?>" method="post" class="form-inline">
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <div class="fieldset">
-                <div class="input-box">
-                    <label for="order" class="control-label"><?php echo $this->translate('Order ID') ?></label>
-                    <div class="cell">
-                        <?php if (empty($orders)): ?>
-                            <input type="text" name="order_id" id="order" class="form-control required" />
+        </caption>
+        <tbody>
+       
+            <?php
+            foreach ($order->getItems() as $item):
+            $product = $item['product'];
+            $thumbnail = $product->getThumbnail();
+            ?>
+            <tr>
+                <td>
+                    <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                </td>
+                <td class="text-vtop">
+                    <h4 class="product-name"><?php echo $product['name'] ?></h4>
+                    <?php
+                    $options = json_decode($item['options'], true);
+                    if ($item['product_id'] && count($options)):
+                    ?>
+                    <dl class="options">
+                        <?php
+                        foreach ($product->getOptions() as $option):
+                        if (isset($options[$option->getId()])):
+                        ?>
+                        <dt><?php echo $option['title'] ?></dt>
+                        <dd>
+                            <?php
+                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                            $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                            ?>
+                        </dd>
+                        <?php
+                        endif;
+                        endforeach;
+                        ?>
+                    </dl>
+                    <?php endif ?>
+                </td>
+                <td>
+                    <div class="price-box text-center">
+                        <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
+                        <span class="regular-price">
+                            <span class="label"><?php echo $this->translate('Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
+                        </span>
                         <?php else: ?>
-                            <select name="order_id" id="order" class="form-control required">
-                                <option value=""><?php echo $this->translate('Please Select') ?></option>
-                                <?php foreach ($orders as $order): ?>  
-                                    <option value="<?php echo $order['id'] ?>"<?php if ($order->getId() == $default || $order['increment_id'] == $default): ?> selected="selected"<?php endif ?>><?php echo $order['increment_id'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif ?>
+                        <span class="old-price text-nowrap">
+                            <span class="label"><?php echo $this->translate('Old Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->convert($product->getFinalPrice($item['qty'], false), true) ?></span>
+                        </span>
+                        <span class="special-price">
+                            <span class="label"><?php echo $this->translate('Special Price') ?></span>
+                            <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
+                        </span>
+                        <?php endif; ?>
                     </div>
-                </div>
-                <div class="input-box">
-                    <label for="reason" class="control-label"><?php echo $this->translate('Reason') ?></label>
-                    <div class="cell">
-                        <textarea class="form-control required" name="comment" id="reason"></textarea>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label for="carrier" class="control-label"><?php echo $this->translate('Carrier') ?></label>
-                    <div class="cell">
-                        <input type="text" name="carrier" class="form-control" id="carrier" />
-                    </div>
-                </div>
-                <div class="input-box">
-                    <label for="track-number" class="control-label"><?php echo $this->translate('Track Number') ?></label>
-                    <div class="cell">
-                        <input type="text" name="track_number" id="track-number" class="form-control" />
-                    </div>
-                </div>
-                <div class="buttons-set">
-                    <div class="cell">&nbsp;</div>
-                    <div class="cell">
-                        <button type="submit" class="btn btn-theme">
-                            <?php echo $this->translate('Submit') ?>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+                </td>
+                <td>
+                    <?php echo (float) $item['qty'] ?>
+                </td>
+                <?php if ($flag): ?>
+                <td rowspan="<?php echo count($order->getItems()) ?>" class="text-center text-nowrap">
+                    <span class="total"><?php echo $order->getCurrency()->format($order['total']) ?></span>
+                    <span class="shipping"><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order['shipping'])]) ?></span>
+                </td>
+                <td rowspan="<?php echo count($order->getItems()) ?>" class="text-nowrap">
+                    <span class="status">
+                        <?php echo $this->translate($order->getStatus()['name']) ?>
+                    </span>
+                    <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
+                    <?php if ($order->canRefund()): ?>
+                    <a href="<?php echo $this->getBaseUrl('sales/refund/?id=' . $order->getId()) ?>"><?php echo $this->translate('Refund Application') ?></a>
+                    <?php endif ?>
+                </td>
+                <?php
+                $flag = false;
+                endif;
+                ?>
+            </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+    <div class="book_page">
+	<ul class="pagination pull-right">
+		<li><a href="#">&laquo;</a></li>
+		<li class="active"><a href="#">1</a></li>
+		<li class=""><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li><a href="#">&raquo;</a></li>
+	</ul>
 </div>
+        <?php endif;?>

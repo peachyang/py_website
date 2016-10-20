@@ -270,8 +270,6 @@ class SalesProducts extends Template
             unset($condition['desc']);
         }
         return $collection;
-    }
-
-    
+    }    
 }
     

@@ -24,10 +24,11 @@ $orders = $this->getOrders();
                 $flag = true;
                 foreach ($items as $item):
                     $product = $item['product'];
+                    $thumbnail = $product->getThumbnail();
                     ?>
                     <tr>
                         <td>
-                            <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product->offsetGet('name') ?>" />
+                            <img src="<?php echo strpos($thumbnail, '://') ? $this->getResourceUrl($thumbnail) : $thumbnail ?>" alt="<?php echo $product->offsetGet('name') ?>" />
                         </td>
                         <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
                             <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>
@@ -59,7 +60,7 @@ $orders = $this->getOrders();
                         <?php if ($flag): ?>
                             <td rowspan="<?php echo count($items) ?>" class="text-nowrap">
                                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?><br />
-                                <?php echo $this->translate('(Including Shipping Fee: %s)',[$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>
+                                <?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>
                             </td>
                             <td rowspan="<?php echo count($items) ?>">
                                 <?php if ($order->canRefund()): ?>

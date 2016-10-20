@@ -30,6 +30,11 @@ class OrderController extends AuthActionController
         return $this->redirectReferer('sales/order/list');
     }
 
+    public function reviewPostAction()
+    {
+        
+    }
+
     public function viewAction($handler = 'sales_order_view')
     {
         if ($id = $this->getRequest()->getQuery('id')) {

@@ -28,7 +28,7 @@ $orders = $this->getOrders();
                     ?>
                     <tr>
                         <td>
-                            <img src="<?php echo strpos($thumbnail, '://') ? $this->getResourceUrl($thumbnail) : $thumbnail ?>" alt="<?php echo $product->offsetGet('name') ?>" />
+                            <img src="<?php echo strpos($thumbnail, '://') ? $thumbnail : $this->getResourceUrl($thumbnail) ?>" alt="<?php echo $product->offsetGet('name') ?>" />
                         </td>
                         <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
                             <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>

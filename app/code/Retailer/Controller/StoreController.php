@@ -443,6 +443,8 @@ class StoreController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
+            $current_template_id = empty($data['current_template_id']) ? null : $data['current_template_id'];
+            $part_id = empty($data['part_id']) ? null : $data['part_id'];
             $files = $this->getRequest()->getUploadedFile()['files'];
             $r = new Rmodel;
             $r->load($segment->get('customer')->getId(), 'customer_id');
@@ -476,6 +478,8 @@ class StoreController extends AuthActionController
                     'store_id' => $store,
                     'pic_title' => $data['pic_title'],
                     'url' => $data['url'],
+                    'template_id' => $current_template_id,
+                    'part_id' => $part_id,
                     'resource_category_code' => $data['resource_category_code'],
                     'resource_id' => $model->getId(),
                     'sort_order' => $model->getId()
@@ -485,7 +489,7 @@ class StoreController extends AuthActionController
         }
 
         $storeDecoration = new SDViewModel();
-        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
+        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code'],null,$current_template_id,$part_id);
         $result['status'] = $result['error'];
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }

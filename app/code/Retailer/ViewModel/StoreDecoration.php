@@ -175,12 +175,23 @@ class StoreDecoration extends Template
 		return $id;
 	}
 	
-	public function getStorePicInfo($code,$current_store_id = null){
+	public function getStorePicInfo($code,$current_store_id = null,$current_template_id = null, $part_id = null){
 		$Scollection = new StorePicInfoCollection;
 		
 		$store_id = $this->judge_store_id($current_store_id);
+		$filters = ['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$store_id];
 		
-		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$store_id])
+		if(!empty($current_template_id))
+			$filters['template_id'] = $current_template_id;
+		else
+			$filters['template_id'] = null;
+		
+		if(!empty($part_id))
+			$filters['part_id'] = $part_id;
+		else
+			$filters['part_id'] = null;
+		
+		$Scollection->where($filters)
 		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 	
 		return $Scollection;
@@ -567,8 +578,17 @@ class StoreDecoration extends Template
 	
 	
 	public function template_pic_carousel($params='',$current_store_id = null){
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		$current_template_id = empty($params) ? "" : $params['current_template_id'];
+		$part_id = empty($params) ? "" : $params['part_id'];
+		
 		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
-		$result = $this->getStorePicInfo('store_carousel',$current_store_id);
+		$result = $this->getStorePicInfo('store_carousel',$current_store_id,$current_template_id,$part_id);
        	foreach ($result as $key => $value)
 		{	
 			if(trim($value['url'])!="")

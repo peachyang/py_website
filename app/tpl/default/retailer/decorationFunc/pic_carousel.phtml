@@ -2,7 +2,8 @@
 $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
 $template_id = $this->getVariable("template_id");
-$picInfos = $this->getStorePicInfo("store_carousel");
+$current_template_id = $this->getVariable("current_template_id");
+$picInfos = $this->getStorePicInfo("store_carousel",null,$current_template_id,$part_id);
 $picInfo = json_encode($picInfos);
 
  ?>
@@ -46,6 +47,8 @@ $picInfo = json_encode($picInfos);
  <div class="rows" >   
    上传图片: &nbsp;<input type="file" name="files[]" style="display:inline"> &nbsp; <button onclick="doUpload()" class="btn btn-danger btn-sm">增 加</button>
 </div>
+<input type="hidden" class="params" name='part_id' id=part_id value="<?php echo $part_id ?>" >
+<input type="hidden" class="params" name='current_template_id' id=current_template_id value="<?php echo $current_template_id ?>" >
 </form>
 <hr width="99%" style="border-color:#e8c7b6" > 
 <div class="rows">

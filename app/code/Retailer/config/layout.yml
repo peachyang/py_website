@@ -69,7 +69,7 @@ retailer_account:
                                 params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/photo/',label:'Photo Space',priority:10,group:'Store Management'}]
+                                params: [{link:'retailer/resource/',label:'Resource Management',priority:10,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/mobile/',label:'Mobile Phone Store',priority:11,group:'Store Management'}]
@@ -416,7 +416,7 @@ retailer_store_category:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/category
-retailer_store_photo:
+retailer_resource:
     update: retailer_account
     root:
         children:
@@ -424,12 +424,33 @@ retailer_store_photo:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Photo Sapce
+                        params: Resource Management
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: {src:'frontend/js/resource.js',defer:'defer'}
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/photo
+                        type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                        template: retailer/resource
+retailer_resource_list:
+    update: frontend
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                        template: retailer/resource/list
 retailer_brand:
     update: retailer_account
     root:

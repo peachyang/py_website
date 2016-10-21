@@ -12,8 +12,7 @@ class ResourceController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_resource_list');
-        return $root;
+        return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');
     }
 
     public function uploadAction()

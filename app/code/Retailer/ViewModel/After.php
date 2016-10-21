@@ -6,7 +6,7 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Retailer\Model\Retailer;
-use Seahinet\Retailer\Model\Collection\After as Collection;
+use Seahinet\Sales\Model\Collection\Rma as Collection;
 use Seahinet\Sales\Model\Collection\Order;
 
 class After extends Template

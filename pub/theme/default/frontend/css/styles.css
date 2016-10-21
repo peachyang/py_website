@@ -260,9 +260,9 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .coupon .store:empty,.customer-account-dashboard .coupon .date:empty{height:18px}
  .coupon .store:empty,.coupon .date:empty{height:18px}
 .customer-account-dashboard .order .store{font-weight:bold;color:#000}
-.customer-account-dashboard .order tbody td,.list_table tbody tr td{border-color:#e1e3e9;padding:10px 12px}
+.customer-account-dashboard .order tbody td,.list_table tbody tr td{border-color:#e1e3e9;padding:10px 0}
 .list_table tbody td .total,.list_table tbody td .status{color:#007dc6}
-.customer-account-dashboard .order tbody td:first-child,.list_table tbody td:first-child {border-left:1px solid #e1e3e9;padding-left:24px}
+.customer-account-dashboard .order tbody td:first-child,.list_table tbody td:first-child {border-left:1px solid #e1e3e9;padding-left:10px}
 .customer-account-dashboard .order tbody td[rowspan]:last-child{border-right:1px solid #e1e3e9;padding-right:24px}
 .customer-account-dashboard .order tbody td span:not(.label):not(.price){display:block}
 .list_table tbody td span:not(.label):not(.price){display:block}
@@ -278,7 +278,6 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-address .btn-add{margin:30px 0 26px 0;}
 .customer-account-address .address-list li{padding:0 6px;line-height:34px;font-size:14px}
 .customer-account-address .address-list li:hover{background:#f5f5f5}
-.list_table tbody tr td{width:100px}
 .customer-account-address .address-list .inline{overflow:hidden;text-overflow:ellipse;white-space:nowrap}
 .customer-account-address .address-list .inline a{display:block}
 .customer-account-address .address-list .action{text-align:right}
@@ -685,7 +684,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit .tab-pane.active{display:table}
 .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
 .product-edit .grid .table.category ul{clear:both;padding-left:2em}
-.product-edit .control-label{-moz-user-select:none;color:#000;display:block;font-size:13px;line-height:26px;width:100%}
+.product-edit .control-label{-moz-user-select:none;color:#000;display:block;font-size:13px;line-height:38px;width:100%}
 .product-edit td.checkbox{display:table-cell}
 .product-edit .checkbox input[type=checkbox]{margin-left:0;position:relative}
 .product-edit .nav-tabs li a{padding:10px}
@@ -1111,3 +1110,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-after .history_after_sale{color: #bebebe}
 .retailer-after .after .table a{color: #007dc6}
 .retailer-after .after .table .afterview{color:#8b8a8a}
+.sales-refund .list_table img{float:left}
+.sales-refund .list_table .product-name{margin-left:10px;float:left}
+.sales-refund .list_table dl{float:left}
+ 

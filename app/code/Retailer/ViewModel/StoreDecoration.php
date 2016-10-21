@@ -440,7 +440,7 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic"  src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
                                 <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>
@@ -538,7 +538,7 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="'.$select_col_md.'">
                             <div>
-                                <a href="'.$urls.'" target=_blank ><img class="pic" style="height:'.$pic_height.'" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
                                 <p class="price"><span class="actural" style="width:80%" >'.$products->getCurrency()->format($value['price']).' </span></p>
                                 <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                        

@@ -764,7 +764,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .hot-product .content ul li .price{text-align:left}
 .retailer-store .hot-product .content ul li .price .actural{color:#FD9030;font-size:15px;font-weight:bold}
 .retailer-store .hot-product .content ul li .price .discount{text-decoration:line-through;color:#757474}
-.retailer-store .hot-product .content ul li h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold}
+.retailer-store .hot-product .content ul li h3.product-name{text-align:left;color:#757474;font-size:12px;font-weight:bold;line-height:17px}
 .retailer-store .hot-product .content ul li .paid-count{color:#757474;text-align:left}
 .retailer-store .search{margin-bottom:10px;border:1px solid#ccc;padding:15px;background:#f5f6f9}
 .retailer-store .retailer-prompt .title{padding:0 0 5px 0;border-bottom:1px solid #FD9030;margin-bottom:10px}
@@ -778,7 +778,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .retailer-prompt .content .prompt-big .price{text-align:left;width:80%;margin:0 auto}
 .retailer-store .retailer-prompt .content .prompt-big .price .actural{color:#FD9030;font-size:15px;font-weight:bold}
 .retailer-store .retailer-prompt .content .prompt-big .price .discount{text-decoration:line-through;color:#757474}
-.retailer-store .retailer-prompt .content .prompt-big h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold;width:80%;margin:0 auto}
+.retailer-store .retailer-prompt .content .prompt-big h3.product-name{text-align:left;color:#757474;font-size:12px;font-weight:bold;width:80%;margin:0 auto;line-height:17px}
 .retailer-store .retailer-prompt .content .prompt-big .paid-count{color:#757474;text-align:left;width:80%;margin:0 auto}
 .retailer-store .local-search{margin-bottom:10px}
 .retailer-store .local-search .title{padding:5px 0px 10px 5px;background:#FD9030}
@@ -804,7 +804,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .statics .content ul li .price{text-align:left}
 .retailer-store .statics .content ul li .price .actural{color:#FD9030;font-size:15px;font-weight:bold}
 .retailer-store .statics .content ul li .price .discount{text-decoration:line-through;color:#757474}
-.retailer-store .statics .content ul li h3.product-name{text-align:left;color:#757474;font-size:14px;font-weight:bold}
+.retailer-store .statics .content ul li h3.product-name{text-align:left;color:#757474;font-size:12px;font-weight:bold;line-height:17px}
 .retailer-store .statics .content ul li .paid-count{color:#757474;text-align:left}
 .retailer-store .statics .content ul li .paid-count .sales-num{color:#FD9030;font-size:15px}
 .retailer-store .products{margin-bottom:10px;padding:0 0px}
@@ -817,7 +817,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .products .content ul li .price{text-align:left}
 .retailer-store .products .content ul li .price .actural{color:#FD9030;font-size:15px;font-weight:bold;width:50%;display:inline-block}
 .retailer-store .products .content ul li .price .paid-count{color:#757474;text-align:right;width:50%;display:inline-block}
-.retailer-store .products .content ul li h3.product-name{text-align:left;color:#757474;font-size:12px;font-weight:bold}
+.retailer-store .products .content ul li h3.product-name{text-align:left;color:#757474;font-size:12px;font-weight:bold;line-height:17px}
 .retailer-store .pic_carousel{margin-bottom:10px}
 .retailer-store .pic_carousel .title{padding:0 0 5px 0;border-bottom:1px solid #FD9030;margin-bottom:10px}
 .retailer-store .pic_carousel .title h2{color:#333;font-size:14px;font-weight:bold}

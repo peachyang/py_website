@@ -33,6 +33,7 @@ else
             var site_path = '<?php echo $this->getBaseUrl();  ?>';
             var template_id = <?php echo $template_id; ?>;
             var template_name = '<?php echo $template_name; ?>';
+            var current_template_id = <?php echo $id; ?>;
             var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
 <div class="decoration_logo_top stable_top " style="height:500px;background-image:url(<?php echo $this->getBaseUrl('pub/theme/default/frontend/dragResource/images/pd-tops.jpg'); ?>)">
@@ -427,7 +428,9 @@ else
 </div>
 
 </div>
+<div style="width:100px;height:300px">
 
+</div>
 
 <div id='save_html' style="display:none">
 	  

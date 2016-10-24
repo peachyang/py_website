@@ -70,6 +70,15 @@
 	    
     }
     
+    function hot_product_init(obj,data_id){
+    	var data_param = obj.attr("data-param");
+    	if($.trim(data_param)!="")
+	    {
+	    	data_param = JSON.parse(decodeURIComponent(data_param));	    		
+	    	$("#" + data_id).find('.hot-product .title h2').html(data_param.title);	    	
+	    }
+    }
+    
     function component_reset(){
     	$('.hiSlider3').resize();
     }

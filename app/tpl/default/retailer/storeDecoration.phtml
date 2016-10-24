@@ -593,6 +593,12 @@ saveData();
 						var f = eval(func);
 						f(dataID,data.view);
 					}
+					 
+					 var func = dataType+"_init";
+					 var f = eval(func);
+					 if(typeof(f) == "function") {
+            			 f(obj,dataID);
+        			}
 					
 					
 					layer.closeAll();

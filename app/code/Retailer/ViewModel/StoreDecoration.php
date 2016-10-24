@@ -408,6 +408,8 @@ class StoreDecoration extends Template
 		$price_to = empty($params) ? "" : $params['price_to'];
 		$select_row = empty($params) ? 1 : $params['select_row'];
 		$select_column = empty($params) ? 4 : (int)$params['select_column'];
+		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
 		$select_col_md = 'col-md-3';
 		$pic_height = '225px';
 		switch ($select_column) {
@@ -433,6 +435,7 @@ class StoreDecoration extends Template
 		$condition['limit'] = $select_column*$select_row;
 		$condition['price_from'] = $price_from;
 		$condition['price_to'] = $price_to;
+		$condition['product_ids'] = $product_ids;
 		$products = new SalesProducts();
 		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
 		

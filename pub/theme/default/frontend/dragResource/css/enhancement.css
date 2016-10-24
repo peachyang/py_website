@@ -87,4 +87,9 @@ ul.selectPic li.selected .icon:hover {
     border: 2px solid #1094fa;
     background-position: 81px 80px;
 }
-	#selectPic .ajaxPageDiv{text-align:right;padding:5px 8px 11px 0px}
+	#selectPic .ajaxPageDiv{text-align:right;padding:0px 8px 16px 0px}
+	#selectPic .ajaxPageDiv .selectedNum{color:#ff3300;}
+	#selectPic .ajaxPageDiv .pageNum{color:#ff3300;}
+	#selectPic .ajaxPageDiv .disabled{color:#cccccc}
+	#selectPic .ajaxPageDiv .prePage{cursor:pointer}
+	#selectPic .ajaxPageDiv .nextPage{cursor:pointer}

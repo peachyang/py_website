@@ -106,6 +106,11 @@ class SalesProducts extends Template
         if(!empty($condition['price_to'])){
             $where->lessThanOrEqualTo('price',$condition['price_to']);
         }
+
+        if(!empty($condition['product_ids'])){
+            $where->in('id', $condition['product_ids']);
+        }
+
         if(isset($condition['catalog']) && $condition['catalog'] != ''){
             $product_in_category_collection = new Picollection;
             $product_in_category_id = $product_in_category_collection->columns(['product_id'])->where(['category_id' => $condition['catalog']]);

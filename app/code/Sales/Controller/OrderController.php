@@ -98,5 +98,4 @@ class OrderController extends AuthActionController
         }
         return $this->redirectReferer('sales/order/list');
     }
-
 }

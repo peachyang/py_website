@@ -155,7 +155,9 @@
             $('.section.address .form-edit-address form').trigger('reset');
         });
         $('.section.address .btn-cancel').on('click', function () {
-            $('.section.address .form-edit-address').slideUp();
+            if ($('.section.address .list [name=shipping_address_id]').length) {
+                $('.section.address .form-edit-address').slideUp();
+            }
             $('.section.address .form-edit-address form').trigger('reset');
         });
         $('.section.address .form-edit-address form').on('submit', function () {

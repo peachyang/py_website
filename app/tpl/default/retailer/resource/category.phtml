@@ -1,0 +1,17 @@
+<?php
+$tree = $this->getCategoryTree();
+$id = $this->getVariable('id');
+?>
+<a href="#resource-category-<?php echo $id ?>" class="<?php if ($id == $this->getQuery('category_id', 0)): ?>active<?php else: ?>collapsed<?php endif ?>" data-toggle="collapse" data-id="<?php echo $id ?>">
+    <span class="fa fa-fw" aria-hidden="true"></span>
+    <span><?php echo $this->getVariable('title') ?></span>
+</a>
+<ul id="resource-category-<?php echo $id ?>" class="collapse"><?php
+    if (!empty($tree[$id])):
+        foreach ($tree[$id] as $item):
+            ?>
+            <li><?php echo $this->getChildrenCategories($item['id'], $item['name']) ?></li>
+            <?php
+        endforeach;
+    endif;
+    ?></ul>

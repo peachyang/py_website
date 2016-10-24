@@ -23,7 +23,7 @@ cms_page_with_nav:
                             page:
                                 type: Seahinet\Cms\ViewModel\Page
 cms_help_order_status:
-    update: help_center
+    update: frontend
     root:
         children:
             head:

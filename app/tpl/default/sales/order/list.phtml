@@ -24,10 +24,11 @@ $orders = $this->getOrders();
                 $flag = true;
                 foreach ($items as $item):
                     $product = $item['product'];
+                    $thumbnail = $product->getThumbnail();
                     ?>
                     <tr>
                         <td>
-                            <img src="<?php echo $product->getThumbnail() ?>" alt="<?php echo $product->offsetGet('name') ?>" />
+                            <img src="<?php echo strpos($thumbnail, '://') ? $thumbnail : $this->getResourceUrl('image/resized/100x/'.$thumbnail) ?>" width="100" alt="<?php echo $product->offsetGet('name') ?>" />
                         </td>
                         <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
                             <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>
@@ -59,11 +60,11 @@ $orders = $this->getOrders();
                         <?php if ($flag): ?>
                             <td rowspan="<?php echo count($items) ?>" class="text-nowrap">
                                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?><br />
-                                <?php echo $this->translate('(Including Shipping Fee: %s)',[$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>
+                                <?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>
                             </td>
                             <td rowspan="<?php echo count($items) ?>">
                                 <?php if ($order->canRefund()): ?>
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal"><?php echo $this->translate('Refund Application') ?></button>
+                                    <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $order->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
                                 <?php endif ?>
                                 <?php if ($order->canReview()): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>"><?php echo $this->translate('Review') ?></a>

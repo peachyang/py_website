@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Catalog\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Catalog\Model\Product;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as Collection;
 
 class Attribute extends PGrid
@@ -51,6 +52,9 @@ class Attribute extends PGrid
             'code' => [
                 'label' => 'Code',
                 'sortby' => 'eav_attribute:code'
+            ],
+            'label' => [
+                'label' => 'Label'
             ],
             'type' => [
                 'label' => 'Type',
@@ -101,7 +105,8 @@ class Attribute extends PGrid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+        $collection->withLabel(Bootstrap::getLanguage()->getId())
+                ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
                 ->where(['eav_entity_type.code' => Product::ENTITY_TYPE]);
         return parent::prepareCollection($collection);
     }

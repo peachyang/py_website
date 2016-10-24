@@ -44,6 +44,7 @@
             };
             $('#unapplied-attribute').sortable(sortParams);
             $('#attribute-groups .group .content').sortable(sortParams).on('click.seahinet', 'a.remove', function () {
+                $(this).siblings('input').attr({'disabled':'disabled','name':'attributes[]'});
                 $(this).parent('.item').appendTo('#unapplied-attribute');
             });
             $('#attribute-groups').on('click.seahinet', '.group>.remove', function () {

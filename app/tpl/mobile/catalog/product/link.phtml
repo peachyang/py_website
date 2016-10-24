@@ -28,10 +28,13 @@ if (count($products)):
                                 <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
                             <?php endif ?>
                         </a>
-                        <p><?php echo $product['name'] ?></p>
+                       
                         <div class="price-box">
                             <?php echo $this->getPriceBox($product) ?>
                         </div>
+                         <p>
+	                         <?php echo $product['name'] ?>
+   						 </p>
                         <div class="action">
                             <a href="<?php
                             echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .

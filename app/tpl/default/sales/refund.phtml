@@ -37,7 +37,7 @@ if (count($orders)):
                     ?>
                     <tr>
                         <td class="col-lg-5 col-md-5">
-                            <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" />
+                            <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
 
                             <h4 class="product-name"><?php echo $product['name'] ?></h4>
                             <?php

@@ -6,9 +6,9 @@ $customer = $this->getCustomer();
     <input type="hidden" name="id" value="<?php echo $customer->getId() ?>">
     <div class="fieldset">
         <div class="input-box">
-            <label class="control-label text-right"><?php echo $this->translate('Username') ?>:</label>
-            <div class="">
-                <span><strong><?php echo $customer->offsetGet('username') ?></strong></span>
+            <label class="control-label text-right"><?php echo $this->translate('Username') ?></label>
+            <div class="cell">
+            <input disabled="disabled" class="form-control" value="hope" type="text">
             </div>
         </div>
         <?php
@@ -17,7 +17,7 @@ $customer = $this->getCustomer();
         }
         ?>
         <div class="input-box">
-            <label class="control-label required text-right" for="crpassword"><?php echo $this->translate('Current Password') ?>:</label>
+            <label class="control-label required text-right" for="crpassword"><?php echo $this->translate('The current password') ?></label>
             <div class="cell col-xs-8 col-sm-8 col-md-11 text-left">
                 <input type="password" name="crpassword" id="crpassword" class="form-control required" class="form-control required" minlength="6"/>
             </div>
@@ -27,7 +27,7 @@ $customer = $this->getCustomer();
         <label class="col-xs-11 col-sm-11" for="edit-password"><?php echo $this->translate('Edit Password') ?></label>
 
         <div class="input-box">
-            <label class="control-label text-right" for="password"><?php echo $this->translate('New Password') ?>:</label>
+            <label class="control-label text-right" for="password"><?php echo $this->translate('New Password') ?></label>
             <div class="cell text-left">
                 <input type="password" name="password" id="password" class="form-control" minlength="6" />
             </div>

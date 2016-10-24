@@ -55,6 +55,20 @@ customer_account:
                                 params:
                                     - inline
                                     - 1
+help_center:
+    root:
+        children:
+            content:
+                children:
+                    nav:
+                        action:
+                            -
+                                method: addGroup
+                                params: [{label:'Help Center',priority:20,icon:'calendar-check-o'}]
+                            -
+                                method: addLink
+                                params: [{link:'help/purchase-protection/order-status/',label:'Select Orders',group:'Help Center'}]
+
 customer_account_dashboard:
     update: customer_account
     root:

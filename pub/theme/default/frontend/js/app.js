@@ -76,6 +76,9 @@
                     success: function (xhr) {
                         GLOBAL.AJAX[$(o).attr('href')] = null;
                         responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
+                        if ($(o).is('[data-pjax]')) {
+                            window.history.pushState({}, '', $(o).attr('href'));
+                        }
                     }
                 });
             }
@@ -95,6 +98,9 @@
                     responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
                     if ($(o).parents('.modal').length) {
                         $(o).parents('.modal').modal('hide');
+                    }
+                    if ($(o).is('[data-pjax],[data-ajax=pjax]')) {
+                        window.history.pushState({}, '', $(o).attr('href'));
                     }
                 }
             });

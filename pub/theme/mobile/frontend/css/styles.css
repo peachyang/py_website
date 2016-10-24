@@ -262,7 +262,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .main-container .breadcrumb-m .content-list .fa-search{ position: absolute; right: 40px; font-size: 19px;}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
 .main-container .breadcrumb-m .content-list a{color:#c8c6c6}
-.main-container .message-box{margin-top:50px} 
+.main-container .message-box{margin-top:30px} 
 .product-essential .carousel .carousel-indicators{bottom:-10px}
 .product-essential .carousel .carousel-indicators .active{width:10px;height:10px;background:#ff8a00;border:1px solid #ff8a00}
 .product-essential .carousel .carousel-indicators li{background-color:rgba(196,196,196,158);border:1px solid #c4c4c4}
@@ -512,7 +512,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-steps .review .order .product-list .product-name .options dd{float:left;margin-right:5px}
 .checkout-steps .review .order .product-list .price{color:#007ecc;font-weight:bold}
 .checkout-steps .review .order .product-list .qty{color:#000;line-height:26px;text-align:right}
-.checkout-order .review .order .shipping{padding-top:5px}
+.checkout-order .review .order .shipping{padding-top:5px;    border-bottom: 1px solid #f7f7f7;font-size:12px}
 .checkout-steps .review .order .shipping,.subtotal{line-height:40px;width:100%;overflow:hidden}
 .checkout-steps .review .order .total .table{overflow: hidden}
 .checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}

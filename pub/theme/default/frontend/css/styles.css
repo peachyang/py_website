@@ -152,7 +152,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .price-box .label{display:none}
 .price-box .old-price .price,.price-box .old-price .label{text-decoration:line-through;font-size:14px;line-height:42px;color:#9b9a9a!important}
 .price-box .special-price .price,.price-box .regular-price .price{font-size:16px;line-height:42px;color:#fd9030;font-weight:bold}
-dl.options{margin-bottom:0;line-height:14px;color:#9C9C9C}
+dl.options{margin-bottom:0;line-height:14px;color:#9C9C9C;font-size: 12px;}
 dl.options:after{content:" ";display:block;width:0;height:0;clear:both}
 dl.options dt{clear:left;float:left}
 dl.options dt:after{content:":"}
@@ -223,6 +223,19 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .address-list .add-address{font-size:13px}
 .customer-account .address-list .modify_book{color:#007dc6}
 .customer-account .address-list .default_book{color:#818589}
+
+.customer-account .page-content .table .sort-by th{padding:5px 20px}
+.customer-account .page-content .table{margin: 30px 0;}
+.customer-account .page-content .table thead{background:#f9f9f9;border: 1px solid #eee;}
+.customer-account .page-content .table .thead_body{border:1px solid #eee}
+.customer-account .page-content .table .thead_title{font-size:12px}
+.customer-account .page-content .table .thead_body .color-blue{color:#007dc6;font-size:16px;font-weight: bold;}
+.customer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight: initial;}
+.customer-account .page-content .table thead th{padding:5px 0px}
+.customer-account .page-content .table .product-name{font-size:13px}
+.customer-account .page-content .table td{border-top:0;padding: 20px 5px 10px 10px;}
+
+.customer-account .page-content .table td:not([rowspan]) + [rowspan] {border-left: 1px solid #eee;}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
 .head_img .bg1{width:100px;height:30px;position:absolute;left:0;bottom:0;background:#000;opacity:0.8;z-index:3;}
@@ -271,7 +284,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .order .price-box .old-price .label{display:inline}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
 .list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden;width:200px;margin-left:-20px}
-.customer-account-dashboard .order .options,.list_table .options{font-size:12px}
+.customer-account-dashboard .order .options,.list_table .options{font-size:12px;padding:0 10px}
 .customer-account-dashboard .Arefund button{background:#fff;padding:5px 10px}
  .Arefund_hide{display:none}
 .list_table td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}

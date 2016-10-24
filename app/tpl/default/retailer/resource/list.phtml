@@ -1,24 +1,37 @@
 <?php
 $tree = $this->getCategoryTree();
 $cid = $this->getQuery('category_id', 0);
-if (isset($tree[$cid])):
-    foreach ($tree[$cid] as $category):
+$resources = $this->getResources();
+?>
+<ul>
+    <?php
+    if (isset($tree[$cid])):
+        foreach ($tree[$cid] as $category):
+            $title = $category['name'][$this->getLanguageId()] ?? $category['name'][0] ?? current($category['name']);
+            ?>
+            <li class="item folder" data-id="<?php echo $category->getId() ?>">
+                <span class="fa fa-folder" aria-hidden="true"></span>
+                <span class="filename" title="<?php echo $title ?>"><?php echo $title ?></span>
+            </li>
+            <?php
+        endforeach;
+    endif;
+    foreach ($resources as $resource):
         ?>
-        <li class="item" data-folder="#resource-category-<?php echo $category->getId() ?>">
-            <span class="fa fa-folder" aria-hidden="true"></span>
-            <span><?php echo $category['name'][$this->getLanguageId()] ?? $category['name'][0] ?? current($category['name']) ?></span>
+        <li class="item" data-id="<?php echo $resource->getId() ?>" data-href="<?php echo $this->getResourceUrl($resource) ?>">
+            <?php if (substr($resource['file_type'], 0, 5) === 'image'): ?>
+                <span class="img"><img src="<?php echo $this->getResourceUrl('image/resized/100x/' . $resource['real_name']) ?>" alt="" /></span>
+            <?php else: ?>
+                <span class="fa fa-file-<?php echo $this->getResourceType($resource['file_type']) ?>-o" aria-hidden="true"></span>
+            <?php endif ?>
+            <span class="filename"><?php echo $resource['uploaded_name'] ?></span>
+            <span class="info">
+                <span class="name"><span class="label"><?php echo $this->translate('Filename') ?></span><span class="value"><?php echo $resource['uploaded_name'] ?></span></span>
+                <span class="text-nowrap type"><span class="label"><?php echo $this->translate('File Type') ?></span><span class="value"><?php echo $resource['file_type'] ?></span></span>
+                <span class="text-nowrap size"><span class="label"><?php echo $this->translate('File Size') ?></span><span class="value"><?php echo $this->getFileSize($resource['size']) ?></span></span>
+                <span class="text-nowrap date"><span class="label"><?php echo $this->translate('Uploaded at') ?></span><span class="value"><?php echo date('Y-m-d H:iO', strtotime($resource['created_at'])) ?></span></span>
+            </span>
         </li>
-        <?php
-    endforeach;
-endif;
-foreach ($this->getResources() as $resource):
-    ?>
-    <li class="item" data-href="<?php echo $this->getResourceUrl($resource) ?>">
-        <?php if (substr($resource['file_type'], 0, 5) === 'image'): ?>
-            <img src="<?php echo $this->getResourceUrl('image/resized/100x/'.$resource['real_name']) ?>" alt="" />
-        <?php else: ?>
-            <span class="fa fa-file-<?php echo $this->getResourceType($resource['file_type']) ?>-o" aria-hidden="true"></span>
-        <?php endif ?>
-        <span class="filename"><?php echo $resource['uploaded_name'] ?></span>
-    </li>
-<?php endforeach; ?>
+    <?php endforeach ?>
+</ul>
+<?php echo $this->getChild('pager')->setCollection($resources) ?>

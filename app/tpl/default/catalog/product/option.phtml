@@ -24,7 +24,7 @@ foreach ($options as $option):
                             <option value=""></option>
                         <?php endif ?>
                         <?php foreach ($option->offsetGet('value') as $value): ?>
-                            <option value="<?php echo $value['id'] ?>"<?php if (isset($values[$option->getId()]) && $values[$option->getId()] == $value['id']): ?> selected="selected"<?php endif ?><?php if ((float)($option->offsetGet('price'))): ?>  data-price="<?php echo $this->getCurrency()->convert($value['is_fixed'] ? $value['price'] : $value['price'] * $price) ?>"<?php endif ?> data-sku="<?php echo $value['sku'] ?>"><?php echo $value['title'] ?></option>
+                            <option value="<?php echo $value['id'] ?>"<?php if (isset($values[$option->getId()]) && $values[$option->getId()] == $value['id']): ?> selected="selected"<?php endif ?><?php if ((float) ($value['price'])): ?>  data-price="<?php echo $this->getCurrency()->convert($value['is_fixed'] ? $value['price'] : $value['price'] * $price) ?>"<?php endif ?> data-sku="<?php echo $value['sku'] ?>"><?php echo $value['title'] ?></option>
                         <?php endforeach ?>
                     </select>
                     <?php

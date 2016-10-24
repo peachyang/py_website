@@ -1,6 +1,6 @@
 ---
 retailer:
-    method: [GET,POST]
+    method: [GET,POST,DELETE]
     route: /retailer/{controller}/[{action}[/]]
     namespace: Seahinet\Retailer\Controller
 store:

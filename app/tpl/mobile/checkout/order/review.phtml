@@ -38,13 +38,22 @@
             endif;
         }
         ?>
+           <ul class="col-xs-12 col-sm-12 shipping">
+            <li class="col-xs-6 col-sm-6 text-nowrap text-left">
+                <span>店铺优惠</span>
+            </li>
+            <li class="col-xs-6 col-sm-6 text-nowrap text-right">
+                <span>全场满300元优惠30元</span> <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </li>         
+        </ul>
         <ul class="col-xs-12 col-sm-12 shipping">
             <li class="col-xs-6 col-sm-6 text-nowrap text-left">
                 <?php echo $this->translate('Shipping Method', [], 'checkout') ?>
-                <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?>
+           
             </li>
             <li class="col-xs-6 col-sm-6 text-nowrap text-right">
-                <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?>
+               <!-- <?php echo $this->translate('Subtotal') . ': ' . $this->getCurrency()->format($subtotal[$current]) ?> --> 
+                    <?php echo $this->getChild('shipping')->setVariable('store_id', $current) ?><i class="fa fa-chevron-right" aria-hidden="true"></i>
             </li>         
         </ul>
     </div>

@@ -8,7 +8,7 @@ $inventory = $item->getInventory();
     <li class="col-xs-1 col-sm-1">
         <input type="checkbox"<?php if ($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
     </li>
-    <li class="col-xs-8 col-xs-8">
+    <li class="col-xs-11 col-sm-11">
         <div class="product-img">
             <a href="<?php echo $item['product']->getUrl() ?>">
                 <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" width="90%" />
@@ -26,7 +26,7 @@ $inventory = $item->getInventory();
                         if (isset($options[$option->getId()])):
                             ?>
                             <dt><?php echo $option['title'] ?></dt>
-                            <dd>
+                            <dd class="col-xs-6 col-sm-6">
                                 <?php
                                 echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                         $option->getValue($options[$option->getId()]) : $options[$option->getId()])
@@ -43,7 +43,7 @@ $inventory = $item->getInventory();
     <div class="price" data-price="<?php echo $item['price'] ?>">
         <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>   
     </div>
-    <li class="col-xs-3 col-sm-2 qty">
+    <li class="col-xs-1 col-sm-1 qty">
         <div class="text-nowrap">
             <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
             <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"

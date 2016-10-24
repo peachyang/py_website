@@ -461,6 +461,28 @@ class StoreDecoration extends Template
         $content .= '</ul>';
 		return $content;
 	}
+	
+	public function func_getProductInfo($condition,$current_store_id = null){
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		$productsDataCount = $products->getRetailerSalesProductsCount($condition,$current_store_id);
+		foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			$productsData[$key]['productURL'] = $urls;
+			$productsData[$key]['picURL'] = $picURL;
+			$productsData[$key]['acturalPrice'] = $products->getCurrency()->format($value['price']);
+		}
+		return ['data'=>$productsData,'count'=>$productsDataCount];
+		
+	}
 
 	public function template_store_recommend($params='',$current_store_id = null){
 		$content ='';

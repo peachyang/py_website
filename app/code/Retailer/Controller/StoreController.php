@@ -301,6 +301,23 @@ class StoreController extends AuthActionController
         echo json_encode(array('status' => true, 'view' => $view));
     }
     
+    public function getProductInfoAction(){
+    	$result = ['error' => 0, 'message' => []];
+    	$data = $this->getRequest()->getPost();
+    	
+    	$data['page'] = isset($data['page']) ? $data['page'] : 1;
+    	$data['limit'] = isset($data['limit']) ? $data['limit'] : 20;
+    	
+    	$products = [];
+    	$storeDecoration = new SDViewModel();
+    	$products = $storeDecoration->func_getProductInfo($data);
+    	$result['status'] = 0;
+    	$result['Info'] = $products['data'];
+    	$result['count'] = $products['count'];
+    	$result['AllPage'] = ceil($products['count'] / $data['limit']);
+    	return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+    }
+    
     public function customizeTemplateAddAction(){
     	$result = ['error' => 0, 'message' => []];
     	$data = $this->getRequest()->getPost();

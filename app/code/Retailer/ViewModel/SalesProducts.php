@@ -29,6 +29,12 @@ class SalesProducts extends Template
 	    $params = !empty($params) ? $params : $this->getQuery();
         return $this->fetchRetailerProducts($params, 1, 1,$current_store_id);
 	}
+
+    public function getRetailerSalesProductsCount($params=[],$current_store_id = null)
+    {
+        $params = !empty($params) ? $params : $this->getQuery();
+        return $this->fetchRetailerProducts($params, 1, 1,$current_store_id,1);
+    }
     
     /** 
     * getRetailerStockProducts  
@@ -67,7 +73,7 @@ class SalesProducts extends Template
     * @access protected 
     * @return object 
     */ 
-    public function  fetchRetailerProducts($params, $delete_status, $stock_status, $current_store_id = null){
+    public function  fetchRetailerProducts($params, $delete_status, $stock_status, $current_store_id = null, $judgeCount = 0){
         $storeid = null;
         $table_name = "product_". Bootstrap::getLanguage()->getId() . '_index';
         if(empty($current_store_id))
@@ -116,7 +122,10 @@ class SalesProducts extends Template
         ->group('id')
         ->having(['sales_status '. $stock_status_option . ' ' . $stock_status])
         ->order(['created_at'=>'DESC']);
-        return $this->prepareCollection($sales_products,$condition);
+        if($judgeCount == 1)
+            return count($sales_products);
+        else
+            return $this->prepareCollection($sales_products,$condition);
     }
 
     /** 

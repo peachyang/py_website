@@ -965,6 +965,9 @@ decorationFunc_hot_product:
             head:
                 action:
                     -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
+                    -
                         method: setTitle
                         params: hot_product
 

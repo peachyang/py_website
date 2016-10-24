@@ -5,6 +5,7 @@ $part_id = $this->getVariable("part_id");
  
  <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
       <li><a href="#basic">基本属性</a></li> 
+      <li><a href="#selectPic">选择图片</a></li> 
  </ul> 
  
  <div class="tab-content"> 
@@ -28,7 +29,24 @@ $part_id = $this->getVariable("part_id");
 <input class="params" type="text" value="" id="price_from"> - <input class="params" type="text" value="" id="price_to"> 	
 </div>
    </div> 
- </div> 	
+   
+   <div class="tab-pane" id="selectPic" >
+<div style="margin:20px" >
+<div>搜索关键字: <input type="text"  id="product_text" value="" > &nbsp; <input type="checkbox"> 只查看选中的产品  
+&nbsp;&nbsp; <button onclick="searchProduct()" class="btn btn-danger btn-sm">搜 索</button>
+</div>
+<hr width="99%" style="border-color:#e8c7b6" > 
+<div class="ajaxPageDiv" >已选  <span class="selectedNum">8</span> 个  &nbsp; 共  <span class="pageNum" >4</span> / <span class="AllPageNum" >6</span> 页    &nbsp;  <span class="prePage" >上一页</span>  <span class="NextPage">下一页</span> </div>
+<ul class="selectPic">
+
+</ul>
+	
+</div>
+   </div>   
+   
+ </div>
+ 
+ 	
  <input type="hidden" id='focusBtn' >	
 
 <script> 
@@ -38,15 +56,19 @@ $part_id = $this->getVariable("part_id");
           e.preventDefault();//阻止a链接的跳转行为 
           $(this).tab('show');//显示当前选中的链接及关联的content
  
-        }) 
+        });
+		
+	      getProductInfo(); 
       }) 
 </script>
 
 <script>
+    var page = 1;
 	var data_tag = '<?php echo $data_tag; ?>';
 	var part_id = '<?php echo $part_id; ?>';
 	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
+	var product_ids = typeof(data_param["product_ids"])=='undefined' ? [] : data_param["product_ids"];
 	$(document).ready(function(){	
 
   		for (key in data_param) {
@@ -61,10 +83,56 @@ $part_id = $this->getVariable("part_id");
 			var tempVal = $(this).val();
 			data_param[tempID] = tempVal; 
 		});
+		data_param['product_ids'] = product_ids;
 		data_param = encodeURIComponent(JSON.stringify(data_param));
 		obj.attr('data-param',data_param);
 		window.parent.call_ajax_data(part_id,data_tag);
 	});
+	
+	function getProductInfo(){
+		var name = $("#product_text").val();
+		$.ajax({  
+          url: '<?php echo $this->getBaseUrl('retailer/store/getProductInfo') ?>' ,  
+          type: 'POST',  
+          data: {name:name},  
+          beforeSend:function(){
+            layer.load(1, {shade: [0.1,'#fff'] });	
+          },  
+          success: function (json) {  
+        	if(json.status==0){
+        		var Info = {info1:{}};
+        		Info.info1 = JSON.parse(json.Info);
+        		console.log(Info);
+        		$('ul.selectPic').html(template('li_pic',Info));	
+        	}
+
+        	layer.closeAll();
+          },  
+          error: function (json) {  
+           
+          }  
+     }); 
+	}
+	
+	function enterProductInfo(id,obj){
+		
+	}
 </script>
 
-
+<script id="li_pic" type="text/html" >
+{{each info1 as value i}}
+<li class="selected">
+<div>
+   <a href="javascript:void(0)" onclick="enterProductInfo({{value.id}},this)" >
+   	<img class="pic" src="{{ value.picURL }}">
+   	<span class="icon"></span>	
+   	</a>
+   <p class="price"><span class="actural">{{ value.acturalPrice }} </span>
+   <br>
+  <a href="javascript:void(0)" onclick="enterProductInfo({{value.id}},this)" >{{ value.name }} </a>
+ </p>
+                       
+</div>
+</li>
+{{/each}}
+</script>

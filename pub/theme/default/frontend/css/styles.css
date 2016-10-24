@@ -218,7 +218,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .btn,.retailer-account .fieldset .btn{border-radius:1px;padding:9px 50px;border:none;margin:20px 0}
 .customer-account .fieldset .input-box .form-control,.retailer-account .fieldset .input-box .form-control{width:276px;border-radius:0}
 .customer-account .fieldset .input-box textarea.form-control,.retailer-account .fieldset .input-box textarea.form-control{min-height:100px}
-.customer-account .btn-theme{background:#00A0E9;color:#fff;    padding: 10px 30px;border-radius: 0;margin: 20px 0 50px 0;}
+.customer-account .btn-theme{background:#00A0E9;color:#fff;    padding: 10px 30px;border-radius: 0;/* margin: 20px 0 50px 0; */}
 .customer-account .add-address{height:60px}
 .customer-account .address-list .add-address{font-size:13px}
 .customer-account .address-list .modify_book{color:#007dc6}
@@ -231,7 +231,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .page-content .table .thead_title{font-size:12px}
 .customer-account .page-content .table .thead_body .color-blue{color:#007dc6;font-size:16px;font-weight: bold;}
 .customer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight: initial;}
-.customer-account .page-content .table thead th{padding:5px 0px}
+.customer-account .page-content .table thead th{padding:5px 10px}
 .customer-account .page-content .table .product-name{font-size:13px}
 .customer-account .page-content .table td{border-top:0;padding: 20px 5px 10px 10px;}
 
@@ -242,6 +242,7 @@ dl.options dd{float:left;margin-left:4px}
 .head_img .headimg_text{width:100px;height:30px;text-align:center;line-height:30px;position:absolute;left:0;bottom:0;z-index:4;color:#ffffff;}
 .customer-account .btn-theme:hover{background:#007dc6}
 .customer-account-dashboard .panel{box-shadow:none}
+.customer-account-dashboard .panel tbody{border:1px solid #eee}
 .customer-account-dashboard .panel-heading{border-bottom:1px solid #dbdee5}
 .customer-account-dashboard .panel-title{border-bottom:1px solid;color:#007dc6;display:inline-block;padding:19px 12px;font-size:14px;line-height:1;margin:21px 0 -1px}
 .customer-account-dashboard .panel-heading,.customer-account-dashboard .panel-body{padding:0}
@@ -258,7 +259,7 @@ dl.options dd{float:left;margin-left:4px}
 .list_table .list_right{font-size:13px}
 .list_table .list_time{padding:0 15px}
 .list_table  .list_delete{color:#007dc6}
-.customer-account-dashboard .order tbody .text-nowrap{border-bottom:1px solid #e1e3e9 }
+.customer-account-dashboard .order tbody .text-nowrap{/* border-bottom:1px solid #e1e3e9 */ }
 .customer-account-dashboard .coupon .carousel-control{width:25px;color:#007dc6}
 .customer-account-dashboard .coupon .carousel-control .fa{position:absolute;top:50%;margin-top:-10px;display:block}
 .customer-account-dashboard .coupon .item .content{padding:0 25px;color:#dcf0fb;font-size:12px;line-height:18px}

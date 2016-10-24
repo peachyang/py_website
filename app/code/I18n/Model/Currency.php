@@ -31,8 +31,8 @@ class Currency extends AbstractModel
     public function rconvert($price)
     {
         if (isset($this->storage['rate'])) {
-            if (function_exists('bcmul')) {
-                $price = bcdiv($price, $this->storage['rate']);
+            if (function_exists('bcdiv')) {
+                $price = bcdiv($price, $this->storage['rate'], 2);
             } else {
                 $price /= $this->storage['rate'];
             }

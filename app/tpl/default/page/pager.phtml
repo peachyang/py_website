@@ -11,10 +11,10 @@ if ($this->getCollection() && is_numeric($limit)):
         ?>
         <ol class="pager">
             <?php if ($current > 1): ?>
-                <li class="first"> 
+                <li class="first" data-page="1"> 
                     <a href="<?php echo $this->getPagerUrl(1) ?>"><?php echo $this->translate('First', [], 'pager') ?></a> 
                 </li> 
-                <li class="prev">
+                <li class="prev" data-page="<?php echo $current - 1 ?>">
                     <a href="<?php echo $this->getPagerUrl($current - 1) ?>">
                         <span><?php echo $this->translate('Previous', [], 'pager') ?></span>
                     </a>
@@ -23,7 +23,7 @@ if ($this->getCollection() && is_numeric($limit)):
             <?php
             for ($p = max($current - 2, 1), $l = min($current + 2, $pages); $p <= $l; $p++):
                 ?>
-                <li>
+                <li data-page="<?php echo $p ?>">
                     <?php if ($current === $p): ?>
                         <span class="current">
                         <?php else: ?>
@@ -38,20 +38,24 @@ if ($this->getCollection() && is_numeric($limit)):
                 </li>
             <?php endfor ?>
             <?php if ($current < $pages): ?>
-                <li class="next">
+                <li class="next" data-page="<?php echo $current + 1 ?>">
                     <a href="<?php echo $this->getPagerUrl($current + 1) ?>">
                         <span><?php echo $this->translate('Next', [], 'pager') ?></span>
                     </a>
                 </li>
-                <li class="last"> 
+                <li class="last" data-page="<?php echo $pages ?>"> 
                     <a href="<?php echo $this->getPagerUrl($pages) ?>"><?php echo $this->translate('Last', [], 'pager') ?></a>
                 </li> 
             <?php endif; ?>
-            <li class="jump">
-                <?php echo $this->translate('Total %d page(s)', [$pages]) ?>
-                <input type="number" max="<?php echo $pages ?>" min="1" value="<?php echo $current ?>" />
-                <button type="button" class="btn" data-url="<?php echo $this->getPagerUrl() ?>"><?php echo $this->translate('Go') ?></button>
-            </li>
+            <?php
+            if ($this->getVariable('canJump', true)):
+                ?>
+                <li class = "jump">
+                    <?php echo $this->translate('Total %d page(s)', [$pages]) ?>
+                    <input type="number" max="<?php echo $pages ?>" min="1" value="<?php echo $current ?>" />
+                    <button type="button" class="btn" data-url="<?php echo $this->getPagerUrl() ?>"><?php echo $this->translate('Go') ?></button>
+                </li>
+            <?php endif ?>
         </ol>
         <?php
     endif;

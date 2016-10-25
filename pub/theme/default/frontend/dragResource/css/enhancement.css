@@ -23,7 +23,9 @@
 		.hiSlider-pages a.active{border:0px}
 		.hiSlider-title{background:rgba(0,0,0,.2)}
 		.nav-tabs>li>a{border:1px solid rgb(214, 213, 213)}
-		.page-home .menu .nav-tabs>li.active>a,.nav-tabs>li.active>a,.nav-tabs>li.active>a{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
+		.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a{cursor:default;background-color:#007dc6!important;color:#fff!important;border:none!important;border-bottom-color:transparent;font-size:14px!important;border-bottom:1px solid #fdcb60!important}
+		
+		
 		#uploadPic div.rows{margin-bottom:13px}
 		#uploadPic .picList,#uploadPic .picList li{margin:0px;padding:0px;list-style: none;}
 		#uploadPic .picList li{padding:11px 0px;float:left}
@@ -48,6 +50,48 @@
 		.decoration_logo_top button.sets{position:absolute;right:11px}
 		.retailer-store .page_type_select{width:120px;height:25px;color:#666666;font-size:14px}
 		.retailer-store .decoration_position{font-size:15px}
+		.retailer-store .title_product_detail{background:none!important;padding:0px!important;margin-bottom: 5px!important;margin-top:11px!important;border-bottom: 0px!important;}
+		.retailer-store .title_product_detail h2{color:#000000!important}
 		.col-md-2-1{width:20%;float:left}
 		.col-md-10-1{width:80%;float:left}
 		.htmlpage .layer_table{border:0px}
+		ul.selectPic,ul.selectPic li{margin:0px;padding:0px;list-style: none;font-size:12px;color:#333333}
+		ul.selectPic li img{width:120px;height:120px}
+		ul.selectPic li .actural{color:#FD9030}
+		ul.selectPic li{float:left;text-align: center;margin-right:5px;width:150px;line-height: 18px;position: relative;overflow: hidden;display:block}
+
+ul.selectPic li .icon {
+    cursor: pointer;
+    width: 123px;
+    height: 122px;
+    position: absolute;
+    top: 0;
+    left: 14px;
+    z-index: 2;
+    border: 0;
+    background-repeat: no-repeat;
+}
+		
+ul.selectPic li .icon:hover {
+    width: 123px;
+    height: 122px;
+    border: 2px solid #1094fa;
+}
+ul.selectPic li.selected .icon {
+    background-image: url(../images/success.png);
+    background-position: 81px 80px;
+    border: 2px solid #1094fa;
+  
+}
+ul.selectPic li.selected .icon:hover {
+    width: 123px;
+    height: 122px;
+    border: 2px solid #1094fa;
+    background-position: 81px 80px;
+}
+	#selectPic .ajaxPageDiv{text-align:right;padding:0px 8px 16px 0px}
+	#selectPic .ajaxPageDiv .selectedNum{color:#ff3300;}
+	#selectPic .ajaxPageDiv .pageNum{color:#ff3300;}
+	#selectPic .ajaxPageDiv .disabled{color:#cccccc}
+	#selectPic .ajaxPageDiv .prePage{cursor:pointer}
+	#selectPic .ajaxPageDiv .nextPage{cursor:pointer}

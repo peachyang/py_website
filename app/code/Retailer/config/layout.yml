@@ -431,7 +431,7 @@ retailer_resource:
                         params: frontend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: {src:'frontend/js/resource.js',defer:'defer'}
+                        params: frontend/js/resource.js
             content:
                 children:
                     main:
@@ -449,6 +449,15 @@ retailer_resource_list:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
                         template: retailer/resource/list
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: setVariable
+                                        params: 
+                                            - canJump
+                                            - 0
 retailer_brand:
     update: retailer_account
     root:

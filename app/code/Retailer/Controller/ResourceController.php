@@ -47,7 +47,6 @@ class ResourceController extends AuthActionController
 
     public function deleteAction()
     {
-        $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['id']);
@@ -59,27 +58,48 @@ class ResourceController extends AuthActionController
                         $model = new Model;
                         $model->load($id);
                         if ($model->getId()) {
-                            $type = $model['file_type'];
+                            $type = $model->offsetGet('file_type');
                             $collection = new Collection;
                             $collection->where(['md5' => $model['md5']])
-                                    ->where('id <> ' . $id);
-                            if (count($collection) === 0) {
-                                unlink($path . substr($type, 0, strpos($type, '/') + 1) . $model['real_name']);
+                            ->where->notEqualTo('id', $id);
+                            if (count($collection) === 0 && file_exists($filename = $path . substr($type, 0, strpos($type, '/') + 1) . $model->offsetGet('real_name'))) {
+                                unlink($filename);
                             }
                             $model->remove();
                             $count++;
                         }
                     }
-                    $result['message'][] = ['message' => $this->translate('%d item(s) have been deleted successfully.', [$count]), 'level' => 'success'];
                     $result['removeLine'] = (array) $data['id'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
-                    $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please check the log report or try again.'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while deleting.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
             }
         }
-        return $this->response($result, ':retailer/resource/');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/resource/');
+    }
+
+    public function renameAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id', 'name']);
+            if ($result['error'] === 0) {
+                try {
+                    $model = new Model;
+                    $model->setData([
+                        'id' => $data['id'],
+                        'uploaded_name' => $data['name']
+                    ])->save();
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                    $result['error'] = 1;
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/resource/');
     }
 
     public function popupAction()

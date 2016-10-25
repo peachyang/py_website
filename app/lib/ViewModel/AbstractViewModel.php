@@ -2,10 +2,7 @@
 
 namespace Seahinet\Lib\ViewModel;
 
-use Seahinet\Lib\Session\{
-    Csrf,
-    Segment
-};
+use Seahinet\Lib\Session\Csrf;
 use Seahinet\Lib\Stdlib\Singleton;
 use Seahinet\Lib\ViewModel\Root;
 use Serializable;
@@ -18,7 +15,9 @@ abstract class AbstractViewModel implements Serializable
 
     use \Seahinet\Lib\Traits\Container,
         \Seahinet\Lib\Traits\Translate,
-        \Seahinet\Lib\Traits\Url;
+        \Seahinet\Lib\Traits\Url {
+        translate as public;
+    }
 
     /**
      * @var string|false to disable the cache for this view model

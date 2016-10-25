@@ -205,7 +205,10 @@ abstract class AbstractModel extends ArrayObject
                     $constraint = [$this->primaryKey => $this->getId()];
                 }
                 $this->beforeSave();
-                $this->update($this->prepareColumns(), $constraint);
+                $columns = $this->prepareColumns();
+                if ($columns) {
+                    $this->update($this->prepareColumns(), $constraint);
+                }
                 $this->afterSave();
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
@@ -213,7 +216,10 @@ abstract class AbstractModel extends ArrayObject
                 $this->flushList($this->getCacheKey());
             } else if ($this->isNew || $insertForce) {
                 $this->beforeSave();
-                $this->insert($this->prepareColumns());
+                $columns = $this->prepareColumns();
+                if ($columns) {
+                    $this->insert($this->prepareColumns());
+                }
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());

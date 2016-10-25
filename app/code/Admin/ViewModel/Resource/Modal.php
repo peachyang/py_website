@@ -15,6 +15,11 @@ class Modal extends Template
         return (new Category)->getSourceArray();
     }
 
+    public function getSubmitUrl()
+    {
+        return $this->getAdminUrl('resource_resource/upload/');
+    }
+
     public function getStore()
     {
         $segment = new Segment('admin');

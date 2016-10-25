@@ -38,13 +38,9 @@ $tree = $this->getCategoryTree();
                     <span class="folder-name"><?php echo $this->translate('Resource Management') ?></span>
                 </h4>
                 <div class="buttons-set col-xs-6 text-right">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#modal-upload">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#modal-upload" data-upload="1" data-category="<?php echo $this->getQuery('category_id', 0) ?>">
                         <span class="fa fa-cloud-upload fa-fw" aria-hidden="true"></span>
                         <span><?php echo $this->translate('Upload') ?></span>
-                    </button>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#modal-newfolder">
-                        <span class="fa fa-folder fa-fw" aria-hidden="true"></span>
-                        <span><?php echo $this->translate('New Folder'); ?></span>
                     </button>
                 </div>
             </header>
@@ -60,6 +56,12 @@ $tree = $this->getCategoryTree();
                         <a href="javascript:void(0);" class="forward">
                             <span class="fa fa-fw fa-arrow-right" aria-hidden="true"></span>
                             <span><?php echo $this->translate('Forward') ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="folder">
+                            <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('New Folder') ?></span>
                         </a>
                     </li>
                     <li>
@@ -90,156 +92,22 @@ $tree = $this->getCategoryTree();
                         <a href="javascript:void(0);" class="list"><span class="fa fa-fw fa-th-list" aria-hidden="true"></span></a>
                     </div>
                 </div>
+                <menu class="context">
+                    <li>
+                        <a href="javascript:void(0);" class="rename">
+                            <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('Rename') ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="delete">
+                            <span class="fa fa-fw fa-times" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('Delete') ?></span>
+                        </a>
+                    </li>
+                </menu>
             </div>
-            <div id="resource-list"></div>
-        </div>
-    </div>
-    <div id="modal-upload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="uploadModalLabel"><?php echo $this->translate('Resource Management'); ?></h4>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs clearfix" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#select-resource" aria-controls="select-resource" role="tab" data-toggle="tab">
-                                <?php echo $this->translate('Select Resource'); ?>
-                            </a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#upload-resource" aria-controls="upload-resource" role="tab" data-toggle="tab">
-                                <?php echo $this->translate('Upload Resource'); ?>                        
-                            </a>
-                        </li>
-                        <li class="col-lg-8 col-md-8 text-right" style="float:right">
-                            <a href="#"><?php echo $this->translate('Search'); ?></a><input type="text" name="search">
-                        </li>
-                    </ul>
-                    <div class="col-lg-12 col-md-12 tab-content">
-                        <div class="tab-pane active" role="tabpanel" id="select-resource">
-                            <div class="content-left" style="width:177px;float:left">
-                                <h3><?php echo $this->translate('Resource Management'); ?></h3>
-                                <dl>
-                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo'); ?></dt>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
-                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo1'); ?></dt>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>   
-                                </dl>
-                            </div>
-                            <div class="content-right" style="width:788px;float:left">
-                                <ul class="col-lg-12 col-md-12 heading">
-                                    <li class="col-lg-2 col-md-2"><?php echo $this->translate('Images'); ?></li>
-                                    <li class="col-lg-7 col-md-7"><?php echo $this->translate('File Name'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Size'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Status'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Delete'); ?></li>
-                                </ul>  
-                            </div>                          
-                        </div>
-                        <div class="tab-pane" role="tabpanel" id="upload-resource">
-                            <div class="content-left" style="width:177px;float:left">
-                                <h3><?php echo $this->translate('Resource Management'); ?></h3>
-                                <dl>
-                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo'); ?></dt>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
-                                    <dt><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('My Photo1'); ?></dt>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo1'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo2'); ?></dd>
-                                    <dd><span class="fa fa-folder" aria-hidden="true"></span><?php echo $this->translate('Photo3'); ?></dd>
-                                </dl>
-                            </div>
-                            <div class="content-right" style="width:788px;float:left">
-                                <ul class="col-lg-12 col-md-12 heading">
-                                    <li class="col-lg-2 col-md-2"><?php echo $this->translate('Images'); ?></li>
-                                    <li class="col-lg-7 col-md-7"><?php echo $this->translate('File Name'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Size'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Status'); ?></li>
-                                    <li class="col-lg-1 col-md-1"><?php echo $this->translate('Delete'); ?></li>
-                                </ul>  
-                            </div>
-                            <div class="cue clearfix">
-                                <p><input type="checkbox" name=" watermark" />&nbsp;<label for=" watermark"><?php echo $this->translate('Add Watermark'); ?></label></p>
-                                <p>小提示:</p>
-                                <ul>
-                                    <li>1. 图片单张大小支持2M以下, 超过无法上传</li>
-                                    <li>2. 自动压缩和宽度调整可能会使图片失真</li>
-                                    <li>3. 支持的图片格式: jpg、jpeg、png、gif</li>
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <ul class="col-lg-4 col-md-4">
-                                    <li><label><?php echo $this->translate('Add Categorey'); ?></label></li>
-                                    <li><input type="text"></li>
-                                    <li><a href=""><?php echo $this->translate('New'); ?></a></li>
-                                </ul>
-                                <ul class="col-lg-4 col-md-4">
-                                    <li>
-                                        <label><?php echo $this->translate('Select Resource'); ?></label>
-                                    </li>
-                                    <li>
-                                        <select name="resource">
-                                            <option><?php echo $this->translate('Select File'); ?></option>
-                                        </select>
-                                    </li>
-                                </ul>
-                                <div class="col-lg-4 col-md-4">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary"><?php echo $this->translate('Upload'); ?></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-newfolder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newfolderModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="newfolderModalLabel">新建文件夹</h4>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        文件夹名称: <input type="text" placeholder="新建文件夹" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="modal-move" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="moveModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="moveModalLabel">移动到</h4>
-                </div>
-                <div class="modal-body">
-                    <select>
-                        <option value="0">图片空间</option>
-                        <option value="1">装修</option>
-                        <option value="2">商品图片</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
-            </div>
+            <div class="resource-list"></div>
         </div>
     </div>
 </div>

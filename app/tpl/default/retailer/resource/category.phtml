@@ -1,12 +1,13 @@
 <?php
 $tree = $this->getCategoryTree();
 $id = $this->getVariable('id');
+$prefix = $this->getVariable('prefix', 'resource-category-');
 ?>
-<a href="#resource-category-<?php echo $id ?>" class="<?php if ($id == $this->getQuery('category_id', 0)): ?>active<?php else: ?>collapsed<?php endif ?>" data-toggle="collapse" data-id="<?php echo $id ?>">
+<a href="#<?php echo $prefix, $id ?>" data-id="<?php echo $id ?>" class="<?php if ($id == $this->getQuery('category_id', 0)): ?>active<?php else: ?>collapsed<?php endif ?>" data-toggle="collapse">
     <span class="fa fa-fw" aria-hidden="true"></span>
     <span><?php echo $this->getVariable('title') ?></span>
 </a>
-<ul id="resource-category-<?php echo $id ?>" class="collapse"><?php
+<ul id="<?php echo $prefix, $id ?>" class="collapse"><?php
     if (!empty($tree[$id])):
         foreach ($tree[$id] as $item):
             ?>

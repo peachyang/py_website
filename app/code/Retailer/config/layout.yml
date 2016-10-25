@@ -431,12 +431,29 @@ retailer_resource:
                         params: frontend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: frontend/js/resource.js
+                        params: [{src:"frontend/js/resource.js",defer:"defer"}]
             content:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
                         template: retailer/resource
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: retailer/resource/upload
+retailer_resource_nav:
+    update: frontend
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                        template: retailer/resource/navigation
 retailer_resource_list:
     update: frontend
     root:

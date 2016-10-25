@@ -220,16 +220,18 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .input-box textarea.form-control,.retailer-account .fieldset .input-box textarea.form-control{min-height:100px}
 .customer-account .btn-theme{background:#00A0E9;color:#fff;    padding: 10px 30px;border-radius: 0;/* margin: 20px 0 50px 0; */}
 .customer-account .add-address{height:60px}
-.customer-account .address-list .add-address{font-size:13px}
+.customer-account .address-list .add-address{font-size:13px;border-bottom:1px solid #eee}
+.customer-account .address-list .add-address:last-child{border-bottom:none}
 .customer-account .address-list .modify_book{color:#007dc6}
 .customer-account .address-list .default_book{color:#818589}
-
+.customer-account .address-list .default_book .btn-Address{background: #cbecfe;border: 1px solid #007dc6;color: #007dc6;padding: 5px 20px;font-size: 12px;}
 .customer-account .page-content .table .sort-by th{padding:5px 20px}
 .customer-account .page-content .table{margin: 30px 0;}
+.customer-account .page-content .address-list{border:1px solid #eee}
 .customer-account .page-content .table thead{background:#f9f9f9;border: 1px solid #eee;}
 .customer-account .page-content .table .thead_body{border:1px solid #eee}
 .customer-account .page-content .table .thead_title{font-size:12px}
-.customer-account .page-content .table .thead_body .color-blue{color:#007dc6;font-size:16px;font-weight: bold;}
+.customer-account .page-content  .color-blue{color:#007dc6;font-size:16px;font-weight: bold;}
 .customer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight: initial;}
 .customer-account .page-content .table thead th{padding:5px 10px}
 .customer-account .page-content .table .product-name{font-size:13px}
@@ -913,12 +915,12 @@ dl.options dd{float:left;margin-left:4px}
  .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
 .evaluate .down_icon .span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
  .details .table td{border-top:none}
- .details .table .title_img {width:90px}
+ .details .table .title_img { width:90px }
 .details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
  .details .table .title_img img{border-radius:50px;width:35px}
  .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
  .details .table .title_img  .icon_comment{font-size:22px}
- .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;display: table-caption;}
+ .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;/* display: table-caption;  */   position: absolute;left: 80px;top: 28px;}
  .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
  .details .table .border_bt {border-bottom: 3px #eee dotted;}
 .details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}

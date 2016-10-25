@@ -595,11 +595,17 @@ saveData();
 					}
 					 
 					 var func = dataType+"_init";
-					// console.log(typeof(eval(func)));
-					 if(typeof(eval(func))== "function") {
+					 
+					 try{
+					if(typeof(eval(func))== "function") {
+						//console.log(111);
 					 	 var f = eval(func);
-            			 f(obj,dataID);
-        			}
+              			 f(obj,dataID);
+          			}
+					} catch (e){
+					
+					}
+					 
 					
 					
 					layer.closeAll();

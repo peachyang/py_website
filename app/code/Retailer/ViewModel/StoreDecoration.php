@@ -377,20 +377,57 @@ class StoreDecoration extends Template
 	}
 	
 	public function template_sales_amount($params='',$current_store_id = null){
-		$content = '<ul>
-                        <li>
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		
+		//$hot_text = empty($params) ? "" : $params['hot_text'];
+		//$price_from = empty($params) ? "" : $params['price_from'];
+		//$price_to = empty($params) ? "" : $params['price_to'];
+		$select_row = empty($params) ? 2 : $params['select_row'];	
+		//$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
+		
+		//$condition['name'] = $hot_text;
+		$condition['limit'] = $select_row;
+		//$condition['price_from'] = $price_from;
+		//$condition['price_to'] = $price_to;
+		//$condition['product_ids'] = $product_ids;
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		
+			
+		$content = '<ul>';
+        
+        foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+		
+        	$content .= '<li>
                             <div class="col-md-4" style="padding:3px" >
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="pad-5">
-                                        <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-                                        <p class="price"><span class="actural">￥119.00 </span></p>
-                                        <p class="paid-count">热销<span class="sales-num">900</span>笔</p>
+                                <div class="col-md-8" style="padding:3px" >
+                                    <div class="pad-5" style="padding:2px" >
+                                        <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
+                                        <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).'</span></p>                                      
                                     </div>
                             </div>
-                        </li>
-                    </ul>';
+                </li>';
+        
+        }
+
+        $content .= '</ul>';
 		return $content;
 	}
 

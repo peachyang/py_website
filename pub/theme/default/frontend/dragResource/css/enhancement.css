@@ -50,6 +50,8 @@
 		.decoration_logo_top button.sets{position:absolute;right:11px}
 		.retailer-store .page_type_select{width:120px;height:25px;color:#666666;font-size:14px}
 		.retailer-store .decoration_position{font-size:15px}
+		.retailer-store .title_product_detail{background:none!important;padding:0px!important;margin-bottom: 5px!important;margin-top:11px!important;border-bottom: 0px!important;}
+		.retailer-store .title_product_detail h2{color:#000000!important}
 		.col-md-2-1{width:20%;float:left}
 		.col-md-10-1{width:80%;float:left}
 		.htmlpage .layer_table{border:0px}

@@ -8,12 +8,15 @@ $sales_status = $this->getAllSalesStatus();
 <div class="wishlist">
     <h3><?php echo $this->translate($subtitle); ?></h3>
 
-    <div class="filter-bar">
+     <div class="filter-bar col-md-12 col-xs-12 col-sm-12">
         <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="soldout">
-                <span>订单号:</span>
-                <input class="form-control " type="text" value="<?php echo isset($filter['increment_id'])?$filter['increment_id']:''; ?>" name="increment_id">&nbsp;&nbsp;
-                <span>交易状态:</span>
+            <div class="col-md-4 col-xs-12 col-sm-6">
+            	  <span>订单号:</span>
+                <input class="form-control " type="text" value="<?php echo isset($filter['increment_id'])?$filter['increment_id']:''; ?>" name="increment_id">
+            </div>
+             <div class="col-md-4 col-xs-12 col-sm-6">
+            	   <span>交易状态:</span>
                 <select class="form-control " id="order_status" name="order_status">
                     <option value="0">全部</option>
                     <?php
@@ -23,16 +26,28 @@ $sales_status = $this->getAllSalesStatus();
                     }
                     ?>
                 </select>
-                <span>快递单号:</span>
-                <input class="form-control " type="text" value="<?php echo isset($filter['track_id'])?$filter['track_id']:''; ?>" id="track_id" name="track_id">&nbsp;&nbsp;<br />
-                <span>收件人:</span>
-                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver'])?$filter['receiver']:''; ?>" id="receiver" name="receiver" />&nbsp;&nbsp;
-                <span>成交时间:</span>
-                <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from'])?$filter['add_time_from']:''; ?>" readonly="readonly" id="add_time_from" name="add_time_from">&nbsp;&nbsp;&nbsp;<input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to'])?$filter['add_time_to']:''; ?>" name="add_time_to" id="add_time_to">&nbsp;&nbsp;<br />
-                <span>收货人手机:</span>
-                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone'])?$filter['receiver_phone']:''; ?>" id="receiver_phone" name="receiver_phone" />&nbsp;&nbsp;<br />
-                <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">重置</a>&nbsp;&nbsp;
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-6">
+            	  <span>快递单号:</span>
+                <input class="form-control " type="text" value="<?php echo isset($filter['track_id'])?$filter['track_id']:''; ?>" id="track_id" name="track_id">
+            </div>
+             <div class="col-md-4 col-xs-12 col-sm-6">
+            	  <span>收件人:</span>
+                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver'])?$filter['receiver']:''; ?>" id="receiver" name="receiver" />
+            </div>
+            <div class="col-md-8 col-xs-12 col-sm-6">
+            	 <span>成交时间:</span>
+                <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from'])?$filter['add_time_from']:''; ?>" readonly="readonly" id="add_time_from" name="add_time_from"><input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to'])?$filter['add_time_to']:''; ?>" name="add_time_to" id="add_time_to">
+            </div>
+              <div class="col-md-4 col-xs-4 col-sm-6">
+            	 <span>收货人手机:</span>
+                    <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone'])?$filter['receiver_phone']:''; ?>" id="receiver_phone" name="receiver_phone" />
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12">
+            	<a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">重置</a>&nbsp;&nbsp;
                 <button class="btn" type="submit">搜索</button>
+            </div>
+                
             </div>
         </form>
     </div>

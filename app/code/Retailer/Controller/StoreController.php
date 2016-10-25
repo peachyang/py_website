@@ -270,10 +270,12 @@ class StoreController extends AuthActionController
         $functions = $this->getRequest()->getQuery('functions');
         $part_id = $this->getRequest()->getQuery('part_id');
         $template_id = $this->getRequest()->getQuery('template_id');
+        $current_template_id = $this->getRequest()->getQuery('current_template_id');
         $root = $this->getLayout('decorationFunc_' . $functions);
         $root->getChild('main', true)->setVariable('data_tag', $functions);
         $root->getChild('main', true)->setVariable('part_id', $part_id);
         $root->getChild('main', true)->setVariable('template_id', $template_id);
+        $root->getChild('main', true)->setVariable('current_template_id', $current_template_id);
         return $root;
     }
 
@@ -285,6 +287,23 @@ class StoreController extends AuthActionController
         $function_name = 'template_' . $dataTag;
         $view = $storeDecoration->$function_name($dataParam);
         echo json_encode(array('status' => true, 'view' => $view));
+    }
+    
+    public function getProductInfoAction(){
+    	$result = ['error' => 0, 'message' => []];
+    	$data = $this->getRequest()->getPost();
+    	
+    	$data['page'] = isset($data['page']) ? $data['page'] : 1;
+    	$data['limit'] = isset($data['limit']) ? $data['limit'] : 20;
+    	
+    	$products = [];
+    	$storeDecoration = new SDViewModel();
+    	$products = $storeDecoration->func_getProductInfo($data);
+    	$result['status'] = 0;
+    	$result['Info'] = $products['data'];
+    	$result['count'] = $products['count'];
+    	$result['AllPage'] = ceil($products['count'] / $data['limit']);
+    	return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
     
     public function customizeTemplateAddAction(){
@@ -429,6 +448,8 @@ class StoreController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
+            $current_template_id = empty($data['current_template_id']) ? null : $data['current_template_id'];
+            $part_id = empty($data['part_id']) ? null : $data['part_id'];
             $files = $this->getRequest()->getUploadedFile()['files'];
             $r = new Rmodel;
             $r->load($segment->get('customer')->getId(), 'customer_id');
@@ -462,6 +483,8 @@ class StoreController extends AuthActionController
                     'store_id' => $store,
                     'pic_title' => $data['pic_title'],
                     'url' => $data['url'],
+                    'template_id' => $current_template_id,
+                    'part_id' => $part_id,
                     'resource_category_code' => $data['resource_category_code'],
                     'resource_id' => $model->getId(),
                     'sort_order' => $model->getId()
@@ -471,7 +494,7 @@ class StoreController extends AuthActionController
         }
 
         $storeDecoration = new SDViewModel();
-        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
+        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code'],null,$current_template_id,$part_id);
         $result['status'] = $result['error'];
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }

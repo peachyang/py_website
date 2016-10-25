@@ -557,4 +557,19 @@ sales_order_creditmemo:
                             pane:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: sales/order/content/creditmemo
-         
+sales_order_inquire:
+    update: customer_account
+    root:
+        children:
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Inquire
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: sales/order/inquire
+                        

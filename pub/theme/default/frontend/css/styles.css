@@ -1129,4 +1129,9 @@ dl.options dd{float:left;margin-left:4px}
 .sales-refund .list_table img{float:left}
 .sales-refund .list_table .product-name{margin-left:10px;float:left}
 .sales-refund .list_table dl{float:left}
+.sales-order-inquire .main_article_content .columns{padding: 30px}
+.sales-order-inquire .main_article_content .columns p,fieldset{line-height: 30px}
+.sales-order-inquire .main_article_content .columns .margin-top-30{margin-top:20px}
+.sales-order-inquire .main_article_content .columns input{width:50%}
+.sales-order-inquire .main_article_content .columns button{width:50%;background:#007ecc;color:#fff;border:1px solid #007ec7}
  

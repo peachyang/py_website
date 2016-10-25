@@ -570,6 +570,6 @@ sales_order_inquire:
                             - Order Inquire
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Sales\ViewModel\Inquire
                         template: sales/order/inquire
                         

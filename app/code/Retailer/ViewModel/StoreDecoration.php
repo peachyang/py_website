@@ -488,6 +488,28 @@ class StoreDecoration extends Template
 	}
 
 	public function template_store_recommend($params='',$current_store_id = null){
+		
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+				
+		$hot_text = empty($params) ? "" : $params['hot_text'];
+		$price_from = empty($params) ? "" : $params['price_from'];
+		$price_to = empty($params) ? "" : $params['price_to'];		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
+		
+		$condition['name'] = $hot_text;
+		$condition['limit'] = 9;
+		$condition['price_from'] = $price_from;
+		$condition['price_to'] = $price_to;
+		$condition['product_ids'] = $product_ids;
+		
+		$result = $this->func_getProductInfo($condition,$current_store_id);
+		$products = $result['data'];
+			
+			
 		$content ='';
 		for($i=0;$i<3;$i++)
 		{
@@ -495,17 +517,26 @@ class StoreDecoration extends Template
 			
 			if($i==1)
 			{
-				$content .= '<div class="prompt-big">
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
-                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-                                <p class="paid-count">1999人付款</p>
-                            </div>';	
+				if(!empty($products[0]))   
+					$content .= '<div class="prompt-big">
+                                <a href="'.$products[0]['productURL'].'" target=_blank ><img class="pic" src="'.$products[0]['picURL'].'"  /></a>
+                                <p class="price"><span class="actural">'.$products[0]['acturalPrice'].' </span><span class="discount">'.$products[0]['acturalPrice'].'</span></p>
+                                <h3 class="product-name"><a href="'.$products[0]['productURL'].'" target=_blank >'.$products[0]['name'].'</a></h3>
+                            </div>';
+				else
+					$content .= '<div class="prompt-big"></div>';
 			}else{
 				for($j=0;$j<4;$j++){
-					$content .= '<div class="col-md-6 col-md-61">
-                        <div class="prompt-small"><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></div>
+					if($i==0)
+						$index = $j+1;
+					if($i==2)
+						$index = $j+5;	
+					if(!empty($products[$index])) 	
+						$content .= '<div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><a href="'.$products[$index]['productURL'].'" target=_blank ><img class="pic" src="'.$products[$index]['picURL'].'"  /></a></div>
                     </div>';
+					else
+						$content .= '<div class="col-md-6 col-md-61"></div>';	
 				}
 			}
 			
@@ -524,7 +555,7 @@ class StoreDecoration extends Template
 			$params = json_decode($params,true);
 		}
 		
-		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
 		$hot_text = empty($params) ? "" : $params['hot_text'];
 		$price_from = empty($params) ? "" : $params['price_from'];
 		$price_to = empty($params) ? "" : $params['price_to'];
@@ -555,7 +586,8 @@ class StoreDecoration extends Template
 		$condition['limit'] = $select_column*$select_row;
 		$condition['price_from'] = $price_from;
 		$condition['price_to'] = $price_to;
-		$condition['recomend_status'] = "1";
+		$condition['product_ids'] = $product_ids;
+		//$condition['recomend_status'] = "1";
 		$products = new SalesProducts();
 		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
 		
@@ -585,19 +617,7 @@ class StoreDecoration extends Template
 		return $content;
 		
 		
-//		$content = '<ul>';       	
-//     	for($i=0;$i<4;$i++)
-//		{
-//			$content .= '<li class="col-md-3">
-//                          <div>
-//                              <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-//                              <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
-//                              <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-//                          </div>
-//                      </li>';
-//		}                
-//      $content .= '</ul>';		
-//		return $content;
+
 		
 	}
 	

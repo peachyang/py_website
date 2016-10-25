@@ -614,6 +614,13 @@ else
 						f(dataID,data.view);
 					}
 					
+					var func = dataType+"_init";
+					 //console.log(func);
+					 if(typeof(eval(func))== "function")  {
+					 	 var f = eval(func); 
+            			 f(obj,dataID);
+        			}
+					
 					
 					layer.closeAll();
                 },

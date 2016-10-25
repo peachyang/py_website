@@ -1082,6 +1082,9 @@ decorationFunc_product_recommend:
                     -
                         method: setTitle
                         params: product_recommend
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:
@@ -1096,6 +1099,9 @@ decorationFunc_store_recommend:
                     -
                         method: setTitle
                         params: store_recommend
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:
@@ -1110,6 +1116,9 @@ decorationFunc_sales_amount:
                     -
                         method: setTitle
                         params: sales_amount
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:

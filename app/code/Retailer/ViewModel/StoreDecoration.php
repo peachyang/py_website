@@ -387,7 +387,7 @@ class StoreDecoration extends Template
 		//$hot_text = empty($params) ? "" : $params['hot_text'];
 		//$price_from = empty($params) ? "" : $params['price_from'];
 		//$price_to = empty($params) ? "" : $params['price_to'];
-		$select_row = empty($params) ? 2 : $params['select_row'];	
+		$select_row = empty($params) ? 3 : $params['select_row'];	
 		//$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
 		
 		//$condition['name'] = $hot_text;

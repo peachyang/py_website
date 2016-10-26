@@ -1,17 +1,17 @@
 <?php
-$customer = $this->getVariable('customer');
-$logviewlist = $this->getVariable('log_view_list');
+$retailer = $this->getRetailer();
+$store = $this->getStore();
 ?>
 <div class="dashboard">
     <div class="myinfo">
         <div class="infodetail col-md-5 col-sm-12  col-xs-12 mg-bottom-20 auto-height">
             <div class="pull-left">
-                <img alt="" src="<?php echo $this->getBaseUrl('/pub/theme/default/frontend/images/placeholder.png') ?>"  height="100" width="100" />
+                <img alt="" src="<?php echo $retailer['profile'] ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png') ?>"  height="100" width="100" />
             </div>
             <div class="pad-left-100">
                 <div class="mg-bottom-10">
                     <span class="wel-name">
-                        <?php echo $this->translate(ucwords($customer->username)) ?>
+                        <?php echo $store['name'] ?>
                     </span>
                     <span class="fa fa-star" aria-hidden="true"></span>
                     <span class="fa fa-star-o" aria-hidden="true"></span>

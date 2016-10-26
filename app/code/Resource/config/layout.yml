@@ -1,42 +1,5 @@
 ---
-admin_resource_category_list:
-    update: grid
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Resource Category / Resource Management / CMS
-            content:
-                children:
-                    breadcrumb:
-                        action:
-                            -
-                                method: addCrumb
-                                params: [{link:':ADMIN/resource_category/',label:'Resource Category'}]
-                            -
-                                method: addAdditional
-                                params: [{link:':ADMIN/resource_category/edit/',label:'Add New Category'}]
-                    grid:
-                        type: Seahinet\Admin\ViewModel\Resource\Grid\Category
-admin_resource_category_edit:
-    update: edit
-    root:
-        children:
-            content:
-                children:
-                    breadcrumb:
-                        action:
-                            -
-                                method: addCrumb
-                                params: [{link:':ADMIN/resource_category/',label:'Resource Category'}]
-                            -
-                                method: addCrumb
-                                params: [{label:'Edit'}]
-                    edit:
-                        type: Seahinet\Admin\ViewModel\Resource\Edit\Category
-admin_resource_list:
+admin_resource:
     update: grid
     root:
         children:
@@ -50,34 +13,77 @@ admin_resource_list:
                         params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
                         params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
                     -
                         method: addScript
                         params: backend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/config.js
+                        params: backend/js/resource.js
                     -
                         method: setTitle
                         params: Resource Management / CMS
             content:
                 children:
-                    breadcrumb:
-                        action:
-                            -
-                                method: addCrumb
-                                params: [{link:':ADMIN/resource_resource/',label:'Resource Management'}]
-                            -
-                                method: addAdditional
-                                params: [{'label':'Upload','data':{'toggle':'modal','target':'#resource-modal','upload':'upload','reload':'reload'}}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
-                        template: resource/grid
+                        type: Seahinet\Admin\ViewModel\Resource\Explorer
+                        template: resource/explorer
             extra:
                 children:
                     modal:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
-                        template: resource/modal
+                        template: resource/upload
+admin_resource_nav:
+    update: frontend
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Resource\Explorer
+                        template: resource/navigation
+admin_resource_list:
+    update: frontend
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Admin\ViewModel\Resource\Explorer
+                        template: resource/list
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: setVariable
+                                        params: 
+                                            - canJump
+                                            - 0
 admin_popup_images_list:
     update: grid
     root:

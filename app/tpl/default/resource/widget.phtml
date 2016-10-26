@@ -11,7 +11,7 @@ if (count($values)):
     foreach ($values as $value):
         ?>
         <div class="inline-box">
-            <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" data-param="<?php echo $parent->getImageOnly() ? 'file_type=image%25' : '' ?>" title="<?php echo $this->translate('Select Resource') ?>">
+            <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" data-param="<?php echo $parent->getImageOnly() ? 'file_type=image%25' : '' ?>" title="<?php echo $this->translate('Select Resource') ?>">
                 <?php if (strpos($value['file_type'], 'image') === 0): ?>
                     <img src="<?php echo $this->getResourceUrl('images/resized/100x100/' . $value['real_name']) ?>" alt="" />
                 <?php else: ?>
@@ -29,7 +29,7 @@ if (count($values)):
 else:
     ?>
     <div class="inline-box">
-        <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" data-param="<?php echo $parent->getImageOnly() ? 'file_type=image%25' : '' ?>" title="<?php echo $this->translate('Select Resource') ?>">
+        <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" data-param="<?php echo $parent->getImageOnly() ? 'file_type=image%25' : '' ?>" title="<?php echo $this->translate('Select Resource') ?>">
             <img src="<?php echo $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
         </button>
         <a href="javascript:void(0);" class="delete">

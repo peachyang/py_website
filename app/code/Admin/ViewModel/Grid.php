@@ -15,6 +15,7 @@ class Grid extends Template
     protected $action = [];
     protected $messAction = [];
     protected $translateDomain = null;
+    protected $bannedFields = [];
 
     public function __construct()
     {
@@ -140,7 +141,7 @@ class Grid extends Template
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {
-                if (trim($value) === '') {
+                if (in_array($key, $this->bannedFields) || trim($value) === '') {
                     unset($condition[$key]);
                 } else if (strpos($key, ':')) {
                     if (strpos($value, '%') !== false) {

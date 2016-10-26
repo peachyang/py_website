@@ -16,7 +16,7 @@ $parent = $this->getVariable('parent');
             $value = (new \Seahinet\Resource\Model\Resource)->load($item['value']);
             ?>
             <div class="inline-box">
-                <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" title="<?php echo $this->translate('Select Resource') ?>">
+                <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" title="<?php echo $this->translate('Select Resource') ?>">
                     <?php if (strpos($value['file_type'], 'image') === 0): ?>
                         <img src="<?php echo $this->getResourceUrl('images/resized/100x100/' . $value['real_name']) ?>" alt="" />
                     <?php else: ?>
@@ -33,7 +33,7 @@ $parent = $this->getVariable('parent');
         else:
             ?>
             <div class="inline-box">
-                <button type="button" class="btn" data-toggle="modal" data-target="#resource-modal" title="<?php echo $this->translate('Select Resource') ?>">
+                <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" title="<?php echo $this->translate('Select Resource') ?>">
                     <img src="<?php echo $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
                 </button>
                 <a href="javascript:void(0);" class="delete">

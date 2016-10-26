@@ -37,6 +37,33 @@ admin_email_template_edit:
                     -
                         method: addScript
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
+                    -
+                        method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/resource.js
             content:
                 children:
                     breadcrumb:
@@ -54,6 +81,16 @@ admin_email_template_edit:
                     send:
                         type: Seahinet\Lib\ViewModel\Template
                         template: admin/email/send
+                    insert:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 admin_email_subscriber_list:
     update: grid
     root:

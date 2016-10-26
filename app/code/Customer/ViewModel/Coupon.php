@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Customer\ViewModel\Dashboard;
+namespace Seahinet\Customer\ViewModel;
 
 use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Promotion\Model\Collection\Rule;

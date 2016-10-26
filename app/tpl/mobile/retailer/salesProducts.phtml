@@ -1,100 +1,91 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$order = $this->getVariable("order");
 $sales_products = $this->getRetailerSalesProducts();
+$filter = $this->getVariable('filter');
 ?>
 <div class="wishlist sales-products">
     <h3><?php echo $this->translate($subtitle); ?></h3>
 
-    <div class="myfilters" >
-        <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
-            <div >
-                <ul>
-                    <li><span>商品名称:</span> <input class="form-control " type="text" value="" name="name"></li>
-                    <li><span>商家编码:</span> <input class="form-control " type="text" value="" name="id"></li>
-                    <li><span>商品类目:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
+    <div class="filter-bar" >
+        <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
+            <div class="sell">
+                <ul class="commodity">
+                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品名称:</span> <input class="form-control col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
+                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品编码:</span> <input class="form-control col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
+                   
+                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品类目:</span> 
+                        <select class="form-control col-xs-8 col-sm-4" id="catalog" name="catalog" value="">
+                            <option value="">全部</option>
+                            <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
+                        </select>
+                    </li>
+                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3">商品分类:</span> 
+                        <select class="form-control col-md-4" id="category" name="category" value="<?php echo $filter['category']; ?>">
                             <option value="">全部</option>
                         </select>
                     </li>
-                    <li><span>价　　格:</span> <input class="form-control small-text " type="text" value="" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="" name="price_to"> </li>
-                    <li><span>总 &nbsp;销 &nbsp;量:</span> <input class="form-control small-text " type="text" value="" name="id"> - <input class="form-control small-text nomargin" type="text" value="" name="id"> </li>
-                    <li><span>商品分类:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
+                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3">橱窗推荐:</span> 
+                        <select class="form-control col-md-4" id="recomend_status" name="recomend_status">
                             <option value="">全部</option>
+                            <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>>是</option>
+                            <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
                         </select>
                     </li>
-                    <li><span>橱窗推荐:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
-                            <option value="">全部</option>
-
-                        </select>
-                    </li>
-                    <li><span>商品设置:</span> 
-                        <select class="form-control " id="send_status" name="send_status">
-                            <option value="">全部</option>
-                        </select>
-                    </li>
-                    <li><span>清空条件</span> 
-                        &nbsp;&nbsp; <button >搜 索</button>
-                    </li>	
+                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input class=" form-time small-text col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from">-<input class="form-time small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
+                    <div class="commodity_btn">
+                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
+                        &nbsp;&nbsp; <button class="btn">搜 索</button>
+                    </div>
+                   
+                  	
                 </ul>
             </div>
         </form>
     </div>
     <div style="clear:both"></div>
 
-    <div class="seperation-title">共有出售中商品 <span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
+    <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
    <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
             <tr>
-                <td style="width: 34%;">商品名称</td>
+                <td style="width: 45%;">商品名称</td>
                 <td style="width: 14%;">价 格</td>
                 <td style="width: 11%;"><span><a href=>库 存</a></span></td>
-                <td style="width: 11%;"><span><a href=>总销量</a></span></td>
                 <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
                 <td style="width: 15%;">操 作</td>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
-                <td colspan="5" style="text-align: left;" >
-                    <input type="checkbox" data-cbtype="all">
+                <td colspan="6" style="text-align: left;" >
+                    <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement">删 除</button>
-                    <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement">橱窗推荐</button>
-                    <button class="btn-options enhancement">取消推荐</button>
-                    <button class="btn-options enhancement">设置VIP</button>
-                    <button class="btn-options enhancement">评论有礼</button>
-
+                    <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
+                    <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
                 </td>
-                <td class="control-right">更多操作</td>
             </tr>
-
-
-
         </table>
         <div class="clearfix mg-bottom-10"></div>
         <?php
         foreach ($sales_products as $sales_product) {
             ?>
-            <div class="transaction-list-sales">
-
+            <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
                 <table class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
                     ?>
                     <tr>
-                        <td style="width: 34%;">
+                        <td style="width: 45%;">
                             <div class="recommend">
-                                <input type="checkbox">	已推荐
+                                <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
+                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
                             </div>
 
                             <div class="product-pic">
-                                <a href="">
+                                <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>" target="_blank">
                                     <?php if (strpos($thumbnail, 'http') === false) { ?>
-                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
+                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } else { ?>
                                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } ?>
@@ -102,7 +93,7 @@ $sales_products = $this->getRetailerSalesProducts();
                             </div>
                             <div class="product-title">
                                 <p>
-                                    <a target="_blank" href="">
+                                    <a target="_blank" href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name'] ?>">
                                         <span><?php echo $sales_product['name'] ?></span>
                                     </a>
                                 </p>
@@ -120,23 +111,17 @@ $sales_products = $this->getRetailerSalesProducts();
                                 <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
                             </div>
                         </td>
-                        <td class="border-right" style="width: 11%;">&nbsp; </td>
-                        <td class="border-right" style="width: 15%;"><?php echo $sales_product['created_at'] ?></td>
+                        <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
-
                             <div>
                                 <p class="text-center">
-                                    <span class="control-right" >编辑商品</span>
-                                </p>
-                                <p class="text-center">
-                                    <a target="_blank" class="control-right" >复制链接</a>
+
+                                    <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" >编辑商品</a></span>
+
                                 </p>
                             </div>
-
                         </td>
-
                     </tr>
-
                 </table>
             </div>
             <?php
@@ -147,21 +132,14 @@ $sales_products = $this->getRetailerSalesProducts();
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">
                     <td  style="text-align: left;" >
-                        <input type="checkbox" data-cbtype="all">
+                        <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement">删 除</button>
-                        <button class="btn-options enhancement">下 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement">橱窗推荐</button>
-                        <button class="btn-options enhancement">取消推荐</button>
-                        <button class="btn-options enhancement">设置VIP</button>
-                        <button class="btn-options enhancement">评论有礼</button>
-
+                        <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
+                        <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
+                        <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
                     </td>
                 </tr>
-
-
-
             </table>
         </div>
         <div class="page-block">

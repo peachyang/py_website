@@ -67,12 +67,13 @@ class ResourceController extends AuthActionController
                 $data['f'] = [];
             }
             if ($result['error'] === 0) {
+                $storeId = (new Segment('admin'))->get('user')->offsetGet('store_id');
                 try {
                     $path = BP . Model::$options['path'];
                     foreach ((array) $data['r'] as $id) {
                         $model = new Model;
                         $model->load($id);
-                        if ($model->getId()) {
+                        if ($model->getId() && $model->offsetGet('store_id') == $storeId) {
                             $type = $model->offsetGet('file_type');
                             $collection = new Collection;
                             $collection->where(['md5' => $model['md5']])
@@ -85,7 +86,10 @@ class ResourceController extends AuthActionController
                     }
                     foreach ((array) $data['f'] as $id) {
                         $model = new Category;
-                        $model->setId($id)->remove();
+                        $model->load($id);
+                        if ($model->offsetGet('store_id') == $storeId) {
+                            $model->remove();
+                        }
                     }
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

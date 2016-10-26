@@ -5,7 +5,3 @@ cms:
             link: 'resource_resource/'
             title: Resource Management
             priority: 30
-        -
-            link: 'resource_category/'
-            title: Resource Category
-            priority: 40

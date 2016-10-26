@@ -14,23 +14,24 @@ $thumbnail = $product->getThumbnail();
             $options = json_decode($item['options'], true);
             if ($item['product_id'] && count($options)):
                 ?>
-                <dl class="options">
+                <ul class="options">
                     <?php
                     foreach ($item['product']->getOptions() as $option):
                         if (isset($options[$option->getId()])):
                             ?>
-                            <dt><?php echo $option['title'] ?></dt>
-                            <dd>
+                            <li><?php echo $option['title'] ?>
+                            <span>
                                 <?php
                                 echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                         $option->getValue($options[$option->getId()]) : $options[$option->getId()])
                                 ?>
-                            </dd>
+                            </span>
+                            </li>
                             <?php
                         endif;
                     endforeach;
                     ?>
-                </dl>
+                </ul>
             <?php endif; ?>
         </div>
         <div class="price" data-price="<?php echo $item['price'] ?>">

@@ -1,22 +1,28 @@
-<div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
+<div class="col-xs-12 col-sm-12 col-md-12 wishlist mg-bottom-40">
     <h3><?php echo $this->translate('Product Category') ?></h3>
-    <div class="shop_classify">
-   
-       <input type="checkbox" class="check"> <label>全选</label>
-          <button data-toggle="" data-target="" class="batch">批量发货</button>
+    <div class="shop_classify col-xs-12 col-sm-12 col-md-6" >
+   		<div class="col-xs-4 col-sm-4 col-md-2 checke">
+   			 <input type="checkbox" class="check"> <label>全选</label>
+          
+   		</div>
+   		<div class="col-xs-4 col-sm-4 col-md-3"><button data-toggle="" data-target="" class="batch">批量发货</button></div>
+   		<div class="col-xs-4 col-sm-4 col-md-3">
+   			<button data-toggle="modal" data-target="#modal-newcat" class="add_classify"><span class="fa fa-plus"></span>新增分类</button>
+   		</div>
+      
   
-        <button data-toggle="modal" data-target="#modal-newcat" class="add_classify"><span class="fa fa-plus"></span>新增分类</button>
+        
     </div>
 
    <div>
-    <table class="table  category_table text-center">
+    <table class="table  category_table text-center  col-xs-12 col-sm-12 col-md-12">
 
 	 <thead> 
 	    <tr class="table_head ">
-		      <th  class="text-center">分类名称</th> 
-		      <th  class="text-center">创建时间</th> 
-			  <th  class="text-center col-md-1">移动</th> 
-			  <th  class="text-center col-md-2">操作</th>
+		      <th  class="col-md-4 col-xs-4 col-sm-4 text-center">分类名称</th> 
+		      <th  class="col-md-2 col-xs-4 col-sm-4 text-center">创建时间</th> 
+			  <th  class="col-md-2 col-xs-2 col-sm-2 text-center">移动</th> 
+			  <th  class="col-md-2 col-xs-6 col-sm-6 text-center">操作</th>
 			  <th></th>
 		     
 		    </tr>

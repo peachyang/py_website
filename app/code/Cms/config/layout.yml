@@ -54,6 +54,12 @@ admin_cms_page_edit:
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
+                    -
+                        method: addScript
                         params: backend/js/jquery.ui/core.js
                     -
                         method: addScript
@@ -63,13 +69,16 @@ admin_cms_page_edit:
                         params: backend/js/jquery.ui/mouse.js
                     -
                         method: addScript
-                        params: backend/js/jquery.ui/sortable.js
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
                     -
                         method: addScript
                         params: backend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/config.js
+                        params: backend/js/resource.js
                     -
                         method: addLink
                         params: backend/css/jquery-ui.min.css
@@ -91,9 +100,16 @@ admin_cms_page_edit:
                                 template: resource/widget
             extra:
                 children:
-                    modal:
+                    insert:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
-                        template: resource/modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 admin_cms_block_list:
     update: grid
     root:
@@ -115,10 +131,51 @@ admin_cms_block_list:
                                 params: [{link:':ADMIN/cms_block/edit/',label:'Add New Block'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Cms\Grid\Block
+            extra:
+                children:
+                    insert:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 admin_cms_block_edit:
     update: edit
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/core.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/widget.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/mouse.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: backend/js/resource.js
             content:
                 children:
                     breadcrumb:

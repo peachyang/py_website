@@ -264,7 +264,9 @@ abstract class AbstractViewModel implements Serializable
     {
         $data = unserialize($serialized);
         foreach ($data as $key => $value) {
-            $this->$key = $value;
+            if ($key !== 'query') {
+                $this->$key = $value;
+            }
         }
         if ($this instanceof Singleton) {
             static::$instance = $this;

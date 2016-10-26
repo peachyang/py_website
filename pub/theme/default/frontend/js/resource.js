@@ -33,9 +33,8 @@
                         $(odiv).find('img').attr('src', GLOBAL.PUB_URL + 'backend/images/placeholder.png');
                         $(o).after(odiv);
                         return false;
-                    }).on('resource.selected', '.inline-box .btn', function () {
-                        var a = $('.resource-list .active img');
-                        $(this).children('img').attr('src', $(a).attr('src'));
+                    }).on('resource.selected', '.inline-box .btn', function (e, a) {
+                        $(this).find('img').attr('src', $(a).find('img').attr('src'));
                         $(this).siblings('[type=hidden]').val($(a).data('id'));
                     });
                 }
@@ -56,9 +55,9 @@
                         widgetUpload.target = e.relatedTarget;
                     },
                     'hide.bs.modal': function () {
-                        var a = $('.resource-list .selected', this);
+                        var a = $('.resource-list .selected:not(.folder)', this);
                         if (a.length) {
-                            $(widgetUpload.target).trigger('resource.selected');
+                            $(widgetUpload.target).trigger('resource.selected', a);
                         }
                         widgetUpload.loadFileList();
                     }
@@ -197,7 +196,7 @@
                         $('.resource-explorer .resource-list [contenteditable]').trigger('blur');
                         $(this).siblings('.selected').removeClass('selected');
                         $(this).addClass('selected');
-                        if ($(this).is('#modal-insert .resource-list .item')) {
+                        if (!$(this).is('.folder') && $(this).is('#modal-insert .resource-list .item')) {
                             $('#modal-insert').modal('hide');
                         }
                     }
@@ -320,7 +319,9 @@
                             widgetUpload.moveFile.call(this, ui.draggable);
                         }
                     });
-                    window.history.pushState({}, '', url);
+                    if ($('.resource-list').length > $('#modal-insert .resource-list').length) {
+                        window.history.pushState({}, '', url);
+                    }
                 });
             }
         };

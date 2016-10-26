@@ -94,5 +94,4 @@
         });
         $(".magnifying").imagezoom();
     });
-
 }));

@@ -112,11 +112,11 @@ retailer_account_dashboard:
                 action:
                     -
                         method: setTitle
-                        params: Retailer
+                        params: Retailer Center
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Retailer\ViewModel\Dashboard
                         template: retailer/dashboard
 retailer_apply:
     update: retailer_account
@@ -424,6 +424,9 @@ retailer_resource:
                         method: setTitle
                         params: Resource Management
                     -
+                        method: addLink
+                        params: frontend/css/resource.css
+                    -
                         method: addScript
                         params: frontend/js/jquery-ui.min.js
                     -
@@ -436,12 +439,12 @@ retailer_resource:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
-                        template: retailer/resource
+                        template: resource/explorer
             extra:
                 children:
                     modal:
                         type: Seahinet\Retailer\ViewModel\Resource\Modal
-                        template: retailer/resource/upload
+                        template: resource/upload
 retailer_resource_nav:
     update: frontend
     root:
@@ -453,7 +456,7 @@ retailer_resource_nav:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
-                        template: retailer/resource/navigation
+                        template: resource/navigation
 retailer_resource_list:
     update: frontend
     root:
@@ -465,7 +468,7 @@ retailer_resource_list:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
-                        template: retailer/resource/list
+                        template: resource/list
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -597,23 +600,17 @@ retailer_products_product_edit:
                         method: addLink
                         params: backend/css/jquery-ui.min.css
                     -
-                        method: addScript
-                        params: backend/js/jquery.ui/core.js
+                        method: addLink
+                        params: frontend/css/resource.css
                     -
                         method: addScript
-                        params: backend/js/jquery.ui/widget.js
-                    -
-                        method: addScript
-                        params: backend/js/jquery.ui/mouse.js
-                    -
-                        method: addScript
-                        params: backend/js/jquery.ui/sortable.js
+                        params: frontend/js/jquery-ui.min.js
                     -
                         method: addScript
                         params: frontend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: frontend/js/jquery.fileupload/config.js
+                        params: frontend/js/resource.js
                     -
                         method: addScript
                         params: backend/js/product.js
@@ -730,9 +727,16 @@ retailer_products_product_edit:
                                         template: admin/catalog/product/additional
             extra:
                 children:
-                    modal:
-                        type: Seahinet\Retailer\ViewModel\Resource\Modal
-                        template: retailer/resource/modal
+                    insert:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 retailer_products_product_edit_1:
     update: retailer_products_product_edit
 retailer_products_product_edit_2:

@@ -208,6 +208,20 @@
         $('.filters .more a').click(function () {
             $(this).parents('dd').toggleClass('all');
         });
+        $('.avatar~[type=file]').change(function () {
+            var oimg = $(this).siblings('.avatar').find('img');
+            if (typeof FileReader !== 'undefined') {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(oimg).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                this.select();
+                var src = document.selection.createRange().text;
+                $(oimg).css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="' + src + '"')
+            }
+        });
         $('[type=file].preview').each(function () {
             $(this).change(function () {
                 $(this).siblings('.preview').remove();

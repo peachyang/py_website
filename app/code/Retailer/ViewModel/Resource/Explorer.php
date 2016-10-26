@@ -111,7 +111,7 @@ class Explorer extends AbstractViewModel
     public function getChildrenCategories($id = 0, $title = null)
     {
         $child = new static;
-        $child->setTemplate('retailer/resource/category')
+        $child->setTemplate('resource/category')
                 ->setVariables([
                     'id' => $id,
                     'title' => is_null($title) ? $this->translate('All Categories') :

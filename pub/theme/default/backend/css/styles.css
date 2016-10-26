@@ -57,6 +57,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .scope.dropdown .dropdown-menu{background:#fff;border:1px solid #ccc;margin-top:-1px;min-width:100%;padding:3px 0}
 .scope.dropdown .dropdown-menu a{display:block;font-size:12px;line-height:1.25;padding:0 1em;white-space:nowrap}
 .scope.dropdown .dropdown-menu .scope-store a{padding-left:2em}
+.collapse{display:none}.collapse.in{display:block}tr.collapse.in{display:table-row}tbody.collapse.in{display:table-row-group}.collapsing{position:relative;height:0;overflow:hidden;transition-timing-function:ease;transition-duration:.35s;transition-property:height,visibility}
 .modal-open{overflow:hidden;}
 .modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;display:none;overflow:hidden;-webkit-overflow-scrolling:touch;outline:0}
 .modal.fade .modal-dialog{transition:transform .3s ease-out;transform:translate(0, -25%)}
@@ -99,7 +100,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .widget-upload:not(table){font-size:0!important}
 .widget-upload .inline-box:not(tr){display:inline-block;vertical-align:middle;width:122px;margin-right:6px;border:1px solid #aaa}
 .widget-upload .inline-box:not(tr) .btn{padding:10px;display:block;text-align:center;height:120px;width:100%}
-.widget-upload .inline-box .btn img{pointer-events:none}
+.widget-upload .inline-box .btn img{pointer-events:none;max-width:100%;max-height:100%}
 .widget-upload .inline-box:not(tr) .delete{display:block;text-align:center;font-size:16px;line-height:1.2;border-top:1px solid #aaa}
 .widget-upload .add{vertical-align:middle;font-size:32px;line-height:139.2px;text-decoration:none}
 .nav-tabs>li{float:left;margin-bottom:-1px}

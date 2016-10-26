@@ -5,9 +5,8 @@ namespace Seahinet\Admin\ViewModel\Resource;
 use Seahinet\Resource\Source\Category;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Store;
-use Seahinet\Lib\ViewModel\Template;
 
-class Modal extends Template
+class Modal extends Explorer
 {
 
     public function getCategorySource()
@@ -31,4 +30,10 @@ class Modal extends Template
         }
     }
 
+    public function getChildrenCategories($id = 0, $title = null)
+    {
+        $child = parent::getChildrenCategories($id, $title);
+        $child->setVariable('prefix', 'modal-upload-');
+        return $child;
+    }
 }

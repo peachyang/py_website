@@ -140,11 +140,15 @@ function _init() {
         var  part_id = _s.parent().parent().assignId();
         $obj = $(this).closest('.box.box-element.ui-draggable').find('.view').find(".content.function-tag");
         var data_tag = $obj.attr("data-tag");
+        var areas = ['700px', '530px'];
+        if(data_tag == "paragraph")
+        	areas = ['1030px', '650px'];
+        
         var data_name = $obj.attr("data-name");
         layer.open({
         	id:'iframe_layer',
   			type: 2,
-  			area: ['700px', '530px'],
+  			area: areas,
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,

@@ -11,9 +11,8 @@ class Inquire extends Template
     public function getInquireies()
     {
         $collection = new Collection;
-        $collection->where(['increment_id' => $this->getRequest()->getPost('increment_id')]);
-        
+        $collection->where(['increment_id' =>$this->getRequest()->getPost('increment_id')]);
         return $collection;
     }
-
+    
 }

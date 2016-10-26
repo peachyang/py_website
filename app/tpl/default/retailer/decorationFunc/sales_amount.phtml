@@ -7,15 +7,25 @@ $part_id = $this->getVariable("part_id");
 
 
 <ul class="nav nav-tabs" id="myTab" style="margin:11px 18px" > 
-      <li><a href="#uploadPic">基本属性</a></li> 
+      <li><a href="#basic">基本属性</a></li> 
  </ul> 
        
  <div class="tab-content"> 
-<div class="tab-pane" id="uploadPic" >
+<div class="tab-pane" id="basic" >
 <div style="margin:26px">
 
-
-
+标题文字:
+<input type="text" id='title' class="params" value="销售量" ><br><br> 
+显示数量: 
+<select id='select_row' class="params"  >
+<option value=2 >2  个</option>	
+<option value=3 selected >3 个</option>
+<option value=4 >4 个</option>
+<option value=5 >5 个</option>
+<option value=6 >6 个</option>
+<option value=7 >7 个</option>
+<option value=8 >8 个</option>
+</select> <br><br>
 
 <div class="rows">
 	<ul class="infoList">
@@ -43,7 +53,7 @@ $part_id = $this->getVariable("part_id");
 <script>
 	var data_tag = '<?php echo $data_tag; ?>';
 	var part_id = '<?php echo $part_id; ?>';
-	var obj = $('#'+part_id,parent.document);
+	var obj = $('#'+part_id,parent.document).find('.view').find('.content.function-tag');
 	var data_param = $.trim(obj.attr('data-param'))=="" ? {} : JSON.parse(decodeURIComponent(obj.attr('data-param')));
 
 	$(document).ready(function(){

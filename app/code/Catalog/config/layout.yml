@@ -62,6 +62,9 @@ catalog_product:
                     -
                         method: addScript
                         params: frontend/js/magnifying.js
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
             content:
                 children:
                     messages:

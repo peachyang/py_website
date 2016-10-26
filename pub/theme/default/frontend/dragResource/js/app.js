@@ -67,7 +67,12 @@ function _init() {
             
         },
         stop: function (e, t) {
-						
+			if(template_id==0)
+			{
+				saveData();
+				return;
+			}
+			
 			if($(".htmlpage .lyrow").length<=0)
 			{
 				//alert("功能模块必须拖入表格内容区\n请先拖入表格内容区");
@@ -112,7 +117,7 @@ function _init() {
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,
-  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
+  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id+"&current_template_id="+current_template_id,
   			btn: ['保存', '取消'],
   			yes:function(){
 
@@ -135,15 +140,19 @@ function _init() {
         var  part_id = _s.parent().parent().assignId();
         $obj = $(this).closest('.box.box-element.ui-draggable').find('.view').find(".content.function-tag");
         var data_tag = $obj.attr("data-tag");
+        var areas = ['700px', '530px'];
+        if(data_tag == "paragraph")
+        	areas = ['1030px', '650px'];
+        
         var data_name = $obj.attr("data-name");
         layer.open({
         	id:'iframe_layer',
   			type: 2,
-  			area: ['700px', '530px'],
+  			area: areas,
   			title:data_name+" 属性",
   			fix: true, //不固定
   			maxmin: true,
-  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id,
+  			content: site_path+'retailer/store/func?functions='+data_tag+'&part_id='+part_id+"&current_template_id="+current_template_id,
   			btn: ['保存', '取消'],
   			yes:function(){
 

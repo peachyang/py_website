@@ -15,20 +15,21 @@ class Explorer extends AbstractViewModel
     protected static $tree = null;
     protected static $resource = null;
     protected $type = [
-        'application/x-compressed' => 'archive',
-        'application/x-compress' => 'archive',
-        'application/x-tar' => 'archive',
-        'application/x-xz' => 'archive',
-        'application/x-rar-compressed' => 'archive',
-        'application/x-gtar' => 'archive',
-        'application/x-gzip' => 'archive',
-        'application/x-bzip2' => 'archive',
-        'application/zip' => 'archive',
-        'application/pdf' => 'pdf',
-        'audio' => 'audio',
-        'image' => 'image',
-        'video' => 'video',
-        'text' => 'text'
+        'application/x-compressed' => 'file-archive',
+        'application/x-compress' => 'file-archive',
+        'application/x-tar' => 'file-archive',
+        'application/x-xz' => 'file-archive',
+        'application/x-rar-compressed' => 'file-archive',
+        'application/x-gtar' => 'file-archive',
+        'application/x-gzip' => 'file-archive',
+        'application/x-bzip2' => 'file-archive',
+        'application/zip' => 'file-archive',
+        'application/octet-stream' => 'file-archive',
+        'application/pdf' => 'file-pdf',
+        'audio' => 'file-audio',
+        'image' => 'file-image',
+        'video' => 'file-video',
+        'text' => 'file-text'
     ];
     protected $unit = [
         'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB', 'BB', 'NB', 'DB'

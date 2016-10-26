@@ -31,6 +31,7 @@ else
             var site_path = '<?php echo $this->getBaseUrl();  ?>';
             var template_id = <?php echo $template_id; ?>;
             var template_name = '<?php echo $template_name; ?>';
+            var current_template_id = <?php echo $id; ?>;
             var store_id = <?php echo empty($templateView) ? 0 : $templateView['store_id'] ?>;
         </script>
 <div class="decoration_logo_top stable_top " style="height:<?php echo $logo_top_outerHeight;  ?>px;background-image:url(<?php echo $logo_topView;  ?>)">
@@ -230,7 +231,7 @@ else
                                 
                                 <div class="box box-element" data-type="paragraph" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">自由编辑</div>
                                     </div>
@@ -272,7 +273,7 @@ else
                                 -->
                                 <div class="box box-element" data-type="long_search" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">长搜索条</div>
                                     </div>
@@ -281,7 +282,7 @@ else
                                 
                                  <div class="box box-element" data-type="short_search" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">短搜索条</div>
                                     </div>
@@ -292,7 +293,7 @@ else
                                 
                   				<div class="box box-element" data-type="product_class" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">商品分类</div>
                                     </div>
@@ -303,7 +304,7 @@ else
             					
             					<div class="box box-element" data-type="sales_amount" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">销 售 量</div>
                                     </div>
@@ -314,7 +315,7 @@ else
             					
             					<div class="box box-element" data-type="hot_product" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">热卖商品</div>
                                     </div>
@@ -325,7 +326,7 @@ else
             					
             					<div class="box box-element" data-type="store_recommend" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a><span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">店长推荐</div>
                                     </div>
@@ -336,7 +337,7 @@ else
             					
             					<div class="box box-element" data-type="product_recommend" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">商品推荐</div>
                                     </div>
@@ -347,7 +348,7 @@ else
             					
             					<div class="box box-element" data-type="pic_carousel" show-type=1 >
                                     <a href="#close" class="remove btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="#" ><i class="fa fa-gear"></i></a> </span>
+                                    <a class="drag btn btn-default btn-xs"><i class="glyphicon glyphicon-move"></i></a> <span class="configuration"> <a class="btn btn-xs btn-warning settings"  href="javascript:void(0)" ><i class="fa fa-gear"></i></a> </span>
                                     <div class="preview"> <i class="fa"> + </i>
                                         <div class="element-desc">图片轮播</div>
                                     </div>
@@ -376,7 +377,9 @@ else
 </div>
 
 </div>
+<div style="width:100px;height:300px">
 
+</div>
 
 <div id='save_html' style="display:none">
 	  
@@ -555,6 +558,18 @@ else
 						var f = eval(func);
 						f(dataID,data.view);
 					}
+					
+					 var func = dataType+"_init";
+					 try{
+					if(typeof(eval(func))== "function") {
+					 	 var f = eval(func);
+              			 f(obj,dataID);
+          			}
+					} catch (e){
+						
+					}
+					 
+					
 					
 					
 					layer.closeAll();

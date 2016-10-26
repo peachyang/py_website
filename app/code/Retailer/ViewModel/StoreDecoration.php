@@ -175,12 +175,23 @@ class StoreDecoration extends Template
 		return $id;
 	}
 	
-	public function getStorePicInfo($code,$current_store_id = null){
+	public function getStorePicInfo($code,$current_store_id = null,$current_template_id = null, $part_id = null){
 		$Scollection = new StorePicInfoCollection;
 		
 		$store_id = $this->judge_store_id($current_store_id);
+		$filters = ['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$store_id];
 		
-		$Scollection->where(['resource_category_code'=>$code,'store_decoration_picinfo.store_id'=>$store_id])
+		if(!empty($current_template_id))
+			$filters['template_id'] = $current_template_id;
+		else
+			$filters['template_id'] = null;
+		
+		if(!empty($part_id))
+			$filters['part_id'] = $part_id;
+		else
+			$filters['part_id'] = null;
+		
+		$Scollection->where($filters)
 		->join('resource','store_decoration_picinfo.resource_id = resource.id',['real_name'],'left')->order(['resource.created_at'=>'DESC']);
 	
 		return $Scollection;
@@ -366,20 +377,57 @@ class StoreDecoration extends Template
 	}
 	
 	public function template_sales_amount($params='',$current_store_id = null){
-		$content = '<ul>
-                        <li>
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		
+		//$hot_text = empty($params) ? "" : $params['hot_text'];
+		//$price_from = empty($params) ? "" : $params['price_from'];
+		//$price_to = empty($params) ? "" : $params['price_to'];
+		$select_row = empty($params) ? 3 : $params['select_row'];	
+		//$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
+		
+		//$condition['name'] = $hot_text;
+		$condition['limit'] = $select_row;
+		//$condition['price_from'] = $price_from;
+		//$condition['price_to'] = $price_to;
+		//$condition['product_ids'] = $product_ids;
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		
+			
+		$content = '<ul>';
+        
+        foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			
+		
+        	$content .= '<li>
                             <div class="col-md-4" style="padding:3px" >
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="pad-5">
-                                        <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-                                        <p class="price"><span class="actural">￥119.00 </span></p>
-                                        <p class="paid-count">热销<span class="sales-num">900</span>笔</p>
+                                <div class="col-md-8" style="padding:3px" >
+                                    <div class="pad-5" style="padding:2px" >
+                                        <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
+                                        <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).'</span></p>                                      
                                     </div>
                             </div>
-                        </li>
-                    </ul>';
+                </li>';
+        
+        }
+
+        $content .= '</ul>';
 		return $content;
 	}
 
@@ -397,6 +445,8 @@ class StoreDecoration extends Template
 		$price_to = empty($params) ? "" : $params['price_to'];
 		$select_row = empty($params) ? 1 : $params['select_row'];
 		$select_column = empty($params) ? 4 : (int)$params['select_column'];
+		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
 		$select_col_md = 'col-md-3';
 		$pic_height = '225px';
 		switch ($select_column) {
@@ -422,6 +472,7 @@ class StoreDecoration extends Template
 		$condition['limit'] = $select_column*$select_row;
 		$condition['price_from'] = $price_from;
 		$condition['price_to'] = $price_to;
+		$condition['product_ids'] = $product_ids;
 		$products = new SalesProducts();
 		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
 		
@@ -450,8 +501,52 @@ class StoreDecoration extends Template
         $content .= '</ul>';
 		return $content;
 	}
+	
+	public function func_getProductInfo($condition,$current_store_id = null){
+		$products = new SalesProducts();
+		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
+		$productsDataCount = $products->getRetailerSalesProductsCount($condition,$current_store_id);
+		foreach ($productsData as $key => $value) {
+			$product = new product;
+			$product->load($value['id']);
+			$urls = $product->getUrl();
+			$thumbnail = $products->getProduct($value['id'])->getThumbnail();
+			if (strpos($thumbnail, 'http') === false) {
+				$picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail); 	
+			}else {
+				$picURL = $thumbnail;
+			}
+			$productsData[$key]['productURL'] = $urls;
+			$productsData[$key]['picURL'] = $picURL;
+			$productsData[$key]['acturalPrice'] = $products->getCurrency()->format($value['price']);
+		}
+		return ['data'=>$productsData,'count'=>$productsDataCount];
+		
+	}
 
 	public function template_store_recommend($params='',$current_store_id = null){
+		
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+				
+		$hot_text = empty($params) ? "" : $params['hot_text'];
+		$price_from = empty($params) ? "" : $params['price_from'];
+		$price_to = empty($params) ? "" : $params['price_to'];		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
+		
+		$condition['name'] = $hot_text;
+		$condition['limit'] = 9;
+		$condition['price_from'] = $price_from;
+		$condition['price_to'] = $price_to;
+		$condition['product_ids'] = $product_ids;
+		
+		$result = $this->func_getProductInfo($condition,$current_store_id);
+		$products = $result['data'];
+			
+			
 		$content ='';
 		for($i=0;$i<3;$i++)
 		{
@@ -459,17 +554,26 @@ class StoreDecoration extends Template
 			
 			if($i==1)
 			{
-				$content .= '<div class="prompt-big">
-                                <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-                                <p class="price"><span class="actural">￥119.00 </span><span class="discount">￥119.00</span></p>
-                                <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-                                <p class="paid-count">1999人付款</p>
-                            </div>';	
+				if(!empty($products[0]))   
+					$content .= '<div class="prompt-big">
+                                <a href="'.$products[0]['productURL'].'" target=_blank ><img class="pic" src="'.$products[0]['picURL'].'"  /></a>
+                                <p class="price"><span class="actural">'.$products[0]['acturalPrice'].' </span><span class="discount">'.$products[0]['acturalPrice'].'</span></p>
+                                <h3 class="product-name"><a href="'.$products[0]['productURL'].'" target=_blank >'.$products[0]['name'].'</a></h3>
+                            </div>';
+				else
+					$content .= '<div class="prompt-big"></div>';
 			}else{
 				for($j=0;$j<4;$j++){
-					$content .= '<div class="col-md-6 col-md-61">
-                        <div class="prompt-small"><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></div>
+					if($i==0)
+						$index = $j+1;
+					if($i==2)
+						$index = $j+5;	
+					if(!empty($products[$index])) 	
+						$content .= '<div class="col-md-6 col-md-61">
+                        <div class="prompt-small"><a href="'.$products[$index]['productURL'].'" target=_blank ><img class="pic" src="'.$products[$index]['picURL'].'"  /></a></div>
                     </div>';
+					else
+						$content .= '<div class="col-md-6 col-md-61"></div>';	
 				}
 			}
 			
@@ -488,7 +592,7 @@ class StoreDecoration extends Template
 			$params = json_decode($params,true);
 		}
 		
-		
+		$product_ids = empty($params['product_ids']) ? "" : $params['product_ids'] ;
 		$hot_text = empty($params) ? "" : $params['hot_text'];
 		$price_from = empty($params) ? "" : $params['price_from'];
 		$price_to = empty($params) ? "" : $params['price_to'];
@@ -519,7 +623,8 @@ class StoreDecoration extends Template
 		$condition['limit'] = $select_column*$select_row;
 		$condition['price_from'] = $price_from;
 		$condition['price_to'] = $price_to;
-		$condition['recomend_status'] = "1";
+		$condition['product_ids'] = $product_ids;
+		//$condition['recomend_status'] = "1";
 		$products = new SalesProducts();
 		$productsData = $products->getRetailerSalesProducts($condition,$current_store_id);
 		
@@ -549,26 +654,23 @@ class StoreDecoration extends Template
 		return $content;
 		
 		
-//		$content = '<ul>';       	
-//     	for($i=0;$i<4;$i++)
-//		{
-//			$content .= '<li class="col-md-3">
-//                          <div>
-//                              <a href=""><img class="pic" src="'.$this->getBaseUrl('/pub/theme/default/frontend/images/sample.jpg').'"  /></a>
-//                              <p class="price"><span class="actural">￥119.00 </span><span class="paid-count">1999人付款</span></p>
-//                              <h3 class="product-name"><a href="">雄鹰能量棒Eagle Energy吸入式咖啡因能量棒提神醒脑的口袋咖啡</a></h3>
-//                          </div>
-//                      </li>';
-//		}                
-//      $content .= '</ul>';		
-//		return $content;
+
 		
 	}
 	
 	
 	public function template_pic_carousel($params='',$current_store_id = null){
+		if(!empty($params))
+		{	
+			$params = urldecode($params);
+			$params = json_decode($params,true);
+		}
+		
+		$current_template_id = empty($params) ? "" : $params['current_template_id'];
+		$part_id = empty($params) ? "" : $params['part_id'];
+		
 		$content = '<div class="carousel_wrap"><ul class="hiSlider hiSlider3">';
-		$result = $this->getStorePicInfo('store_carousel',$current_store_id);
+		$result = $this->getStorePicInfo('store_carousel',$current_store_id,$current_template_id,$part_id);
        	foreach ($result as $key => $value)
 		{	
 			if(trim($value['url'])!="")

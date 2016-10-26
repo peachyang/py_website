@@ -679,6 +679,8 @@ CREATE TABLE IF NOT EXISTS `store_decoration_picinfo` (
     `pic_title` VARCHAR(255) DEFAULT NULL COMMENT 'Picture title',
     `url` VARCHAR(255) DEFAULT NULL COMMENT 'Picture url',
     `resource_category_code` VARCHAR(255) NOT NULL COMMENT 'Resource category code',
+    `template_id` INTEGER DEFAULT NULL COMMENT 'Template ID',
+    `part_id` VARCHAR(200) DEFAULT NULL COMMENT 'Part ID',
     `sort_order` INTEGER DEFAULT NULL COMMENT 'Sort order',
     PRIMARY KEY (`id`),
     INDEX IDX_STORE_DECORATION_PICINFO_STORE_ID (`store_id`),

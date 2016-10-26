@@ -9,6 +9,7 @@ use Seahinet\Lib\Model\AbstractModel;
  */
 class Category extends AbstractModel
 {
+
     protected function construct()
     {
         $this->init('resource_category', 'id', ['id', 'store_id', 'parent_id', 'code']);
@@ -19,8 +20,9 @@ class Category extends AbstractModel
         $this->beginTransaction();
         parent::beforeSave();
     }
-    
-    protected function afterSave(){
+
+    protected function afterSave()
+    {
         parent::afterSave();
         if (isset($this->storage['name'])) {
             $tableGateway = $this->getTableGateway('resource_category_language');
@@ -30,5 +32,5 @@ class Category extends AbstractModel
         }
         $this->commit();
     }
-    
+
 }

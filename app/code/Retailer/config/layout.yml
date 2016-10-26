@@ -431,12 +431,29 @@ retailer_resource:
                         params: frontend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: frontend/js/resource.js
+                        params: [{src:"frontend/js/resource.js",defer:"defer"}]
             content:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Resource\Explorer
                         template: retailer/resource
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: retailer/resource/upload
+retailer_resource_nav:
+    update: frontend
+    root:
+        template: page/ajax
+        unset: [head]
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                        template: retailer/resource/navigation
 retailer_resource_list:
     update: frontend
     root:
@@ -993,6 +1010,9 @@ decorationFunc_hot_product:
             head:
                 action:
                     -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
+                    -
                         method: setTitle
                         params: hot_product
 
@@ -1088,6 +1108,9 @@ decorationFunc_product_recommend:
                     -
                         method: setTitle
                         params: product_recommend
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:
@@ -1102,6 +1125,9 @@ decorationFunc_store_recommend:
                     -
                         method: setTitle
                         params: store_recommend
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:
@@ -1116,6 +1142,9 @@ decorationFunc_sales_amount:
                     -
                         method: setTitle
                         params: sales_amount
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/template.js
             content:
                 children:
                     main:

@@ -3,7 +3,7 @@ $data_tag = $this->getVariable("data_tag");
 $part_id = $this->getVariable("part_id");
  ?>
  <div style="padding:11px">
-  <script id="editor" type="text/plain" style="width:669px;height:280px;"></script>
+  <script id="editor" type="text/plain" style="width:1000px;height:450px;"></script>
 </div>	
  <input type="hidden" id='focusBtn' >	
 
@@ -43,6 +43,60 @@ $part_id = $this->getVariable("part_id");
 		window.parent.layer.closeAll();
 		//window.parent.call_ajax_data(part_id,data_tag);
 	});
+</script>
+
+<script>
+UE.registerUI('dialog',function(editor,uiName){
+
+    //创建dialog
+    var dialog = new UE.ui.Dialog({
+  
+        iframeUrl:'customizeDialogPage.html',
+
+        editor:editor,
+
+        name:uiName,
+
+        title:"图片管理",
+
+
+        cssRules:"width:900px;height:439px;",
+
+
+        buttons:[
+            {
+                className:'edui-okbutton',
+                label:'确定',
+                onclick:function () {
+                    dialog.close(true);
+                }
+            },
+            {
+                className:'edui-cancelbutton',
+                label:'取消',
+                onclick:function () {
+                    dialog.close(false);
+                }
+            }
+        ]
+        });
+
+
+    var btn = new UE.ui.Button({
+        name:'dialogbutton' + uiName,
+        title:'图片管理',
+
+        cssRules :'background-position: -725px -77px;',
+        onclick:function () {
+            //渲染dialog
+            dialog.render();
+            dialog.open();
+        }
+    });
+
+    return btn;
+},[73]);	
+	
 </script>
 
 

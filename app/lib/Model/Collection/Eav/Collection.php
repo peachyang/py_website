@@ -94,7 +94,6 @@ abstract class Collection extends AbstractCollection
                 ->join($valueTablePrefix . '_int', 'eav_attribute.id=' . $valueTablePrefix . '_int.attribute_id', ['value_int' => 'value'], 'left')
                 ->join($valueTablePrefix . '_varchar', 'eav_attribute.id=' . $valueTablePrefix . '_varchar.attribute_id', ['value_varchar' => 'value'], 'left')
                 ->join($valueTablePrefix . '_datetime', 'eav_attribute.id=' . $valueTablePrefix . '_datetime.attribute_id', ['value_datetime' => 'value'], 'left')
-                ->join($valueTablePrefix . '_blob', 'eav_attribute.id=' . $valueTablePrefix . '_blob.attribute_id', ['value_blob' => 'value'], 'left')
                 ->join($valueTablePrefix . '_text', 'eav_attribute.id=' . $valueTablePrefix . '_text.attribute_id', ['value_text' => 'value'], 'left')
                 ->join($valueTablePrefix . '_decimal', 'eav_attribute.id=' . $valueTablePrefix . '_decimal.attribute_id', ['value_decimal' => 'value'], 'left');
         $items = [];
@@ -117,21 +116,20 @@ abstract class Collection extends AbstractCollection
                     'type_id', 'attr', 'type', 'is_required', 'default_value',
                     'is_unique', 'code', 'entity_table', 'value_table_prefix',
                     'is_form', 'value_varchar', 'value_decimal', 'value_text',
-                    'value_int', 'value_blob', 'value_datetime',
+                    'value_int', 'value_datetime',
                     'language_varchar', 'language_decimal', 'language_text',
-                    'language_int', 'language_blob', 'language_datetime'
+                    'language_int', 'language_datetime'
                 ]) as $key) {
                     $items[$record['id']][$key] = $record[$key];
                 }
             }
             if ($record['attr']) {
-                $items[$record['id']][$record['attr']] = $record['value_int']? : (
-                        $record['value_varchar']? : (
-                                $record['value_decimal']? : (
-                                        $record['value_text']? : (
-                                                $record['value_datetime']? :
-                                                        $record['value_blob']
-                                                ))));
+                $items[$record['id']][$record['attr']] = $record['value_int'] ?: (
+                        $record['value_varchar'] ?: (
+                        $record['value_decimal'] ?: (
+                        $record['value_text'] ?:
+                        $record['value_datetime']
+                        )));
             }
         }
         return array_values($items);
@@ -147,7 +145,7 @@ abstract class Collection extends AbstractCollection
                     $attributes[$item['attribute_set_id']]->withSet()
                             ->columns(['code'])
                             ->where(['eav_attribute_set.id' => $item['attribute_set_id']])
-                            ->where->in('input', ['multiselect', 'checkbox']);
+                    ->where->in('input', ['multiselect', 'checkbox']);
                 }
                 foreach ($attributes[$item['attribute_set_id']] as $attribute) {
                     if (is_string($item[$attribute['code']])) {

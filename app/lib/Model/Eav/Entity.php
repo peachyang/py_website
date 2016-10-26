@@ -112,7 +112,6 @@ abstract class Entity extends AbstractModel
                 ->join($this->valueTablePrefix . '_int', 'eav_attribute.id=' . $this->valueTablePrefix . '_int.attribute_id', ['value_int' => 'value'], 'left')
                 ->join($this->valueTablePrefix . '_varchar', 'eav_attribute.id=' . $this->valueTablePrefix . '_varchar.attribute_id', ['value_varchar' => 'value'], 'left')
                 ->join($this->valueTablePrefix . '_datetime', 'eav_attribute.id=' . $this->valueTablePrefix . '_datetime.attribute_id', ['value_datetime' => 'value'], 'left')
-                ->join($this->valueTablePrefix . '_blob', 'eav_attribute.id=' . $this->valueTablePrefix . '_blob.attribute_id', ['value_blob' => 'value'], 'left')
                 ->join($this->valueTablePrefix . '_text', 'eav_attribute.id=' . $this->valueTablePrefix . '_text.attribute_id', ['value_text' => 'value'], 'left')
                 ->join($this->valueTablePrefix . '_decimal', 'eav_attribute.id=' . $this->valueTablePrefix . '_decimal.attribute_id', ['value_decimal' => 'value'], 'left');
         $items = [];
@@ -135,9 +134,9 @@ abstract class Entity extends AbstractModel
                     'type_id', 'attr', 'type', 'is_required', 'default_value',
                     'is_unique', 'code', 'entity_table', 'value_table_prefix',
                     'is_form', 'value_varchar', 'value_decimal', 'value_text',
-                    'value_int', 'value_blob', 'value_datetime',
+                    'value_int', 'value_datetime',
                     'language_varchar', 'language_decimal', 'language_text',
-                    'language_int', 'language_blob', 'language_datetime'
+                    'language_int', 'language_datetime'
                 ]) as $key) {
                     $items[$record['id']][$key] = $record[$key];
                 }
@@ -146,10 +145,9 @@ abstract class Entity extends AbstractModel
                 $items[$record['id']][$record['attr']] = $record['value_int'] ?: (
                         $record['value_varchar'] ?: (
                         $record['value_decimal'] ?: (
-                        $record['value_text'] ?: (
-                        $record['value_datetime'] ?:
-                        $record['value_blob']
-                        ))));
+                        $record['value_text'] ?:
+                        $record['value_datetime']
+                        )));
             }
         }
         if (is_null($key) || $key === $this->primaryKey) {

@@ -1,5 +1,5 @@
 html{font-size:32px}
-body{min-width:320px;background:#e7e7e7}
+body{min-width:320px;background:#e7e7e7 }
 body {position: relative}
 [lang|=zh],[lang|=zh] body{font-family:"Microsoft Yahei",SimHei,STHeiti,sans-serif}
 label[for]{cursor:pointer}
@@ -16,10 +16,10 @@ select[multiple],select[size],textarea{resize:vertical}
 @-moz-document url-prefix() {
     fieldset {display:table-cell}
 }
-.input-box{position:relative}
+.input-box{position:relative;padding: 3px 10px;}
 .table th{font-weight:normal}
 .header,.footer{display:none}
-.main-container .container .col-left,.col-xs-3,.clo-sm-3,.col-md-2{display:none}
+/* .main-container .container .col-left,.col-xs-3,.clo-sm-3,.col-md-2{display:none} */
 /*create user*/
 .customer-account-create .main-container{padding:10px 11px 0 11px}
 .customer-account .main-container .message-box{margin-top:0}
@@ -62,6 +62,7 @@ select[multiple],select[size],textarea{resize:vertical}
 
 @media(min-width:768px){
     .customer-account-login .container{width:746px}
+    .retailer-account  .form-inline .form-control{width:100%}
 }
 @media(min-width:1024px){
     .customer-account-login .container{width:1002px}
@@ -451,7 +452,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 #cart .total,.selected{font-size:16px;color:#007dc6;font-weight:bold}
 .product-info .selected a{font-size:16px;color:#8f8f8f;font-weight:normal}
 #cart,.order .col-xs-3{display:block}
-#cart .qty .form-control{display:inline-block;font-size:14px;line-height:18px;border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4;border-left:none;border-right:none;width:40%;height:20px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
+#cart .qty .form-control{    margin-bottom: 6px;display:inline-block;font-size:14px;line-height:18px;border-top:1px solid #d4d4d4;border-bottom:1px solid #d4d4d4;border-left:none;border-right:none;width:40%;height:20px;border-radius:0;padding:0;text-align:center;vertical-align:bottom}
 #cart .product-list .product-img{float:left;width:26%}
 #cart .product-list .product-name{float:left;width:72%;margin-right:2%}
 #cart .checkout{background:#ffffff;height:45px;line-height:45px;position:fixed;bottom:0;z-index:10}
@@ -466,7 +467,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .message-box{margin-top:50px}
 .checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
 .checkout-order .checkout-steps .payment{margin-bottom:60px}
-.checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold;padding: 0 15px;}
+.checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold;}
 .checkout-order .address .list{height:60px;line-height:60px;overflow-y:hidden}
 .checkout-order .address .list li{display:inline-block;line-height:30px}
 .checkout-order .address .list li input{float:left;margin: 10px 5px 0 10px;}
@@ -567,7 +568,26 @@ overflow:hidden;}
 .retailer-apply .page-content>.alert-warning,.retailer-processing .page-content>.alert-warning{border-radius:0;border-color:#fdd685;margin-top:10px;padding:6px 30px;font-size:12px;line-height:24px;color:#7c7c7c}
 .retailer-account .profile .head_pic .title_oic{ position: absolute; top: 30; right: 40px; top: 40px;}
 .retailer-account .profile .head_pic .title_oic p{ color: #7fcefe;font-size:12px}
-    
+.retailer-account .wishlist .soldout .form-control{width:70%;display: inline-block;}   
+.retailer-account .wishlist .soldout .form-time{width:35%} 
+.retailer-account .wishlist .commodity .form-time{width:35%} 
+.retailer-account .wishlist .commodity li{margin:5px 0}
+.retailer-account .wishlist .commodity .form-control{width:73%}
+.retailer-account .wishlist .soldout div{padding:5px 10px}
+.retailer-account .evaluate .down_icon {margin:10px 0}
+.retailer-account .evaluate .down_icon .span{background: #fff;padding: 3px 15px;font-size: 12px;color: #555;margin:10px}
+.retailer-account .evaluate .table .title_img_mg img{border-radius: 50px;}
+.retailer-account .evaluation {margin:10px 0}
+.retailer-account .wishlist  .filter-bar{margin:20px 0}
+.retailer-account .evaluation .evaluation_left{padding:5px 10px}
+.retailer-account  .btn{color: #fff;background: #007dc6;padding: 3px 15px;border: none; margin: 10px 0px;font-size:12px}
+.retailer-account .evaluation .evaluation_left .btn{color: #fff;background: #007dc6;padding: 3px 15px;border: none;font-size:12px}
+.retailer-account .wishlist  .filter-bar .btn{margin:10px 0;background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;padding:5px 10px;text-decoration:none}
+.retailer-account  .fieldset .mobile-img img{width:20%}
+.retailer-account  .fieldset .mobile-img {font-size:12px}
+.retailer-account .wishlist .shop_classify{padding:10px}
+.retailer-account .wishlist .shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 3px 10px;}
+.retailer-account .wishlist .shop_classify .add_classify{background: #007dc6;color: #fff;padding: 3px 10px;border: none;}
 .retailer-apply .page-content>.flow li,.retailer-processing .page-content>.flow li{counter-increment:item;display:block;border-top:1px dashed #dee1e8;float:left;width:33.33333333%;color:#7a7a7a}
 .retailer-apply .page-content>.flow li:last-child,.retailer-processing .page-content>.flow li:last-child{border:none}
 .retailer-apply .page-content>.flow li:before,.retailer-processing .page-content>.flow li:before{content:counter(item);display:block;margin:-.5625em 0 0;font-size:16px;line-height:1.125;width:1.125em;height:1.125em;color:#fff;background:#aaa9a9;text-align:center;border-radius:.5625em;text-indent:0}

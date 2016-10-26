@@ -1,77 +1,71 @@
-<div class="col-xs-9 col-sm-9 col-md-10 wishlist mg-bottom-40">
-    <h3><?php echo $this->translate('After Service'); ?></h3>
-    
-    <div id="scarch_order">
-        <form method="get">
-            <div >
-                <span>订单号:</span>
-                <input type="text" value="" name="order_sn">
-                <span>申请时间:</span>
-                <input type="text" value="" id="apply_time_from" name="apply_time_from"> &ndash; <input type="text" value="" name="apply_time_to" id="apply_time_to">
-                <span>买家:</span>
-                <input type="text" value="" name="buyer_name">
-                <input type="submit" value="搜索" class="btn">
-            </div>
-        </form>
-    </div>
-    <br /><br />
-    
-    <div>
-        <table class="table table-bordered">
-            <tr>
-                <th>售后编号</th>
-                <th>订单号</th>
-                <th>买家</th>
-                <th>售后原因</th>
-                <th>状态</th>
-                <th>申请时间</th>
-            </tr>
-            <tr>
-                <td><span>44444444444</span></td>
-                <td><span>88888888888</span></td>
-                <td>Buyer</td>
-                <td>未收到货</td>
-                <td>处理完成</td>
-                <td>2012-06-08 22:35</td>
-            </tr>
-            <tr>
-                <td align="right" colspan="6">
-                    <div>
-                        <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/afterview')?>">查看订单</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><span>44444444445</span></td>
-                <td><span>88888888889</span></td>
-                <td>Buyer</td>
-                <td>未收到货</td>
-                <td>售后申请</td>
-                <td>2012-06-08 22:35</td>
-            </tr>
-            <tr>
-                <td align="right" colspan="6">
-                    <div>
-                        <button data-toggle="modal" data-target="#modal-refuse">拒绝申请</button>
-                        <button data-toggle="modal" data-target="#modal-agree">同意申请</button>
-                        <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/afterview')?>">查看订单</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <div class="text-right">
-                        <a>共 2 个项目</a>
-                        <a href="#">上一页</a>
-                        <a href="#">1</a>
-                        <span>1 / 1</span>
-                        <a href="#">下一页</a>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    
+<?php
+$after = new \Seahinet\Sales\Model\Collection\Rma;
+$after = $this->getAfterCollection();
+?>
+<div class="col-xs-12 col-sm-12 col-md-12 wishlist mg-bottom-40">
+    <h4><?php echo $this->translate('After Service'); ?><span>(<?php echo count($after); ?>)</span>&nbsp;&nbsp; / &nbsp;&nbsp;
+        <span class="history_after_sale"><a href="#"><?php echo $this->translate('History after Sale Service'); ?></a></span>
+    </h4>
+    <?php
+    if ($after):
+        ?>
+        <div class="after">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-lg-3 col-md-3 text-center">宝贝</th>
+                        <th class="col-lg-2 col-md-2 text-center">售后编号</th>
+                        <th class="col-lg-2 col-md-2 text-center">售后原因</th>
+                        <th class="col-lg-1 col-md-1 text-center">状态</th>
+                        <th class="col-lg-3 col-md-3 text-center">时间</th>
+                        <th class="col-lg-1 col-md-1 text-center">操作</th>
+                    </tr>
+                </thead>
+            </table>
+            <?php
+            foreach ($after as $after1):
+                $customer = new Seahinet\Customer\Model\Customer;
+                
+                $product = new Seahinet\Catalog\Model\Product;
+                $thumbnail= $product->getThumbnail();           
+                ?>
+                <table class="table">
+                    <caption>
+                        <tr>
+                            <td class="col-xs-6 store" colspan="3">
+                                <a href="" target="_blank"><?php echo $customer['username']; ?><span class="fa fa-qq"></span></a>
+                            </td>
+                            <td class="col-xs-6 text-right" colspan="3">
+                                <span class="label">订单号：</span>
+                                <span><?php echo $after1['increment_id'] ?></span>&nbsp;&nbsp;
+                                <span class="list_time"><?php echo date('Y-m-d', strtotime($after1['created_at'])) ?></span>
+                            </td>
+                        </tr>
+                    </caption>
+                    <tbody>
+                        <tr>
+                            <td class="col-lg-3 col-md-3 text-left">
+                                <img class="Thumbnail" src="<?php echo $product->getThumbnail(); ?>" alt="">
+                                <a href="#"><?php echo $product['name']?></a>
+                            </td>
+                            <td class="col-lg-2 col-md-2 text-center"><?php echo $after1['increment_id'] ?></td>
+                            <td class="col-lg-1 col-md-1 text-center"><a href="">换货申请</a></td>
+                            <td class="col-lg-2 col-md-2 text-center"><a href="">买家提出申请</a></td>
+                            <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $after1['created_at'] ?></span>
+                            </td>
+                            <td class="col-lg-1 col-md-1 text-center"><button class="after_bt">取消</button>
+                                <a class="afterview" href="<?php echo $this->getBaseUrl()?>retailer/transaction/afterview">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php
+            endforeach;
+            ?>
+        </div>
+        <?php
+    endif;
+    ?>
     <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -80,7 +74,7 @@
                     <h4 class="modal-title" id="refusedModalLabel">拒绝申请</h4>
                 </div>
                 <div class="modal-body">
-                    <div >
+                    <div>
                         <h1>您确定要拒绝买家的售后申请吗？</h1>
                         <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888889</span></p>
                         <dl>
@@ -96,7 +90,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="modal-agree" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="agreedModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -132,5 +126,4 @@
             </div>
         </div>
     </div>
-    
 </div>

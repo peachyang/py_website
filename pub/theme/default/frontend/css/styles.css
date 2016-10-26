@@ -572,7 +572,7 @@ dl.options dd{float:left;margin-left:4px}
 .shop_classify .fa-plus{padding:0 8px}
 .mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
 .shop_classify .add_class{padding-right:5px;}
-.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 4px 13px;margin:0 15px}
+.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 6px 16px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
@@ -580,7 +580,7 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-40 .category_table{border: 1px solid #eee;}
 .mg-bottom-40 .category_table .table_head{background:#fbfbfb}
 .mg-bottom-40 .category_table .table_head th{padding:5px 0}
-
+.retailer-account .wishlist .checke{padding:5px 0}
 .mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
 .evaluate .down_icon i{font-size:18px;color:#c1c1c1;margin: 0 10px 0 20px;}
 .mg-bottom-40  .class_menu{display:inline-table}
@@ -627,15 +627,15 @@ dl.options dd{float:left;margin-left:4px}
 .statistics-list table{width:100%}
 .statistics-list table tr{border-bottom:1px dashed #ccc}
 .statistics-list table td{padding:5px 0}
-
-.filter-bar{margin:20px 0;background:#fafafa none repeat scroll 0 0;border-bottom:1px solid #cce0e9;padding:8px 0;font-size:13px}
+.filter-bar .soldout{margin:20px 15px}
+.filter-bar{margin:20px 0;background:#fafafa none repeat scroll 0 0;border-bottom:1px solid #cce0e9;padding:10px 0;font-size:13px}
 .filter-bar .form-control{border-color: #eee;border-radius: 0;margin: 0 30px 10px 5px;height:21px;line-height:21px;width:130px;padding:0 .75em}
 .filter-bar select.form-control{padding:0 .42em}
-.filter-bar #receiver_phone{margin-left:-16px}
+.filter-bar #receiver_phone{}
 .filter-bar .form-inline span{margin:0 15px} 
 .filter-bar .form-inline  .commodity li{display: inline-flex;vertical-align: middle;}
-.filter-bar .form-inline  .commodity_btn{margin:16px 0}
-.filter-bar .btn{background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;margin-left:15px;padding:5px 10px;text-decoration:none}
+.filter-bar .form-inline  .commodity_btn{margin:16px 0;padding: 0 15px;}
+.filter-bar .btn{margin:10px 0;background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;padding:5px 10px;text-decoration:none}
 .btn-options{background-color:#fff;border:1px solid #dcdcdc;color:#3c3c3c;font-size:12px;height:24px;line-height:22px}
 .table-title{background:#f9f9f9 none repeat scroll 0 0;border:1px solid #ececec;margin-bottom:5px;text-align:center}
 .table-title td{padding-bottom:8px;padding-top:8px;vertical-align:top}
@@ -910,8 +910,9 @@ dl.options dd{float:left;margin-left:4px}
 .evaluate .down_icon {margin:20px 0 20px 70px}
 .details .table{font-size:13px;color:#7e7f7f}
 .evaluate .details .table .buyer{color:#007dc6}
+.evaluate .details .table td{padding:2px 8px}
 .evaluate .details .table .star{color:#007dc6}
-.evaluate .details .table .price{color:#fc021f}
+.evaluate .details .table .price{color:#fc021f;padding: 5px 0;}
  .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
 .evaluate .down_icon .span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
  .details .table td{border-top:none}
@@ -920,9 +921,10 @@ dl.options dd{float:left;margin-left:4px}
  .details .table .title_img img{border-radius:50px;width:35px}
  .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
  .details .table .title_img  .icon_comment{font-size:22px}
- .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;/* display: table-caption;  */   position: absolute;left: 80px;top: 28px;}
+ .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;/* display: table-caption;  */   position: absolute;left: 80px;top: 24px;}
  .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
  .details .table .border_bt {border-bottom: 3px #eee dotted;}
+  .details .table .bt-time{margin-bottom: 10px;display: inline-block;}     
 .details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
 .details{margin:30px 0;position:relative}
  .details:last-child .border_left{display:none}

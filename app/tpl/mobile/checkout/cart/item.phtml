@@ -8,7 +8,7 @@ $inventory = $item->getInventory();
     <li class="col-xs-1 col-sm-1">
         <input type="checkbox"<?php if ($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
     </li>
-    <li class="col-xs-9 col-sm-9">
+    <li class="col-xs-8 col-sm-8">
         <div class="product-img">
             <a href="<?php echo $item['product']->getUrl() ?>">
                 <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" width="90%" />

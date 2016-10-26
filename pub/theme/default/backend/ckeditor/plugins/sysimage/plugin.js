@@ -16,7 +16,6 @@
             sysimage: {
                 exec: function (editor) {
                     $('#modal-insert').modal('show', editor);
-                    var cname = $(editor).prop('name');
                     $(editor).off('resource.selected').one('resource.selected', function (e, a) {
                         this.insertHtml("<img src='" + $('img', a).attr('src').replace(/resized\/\d+x\d*\//, '') + "'>");
                     });

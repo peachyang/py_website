@@ -140,18 +140,24 @@
                         history.go(1);
                     }
                 }).on('click', '.folder', function () {
-                    $('.resource-explorer .resource-list .item.selected').removeClass('selected');
+                    var p = $(this).parents('.resource-explorer');
+                    $('.resource-list .item.selected', p).removeClass('selected');
                     var oli = document.createElement('li');
                     $(oli).attr({'class': 'item folder new selected', 'data-id': '0', 'data-old-name': ''}).html('<span class="fa fa-folder" aria-hidden="true"></span><span class="filename" contenteditable="true"></span>');
-                    $('.resource-explorer .resource-list .item.folder').last().after(oli);
+                    var l = $('.resource-list .item.folder', p);
+                    if (l.length) {
+                        $(l).last().after(oli);
+                    } else {
+                        $('.resource-list', p).prepend(oli);
+                    }
                     $(oli).children('.filename').focus();
                 }).on('click', '.rename', function () {
-                    $('.resource-explorer .resource-list .item.selected .filename').attr('contenteditable', 'true').attr('data-old-name', function () {
+                    $('.resource-list .item.selected .filename', $(this).parents('.resource-explorer')).attr('contenteditable', 'true').attr('data-old-name', function () {
                         return $(this).text();
                     }).focus();
                 }).on('click', '.delete', function () {
                     var ids = '';
-                    $('.resource-explorer .resource-list .item.selected').each(function () {
+                    $('.resource-list .item.selected', $(this).parents('.resource-explorer')).each(function () {
                         ids += ($(this).is('.folder') ? 'f[]=' : 'r[]=') + $(this).data('id') + '&';
                     });
                     if (ids !== '') {
@@ -168,13 +174,13 @@
                 }).on('change', '[name=desc]', function () {
                     widgetUpload.loadFileList();
                 }).on('click', '.grid', function () {
-                    $('.resource-explorer .resource-list.list').removeClass('list');
+                    $('.resource-list.list', $(this).parents('.resource-explorer')).removeClass('list');
                     if (window.localStorage) {
                         window.localStorage.listMode = 0;
                     }
                     return false;
                 }).on('click', '.list', function () {
-                    $('.resource-explorer .resource-list').addClass('list');
+                    $('.resource-list', $(this).parents('.resource-explorer')).addClass('list');
                     if (window.localStorage) {
                         window.localStorage.listMode = 1;
                     }
@@ -182,7 +188,7 @@
                 }).on('mouseleave', 'menu.context', function () {
                     $(this).fadeOut('fast');
                 }).on('click', 'menu.context a', function () {
-                    $('.resource-explorer .toolbar menu.context').fadeOut('fast');
+                    $('.toolbar menu.context', $(this).parents('.resource-explorer')).fadeOut('fast');
                 });
                 if (window.localStorage && window.localStorage.listMode === '1') {
                     $('.resource-explorer .resource-list').addClass('list');
@@ -193,7 +199,7 @@
                             $(this).removeClass('selected');
                         }
                     } else {
-                        $('.resource-explorer .resource-list [contenteditable]').trigger('blur');
+                        $('.resource-list [contenteditable]', $(this).parents('.resource-explorer')).trigger('blur');
                         $(this).siblings('.selected').removeClass('selected');
                         $(this).addClass('selected');
                         if (!$(this).is('.folder') && $(this).is('#modal-insert .resource-list .item')) {
@@ -233,12 +239,12 @@
                     widgetUpload.loadFileList();
                     return false;
                 }).on('click', '.pager a', function () {
-                    $('.resource-explorer .pager .active').removeClass('active');
+                    $('.active', $(this).parents('.pager')).removeClass('active');
                     $(this).parent('li').addClass('active');
                     widgetUpload.loadFileList();
                     return false;
                 }).on('dblclick', '.item.folder', function () {
-                    $('.resource-explorer .nav a[data-toggle=collapse][href="#resource-category-' + $(this).data('id') + '"]').trigger('click');
+                    $('.nav a[data-toggle=collapse][href="#resource-category-' + $(this).data('id') + '"]', $(this).parents('.resource-explorer')).trigger('click');
                 });
                 $('.resource-explorer').on('mouseenter', '.resource-list:not(.list) .item', function () {
                     var o = this;

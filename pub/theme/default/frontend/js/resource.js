@@ -113,10 +113,11 @@
                 $('.resource-explorer .nav').on('click', 'a[data-toggle=collapse]', function () {
                     if (!$(this).is('.active')) {
                         var flag = $(this).siblings('ul').find('a.active').length;
-                        $('.resource-explorer .nav a.active').removeClass('active');
+                        var p = $(this).parents('.resource-explorer');
+                        $('.nav a.active', p).removeClass('active');
                         $(this).addClass('active');
-                        $('.resource-explorer header .title .folder-name').text($(this).text());
-                        $('.resource-explorer header .buttons-set .btn').attr('data-category', $(this).data('id'));
+                        $('header .title .folder-name', p).text($(this).text());
+                        $('header .buttons-set .btn', p).attr('data-category', $(this).data('id'));
                         widgetUpload.loadFileList();
                         if (flag) {
                             return false;
@@ -148,7 +149,7 @@
                     if (l.length) {
                         $(l).last().after(oli);
                     } else {
-                        $('.resource-list', p).prepend(oli);
+                        $('.resource-list .item:first-child', p).before(oli);
                     }
                     $(oli).children('.filename').focus();
                 }).on('click', '.rename', function () {

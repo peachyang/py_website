@@ -73,7 +73,7 @@ class TransactionController extends AuthActionController
     }
     
     /** 
-    * commentAction  
+    * afterAction  
     * View the comment infomation
     * 
     * @access public 

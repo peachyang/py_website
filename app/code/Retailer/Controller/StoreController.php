@@ -19,10 +19,12 @@ use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
  * 
  */
 class StoreController extends AuthActionController
-{   private $page_types = [
-                '首页'=> 0,
-                '产品详情页' => 2
-                ];
+{
+
+    private $page_types = [
+        '首页' => 0,
+        '产品详情页' => 2
+    ];
 
     public function indexAction()
     {
@@ -35,6 +37,16 @@ class StoreController extends AuthActionController
             $root->getChild('main', true)->setVariable('customer', $customer);
             return $root;
         }
+        return $root;
+    }
+
+    /**
+     * freightAction
+     * show Freight setting
+     */
+    public function freightAction()
+    {
+        $root = $this->getLayout('freight_setting');
         return $root;
     }
 
@@ -122,6 +134,12 @@ class StoreController extends AuthActionController
         return $root;
     }
 
+    public function setupAction()
+    {
+        $root = $this->getLayout('store_setup');
+        return $root;
+    }
+
     public function viewSearchAction()
     {
         $root = $this->getLayout('view_search');
@@ -150,12 +168,12 @@ class StoreController extends AuthActionController
         $root->getChild('main', true)->setVariable('page_types', $this->page_types);
         return $root;
     }
-    
+
     public function decorationCustomizeAction()
-    {	
-    	$template_name = $this->getRequest()->getQuery('template_name');
-    	$id = $this->getRequest()->getQuery('id');
-    	$template_id = $this->getRequest()->getQuery('template_id');
+    {
+        $template_name = $this->getRequest()->getQuery('template_name');
+        $id = $this->getRequest()->getQuery('id');
+        $template_id = $this->getRequest()->getQuery('template_id');
         $root = $this->getLayout('decoration_store_customize');
         $root->getChild('main', true)->setVariable('template_name', $template_name);
         $root->getChild('main', true)->setVariable('template_id', $template_id);
@@ -163,12 +181,13 @@ class StoreController extends AuthActionController
         $root->getChild('main', true)->setVariable('page_types', $this->page_types);
         return $root;
     }
-    
-    public function decorationProductDetailAction(){
-    	$template_name = $this->getRequest()->getQuery('template_name');
-    	$SDViewModel = new SDViewModel;
-    	$template_id = $this->getRequest()->getQuery('template_id');
-    	$id = $SDViewModel->getProductDetailPageID($template_id);
+
+    public function decorationProductDetailAction()
+    {
+        $template_name = $this->getRequest()->getQuery('template_name');
+        $SDViewModel = new SDViewModel;
+        $template_id = $this->getRequest()->getQuery('template_id');
+        $id = $SDViewModel->getProductDetailPageID($template_id);
         $root = $this->getLayout('decoration_store_productdetail');
         $root->getChild('main', true)->setVariable('template_name', $template_name);
         $root->getChild('main', true)->setVariable('template_id', $template_id);
@@ -288,49 +307,51 @@ class StoreController extends AuthActionController
         $view = $storeDecoration->$function_name($dataParam);
         echo json_encode(array('status' => true, 'view' => $view));
     }
-    
-    public function getProductInfoAction(){
-    	$result = ['error' => 0, 'message' => []];
-    	$data = $this->getRequest()->getPost();
-    	
-    	$data['page'] = isset($data['page']) ? $data['page'] : 1;
-    	$data['limit'] = isset($data['limit']) ? $data['limit'] : 20;
-    	
-    	$products = [];
-    	$storeDecoration = new SDViewModel();
-    	$products = $storeDecoration->func_getProductInfo($data);
-    	$result['status'] = 0;
-    	$result['Info'] = $products['data'];
-    	$result['count'] = $products['count'];
-    	$result['AllPage'] = ceil($products['count'] / $data['limit']);
-    	return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
+
+    public function getProductInfoAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+        $data = $this->getRequest()->getPost();
+
+        $data['page'] = isset($data['page']) ? $data['page'] : 1;
+        $data['limit'] = isset($data['limit']) ? $data['limit'] : 20;
+
+        $products = [];
+        $storeDecoration = new SDViewModel();
+        $products = $storeDecoration->func_getProductInfo($data);
+        $result['status'] = 0;
+        $result['Info'] = $products['data'];
+        $result['count'] = $products['count'];
+        $result['AllPage'] = ceil($products['count'] / $data['limit']);
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
-    
-    public function customizeTemplateAddAction(){
-    	$result = ['error' => 0, 'message' => []];
-    	$data = $this->getRequest()->getPost();
-    	$segment = new Segment('customer');
+
+    public function customizeTemplateAddAction()
+    {
+        $result = ['error' => 0, 'message' => []];
+        $data = $this->getRequest()->getPost();
+        $segment = new Segment('customer');
         $r = new Rmodel;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $data['store_id'] = $r['store_id'];
-    	$model = new StoreTemplate();
-    	$template_id = 0;
-    	try {    
-    	    $model->setData($data);
+        $model = new StoreTemplate();
+        $template_id = 0;
+        try {
+            $model->setData($data);
             $model->save();
             $template_id = $model->getId();
         } catch (Exception $e) {
-                $result['error'] = 1;
+            $result['error'] = 1;
         }
 
         $result['status'] = $result['error'];
         $storeDecoration = new SDViewModel();
-        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$data['store_id']);
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $data['store_id']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
-    
     }
 
-    public function customizeTemplateSaveAction(){
+    public function customizeTemplateSaveAction()
+    {
         $result = ['error' => 0, 'message' => []];
         $segment = new Segment('customer');
         $data = $this->getRequest()->getPost();
@@ -357,11 +378,12 @@ class StoreController extends AuthActionController
 
         $result['status'] = $result['error'];
         $storeDecoration = new SDViewModel();
-        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $store_id);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 
-    public function customizeTemplateDeleteAction(){
+    public function customizeTemplateDeleteAction()
+    {
         $result = ['error' => 0, 'message' => []];
         $segment = new Segment('customer');
         $data = $this->getRequest()->getPost();
@@ -385,7 +407,7 @@ class StoreController extends AuthActionController
 
         $result['status'] = $result['error'];
         $storeDecoration = new SDViewModel();
-        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'],$data['page_type'],$store_id);
+        $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $store_id);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 
@@ -494,7 +516,7 @@ class StoreController extends AuthActionController
         }
 
         $storeDecoration = new SDViewModel();
-        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code'],null,$current_template_id,$part_id);
+        $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code'], null, $current_template_id, $part_id);
         $result['status'] = $result['error'];
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }

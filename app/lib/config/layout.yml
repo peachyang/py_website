@@ -78,7 +78,7 @@ frontend:
                         params: [{src:'frontend/js/modernizr.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: [{src:'frontend/js/bootstrap.js',defer:'defer',async:'async'}]
+                        params: frontend/js/bootstrap.js
                     -    
                         method: addScript
                         params: frontend/js/app.js

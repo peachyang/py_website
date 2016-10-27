@@ -2,5 +2,6 @@
 promotion:
     icon: gift
     link: promotion/
+    operation: 'Admin\Promotion::index'
     title: Promotion
     priority: 40

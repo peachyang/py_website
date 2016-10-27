@@ -38,7 +38,7 @@ final class Bootstrap
      * @var Language
      */
     private static $language = null;
-    
+
     /**
      * @var int
      */

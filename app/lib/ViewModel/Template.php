@@ -42,8 +42,8 @@ class Template extends AbstractViewModel
                 }
             }
             $template = BP . 'app/tpl/' . $this->getConfig()[$this->isAdminPage() ?
-                            'theme/backend/' . ($this->isMobile() ? 'mobile_' : '') . 'template' :
-                            'theme/frontend/' . ($this->isMobile() ? 'mobile_' : '') . 'template'] .
+                    'theme/backend/' . ($this->isMobile() ? 'mobile_' : '') . 'template' :
+                    'theme/frontend/' . ($this->isMobile() ? 'mobile_' : '') . 'template'] .
                     DS . $this->getTemplate();
             if ($this->getContainer()->has('renderer')) {
                 $rendered = $this->getContainer()->get('renderer')->render($template, $this);

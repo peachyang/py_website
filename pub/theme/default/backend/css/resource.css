@@ -21,7 +21,7 @@
 .resource-explorer .content header .btn:hover{border-color:#666}
 .resource-explorer .content header .btn .fa{color:#1798d3}
 .resource-explorer .content .toolbar{border-top:1px solid #e3e5ea;border-bottom:1px solid #e3e5ea;line-height:35px;font-size:12px;color:#616161}
-.resource-explorer .content .toolbar .list-inline li{padding-right:5px;vertical-align:top}
+.resource-explorer .content .toolbar .list-inline li{padding-right:5px;vertical-align:top;font-size:12px}
 .resource-explorer .content .toolbar .list-inline li+li{padding-left:5px}
 .resource-explorer .content .toolbar .sort-by{display:inline-block;border:1px solid #e1e3e9;line-height:22px;padding-left:4px;vertical-align:middle}
 .resource-explorer .content .toolbar .sort-by select{border:none;outline:none}
@@ -52,6 +52,7 @@
 .resource-explorer .content .resource-list.list .item .info>.size{width:20%}
 .resource-explorer .content .resource-list.list .item .info>.date{width:50%}
 .resource-explorer .content .resource-list.list .item .info .label,.resource-explorer .content .resource-list.list .item .info .name{display:none}
+.resource-explorer .content .resource-list .pager li{font-size:12px}
 #modal-insert .resource-explorer .toolbar .list-inline{visibility:hidden}
 #modal-insert .modal-content,#modal-upload .modal-content{border-radius:0}
 #modal-upload .modal-header{border-bottom:1px solid #e5e5e5;padding:14px 20px}

@@ -16,7 +16,13 @@ class ResourceController extends AuthActionController
 
     public function indexAction()
     {
-        return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');
+        $data = $this->getRequest()->getQuery('decoration');
+        if (!empty($data)) {
+            $root = $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource_decoration');
+            $root->getChild('main', true)->setVariable('decoration', $data);
+            return $root;
+        } else
+            return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');
     }
 
     public function navAction()
@@ -39,7 +45,7 @@ class ResourceController extends AuthActionController
                         $model = new Model();
                         $model->moveFile($file)
                                 ->setData([
-                                    'store_id' => $retailer ? $retailer->offsetGet('store_id') : (empty($data['store_id']) ? null : $data['store_id']),
+                                    'store_id' => $retailer && $retailer->offsetGet('store_id') ? $retailer->offsetGet('store_id') : (empty($data['store_id']) ? null : $data['store_id']),
                                     'uploaded_name' => $name,
                                     'file_type' => $file->getClientMediaType(),
                                     'category_id' => empty($data['category_id']) ? null : $data['category_id']

@@ -202,7 +202,7 @@ class UploadedFile implements UploadedFileInterface
     {
         return $this->size;
     }
-    
+
     /**
      * @return blooean
      */
@@ -210,5 +210,5 @@ class UploadedFile implements UploadedFileInterface
     {
         return $this->moved;
     }
-    
+
 }

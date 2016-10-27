@@ -16,7 +16,7 @@ class Wrapper extends AbstractViewModel
     {
         try {
             ob_start();
-            foreach($this->getChild() as $child){
+            foreach ($this->getChild() as $child) {
                 echo $child->__toString();
             }
             return ob_get_clean();

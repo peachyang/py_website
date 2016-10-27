@@ -85,7 +85,8 @@ class ShipmentController extends AuthActionController
                     $track = new Track($data['tracking']);
                     $track->setData([
                         'shipment_id' => $shipment->getId(),
-                        'order_id' => $data['order_id']
+                        'order_id' => $data['order_id'],
+                        'track_number' => $data['tracking']['number']
                     ])->save();
                 }
                 $code = (int) !$order->canShip() + (int) !$order->canInvoice();

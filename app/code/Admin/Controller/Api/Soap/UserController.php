@@ -4,7 +4,7 @@ namespace Seahinet\Admin\Controller\Api\Soap;
 
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Api\Model\Soap\SoapUser as Model;
+use Seahinet\Api\Model\Soap\User as Model;
 
 class UserController extends AuthActionController
 {
@@ -36,7 +36,7 @@ class UserController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\SoapUser', ':ADMIN/api_soap_user/list/');
+        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\User', ':ADMIN/api_soap_user/list/');
     }
 
     public function saveAction()

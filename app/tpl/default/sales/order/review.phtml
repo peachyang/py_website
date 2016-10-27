@@ -1,20 +1,38 @@
+<?php
+$ratings = $this->getOrderRating();
+$order = $this->getVariable('model');
+$retailer = $this->getRetailer();
+?>
 <form action="<?php echo $this->getBaseUrl('sales/order/reviewPost/') ?>" method="post">
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <input type="hidden" name="order_id" value="<?php echo $this->getVariable('model')->getId() ?>" />
-    <div class="fieldset">
-        <?php if (count($this->getOrderRating())): ?>
-            <?php foreach ($this->getOrderRating() as $rating): ?>
-                <div class="input-box">
-                    <label class="control-label"><?php echo $this->translate($rating['title']) ?></label>
-                    <div class="cell">
-                        <?php for ($i = 5; $i > 0; $i--): ?>
-                            <input type="radio" name="rating[0][<?php echo $rating['id'] ?>]" hidden id="rating-0-<?php echo $rating['id'], '-', $i ?>" value="<?php echo $i ?>" />
-                            <label for="rating-0-<?php echo $rating['id'], '-', $i ?>"><span class="sr-only"><?php echo $i ?></span></label>
-                        <?php endfor ?>
-                    </div>
+    <table class="table-no-border table review-form">
+        <tr>
+            <th<?php if (count($ratings) === 0): ?> colspan="2"<?php endif ?> class="store text-center">
+                <div class="profile">
+                    <img src="<?php echo (!empty($retailer['profile']) ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png')) ?>" alt="" />
                 </div>
-            <?php endforeach ?>
-        <?php endif ?>
+                <div class="info">
+                    <h3 class="name"><?php echo $order->getStore()->offsetGet('name') ?></h3>
+                    <p class="description"><?php echo $retailer['description'] ?? '' ?></p>
+                </div>
+            </th>
+            <?php if (count($ratings)): ?>
+                <td>
+                    <?php foreach ($ratings as $rating): ?>
+                        <div class="input-box">
+                            <label class="control-label"><?php echo $this->translate($rating['title']) ?></label>
+                            <div class="cell">
+                                <?php for ($i = 5; $i > 0; $i--): ?>
+                                    <input type="radio" name="rating[0][<?php echo $rating['id'] ?>]" hidden id="rating-0-<?php echo $rating['id'], '-', $i ?>" value="<?php echo $i ?>" />
+                                    <label for="rating-0-<?php echo $rating['id'], '-', $i ?>"><span class="sr-only"><?php echo $i ?></span></label>
+                                <?php endfor ?>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </td>
+            <?php endif ?>
+        </tr>
         <?php
         foreach ($this->getVariable('model')->getItems() as $item):
             $product = $item['product'];
@@ -26,8 +44,8 @@
                 </div>
                 <div class="cell">
                     <div class="col-xs-12 col-sm-4">
+                        <h4 class="product-name"><?php echo $product['name'] ?></h4>
                         <?php
-                        echo $product['name'];
                         $options = json_decode($item['options'], true);
                         if ($item['product_id'] && count($options)):
                             ?>
@@ -50,11 +68,7 @@
                             </dl>
                         <?php endif; ?>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <label for="review-<?php echo $product->getId() ?>"></label>
-                        <textarea name="review[<?php echo $product->getId() ?>]" class="form-control required" id="review-<?php echo $product->getId() ?>"></textarea>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-3">
                         <div class="fieldset">
                             <?php foreach ($this->getProductRating() as $rating): ?>
                                 <div class="input-box">
@@ -63,17 +77,22 @@
                                         <?php for ($i = 5; $i > 0; $i--): ?>
                                             <input type="radio" name="rating[<?php echo $product->getId() ?>][<?php echo $rating['id'] ?>]" hidden id="rating-<?php echo $product->getId(), '-', $rating['id'], '-', $i ?>" value="<?php echo $i ?>" />
                                             <label for="rating-<?php echo $product->getId(), '-', $rating['id'], '-', $i ?>"><span class="sr-only"><?php echo $i ?></span></label>
-                                            <?php endfor ?>
+                                        <?php endfor ?>
                                     </div>
                                 </div>
                             <?php endforeach ?>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-5">
+                        <label for="review-<?php echo $product->getId() ?>"></label>
+                        <textarea name="review[<?php echo $product->getId() ?>]" class="form-control required" id="review-<?php echo $product->getId() ?>"></textarea>
+                    </div>
                 </div>
             </div>
         <?php endforeach ?>
-    </div>
-    <div class="buttons-set">
-        <button type="submit" class="btn btn-theme"><?php echo $this->translate('Submit') ?></button>
-    </div>
+        </div>
+        <div class="buttons-set">
+            <button type="submit" class="btn btn-theme"><?php echo $this->translate('Submit') ?></button>
+        </div>
+    </table>
 </form>

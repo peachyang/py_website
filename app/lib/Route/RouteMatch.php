@@ -36,7 +36,7 @@ class RouteMatch implements ArrayAccess
      */
     public function getRequest()
     {
-        return $this->request? : new Request;
+        return $this->request ?: new Request;
     }
 
     /**

@@ -31,7 +31,7 @@ $filter = $this->getVariable('filter');
                             <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
                         </select>
                     </li>
-                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input class=" form-time small-text col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from">-<input class="form-time small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
+                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input id="form-time" class="form-control small-text col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"><input id="form-time" class="form-control  small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
                     <div class="commodity_btn">
                     <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
                         &nbsp;&nbsp; <button class="btn">搜 索</button>
@@ -47,6 +47,9 @@ $filter = $this->getVariable('filter');
     <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
    <hr class="seperation">
     <div class="products-content">
+    	<div class="table-responsive">
+    	
+    	
         <table class="table table-title">
             <tr>
                 <td style="width: 45%;">商品名称</td>
@@ -66,11 +69,12 @@ $filter = $this->getVariable('filter');
                 </td>
             </tr>
         </table>
+       </div>
         <div class="clearfix mg-bottom-10"></div>
         <?php
         foreach ($sales_products as $sales_product) {
             ?>
-            <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
+            <div class="transaction-list-sales table-responsive" data-id="<?php echo $sales_product['id']; ?>">
                 <table class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
@@ -128,7 +132,7 @@ $filter = $this->getVariable('filter');
         }
         ?>
 
-        <div>
+        <div class="table-responsive">
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">
                     <td  style="text-align: left;" >

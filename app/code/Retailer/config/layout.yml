@@ -66,31 +66,34 @@ retailer_account:
                                 params: [{link:'retailer/store/view/',label:'View Store',priority:8,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:9,group:'Store Management'}]
+                                params: [{link:'retailer/store/freight/',label:'Freight Setting',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/resource/',label:'Resource Management',priority:10,group:'Store Management'}]
+                                params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:10,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/mobile/',label:'Mobile Phone Store',priority:11,group:'Store Management'}]
+                                params: [{link:'retailer/resource/',label:'Resource Management',priority:11,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/cotegory/',label:'Product Category',priority:12,group:'Store Management'}]
+                                params: [{link:'retailer/store/mobile/',label:'Mobile Phone Store',priority:12,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/setting/',label:'Store Settings',priority:13,group:'Store Management'}]
+                                params: [{link:'retailer/store/cotegory/',label:'Product Category',priority:13,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:14,group:'Store Management'}]
+                                params: [{link:'retailer/store/setting/',label:'Store Settings',priority:14,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:15,group:'Marketing Center'}]
+                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:15,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:16,group:'Marketing Center'}] 
+                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:16,group:'Marketing Center'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:17,group:'Marketing Center'}] 
+                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:17,group:'Marketing Center'}] 
+                            -
+                                method: addLink
+                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:18,group:'Marketing Center'}] 
                     messages:
                         action:
                             -
@@ -489,6 +492,20 @@ retailer_brand:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/brand
+freight_setting:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Freight Setting
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/freight
 retailer_activity:
     update: retailer_account
     root:

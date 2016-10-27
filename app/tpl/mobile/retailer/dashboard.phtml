@@ -2,7 +2,7 @@
 $customer = $this->getVariable('customer');
 $logviewlist = $this->getVariable('log_view_list');
 ?>
-<div class="dashboard">
+<div class="dashboard account-bg">
   <div class="profile clearfix">
     <div class="head_pic">
 
@@ -50,7 +50,7 @@ $logviewlist = $this->getVariable('log_view_list');
         </div>
     </div>
 </div>
-				
+<div class="myorder-cont">	
 <div class="myorder">
 	<div class="panel-heading" onclick="i_btn($(this))">
 		<h3 class="panel-title">
@@ -63,38 +63,43 @@ $logviewlist = $this->getVariable('log_view_list');
 		</h3>
 	</div>
 	<div class="Management-menu">
-		<div class="panel-heading panel-menu">
+	
+		<div class="panel-heading panel-menu" >
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/product/">
 			<h3 class="panel-title">
 				<span>
 					<?php echo $this->
 						translate('Has sold the baby') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/product/" class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
+				<i class="fa fa-chevron-right pull-right" aria-hidden="true">
+				</i>
 			</h3>
+		</a>	
 		</div>
-		<div class="panel-heading panel-menu">
+	
+	<div class="panel-heading panel-menu">
+	<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/comment/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Comment Management') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/comment/" class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
+				 <i class="fa fa-chevron-right pull-right"></i>
+				
 			</h3>
+		</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/after/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('After Service') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/after/" class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
+				<i class="fa fa-chevron-right pull-right">
+				</i>
 			</h3>
+			</a>
 		</div>
 	</div>
 </div>
@@ -112,48 +117,55 @@ $logviewlist = $this->getVariable('log_view_list');
 	</div>
 	<div class="Management-menu">
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/product/release/">
 			<h3 class="panel-title">
 				<span>
 					<?php echo $this->
 						translate('Release Product') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/product/release/" class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
+				<i class="fa fa-chevron-right pull-right"></i>
 			</h3>
+		</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/product/sales/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Sales of Product') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/product/sales/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+		</a>	
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/product/stock/">
 			<h3 class="panel-title" >
 				<span>
 					<?php echo $this->
 						translate('Stock') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/product/stock/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+		</a>	
 		</div>
 		<div class="panel-heading panel-menu">
+			<a href="<?php echo $this->getBaseUrl() ?>retailer/product/history/">
+				
 			<h3 class="panel-title" >
 				<span>
 					<?php echo $this->
 						translate('History Record') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/product/history/" class="fa fa-chevron-right text-right"
+				<i  class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+		</a>	
 		</div>
 	</div>
 </div>
@@ -169,82 +181,85 @@ $logviewlist = $this->getVariable('log_view_list');
 		</h3>
 	</div>
 	<div class="Management-menu">
-		<div class="panel-heading panel-menu">
+	
+	<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/view/">
 			<h3 class="panel-title">
 				<span>
 					<?php echo $this->
 						translate('View Store') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/view/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/freight/">
+			<h3 class="panel-title">
+				<span>
+					<?php echo $this->
+						translate('Freight Setting') ?>
+				</span>
+				<i class="fa fa-chevron-right pull-right"
+				aria-hidden="true">
+				</i>
+			</h3>
+			</a>
+		</div>
+
+		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/mobile/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
-						translate('Store Decoration') ?>
+						translate('Mobile Phone Store') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/decorationList " class="fa fa-chevron-right text-right"
+				<i  class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
-			<h3 class="panel-title" onclick="">
-				<span>
-					<?php echo $this->
-						translate('Photo Space') ?>
-				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/resource/ " class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
-			</h3>
-		</div>
-		<div class="panel-heading panel-menu">
-			<h3 class="panel-title" onclick="">
-				<span>
-					<?php echo $this->
-						translate('Photo Space') ?>
-				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/mobile/" class="fa fa-chevron-right text-right"
-				aria-hidden="true">
-				</a>
-			</h3>
-		</div>
-		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/cotegory/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Product Category') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/cotegory/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/setting/ ">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Store Settings') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/setting/ " class="fa fa-chevron-right text-right"
+				<i  class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/store/brand/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Brand Management') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/store/brand/" class="fa fa-chevron-right text-right"
+				<i  class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 	</div>
 </div>
@@ -261,40 +276,47 @@ $logviewlist = $this->getVariable('log_view_list');
 	</div>
 	<div class="Management-menu">
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/activity/">
 			<h3 class="panel-title">
 				<span>
 					<?php echo $this->
 						translate('Activity Registration') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/activity/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/promotion/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Promotion Management') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/promotion/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 		<div class="panel-heading panel-menu">
+		<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/relationship/">
 			<h3 class="panel-title" onclick="">
 				<span>
 					<?php echo $this->
 						translate('Member Relationship Management') ?>
 				</span>
-				<a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/relationship/" class="fa fa-chevron-right text-right"
+				<i class="fa fa-chevron-right pull-right"
 				aria-hidden="true">
-				</a>
+				</i>
 			</h3>
+			</a>
 		</div>
 	</div>
-</div>				
+</div>	
+</div>			
 <div class="profile-foot">
     <ul class="col-xs-12 col-sm-12">
         <li class="col-xs-3 col-sm-3 text-center">

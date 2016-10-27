@@ -16,8 +16,16 @@ class ResourceController extends AuthActionController
 
     public function indexAction()
     {
-        return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');
-    }
+    	$data = $this->getRequest()->getQuery('decoration');	
+    	if(!empty($data))
+		{   
+        	$root = $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource_decoration');
+			$root->getChild('main', true)->setVariable('decoration', $data);
+			return $root;
+		}
+		else
+			return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');	
+	}
 
     public function navAction()
     {

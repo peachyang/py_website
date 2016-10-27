@@ -445,6 +445,43 @@ retailer_resource:
                     modal:
                         type: Seahinet\Retailer\ViewModel\Resource\Modal
                         template: resource/upload
+
+retailer_resource_decoration:
+    update: frontend
+    root:
+        template: page/empty
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Resource Management
+                    -
+                        method: addLink
+                        params: frontend/css/resource.css
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: [{src:"frontend/js/resource.js",defer:"defer"}]
+                    -
+                        method: addScript
+                        params: frontend/dragResource/editor/dialogs/internal.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                        template: resource/explorer
+            extra:
+                children:
+                    modal:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: resource/upload
+
 retailer_resource_nav:
     update: frontend
     root:

@@ -558,7 +558,7 @@ sales_order_creditmemo:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: sales/order/content/creditmemo
 sales_order_inquire:
-    update: customer_account
+    update: frontend
     root:
         children:
             content:

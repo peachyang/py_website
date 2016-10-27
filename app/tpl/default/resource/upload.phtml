@@ -1,7 +1,9 @@
 <?php
 $stores = $this->getStore();
+
+$decoration = $this->getQuery('decoration');
 ?>
-<div class="modal fade" id="modal-upload" tabindex="-1" data-keyboard="false">
+<div class="modal fade" id="modal-upload" tabindex="-1" data-keyboard="false" >
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="upload-form" class="form-inline" action="<?php echo $this->getSubmitUrl() ?>" method="post" enctype="multipart/form-data">
@@ -12,7 +14,7 @@ $stores = $this->getStore();
                     </button>
                     <h4 class="modal-title" id="resource-modal-label"><?php echo $this->translate('Upload Resource') ?></h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" <?php echo $decoration=="1" ? "style='min-height:300px'" : "" ?> >
                     <nav class="nav">
                         <?php echo $this->getChildrenCategories() ?>
                     </nav>

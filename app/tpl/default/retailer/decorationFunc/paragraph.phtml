@@ -51,7 +51,7 @@ UE.registerUI('dialog',function(editor,uiName){
     //创建dialog
     var dialog = new UE.ui.Dialog({
   
-        iframeUrl:'customizeDialogPage.html',
+        iframeUrl:'<?php echo $this->getBaseUrl('/retailer/resource/?decoration=1')?>',
 
         editor:editor,
 
@@ -60,7 +60,7 @@ UE.registerUI('dialog',function(editor,uiName){
         title:"图片管理",
 
 
-        cssRules:"width:900px;height:439px;",
+        cssRules:"width:900px;height:450px;",
 
 
         buttons:[
@@ -86,7 +86,7 @@ UE.registerUI('dialog',function(editor,uiName){
         name:'dialogbutton' + uiName,
         title:'图片管理',
 
-        cssRules :'background-position: -725px -77px;',
+        cssRules :'background-position: -380px 0px;',
         onclick:function () {
             //渲染dialog
             dialog.render();
@@ -95,7 +95,7 @@ UE.registerUI('dialog',function(editor,uiName){
     });
 
     return btn;
-},[73]);	
+},[74]);	
 	
 </script>
 

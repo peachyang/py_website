@@ -151,6 +151,9 @@ admin_catalog_category_edit:
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addScript
                         params: backend/js/jquery.ui/core.js
                     -
                         method: addScript
@@ -166,7 +169,16 @@ admin_catalog_category_edit:
                         params: backend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/config.js
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
+                    -
+                        method: addScript
+                        params: backend/js/resource.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
             content:
                 children:
                     breadcrumb:
@@ -188,9 +200,16 @@ admin_catalog_category_edit:
                                         params: General
             extra:
                 children:
-                    modal:
+                    insert:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
-                        template: resource/modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 admin_catalog_product_list:
     update: grid
     root:
@@ -252,6 +271,9 @@ admin_catalog_product_edit:
                         params: [{src:'backend/js/modal.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
+                        params: backend/js/collapse.js
+                    -
+                        method: addScript
                         params: backend/js/jquery.ui/core.js
                     -
                         method: addScript
@@ -267,10 +289,19 @@ admin_catalog_product_edit:
                         params: backend/js/jquery.fileupload/core.js
                     -
                         method: addScript
-                        params: backend/js/jquery.fileupload/config.js
+                        params: backend/js/jquery.ui/draggable.js
+                    -
+                        method: addScript
+                        params: backend/js/jquery.ui/droppable.js
+                    -
+                        method: addScript
+                        params: backend/js/resource.js
                     -
                         method: addScript
                         params: backend/js/product.js
+                    -
+                        method: addLink
+                        params: backend/css/resource.css
                     -
                         method: addLink
                         params: backend/css/jquery-ui.min.css
@@ -386,9 +417,16 @@ admin_catalog_product_edit:
                                         template: admin/catalog/product/additional
             extra:
                 children:
-                    modal:
+                    insert:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
-                        template: resource/modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        template: resource/upload
 admin_catalog_attribute_list:
     update: grid
     root:

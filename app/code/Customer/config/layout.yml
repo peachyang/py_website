@@ -76,7 +76,7 @@ customer_account_dashboard:
                                 type: Seahinet\Customer\ViewModel\Dashboard\Order
                                 template: customer/dashboard/order
                             coupon:
-                                type: Seahinet\Customer\ViewModel\Dashboard\Coupon
+                                type: Seahinet\Customer\ViewModel\Coupon
                                 template: customer/dashboard/coupon
 customer_account_edit:
     update: customer_account
@@ -155,8 +155,8 @@ customer_account_coupon:
                         type: Seahinet\Lib\ViewModel\Wrapper
                         children:
                             coupon:
-                                type: Seahinet\Customer\ViewModel\Dashboard\Coupon
-                                template: customer/dashboard/coupon_1
+                                type: Seahinet\Customer\ViewModel\Coupon
+                                template: customer/coupon
     
 customer_wishlist:
     update: customer_account

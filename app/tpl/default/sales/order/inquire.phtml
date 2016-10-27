@@ -1,115 +1,114 @@
 <?php
 $inquireies = $this->getInquireies();
 ?>
-<div class="main_article_content text-center">
+<div class="container main_article_content text-center">
     <div class="columns">
-        <p>输入你的订单号和账单地址的电子邮箱来查找你的订单。</p>
+        <h3><?php echo $this->translate('Order Inquire'); ?></h3>
+        <p><?php echo $this->translate('Enter your order number and billing address to find your order.'); ?></p>
         <form action="<?php echo $this->getBaseUrl() ?>sales/inquire/inquire/" id="orderStatusForm" method="post" novalidate="novalidate">
-            <fieldset><label class="text-left" for="orderNumber">订单号:</label><br />
+            <fieldset><label class="text-left" for="orderNumber"><?php echo $this->translate('Order Number'); ?>:</label><br />
                 <input class="required" data-required="true" id="increment_id" name="increment_id" type="text" />
-                <div class="error hidden" data-form-error="true">请输入订单号！</div>
             </fieldset>
 
-            <fieldset><label class="text-left" for="zipEmail">账单地址的电子邮箱 （支付宝订单请使用配送地址邮箱）:</label><br />
+            <fieldset><label class="text-left" for="zipEmail"><?php echo $this->translate('Billing Address Email'); ?>:</label><br />
                 <input class="required" data-required="true" id="email" name="email" type="text" />
-                <div class="error hidden" data-form-error="true">请输入账单地址的电子邮箱！</div>
             </fieldset>
-            <p class="margin-top-30"><button class="button-pink status-submit" type="submit">查找</button></p>
+            <p class="margin-top-30"><button class="button-pink status-submit" type="submit"><?php echo $this->translate('Search') ?></button></p>
         </form>
     </div>
-    
+
     <div class="order-list">
-        <?php if(count($inquireies)): ?>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="text-left"><?php echo $this->translate('Product(s)') ?></th>
-                    <th class="text-center"><?php echo $this->translate('Price') ?></th>
-                    <th class="text-center"><?php echo $this->translate('Qty') ?></th>
-                    <th class="text-center"><?php echo $this->translate('Total') ?></th>
-                    <th class="text-center"><?php echo $this->translate('Action') ?></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($inquireies as $inquire): ?>  
-                    <tr class="thead_title">
-                        <td colspan="2" class="text-left"><?php echo $inquire->getStore()->offsetGet('name') ?></td>
-                        <td colspan="3" class="text-nowrap text-right"><?php echo $this->translate('Order ID'), ': ', $inquire->offsetGet('increment_id') ?></td>
-                        <td class="text-nowrap text-right"><?php echo date('Y-m-d', strtotime($inquire->offsetGet('created_at'))) ?></td>
+        <?php if (count($inquireies)): ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center"><?php echo $this->translate('Product(s)') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Price') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Qty') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Total') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Action') ?></th>
                     </tr>
+                </thead>
+                <tbody>
                     <?php
-                    $items = $inquire->getItems();
-                    $flag = true;
-                    foreach ($items as $item):
-                        $product = $item['product'];
-                        $thumbnail = $product->getThumbnail();
-                        ?>
-                        <tr class="thead_body">
-                            <td class="col-md-1">
-                                <img src="<?php echo strpos($thumbnail, '://') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
-                            </td>
-                            <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
-                                <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>
-                                <?php
-                                $options = json_decode($item['options'], true);
-                                if ($item['product_id'] && count($options)):
-                                    ?>
-                                    <dl class="options">
+                    foreach ($inquireies as $inquire):
+                        if ($inquire->getShippingAddress()['email'] === $_POST['email']):
+                            ?>  
+                            <tr class="thead_title">
+                                <td colspan="2" class="text-left"><?php echo $inquire->getStore()->offsetGet('name') ?></td>
+                                <td colspan="3" class="text-nowrap text-right"><?php echo $this->translate('Order ID'), ': ', $inquire->offsetGet('increment_id') ?></td>
+                                <td class="text-nowrap text-right"><?php echo date('Y-m-d', strtotime($inquire->offsetGet('created_at'))) ?></td>
+                            </tr>
+                            <?php
+                            $items = $inquire->getItems();
+                            $flag = true;
+                            foreach ($items as $item):
+                                $product = $item['product'];
+                                $thumbnail = $product->getThumbnail();
+                                ?>
+                                <tr class="thead_body">
+                                    <td class="col-md-1">
+                                        <img src="<?php echo strpos($thumbnail, '://') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
+                                    </td>
+                                    <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
+                                        <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>
                                         <?php
-                                        foreach ($product->getOptions() as $option):
-                                            if (isset($options[$option->getId()])):
-                                                ?>
-                                                <dt><?php echo $option['title'] ?></dt>
-                                                <dd>
-                                                    <?php
-                                                    echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                                            $option->getValue($options[$option->getId()]) : $options[$option->getId()])
-                                                    ?>
-                                                </dd>
+                                        $options = json_decode($item['options'], true);
+                                        if ($item['product_id'] && count($options)):
+                                            ?>
+                                            <dl class="options">
                                                 <?php
-                                            endif;
-                                        endforeach;
-                                        ?>
-                                    </dl>
-                                <?php endif; ?>
-                            </td>
-                            <td><?php echo $inquire->getCurrency()->format($item->offsetGet('price')) ?></td>
-                            <td><?php echo (float) $item->offsetGet('qty') ?></td>
-                            <?php if ($flag): ?>
-                                <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue">
-                                    <?php echo $inquire->getCurrency()->format($inquire->offsetGet('total')) ?><p><?php echo $this->translate('(Including Shipping Fee: %s)', [$inquire->getCurrency()->format($inquire->offsetGet('shipping'))]) ?></p>
+                                                foreach ($product->getOptions() as $option):
+                                                    if (isset($options[$option->getId()])):
+                                                        ?>
+                                                        <dt><?php echo $option['title'] ?></dt>
+                                                        <dd>
+                                                            <?php
+                                                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                                    $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                            ?>
+                                                        </dd>
+                                                        <?php
+                                                    endif;
+                                                endforeach;
+                                                ?>
+                                            </dl>
+                <?php endif; ?>
+                                    </td>
+                                    <td><?php echo $inquire->getCurrency()->format($item->offsetGet('price')) ?></td>
+                                    <td><?php echo (float) $item->offsetGet('qty') ?></td>
+                                        <?php if ($flag): ?>
+                                        <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue">
+                    <?php echo $inquire->getCurrency()->format($inquire->offsetGet('total')) ?><p><?php echo $this->translate('(Including Shipping Fee: %s)', [$inquire->getCurrency()->format($inquire->offsetGet('shipping'))]) ?></p>
 
-                                </td>
-                                <td rowspan="<?php echo count($items) ?>">
-                                    <?php if ($inquire->canRefund()): ?>
-                                        <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $inquire->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
-                                        <br>
-                                    <?php endif ?>
-                                    <?php if ($inquire->canReview()): ?>
-                                        <p><a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
+                                        </td>
+                                        <td rowspan="<?php echo count($items) ?>">
+                    <?php if ($inquire->canRefund()): ?>
+                                                <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $inquire->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
+                                                <br>
+                                            <?php endif ?>
+                    <?php if ($inquire->canReview()): ?>
+                                                <p><a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
 
-                                    <?php endif ?>
-                                    <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
-                                </td>
-                                <?php
-                                $flag = false;
-                            endif;
-                            ?>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php else :
-        ?>
-        <table class="table">
-            <tr>
-                <td colspan="6" class="text-center"><?php $this->translate('No order for you to check, please confirm the order information!');?></td>
-            </tr>
-        </table>
-        <?php
+                    <?php endif ?>
+                                            <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
+                                        </td>
+                                        <?php
+                                        $flag = false;
+                                    endif;
+                                    ?>
+                                </tr>
+                            <?php endforeach; ?>
+        <?php else : ?>
+                            <tr>
+                                <td colspan="6"><?php echo $this->translate('No order for you to check, please confirm the order information!'); ?></td>
+                            </tr>    
+                        <?php endif; ?>
+    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php
         endif;
-?>
+        ?>
     </div>
 </div>

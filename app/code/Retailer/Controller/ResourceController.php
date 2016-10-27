@@ -16,8 +16,16 @@ class ResourceController extends AuthActionController
 
     public function indexAction()
     {
-        return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');
-    }
+    	$data = $this->getRequest()->getQuery('decoration');	
+    	if(!empty($data))
+		{   
+        	$root = $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource_decoration');
+			$root->getChild('main', true)->setVariable('decoration', $data);
+			return $root;
+		}
+		else
+			return $this->getLayout($this->getRequest()->isXmlHttpRequest() ? 'retailer_resource_list' : 'retailer_resource');	
+	}
 
     public function navAction()
     {
@@ -66,12 +74,13 @@ class ResourceController extends AuthActionController
                 $data['f'] = [];
             }
             if ($result['error'] === 0) {
+                $storeId = (new Segment('customer'))->get('customer')->getRetailer()->offsetGet('store_id');
                 try {
                     $path = BP . Model::$options['path'];
                     foreach ((array) $data['r'] as $id) {
                         $model = new Model;
                         $model->load($id);
-                        if ($model->getId()) {
+                        if ($model->getId() && $model->offsetGet('store_id') == $storeId) {
                             $type = $model->offsetGet('file_type');
                             $collection = new Collection;
                             $collection->where(['md5' => $model['md5']])
@@ -84,7 +93,10 @@ class ResourceController extends AuthActionController
                     }
                     foreach ((array) $data['f'] as $id) {
                         $model = new Category;
-                        $model->setId($id)->remove();
+                        $model->load($id);
+                        if ($model->getId() && $model->offsetGet('store_id') == $storeId) {
+                            $model->remove();
+                        }
                     }
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

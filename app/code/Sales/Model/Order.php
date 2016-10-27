@@ -336,6 +336,8 @@ class Order extends AbstractModel
     {
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
+        } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && $this->getStatus()->offsetGet('is_default') !== 0) {
+            return false;
         }
         $memos = $this->getCreditMemo();
         $qty = $this->getQty();
@@ -358,9 +360,9 @@ class Order extends AbstractModel
                     ->limit(1)
             ->where->notEqualTo('status_id', $this->storage['status_id']);
             $user = new Segment('admin');
-            if($user->get('user')){
+            if ($user->get('user')) {
                 $userId = $user->get('user')->getId();
-            }else{
+            } else {
                 $userId = null;
             }
             if (count($history)) {

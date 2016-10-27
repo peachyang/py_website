@@ -3,17 +3,21 @@ permissions:
     children:
 #        -
 #            link: api_soap_user/
+#            operation: 'Admin\Api\Soap\User::index'
 #            title: SOAP/RPC - User
 #            priority: 60
 #        -
 #            link: api_soap_role/
+#            operation: 'Admin\Api\Soap\Role::index'
 #            title: SOAP/RPC - Role
 #            priority: 61
         -
             link: api_rest_role/
+            operation: 'Admin\Api\Rest\Role::index'
             title: REST - Role
             priority: 70
         -
             link: api_rest_attribute/
+            operation: 'Admin\Api\Rest\Attribute::index'
             title: REST - Attributes
             priority: 71

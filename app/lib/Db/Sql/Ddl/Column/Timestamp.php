@@ -4,14 +4,16 @@ namespace Seahinet\Lib\Db\Sql\Ddl\Column;
 
 use Zend\Db\Sql\Ddl\Column\AbstractTimestampColumn;
 
-class Timestamp extends AbstractTimestampColumn {
+class Timestamp extends AbstractTimestampColumn
+{
 
     /**
      * @var string
      */
     protected $type = 'TIMESTAMP';
 
-    public function getExpressionData() {
+    public function getExpressionData()
+    {
         $spec = $this->specification;
 
         $params = [];

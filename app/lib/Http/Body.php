@@ -8,5 +8,5 @@ namespace Seahinet\Lib\Http;
  */
 class Body extends Stream
 {
-
+    
 }

@@ -2,5 +2,6 @@
 retailer:
     icon: university
     link: retailer_apply/
+    operation: 'Admin\Retailer\Apply::index'
     title: Retailer Application
     priority: 70

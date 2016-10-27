@@ -49,12 +49,12 @@ abstract class AbstractHandler
                 if (!isset($record['id']) || !$record['id']) {
                     continue;
                 }
-                $languageId = $record['language_varchar']? : (
-                        $record['language_int']? : (
-                                $record['language_decimal']? : (
-                                        $record['language_text']? :
-                                                $record['language_datetime']
-                                        )));
+                $languageId = $record['language_varchar'] ?: (
+                        $record['language_int'] ?: (
+                        $record['language_decimal'] ?: (
+                        $record['language_text'] ?:
+                        $record['language_datetime']
+                        )));
                 if (!$languageId) {
                     continue;
                 }
@@ -72,12 +72,12 @@ abstract class AbstractHandler
                     }
                 }
                 if ($record['attr']) {
-                    $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar']? : (
-                            $record['value_int']? : (
-                                    $record['value_decimal']? : (
-                                            $record['value_text']? :
-                                                    $record['value_datetime']
-                                            )));
+                    $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar'] ?: (
+                            $record['value_int'] ?: (
+                            $record['value_decimal'] ?: (
+                            $record['value_text'] ?:
+                            $record['value_datetime']
+                            )));
                 }
             }
             $languages = new Language;

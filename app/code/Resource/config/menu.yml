@@ -3,5 +3,6 @@ cms:
     children:
         -
             link: 'resource_resource/'
+            operation: 'Admin\Resource\Resource::index'
             title: Resource Management
             priority: 30

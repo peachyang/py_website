@@ -28,7 +28,7 @@ class Breadcrumb extends Template
         }
         return $this->showLabel;
     }
-    
+
     /**
      * Get/Set whether the home link shown or not
      * 

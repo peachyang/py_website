@@ -3,29 +3,31 @@
 namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-class SoapRole extends PEdit 
+
+class SoapRole extends PEdit
 {
-    public function getTitle() 
+
+    public function getTitle()
     {
-        
         return $this->getQuery('id') ? 'Edit SOAP Role' : 'Add New SOAP Role';
-        
     }
-    public function getSaveUrl() 
+
+    public function getSaveUrl()
     {
-        
         return $this->getAdminUrl('api_soap_role/save/');
-        
     }
-    public function getDeleteUrl() {
-        
+
+    public function getDeleteUrl()
+    {
         $model = $this->getVariable('model');
-        if($model && $model->getId()) {
+        if ($model && $model->getId()) {
             return $this->getAdminUrl('api_soap_role/delete/');
         }
         return FALSE;
     }
-    protected function prepareElements($columns = []) {
+
+    protected function prepareElements($columns = [])
+    {
         $columns = [
             'id' => [
                 'type' => 'hidden'
@@ -33,14 +35,14 @@ class SoapRole extends PEdit
             'csrf' => [
                 'type' => 'csrf'
             ],
-             'name' => [
+            'name' => [
                 'type' => 'text',
                 'label' => 'Name',
                 'required' => 'required',
                 'attrs' => [
                     'spellcheck' => 'false'
                 ]
-            ],          
+            ],
             'crpassword' => [
                 'type' => 'password',
                 'label' => 'Current Password',
@@ -52,6 +54,7 @@ class SoapRole extends PEdit
                 ]
             ],
         ];
-        return parent::prepareElements($columns);  //ruturn peach_add
+        return parent::prepareElements($columns);
     }
+
 }

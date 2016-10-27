@@ -314,7 +314,7 @@ class Order extends AbstractModel
         }
         $collection = new Review;
         $collection->where(['order_id' => $this->getId()]);
-        return (bool) $collection->count();
+        return $collection->count() === 0;
     }
 
     public function canShip()

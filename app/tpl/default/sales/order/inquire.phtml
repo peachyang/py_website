@@ -33,7 +33,7 @@ $inquireies = $this->getInquireies();
                     <?php
                     foreach ($inquireies as $inquire):
                         if ($inquire->getShippingAddress()['email'] === $_POST['email']):
-                            ?>  
+                            ?>                            
                             <tr class="thead_title">
                                 <td colspan="2" class="text-left"><?php echo $inquire->getStore()->offsetGet('name') ?></td>
                                 <td colspan="3" class="text-nowrap text-right"><?php echo $this->translate('Order ID'), ': ', $inquire->offsetGet('increment_id') ?></td>
@@ -73,24 +73,23 @@ $inquireies = $this->getInquireies();
                                                 endforeach;
                                                 ?>
                                             </dl>
-                <?php endif; ?>
+                                        <?php endif; ?>
                                     </td>
                                     <td><?php echo $inquire->getCurrency()->format($item->offsetGet('price')) ?></td>
                                     <td><?php echo (float) $item->offsetGet('qty') ?></td>
-                                        <?php if ($flag): ?>
+                                    <?php if ($flag): ?>
                                         <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue">
-                    <?php echo $inquire->getCurrency()->format($inquire->offsetGet('total')) ?><p><?php echo $this->translate('(Including Shipping Fee: %s)', [$inquire->getCurrency()->format($inquire->offsetGet('shipping'))]) ?></p>
-
+                                            <?php echo $inquire->getCurrency()->format($inquire->offsetGet('total')) ?>
+                                            <p><?php echo $this->translate('(Including Shipping Fee: %s)', [$inquire->getCurrency()->format($inquire->offsetGet('shipping'))]) ?></p>
                                         </td>
                                         <td rowspan="<?php echo count($items) ?>">
-                    <?php if ($inquire->canRefund()): ?>
+                                            <?php if ($inquire->canRefund()): ?>
                                                 <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $inquire->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
                                                 <br>
                                             <?php endif ?>
-                    <?php if ($inquire->canReview()): ?>
+                                            <?php if ($inquire->canReview()): ?>
                                                 <p><a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
-
-                    <?php endif ?>
+                                            <?php endif ?>
                                             <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
                                         </td>
                                         <?php
@@ -99,12 +98,12 @@ $inquireies = $this->getInquireies();
                                     ?>
                                 </tr>
                             <?php endforeach; ?>
-        <?php else : ?>
+                        <?php else : ?>
                             <tr>
                                 <td colspan="6"><?php echo $this->translate('No order for you to check, please confirm the order information!'); ?></td>
                             </tr>    
                         <?php endif; ?>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <?php

@@ -56,8 +56,9 @@ class OrderController extends AuthActionController
                     foreach ($data['review'] as $productId => $content) {
                         $images = [];
                         if (!empty($files['image'][$productId])) {
+                            $count = 0;
                             foreach ($files['image'][$productId] as $file) {
-                                if ($file->getError() === UPLOAD_ERR_OK) {
+                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
                                     $newName = $file->getClientFilename();
                                     while (file_exists($path . $newName)) {
                                         $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);

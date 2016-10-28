@@ -352,9 +352,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .margin-10{margin:10px 0}
 .color-red{color:red}
 .font-family-x{font-family:-webkit-pictograph;} 
-
-
-
 .qty .form-control {display:inline-block;font-size: 14px;line-height: 28px;border: 1px solid #d4d4d4;border-left: none;border-right: none;width: 50px;height: 28px;border-radius: 0;padding: 0;text-align: center;margin:0}
 .qty .spin {font-size: 18px;line-height: 22px;border: 1px solid #d4d4d4;width: 28px;height: 28px;text-align: center;color: #cbcbcb;background: #ededed;}
 .modal-dialog .modal-footer{padding:0}
@@ -480,9 +477,12 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-order .address .list{height:60px;line-height:60px;overflow-y:hidden}
 .checkout-order .address .list li{display:inline-block;line-height:30px}
 .checkout-order .address .list li input{float:left;margin: 10px 5px 0 10px;}
+.retailer-account  .wishlist .filter-bar .commodity .form-control { width: 73%;}
+.retailer-account .wishlist .filter-bar .commodity  #form-time{width:36%} 
 @media(min-width:768px){
     .checkout-order .address .list li input{float:left;margin-top: 10px}
     .checkout-order .address .list li .fa{line-height:30px}
+   
 }
 /* .checkout-order .address .list li label{width:90%} */
 .checkout-order .address .list li .fa{float:right;color:#b5b5b5;line-height:30px}
@@ -493,6 +493,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 @media(min-width:768px){
     .checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff;left: 50%}
      .retailer-account .wishlist .activity .form-control { width: 40%;display: inline-block;}
+}
      
 @media(min-width:1024px){
     .checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff;left: 50%}
@@ -627,14 +628,14 @@ overflow:hidden;}
 .retailer-account .account-bg{background:#e7e7e7;}
 .retailer-account .after-border{margin:20px 0}
 .mg-bottom-40  .class_menu dt{padding:5px 15px}
-.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;position: relative;text-align: center;}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;text-align: center;}
 .mg-bottom-40  .class_menu dd{padding:5px 10px}
 .mg-bottom-40  .dd_left{margin:15px 0  0 40px}
-.mg-bottom-40  .dd_content{position: relative;}
+.mg-bottom-40  .dd_content{position: relative;    display: table;}
 .mg-bottom-40 .category_table .class_icon i{font-size: 25px; color: #c1c1c1; margin: 0 10px 0 40px;}
-.mg-bottom-40 .class_menu .border_lf {border-left: 1px solid #eee; position: absolute;width: 1px; height: 26px;bottom:9px;}
+.mg-bottom-40 .class_menu .border_lf {border-left: 1px solid #eee; position: absolute;width: 1px; height: 30px;}
 .retailer-account .class_icon .class_menu{display: inline-flex;}
-.mg-bottom-40 .class_menu .border_bt{width: 40px; height: 1px; background: #eee; position: absolute; top: 20px; left: 0;bottom: 177px;right: 0;}
+.mg-bottom-40 .class_menu .border_bt{width: 40px; height: 1px; background: #eee; position: absolute; top: 30px; left: 0;bottom: 177px;right: 0;}
 .retailer-account .activity_body .activity_search  {margin-bottom:20px;margin-top:20px}
 .retailer-account  .activity_body .enroll .whole {background: #007dc6;color: #fff; margin: 0 15px 0 0;font-size: 12px;border: none;}
 .retailer-account .activity_body .enroll .filter {font-size: 12px;border: none;padding: 5px 15px; background: #b8e5ff; color: #646565;}

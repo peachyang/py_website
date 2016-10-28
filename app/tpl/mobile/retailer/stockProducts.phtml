@@ -1,12 +1,12 @@
 <?php
 $subtitle = $this->getVariable("subtitle");
-$sales_products = $this->getRetailerSalesProducts();
+$sales_products = $this->getRetailerStockProducts( );
 $filter = $this->getVariable('filter');
 ?>
 <div class="wishlist sales-products">
-    <h3><?php echo $this->translate($subtitle); ?></h3>
+    <h4><?php echo $this->translate($subtitle); ?></h4>
 
-    <div class="filter-bar" >
+      <div class="filter-bar" >
         <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="sell">
                 <ul class="commodity">
@@ -31,7 +31,7 @@ $filter = $this->getVariable('filter');
                             <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
                         </select>
                     </li>
-                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input id="form-time" class="form-control small-text col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"><input id="form-time" class="form-control  small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
+                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input id="form-time" class="small-text col-xs-8 col-sm-4 form-control" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"><input id="form-time" class=" small-text nomargin form-control" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
                     <div class="commodity_btn">
                     <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
                         &nbsp;&nbsp; <button class="btn">搜 索</button>
@@ -44,37 +44,34 @@ $filter = $this->getVariable('filter');
     </div>
     <div style="clear:both"></div>
 
-    <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
+    <div class="seperation-title">共有 <span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
    <hr class="seperation">
     <div class="products-content">
-    	<div class="table-responsive">
-    	
-    	
+     <div class="table-responsive">
         <table class="table table-title">
         <thead>
             <tr>
-                <th style="width: 45%;">商品名称</th>
-                <th style="width: 14%;">价 格</th>
-                <th style="width: 11%;"><span><a href=>库 存</a></span></th>
-                <th style="width: 15%;"><span><a href=>发布时间</a></span></th>
-                <th style="width: 15%;">操 作</th>
+                <td style="width: 45%;">商品名称</td>
+                <td style="width: 14%;">价 格</td>
+                <td style="width: 11%;"><span><a href=>库 存</a></span></td>
+                <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
+                <td style="width: 15%;">操 作</td>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
-                <th colspan="6" style="text-align: left;" >
+                <td colspan="6" style="text-align: left;" >
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                    <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
-                </th>
+                    <button class="btn-options enhancement product_status" data-type=1>上 架</button> <span class="function-seperation">|</span>
+                    <button class="btn-options enhancement product_remove" data-type=0>删除</button>
+                </td>
             </tr>
             </thead>
-            <div class="clearfix mg-bottom-10"></div>
-        <?php
+             <?php
         foreach ($sales_products as $sales_product) {
             ?>
-            <div class="transaction-list-sales " data-id="<?php echo $sales_product['id']; ?>">
+            <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
+        
                 <tbody class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
@@ -83,7 +80,6 @@ $filter = $this->getVariable('filter');
                         <td style="width: 45%;">
                             <div class="recommend">
                                 <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
-                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
                             </div>
 
                             <div class="product-pic">
@@ -127,27 +123,27 @@ $filter = $this->getVariable('filter');
                         </td>
                     </tr>
                 </tbody>
+               
             </div>
             <?php
         }
         ?>
             
             
-            
         </table>
-       </div>
-        
+        </div>
+        <div class="clearfix mg-bottom-10"></div>
+       
 
-        <div class="table-responsive">
+         <div class="table-responsive">
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">
                     <td  style="text-align: left;" >
                         <input type="checkbox" class="selectall" data-cbtype="all">
                         <span>全选</span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                        <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
+                        <button class="btn-options enhancement" data-type=1>上 架</button> <span class="function-seperation">|</span>
+                        <button class="btn-options enhancement product_remove" data-type=0>删除</button>
                     </td>
                 </tr>
             </table>

@@ -2,9 +2,9 @@
 
 namespace Seahinet\Admin\Controller\Api\Soap;
 
+use Seahinet\Api\Model\Soap\Role as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Api\Model\Soap\SoapRole as Model;
 
 class RoleController extends AuthActionController
 {
@@ -29,7 +29,7 @@ class RoleController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\SoapRole', ':ADMIN/api_soap_role/list/');
+        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\Role', ':ADMIN/api_soap_role/list/');
     }
     public function saveAction()
     {

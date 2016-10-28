@@ -3,9 +3,11 @@ permissions:
     children:
         -
             link: api_oauth_consumer/
+            operation: 'Admin\Api\Oauth\Consumer::index'
             title: REST - OAuth Consumer
             priority: 75
         -
             link: api_oauth_token/
+            operation: 'Admin\Api\Oauth\Token::index'
             title: REST - OAuth Authorized Token
             priority: 76

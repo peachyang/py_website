@@ -10,6 +10,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .text-vtop{vertical-align:top!important}
 .text-vmiddle{vertical-align:middle!important}
 .text-vbottom{vertical-align:bottom!important}
+.text-break{word-break:break-all!important}
 a{color:inherit}
 a:hover,a:focus{color:inherit;text-decoration:none}
 h1,h2,h3,h4,h5,h6{margin:0}
@@ -211,7 +212,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .fieldset .avatar,.retailer-account .fieldset .avatar{position:relative;width:100px;text-align:center}
 .customer-account .fieldset .avatar img,.retailer-account .fieldset .avatar img{max-height:100px;max-width:100px}
 .customer-account .fieldset .avatar .update,.retailer-account .fieldset .avatar .update{position:absolute;bottom:0;left:0;display:block;width:100%;font-size:12px;line-height:21px;background:#000;color:#fff;text-align:center}
-.customer-account .fieldset .cell,.retailer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px}
+.customer-account .fieldset .cell,.retailer-account .fieldset .cell{display:table-cell;font-size:14px;line-height:34px;vertical-align:top}
 .customer-account .fieldset .control-label+.cell,.retailer-account .fieldset .control-label+.cell{padding-bottom:16px}
 .customer-account .fieldset .input-box .control-label,.retailer-account .fieldset .input-box .control-label{display:table-cell;width:1%;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap}
 .customer-account .fieldset .buttons-set,.retailer-account .fieldset .buttons-set{display:table-row}
@@ -236,7 +237,6 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .page-content .table thead th{padding:5px 10px}
 .customer-account .page-content .table .product-name{font-size:13px}
 .customer-account .page-content .table td{border-top:0;padding: 20px 5px 10px 10px;}
-
 .customer-account .page-content .table td:not([rowspan]) + [rowspan] {border-left: 1px solid #eee;}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
@@ -308,10 +308,16 @@ dl.options dd{float:left;margin-left:4px}
 .customer-history .products-grid dt{font-size:14px;line-height:30px;}
 .customer-history .products-grid dt .fa{color:#007dc6;font-size:18px;}
 .customer-history .products-grid .viewed_title{font-size:13px}
+.customer-account .orders-list .action a{display:block}
 .customer-account .sales-order-view .nav-tabs{margin:2% 0}
 .customer-account .sales-order-view .panel{width:49%;float:left;margin-bottom:2%}
 .customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
 .customer-account .sales-order-view .panel.wide{clear:both;width:100%;margin-left:0}
+.customer-account .review-form .store .profile{display:inline-block;width:70px;height:70px}
+.customer-account .review-form .store .profile img{max-width:100%;max-height:100%}
+.customer-account .review-form .store .info{display:inline-block;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.customer-account .review-form .store .info .name{font-size:14px;line-height:2}
+.customer-account .review-form .store .info .description{font-size:14px;line-height:2;color:#999}
 .retailer-apply .page-content>.alert-warning,.retailer-processing .page-content>.alert-warning{border-radius:0;border-color:#fdd685;margin-top:10px;padding:6px 30px;font-size:12px;line-height:24px;color:#7c7c7c}
 .retailer-apply .page-content>.flow,.retailer-processing .page-content>.flow{padding:28px 0 28px 210px}
 .retailer-apply .page-content>.flow li,.retailer-processing .page-content>.flow li{counter-increment:item;display:block;border-top:1px dashed #dee1e8;float:left;width:33.33333333%;color:#7a7a7a}
@@ -557,7 +563,6 @@ dl.options dd{float:left;margin-left:4px}
 .evaluation .evaluation_left .btn{margin-left:34px}
 
 .activity_body .activity{margin:30px 0}
-.retailer-account .modal-content{margin-top:300px}
 .retailer-account #modal-reply .modal-content textarea{width: 90%;}
 .retailer-account #modal-reply .modal-content li{margin:10px 0}
 .activity_body  .activity_search div{margin:0 10px;display: inline-table;}

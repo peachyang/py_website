@@ -62,7 +62,7 @@ abstract class ActionController extends AbstractController
         if (!$referer && strpos($location, '://') === false) {
             $location = strpos($location, ':ADMIN') === false ? $this->getBaseUrl($location) : $this->getAdminUrl($location);
         }
-        return $this->redirect($referer? : $location, $code);
+        return $this->redirect($referer ?: $location, $code);
     }
 
     /**

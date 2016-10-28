@@ -782,14 +782,14 @@ retailer_products_product_edit:
             extra:
                 children:
                     insert:
-                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
                         template: resource/insert
                         children:
                             list:
-                                type: Seahinet\Admin\ViewModel\Resource\Explorer
+                                type: Seahinet\Retailer\ViewModel\Resource\Explorer
                                 template: resource/explorer
                     upload:
-                        type: Seahinet\Admin\ViewModel\Resource\Modal
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
                         template: resource/upload
 retailer_products_product_edit_1:
     update: retailer_products_product_edit
@@ -870,6 +870,20 @@ view_store1:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/store1
+freight_setting:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Freight Setting
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/freight                        
 decoration_store:
     update: default
     root:

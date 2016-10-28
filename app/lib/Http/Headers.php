@@ -68,7 +68,7 @@ class Headers implements ArrayAccess, IteratorAggregate
     {
         $str = '';
         foreach ($this->headers as $key => $value) {
-            $str.=($str === '' ? '' : '\r\n') . $key . ': ' . $value;
+            $str .= ($str === '' ? '' : '\r\n') . $key . ': ' . $value;
         }
         return $str;
     }

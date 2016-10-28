@@ -2,8 +2,8 @@
 
 namespace Seahinet\Admin\Controller\Api\Rest;
 
-use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Api\Model\Rest\Role as Model;
+use Seahinet\Lib\Controller\AuthActionController;
 
 class RoleController extends AuthActionController
 {
@@ -29,12 +29,12 @@ class RoleController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Oauth\\Model\\Role', ':ADMIN/api_rest_role/');
+        return $this->doDelete('\\Seahinet\\Api\\Model\\Rest\\Role', ':ADMIN/api_rest_role/');
     }
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Oauth\\Model\\Role', ':ADMIN/api_rest_role/');
+        return $this->doSave('\\Seahinet\\Api\\Model\\Rest\\Role', ':ADMIN/api_rest_role/');
     }
 
 }

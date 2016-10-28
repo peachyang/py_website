@@ -23,6 +23,13 @@ final class Config extends ArrayObject implements Singleton
     protected $cache = [];
 
     /**
+     * A pattern (a regexp, a glob, or a string)
+     *
+     * @var string
+     */
+    protected $bannedYml = 'rbac.yml';
+
+    /**
      * @param array|Container $config
      */
     private function __construct($config = [])
@@ -60,6 +67,9 @@ final class Config extends ArrayObject implements Singleton
     {
         $finder = new Finder;
         $finder->files()->in(BP . 'app')->name('*.yml');
+        if ($this->bannedYml) {
+            $finder->notName($this->bannedYml);
+        }
         $parser = new Parser;
         $config = [];
         foreach ($finder as $file) {

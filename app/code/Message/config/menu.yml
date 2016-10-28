@@ -3,5 +3,6 @@ email:
     children:
         -
             link: 'message_template/'
+            operation: 'Admin\Message\Template::index'
             title: 'Message Template'
             priority: 60

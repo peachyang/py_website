@@ -3,7 +3,6 @@
 namespace Seahinet\Lib\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
-use Zend\Db\Sql\Expression;
 
 /**
  * Pager of collection

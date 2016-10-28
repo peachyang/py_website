@@ -4,6 +4,7 @@ namespace Seahinet\Sales\ViewModel;
 
 use Seahinet\Catalog\Model\Collection\Product\Rating;
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Retailer\Model\Retailer;
 
 class Review extends Template
 {
@@ -48,6 +49,16 @@ class Review extends Template
             }
         }
         return $this->productRating;
+    }
+
+    public function getRetailer()
+    {
+        if (class_exists('\\Seahinet\\Retailer\\Model\\Retailer')) {
+            $retailer = new Retailer;
+            $retailer->load($this->getVariable('model')->offsetGet('store_id'), 'store_id');
+            return $retailer;
+        }
+        return [];
     }
 
 }

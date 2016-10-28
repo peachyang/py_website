@@ -250,7 +250,7 @@ class MongoDB extends AbstractHandler
         foreach ($languages as $language) {
             $this->getCollection($language['id'])->drop();
             $indexes = [
-                ['key' => ['id' => 1]]
+                    ['key' => ['id' => 1]]
             ];
             if (!is_null($keys)) {
                 $indexes[] = ['key' => ['store_id' => 1]];

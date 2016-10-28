@@ -74,7 +74,7 @@
                 $("#modal-upload #upload-element").fileupload({
                     dataType: 'json',
                     add: function (e, data) {
-                        data.context = $('<tr class="item"></tr>').html('<td>' +
+                        data.context = $('<tr class="item"></tr>').html('<td class="text-break">' +
                                 data['files'][0].name + '</td><td>' + calcSize(data['files'][0].size, 0) +
                                 '</td><td class="upload-note"><span class="fa fa-pause"></span></td><td><a href="javascript:void(0);" class="upload-remove"><span class="fa fa-remove"></span></a></td>').on('upload', function () {
                             var o = this;

@@ -8,6 +8,7 @@ use Exception;
 use ReflectionClass;
 use Seahinet\Admin\Model\Operation;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Parser;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 
 /**
@@ -60,6 +61,26 @@ class Rbac extends AbstractCli
                                 echo $e->getMessage();
                             }
                         }
+                    }
+                }
+            }
+            $finder = new Finder;
+            $finder->files()->in(BP . 'app/code')->name('rbac.yml');
+            $parser = new Parser;
+            foreach ($finder as $file) {
+                $array = $parser->parse($file->getContents());
+                foreach ($array as $name) {
+                    try {
+                        $model = new Operation;
+                        $model->setData([
+                            'name' => $name,
+                            'is_system' => 1
+                        ])->save();
+                        $count++;
+                    } catch (InvalidQueryException $e) {
+                        
+                    } catch (Exception $e) {
+                        echo $e->getMessage();
                     }
                 }
             }

@@ -85,25 +85,24 @@ $sales_status = $this->getAllSalesStatus();
         <div class="clearfix mg-bottom-20"></div>
         <div class="table-responsive">
         <table class="table table-title">
+        <thead>
             <tr>
-                <td style="width: 35%;">商品</td>
-                <td style="width: 8%;">单价</td>
-                <td style="width: 8%;">数量</td>
-                <td style="width: 8%;">售后</td>
-                <td style="width: 11%;">买家</td>
-                <td style="width: 11%;">交易状态</td>
-                <td style="width: 11%;">实收款</td>
-                <td style="width: 8%;">操作</td>
+                <th style="width: 35%;">商品</th>
+                <th style="width: 8%;">单价</th>
+                <th style="width: 8%;">数量</th>
+                <th style="width: 8%;">售后</th>
+                <th style="width: 11%;">买家</th>
+                <th style="width: 11%;">交易状态</th>
+                <th style="width: 11%;">实收款</th>
+                <th style="width: 8%;">操作</th>
             </tr>
-        </table>
-        </div>
-        <div class="clearfix mg-bottom-10"></div>
-        <?php
+         </thead>
+          <?php
         foreach ($transactions as $transaction) {
             ?>
             <div class="transaction-list">
-             <div class="table-responsive">
-                <table class="table table-info">
+           
+                <thead class="table table-info">
                     <tr>
                         <td colspan="7">
                             <label>
@@ -113,13 +112,13 @@ $sales_status = $this->getAllSalesStatus();
                         </td>
                         <td>&nbsp;</td>
                     </tr>
-                </table>
-                </div>
+                </thead>
+          
                 <?php
                     if(!empty($transaction['items'])){
                 ?>
-                 <div class="table-responsive">
-                <table class="list-info">
+               
+                <tbody class="list-info">
                     <?php
                     foreach ($transaction['items'] as $key => $item) {
                         $thumbnail = $this->getProduct($item['product_id'])->getThumbnail();
@@ -250,8 +249,8 @@ $sales_status = $this->getAllSalesStatus();
                         <?php
                     }
                     ?>
-                </table>
-                </div>
+                </tbody>
+               
                  <?php
                     }
                 ?>
@@ -259,7 +258,12 @@ $sales_status = $this->getAllSalesStatus();
             <?php
                 }
             ?>
-
+         
+         
+        </table>
+        </div>
+<!--         <div class="clearfix mg-bottom-10"></div> -->
+       
         <div style="display: none;">
             <div>
                 <div>

@@ -74,7 +74,7 @@ $filter = $this->getVariable('filter');
         <?php
         foreach ($sales_products as $sales_product) {
             ?>
-            <div class="transaction-list-sales table-responsive" data-id="<?php echo $sales_product['id']; ?>">
+            <div class="transaction-list-sales " data-id="<?php echo $sales_product['id']; ?>">
                 <tbody class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();

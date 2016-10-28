@@ -600,7 +600,7 @@ dl.options dd{float:left;margin-left:4px}
 .evaluate .down_icon i{font-size:18px;color:#c1c1c1;margin: 0 10px 0 20px;}
 .mg-bottom-40  .class_menu{display:inline-table}
 .mg-bottom-40  .class_menu dt{padding:5px 30px}
-.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;position: relative;}
+.mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;}
 .mg-bottom-40  .class_menu .border_left{border-left: 1px solid #eee;height: 8%;position: absolute;left: 105px;}
 .mg-bottom-40  .class_menu .border_bt{width: 29px;height: 1px;background: #eee;position: absolute;left: 105px;bottom: 177px;right: 0;}
 .mg-bottom-40  .class_menu dd{padding:5px 10px 5px 5px; }

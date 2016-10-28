@@ -1,5 +1,5 @@
 <?php
-//$after = new \Seahinet\Sales\Model\Collection\Rma;
+$after = new \Seahinet\Sales\Model\Collection\Rma;
 $services = $this->getAfterCollection();
 ?>
 <div class="col-xs-9 col-sm-9 col-md-12 wishlist mg-bottom-40">
@@ -13,53 +13,59 @@ $services = $this->getAfterCollection();
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="col-lg-3 col-md-3 text-center"><?php echo $this->translate('Product(s)');?></th>
-                        <th class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('After Sales Number');?></th>
-                        <th class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('After Sales Reason');?></th>
-                        <th class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Status');?></th>
-                        <th class="col-lg-3 col-md-3 text-center"><?php echo $this->translate('Time');?></th>
-                        <th class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Action');?></th>
+                        <th class="col-lg-3 col-md-3 text-center"><?php echo $this->translate('Product(s)'); ?></th>
+                        <th class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('After Sales Number'); ?></th>
+                        <th class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('After Sales Reason'); ?></th>
+                        <th class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Status'); ?></th>
+                        <th class="col-lg-3 col-md-3 text-center"><?php echo $this->translate('Time'); ?></th>
+                        <th class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Action'); ?></th>
                     </tr>
                 </thead>
             </table>
             <?php
             foreach ($services as $service):
-                $flag = TRUE;
-                $customer = new Seahinet\Customer\Model\Customer;             
-                $product = new Seahinet\Catalog\Model\Product;
-                $thumbnail= $product->getThumbnail();           
-                ?>
-                <table class="table">
-                    <caption>
-                        <tr>
-                            <td class="col-xs-6 store" colspan="3">
-                                <a href="" target="_blank"><?php echo $service->getStore()['name']; ?><span class="fa fa-qq"></span></a>
-                            </td>
-                            <td class="col-xs-6 text-right" colspan="3">
-                                <span class="label">订单号：</span>
-                                <span><?php echo $service['increment_id'] ?></span>&nbsp;&nbsp;
-                                <span class="list_time"><?php echo date('Y-m-d', strtotime($service['created_at'])) ?></span>
-                            </td>
-                        </tr>
-                    </caption>
-                    <tbody>
-                        <tr>
-                            <td class="col-lg-3 col-md-3 text-left">
-                                <img class="Thumbnail" src="<?php echo $product->getThumbnail(); ?>" alt="">
-                                <a href="#"><?php echo $product['name']?></a>
-                            </td>
-                            <td class="col-lg-2 col-md-2 text-center"><?php echo $service['increment_id'] ?></td>
-                            <td class="col-lg-1 col-md-1 text-center"><a href="">换货申请</a></td>
-                            <td class="col-lg-2 col-md-2 text-center"><a href="">买家提出申请</a></td>
-                            <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $service['created_at'] ?></span>
-                            </td>
-                            <td class="col-lg-1 col-md-1 text-center"><button class="after_bt"><?php echo $this->translate('Cancel');?></button>
-                                <a class="afterview" href="<?php echo $this->getBaseUrl()?>sales/order/view/?id=<?php echo $service['id']?>"><?php echo $this->translate('View Details');?></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <?php
+            $flag = TRUE;
+            ?>
+            <table class="table">
+                <caption>
+                    <tr>
+                        <td class="col-xs-6 store" colspan="3">
+                            <a href="" target="_blank"><?php echo $service->getStore()['name']; ?><span class="fa fa-qq"></span>
+                            </a>
+                        </td>
+                        <td class="col-xs-6 text-right" colspan="3">
+                            <span class="label">订单号：</span>
+                            <span><?php echo $service['increment_id'] ?></span>&nbsp;&nbsp;
+                            <span class="list_time"><?php echo date('Y-m-d', strtotime($service['created_at'])) ?></span>
+                        </td>
+                    </tr>
+                </caption>
+                <tbody>
+                    <?php
+                    foreach ($service->getItems() as $item):
+                    $product = $item['product'];
+                    $thumbnail = $product->getThumbnail();
+                    ?>
+                    <tr>
+                        <td class="col-lg-3 col-md-3 text-left">
+                            <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
+                            <h4><a href="#"><?php echo $product['name'] ?></a></h4>
+                        </td>
+                        <td class="col-lg-2 col-md-2 text-center"><?php echo $service['increment_id'] ?></td>
+                        <td class="col-lg-1 col-md-1 text-center"><?php echo $after['comment'] ?></td>
+                        <td class="col-lg-2 col-md-2 text-center"><a href="">买家提出申请</a></td>
+                        <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $item['created_at'] ?></span>
+                        </td>
+                        <td class="col-lg-1 col-md-1 text-center"><button class="after_bt"><?php echo $this->translate('Cancel'); ?></button>
+                            <a class="afterview" href="<?php echo $this->getBaseUrl('sales/order/view/?id='. $service['id']) ?>"><?php echo $this->translate('View Details'); ?></a>
+                        </td>
+                    </tr>
+                    <?php
+                endforeach;
+                    ?>
+                </tbody>
+            </table>
+            <?php
             endforeach;
             ?>
         </div>

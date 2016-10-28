@@ -1098,6 +1098,9 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-after .history_after_sale{color: #bebebe}
 .retailer-after .after .table a{color: #007dc6}
 .retailer-after .after .table .afterview{color:#8b8a8a}
+.retailer-after .after img{float: left;margin-right:5px}
+.retailer-after .after .table h4{line-height:20px;border-bottom:0}
+.retailer-after .after .table h4 a{color: #333}
 .sales-refund .list_table img{float:left}
 .sales-refund .list_table .product-name{margin-left:10px;float:left}
 .sales-refund .list_table dl{float:left}

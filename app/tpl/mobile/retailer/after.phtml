@@ -22,17 +22,15 @@ $after = $this->getAfterCollection();
                         <th class="col-lg-1 col-md-1 text-center">操作</th>
                     </tr>
                 </thead>
-            </table>
-            </div>
-            <?php
+                <?php
             foreach ($after as $after1):
                 $customer = new Seahinet\Customer\Model\Customer;
                 
                 $product = new Seahinet\Catalog\Model\Product;
                 $thumbnail= $product->getThumbnail();           
                 ?>
-                <div class="table-responsive">  
-                <table class="table">
+              
+                <tbody class="table">
                     <caption>
                         <tr>
                             <td class="col-xs-6 store" colspan="3">
@@ -45,7 +43,7 @@ $after = $this->getAfterCollection();
                             </td>
                         </tr>
                     </caption>
-                    <tbody>
+                    
                         <tr>
                             <td class="col-lg-3 col-md-3 text-left">
                                 <img class="Thumbnail" src="<?php echo $product->getThumbnail(); ?>" alt="">
@@ -60,9 +58,9 @@ $after = $this->getAfterCollection();
                                 <a class="afterview" href="<?php echo $this->getBaseUrl()?>retailer/transaction/afterview">查看详情</a>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-                </div>
+                   
+                </tbody>
+               
                 <?php
             endforeach;
             ?>
@@ -70,6 +68,10 @@ $after = $this->getAfterCollection();
         <?php
     endif;
     ?>
+                
+            </table>
+            </div>
+            
     <div id="modal-refuse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

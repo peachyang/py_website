@@ -67,7 +67,7 @@ retailer_account:
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/freight/',label:'Freight Setting',priority:9,group:'Store Management'}]
-                            -  
+                            -
                                 method: addLink
                                 params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:10,group:'Store Management'}]
                             -

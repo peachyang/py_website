@@ -19,9 +19,21 @@ class After extends Template
         $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $collection = new Order;
         $collection->join('rma', 'rma.order_id=sales_order.id', ['refund_status' => 'status'], 'left')
-                    ->where([
+                ->where([
                     'store_id' => $retailer->offsetGet('store_id'),
                 ])->order('created_at DESC')->where->isNotNull('rma.order_id');
         return $collection;
-    } 
+    }
+
+    /**
+     * @param int $customerID customer id
+     * return object
+     */
+    public function getCustomerID($customerID)
+    {
+        $customers = new \Seahinet\Customer\Model\Customer;
+        $customer = $customers->load($customerID);
+        return $customer;
+    }
+
 }

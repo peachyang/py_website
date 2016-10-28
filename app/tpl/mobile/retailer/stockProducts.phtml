@@ -49,6 +49,7 @@ $filter = $this->getVariable('filter');
     <div class="products-content">
      <div class="table-responsive">
         <table class="table table-title">
+        <thead>
             <tr>
                 <td style="width: 45%;">商品名称</td>
                 <td style="width: 14%;">价 格</td>
@@ -65,15 +66,13 @@ $filter = $this->getVariable('filter');
                     <button class="btn-options enhancement product_remove" data-type=0>删除</button>
                 </td>
             </tr>
-        </table>
-        </div>
-        <div class="clearfix mg-bottom-10"></div>
-        <?php
+            </thead>
+             <?php
         foreach ($sales_products as $sales_product) {
             ?>
             <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
-             <div class="table-responsive">
-                <table class="list-info">
+        
+                <tbody class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
                     ?>
@@ -123,12 +122,18 @@ $filter = $this->getVariable('filter');
                             </div>
                         </td>
                     </tr>
-                </table>
-                </div>
+                </tbody>
+               
             </div>
             <?php
         }
         ?>
+            
+            
+        </table>
+        </div>
+        <div class="clearfix mg-bottom-10"></div>
+       
 
          <div class="table-responsive">
             <table class="table table-title">

@@ -526,6 +526,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account-dashboard .main-container .dashboard .myorder-text{border-bottom:1px solid #007dc6;height:55px;line-height:55px;width:150px;text-align:center}
 .retailer-account-dashboard .main-container .dashboard .coupon-title{border-bottom:1px solid #dbdee5;margin-bottom:20px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
 .retailer-account-dashboard .main-container .coupon{margin-bottom:30px}
+.retailer-account #modal-reply .modal-content {margin-top: 300px;}
 /* end copy */
 /* Common Setting */
 .pad-2{padding:2px}

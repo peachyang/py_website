@@ -51,31 +51,31 @@ $filter = $this->getVariable('filter');
     	
     	
         <table class="table table-title">
+        <thead>
             <tr>
-                <td style="width: 45%;">商品名称</td>
-                <td style="width: 14%;">价 格</td>
-                <td style="width: 11%;"><span><a href=>库 存</a></span></td>
-                <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
-                <td style="width: 15%;">操 作</td>
+                <th style="width: 45%;">商品名称</th>
+                <th style="width: 14%;">价 格</th>
+                <th style="width: 11%;"><span><a href=>库 存</a></span></th>
+                <th style="width: 15%;"><span><a href=>发布时间</a></span></th>
+                <th style="width: 15%;">操 作</th>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
-                <td colspan="6" style="text-align: left;" >
+                <th colspan="6" style="text-align: left;" >
                     <input type="checkbox" class="selectall" data-cbtype="all">
                     <span>全选</span>
                     &nbsp;&nbsp;
                     <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
                     <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
                     <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
-                </td>
+                </th>
             </tr>
-        </table>
-       </div>
-        <div class="clearfix mg-bottom-10"></div>
+            </thead>
+            <div class="clearfix mg-bottom-10"></div>
         <?php
         foreach ($sales_products as $sales_product) {
             ?>
             <div class="transaction-list-sales table-responsive" data-id="<?php echo $sales_product['id']; ?>">
-                <table class="list-info">
+                <tbody class="list-info">
                     <?php
                     $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
                     ?>
@@ -126,11 +126,17 @@ $filter = $this->getVariable('filter');
                             </div>
                         </td>
                     </tr>
-                </table>
+                </tbody>
             </div>
             <?php
         }
         ?>
+            
+            
+            
+        </table>
+       </div>
+        
 
         <div class="table-responsive">
             <table class="table table-title">

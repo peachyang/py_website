@@ -43,6 +43,7 @@ $services = $this->getAfterCollection();
                     <tbody>
                         <?php
                         foreach ($service->getItems() as $item):
+                            $rma = new Seahinet\Sales\Model\Collection\Rma;
                             $product = $item['product'];
                             $thumbnail = $product->getThumbnail();
                             ?>
@@ -52,7 +53,7 @@ $services = $this->getAfterCollection();
                                     <h4><a href="#"><?php echo $product['name'] ?></a></h4>
                                 </td>
                                 <td class="col-lg-2 col-md-2 text-center"><?php echo $service['increment_id'] ?></td>
-                                <td class="col-lg-1 col-md-1 text-center"><?php echo $rma['comment'] ?></td>
+                                <td class="col-lg-1 col-md-1 text-center"><?php echo $service['comment'] ?></td>
                                 <td class="col-lg-2 col-md-2 text-center"><a href="">买家提出申请</a></td>
                                 <td class="col-lg-2 col-md-2 text-center"><span class="list_time"><?php echo $item['created_at'] ?></span>
                                 </td>

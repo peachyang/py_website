@@ -464,6 +464,11 @@ sales_order_review:
     update: customer_account
     root:
         children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:"frontend/js/review.js",defer:"defer",async:"async"}]
             content:
                 children:
                     main:

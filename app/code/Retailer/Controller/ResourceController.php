@@ -45,7 +45,7 @@ class ResourceController extends AuthActionController
                         $model = new Model();
                         $model->moveFile($file)
                                 ->setData([
-                                    'store_id' => $retailer && $retailer->offsetGet('store_id') ? $retailer->offsetGet('store_id') : (empty($data['store_id']) ? null : $data['store_id']),
+                                    'store_id' => $retailer->getId() ? $retailer->offsetGet('store_id') : (empty($data['store_id']) ? null : $data['store_id']),
                                     'uploaded_name' => $name,
                                     'file_type' => $file->getClientMediaType(),
                                     'category_id' => empty($data['category_id']) ? null : $data['category_id']

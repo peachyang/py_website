@@ -19,7 +19,7 @@ customer_account:
                                 params: [{label:'My Following',priority:30,icon:'star'}]
                             -
                                 method: addGroup
-                                params: [{label:'Account Infomation',priority:0,icon:'th-list'}]
+                                params: [{label:'Account Infomation',priority:0,icon:'address-card'}]
                             -
                                 method: addLink
                                 params: [{link:'customer/wishlist/',label:'My Wishlist',group:'My Following'}]

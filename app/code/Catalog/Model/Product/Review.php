@@ -9,7 +9,7 @@ class Review extends AbstractModel
 
     protected function construct()
     {
-        $this->init('review', 'id', ['id', 'product_id', 'customer_id', 'order_id', 'language_id', 'subject', 'content', 'status']);
+        $this->init('review', 'id', ['id', 'product_id', 'customer_id', 'order_id', 'language_id', 'subject', 'content', 'reply', 'images', 'anonymous', 'status']);
     }
 
     protected function beforeSave()

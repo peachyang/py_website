@@ -84,9 +84,23 @@ class UploadedFile implements UploadedFileInterface
                 );
             } else {
                 foreach ($uploadedFile['error'] as $fileIdx => $error) {
-                    $parsed[$field][] = new static(
-                            $uploadedFile['tmp_name'][$fileIdx], isset($uploadedFile['name']) ? $uploadedFile['name'][$fileIdx] : null, isset($uploadedFile['type']) ? $uploadedFile['type'][$fileIdx] : null, isset($uploadedFile['size']) ? $uploadedFile['size'][$fileIdx] : null, $uploadedFile['error'][$fileIdx], true
-                    );
+                    if (is_array($error)) {
+                        $toBeParsed = [];
+                        foreach ($error as $key => $value) {
+                            $toBeParsed[$key] = [
+                                'error' => $value,
+                                'tmp_name' => $uploadedFile['tmp_name'][$fileIdx][$key],
+                                'name' => isset($uploadedFile['name']) ? $uploadedFile['name'][$fileIdx][$key] : null,
+                                'type' => isset($uploadedFile['type']) ? $uploadedFile['type'][$fileIdx][$key] : null,
+                                'size' => isset($uploadedFile['size']) ? $uploadedFile['size'][$fileIdx][$key] : null
+                            ];
+                        }
+                        $parsed[$field][$fileIdx] = static::parseUploadedFiles($toBeParsed);
+                    } else {
+                        $parsed[$field][$fileIdx] = new static(
+                                $uploadedFile['tmp_name'][$fileIdx], isset($uploadedFile['name']) ? $uploadedFile['name'][$fileIdx] : null, isset($uploadedFile['type']) ? $uploadedFile['type'][$fileIdx] : null, isset($uploadedFile['size']) ? $uploadedFile['size'][$fileIdx] : null, $error, true
+                        );
+                    }
                 }
             }
         }

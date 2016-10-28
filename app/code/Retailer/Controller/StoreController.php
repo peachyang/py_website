@@ -71,6 +71,15 @@ class StoreController extends AuthActionController
         $root = $this->getLayout('freight_setting');
         return $root;
     }
+    /**
+     * freightAction
+     * show Freight setting
+     */
+    public function freightAction()
+    {
+        $root = $this->getLayout('freight_setting');
+        return $root;
+    }
 
     public function saveAction()
     {

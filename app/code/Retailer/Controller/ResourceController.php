@@ -173,9 +173,4 @@ class ResourceController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/resource/');
     }
 
-    public function popupAction()
-    {
-        return $this->getLayout('retailer_popup_images_list');
-    }
-
 }

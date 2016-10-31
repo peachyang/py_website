@@ -83,17 +83,4 @@ admin_resource_list:
                                         method: setVariable
                                         params: 
                                             - canJump
-                                            - 0
-admin_popup_images_list:
-    update: grid
-    root:
-        template: page/ajax
-        unset: [head]
-        children:
-            content:
-                unset: [breadcrumb,messages]
-                children:
-                    grid:
-                        type: Seahinet\Admin\ViewModel\Resource\Grid\Resource
-                        template: resource/gridpopup
-                                        
+                                            - 0                                        

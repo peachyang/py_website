@@ -30,7 +30,7 @@ $children = is_object($model) ? $model->getChildren() : [];
                 <?php foreach ($items as $item): ?>
                     <dd>
                         <input type="checkbox" name="operation_id[]"<?php if (in_array($role_id, $children) || $model && $model->hasPermission($item['name'])): ?> checked="checked"<?php endif ?> id="operation:<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>" />
-                        <label for="operation:<?php echo $item['id'] ?>"><?php echo $item['name'] ?></label>
+                        <label for="operation:<?php echo $item['id'] ?>"><?php echo $this->translate($item['name'], [], 'rbac') ?></label>
                     </dd>
                 <?php endforeach ?>
             </dl>
@@ -43,7 +43,7 @@ $children = is_object($model) ? $model->getChildren() : [];
             <?php foreach ($others as $item): ?>
                 <dd>
                     <input type="checkbox" name="operation_id[]"<?php if ($model && $model->hasPermission($item['name'])): ?> checked="checked"<?php endif ?> id="operation:<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>" />
-                    <label for="operation:<?php echo $item['id'] ?>"><?php echo $item['name'] ?></label>
+                    <label for="operation:<?php echo $item['id'] ?>"><?php echo $this->translate($item['name'], [], 'rbac') ?></label>
                 </dd>
             <?php endforeach ?>
         </dl>

@@ -1,5 +1,5 @@
 <?php
-$order = $this->getOrder();
+$order = $this->getLatestOrder();
 if ($order && $order->getId()):
     $flag = true;
     ?>
@@ -24,7 +24,7 @@ if ($order && $order->getId()):
                     ?>
                     <tr>
                         <td>
-                            <img src="<?php echo strpos($thumbnail, '://') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100"/>
+                            <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100"/>
                         </td>
                         <td class="text-vtop">
                             <h4 class="product-name"><?php echo $product['name'] ?></h4>
@@ -78,14 +78,17 @@ if ($order && $order->getId()):
                                 <span class="total color-blue"><?php echo $order->getCurrency()->format($order['total']) ?></span>
                                 <span class="shipping"><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order['shipping'])]) ?></span>
                             </td>
-                            <td rowspan="<?php echo count($order->getItems()) ?>" class="text-nowrap">
+                            <td rowspan="<?php echo count($order->getItems()) ?>" class="text-nowrap action">
                                 <span class="status">
                                     <?php echo $this->translate($order->getStatus()['name']) ?>
                                 </span>
-                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
                                 <?php if ($order->canRefund()): ?>
-                                    <a href="<?php echo $this->getBaseUrl('sales/refund/?id=' . $order->getId()) ?>"><?php echo $this->translate('Refund Application') ?></a>
+                                    <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order->getId()) ?>"><?php echo $this->translate('Refund Application') ?></a>
                                 <?php endif ?>
+                                <?php if ($order->canReview()): ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>"><?php echo $this->translate('Add Review') ?></a>
+                                <?php endif ?>
+                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
                             </td>
                             <?php
                             $flag = false;

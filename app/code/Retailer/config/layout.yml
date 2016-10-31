@@ -1294,15 +1294,3 @@ admin_retailer_apply_edit:
                                 params: [{label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Retailer\Edit
-retailer_popup_images_list:
-    update: grid
-    root:
-        template: page/ajax
-        unset: [head, beforeContent]
-        children:
-            content:
-                unset: [breadcrumb,messages]
-                children:
-                    grid:
-                        type: Seahinet\Retailer\ViewModel\Resource\Resource
-                        template: retailer/resource/gridpopup

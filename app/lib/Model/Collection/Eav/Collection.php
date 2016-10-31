@@ -38,8 +38,9 @@ abstract class Collection extends AbstractCollection
         }
     }
 
-    public function load($useCache = true)
+    public function load($useCache = true, $arrayMode = false)
     {
+        $this->arrayMode = $arrayMode;
         if (!$this->isLoaded) {
             try {
                 $cacheKey = md5($this->select->getSqlString($this->getTableGateway($this->tableName)->getAdapter()->getPlatform()));

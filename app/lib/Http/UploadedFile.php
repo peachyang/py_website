@@ -159,7 +159,7 @@ class UploadedFile implements UploadedFileInterface
             throw new InvalidArgumentException('Upload target path is not writable');
         }
 
-        $targetIsStream = strpos($targetPath, '://') > 0;
+        $targetIsStream = strpos($targetPath, '//') > 0;
         if ($targetIsStream) {
             if (!copy($this->file, $targetPath)) {
                 throw new RuntimeException(sprintf('Error moving uploaded file %1s to %2s', $this->name, $targetPath));

@@ -68,7 +68,7 @@
                             calcSize(s / 1024, u + 1) :
                             s.toFixed(2) + unit[u];
                 };
-                $('#modal-upload').on('click', '.upload-remove', function () {
+                $('#modal-upload .upload-remove').on('click', function () {
                     $(this).parents('tr.item').remove();
                 });
                 $("#modal-upload #upload-element").fileupload({
@@ -162,7 +162,6 @@
                         ids += ($(this).is('.folder') ? 'f[]=' : 'r[]=') + $(this).data('id') + '&';
                     });
                     if (ids !== '') {
-                        console.log(GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/delete/' : 'retailer/resource/delete/'));
                         $.ajax(GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/delete/' : 'retailer/resource/delete/'), {
                             type: 'delete',
                             data: ids + 'csrf=' + $('.resource-explorer .toolbar').data('csrf'),

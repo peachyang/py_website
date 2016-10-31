@@ -10,7 +10,7 @@ $inventory = $item->getInventory();
     </td>
     <td>
         <a href="<?php echo $item['product']->getUrl() ?>">
-            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
+            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
         </a>
     </td>
     <td class="product-name">

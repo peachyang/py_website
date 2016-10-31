@@ -5,9 +5,6 @@ namespace Seahinet\Admin\ViewModel\Sales\View;
 use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Order as Model;
-use TCPDF;
-use TCPDFBarcode;
-use Pelago\Emogrifier;
 
 class Order extends Template
 {
@@ -56,10 +53,11 @@ class Order extends Template
         return $this->phase;
     }
 
-    public function getOrderModel(){
-        error_reporting(E_ALL & ~E_NOTICE);
+    public function getOrderModel()
+    {
         $id = $this->getRequest()->getQuery('id');
         $order = (new Model)->load($id);
         return $order;
     }
+
 }

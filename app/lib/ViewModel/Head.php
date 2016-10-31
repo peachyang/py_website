@@ -221,10 +221,10 @@ final class Head extends Template implements Singleton
         $files = [];
         $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/';
         foreach ($links as $link => $type) {
-            if ($combine && $type === 'stylesheet' && strpos($link, '://') === false) {
+            if ($combine && $type === 'stylesheet' && strpos($link, '//') === false) {
                 $files[] = $prefix . '/' . $link;
             } else if ($type !== 'stylesheet' || substr($link, -4) === '.css') {
-                if (strpos($link, '://') === false) {
+                if (strpos($link, '//') === false) {
                     $link = $this->getPubUrl($link);
                 }
                 $result .= '<link href="' . $link . '" rel="' . $type . '" />';
@@ -254,10 +254,10 @@ final class Head extends Template implements Singleton
             if (is_string($script)) {
                 $script = ['src' => $script];
             }
-            if ($combine && strpos($script['src'], '://') === false) {
+            if ($combine && strpos($script['src'], '//') === false) {
                 $files[] = $prefix . $script['src'];
             } else {
-                if (strpos($script['src'], '://') === false) {
+                if (strpos($script['src'], '//') === false) {
                     $script['src'] = $this->getPubUrl($script['src']);
                 }
                 $result .= '<script type="text/javascript" ';

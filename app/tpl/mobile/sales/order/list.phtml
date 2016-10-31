@@ -1,36 +1,91 @@
 <?php
 $orders = $this->getOrders();
 ?>
-<div class="table-responsive">
-    <table class="table table-hover table-striped table-no-border text-center">
-        <thead class="sort-by">
-            <tr>
-                <th class="col-lg-3 col-xs-3 text-center"><?php echo $this->translate('ID'); ?></th>
-                <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Price'); ?></th>
-                <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Status'); ?></th>
-                <th class="col-lg-3 col-xs-3 text-center"><?php echo $this->translate('Ordered Date'); ?></th>
-                <th class="col-lg-2 col-xs-2 text-center"><?php echo $this->translate('Action'); ?></th>
-            </tr>
-        </thead>
-        <?php if (count($orders)): ?>
-            <tbody>
-                <?php foreach ($orders as $order): ?>  
-                    <tr>
-                        <td><?php echo $order->offsetGet('increment_id') ?></td>
-                        <td><?php echo $order->getCurrency()->format($order->offsetGet('total')) ?></td>
-                        <td><?php echo $this->translate($order->getStatus()['name'], [], 'sales') ?></td>
-                        <td><?php echo $order->offsetGet('created_at') ?></td>
-                        <td><a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>"><?php echo $this->translate('View Details') ?></a></td>
-                    </tr>             
-                <?php endforeach; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <?php echo $this->getChild('pager')->setCollection($orders) ?>
-                    </td>
-                </tr>
-            </tfoot>
-        <?php endif ?>
-    </table>
+
+<div id="Has-sold" class="seller-tab">
+<div class="tab-nav">
+	<ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+	    <li class="active col-xs-3 col-sm-3">
+	        <a href="#all" data-toggle="tab">
+	            全部(18)
+	        </a>
+	    </li>
+	    <li class="col-xs-3 col-sm-3">
+	    	<a href="#delivery" data-toggle="tab">
+	    		待付款(13)
+	    	</a>
+	    </li>
+	    <li class="col-xs-3 col-sm-3">
+	      <a href="#payment" data-toggle="tab">
+	    		待发货(13)
+	    	</a>
+	    </li>
+	    <li class="col-xs-3 col-sm-3">
+	      <a href="#refund" data-toggle="tab">
+	    		待收货(12)
+	    	</a>
+	    </li>
+	    <li class="col-xs-3 col-sm-3">
+	      <a href="#refund" data-toggle="tab">
+	    		待评价
+	    	</a>
+	    </li>
+	</ul>
+</div>	
+
+	<div class="search col-xs-12 col-sm-12">
+		<div class="search_center">
+			<i class="fa fa-search" aria-hidden="true"></i>
+			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+		</div>
+		
+	</div>
+	<div id="Product-details" class="tab-content">
+	    <div class="tab-pane fade in active" id="all">
+	        <div>
+        	<ul  class="col-xs-12 col-sm-12 title-nav">
+	        		<li class="col-xs-6 col-sm-6 text-left font-14"><a href="" target="_blank">denny</a></li>
+	        		<li class="col-xs-6 col-sm-6 text-right font-14"><a href="">实付:￥123.00(包邮)</a></li>	
+	        			
+	        			
+	        </ul>
+	          <ul class="col-xs-12 col-sm-12 inline">
+	        		<li class="col-xs-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
+	        		<li class="col-xs-7 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+	        		<li class="col-xs-3 text-right">
+	        			<span class="price color-blue font-14">￥198.00</span>
+						<span>x1</span>
+						<span>已付款</span>
+	        		</li>
+	        			
+	       </ul>
+	       <ul class="col-xs-12 col-sm-12 inline text-center operation">
+	        		<li class="col-xs-3"><span>取消</span></li>
+	        		<li class="col-xs-3 "><span>账单</span></li>
+	        		<li class="col-xs-3 "><span>发货</span></li>
+	        		<li class="col-xs-3"><span>打印</span></li>
+	        			
+	        			
+	       </ul>
+	        	
+	        </div>
+	        
+	        
+	        
+	        
+	        
+	    </div>
+	     <div class="tab-pane fade " id="delivery">
+	        2
+	    </div>
+	     <div class="tab-pane fade" id="payment">
+	        3
+	    </div>
+	     <div class="tab-pane fade " id="refund">
+	        4
+	    </div>
+	
+	
+	</div>
+		
 </div>

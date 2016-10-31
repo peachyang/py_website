@@ -254,6 +254,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .profile .level{background:#007dc6;color:#fff;font-size:12px;line-height:18px;display:inline-block;padding:0 3px;vertical-align:bottom}
 .customer-account-dashboard .profile .count{font-size:13px;color:#007dc6;font-weight:bold}
 .customer-account-dashboard .profile span:not(.label)+span{margin-left:10px}
+.customer-account-dashboard .order .action>*{display:block}
 .customer-account-dashboard .coupon .panel-body{margin-top:25px}
 .list_table{border:1px solid #e1e3e9}
 .list_table caption {color: #272323;text-align: left;font-size: 14px}

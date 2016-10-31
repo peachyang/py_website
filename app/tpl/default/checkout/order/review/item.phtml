@@ -5,7 +5,7 @@ $thumbnail = $product->getThumbnail();
 ?>
 <tr class="product-list">
     <td class="td-img">
-        <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
+        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" />
     </td>
     <td class="td-name" colspan="3">
         <strong><?php echo $item['product_name'] ?></strong>

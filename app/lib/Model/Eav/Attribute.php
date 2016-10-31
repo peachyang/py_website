@@ -4,8 +4,10 @@ namespace Seahinet\Lib\Model\Eav;
 
 use Exception;
 use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Language;
+use Seahinet\Lib\Model\{
+    AbstractModel,
+    Language
+};
 
 class Attribute extends AbstractModel
 {

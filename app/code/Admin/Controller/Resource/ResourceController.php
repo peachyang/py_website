@@ -73,7 +73,7 @@ class ResourceController extends AuthActionController
                     foreach ((array) $data['r'] as $id) {
                         $model = new Model;
                         $model->load($id);
-                        if ($model->getId() && $model->offsetGet('store_id') == $storeId) {
+                        if ($model->getId() && (!$storeId || $model->offsetGet('store_id') == $storeId)) {
                             $type = $model->offsetGet('file_type');
                             $collection = new Collection;
                             $collection->where(['md5' => $model['md5']])
@@ -87,7 +87,7 @@ class ResourceController extends AuthActionController
                     foreach ((array) $data['f'] as $id) {
                         $model = new Category;
                         $model->load($id);
-                        if ($model->offsetGet('store_id') == $storeId) {
+                        if (!$storeId || $model->offsetGet('store_id') == $storeId) {
                             $model->remove();
                         }
                     }
@@ -166,11 +166,6 @@ class ResourceController extends AuthActionController
             }
         }
         return $this->response($result ?? ['error' => 0, 'message' => []], ':ADMIN/resource_resource/');
-    }
-
-    public function popupAction()
-    {
-        return $this->getLayout('admin_popup_images_list');
     }
 
 }

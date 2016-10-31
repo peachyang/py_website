@@ -73,7 +73,7 @@ customer_account_dashboard:
                                 type: Seahinet\Customer\ViewModel\Dashboard\Profile
                                 template: customer/dashboard/profile
                             order:
-                                type: Seahinet\Customer\ViewModel\Dashboard\Order
+                                type: Seahinet\Sales\ViewModel\Order
                                 template: customer/dashboard/order
                             coupon:
                                 type: Seahinet\Customer\ViewModel\Coupon

@@ -19,7 +19,7 @@ $items = $this->getItems();
                     ?>
                     <li data-id="<?php echo $item['id'] ?>" class="clearfix">
                         <a href="<?php echo $item['product']->getUrl() ?>" class="product-image col-xs-2">
-                            <img src="<?php echo strpos($thumbnail, '://') === false ? $this->getBaseUrl('pub/resource/image/resized/45x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" class="img-responsive" />
+                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getBaseUrl('pub/resource/image/resized/45x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $item['product']['name'] ?>" class="img-responsive" />
                         </a>
                         <h3 class="product-name col-xs-7">
                             <a href="<?php echo $item['product']->getUrl() ?>" title="<?php echo $item['product']['name'] ?>"><?php echo $item['product']['name'] ?></a>

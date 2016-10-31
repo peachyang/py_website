@@ -215,7 +215,7 @@ class Uri implements UriInterface
             throw new InvalidArgumentException('Uri scheme must be a string');
         }
 
-        $scheme = str_replace('://', '', strtolower((string) $scheme));
+        $scheme = str_replace('//', '', strtolower((string) $scheme));
         if (!isset($valid[$scheme])) {
             throw new InvalidArgumentException('Uri scheme must be one of: "", "https", "http"');
         }

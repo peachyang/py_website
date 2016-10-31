@@ -394,6 +394,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail{width:81%;float: left;margin-bottom:50px;padding-left: 20px}
 .product-detail>.nav-tabs{margin-bottom:12px;background:#f4f4f4;border:none;border-bottom: 1px solid #cbdfe9;}
 .product-detail>.nav-tabs>li>a{padding:18px 25px 16px;font-size:18px;color:#747474;border-radius:0;border:none;line-height:1}
+.catalog-product .product-detail>.nav-tabs{border-bottom:none}
+.product-detail>.nav-tabs>li{margin-bottom:-4px}
 .product-detail>.nav-tabs>li.active>a{color:#fff;background:#fd9030;margin:0;border:none}
 .product-detail .product-attributes{background:#f1f1f1;color:#747474;font-size:14px;line-height:36px;padding:34px 0;margin-bottom:12px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

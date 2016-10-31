@@ -8,16 +8,16 @@
 .resource-explorer .filters .form-control{width:100px;height:28px;line-height:1;padding:3px 6px;vertical-align:top}
 .resource-explorer .filters .buttons-set{display:inline-block;vertical-align:top}
 .resource-explorer .table{display:table}
-.resource-explorer .nav,#modal-upload .nav{display:table-cell;width:16.66666667%;min-width:135px;padding:10px;vertical-align:top;font-size:16px}
-.resource-explorer .nav ul,#modal-upload .nav ul{padding-left:10px}
+.resource-explorer .nav,#modal-upload .nav{display:table-cell;width:16.66666667%;min-width:135px;padding:10px;vertical-align:top;font-size:14px;color:#74787a}
+.resource-explorer .nav ul,#modal-upload .nav ul{padding-left:10px;font-size:12px}
 .resource-explorer .nav a,#modal-upload .nav a{display:block}
 .resource-explorer .nav a>.fa:before,#modal-upload .nav a>.fa:before{content:"\f07c";color:#ffd54a}
 .resource-explorer .nav .collapsed>.fa:before,#modal-upload .nav .collapsed>.fa:before{content:"\f07b"}
 .resource-explorer .content,#modal-upload .modal-body .content{display:table-cell;width:83.33333333%;padding:0 0 4px 10px;border-left:1px solid #ececec}
-.resource-explorer .content header .title{color:#74787a;font-size:13px;line-height:42px}
+.resource-explorer .content header .title{color:#74787a;font-size:13px;line-height:30px}
 .resource-explorer .content header .title .fa,.resource-explorer .content .toolbar li .fa{color:#01a0e7}
-.resource-explorer .content header .buttons-set{padding:9px 0}
-.resource-explorer .content header .btn{background:none;color:#666;border:1px solid #e3e5ea;border-radius:0;margin-left:7px;padding:1px 8px}
+.resource-explorer .content header .buttons-set{padding:5px 0}
+.resource-explorer .content header .btn{background:none;color:#666;border:1px solid #e3e5ea;border-radius:0;margin-left:7px;padding:1px 8px;margin-right:10px}
 .resource-explorer .content header .btn:hover{border-color:#666}
 .resource-explorer .content header .btn .fa{color:#1798d3}
 .resource-explorer .content .toolbar{border-top:1px solid #e3e5ea;border-bottom:1px solid #e3e5ea;line-height:35px;font-size:12px;color:#616161}
@@ -25,7 +25,7 @@
 .resource-explorer .content .toolbar .list-inline li+li{padding-left:5px}
 .resource-explorer .content .toolbar .sort-by{display:inline-block;border:1px solid #e1e3e9;line-height:22px;padding-left:4px;vertical-align:middle}
 .resource-explorer .content .toolbar .sort-by select{border:none;outline:none}
-.resource-explorer .content .toolbar .mode{display:inline-block;font-size:0;line-height:22px;vertical-align:middle}
+.resource-explorer .content .toolbar .mode{display:inline-block;font-size:0;line-height:22px;vertical-align:middle;margin-right: 10px}
 .resource-explorer .content .toolbar .mode a{border:1px solid #e1e3e9;font-size:16px;display:inline-block;vertical-align:top}
 .resource-explorer .content .toolbar .mode a+a{border-left:none}
 .resource-explorer .content .toolbar menu.context{display:none;list-style:none;position:fixed;z-index:9;background:#fff;border:1px solid #999;padding:4px 0;box-shadow:0 1px 3px rgba(0,0,0,0.3);border-radius:3px}

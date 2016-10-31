@@ -18,6 +18,7 @@ atlassian*
 !/var/export/.htaccess
 !/var/geoip/
 /pub/resource/
+/pub/review/
 /app/config/adapter.yml
 cache/
 resized/

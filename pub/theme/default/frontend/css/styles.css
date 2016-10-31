@@ -1,7 +1,7 @@
 html{font-size:32px}
 body{min-width:320px}
 [lang|=zh],[lang|=zh] body{font-family:"Microsoft Yahei",SimHei,STHeiti,sans-serif}
-label[for]{cursor:pointer}
+label[for]{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 input[type=number]{-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 .hidden,[hidden]{display:none!important}
@@ -315,9 +315,21 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .sales-order-view .panel.wide{clear:both;width:100%;margin-left:0}
 .customer-account .review-form .store .profile{display:inline-block;width:70px;height:70px}
 .customer-account .review-form .store .profile img{max-width:100%;max-height:100%}
-.customer-account .review-form .store .info{display:inline-block;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.customer-account .review-form .store .info{display:inline-block;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
 .customer-account .review-form .store .info .name{font-size:14px;line-height:2}
-.customer-account .review-form .store .info .description{font-size:14px;line-height:2;color:#999}
+.customer-account .review-form .store .info .description{font-size:14px;line-height:2;color:#999;margin:0}
+.customer-account .review-form tbody th{width:30%}
+.customer-account .review-form .options{display:inline-block}
+.customer-account .review-form .fieldset .cell{padding:0}
+.customer-account .review-form .ratings{width:6.42857145em;display:inline-block}
+.customer-account .review-form .ratings .fa{float:right}
+.customer-account .review-form .ratings .fa:before{content:'\f006'}
+.customer-account .review-form .ratings :checked~.fa:before,.customer-account .review-form .ratings .fa:hover:before,.customer-account .review-form .ratings .fa:hover~.fa:before{content:'\f005'}
+.customer-account .review-form .images{margin-top:10px}
+.customer-account .review-form .images .preview,.customer-account .review-form .images .add-image{position:relative;width:50px;margin-right:6px;height:50px;display:inline-block;border:1px solid #ccc;color:#ccc;padding:0;line-height:2;font-size:24px;text-align:center;vertical-align:middle;cursor:pointer}
+.customer-account .review-form .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
+.customer-account .review-form .images .preview img{max-width:48px;max-height:48px;vertical-align:top}
+.customer-account .review-form .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
 .retailer-apply .page-content>.alert-warning,.retailer-processing .page-content>.alert-warning{border-radius:0;border-color:#fdd685;margin-top:10px;padding:6px 30px;font-size:12px;line-height:24px;color:#7c7c7c}
 .retailer-apply .page-content>.flow,.retailer-processing .page-content>.flow{padding:28px 0 28px 210px}
 .retailer-apply .page-content>.flow li,.retailer-processing .page-content>.flow li{counter-increment:item;display:block;border-top:1px dashed #dee1e8;float:left;width:33.33333333%;color:#7a7a7a}
@@ -381,6 +393,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail{width:81%;float: left;margin-bottom:50px;padding-left: 20px}
 .product-detail>.nav-tabs{margin-bottom:12px;background:#f4f4f4;border:none;border-bottom: 1px solid #cbdfe9;}
 .product-detail>.nav-tabs>li>a{padding:18px 25px 16px;font-size:18px;color:#747474;border-radius:0;border:none;line-height:1}
+.catalog-product .product-detail>.nav-tabs{border-bottom:none}
+.product-detail>.nav-tabs>li{margin-bottom:-4px}
 .product-detail>.nav-tabs>li.active>a{color:#fff;background:#fd9030;margin:0;border:none}
 .product-detail .product-attributes{background:#f1f1f1;color:#747474;font-size:14px;line-height:36px;padding:34px 0;margin-bottom:12px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -648,7 +662,7 @@ dl.options dd{float:left;margin-left:4px}
 .filter-bar select.form-control{padding:0 .42em}
 .filter-bar #receiver_phone{}
 .filter-bar .form-inline span{margin:0 15px} 
-.filter-bar .form-inline  .commodity li{display: inline-flex;vertical-align: middle;}
+.filter-bar .form-inline  .commodity li{display: -ms-inline-flexbox;display: inline-flex;vertical-align: middle;}
 .filter-bar .form-inline  .commodity_btn{margin:16px 0;padding: 0 15px;}
 .filter-bar .btn{margin:10px 0;background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;padding:5px 10px;text-decoration:none}
 .btn-options{background-color:#fff;border:1px solid #dcdcdc;color:#3c3c3c;font-size:12px;height:24px;line-height:22px}
@@ -674,7 +688,7 @@ dl.options dd{float:left;margin-left:4px}
 .order-dashboard{background-color:#fff7eb;margin-top:10px}
 .order-dashboard .bd{background:#fffcf3 none repeat scroll 0 0;border:1px solid #f7e4a5;padding:20px 30px}
 .order-dashboard .tbnotes{border-top:1px solid #ddd;line-height:21px;margin-top:15px;padding-top:5px;}
-#modal-reply .reply{display: inline-flex;width:80%;height:auto}
+#modal-reply .reply{display: -ms-inline-flexbox;display: inline-flex;width:80%;height:auto}
 .order-dashboard .tbnotes span{color:#f60;font-weight:700}
 .product-pic{display:inline-block;float:left;width:50px;margin-right:20px}
 .product-pic img{width:50px}
@@ -892,7 +906,7 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist  #order  .after_table_cont .padding_bottom{padding-bottom:60px;display: block;}
 .decorationlist  #order .border_bottom{border-bottom:1px solid #eee}
 .decorationlist  #order  .after—table{border:1px solid #eee}
-.decorationlist  #order  .after—table .information{display: flex;}
+.decorationlist  #order  .after—table .information{display: -ms-flexbox;display: flex;}
 .decorationlist  #order  .after—table .details{margin:30px}
 .decorationlist  #order .textarea{width: 85%;margin: 50px 0 50px 90px;}
 .decorationlist  #order .btn_sub{margin-left:90px}
@@ -908,12 +922,12 @@ dl.options dd{float:left;margin-left:4px}
 .layer_table{border:1px solid #ccc;margin: 10px 0 40px 0;}
 .details_layer{}
 .details_layer .details_thead{background: #eee;border-bottom: 1px solid #ccc;}
-.details_layer .details_thead th{display: flex;padding: 12px 15px 12px 25px;}
+.details_layer .details_thead th{display: -ms-flexbox;display: flex;padding: 12px 15px 12px 25px;}
 .details_layer .details_thead lable{padding:5px 0;font-size:16px}
 .details_layer .details_thead select{width:200px}
 .details_layer .details_thead span{padding:12px 0px 0px 15px;}
 .details_layer .details_thead .span_txt{padding:8px}
-.layer_table .input-box{display:flex;margin:40px}
+.layer_table .input-box{display:-ms-flexbox;display:flex;margin:40px}
 .color-red{color:red;padding-right:5px}
 .font_color{font-size:12px;color:#ccc}
 .layer_table .input-box .input_width{width:80%}
@@ -1099,6 +1113,9 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-after .history_after_sale{color: #bebebe}
 .retailer-after .after .table a{color: #007dc6}
 .retailer-after .after .table .afterview{color:#8b8a8a}
+.retailer-after .after img{float: left;margin-right:5px}
+.retailer-after .after .table h4{line-height:20px;border-bottom:0}
+.retailer-after .after .table h4 a{color: #333}
 .sales-refund .list_table img{float:left}
 .sales-refund .list_table .product-name{margin-left:10px;float:left}
 .sales-refund .list_table dl{float:left}

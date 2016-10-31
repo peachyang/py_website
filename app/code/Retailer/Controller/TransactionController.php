@@ -82,6 +82,7 @@ class TransactionController extends AuthActionController
     public function afterAction()
     {
         $root = $this->getLayout('retailer_after');
+        $root->getChild('main',true)->setVariable('subtitle', 'After Service')->setVariable('history_sold', 'History after Sale Service');
         return $root;
     }
     

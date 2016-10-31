@@ -43,11 +43,11 @@ $attributes = $this->getAddressAttribute();
             </tr>
         <?php endforeach ?>
     </tbody>
-    <?php if (count($addresses)): ?>
+    <?php if (count($addresses) && $pager = trim($this->getChild('pager')->setCollection($addresses))): ?>
         <tfoot>
             <tr>
                 <td colspan="6">
-                    <?php echo $this->getChild('pager')->setCollection($addresses) ?>
+                    <?php echo $pager ?>
                 </td>
             </tr>
         </tfoot>

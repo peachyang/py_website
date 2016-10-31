@@ -69,6 +69,11 @@ abstract class AbstractViewModel implements Serializable
      */
     protected $config = null;
 
+    /**
+     * @var array
+     */
+    protected $bannedMember = ['query'];
+
     public function __toString()
     {
         return $this->render();
@@ -264,7 +269,7 @@ abstract class AbstractViewModel implements Serializable
     {
         $data = unserialize($serialized);
         foreach ($data as $key => $value) {
-            if ($key !== 'query') {
+            if (!in_array($key, $this->bannedMember)) {
                 $this->$key = $value;
             }
         }

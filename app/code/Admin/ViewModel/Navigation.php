@@ -10,6 +10,7 @@ class Navigation extends Template
 
     protected $items = [];
     protected $role;
+    protected $bannedMember = ['query', 'items'];
 
     public function __construct()
     {
@@ -32,6 +33,9 @@ class Navigation extends Template
 
     public function getMenuItems()
     {
+        if (empty($this->items)) {
+            $this->items = $this->getConfig()['menu'] ?? [];
+        }
         uasort($this->items, [$this, 'sortItems']);
         return $this->items;
     }

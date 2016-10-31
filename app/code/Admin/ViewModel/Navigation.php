@@ -10,15 +10,6 @@ class Navigation extends Template
 
     protected $items = [];
     protected $role;
-    protected $bannedMember = ['query', 'items'];
-
-    public function __construct()
-    {
-        $config = $this->getConfig();
-        $this->items = $config['menu'] ?? [];
-        $segment = new Segment('admin');
-        $this->role = $segment->get('user')->getRole();
-    }
 
     protected function sortItems(&$a, &$b)
     {
@@ -54,10 +45,10 @@ class Navigation extends Template
 
     public function hasPermission($operation)
     {
-        if ($this->role) {
-            return $this->role->hasPermission($operation);
+        if (!$this->role) {
+            $this->role = (new Segment('admin'))->get('user')->getRole();
         }
-        return true;
+        return $this->role->hasPermission($operation);
     }
 
     public function getUrl($path = '')

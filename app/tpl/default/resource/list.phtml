@@ -37,20 +37,3 @@ $decoration =  $this->getVariable("decoration");
     <?php endforeach ?>
 </ul>
 <?php echo $this->getChild('pager')->setCollection($resources) ?>
-	
-	<script>
-
-    dialog.onok = function (){
-    	var obj = $(".resource-list li.item.selected");
-    	if(obj.length>0)
-		{
-		var hrefs = obj.attr('data-href');
-        editor.execCommand('inserthtml', '<img style="margin-left: -28px;" src="'+ hrefs +'">');
-        //dialog.close();
-       }
-    };
-    dialog.oncancel = function () {
-    	//dialog.close();
-    };
-
-</script>

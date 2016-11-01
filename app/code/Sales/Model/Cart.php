@@ -44,6 +44,7 @@ final class Cart extends AbstractModel implements Singleton
                 'customer_id' => $segment->get('customer')->getId(),
                 'status' => 1
             ])->order('id DESC');
+            $collection->load(true, true);
             if ($collection->count()) {
                 $this->setData($collection->toArray()[0]);
             }

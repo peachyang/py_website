@@ -6,42 +6,7 @@ $filter = $this->getVariable('filter');
 <div class="wishlist sales-products">
     <h3><?php echo $this->translate($subtitle); ?></h3>
 
-    <div class="filter-bar" >
-        <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
-            <div class="sell">
-                <ul class="commodity">
-                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品名称:</span> <input class="form-control col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
-                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品编码:</span> <input class="form-control col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
-                   
-                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >商品类目:</span> 
-                        <select class="form-control col-xs-8 col-sm-4" id="catalog" name="catalog" value="">
-                            <option value="">全部</option>
-                            <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
-                        </select>
-                    </li>
-                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3">商品分类:</span> 
-                        <select class="form-control col-md-4" id="category" name="category" value="<?php echo $filter['category']; ?>">
-                            <option value="">全部</option>
-                        </select>
-                    </li>
-                    <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3">橱窗推荐:</span> 
-                        <select class="form-control col-md-4" id="recomend_status" name="recomend_status">
-                            <option value="">全部</option>
-                            <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>>是</option>
-                            <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
-                        </select>
-                    </li>
-                     <li class="col-xs-12 col-sm-4"><span class="col-xs-3 col-sm-3" >价　　格:</span> <input id="form-time" class="form-control small-text col-xs-8 col-sm-4" type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"><input id="form-time" class="form-control  small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
-                    <div class="commodity_btn">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
-                        &nbsp;&nbsp; <button class="btn">搜 索</button>
-                    </div>
-                   
-                  	
-                </ul>
-            </div>
-        </form>
-    </div>
+    
     <div style="clear:both"></div>
 
     <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>

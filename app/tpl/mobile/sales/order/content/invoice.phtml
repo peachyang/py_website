@@ -3,124 +3,60 @@ $order = $this->getVariable('order');
 $invoice = $this->getVariable('model');
 $currency = $order->getCurrency();
 ?>
-<div class="clearfix">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Invoice Infomation', [], 'sales') ?></h4>
-        </div>
-        <div class="panel-body">
-            <?php echo $this->translate('ID'), ': ', $invoice['increment_id'] ?><br />
-            <?php echo $this->translate('Order ID'), ': ', $order['increment_id'] ?><br />
-            <?php
-            if ($store = $order->getStore()) {
-                echo $this->translate('Store'), ': ', $store->offsetGet('name');
-            }
-            ?><br />
-            <?php
-            if ($language = $order->getLanguage()) {
-                echo $this->translate('Language'), ': ', $language->offsetGet('name');
-            }
-            ?>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
-        </div>
-        <div class="panel-body">
-            <?php
-            echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />',
-            $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales'), '<br />',
-            $invoice['comment']
-            ?>
-        </div>
-    </div>
-    <div class="panel panel-default wide">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
-        </div>
-        <div class="panel-body grid table-responsive">
-            <table class="table table-hover table-striped table-no-border">
-                <thead class="sort-by">
-                    <tr>
-                        <th colspan="2"><?php echo $this->translate('Product') ?></th>
-                        <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Price', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Qty', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Total', [], 'sales') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($invoice->getItems() as $item):
-                        $product = $item['product'];
-                        $thumbnail = $product->getThumbnail();
-                        ?>
-                        <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                            <td>
-                                <a href="<?php echo $product->getUrl() ?>">
-                                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" width="100" alt="<?php echo $item['product_name'] ?>" />
-                                </a>
-                            </td>
-                            <td>
-                                <a href="<?php echo $product->getUrl() ?>">
-                                    <?php echo $item['product_name'] ?>
-                                </a>
-                                <?php
-                                $options = json_decode($item['options'], true);
-                                if ($item['product_id'] && count($options)):
-                                    ?>
-                                    <dl class="options">
-                                        <?php
-                                        foreach ($item['product']->getOptions() as $option):
-                                            if (isset($options[$option->getId()])):
-                                                ?>
-                                                <dt><?php echo $option['title'] ?></dt>
-                                                <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd>
-                                                <?php
-                                            endif;
-                                        endforeach;
-                                        ?>
-                                    </dl>
-                                <?php endif ?>
-                            </td>
-                            <td><?php echo $item['sku'] ?></td>
-                            <td><?php echo $currency->format($item['price']) ?></td>
-                            <td><?php echo (float) $item['qty'] ?></td>
-                            <td><?php echo $currency->format($item['total']) ?></td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6">
-                            <dl class="dl-horizontal pull-right">
-                                <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($invoice->offsetGet('subtotal')) ?></dd>
-                                <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($invoice->offsetGet('shipping')) ?></dd>
-                                <?php if ((float) $invoice->offsetGet('tax')): ?>
-                                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
-                                    <dd><?php echo $currency->format($invoice->offsetGet('tax')) ?></dd>
-                                <?php endif ?>
-                                <?php
-                                if ((float) $invoice->offsetGet('discount')):
-                                    $discount = json_decode($invoice->offsetGet('discount_detail'), true);
-                                    foreach ($discount as $type => $price):
-                                        ?>
-                                        <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?></dt>
-                                        <dd><?php echo $currency->convert($price, true) ?></dd>
-                                        <?php
-                                    endforeach;
-                                endif;
-                                ?>
-                                <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($invoice->offsetGet('total')) ?></dd>
-                            </dl>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+<div id="Has-sold" class="seller-tab">
+	<div class="search col-xs-12 col-sm-12">
+		<div class="search_center">
+			<i class="fa fa-search" aria-hidden="true"></i>
+			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+		</div>
+		
+	</div>
+	<div id="Product-details" class="tab-content">
+	    <div class="tab-pane fade in active" id="all">
+	      <div class="order-details col-xs-12 col-sm-12 ">
+	      	
+        	<ul  class="col-xs-12 col-sm-12 title-nav bt bg">
+	        		<li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
+	        		<li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
+	        			
+	        			
+	        </ul>
+	          <ul class="col-xs-12 col-sm-12 inline bt">
+	        		<li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
+	        		<li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+	        		<li class="col-xs-3  col-sm-3 text-right">
+	        			<span class="price color-blue font-14">￥198.00</span>
+						<span>x1</span>
+						<span>已付款</span>
+	        		</li>
+	        			
+	       </ul>
+	      </div>
+	      <div class="billing col-xs-12 col-sm-12 ">
+	       		<ul class="col-xs-12 col-sm-12 font-12">
+	       		<li class="bg font-14">账单信息</li>
+	       		<li class="col-xs-12 col-sm-12">店铺:123456's Store</li>
+	       		<li class="col-xs-5 col-sm-5">ID:1216102111365186</li>
+	       		<li class="col-xs-7 col-sm-7 text-right">订单号:1216102111365186</li>
+	       		</ul>
+	      </div>
+	      <div class="payment col-xs-12 col-sm-12 ">
+	       		<ul class="col-xs-12 col-sm-12 font-12">
+	       		<li class="bg font-14">支付方式</li>
+	       		<li class="col-xs-6 col-sm-6">支付:银行转账</li>
+	       		<li class="col-xs-6 col-sm-6">订单使用CNY提交</li>
+	       		</ul>
+	      </div> 
+	    </div>
+	     <div class="tab-pane fade " id="delivery">
+	        2
+	    </div>
+	     <div class="tab-pane fade" id="payment">
+	        3
+	    </div>
+	     <div class="tab-pane fade " id="refund">
+	        4
+	    </div>
+	</div>
+		
 </div>

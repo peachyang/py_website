@@ -7,9 +7,9 @@
 .resource-explorer .filters .form-control{width:100px;height:28px;line-height:1;padding:3px 6px;vertical-align:top}
 .resource-explorer .filters .buttons-set{display:inline-block;vertical-align:top}
 .resource-explorer .table{display:table}
-.resource-explorer .nav,#modal-upload .nav{display:table-cell;width:16.66666667%;min-width:135px;padding:10px;vertical-align:top;font-size:16px;color:#74787a}
+.resource-explorer .nav,#modal-upload .nav{display:table-cell;width:16.66666667%;min-width:135px;padding:10px;vertical-align:top;color:#74787a}
 .resource-explorer .nav ul,#modal-upload .nav ul{padding-left:10px;font-size:12px}
-.resource-explorer .nav a,#modal-upload .nav a{display:block}
+.resource-explorer .nav a,#modal-upload .nav a{display:block;font-size:14px}
 .resource-explorer .nav a>.fa:before,#modal-upload .nav a>.fa:before{content:"\f07c";color:#ffd54a}
 .resource-explorer .nav .collapsed>.fa:before,#modal-upload .nav .collapsed>.fa:before{content:"\f07b"}
 .resource-explorer .content,#modal-upload .modal-body .content{display:table-cell;width:83.33333333%;padding:0 0 4px 10px;border-left:1px solid #ececec}

@@ -76,7 +76,7 @@
                     add: function (e, data) {
                         data.context = $('<tr class="item"></tr>').html('<td class="text-break">' +
                                 data['files'][0].name + '</td><td>' + calcSize(data['files'][0].size, 0) +
-                                '</td><td class="upload-note"><span class="fa fa-pause"></span></td><td><a href="javascript:void(0);" class="upload-remove"><span class="fa fa-remove"></span></a></td>').on('upload', function () {
+                                '</td><td class="upload-note"><span class="fa fa-pause"></span></td><td><a href="javascript:void(0);" class="upload-remove"><span class="fa fa-remove"></span></a></td>').on('upload.seahinet', function () {
                             var o = this;
                             $(o).find('.upload-note .fa').removeClass('fa-pause').addClass('fa-spinner fa-spin');
                             data.submit().success(function (result) {
@@ -84,6 +84,7 @@
                                     $(o).find('.upload-note .fa').removeClass('fa-spinner fa-spin').addClass('fa-exclamation-triangle');
                                     alert(result.error);
                                 } else {
+                                    $(o).off('upload.seahinet');
                                     $(o).find('.upload-note .fa').removeClass('fa-spinner fa-spin').addClass('fa-check');
                                 }
                             });
@@ -93,7 +94,7 @@
                 $('#modal-upload #upload-form').submit(function () {
                     var anchors = $("#modal-upload #upload-list .item");
                     if (anchors.length) {
-                        $(anchors).trigger('upload');
+                        $(anchors).trigger('upload.seahinet');
                     }
                     return false;
                 });

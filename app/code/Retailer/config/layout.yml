@@ -982,7 +982,6 @@ decoration_store:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
                         template: retailer/storeDecoration
-
 decoration_store_customize:
     update: decoration_store
     root:
@@ -1056,8 +1055,30 @@ decorationFunc:
                     -
                         method: addScript
                         params: frontend/dragResource/js/bootstrap.min.js
-
-
+                    -
+                        method: addLink
+                        params: frontend/css/resource.css
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: frontend/js/resource.js
+            extra:
+                children:
+                    insert:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: resource/upload
 decorationFunc_customize:
     update: decorationFunc
     root:

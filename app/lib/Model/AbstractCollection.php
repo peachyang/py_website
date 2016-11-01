@@ -112,8 +112,9 @@ abstract class AbstractCollection extends ArrayObject
      * 
      * @return AbstractCollection
      */
-    public function load($useCache = true)
+    public function load($useCache = true, $arrayMode = false)
     {
+        $this->arrayMode = $arrayMode;
         if (!$this->isLoaded) {
             try {
                 if ($useCache) {

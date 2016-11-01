@@ -19,9 +19,9 @@ $avatar = $customer['avatar'];
         </div>
         <div class="transaction">
             <span class="label"><?php echo $this->translate('My Orders') ?>:</span>
-            <span><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></span>
-            <span><?php echo $this->translate('Delivering', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></span>
-            <span><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></span>
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1') ?>"><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2') ?>"><?php echo $this->translate('Delivering', [], 'customer') ?><span class="count">(<?php echo $this->getShipping() ?>)</span></a>
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3') ?>"><?php echo $this->translate('Reviewing', [], 'customer') ?><span class="count">(<?php echo $this->getReviewing() ?>)</span></a>
         </div>
     </div>
 </div>

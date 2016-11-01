@@ -4,11 +4,8 @@ namespace Seahinet\Admin\ViewModel\Sales\View;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Rma as Model;
-use TCPDFBarcode;
-use Zend\Db\Adapter\Platform\Oracle;
 use Seahinet\Sales\Model\Order;
 use Seahinet\Customer\Model\Customer;
-use Pelago\Emogrifier;
 
 class Refund extends Template
 {
@@ -50,9 +47,9 @@ class Refund extends Template
         $collection = $this->getOrder()->getItems();
         return $collection;
     }
-    
 
-    public function getOrderModel(){
+    public function getOrderModel()
+    {
         $id = $this->getRequest()->getQuery('id');
         $refund = (new Model)->load($id);
         $order = (new Order())->load($refund['order_id']);

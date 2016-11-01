@@ -15,8 +15,17 @@ class RefundController extends ActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('sales_refund');
-        return $root;
+        return $this->getLayout('sales_refund');
+    }
+
+    public function applyAction()
+    {
+        return $this->getLayout('sales_refund_apply');
+    }
+
+    public function viewAction()
+    {
+        return $this->getLayout('sales_refund_view');
     }
 
     public function saveAction()

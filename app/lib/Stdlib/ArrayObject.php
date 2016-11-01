@@ -95,7 +95,7 @@ class ArrayObject implements ArrayAccess, Countable, JsonSerializable, Serializa
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
+     * @param  scalar $key
      * @param  mixed $value
      * @return void
      */

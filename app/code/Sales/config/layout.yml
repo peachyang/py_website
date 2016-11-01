@@ -427,7 +427,47 @@ sales_refund:
                 children:
                     main:
                         type: Seahinet\Sales\ViewModel\Refund
-                        template: sales/refund
+                        template: sales/refund/list
+sales_refund_apply:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Return &amp; Refund
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Return &amp; Refund
+                children:
+                    main:
+                        type: Seahinet\Sales\ViewModel\Refund
+                        template: sales/refund/form
+sales_refund_view:
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Return &amp; Refund
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Return &amp; Refund
+                children:
+                    main:
+                        type: Seahinet\Sales\ViewModel\Refund
+                        template: sales/refund/view
 sales_order_list:
     update: customer_account
     root:
@@ -455,11 +495,6 @@ sales_order_list:
                                     -
                                         method: setDefaultLimit
                                         params: 20
-            extra:
-                children:
-                    modal:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: sales/refund/form
 sales_order_review:
     update: customer_account
     root:

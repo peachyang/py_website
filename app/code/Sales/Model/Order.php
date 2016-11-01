@@ -336,7 +336,7 @@ class Order extends AbstractModel
     {
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
-        } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && $this->getStatus()->offsetGet('is_default') !== 0) {
+        } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
             return false;
         }
         $memos = $this->getCreditMemo();

@@ -49,7 +49,6 @@ class Currency implements SourceInterface
             'DOP' => 'Dominican Peso',
             'XCD' => 'East Caribbean Dollar',
             'EGP' => 'Egyptian Pound',
-            'SVC' => 'El Salvador Colon',
             'EEK' => 'Estonian Kroon',
             'ETB' => 'Ethiopian Birr',
             'EUR' => 'Euro',

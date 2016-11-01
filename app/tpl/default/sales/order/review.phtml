@@ -91,7 +91,7 @@ $retailer = $this->getRetailer();
                             <div class="cell">
                                 <textarea name="review[<?php echo $product->getId() ?>]" class="form-control required" id="review-<?php echo $product->getId() ?>"></textarea>
                                 <div class="images">
-                                    <input type="file" hidden="hidden" name="image[<?php echo $product->getId() ?>][]" id="review-image-<?php echo $product->getId() ?>" />
+                                    <input type="file" hidden="hidden" accept="image/*" name="image[<?php echo $product->getId() ?>][]" id="review-image-<?php echo $product->getId() ?>" />
                                     <label for="review-image-<?php echo $product->getId() ?>" class="add-image"><span class="fa fa-camera" aria-hidden="true"></span></label>
                                     <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
                                 </div>

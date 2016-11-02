@@ -21,9 +21,9 @@ $currency = $this->getCurrency();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th colspan="2"><?php echo $order->getStore()['name'] ?></th>
-                        <th colspan="4" class="text-right"><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></th>
+                    <tr class="refund-store">
+                        <td><?php echo $order->getStore()['name'] ?></td>
+                        <td class="text-right" colspan="5"><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></td>
                     </tr>
                     <?php
                     $items = $application->getItems();
@@ -32,7 +32,7 @@ $currency = $this->getCurrency();
                         $product = $item['product'];
                         $thumbnail = $product->getThumbnail();
                         ?>
-                        <tr>
+                    <tr class="refund-list">
                             <td>
                                 <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
                             </td>

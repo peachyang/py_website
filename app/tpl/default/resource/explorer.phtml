@@ -1,14 +1,12 @@
 <?php
 $tree = $this->getCategoryTree();
-$decoration =  $this->getVariable("decoration");
 ?>
 <div class="resource-explorer">
     <div class="filters">
         <form action="<?php echo $this->getCurrentUrl() ?>" method="get" class="form-inline">
             <div class="input-box">
                 <label for="uploaded_name" class="control-label"><?php echo $this->translate('Filename') ?></label>
-                <input type="text" name="uploaded_name" id="uploaded_name" class="form-control" value="">
-                <input type="hidden" name="decoration" value="<?php echo $decoration ?>" >
+                <input type="text" name="uploaded_name" id="uploaded_name" class="form-control" value="" />
             </div>
             <div class="input-box">
                 <label for="file_type" class="control-label"><?php echo $this->translate('File Type') ?></label>

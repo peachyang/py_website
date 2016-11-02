@@ -521,6 +521,7 @@ CREATE TABLE IF NOT EXISTS `sales_rma` (
     `amount` DECIMAL(12,4) NULL DEFAULT NULL COMMENT 'Amount',
     `carrier` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Carrier name',
     `track_number` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Track number',
+    `reason` INTEGER UNSIGNED NOT NULL COMMENT 'Reason',
     `comment` TEXT COMMENT 'Comment',
     `status` INTEGER NULL DEFAULT 0 COMMENT 'Status',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at',

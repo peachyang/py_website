@@ -1,7 +1,7 @@
 <?php
 $orders = $this->getOrders();
 ?>
-<table class="table text-center orders-list">
+<table class="table table-no-border text-center orders-list">
     <?php if (count($orders)): ?>
         <thead class="sort-by">
             <tr class="text-nowrap">
@@ -27,7 +27,7 @@ $orders = $this->getOrders();
                     $thumbnail = $product->getThumbnail();
                     ?>
                     <tr class="thead_body">
-                        <td class="col-md-1">
+                        <td>
                             <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
                         </td>
                         <td class="text-left text-vtop" title="<?php echo $product->offsetGet('name') ?>">

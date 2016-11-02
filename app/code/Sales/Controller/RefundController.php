@@ -4,7 +4,7 @@ namespace Seahinet\Sales\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Order as OrderModel;
+use Seahinet\Sales\Model\Order;
 use Seahinet\Sales\Model\Order\Phase;
 use Seahinet\Sales\Model\Rma;
 
@@ -20,7 +20,16 @@ class RefundController extends ActionController
 
     public function applyAction()
     {
-        return $this->getLayout('sales_refund_apply');
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Order;
+            $order->load($id);
+            if ($order->getId() && $order->canRefund(false)) {
+                $root = $this->getLayout('sales_refund_apply');
+                $root->getChild('main', true)->setVariable('model', $order);
+                return $root;
+            }
+        }
+        return $this->notFoundAction();
     }
 
     public function viewAction()
@@ -32,14 +41,12 @@ class RefundController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['order_id', 'comment']);
+            $result = $this->validateForm($data, ['order_id', 'reason', 'qty', 'comment']);
             if ($result['error'] === 0) {
                 $segment = new Segment('customer');
+                $order = (new Order)->load($data['order_id']);
                 if ($segment->get('hasLoggedIn')) {
-                    $customerId = $segment->get('customer')->getID();
-                }
-                $order = (new OrderModel)->load($data['order_id'], isset($customerId) ? 'id' : 'increment_id');
-                if (isset($customerId)) {
+                    $customerId = $segment->get('customer')->getId();
                     if ($customerId !== $order['customer_id']) {
                         $result['error'] = 1;
                         $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
@@ -51,7 +58,7 @@ class RefundController extends ActionController
                 if ($order->getId() && $order->canRefund(false)) {
                     $refund = new Rma($data);
                     $refund->setData([
-                        'order_id' => $order['id'],
+                        'order_id' => $order->getId(),
                         'customer_id' => $customerId ?? null
                     ]);
                     try {

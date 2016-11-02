@@ -34,11 +34,16 @@ $thumbnail = $product->getThumbnail();
                 </ul>
             <?php endif; ?>
         </div>
-        <div class="price" data-price="<?php echo $item['price'] ?>">
-            <p><?php echo $this->getCurrency()->format($item['price']) ?></p>
-        </div>
     </li>  
     <li class="col-xs-2 col-sm-2 qty">
+    	x
         <?php echo (float) $item['qty'] ?>
     </li>
+	<li>
+		 <div class="price" data-price="<?php echo $item['price'] ?>">
+            <p><?php echo $this->getCurrency()->format($item['price']) ?></p>
+        </div>
+	</li>
+
+    
 </ul>

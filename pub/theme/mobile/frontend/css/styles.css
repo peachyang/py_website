@@ -342,16 +342,20 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .font-16{font-size:16px}
 .font-color-0{color:#000}
 .font-color-orange{color:#fd9030}
+.padding-5{padding:0 5px}
 .padding-10{padding:0 10px}
 .padding-15{padding: 0 15px 0 10px;}
 .padding-20{padding:0 20px}
 .padding-10-10{padding:10px 10px}
 .padding-10-15{padding:10px 15px}
 .padding-0-10{padding:10px 0}
+.padding-10-5{padding:10px 5px}
 .padding-0-5{padding:5px 0}
+.padding-0{padding:0}
 .margin-10{margin:10px 0}
 .color-red{color:red}
 .color-blue{color:#007dc6}
+.color-hui{color:#777}
 .font-family-x{font-family:-webkit-pictograph;} 
 .qty .form-control {display:inline-block;font-size: 14px;line-height: 28px;border: 1px solid #d4d4d4;border-left: none;border-right: none;width: 50px;height: 28px;border-radius: 0;padding: 0;text-align: center;margin:0}
 .qty .spin {font-size: 18px;line-height: 22px;border: 1px solid #d4d4d4;width: 28px;height: 28px;text-align: center;color: #cbcbcb;background: #ededed;}
@@ -510,7 +514,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-cart #cart .product-list .product-name dt:after{content:":"}
 .checkout-cart #cart .product-list .product-name dd{margin-right:5px}
 .checkout-cart #cart .product-list .product-name h4{font-size:13px;color:#696868;height:20px;line-height:20px;overflow-y:hidden}
-.checkout-cart #cart .product-list .price{color:#007ecc;font-weight:bold;text-align:center;font-size:14px}
+.checkout-cart #cart .product-list .price{    padding: 10px 0 0 0;color:#007ecc;font-weight:bold;text-align:center;font-size:14px}
 .checkout-cart #cart .product-list .qty p{line-height:16px;text-align:center;margin-bottom:0}
 .checkout-order-success h3,h4,li{line-height:30px}
 .checkout-order-success li{margin:0 10px}
@@ -529,7 +533,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .checkout-steps .review .order .product-list .price{color:#007ecc;font-weight:bold}
 .checkout-steps .review .order .product-list .qty{color:#000;line-height:26px;text-align:right}
 .checkout-order .review .order .shipping{padding-top:5px;    border-bottom: 1px solid #f7f7f7;font-size:12px}
-.checkout-steps .review .order .shipping,.subtotal{line-height:40px;width:100%;overflow:hidden}
+.checkout-steps .review .order .shipping,.subtotal{/* line-height:40px; */width:100%;overflow:hidden}
 .checkout-steps .review .order .total .table{overflow: hidden}
 .checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}
 .checkout-order .review .tfoot .buttons-set{background:#ffffff;position:fixed;bottom:0;z-index:1001;margin-left:-5px}
@@ -586,7 +590,7 @@ overflow:hidden;}
 .retailer-account .wishlist .soldout .form-control,.retailer-account  .wishlist .activity .form-control{width:70%;display: inline-block;}   
 .retailer-account .wishlist .soldout .form-time{width:35%} 
 .retailer-account .wishlist .batch_button{margin:10px 0}
-.retailer-account .wishlist,.retailer-order-view .wishlist{padding:0 5px}
+.retailer-account .wishlist,.retailer-order-view .wishlist{/* padding:0 5px */}
 .retailer-account .wishlist .commodity  #form-time{width:36%} 
 .retailer-account .wishlist .commodity li{margin:5px 0}
 .retailer-account .wishlist .commodity .form-control{width:73%}
@@ -654,7 +658,6 @@ overflow:hidden;}
 .retailer-processing .page-content .notice .btn:hover,.retailer-apply .page-content .form>.btn:hover{background:linear-gradient(to bottom,#007ec7,#1da7f8)}
 .customer-history .products-grid .fa{color: #007ecc}
 .customer-history .products-grid dt{line-height: 30px}
-.sales-order-list .container{padding:0 5px}
 .seller-tab .nav,.retailer-order-view  .wishlist  .seller-tab .nav, .sales-order-list .seller-tab .nav,.sales-order-view .nav{border-bottom:1px solid #ccc}
 .retailer-product .wishlist  .seller-tab .nav>li>a,.retailer-order-view .wishlist  .seller-tab .nav>li>a{padding:0;line-height: 40px;height:auto}
 .retailer-product .wishlist  .seller-tab .nav,.retailer-order-view .wishlist  .seller-tab .nav{font-size:13px}
@@ -665,26 +668,40 @@ overflow:hidden;}
 .seller-tab  .search input,.sales-order-list .seller-tab  .search input{border:1px solid #ccc;line-height:2}
 .seller-tab  .search input[value],.sales-order-list .seller-tab  .search input[value]{padding-left:40px;color:#ccc;font-size:12px}
 .seller-tab  .tab-content .inline li, .wishlist .after-sales .inline li,.sales-order-list  .seller-tab  .tab-content .inline li{line-height: 20px;}
-.wishlist .title{font-size:15px;margin:5px 0 20px 0}
+.wishlist .title{padding: 0 5px;font-size:15px;margin:5px 0 20px 0;    border-bottom: 1px solid #eee;}
 .wishlist .bt{border-top:1px solid #eee;}
 .sales-order-invoice .container{padding:0 3px}
 .seller-tab  .tab-content .inline li span,.sales-order-list  .seller-tab  .tab-content .inline li span{display: inherit;}
-.seller-tab .tab-content .inline li .choose{color:#a7a3a3;font-size:12px}
+.seller-tab .tab-content .inline li .choose{color:#777;font-size:12px}
 .wishlist .seller-tab .tab-content .inline li .choose span{text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
 .seller-tab  .tab-content .inline{font-size:12px}
-.seller-tab  .tab-content ul li,.sales-order-list  .seller-tab  .tab-content ul li{padding:5px 0}
+.seller-tab  .tab-content ul li,.sales-order-list  .seller-tab  .tab-content ul li{padding:7px 0}
+.seller-tab  .tab-content  li,.sales-order-list  .seller-tab  .tab-content .name li{padding:0 0}
 .wishlist  .seller-tab  .tab-content .logistics .form-control{width:60%}
 .wishlist  .seller-tab  .tab-content .logistics button {background:#02a0e9;color:#fff;padding:2px 18px;border:none;font-size:12px}
 .wishlist  .seller-tab  .tab-content ul{/* border-top:1px solid #eee */}
 .seller-tab  .tab-content .bg{background:#f9f9f9}
+.seller-tab .tab-content .bg span{padding:7px 5px}
+.seller-tab  .tab-content .bg li{padding:0 5px}
 .seller-tab  .tab-content .bt,.sales-order-list .seller-tab  .tab-content .bt{border-top:1px solid #eee}
 .seller-tab  .tab-content .margin-bj div{margin:10px 0}
-.seller-tab  .tab-content .inline,.sales-order-list .seller-tab  .tab-content .inline{padding:10px 0}
+.sales-order-list .seller-tab  .tab-content .inline{padding:10px 0}
 .seller-tab  .tab-content .padding-0{padding:0}
+.border-bottom{border-bottom:1px solid #eee}
 .seller-tab  .tab-content .operation,.sales-order-list .seller-tab  .tab-content .operation{background:#eee;color:#736f6f;padding:0;border-top: 1px solid #ccc;}
-.wishlist  .after-sales .inline {font-size:12px;margin:10px 0;padding:10px 0;border-top:1px solid #eee;    border-bottom: 1px solid #eee;}
+.seller-tab  .tab-content .operation li a,.sales-order-list .seller-tab  .tab-content .operation li a{ border: 1px solid #02a0e9; padding: 3px 15px;font-size: 12px;}
+.wishlist  .after-sales .inline {font-size:12px;margin:10px 0;padding:10px 0; border-bottom: 1px solid #eee;}
 .wishlist  .seller-tab  .tab-content .inline .text-ovflow, .wishlist  .after-sales .inline .text-ovflow { overflow : hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
-.wishlist  .after-sales .inline .time-bt{margin-top:10px} 
+.wishlist  .after-sales .inline .time-bt{margin-top:10px}
 .wishlist  .after-sales {font-size:12px}
 .wishlist  .after-sales .inline .time-bt span{padding:5px 0}
 .sales-order-view .container{padding:0 3px}
+.checkout-cart #cart .product-list li{padding:10px 0}
+.checkout-order{background:#eee}
+.wishlist  .seller-tab  .tab-content .title-nav li{padding:10px 0 0 0}
+.wishlist  .seller-tab  .tab-content .title-nav {border-bottom:1px solid #eee}
+.retailer-sales-invoice-edit{background:#eee}
+.retailer-sales-invoice-edit .view .panel-body{font-size:12px}
+.retailer-sales-invoice-edit .view .panel-heading{padding:6px 15px}
+.retailer-sales-invoice-edit .view .panel{margin-bottom:5px}
+.retailer-product .container .menu-ctn .name li{padding:0 0}

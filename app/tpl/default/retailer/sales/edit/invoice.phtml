@@ -10,7 +10,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         <input type="hidden" name="back_url" value="<?php echo $back_url; ?>" />
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Order Infomation', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Order Infomation', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
                 <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?><br />
@@ -29,7 +29,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Customer Infomation', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Customer Infomation', [], 'sales') ?></h5>
             </div>
             <div class="panel-body"><?php if ($customer = $this->getCustomer()): ?>
                     ID: <?php echo $customer->getId() ?><br />
@@ -38,7 +38,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Billing Address', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Billing Address', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
                 <?php echo nl2br($order->offsetGet('billing_address')) ?>
@@ -46,7 +46,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Shipping Address', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
                 <?php echo nl2br($order->offsetGet('shipping_address')) ?>
@@ -54,7 +54,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Shipping Method', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
                 <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
@@ -62,7 +62,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
+                <h5 class=""><?php echo $this->translate('Payment Method', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
                 <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
@@ -70,7 +70,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel wide panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
+                <h5 class=""><?php echo $this->translate('Product(s)') ?></h5>
             </div>
             <div class="panel-body grid table-responsive">
                 <table class="table table-hover table-striped table-no-border">
@@ -109,7 +109,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                                     <td class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></td>
                                     <td>
                                         <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
-                                        <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
+                                        <input type="number" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
                                     </td>
                                     <td class="total"><?php echo $currency->format($item['total']) ?></td>
                                 </tr>
@@ -134,41 +134,44 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h4 class="panel-title"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">
-                <dl class="dl-horizontal totals">
-                    <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
-                    <dd>
-                        <span class="price subtotal">
+                <ul class="dl-horizontal totals col-md-12 col-xs-12 col-sm-12">
+                    <li class="col-md-2 col-xs-5 col-sm-2">
+                    	<?php echo $this->translate('Subtotal', [], 'sales') ?>
+                    	 <span class="price subtotal">
                             <?php echo $currency->format($order->offsetGet('subtotal')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
-                    <dd>
-                        <input type="checkbox" name="include_shipping" value="1" checked="checked" />
+                    
+                    </li>
+                 
+                    <li class="col-md-3 col-xs-7 col-sm-3">
+                    	<?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?>
+                    	 <input type="checkbox" name="include_shipping" value="1" checked="checked" />
                         <span class="price shipping" data-price="<?php echo $order->offsetGet('shipping') ?>">
                             <?php echo $currency->format($order->offsetGet('shipping')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
-                    <dd>
-                        <input type="checkbox" name="include_tax" value="1" checked="checked" />
+                      </li>
+                   
+                    <li class="col-md-2 col-xs-5 col-sm-2"><?php echo $this->translate('Tax', [], 'sales') ?>
+                    	 <input type="checkbox" name="include_tax" value="1" checked="checked" />
                         <span class="price tax" data-price="<?php echo $order->offsetGet('tax') ?>">
                             <?php echo $currency->format($order->offsetGet('tax')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
-                    <dd>
-                        <span class="price total">
+                    </li>
+                  
+                    <li class="col-md-2 col-xs-5 col-sm-3"><?php echo $this->translate('Grand Total', [], 'sales') ?>
+                    	   <span class="price total">
                             <?php echo $currency->format($order->offsetGet('total')) ?>
                         </span>
-                    </dd>
-                </dl>
+                    </li>
+                  
+                </ul>
                 <div class="buttons-set text-right">
                     <a class="btn btn-reset" href="<?php echo $back_url; ?>" ><?php echo $this->translate('Back') ?></a>
                     <button type="submit" class="btn btn-submit">
                         <span><?php echo $this->translate('Submit') ?></span>
                     </button>
                 </div>
-            </div>
+            </div> 
         </div>
     </form>
 </div>

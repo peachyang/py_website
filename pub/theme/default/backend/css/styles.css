@@ -343,3 +343,4 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin-media-edit .select-icon input:checked+label{border:2px solid #8b8c8c}
 .admin-media-list .grid td i {font-size:25px;}
 .admin .totals [type=checkbox]:not(:checked)+.price{text-decoration:line-through}
+

@@ -9,7 +9,7 @@ class Rma extends AbstractCollection
 
     protected function construct()
     {
-        $this->init('rma');
+        $this->init('sales_rma');
     }
 
 }

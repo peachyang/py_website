@@ -343,4 +343,22 @@ abstract class AbstractCollection extends ArrayObject
         return $this->select->reset($part);
     }
 
+    /**
+     * Create "IN" predicate
+     *
+     * Utilizes In predicate
+     * 
+     * @param string $identifier
+     * @param array|Select|AbstractCollection $valueSet
+     * @return Select
+     */
+    public function in($identifier, $valueSet)
+    {
+        if ($valueSet instanceof AbstractCollection) {
+            $valueSet = $valueSet->getSelect();
+        }
+        $this->select->where->in($identifier, $valueSet);
+        return $this->select;
+    }
+
 }

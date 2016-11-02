@@ -326,6 +326,14 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .review-form .ratings :checked~.fa:before,.customer-account .review-form .ratings .fa:hover:before,.customer-account .review-form .ratings .fa:hover~.fa:before{content:'\f005'}
 .customer-account .review-form .images{margin-top:10px}
 .customer-account .refund-form{}
+.customer-account .form-rma{margin-top:30px;border:1px solid #e1e3ea}
+.customer-account .form-rma .service{background:#f5f6f9;border-bottom:1px solid #e1e3ea;padding:16px 0 12px 20px}
+.customer-account .form-rma .table{margin:15px 13px;width:97%}
+.customer-account .form-rma .table>thead{background:none;border:none}
+.customer-account .form-rma table>tbody{border:1px solid #e1e3e9}
+.customer-account .form-rma table>tbody>tr{border-bottom: 1px solid #e1e3e9}
+.customer-account .form-rma table>tbody>tr>td{padding:15px}
+.customer-account .form-rma .fieldset{margin-top:60px;margin-left:35px}
 .customer-account .images .preview,.customer-account .images .add-image{position:relative;width:50px;margin-right:6px;height:50px;display:inline-block;border:1px solid #ccc;color:#ccc;padding:0;line-height:2;font-size:24px;text-align:center;vertical-align:middle;cursor:pointer}
 .customer-account .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
 .customer-account .images .preview img{max-width:48px;max-height:48px;vertical-align:top}

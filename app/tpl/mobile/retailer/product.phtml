@@ -3,7 +3,6 @@ $subtitle = $this->getVariable("subtitle");
 $filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
-
 ?>
 <div class="wishlist">
     <h4 class="title"><?php echo $this->translate($subtitle); ?></h4>
@@ -32,7 +31,6 @@ $sales_status = $this->getAllSalesStatus();
 	    </li>
 	</ul>
 </div>	
-
 	<div class="search padding-5 col-xs-12 col-sm-12">
 		<div class="search_center">
 			<i class="fa fa-search" aria-hidden="true"></i>
@@ -72,23 +70,22 @@ $sales_status = $this->getAllSalesStatus();
 	        		<li class="col-xs-3 col-sm-3"><span><a  href="">账单</a></span></li>
 	        		
 	        		<!-- If not paying the following status display to cancel the bill -->
-	        		
 <!-- 	        		<li class="col-xs-6 col-sm-6"><span><a  href=" ">取消</a></span></li> -->
 <!-- 	        		<li class="col-xs-6 col-sm-6"><span>账单</span></li> -->     		
-	       </ul>	
-	       </div>  
-	    </div>
-	     <div class="tab-pane fade " id="delivery">
-	        2
-	    </div>
-	     <div class="tab-pane fade" id="payment">
-	        3
-	    </div>
-	     <div class="tab-pane fade " id="refund">
-	        4
-	    </div>
-	</div>		
-</div>
+                    </ul>	
+                </div>  
+            </div>
+            <div class="tab-pane fade " id="delivery">
+                2
+            </div>
+            <div class="tab-pane fade" id="payment">
+                3
+            </div>
+            <div class="tab-pane fade " id="refund">
+                4
+            </div>
+        </div>		
+    </div>
 
 
     <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">

@@ -11,12 +11,6 @@ class UserController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_soap_user_list');
-        return $root;
-    }
-
-    public function listAction()
-    {
         return $this->getLayout('admin_soap_user_list');
     }
 

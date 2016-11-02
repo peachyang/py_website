@@ -1,44 +1,53 @@
 <?php
-$orders = $this->getOrders();
-$default = $this->getDefaultOrder();
-if (count($orders)):
+$applications = $this->getApplication();
+$currency = $this->getCurrency();
+if (count($applications)):
     ?>
-    <table class="table address-list text-center">
-        <thead style="border:1px solid #eee">
-            <tr class="table_head">
-                <th  class="col-lg-5 col-md-5 text-center"><?php echo $this->translate('Commodity') ?></th>
-                <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Amount of the transaction') ?></th>
-                <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Refund amount') ?></th>
-                <th  class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('application time') ?></th>
-                <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Service type') ?></th>
-                <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Refund status') ?></th>
-                <th  class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Transaction operation') ?></th>
+    <table class="table table-no-border">
+        <colgroup>
+            <col width="116" />
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+        </colgroup>
+        <thead>
+            <tr class="text-nowrap">
+                <th class="text-left" colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
+                <th class="text-center"><?php echo $this->translate('Price') ?></th>
+                <th class="text-center"><?php echo $this->translate('Refund Qty') ?></th>
+                <th class="text-center"><?php echo $this->translate('Last Modified') ?></th>
+                <th class="text-center"><?php echo $this->translate('Action') ?></th>
             </tr>
         </thead>
-    </table>
-    <?php
-    foreach ($orders as $order):
-        $flag = true;
-        ?>
-        <table class="table table-no-border list_table">
-            <caption>
-                <div class="col-xs-6 store"><?php echo $order->getStore()['name'] ?> <a href=""><span class="fa fa-qq"></span></a></div>
-                <div class="col-xs-6 text-right list_right">
-                    <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
-                    <span><?php echo $order['increment_id'] ?></span>
-                    <span class="list_time"><?php echo date('Y-m-d', strtotime($order['created_at'])) ?></span>
-                </div>
-            </caption>
-            <tbody>
+        <tbody>
+            <?php
+            foreach ($applications as $application):
+                $order = $application->getOrder();
+                $flag = true;
+                ?>
+                <tr>
+                    <th colspan="2">
+                        <?php echo $order->getStore()['name'] ?>
+                    </th>
+                    <th colspan="4" class="text-nowrap text-right">
+                        <span class="label"><?php echo $this->translate('Order ID') ?>:</span>
+                        <span><?php echo $order['increment_id'] ?></span>
+                    </th>
+                </tr>
                 <?php
-                foreach ($order->getItems() as $item):
+//                $items = $this->getItems($order);
+                $items = $application->getItems();
+                foreach ($items as $item):
                     $product = $item['product'];
                     $thumbnail = $product->getThumbnail();
                     ?>
                     <tr>
-                        <td class="col-lg-5 col-md-5">
-                            <img class="Thumbnail" src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('frontend/images/placeholder.png') ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
-
+                        <td>
+                            <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
+                        </td>
+                        <td>
                             <h4 class="product-name"><?php echo $product['name'] ?></h4>
                             <?php
                             $options = json_decode($item['options'], true);
@@ -63,76 +72,31 @@ if (count($orders)):
                                 </dl>
                             <?php endif ?>
                         </td>
-                        <td class="col-lg-1 col-md-1  text-center">
-                            <div class="price-box">
-                                <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
-                                    <span class="regular-price">
-                                        <span class="label"><?php echo $this->translate('Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
-                                    </span>
-                                <?php else: ?>
-                                    <span class="old-price text-nowrap">
-                                        <span class="label"><?php echo $this->translate('Old Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->convert($product->getFinalPrice($item['qty'], false), true) ?></span>
-                                    </span>
-                                    <span class="special-price">
-                                        <span class="label"><?php echo $this->translate('Special Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </td>
-                        <td class="col-lg-1 col-md-1  text-center">
-                            <div class="price-box">
-                                <?php if ($product->getFinalPrice($item['qty'], false) == $item['base_price']): ?>
-                                    <span class="regular-price">
-                                        <span class="label"><?php echo $this->translate('Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
-                                    </span>
-                                <?php else: ?>
-                                    <span class="old-price text-nowrap">
-                                        <span class="label"><?php echo $this->translate('Old Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->convert($product->getFinalPrice($item['qty'], false), true) ?></span>
-                                    </span>
-                                    <span class="special-price">
-                                        <span class="label"><?php echo $this->translate('Special Price') ?></span>
-                                        <span class="price"><?php echo $order->getCurrency()->format($item['price']) ?></span>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </td>
-                        <td class="col-lg-2 col-md-2 text-center"><?php echo $item['created_at'] ?></td>
+                        <td class="text-center"><?php echo $currency->convert($item['base_price'], true) ?></td>
+                        <td class="text-center"><?php echo (float) $item['qty'] ?></td>
                         <?php if ($flag): ?>
-                            <td class="col-lg-1 col-md-1 text-center" rowspan="<?php echo count($order->getItems()) ?>">
-                                <span class="status">
-                                    <?php echo $this->translate($order->getStatus()['name']) ?>
-                                </span>
+                            <td class="text-center text-nowrap" rowspan="<?php echo count($items) ?>">
+                                <?php echo date('Y-m-d<\b\r />H:i:s', strtotime($application['updated_at'])) ?>
                             </td>
-                            <td class="col-lg-1 col-md-1 text-center" rowspan="<?php echo count($order->getItems()) ?>" >
-                                <a style="color: #337ab7" href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
-                            </td>
-                            <td class="col-lg-1 col-md-1 text-center" rowspan="<?php echo count($order->getItems()) ?>">
-                                <?php if ($order->canRefund()): ?>
-                                    <a style="color: #337ab7" href="<?php echo $this->getBaseUrl('sales/refund/?id=' . $order->getId()) ?>"><?php echo $this->translate('Refund Application') ?></a>
-                                <?php endif ?>
+                            <td class="text-center" rowspan="<?php echo count($items) ?>">
+                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Order Details') ?></a>
+                                <a href="<?php echo $this->getBaseUrl('sales/refund/view/?id=' . $application->getId()) ?>"><?php echo $this->translate('View Details') ?></a>
                             </td>
                             <?php
                             $flag = false;
                         endif;
                         ?>
                     </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+                    <?php
+                endforeach;
+            endforeach;
+        else:
+            ?>
+            <tr>
+                <td colspan="7" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
+            </tr>
         <?php
-    endforeach;
-else:
-    ?>
-    <table class="table">
-        <tr>
-            <td colspan="7" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
-        </tr>
-    </table>
-<?php
-endif;
-?>
+        endif;
+        ?>
+    </tbody>
+</table>

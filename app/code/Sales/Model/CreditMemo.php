@@ -21,6 +21,23 @@ class CreditMemo extends AbstractModel
         ]);
     }
 
+    public function &offsetGet($key)
+    {
+        $result = parent::offsetGet($key);
+        if (substr($key, 0, 5) === 'base_' && is_numeric($result) && $this->getContainer()->get('currency')['code'] !== $this->storage['base_currency']) {
+            $result = $this->getBaseCurrency()->rconvert($result);
+        }
+        return $result;
+    }
+
+    public function getBaseCurrency()
+    {
+        if (isset($this->storage['base_currency'])) {
+            return (new Currency)->load($this->storage['base_currency'], 'code');
+        }
+        return $this->getContainer()->get('currency');
+    }
+
     public function getCurrency()
     {
         if (isset($this->storage['currency'])) {
@@ -30,7 +47,7 @@ class CreditMemo extends AbstractModel
         }
         return $this->getContainer()->get('currency');
     }
-    
+
     public function getShippingMethod()
     {
         if (isset($this->storage['shipping_method'])) {
@@ -39,7 +56,7 @@ class CreditMemo extends AbstractModel
         }
         return null;
     }
-    
+
     public function getPaymentMethod()
     {
         if (isset($this->storage['payment_method'])) {
@@ -58,10 +75,10 @@ class CreditMemo extends AbstractModel
             $items->walk(function($item) use (&$result) {
                 $result[$item['id']] = $item;
             });
-                $this->items = $result;
-                if ($force) {
-                    return $items;
-                }
+            $this->items = $result;
+            if ($force) {
+                return $items;
+            }
         }
         return $this->items;
     }

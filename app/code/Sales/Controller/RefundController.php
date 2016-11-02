@@ -4,9 +4,11 @@ namespace Seahinet\Sales\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Order;
-use Seahinet\Sales\Model\Order\Phase;
-use Seahinet\Sales\Model\Rma;
+use Seahinet\Sales\Model\{
+    Order,
+    Order\Phase,
+    Rma
+};
 
 class RefundController extends ActionController
 {
@@ -34,7 +36,16 @@ class RefundController extends ActionController
 
     public function viewAction()
     {
-        return $this->getLayout('sales_refund_view');
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $rma = new Rma;
+            $rma->load($id);
+            if ($rma->getId()) {
+                $root = $this->getLayout('sales_refund_view');
+                $root->getChild('main', true)->setVariable('model', $rma);
+                return $root;
+            }
+        }
+        return $this->redirectReferer('sales/refund/');
     }
 
     public function saveAction()
@@ -49,11 +60,11 @@ class RefundController extends ActionController
                     $customerId = $segment->get('customer')->getId();
                     if ($customerId !== $order['customer_id']) {
                         $result['error'] = 1;
-                        $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
+                        $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
                     }
                 } else if (!$order['customer_id']) {
                     $result['error'] = 1;
-                    $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
                 }
                 if ($order->getId() && $order->canRefund(false)) {
                     $refund = new Rma($data);
@@ -68,16 +79,16 @@ class RefundController extends ActionController
                         if ($order->offsetGet('status_id') != $status) {
                             $order->setData('status_id', $status)->save();
                         }
-                        $result['message'][] = ['message' => 'We have received your application. The customer service will contact you as soon as possible. Thanks for your support.', 'level' => 'success'];
+                        $result['message'][] = ['message' => $this->translate('We have received your application. The customer service will contact you as soon as possible. Thanks for your support.'), 'level' => 'success'];
                         $this->commit();
                     } catch (Exception $e) {
                         $this->rollback();
                         $result['error'] = 1;
-                        $result['message'][] = ['message' => 'An error detected. Please contact us or try again later.', 'level' => 'danger'];
+                        $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                     }
                 } else {
                     $result['error'] = 1;
-                    $result['message'][] = ['message' => 'Invalid order ID', 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
                 }
             }
         }

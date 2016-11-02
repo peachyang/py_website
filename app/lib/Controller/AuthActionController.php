@@ -112,10 +112,10 @@ class AuthActionController extends ActionController
                 if ($transaction) {
                     $this->beginTransaction();
                 }
-                if (is_callable($beforeSave)) {
-                    $beforeSave($model, $data);
-                }
                 try {
+                    if (is_callable($beforeSave)) {
+                        $beforeSave($model, $data);
+                    }
                     $model->save();
                     $result['data'] = $model->getArrayCopy();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];

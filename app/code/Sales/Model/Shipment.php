@@ -38,16 +38,6 @@ class Shipment extends AbstractModel
         return $this->items;
     }
 
-    public function getCurrency()
-    {
-        if (isset($this->storage['currency'])) {
-            $currency = new Currency;
-            $currency->labol = 'invoice';
-            return $currency->load($this->storage['currency'], 'code');
-        }
-        return $this->getContainer()->get('currency');
-    }
-
     public function getShippingMethod()
     {
         if (isset($this->storage['shipping_method'])) {
@@ -56,4 +46,5 @@ class Shipment extends AbstractModel
         }
         return null;
     }
+
 }

@@ -3,94 +3,89 @@ $subtitle = $this->getVariable("subtitle");
 $filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
-
 ?>
 <div class="wishlist">
-   
-<div id="Has-sold" class="seller-tab">
+    <div id="Has-sold" class="seller-tab">
+        <div class="search col-xs-12 col-sm-12">
+            <div class="search_center">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+            </div>
+        </div>
+        <div id="Product-details" class="tab-content">
+            <div class="tab-pane fade in active margin-bj" id="all">
+
+                <div class="order col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 bg" >
+                        <li class="col-xs-8 col-sm-8">订单编号：1216102011092481</li>
+                        <li class="col-xs-4 col-sm-4 text-right"> 已发货</li>
+                    </ul>
+                    <ul  class="col-xs-12 col-sm-12 title-nav">
+                        <li class="col-xs-6 col-sm-6 text-left font-14"><a href="" target="_blank">denny</a></li>
+                        <li class="col-xs-6 col-sm-6 text-right font-14"><a href="">实付:￥123.00(包邮)</a></li>	
 
 
-	<div class="search col-xs-12 col-sm-12">
-		<div class="search_center">
-			<i class="fa fa-search" aria-hidden="true"></i>
-			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
-		</div>
-		
-	</div>
-	<div id="Product-details" class="tab-content">
-	    <div class="tab-pane fade in active margin-bj" id="all">
-	    
-	     <div class="order col-xs-12 col-sm-12">
-	     	 <ul class="col-xs-12 col-sm-12 bg" >
-	       		<li class="col-xs-8 col-sm-8">订单编号：1216102011092481</li>
-	       		<li class="col-xs-4 col-sm-4 text-right"> 已发货</li>
-	       </ul>
-	       <ul  class="col-xs-12 col-sm-12 title-nav">
-	        		<li class="col-xs-6 col-sm-6 text-left font-14"><a href="" target="_blank">denny</a></li>
-	        		<li class="col-xs-6 col-sm-6 text-right font-14"><a href="">实付:￥123.00(包邮)</a></li>	
-	        			
-	        			
-	        </ul>
-	        <ul class="col-xs-12 col-sm-12 inline">
-	        		<li class="col-xs-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
-	        		<li class="col-xs-7 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-	        		<li class="col-xs-3 text-right">
-	        			<span class="price color-blue font-14">￥198.00</span>
-						<span>x1</span>
-						<span>已付款</span>
-						<button class="padding-0">未确认收货</button>
-						
-	        		</li>
-	        			
-	       </ul>
-	     
-	     </div>
-	     
-        	
-	        
-	       <div class="address col-xs-12 col-sm-12">
-	       		<ul class="col-xs-12 col-sm-12 font-12">
-	       		<li class="bg font-14">收货信息</li>
-	       		<li class="col-xs-4 col-sm-4">刘筱菲</li>
-	       		<li class="col-xs-8 col-sm-8">18865529426</li>
-	       		
-	       		<li>山东省烟台市莱山区港城东大街100号3号楼206</li>	
-	       		</ul>
-	       </div>
-	       <div class="logistics-ct col-xs-12 col-sm-12">
-	       	<ul class="logistics font-12">
-	       			<li class="bg font-14">物流状态</li>
-	       			<li class="col-xs-9 col-sm-9"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
-	       			<li class="col-xs-3 col-sm-3"><button>发货</button></li>
-	       		</ul>
-	       		<ul class="col-xs-12 col-sm-12">
-		       		<li class="col-xs-12 col-sm-12"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
-		       		<li class="col-xs-12 col-sm-12"><span class="col-xs-6 col-sm-6">付款时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
-	       		</ul>
-	       </div>
-	       <div class="xq col-xs-12 col-sm-12">
-	       	 <ul class="col-xs-12 col-sm-12 inline text-center operation">
-	        		<li class="col-xs-3"><span>详情</span></li>
-	        		<li class="col-xs-3 "><span>账单</span></li>
-	        		<li class="col-xs-3 "><span>发货</span></li>
-	        		<li class="col-xs-3"><span>打印</span></li>		
-	       </ul>
-	       </div>
-	      
-	        	
-	        </div>  
-	  
-	     <div class="tab-pane fade " id="delivery">
-	        2
-	    </div>
-	     <div class="tab-pane fade" id="payment">
-	        3
-	    </div>
-	     <div class="tab-pane fade " id="refund">
-	        4
-	    </div>
-	</div>		
-</div>
+                    </ul>
+                    <ul class="col-xs-12 col-sm-12 inline">
+                        <li class="col-xs-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
+                        <li class="col-xs-7 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+                        <li class="col-xs-3 text-right">
+                            <span class="price color-blue font-14">￥198.00</span>
+                            <span>x1</span>
+                            <span>已付款</span>
+                            <button class="padding-0">未确认收货</button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="address col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 font-12">
+                        <li class="bg font-14">收货信息</li>
+                        <li class="col-xs-4 col-sm-4">刘筱菲</li>
+                        <li class="col-xs-8 col-sm-8">18865529426</li>
+
+                        <li>山东省烟台市莱山区港城东大街100号3号楼206</li>	
+                    </ul>
+                </div>
+                <div class="logistics-ct col-xs-12 col-sm-12">
+                    <ul class="logistics font-12">
+                        <li class="bg font-14">物流状态</li>
+                        <li class="col-xs-9 col-sm-9"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
+                        <li class="col-xs-3 col-sm-3"><button>发货</button></li>
+                    </ul>
+                    <ul class="col-xs-12 col-sm-12">
+                        <li class="col-xs-12 col-sm-12"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
+                        <li class="col-xs-12 col-sm-12"><span class="col-xs-6 col-sm-6">付款时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
+                    </ul>
+                </div>
+                <div class="xq col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 inline text-center operation">
+                        <li class="col-xs-3"><span>详情</span></li>
+                        <li class="col-xs-3 "><span>账单</span></li>
+                        <li class="col-xs-3 "><span>发货</span></li>
+                        <li class="col-xs-3"><span>打印</span></li>		
+                    </ul>
+                </div>
+
+
+            </div>  
+
+            <div class="tab-pane fade " id="delivery">
+                2
+            </div>
+            <div class="tab-pane fade" id="payment">
+                3
+            </div>
+            <div class="tab-pane fade " id="refund">
+                4
+            </div>
+        </div>		
+    </div>
 
 
     <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">

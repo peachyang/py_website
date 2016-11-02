@@ -331,7 +331,7 @@ retailer_history_products:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
 retailer_order_view:
-    update: frontend
+    update: retailer_account
     root:
         children:
             head:

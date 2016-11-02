@@ -10,20 +10,20 @@ $currency = $this->getCurrency();
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="products">
-            <table>
+            <table class="table table-no-border">
                 <thead>
                     <tr class="text-nowrap">
                         <th class="text-left" colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
                         <th class="text-center"><?php echo $this->translate('Price') ?></th>
                         <th class="text-center"><?php echo $this->translate('Refund Qty') ?></th>
-                        <th class="text-center"><?php echo $this->translate('Applied at') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Detail') ?></th>
                         <th class="text-center"><?php echo $this->translate('Total') ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th><?php echo $order->getStore()['name'] ?></th>
-                        <th><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></th>
+                        <th colspan="2"><?php echo $order->getStore()['name'] ?></th>
+                        <th colspan="4" class="text-right"><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></th>
                     </tr>
                     <?php
                     $items = $application->getItems();
@@ -64,7 +64,11 @@ $currency = $this->getCurrency();
                             <td class="text-center"><?php echo $currency->convert($item['base_price'], true) ?></td>
                             <td class="text-center"><?php echo (float) $item['qty'] ?></td>
                             <?php if ($flag): ?>
-                                <td class="text-center" rowspan="<?php echo count($items) ?>"><?php echo $application['created_at'] ?></td>
+                                <td class="text-center" rowspan="<?php echo count($items) ?>">
+                                    <span><?php echo $this->translate($this->getService($application['service'])) ?></span>
+                                    <span><?php echo $this->translate($this->getStatus($application['status'])) ?></span>
+                                    <span><?php echo $application['created_at'] ?></span>
+                                </td>
                                 <td class="text-center" rowspan="<?php echo count($items) ?>"><?php echo $currency->convert($application['amount'], true) ?></td>
                                 <?php
                                 $flag = false;
@@ -76,7 +80,16 @@ $currency = $this->getCurrency();
             </table>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="address">
-
+            <?php echo nl2br($order['shipping_address']) ?>
         </div>
+    </div>
+    <div class="handler">
+        
+    </div>
+    <div class="flow">
+        
+    </div>
+    <div class="record">
+        
     </div>
 </div>

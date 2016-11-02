@@ -1,10 +1,10 @@
 <?php
 
-namespace Seahinet\Sales\Source;
+namespace Seahinet\Sales\Source\Refund;
 
 use Seahinet\Lib\Source\SourceInterface;
 
-class RefundReason implements SourceInterface
+class Reason implements SourceInterface
 {
 
     public function getSourceArray()

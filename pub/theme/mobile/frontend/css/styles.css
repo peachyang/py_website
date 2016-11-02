@@ -357,6 +357,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .color-blue{color:#007dc6}
 .color-hui{color:#777}
 .font-family-x{font-family:-webkit-pictograph;} 
+.seller-tab  .tab-content .li-padding li{padding:0 5px}
 .qty .form-control {display:inline-block;font-size: 14px;line-height: 28px;border: 1px solid #d4d4d4;border-left: none;border-right: none;width: 50px;height: 28px;border-radius: 0;padding: 0;text-align: center;margin:0}
 .qty .spin {font-size: 18px;line-height: 22px;border: 1px solid #d4d4d4;width: 28px;height: 28px;text-align: center;color: #cbcbcb;background: #ededed;}
 .modal-dialog .modal-footer{padding:0}
@@ -695,7 +696,7 @@ overflow:hidden;}
 .wishlist  .after-sales .inline .time-bt{margin-top:10px}
 .wishlist  .after-sales {font-size:12px}
 .wishlist  .after-sales .inline .time-bt span{padding:5px 0}
-.sales-order-view .container{padding:0 3px}
+.sales-order-view .container{/* padding:0 3px */}
 .checkout-cart #cart .product-list li{padding:10px 0}
 .checkout-order{background:#eee}
 .wishlist  .seller-tab  .tab-content .title-nav li{padding:10px 0 0 0}

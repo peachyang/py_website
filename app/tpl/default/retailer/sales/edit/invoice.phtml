@@ -134,41 +134,44 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h4 class="panel-title"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">
-                <dl class="dl-horizontal totals">
-                    <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
-                    <dd>
-                        <span class="price subtotal">
+                <ul class="dl-horizontal totals col-md-12 col-xs-12 col-sm-12">
+                    <li class="col-md-2 col-xs-5 col-sm-2">
+                    	<?php echo $this->translate('Subtotal', [], 'sales') ?>
+                    	 <span class="price subtotal">
                             <?php echo $currency->format($order->offsetGet('subtotal')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
-                    <dd>
-                        <input type="checkbox" name="include_shipping" value="1" checked="checked" />
+                    
+                    </li>
+                 
+                    <li class="col-md-3 col-xs-7 col-sm-3">
+                    	<?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?>
+                    	 <input type="checkbox" name="include_shipping" value="1" checked="checked" />
                         <span class="price shipping" data-price="<?php echo $order->offsetGet('shipping') ?>">
                             <?php echo $currency->format($order->offsetGet('shipping')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
-                    <dd>
-                        <input type="checkbox" name="include_tax" value="1" checked="checked" />
+                      </li>
+                   
+                    <li class="col-md-2 col-xs-5 col-sm-2"><?php echo $this->translate('Tax', [], 'sales') ?>
+                    	 <input type="checkbox" name="include_tax" value="1" checked="checked" />
                         <span class="price tax" data-price="<?php echo $order->offsetGet('tax') ?>">
                             <?php echo $currency->format($order->offsetGet('tax')) ?>
                         </span>
-                    </dd>
-                    <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
-                    <dd>
-                        <span class="price total">
+                    </li>
+                  
+                    <li class="col-md-2 col-xs-5 col-sm-3"><?php echo $this->translate('Grand Total', [], 'sales') ?>
+                    	   <span class="price total">
                             <?php echo $currency->format($order->offsetGet('total')) ?>
                         </span>
-                    </dd>
-                </dl>
+                    </li>
+                  
+                </ul>
                 <div class="buttons-set text-right">
                     <a class="btn btn-reset" href="<?php echo $back_url; ?>" ><?php echo $this->translate('Back') ?></a>
                     <button type="submit" class="btn btn-submit">
                         <span><?php echo $this->translate('Submit') ?></span>
                     </button>
                 </div>
-            </div>
+            </div> 
         </div>
     </form>
 </div>

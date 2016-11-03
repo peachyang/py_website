@@ -64,12 +64,12 @@ $currency = $this->getCurrency();
                             <td class="text-center"><?php echo $currency->convert($item['base_price'], true) ?></td>
                             <td class="text-center"><?php echo (float) $item['qty'] ?></td>
                             <?php if ($flag): ?>
-                                <td class="text-center" rowspan="<?php echo count($items) ?>">
+                                <td class="text-center detail" rowspan="<?php echo count($items) ?>">
                                     <span><?php echo $this->translate($this->getService($application['service'])) ?></span>
                                     <span><?php echo $this->translate($this->getStatus($application['status'])) ?></span>
                                     <span><?php echo date('Y-m-d<\b\r />H:i:s',strtotime($application['created_at'])) ?></span>
                                 </td>
-                                <td class="text-center" rowspan="<?php echo count($items) ?>"><?php echo $currency->convert($application['amount'], true) ?></td>
+                                <td class="text-center amount" rowspan="<?php echo count($items) ?>"><?php echo $currency->convert($application['amount'], true) ?></td>
                                 <?php
                                 $flag = false;
                             endif;

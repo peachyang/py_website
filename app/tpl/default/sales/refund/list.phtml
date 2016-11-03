@@ -1,9 +1,9 @@
 <?php
 $applications = $this->getApplication();
 $currency = $this->getCurrency();
-if (count($applications)):
-    ?>
-    <table class="table table-no-border">
+?>
+<table class="table table-no-border refund-list">
+    <?php if (count($applications)): ?>
         <colgroup>
             <col width="116" />
             <col />
@@ -27,7 +27,7 @@ if (count($applications)):
                 $order = $application->getOrder();
                 $flag = true;
                 ?>
-                <tr class="refund-store">
+                <tr class="store">
                     <th colspan="2">
                         <?php echo $order->getStore()['name'] ?>
                     </th>
@@ -37,13 +37,12 @@ if (count($applications)):
                     </th>
                 </tr>
                 <?php
-//                $items = $this->getItems($order);
                 $items = $application->getItems();
                 foreach ($items as $item):
                     $product = $item['product'];
                     $thumbnail = $product->getThumbnail();
                     ?>
-                    <tr class="refund-list">
+                    <tr class="list">
                         <td>
                             <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
                         </td>
@@ -93,10 +92,8 @@ if (count($applications)):
         else:
             ?>
             <tr>
-                <td colspan="7" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
+                <td colspan="6" class="text-center"><?php echo $this->translate('You have placed no refund application.') ?></td>
             </tr>
-        <?php
-        endif;
-        ?>
+        <?php endif ?>
     </tbody>
 </table>

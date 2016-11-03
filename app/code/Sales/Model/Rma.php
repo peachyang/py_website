@@ -36,19 +36,33 @@ class Rma extends AbstractModel
     {
         if ($this->getId()) {
             if (is_scalar($data)) {
-                $data = ['comment' => $data];
+                $data = ['comment' => gzencode($data)];
+            } else {
+                $data['comment'] = gzencode($data['comment']);
             }
             $tableGateway = $this->getTableGateway('log_rma');
             $tableGateway->insert(['rma_id' => $this->getId()] + $data);
+            $this->flushList('log_rma');
         }
         return $this;
     }
 
-    public function getComment()
+    public function getComments()
     {
         if ($this->getId()) {
-            $tableGateway = $this->getTableGateway('log_rma');
-            $tableGateway->select(['rma_id' => $this->getId()]);
+            $result = $this->fetchList('rma_id=' . $this->getId(), 'log_rma');
+            if (!$result = $this->fetchList('rma_id=' . $this->getId(), 'log_rma')) {
+                $tableGateway = $this->getTableGateway('log_rma');
+                $select = $tableGateway->getSql()->select();
+                $select->where(['rma_id' => $this->getId()])
+                        ->order('created_at DESC');
+                $result = $tableGateway->selectWith($select)->toArray();
+                foreach($result as &$item){
+                    $item['comment'] = @gzdecode($item['comment']);
+                }
+                $this->addCacheList('rma_id=' . $this->getId(), $result, 'log_rma');
+            }
+            return $result;
         }
         return $this;
     }

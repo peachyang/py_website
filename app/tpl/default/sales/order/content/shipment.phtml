@@ -1,5 +1,6 @@
 <?php
 $order = $this->getVariable('order');
+$currency = $order->getCurrency();
 $shipment = $this->getVariable('model');
 ?>
 <div class="clearfix">
@@ -52,7 +53,7 @@ $shipment = $this->getVariable('model');
         </div>
         <div class="panel-body grid table-responsive">
             <table class="table table-hover table-striped table-no-border">
-                <thead class="sort-by">
+                <thead class="text-nowrap">
                     <tr>
                         <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
                         <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
@@ -66,7 +67,7 @@ $shipment = $this->getVariable('model');
                     <?php foreach ($shipment->getItems() as $item): ?>
                         <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                             <td><?php echo $item['product_name'] ?></td>
-                            <td><?php echo $item['sku'] ?></td>
+                            <td class="text-center"><?php echo $item['sku'] ?></td>
                             <td>
                                 <?php
                                 $options = json_decode($item['options'], true);
@@ -80,9 +81,9 @@ $shipment = $this->getVariable('model');
                                 }
                                 ?>
                             </td>
-                            <td><?php echo $currency->format($item['price']) ?></td>
-                            <td><?php echo $item['qty'] ?></td>
-                            <td><?php echo $currency->format($item['total']) ?></td>
+                            <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
+                            <td class="text-center"><?php echo (float) $item['qty'] ?></td>
+                            <td class="text-center"><?php echo $currency->format($item['total']) ?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

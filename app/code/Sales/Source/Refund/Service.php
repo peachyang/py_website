@@ -10,9 +10,9 @@ class Service implements SourceInterface
     public function getSourceArray()
     {
         return [
+            'Refund Only',
             'Return &amp; Refund',
-            'Repair or Exchange',
-            'Refund Only'
+            'Repair or Exchange'
         ];
     }
 

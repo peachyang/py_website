@@ -338,13 +338,24 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-list .list>td{padding:15px}
 .customer-account .refund-list .amount{color:#007dc6}
 .customer-account .refund-list .detail span{display:block}
+.customer-account .refund-list{border:1px solid #e1e3ea}
+.customer-account .refund-list>td{padding:15px}
+.customer-account .refund-detail .handler{border:1px solid #e1e3ea;padding:10px;margin-bottom:15px}
+.customer-account .refund-detail .handler h3{font-size:14px;color:#8d8c8c}
+.customer-account .refund-detail .handler .input-box,.buttons-set{display:inline-block}
+.customer-account .refund-detail .btn-submit, .btn-reset, .btn-delete, .btn-theme, .btn-add{padding:9px 15px;background: #3fb5fa;border:#007dc6}
+.customer-account .refund-detail .flow,.log{border:1px solid #e1e3ea;padding:40px 0}
+.customer-account .refund-detail .log{padding-left:90px;border-top:none}
+.customer-account .refund-detail .log .item{padding:10px 36px 15px 0;margin-right:36px;border-bottom:2px dotted #e1e3ea}
+.customer-account .refund-detail .log form{padding:30px 36px 0 0}
+.customer-account .refund-detail .log form .input-box,.buttons-set{margin-bottom:15px}
 .customer-account .refund-detail{margin-top:30px}
 .customer-account .refund-detail .nav{margin-bottom:20px;padding-top:20px;background:#e3f4fd}
 .customer-account .refund-detail .nav>li>a{padding:4px 15px}
 .customer-account .refund-detail .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6}
 .customer-account .refund-detail .images li{text-indent:0;border:1px solid #f5f6f9;border-radius:0;width:50px;height:50px;text-align:center;margin-right:10px;position:relative}
 .customer-account .refund-detail .images .thumbnail{max-width:48px;max-height:48px;cursor:pointer}
-.customer-account .refund-detail .flow{text-align:center;font-size:0}
+.customer-account .refund-detail .flow{text-align:center;font-size:0;border-bottom:none}
 .customer-account .refund-detail .flow .step{display:inline-block;color:#d2d2d2;font-size:12px;line-height:4;position:relative;width:100px}
 .customer-account .refund-detail .flow .step:before{content:" ";display:block;width:30px;height:30px;border:4px solid;margin:0 auto;border-radius:15px}
 .customer-account .refund-detail .flow .step:not(:last-child):after{content:" ";display:block;width:0;height:0;border-width:4px 36px;border-width:4px calc(50% - 14px);border-style:solid;position:absolute;top:11px;left:64px;left:calc(50% + 14px)}

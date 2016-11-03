@@ -49,9 +49,9 @@ class Refund extends AbstractViewModel
     public function getHandler($service, $status)
     {
         $template = $service . '-' . $status;
-        echo $template;
-        if (!in_array($template, [
-                    '1-2', '2-1', '2-4'
+        if (in_array($template, [
+                    '0-0', '1-0', '2-0',
+                    '1-2'
                 ])) {
             $viewModel = new static;
             $viewModel->setTemplate('sales/refund/handler/' . $template);

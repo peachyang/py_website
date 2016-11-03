@@ -35,7 +35,7 @@ $currency = $this->getCurrency();
                         ?>
                         <tr class="refund-list">
                             <td>
-                                <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
+                                <img src="<?php echo strpos($thumbnail, '//') === false ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
                             </td>
                             <td>
                                 <h4 class="product-name"><?php echo $product['name'] ?></h4>
@@ -88,7 +88,7 @@ $currency = $this->getCurrency();
     <div class="flow">
         <div class="step active"><?php echo $this->translate('Applied') ?></div>
         <?php if ($status == -1): ?>
-            <div class="step<?php if ($status > 4): ?> active<?php endif ?>"><?php echo $this->translate('Refused') ?></div>
+            <div class="step active"><?php echo $this->translate('Refused') ?></div>
         <?php else: ?>
             <div class="step<?php if ($status): ?> active<?php endif ?>"><?php echo $this->translate('Approved') ?></div>
             <?php if ($application['service'] > 1): ?>
@@ -121,20 +121,22 @@ $currency = $this->getCurrency();
                 </div>
             </div>
         <?php endforeach; ?>
-        <form action="<?php echo $this->getBaseUrl('sales/refund/addcomment/') ?>" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />
-            <div class="input-box">
-                <textarea name="comment" class="form-control"></textarea>
-            </div>
-            <div class="input-box images">
-                <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />
-                <label for="voucher" class="add-image"><span class="fa fa-camera"></span></label>
-                <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
-            </div>
-            <div class="buttons-set">
-                <button type="submit" name="success_url" value="<?php echo $this->getUri() ?>" class="btn btn-submit"><?php echo $this->translate('Submit') ?></button>
-            </div>
-        </form>
+        <?php if ($status != -1 && $status < 5): ?>
+            <form action="<?php echo $this->getBaseUrl('sales/refund/addcomment/') ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />
+                <div class="input-box">
+                    <textarea name="comment" class="form-control"></textarea>
+                </div>
+                <div class="input-box images">
+                    <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />
+                    <label for="voucher" class="add-image"><span class="fa fa-camera"></span></label>
+                    <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
+                </div>
+                <div class="buttons-set">
+                    <button type="submit" name="success_url" value="<?php echo $this->getUri() ?>" class="btn btn-submit"><?php echo $this->translate('Submit') ?></button>
+                </div>
+            </form>
+        <?php endif ?>
     </div>
 </div>

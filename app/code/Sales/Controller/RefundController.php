@@ -48,6 +48,52 @@ class RefundController extends ActionController
         return $this->redirectReferer('sales/refund/');
     }
 
+    public function addCommentAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['rma_id', 'comment']);
+            if ($result['error'] === 0) {
+                try {
+                    $images = [];
+                    $path = BP . 'pub/upload/refund/';
+                    if (!is_dir($path)) {
+                        mkdir($path, 0755, true);
+                    }
+                    $count = 0;
+                    $files = $this->getRequest()->getUploadedFile();
+                    if (!empty($files['voucher'])) {
+                        foreach ($files['voucher'] as $file) {
+                            if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                $newName = $file->getClientFilename();
+                                while (file_exists($path . $newName)) {
+                                    $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
+                                    if (strlen($newName) >= 120) {
+                                        throw new Exception('The file is existed.');
+                                    }
+                                }
+                                $file->moveTo($path . $newName);
+                                $images[] = $newName;
+                            }
+                        }
+                    }
+                    $refund = new Rma;
+                    $refund->setId($data['rma_id'])->addComment([
+                        'is_customer' => 0,
+                        'comment' => $data['comment'],
+                        'image' => json_encode($images)
+                    ]);
+                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->rollback();
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'sales/refund/', 'customer');
+    }
+
     public function saveAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -79,21 +125,25 @@ class RefundController extends ActionController
                             mkdir($path, 0755, true);
                         }
                         $count = 0;
-                        foreach ((array) $this->getRequest()->getUploadedFile() as $file) {
-                            if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
-                                $newName = $file->getClientFilename();
-                                while (file_exists($path . $newName)) {
-                                    $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
-                                    if (strlen($newName) >= 120) {
-                                        throw new Exception('The file is existed.');
+                        $files = $this->getRequest()->getUploadedFile();
+                        if (!empty($files['voucher'])) {
+                            foreach ($files['voucher'] as $file) {
+                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                    $newName = $file->getClientFilename();
+                                    while (file_exists($path . $newName)) {
+                                        $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
+                                        if (strlen($newName) >= 120) {
+                                            throw new Exception('The file is existed.');
+                                        }
                                     }
+                                    $file->moveTo($path . $newName);
+                                    $images[] = $newName;
                                 }
-                                $file->moveTo($path . $newName);
-                                $images[] = $newName;
                             }
                         }
                         $this->beginTransaction();
                         $refund->save()->addComment([
+                            'is_customer' => 0,
                             'comment' => $data['comment'],
                             'image' => json_encode($images)
                         ]);
@@ -111,6 +161,53 @@ class RefundController extends ActionController
                 } else {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'sales/refund/', 'customer');
+    }
+
+    public function deliverAction()
+    {
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['rma_id', 'comment']);
+            if ($result['error'] === 0) {
+                try {
+                    $images = [];
+                    $path = BP . 'pub/upload/refund/';
+                    if (!is_dir($path)) {
+                        mkdir($path, 0755, true);
+                    }
+                    $count = 0;
+                    $files = $this->getRequest()->getUploadedFile();
+                    if (!empty($files['voucher'])) {
+                        foreach ($files['voucher'] as $file) {
+                            if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                $newName = $file->getClientFilename();
+                                while (file_exists($path . $newName)) {
+                                    $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
+                                    if (strlen($newName) >= 120) {
+                                        throw new Exception('The file is existed.');
+                                    }
+                                }
+                                $file->moveTo($path . $newName);
+                                $images[] = $newName;
+                            }
+                        }
+                    }
+                    $refund = new Rma;
+                    $refund->setId($data['rma_id'])->addComment([
+                        'is_customer' => 0,
+                        'comment' => $data['comment'],
+                        'image' => json_encode($images)
+                    ]);
+                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->rollback();
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                 }
             }
         }

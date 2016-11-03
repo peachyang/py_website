@@ -14,7 +14,7 @@ class Rma extends AbstractModel
 
     protected function construct()
     {
-        $this->init('sales_rma', 'id', ['id', 'order_id', 'customer_id', 'currency', 'amount', 'carrier', 'track_number', 'reason', 'comment', 'status', 'created_at', 'updated_at']);
+        $this->init('sales_rma', 'id', ['id', 'order_id', 'customer_id', 'currency', 'amount', 'carrier', 'track_number', 'reason', 'service', 'status', 'created_at', 'updated_at']);
     }
 
     protected function afterSave()
@@ -30,6 +30,27 @@ class Rma extends AbstractModel
             }
         }
         parent::afterSave();
+    }
+
+    public function addComment($data)
+    {
+        if ($this->getId()) {
+            if (is_scalar($data)) {
+                $data = ['comment' => $data];
+            }
+            $tableGateway = $this->getTableGateway('log_rma');
+            $tableGateway->insert(['rma_id' => $this->getId()] + $data);
+        }
+        return $this;
+    }
+
+    public function getComment()
+    {
+        if ($this->getId()) {
+            $tableGateway = $this->getTableGateway('log_rma');
+            $tableGateway->select(['rma_id' => $this->getId()]);
+        }
+        return $this;
     }
 
     public function getOrder()

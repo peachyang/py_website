@@ -3,7 +3,10 @@
 namespace Seahinet\Sales\ViewModel\Refund;
 
 use Seahinet\Lib\ViewModel\Template;
-use Seahinet\Sales\Source\RefundReason;
+use Seahinet\Sales\Source\Refund\{
+    Reason,
+    Service
+};
 
 class Apply extends Template
 {
@@ -15,7 +18,12 @@ class Apply extends Template
 
     public function getReasons()
     {
-        return (new RefundReason)->getSourceArray();
+        return (new Reason)->getSourceArray();
+    }
+
+    public function getServices()
+    {
+        return (new Service)->getSourceArray();
     }
 
 }

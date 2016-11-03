@@ -49,7 +49,7 @@ class OrderController extends AuthActionController
                         throw new Exception('Invalid Order Id');
                     }
                     $files = $this->getRequest()->getUploadedFile();
-                    $path = BP . 'pub/review/';
+                    $path = BP . 'pub/upload/review/';
                     if (!is_dir($path)) {
                         mkdir($path, 0644, true);
                     }

@@ -72,9 +72,31 @@ class RefundController extends ActionController
                         'order_id' => $order->getId(),
                         'customer_id' => $customerId ?? null
                     ]);
+                    $images = [];
                     try {
+                        $path = BP . 'pub/upload/refund/';
+                        if (!is_dir($path)) {
+                            mkdir($path, 0755, true);
+                        }
+                        $count = 0;
+                        foreach ((array) $this->getRequest()->getUploadedFile() as $file) {
+                            if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                $newName = $file->getClientFilename();
+                                while (file_exists($path . $newName)) {
+                                    $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
+                                    if (strlen($newName) >= 120) {
+                                        throw new Exception('The file is existed.');
+                                    }
+                                }
+                                $file->moveTo($path . $newName);
+                                $images[] = $newName;
+                            }
+                        }
                         $this->beginTransaction();
-                        $refund->save();
+                        $refund->save()->addComment([
+                            'comment' => $data['comment'],
+                            'image' => json_encode($images)
+                        ]);
                         $status = (new Phase)->load('holded', 'code')->getDefaultStatus()->getId();
                         if ($order->offsetGet('status_id') != $status) {
                             $order->setData('status_id', $status)->save();

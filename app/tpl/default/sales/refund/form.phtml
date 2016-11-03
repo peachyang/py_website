@@ -8,9 +8,10 @@ $currency = $this->getCurrency();
         <input type="hidden" name="order_id" value="<?php echo $order->getId() ?>" />
         <div class="service">
             <label for="service" class="control-label required"><?php echo $this->translate('Service') ?></label>
-            <select name="service" class="form-control required">
-                <option value="1"><?php echo $this->translate('Return &amp; Refund') ?></option>
-                <option value="0"><?php echo $this->translate('Refund Only') ?></option>
+            <select name="service" id="service" class="form-control required">
+                <?php foreach ($this->getServices() as $key => $service): ?>
+                    <option value="<?php echo $key ?>"><?php echo $this->translate($service) ?></option>
+                <?php endforeach ?>
             </select>
         </div>
         <table class="table table-no-border">
@@ -120,7 +121,7 @@ $currency = $this->getCurrency();
             <div class="input-box">
                 <label for="voucher" class="control-label"><?php echo $this->translate('Voucher') ?></label>
                 <div class="cell images">
-                    <input type="file" name="voucher" id="voucher" hidden="hidden" accept="image/*" />
+                    <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />
                     <label for="voucher" class="add-image"><span class="fa fa-camera"></span></label>
                     <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
                 </div>

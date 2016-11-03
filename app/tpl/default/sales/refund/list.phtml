@@ -15,10 +15,10 @@ if (count($applications)):
         <thead>
             <tr class="text-nowrap">
                 <th class="text-left" colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
-                <th class="text-center"><?php echo $this->translate('Price') ?></th>
-                <th class="text-center"><?php echo $this->translate('Refund Qty') ?></th>
-                <th class="text-center"><?php echo $this->translate('Last Modified') ?></th>
-                <th class="text-center"><?php echo $this->translate('Action') ?></th>
+                <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Price') ?></th>
+                <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Refund Qty') ?></th>
+                <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Last Modified') ?></th>
+                <th class="text-center col-lg-2 col-md-2"><?php echo $this->translate('Action') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@ if (count($applications)):
                 $order = $application->getOrder();
                 $flag = true;
                 ?>
-                <tr>
+                <tr class="refund-store">
                     <th colspan="2">
                         <?php echo $order->getStore()['name'] ?>
                     </th>
@@ -43,7 +43,7 @@ if (count($applications)):
                     $product = $item['product'];
                     $thumbnail = $product->getThumbnail();
                     ?>
-                    <tr>
+                    <tr class="refund-list">
                         <td>
                             <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
                         </td>

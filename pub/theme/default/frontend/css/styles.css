@@ -1059,7 +1059,7 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .electron_ct_bt li{border:1px solid #eee}
 .page-home .electron_ct_bt .border-r{border-right:none}
 .page-home .electron_ct_bt ul{}
-.page-home .electron_ct_bt ul li{margin:7px 0 0 0px;float:left}
+.page-home .electron_ct_bt ul li{margin:5px 0 0 0px;float:left}
 .page-home .bg_img{width:100%;height:40px;display:inline-block;background-repeat:no-repeat;padding:1px 30px}
 .page-home .electron .bg_img{padding:0 30px}
 .page-home .electron .clothing_tilte{}
@@ -1081,7 +1081,6 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .brand_right td{border:1px solid #eee;width:119px;height:75px}
 .page-home .brand .brand_right td{text-align:center}
 .page-home .brand .brand_right td img{vertical-align:middle}
-
 .page-home .clothing_txt{width:143px}
 .page-home .electron_menu  li a:hover{color:#23527c}
 .page-home .electron_menu_ul_2{margin-left:30px}
@@ -1094,19 +1093,12 @@ dl.options dd{float:left;margin-left:4px}
 .catalog-product .store_info{width:19%;overflow: hidden;float:left}
 .catalog-product .store_info h3.tops{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
 .catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
-.catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-    padding:0;
-    padding-top: 10px;
-    line-height: 1.42857143;
-    vertical-align: middle;
-    border-top:0;
-}
+.catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{ padding:0; padding-top: 10px; line-height: 1.42857143; vertical-align: middle; border-top:0;}
 .catalog-product .store_detail .fa{color: #fd9030}
 .catalog-product .store_detail h4{color:#af0029;font-size:26px;font-weight:bold;text-align:right}
 .catalog-product .store_detail .store_entry{border: 1px solid #d5d5d6;border-radius:2px;padding:10px 40px;background:#f1f1f1}
 .catalog-product .store_detail tfoot .fa{color:#fd9233;font-size:26px}
-.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
-.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
+.page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border-bottom-color: transparent;font-size: 14px;}
 .catalog-product .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
 .nav>li>a:focus, .nav>li>a:hover { text-decoration: none;background-color: #fff}
 .catalog-product .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{color: #555;cursor: default;background-color: #fff;border: 1px solid #5bc4fc;border-bottom-color: transparent}
@@ -1137,6 +1129,10 @@ dl.options dd{float:left;margin-left:4px}
 .sales-order-inquire .main_article_content .columns .margin-top-30{margin-top:20px}
 .sales-order-inquire .main_article_content .columns input{width:50%}
 .sales-order-inquire .main_article_content .columns button{width:50%;background:#007ecc;color:#fff;border:1px solid #007ec7}
+.sales-order-inquire .main_article_content .order-list{margin-bottom: 30px}
+.sales-order-inquire .main_article_content .order-list .table thead{background:#eee}
+.sales-order-inquire .main_article_content .order-list .table thead th{padding-top:0px;padding:5px 0}
+/* Quick properties */
 
 .font-12{font-size:12px}
 .font-13{font-size:13px}
@@ -1152,7 +1148,5 @@ dl.options dd{float:left;margin-left:4px}
 .padding-0-10{padding:10px 0}
 .padding-0-5{padding:5px 0}
 .margin-10{margin:10px 0}
- .sales-order-inquire .main_article_content .order-list{margin-bottom: 30px}
- .sales-order-inquire .main_article_content .order-list .table thead{background:#eee}
-  .sales-order-inquire .main_article_content .order-list .table thead th{padding-top:0px;padding:5px 0}
 
+/* end */

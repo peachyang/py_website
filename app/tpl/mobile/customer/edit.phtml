@@ -8,7 +8,7 @@ $customer = $this->getCustomer();
         <div class="input-box">
             <label class="control-label text-right"><?php echo $this->translate('Username') ?></label>
             <div class="cell">
-            <input disabled="disabled" class="form-control" value="hope" type="text">
+             <input type="text" disabled="disabled" class="form-control" value="<?php echo $customer->offsetGet('username') ?>" >
             </div>
         </div>
         <?php

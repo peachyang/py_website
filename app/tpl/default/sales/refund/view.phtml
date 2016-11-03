@@ -63,7 +63,7 @@ $currency = $this->getCurrency();
                                 <?php endif ?>
                             </td>
                             <td class="text-center"><?php echo $currency->convert($item['base_price'], true) ?></td>
-                            <td class="text-center"><?php echo (float) $item['qty'] ?></td>
+                            <td class="text-center"><?php echo (float) $item['refunded_qty'] ?></td>
                             <?php if ($flag): ?>
                                 <td class="text-center detail" rowspan="<?php echo count($items) ?>">
                                     <span><?php echo $this->translate($this->getService($application['service'])) ?></span>

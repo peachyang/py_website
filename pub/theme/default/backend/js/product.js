@@ -15,7 +15,7 @@
                 ajax.abort();
             }
             var u = $(p).find('.filters [formaction]').attr('formaction');
-            var m = $(p).find('.filters [name]').serialize();
+            var m = $(p).find('.filters [name]').serialize() + '&id=' + $('[type=hidden][name=id]').val();
             var s = '&' + ($(this).is('.sort-by a') ? $(this).attr('href').match(/(?:a|de)sc=[^\&]+/) : ($(p).find('.sort-by .asc,.sort-by .desc').length ? $(p).find('.sort-by .asc,.sort-by .desc').attr('href').match(/(?:a|de)sc=[^\&]+/) : ''));
             var e = '&page=' + ($(this).is('.pager a') ? $(this).parents('[data-page]').data('page') : ($(p).find('.pager .current').length ? $(p).find('.pager .current').parents('[data-page]').data('page') : 1));
             ajax = $.get(u, m + s + e, function (response) {
@@ -29,7 +29,7 @@
             if (ajax) {
                 ajax.abort();
             }
-            ajax = $.get($(this).attr('href'), function (response) {
+            ajax = $.get($(this).attr('href'), 'id=' + $('[type=hidden][name=id]').val(), function (response) {
                 var fg = document.createDocumentFragment();
                 $(fg).html(response);
                 $(p).html($(fg).find('.grid').html());

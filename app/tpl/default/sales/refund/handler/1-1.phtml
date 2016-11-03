@@ -16,6 +16,6 @@
         <input type="text" name="tracking_number" class="form-control" id="tracking_number" />
     </div>
     <div class="buttons-set">
-        <button type="submit" class="btn btn-submit" name="success_url"><?php echo $this->translate('Submit') ?></button>
+        <button type="submit" class="btn btn-submit" name="success_url" value="<?php echo $this->getUri() ?>"><?php echo $this->translate('Submit') ?></button>
     </div>
 </form>

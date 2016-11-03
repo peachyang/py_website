@@ -1,32 +1,27 @@
 <?php
 
-namespace Seahinet\Sales\ViewModel\Refund;
+namespace Seahinet\Sales\ViewModel;
 
-use Seahinet\Retailer\ViewModel\AbstractViewModel;
+use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Sales\Model\Collection\Rma;
 use Seahinet\Sales\Source\Refund\{
     Service,
     Status
 };
 
-class Retailer extends AbstractViewModel
+class Refund extends Account
 {
 
     protected $status = null;
     protected $service = null;
+    protected $orderUrl = 'sales/order/view/';
+    protected $viewUrl = 'sales/refund/view/';
 
     public function getApplication()
     {
         $collection = new Rma;
-        $collection->join('sales_order', 'sales_order.id=sales_rma.order_id', [], 'left')
-                ->join('retailer', 'sales_order.store_id=retailer.store_id', [], 'left')
-                ->where(['retailer.id' => $this->getRetailer()->getId()]);
+        $collection->where(['customer_id' => $this->getCustomer()->getId()]);
         return $collection;
-    }
-
-    public function getCurrency()
-    {
-        return $this->getContainer()->get('currency');
     }
 
     public function getStatus($key)
@@ -48,13 +43,23 @@ class Retailer extends AbstractViewModel
     public function getHandler($service, $status)
     {
         $template = $service . '-' . $status;
-        if (!in_array($template, [
-                    '1-2', '2-2', '2-4'
+        if (in_array($template, [
+                    '1-1', '2-1', '2-4'
                 ])) {
             $viewModel = new static;
             $viewModel->setTemplate('sales/refund/handler/' . $template);
         }
         return $viewModel ?? '';
+    }
+
+    public function getOrderUrl()
+    {
+        return $this->orderUrl;
+    }
+
+    public function getViewUrl()
+    {
+        return $this->viewUrl;
     }
 
 }

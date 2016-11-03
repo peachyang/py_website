@@ -83,6 +83,8 @@ class Link extends Product
 
     protected function prepareCollection($collection = null)
     {
+        $collection = new Collection;
+        $collection->getSelect()->where->notEqualTo('id', $this->getRequest()->getQuery('id'));
         return parent::prepareCollection(new Collection);
     }
 

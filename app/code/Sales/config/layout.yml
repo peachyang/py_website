@@ -426,7 +426,7 @@ sales_refund:
                             - Return &amp; Refund
                 children:
                     main:
-                        type: Seahinet\Sales\ViewModel\Refund\Customer
+                        type: Seahinet\Sales\ViewModel\Refund
                         template: sales/refund/list
 sales_refund_apply:
     update: customer_account
@@ -466,7 +466,7 @@ sales_refund_view:
                             - Return &amp; Refund
                 children:
                     main:
-                        type: Seahinet\Sales\ViewModel\Refund\Customer
+                        type: Seahinet\Sales\ViewModel\Refund
                         template: sales/refund/view
 sales_order_list:
     update: customer_account

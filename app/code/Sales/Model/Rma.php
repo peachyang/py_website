@@ -44,6 +44,15 @@ class Rma extends AbstractModel
         return $this;
     }
 
+    public function getComment()
+    {
+        if ($this->getId()) {
+            $tableGateway = $this->getTableGateway('log_rma');
+            $tableGateway->select(['rma_id' => $this->getId()]);
+        }
+        return $this;
+    }
+
     public function getOrder()
     {
         if (is_null($this->order)) {

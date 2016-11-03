@@ -22,8 +22,8 @@ $currency = $this->getCurrency();
                 </thead>
                 <tbody>
                     <tr class="refund-store">
-                        <td><?php echo $order->getStore()['name'] ?></td>
-                        <td class="text-right" colspan="5"><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></td>
+                        <td colspan="2"><?php echo $order->getStore()['name'] ?></td>
+                        <td class="text-right" colspan="4"><?php echo $this->translate('Order ID'), ':', $order->offsetGet('increment_id') ?></td>
                     </tr>
                     <?php
                     $items = $application->getItems();
@@ -67,7 +67,7 @@ $currency = $this->getCurrency();
                                 <td class="text-center" rowspan="<?php echo count($items) ?>">
                                     <span><?php echo $this->translate($this->getService($application['service'])) ?></span>
                                     <span><?php echo $this->translate($this->getStatus($application['status'])) ?></span>
-                                    <span><?php echo $application['created_at'] ?></span>
+                                    <span><?php echo date('Y-m-d<\b\r />H:i:s',strtotime($application['created_at'])) ?></span>
                                 </td>
                                 <td class="text-center" rowspan="<?php echo count($items) ?>"><?php echo $currency->convert($application['amount'], true) ?></td>
                                 <?php

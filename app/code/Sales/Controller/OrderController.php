@@ -127,9 +127,9 @@ class OrderController extends AuthActionController
         return $this->redirectReferer('sales/order/list');
     }
 
-    public function shippmentAction()
+    public function shipmentAction()
     {
-        if ($id = $this->getRequest()->getQuery('shippment')) {
+        if ($id = $this->getRequest()->getQuery('shipment')) {
             $model = new Model\Shipment;
             $model->load($id);
             if ($model->offsetGet('order_id') == $this->getRequest()->getQuery('id')) {

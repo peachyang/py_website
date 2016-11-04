@@ -206,6 +206,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
+.customer-account .message-box:empty+.page-content,.retailer-account .message-box:empty+.page-content{margin-top:15px}
 .customer-account:not(.customer-account-dashboard) .col-main .message-box:not(:empty),.retailer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account .fieldset,.retailer-account .fieldset{display:table;width:100%;padding:20px 25px}
 .customer-account .fieldset .caption,.retailer-account .fieldset .caption{display:table-caption;width:100%}
@@ -227,16 +228,16 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .address-list .modify_book{color:#007dc6}
 .customer-account .address-list .default_book{color:#818589}
 .customer-account .address-list .default_book .btn-Address{background: #cbecfe;border: 1px solid #007dc6;color: #007dc6;padding: 5px 20px;font-size: 12px;}
-.customer-account .page-content .table .sort-by th{padding:5px 20px}
-.customer-account .page-content .address-list{border:1px solid #eee}
-.customer-account .page-content .table thead{background:#f9f9f9;border: 1px solid #eee;}
-.customer-account .page-content .table .thead_body{border:1px solid #eee}
-.customer-account .page-content .table .thead_title{font-size:12px}
-.customer-account .page-content .color-blue{color:#007dc6;font-size:16px;font-weight:bold}
-.customer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight:normal}
-.customer-account .page-content .table thead th{padding:5px 10px}
-.customer-account .page-content .table .product-name{font-size:13px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
-.customer-account .page-content .table td:not([rowspan])+[rowspan]{border-left:1px solid #eee}
+.customer-account .page-content .table .sort-by th,.retailer-account .page-content .table .sort-by th{padding:5px 20px}
+.customer-account .page-content .address-list,.retailer-account .page-content .address-list{border:1px solid #eee}
+.customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;border: 1px solid #eee;}
+.customer-account .page-content .table .thead_body,.retailer-account .page-content .table .thead_body{border:1px solid #eee}
+.customer-account .page-content .table .thead_title,.retailer-account .page-content .table .thead_title{font-size:12px}
+.customer-account .page-content .color-blue,.retailer-account .page-content .color-blue{color:#007dc6;font-size:16px;font-weight:bold}
+.customer-account .page-content .table .thead_body .color-blue p,.retailer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight:normal}
+.customer-account .page-content .table thead th,.retailer-account .page-content .table thead th{padding:5px 10px}
+.customer-account .page-content .table .product-name,.retailer-account .page-content .table .product-name{font-size:13px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.customer-account .page-content .table td:not([rowspan])+[rowspan],.retailer-account .page-content .table td:not([rowspan])+[rowspan]{border-left:1px solid #eee}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
 .head_img .bg1{width:100px;height:30px;position:absolute;left:0;bottom:0;background:#000;opacity:0.8;z-index:3;}
@@ -340,7 +341,6 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-list,.retailer-account .refund-list{border:1px solid #e1e3ea}
 .customer-account .refund-list .action a,.retailer-account .refund-list .action a{display:block}
 .customer-account .refund-list>td,.retailer-account .refund-list>td{padding:15px}
-.customer-account .refund-detail,.retailer-account .refund-detail{margin-top:30px}
 .customer-account .refund-detail .handler:not(:empty),.retailer-account .refund-detail .handler:not(:empty){border:1px solid #e1e3ea;border-top:none;padding:10px;margin-bottom:15px}
 .customer-account .refund-detail .handler h3,.retailer-account .refund-detail .handler h3{font-size:14px;color:#8d8c8c}
 .customer-account .refund-detail .handler .input-box,.retailer-account .refund-detail .handler .input-box,.customer-account .refund-detail .handler .buttons-set,.retailer-account .refund-detail .handler .buttons-set{display:inline-block}
@@ -993,22 +993,6 @@ dl.options dd{float:left;margin-left:4px}
 .details{margin:30px 0;position:relative}
  .details:last-child .border_left{display:none}
 /*end*/
-/* after-sales service*/
-.after .table_head{background:#fbfbfb}
-.after .store{color:#000}
-.after .store span{font-size: 18px;color: #007dc6;padding-left: 10px;}
-.after .list_right{font-size:13px}
-.after  .table_content{margin:25px 0;padding:20px 0}
-.after .table_body .Thumbnail{width:65px;height:67px}
-.after .table_body {color:#666;font-size:13px;border:1px solid #eee}
-.after .table_body .product-name{width: 260px;white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;overflow: hidden;}
-.after .text-vtop{padding-top:30px}
-.after .after_color{color:#007dc6}
-.after .after_bt{border: none;padding: 4px 20px;color: #fff;background: #337ab7;margin: 6px 0;}
-.after .table > tbody > tr > td{border-top:0;}
-.ui-sortable input[type="radio"]{height:18px;}
-/**/
-
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}
 .page-home .menu .menu_left .menus{background-color:#f5f6f9;width:165px}
@@ -1028,11 +1012,8 @@ dl.options dd{float:left;margin-left:4px}
 .page-home .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
 .page-home .menu .menu_right img{width:170px;height:247px}
 .page-home .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}
-
 .page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space: nowrap;font-size:12px}
-
 .page-home .menu .menu_right .menu_rg_bt li{list-style:disc;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
-
 .page-home .menu .menu_right .menu_rg_bt span a{color:#9a9494;float:right;padding:10px;font-size:12px}
 .page-home .menu .nav-tabs>li.active>a,.nav-tabs>li.active>a:focus,.nav-tabs>li.active>a:hover{cursor:default;background-color:#007dc6;color:#fff;border:none;border-bottom-color:transparent;font-size:14px;border-bottom:1px solid #fdcb60}
 .page-home .menu .nav-tabs{border-bottom:1px solid #fdcb60}
@@ -1128,22 +1109,6 @@ dl.options dd{float:left;margin-left:4px}
 .page-order-status .main_article_content .columns fieldset .text-left{text-align:left}
 .page-order-status .main_article_content .columns button{width: 50%;background:#007ecc;color: #fff;border:none;margin-top:10px;height:36px}
 .sales-order-list .page-content .list_table{margin:10px 0}
-.sales-refund .page-content{margin-top:30px}
-.retailer-after .after thead{line-height: 30px;border: 1px solid #ececec;background-color:#eeeeee}
-.retailer-after .after thead th{padding-top:0;padding: 5px 0}
-.retailer-after .after .table>tbody+tbody{border-top: none;border: 1px solid #e4e5eb}
-.retailer-after .after tbody h4{font-size: 14px;font-weight:normal}
-.retailer-after h4{line-height: 30px;border-bottom:1px solid #e4e5eb;margin-bottom:45px}
-.retailer-after h4 span{color:#007dc6}
-.retailer-after .history_after_sale{color: #bebebe}
-.retailer-after .after .table a{color: #007dc6}
-.retailer-after .after .table .afterview{color:#8b8a8a}
-.retailer-after .after img{float: left;margin-right:5px}
-.retailer-after .after .table h4{line-height:20px;border-bottom:0}
-.retailer-after .after .table h4 a{color: #333}
-.sales-refund .list_table img{float:left}
-.sales-refund .list_table .product-name{margin-left:10px;float:left}
-.sales-refund .list_table dl{float:left}
 .sales-order-inquire .main_article_content .columns{padding: 30px}
 .sales-order-inquire .main_article_content .columns h3{line-height:38px;font-size:18px;color:#007dc6}
 .sales-order-inquire .main_article_content .columns p,fieldset{line-height: 30px}

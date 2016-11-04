@@ -11,7 +11,7 @@
     $(function () {
         $('.form-sales').submit(function () {
             var q = 0;
-            $('[type=range]').each(function () {
+            $('[name^=qty]').each(function () {
                 q += $(this).val();
             });
             if (q == 0) {

@@ -3,5 +3,5 @@
  * Seller Confirm
  */
 ?>
-<a href="" class="btn btn-submit"><?php echo $this->translate('Refund') ?></a>
+<a href="<?php echo $this->getBaseUrl('retailer/refund/approve/?id='), $this->getQuery('id') ?>" class="btn btn-submit"><?php echo $this->translate('Refund') ?></a>
 <a href="<?php echo $this->getBaseUrl('retailer/refund/refuse/?id='), $this->getQuery('id') ?>" class="btn btn-default"><?php echo $this->translate('Refuse') ?></a>

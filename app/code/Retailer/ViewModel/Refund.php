@@ -3,10 +3,7 @@
 namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Sales\Model\Collection\Rma;
-use Seahinet\Sales\Source\Refund\{
-    Service,
-    Status
-};
+use Seahinet\Sales\Source\Refund\Service;
 
 class Refund extends AbstractViewModel
 {
@@ -21,21 +18,14 @@ class Refund extends AbstractViewModel
         $collection = new Rma;
         $collection->join('sales_order', 'sales_order.id=sales_rma.order_id', [], 'left')
                 ->join('retailer', 'sales_order.store_id=retailer.store_id', [], 'left')
-                ->where(['retailer.id' => $this->getRetailer()->getId()]);
+                ->where(['retailer.id' => $this->getRetailer()->getId()])
+                ->order('created_at DESC');
         return $collection;
     }
 
     public function getCurrency()
     {
         return $this->getContainer()->get('currency');
-    }
-
-    public function getStatus($key)
-    {
-        if (is_null($this->status)) {
-            $this->status = (new Status)->getSourceArray();
-        }
-        return $this->status[$key] ?? '';
     }
 
     public function getService($key)
@@ -51,7 +41,7 @@ class Refund extends AbstractViewModel
         $template = $service . '-' . $status;
         if (in_array($template, [
                     '0-0', '1-0', '2-0',
-                    '1-2'
+                    '1-2', '2-2', '2-3'
                 ])) {
             $viewModel = new static;
             $viewModel->setTemplate('sales/refund/handler/' . $template);

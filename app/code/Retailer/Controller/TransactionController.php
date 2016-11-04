@@ -51,7 +51,7 @@ class TransactionController extends AuthActionController
     */ 
     public function orderviewAction()
     {
-        $order_id = $this->getRequest()->getQuery('order_id');
+        $order_id = $this->getRequest()->getQuery('id');
         if(empty($order_id) || !is_numeric($order_id)){
             return $this->redirect('retailer/transaction/products/');
         }

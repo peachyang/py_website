@@ -56,10 +56,11 @@ class Order extends Template
         return $this->phase;
     }
 
-    public function getOrderModel(){
-        error_reporting(E_ALL & ~E_NOTICE);
+    public function getOrderModel()
+    {
         $id = $this->getRequest()->getQuery('id');
         $order = (new Model)->load($id);
         return $order;
     }
+
 }

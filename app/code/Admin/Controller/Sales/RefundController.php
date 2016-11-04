@@ -13,16 +13,16 @@ class RefundController extends AuthActionController
         $root = $this->getLayout('admin_refund_list');
         return $root;
     }
-    
+
     public function viewAction()
     {
         $root = $this->getLayout('admin_refund_view');
         return $root;
     }
-    
+
     public function statusAction()
     {
-        if ($this->getRequest()->isPost()){
+        if ($this->getRequest()->isPost()) {
             $post = $this->getRequest()->getPost();
             $refund = new Rma;
             $refund->load($post['id']);
@@ -30,11 +30,10 @@ class RefundController extends AuthActionController
         }
         return $this->response($result ?? ['error' => 0, 'message' => []], 'admin/sales_refund/');
     }
-    
-    
+
     public function processingAction()
     {
-        if ($id = $this->getRequest()->getQuery('id')){
+        if ($id = $this->getRequest()->getQuery('id')) {
             $refund = new Rma;
             $refund->load($id);
             $refund->setData('status', 0)->save();
@@ -44,11 +43,10 @@ class RefundController extends AuthActionController
         }
         return $this->redirectReferer(':ADMIN/sales_refund/');
     }
-    
-    
+
     public function completeAction()
     {
-        if ($id = $this->getRequest()->getQuery('id')){
+        if ($id = $this->getRequest()->getQuery('id')) {
             $refund = new Rma;
             $refund->load($id);
             $refund->setData('status', 1)->save();
@@ -58,6 +56,5 @@ class RefundController extends AuthActionController
         }
         return $this->redirectReferer(':ADMIN/sales_refund/');
     }
-    
 
 }

@@ -95,7 +95,7 @@ class Refund extends Grid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->join('sales_order', 'rma.order_id=sales_order.id', ['order_increment_id' => 'increment_id'], 'left');
+        $collection->join('sales_order', 'sales_rma.order_id=sales_order.id', ['order_increment_id' => 'increment_id'], 'left');
         foreach ($collection as $key => $refund) {
             $collection[$key]['customer_name'] = (new Customer())->load($refund['customer_id'])['username'];
         }

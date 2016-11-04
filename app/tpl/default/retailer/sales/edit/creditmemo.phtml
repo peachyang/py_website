@@ -7,6 +7,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
     <form action="<?php echo $this->getBaseUrl('retailer/sales_creditmemo/save/') ?>" method="post" class="form-sales">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="order_id" value="<?php echo $this->getQuery('id') ?>" />
+        <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('rma_id') ?>" />
         <input type="hidden" name="back_url" value="<?php echo $back_url; ?>" />
         <div class="panel">
             <div class="panel-heading">
@@ -109,7 +110,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                                     <td class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></td>
                                     <td>
                                         <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
-                                        <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
+                                        <input type="number" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo (float) $this->getQty($item['id'], $max) ?>" />
                                     </td>
                                     <td class="total"><?php echo $currency->format($item['total']) ?></td>
                                 </tr>
@@ -164,7 +165,8 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 </dl>
                 <div class="buttons-set text-right">
                     <a class="btn btn-reset" href="<?php echo $back_url; ?>" ><?php echo $this->translate('Back') ?></a>
-                    <button type="submit" class="btn btn-submit" onclick="if (!confirm('<?php echo $this->translate('Are you sure to refund this order?') ?>'))  return false;">
+                    <button type="submit" class="btn btn-submit" onclick="if (!confirm('<?php echo $this->translate('Are you sure to refund this order?') ?>'))
+                                return false;">
                         <span><?php echo $this->translate('Submit') ?></span>
                     </button>
                 </div>

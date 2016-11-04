@@ -44,60 +44,64 @@ $currency = $this->getCurrency();
             </thead>
             <tbody>
                 <?php
-                foreach ($order->getItems() as $item):
-                    $product = $item['product'];
-                    $thumbnail = $product->getThumbnail();
-                    ?>
-                    <tr>
-                        <td>
-                            <img src="<?php echo strpos($thumbnail, '//') === false ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $item['product_name'] ?>" />
-                        </td>
-                        <td>
-                            <h4 class="product-name"><?php echo $item['product_name'] ?></h4>
-                            <?php
-                            $options = json_decode($item['options'], true);
-                            if ($item['product_id'] && count($options)):
-                                ?>
-                                <dl class="options">
-                                    <?php
-                                    foreach ($product->getOptions() as $option):
-                                        if (isset($options[$option->getId()])):
-                                            ?>
-                                            <dt><?php echo $option['title'] ?></dt>
-                                            <dd>
-                                                <?php
-                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
-                                                ?>
-                                            </dd>
-                                            <?php
-                                        endif;
-                                    endforeach;
+                foreach ($this->getItems() as $item):
+                    if ($item['qty']):
+                        $product = $item['product'];
+                        $thumbnail = $product->getThumbnail();
+                        ?>
+                        <tr>
+                            <td>
+                                <img src="<?php echo strpos($thumbnail, '//') === false ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $item['product_name'] ?>" />
+                            </td>
+                            <td>
+                                <h4 class="product-name"><?php echo $item['product_name'] ?></h4>
+                                <?php
+                                $options = json_decode($item['options'], true);
+                                if ($item['product_id'] && count($options)):
                                     ?>
-                                </dl>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?php echo $currency->convert($item['base_price'], true) ?>
-                        </td>
-                        <td class="text-center">
-                            <?php echo (float) $item['qty'] ?>
-                        </td>
-                        <td>
-                            <?php echo $currency->convert($item['base_total'], true) ?>
-                        </td>
-                        <td>
-                            <div class="qty text-nowrap">
-                                <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
-                                <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"
-                                       min="0"
-                                       max="<?php echo (float) $item['qty'] ?>"
-                                       class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
-                                <label class="spin plus" for="qty-<?php echo $item['id'] ?>">+</label>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
+                                    <dl class="options">
+                                        <?php
+                                        foreach ($product->getOptions() as $option):
+                                            if (isset($options[$option->getId()])):
+                                                ?>
+                                                <dt><?php echo $option['title'] ?></dt>
+                                                <dd>
+                                                    <?php
+                                                    echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                            $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                    ?>
+                                                </dd>
+                                                <?php
+                                            endif;
+                                        endforeach;
+                                        ?>
+                                    </dl>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php echo $currency->convert($item['base_price'], true) ?>
+                            </td>
+                            <td class="text-center">
+                                <?php echo (float) $item['qty'] ?>
+                            </td>
+                            <td>
+                                <?php echo $currency->convert($item['base_total'], true) ?>
+                            </td>
+                            <td>
+                                <div class="qty text-nowrap">
+                                    <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
+                                    <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"
+                                           min="0"
+                                           max="<?php echo (float) $item['qty'] ?>"
+                                           class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
+                                    <label class="spin plus" for="qty-<?php echo $item['id'] ?>">+</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+                    endif;
+                endforeach;
+                ?>
             </tbody>
         </table>
         <div class="fieldset">

@@ -115,38 +115,6 @@ class RefundController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/refund/', 'customer');
     }
 
-    public function confirmAction()
-    {
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['rma_id']);
-            if ($result['error'] === 0) {
-                try {
-                    $refund = new Rma;
-                    $refund->load($data['rma_id']);
-                    $segment = new Segment('customer');
-                    if ($segment->get('hasLoggedIn') && $segment->get('customer')->getId() != $refund['customer_id'] ||
-                            !$segment->get('hasLoggedIn') && $refund['customer_id'] ||
-                            $refund['service'] < 2 && $refund['status'] != 4) {
-                        $result['error'] = 1;
-                        $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
-                    } else {
-                        $this->beginTransaction();
-                        $refund->setData('status', 5)->save();
-                        $refund->getOrder()->rollbackStatus();
-                        $result['message'][] = ['message' => $this->translate('The application has been complete.'), 'level' => 'success'];
-                        $this->commit();
-                    }
-                } catch (Exception $e) {
-                    $this->rollback();
-                    $result['error'] = 1;
-                    $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
-                }
-            }
-        }
-        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/refund/', 'customer');
-    }
-
     public function refuseAction()
     {
         $id = $this->getRequest()->getQuery('id');
@@ -198,13 +166,13 @@ class RefundController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {
+                    if ($refund['service'] == 0 || $refund['service'] == 1 && $refund['status'] == 2) {
+                        $url = 'retailer/sales_order/refund/?id=' . $refund['order_id'] . '&rma_id=' . $id;
+                    }
                     $this->beginTransaction();
                     $refund->setData('status', $refund['status'] + 1)->save();
                     $result['message'][] = ['message' => $this->translate('The application has been approved.'), 'level' => 'success'];
                     $this->commit();
-                    if ($refund['service'] == 0) {
-                        $url = 'retailer/sales_order/refund/?id=' . $refund['order_id'] . '&rma_id=' . $id;
-                    }
                 }
             } catch (Exception $e) {
                 $this->rollback();

@@ -32,27 +32,6 @@ $currency = $order->getCurrency();
                 <?php echo $this->translate('Username'), ': ', $customer['username'] ?>
             <?php endif ?></div>
     </div>
-    <div class="panel">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Carrier', [], 'sales') ?></h4>
-        </div>
-        <div class="panel-body">
-            <?php
-            echo $this->translate('Carrier'). ':'.$refund['carrier'],'<br />',
-                 $this->translate('Track Number'). ':'.$refund['track_number']
-            ?>
-        </div>
-    </div>
-    <div class="panel">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Reason', [], 'sales') ?></h4>
-        </div>
-        <div class="panel-body">
-            <?php
-            echo $refund->offsetGet('comment')
-            ?>
-        </div>
-    </div>
     <div class="panel wide">
         <div class="panel-heading">
             <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
@@ -88,7 +67,7 @@ $currency = $order->getCurrency();
                                 ?>
                             </td>
                             <td><?php echo $currency->format($item['price']) ?></td>
-                            <td><?php echo $item['qty'] ?></td>
+                            <td><?php echo (float) $item['qty'] ?></td>
                             <td><?php echo $currency->format($item['total']) ?></td>
                         </tr>
                     <?php endforeach ?>
@@ -98,20 +77,10 @@ $currency = $order->getCurrency();
     </div>
     <div class="panel">
         <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Status', [], 'sales') ?></h4>
+            <h4 class="panel-title"><?php echo $this->translate('Action', [], 'sales') ?></h4>
         </div>
         <div class="panel-body">
-        	<form action="<?php echo $this->getAdminUrl('sales_refund/status/') ?>" method="post">
-                <input type="hidden" name="id" value="<?php echo $refund->getId() ?>" />
-                <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            	<p>
-            		<select name="status">
-                		<option value="0" <?php if ($refund['status'] == 0){echo 'selected="selected"';}?>><?php echo $this->translate('Processing')?></option>
-                		<option value="1" <?php if ($refund['status'] == 1){echo 'selected="selected"';}?>><?php echo $this->translate('Complete')?></option>
-            		</select>
-            	</p>
-                <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Submit') ?></span></button>
-            </form>
+            <?php echo $this->getHandler() ?>
         </div>
     </div>
     <div class="panel">

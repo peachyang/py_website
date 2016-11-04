@@ -56,4 +56,17 @@ class Refund extends Template
         return $order;
     }
 
+    public function getHandler()
+    {
+        $template = $this->getRefund()['service'] . '-' . $this->getRefund()['status'];
+        if (in_array($template, [
+                    '0-0', '1-0', '2-0',
+                    '1-2', '2-2', '2-3'
+                ])) {
+            $viewModel = new static;
+            $viewModel->setTemplate('admin/sales/refund/' . $template);
+        }
+        return $viewModel ?? '';
+    }
+
 }

@@ -877,6 +877,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-store .category .content .category_list{}
 .retailer-store .category .content .category_list li{padding:2px 0}
 .retailer-store .category .content .category_list li a{font-size:12px}
+.retailer-store .category .content .category_list li span{font-size:12px}
 .retailer-store .statics{margin-bottom:10px}
 .retailer-store .statics .content{border:1px solid #ccc;overflow:hidden;padding:10px}
 .retailer-store .statics .title{padding:5px 0px 10px 5px;background:#FD9030}

@@ -545,29 +545,32 @@ else
                 success: function (data) {
                 	var obj = $("#"+dataID).find(".view").find(".content.function-tag[data-id='"+dataID+"']");
                 	obj.html(data.view);
-					if(obj.hasClass('component'))
-					{	
-						var func = dataType+"_init";
-						var f = eval(func);
-						f(obj);
-					}
-					
-					if($("#"+dataID).hasClass('stable'))
-					{	
-						var func = dataType+"_init";
-						var f = eval(func);
-						f(dataID,data.view);
-					}
-					
-					 var func = dataType+"_init";
-					 try{
-					if(typeof(eval(func))== "function") {
-					 	 var f = eval(func);
-              			 f(obj,dataID);
-          			}
-					} catch (e){
-						
-					}
+                if (obj.hasClass('component'))
+                {
+                    var func = dataType + "_init";
+                    var f = eval(func);
+                    f(obj);
+                }
+                else if ($("#" + dataID).hasClass('stable'))
+                {
+                    var func = dataType + "_init";
+                    var f = eval(func);
+                    f(dataID, data.view);
+                }else
+                {
+
+                var func = dataType + "_init";
+
+                try {
+                    if (typeof (eval(func)) == "function") {
+                        //console.log(111);
+                        var f = eval(func);
+                        f(obj, dataID);
+                    }
+                } catch (e) {
+
+                }
+				}
 					 
 					
 					

@@ -4,12 +4,14 @@ namespace Seahinet\Retailer\Controller\Sales;
 
 use Exception;
 use Seahinet\Retailer\Controller\AuthActionController;
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\Order\Status as StatusCollection;
-use Seahinet\Sales\Model\CreditMemo;
-use Seahinet\Sales\Model\CreditMemo\Item;
-use Seahinet\Sales\Model\Order;
-use Seahinet\Sales\Model\Order\Status\History;
+use Seahinet\Sales\Model\{
+    CreditMemo,
+    CreditMemo\Item,
+    Order,
+    Order\Status\History,
+    Rma
+};
 use TCPDF;
 
 class CreditmemoController extends AuthActionController
@@ -80,6 +82,11 @@ class CreditmemoController extends AuthActionController
                     ])->save();
                 }
                 $order->save();
+                if (!empty($data['rma_id'])) {
+                    $rma = new Rma;
+                    $rma->setData(['id' => $data['rma_id'], 'status' => 5])
+                            ->save();
+                }
                 $this->commit();
             } catch (Exception $e) {
                 $this->rollback();

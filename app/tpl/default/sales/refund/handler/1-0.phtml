@@ -1,7 +1,7 @@
 <?php
 /**
- * Retailer Approving
+ * Seller Approving
  */
 ?>
-<a href="" class="btn btn-submit"><?php echo $this->translate('Approve') ?></a>
-<a href="" class="btn btn-default"><?php echo $this->translate('Refuse') ?></a>
+<a href="<?php echo $this->getBaseUrl('retailer/refund/approve/?id='), $this->getQuery('id') ?>" class="btn btn-submit"><?php echo $this->translate('Approve') ?></a>
+<a href="<?php echo $this->getBaseUrl('retailer/refund/refuse/?id='), $this->getQuery('id') ?>" class="btn btn-default"><?php echo $this->translate('Refuse') ?></a>

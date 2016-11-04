@@ -29,7 +29,7 @@ class NotifyController extends ActionController
                 $method = new $log['method'];
                 $response = $method->asyncNotice($data);
                 if ($response !== false) {
-                    return strpos($response, '//') ? $this->redirect($response) : $response;
+                    return strpos($response, '//') === false ? $this->redirect($response) : $response;
                 }
             }
         }

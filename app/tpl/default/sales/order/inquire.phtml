@@ -48,7 +48,7 @@ $inquireies = $this->getInquireies();
                                 ?>
                                 <tr class="thead_body">
                                     <td class="col-md-1">
-                                        <img src="<?php echo strpos($thumbnail, '//') ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
+                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
                                     </td>
                                     <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
                                         <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>

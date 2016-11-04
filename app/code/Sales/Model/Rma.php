@@ -14,19 +14,21 @@ class Rma extends AbstractModel
 
     protected function construct()
     {
-        $this->init('sales_rma', 'id', ['id', 'order_id', 'customer_id', 'currency', 'amount', 'carrier', 'track_number', 'reason', 'service', 'status', 'created_at', 'updated_at']);
+        $this->init('sales_rma', 'id', ['id', 'order_id', 'customer_id', 'currency', 'amount', 'reason', 'service', 'status', 'created_at', 'updated_at']);
     }
 
     protected function afterSave()
     {
         if (!empty($this->storage['qty'])) {
             foreach ($this->storage['qty'] as $id => $qty) {
-                $item = new Item;
-                $item->setData([
-                    'rma_id' => $this->getId(),
-                    'item_id' => $id,
-                    'qty' => $qty
-                ])->save();
+                if ($qty) {
+                    $item = new Item;
+                    $item->setData([
+                        'rma_id' => $this->getId(),
+                        'item_id' => $id,
+                        'qty' => $qty
+                    ])->save();
+                }
             }
         }
         parent::afterSave();
@@ -57,14 +59,14 @@ class Rma extends AbstractModel
                 $select->where(['rma_id' => $this->getId()])
                         ->order('created_at DESC');
                 $result = $tableGateway->selectWith($select)->toArray();
-                foreach($result as &$item){
+                foreach ($result as &$item) {
                     $item['comment'] = @gzdecode($item['comment']);
                 }
                 $this->addCacheList('rma_id=' . $this->getId(), $result, 'log_rma');
             }
             return $result;
         }
-        return $this;
+        return [];
     }
 
     public function getOrder()

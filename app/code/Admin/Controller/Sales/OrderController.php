@@ -198,12 +198,7 @@ class OrderController extends AuthActionController
         if ($id = $this->getRequest()->getQuery('id')) {
             $result = ['error' => 0, 'message' => []];
             try {
-                $status = new Status;
-                $status->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [])
-                        ->where(['is_default' => 1, 'sales_order_phase.code' => 'processing'])
-                        ->limit(1);
                 $count = 0;
-                $userId = (new Segment('admin'))->get('user')->getId();
                 $this->beginTransaction();
                 foreach ((array) $id as $i) {
                     $order = new Model;

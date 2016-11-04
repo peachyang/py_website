@@ -1,9 +1,7 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Sales;
+namespace Seahinet\Retailer\Controller;
 
-use Exception;
-use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Rma;
 
@@ -12,14 +10,21 @@ class RefundController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_refund_list');
-        return $root;
+        return $this->getLayout('retailer_refund');
     }
 
     public function viewAction()
     {
-        $root = $this->getLayout('admin_refund_view');
-        return $root;
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $rma = new Rma;
+            $rma->load($id);
+            if ($rma->getId()) {
+                $root = $this->getLayout('retailer_refund_view');
+                $root->getChild('main', true)->setVariable('model', $rma);
+                return $root;
+            }
+        }
+        return $this->redirectReferer('retailer/refund/');
     }
 
     public function addCommentAction()
@@ -84,9 +89,10 @@ class RefundController extends AuthActionController
                 try {
                     $refund = new Rma;
                     $refund->load($data['rma_id']);
-                    $segment = new Segment('admin');
-                    $storeId = $segment->get('user')['store_id'];
-                    if ($storeId && $refund->getOrder()['store_id'] != $storeId ||
+                    $segment = new Segment('customer');
+                    $retailer = $segment->get('customer')->getRetailer();
+                    if (!$retailer || !$retailer->getId() ||
+                            $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                             $refund['service'] != 2 || $refund['status'] != 3) {
                         $result['error'] = 1;
                         $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
@@ -115,9 +121,10 @@ class RefundController extends AuthActionController
             try {
                 $refund = new Rma;
                 $refund->load($id);
-                $segment = new Segment('admin');
-                $storeId = $segment->get('user')['store_id'];
-                if ($storeId && $refund->getOrder()['store_id'] != $storeId ||
+                $segment = new Segment('customer');
+                $retailer = $segment->get('customer')->getRetailer();
+                if (!$retailer || !$retailer->getId() ||
+                        $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                         $refund['status'] != 0 && $refund['status'] != 2) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
@@ -142,21 +149,22 @@ class RefundController extends AuthActionController
         $id = $this->getRequest()->getQuery('id');
         $result = empty($id) ? ['error' => 1, 'message' => [['message' => $this->translate('Invalid application ID'), 'level' => 'danger']]] :
                 ['error' => 0, 'message' => []];
-        $url = ':ADMIN/sales_refund/';
+        $url = 'retailer/refund/';
         if ($result['error'] === 0) {
             try {
-                $url = ':ADMIN/sales_refund/view/?id=' . $id;
+                $url = 'retailer/refund/view/?id=' . $id;
                 $refund = new Rma;
                 $refund->load($id);
-                $segment = new Segment('admin');
-                $storeId = $segment->get('user')['store_id'];
-                if ($storeId && $refund->getOrder()['store_id'] != $storeId ||
+                $segment = new Segment('customer');
+                $retailer = $segment->get('customer')->getRetailer();
+                if (!$retailer || !$retailer->getId() ||
+                        $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                         $refund['status'] != 0 && $refund['status'] != 2) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {
                     if ($refund['service'] == 0 || $refund['service'] == 1 && $refund['status'] == 2) {
-                        $url = ':ADMIN/sales_order/refund/?id=' . $refund['order_id'] . '&rma_id=' . $id;
+                        $url = 'retailer/sales_order/refund/?id=' . $refund['order_id'] . '&rma_id=' . $id;
                     }
                     $this->beginTransaction();
                     $refund->setData('status', $refund['status'] + 1)->save();

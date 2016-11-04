@@ -4,10 +4,13 @@ namespace Seahinet\Retailer\ViewModel\Sales\Edit;
 
 use Seahinet\Retailer\ViewModel\Sales\View\Order;
 use Seahinet\Sales\Model\Collection\CreditMemo\Item;
+use Seahinet\Sales\Model\Collection\Rma\Item as RmaItem;
 use Zend\Db\Sql\Expression;
 
 class CreditMemo extends Order
 {
+
+    protected $items = null;
 
     public function getMaxQty($item)
     {
@@ -19,6 +22,21 @@ class CreditMemo extends Order
             return $item['qty'] - $items[0]['sum'];
         }
         return $item['qty'];
+    }
+
+    public function getQty($itemId, $default)
+    {
+        if (is_null($this->items)) {
+            $this->items = [];
+            if ($id = $this->getQuery('rma_id')) {
+                $items = new RmaItem;
+                $items->where(['rma_id' => $id]);
+                foreach ($items as $item) {
+                    $this->items[$item['item_id']] = $item['qty'];
+                }
+            }
+        }
+        return empty($this->items) ? $default : ($this->items[$itemId] ?? 0);
     }
 
 }

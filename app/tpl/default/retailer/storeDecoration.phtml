@@ -584,13 +584,13 @@ else
                     var f = eval(func);
                     f(obj);
                 }
-
-                if ($("#" + dataID).hasClass('stable'))
+                else if ($("#" + dataID).hasClass('stable'))
                 {
                     var func = dataType + "_init";
                     var f = eval(func);
                     f(dataID, data.view);
-                }
+                }else
+                {
 
                 var func = dataType + "_init";
 
@@ -603,7 +603,7 @@ else
                 } catch (e) {
 
                 }
-
+				}
 
 
                 layer.closeAll();

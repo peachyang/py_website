@@ -346,9 +346,9 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-detail .handler .input-box,.retailer-account .refund-detail .handler .input-box,.customer-account .refund-detail .handler .buttons-set,.retailer-account .refund-detail .handler .buttons-set{display:inline-block}
 .customer-account .refund-detail .btn-submit,.retailer-account .refund-detail .btn-submit,.customer-account .refund-detail .btn-theme,.retailer-account .refund-detail .btn-theme{padding:9px 15px;background: #3fb5fa;border:#007dc6}
 .customer-account .refund-detail .log,.retailer-account .refund-detail .log{padding-left:90px;border-top:none}
-.customer-account .refund-detail .log .item,.retailer-account .refund-detail .log .item{padding:10px 36px 15px 0;margin-right:36px;border-bottom:2px dotted #e1e3ea}
-.customer-account .refund-detail .log form,.retailer-account .refund-detail .log form{padding:30px 36px 0 0}
-.customer-account .refund-detail .log form .input-box,.retailer-account .refund-detail .log form .input-box,.buttons-set{margin-bottom:15px}
+.customer-account .refund-detail .log .item,.retailer-account .refund-detail .log .item{padding:10px 15px}
+.customer-account .refund-detail .log .item+.item,.retailer-account .refund-detail .log .item+.item{border-top:1px dotted #e1e3ea}
+.customer-account .refund-detail .log .input-box,.retailer-account .refund-detail .log .input-box,.customer-account .refund-detail .log .buttons-set,.retailer-account .refund-detail .log .buttons-set{padding:6px 15px}
 .customer-account .refund-detail .nav,.retailer-account .refund-detail .nav{margin-bottom:20px;padding-top:20px;background:#e3f4fd}
 .customer-account .refund-detail .nav>li>a,.retailer-account .refund-detail .nav>li>a{padding:4px 15px}
 .customer-account .refund-detail .nav-tabs>li.active>a,.retailer-account .refund-detail .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6}

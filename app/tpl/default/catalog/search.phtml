@@ -10,7 +10,7 @@ $query = $this->getQuery('q');
                 <option value="1"<?php if ($type === '1'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Store') ?></option>
             </select>
         </div>
-        <input type="search" class="form-control required" name="q" value="<?php echo $query ?>" />
+        <input type="search" class="form-control required" x-webkit-speech x-webkit-grammar="builtin:search" name="q" value="<?php echo $query ?>" />
         <div class="input-group-addon">
             <button class="btn btn-submit" type="submit"><?php echo $this->translate('Search') ?></button>
         </div>

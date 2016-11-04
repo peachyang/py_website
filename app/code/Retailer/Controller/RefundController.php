@@ -3,11 +3,7 @@
 namespace Seahinet\Retailer\Controller;
 
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\{
-    Order,
-    Order\Phase,
-    Rma
-};
+use Seahinet\Sales\Model\Rma;
 
 class RefundController extends AuthActionController
 {

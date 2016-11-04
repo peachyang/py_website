@@ -3,7 +3,7 @@
  * Seller Returning
  */
 ?>
-<form action="<?php echo $this->getBaseUrl('sales/refund/deliver/') ?>" method="post" class="form-inline">
+<form action="<?php echo $this->getBaseUrl('retailer/refund/deliver/') ?>" method="post" class="form-inline">
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />
     <h3 class="label"><?php echo $this->translate('Please submit the carrier and tracking number.') ?></h3>

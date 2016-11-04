@@ -395,6 +395,9 @@ admin_refund_view:
                     -
                         method: setTitle
                         params: Return &amp; Refund / Sales
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/tab.js',defer:'defer',async:'async'}]
             content:
                 children:
                     breadcrumb:
@@ -407,7 +410,7 @@ admin_refund_view:
                                 params: [{label:'View'}]
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Refund
-                        template: admin/sales/refund
+                        template: sales/refund/view
 sales_refund:
     update: customer_account
     root:

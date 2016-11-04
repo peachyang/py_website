@@ -66,7 +66,7 @@ class Rma extends AbstractModel
             }
             return $result;
         }
-        return $this;
+        return [];
     }
 
     public function getOrder()

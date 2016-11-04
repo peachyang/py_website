@@ -81,6 +81,26 @@ $currency = $order->getCurrency();
         </div>
         <div class="panel-body">
             <?php echo $this->getHandler() ?>
+            <div class="clearfix">
+                <?php foreach ($this->getRefund()->getComments() as $comment): ?>
+                    <div class="col-xs-1">
+                        <?php echo $this->translate($comment['is_customer'] ? 'Buyer' : 'Seller') ?>
+                    </div>
+                    <div class="col-xs-11">
+                        <p class="comment"><?php echo $comment['comment'] ?></p>
+                        <p class="date">[<?php echo $comment['created_at'] ?>]</p>
+                        <?php if ($images = @json_decode($comment['image'], true)): ?>
+                            <ul class="images list-inline">
+                                <?php foreach ($images as $i => $image): ?>
+                                    <li>
+                                        <img src="<?php echo $this->getBaseUrl('pub/upload/refund/' . $image) ?>" class="thumbnail" alt="" />
+                                    </li>
+                                <?php endforeach ?>
+                            </ul>
+                        <?php endif ?>
+                    </div>
+                <?php endforeach ?>
+            </div>
         </div>
     </div>
     <div class="panel">

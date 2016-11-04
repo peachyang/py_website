@@ -9,7 +9,6 @@ use Seahinet\Sales\Source\Refund\Service;
 class Refund extends Account
 {
 
-    protected $status = null;
     protected $service = null;
     protected $orderUrl = 'sales/order/view/';
     protected $viewUrl = 'sales/refund/view/';

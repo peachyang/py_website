@@ -109,7 +109,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                                     <td class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></td>
                                     <td>
                                         <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
-                                        <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
+                                        <input type="number" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo (float) $max ?>" />
                                     </td>
                                     <td class="total"><?php echo $currency->format($item['total']) ?></td>
                                 </tr>

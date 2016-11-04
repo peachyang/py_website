@@ -4,10 +4,7 @@ namespace Seahinet\Sales\ViewModel;
 
 use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Sales\Model\Collection\Rma;
-use Seahinet\Sales\Source\Refund\{
-    Service,
-    Status
-};
+use Seahinet\Sales\Source\Refund\Service;
 
 class Refund extends Account
 {
@@ -20,16 +17,9 @@ class Refund extends Account
     public function getApplication()
     {
         $collection = new Rma;
-        $collection->where(['customer_id' => $this->getCustomer()->getId()]);
+        $collection->where(['customer_id' => $this->getCustomer()->getId()])
+                ->order('created_at DESC');
         return $collection;
-    }
-
-    public function getStatus($key)
-    {
-        if (is_null($this->status)) {
-            $this->status = (new Status)->getSourceArray();
-        }
-        return $this->status[$key] ?? '';
     }
 
     public function getService($key)

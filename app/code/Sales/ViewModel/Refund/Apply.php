@@ -26,4 +26,20 @@ class Apply extends Template
         return (new Service)->getSourceArray();
     }
 
+    public function getItems()
+    {
+        $order = $this->getVariable('model');
+        $items = [];
+        foreach ($order->getItems() as $item) {
+            $items[$item->getId()] = $item;
+        }
+        $memos = $order->getCreditMemo();
+        foreach ($memos as $memo) {
+            foreach ($memo->getItems() as $item) {
+                $items[$item['item_id']]['qty'] -= $item['qty'];
+            }
+        }
+        return $items;
+    }
+
 }

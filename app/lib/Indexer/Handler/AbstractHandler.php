@@ -20,12 +20,13 @@ abstract class AbstractHandler
         if (isset($config['indexer'][$this->entityType])) {
             $provider = new $config['indexer'][$this->entityType]['provider'];
         }
+        $adapter = $this->getContainer()->get('dbAdapter');
+        $where = is_numeric($this->entityType) ? ['eav_entity_type.id' => $this->entityType] : ['eav_entity_type.code' => $this->entityType];
         if (!isset($provider) || !$provider->provideStructure($this)) {
-            $adapter = $this->getContainer()->get('dbAdapter');
             $tableGateway = new TableGateway('eav_entity_type', $adapter);
             $select = $tableGateway->getSql()->select();
             $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
-                    ->where(is_numeric($this->entityType) ? ['eav_entity_type.id' => $this->entityType] : ['eav_entity_type.code' => $this->entityType])
+                    ->where($where)
                     ->columns(['entity_table', 'value_table_prefix', 'entity_type' => 'code']);
             $result = $tableGateway->selectWith($select)->toArray();
             if (count($result) === 0) {
@@ -34,63 +35,79 @@ abstract class AbstractHandler
             if (is_numeric($this->entityType)) {
                 $this->entityType = $result[0]['entity_type'];
             }
-            $keys = array_keys($tableGateway->selectWith($select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left'))->toArray()[0]);
+            $keys = array_keys($tableGateway->selectWith($select->join($result[0]['entity_table'], $result[0]['entity_table'] . '.type_id=eav_entity_type.id', '*', 'left')->limit(1))->toArray()[0]);
             $this->buildStructure($result, $keys);
         }
         if (!isset($provider) || !$provider->provideData($this)) {
-            $select->join($result[0]['value_table_prefix'] . '_int', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_int.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_int.entity_id', ['value_int' => 'value', 'language_int' => 'language_id'], 'left')
+            $select->reset('limit')
+                    ->join($result[0]['value_table_prefix'] . '_int', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_int.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_int.entity_id', ['value_int' => 'value', 'language_int' => 'language_id'], 'left')
                     ->join($result[0]['value_table_prefix'] . '_varchar', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_varchar.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_varchar.entity_id', ['value_varchar' => 'value', 'language_varchar' => 'language_id'], 'left')
                     ->join($result[0]['value_table_prefix'] . '_datetime', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_datetime.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_datetime.entity_id', ['value_datetime' => 'value', 'language_datetime' => 'language_id'], 'left')
                     ->join($result[0]['value_table_prefix'] . '_text', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_text.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_text.entity_id', ['value_text' => 'value', 'language_text' => 'language_id'], 'left')
                     ->join($result[0]['value_table_prefix'] . '_decimal', 'eav_attribute.id=' . $result[0]['value_table_prefix'] . '_decimal.attribute_id AND ' . $result[0]['entity_table'] . '.id=' . $result[0]['value_table_prefix'] . '_decimal.entity_id', ['value_decimal' => 'value', 'language_decimal' => 'language_id'], 'left');
-            $data = $tableGateway->selectWith($select)->toArray();
-            $items = [];
-            foreach ($data as $record) {
-                if (!isset($record['id']) || !$record['id']) {
-                    continue;
+            $entity = new TableGateway($result[0]['entity_table'], $adapter);
+            $entitySelect = $entity->getSql()->select();
+            $entitySelect->columns(['id'])
+                    ->limit(50);
+            for ($i = 0;; $i++) {
+                $entitySelect->offset(50 * $i);
+                $ids = $entity->selectWith($entitySelect)->toArray();
+                if (empty($ids)) {
+                    break;
                 }
-                $languageId = $record['language_varchar'] ?: (
-                        $record['language_int'] ?: (
-                        $record['language_decimal'] ?: (
-                        $record['language_text'] ?:
-                        $record['language_datetime']
-                        )));
-                if (!$languageId) {
-                    continue;
-                }
-                if (!isset($items[$languageId])) {
-                    $items[$languageId] = [];
-                }
-                if (!isset($items[$languageId][$record['id']])) {
-                    $items[$languageId][$record['id']] = [];
-                    foreach (array_diff($keys, [
-                        'updated_at', 'type_id', 'attr', 'type',
-                        'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
-                        'value_table_prefix', 'is_form', 'entity_type'
-                    ]) as $key) {
-                        $items[$languageId][$record['id']][$key] = $record[$key];
+                foreach ($ids as $item) {
+                    $select->reset('where')
+                            ->where($where + [$result[0]['entity_table'] . '.id' => $item['id']]);
+                    $data = $tableGateway->selectWith($select)->toArray();
+                    $items = [];
+                    foreach ($data as $record) {
+                        if (!isset($record['id']) || !$record['id']) {
+                            continue;
+                        }
+                        $languageId = $record['language_varchar'] ?: (
+                                $record['language_int'] ?: (
+                                $record['language_decimal'] ?: (
+                                $record['language_text'] ?:
+                                $record['language_datetime']
+                                )));
+                        if (!$languageId) {
+                            continue;
+                        }
+                        if (!isset($items[$languageId])) {
+                            $items[$languageId] = [];
+                        }
+                        if (!isset($items[$languageId][$record['id']])) {
+                            $items[$languageId][$record['id']] = [];
+                            foreach (array_diff($keys, [
+                                'updated_at', 'type_id', 'attr', 'type',
+                                'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
+                                'value_table_prefix', 'is_form', 'entity_type'
+                            ]) as $key) {
+                                $items[$languageId][$record['id']][$key] = $record[$key];
+                            }
+                        }
+                        if ($record['attr']) {
+                            $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar'] ?: (
+                                    $record['value_int'] ?: (
+                                    $record['value_decimal'] ?: (
+                                    $record['value_text'] ?:
+                                    $record['value_datetime']
+                                    )));
+                        }
                     }
-                }
-                if ($record['attr']) {
-                    $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar'] ?: (
-                            $record['value_int'] ?: (
-                            $record['value_decimal'] ?: (
-                            $record['value_text'] ?:
-                            $record['value_datetime']
-                            )));
+                    $languages = new Language;
+                    $languages->columns(['id'])->order('id ASC');
+                    $ids = $languages->load(false)->toArray();
+                    foreach ($ids as $key => $language) {
+                        if (!isset($items[$language['id']])) {
+                            for ($i = $key - 1; $i >= 0 && isset($items[$ids[$i]['id']]); $i--) {
+                                $items[$language['id']] = $items[$ids[$i]['id']];
+                            }
+                        }
+                    }
+                    $this->buildData($items);
                 }
             }
-            $languages = new Language;
-            $languages->columns(['id'])->order('id ASC');
-            $ids = $languages->load(false)->toArray();
-            foreach ($ids as $key => $language) {
-                if (!isset($items[$language['id']])) {
-                    for ($i = $key - 1; $i >= 0 && isset($items[$ids[$i]['id']]); $i--) {
-                        $items[$language['id']] = $items[$ids[$i]['id']];
-                    }
-                }
-            }
-            $this->buildData($items);
         }
     }
 

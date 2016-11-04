@@ -96,7 +96,7 @@ class RefundController extends AuthActionController
                     $segment = new Segment('customer');
                     if ($segment->get('hasLoggedIn') && $segment->get('customer')->getId() != $refund['customer_id'] ||
                             !$segment->get('hasLoggedIn') && $refund['customer_id'] ||
-                            $refund['service'] != 2 && $refund['status'] != 3) {
+                            $refund['service'] != 2 || $refund['status'] != 3) {
                         $result['error'] = 1;
                         $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                     } else {

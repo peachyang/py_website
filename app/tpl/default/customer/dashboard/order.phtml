@@ -24,7 +24,7 @@ if ($order && $order->getId()):
                     ?>
                     <tr>
                         <td>
-                            <img src="<?php echo strpos($thumbnail, '//') === false ? $thumbnail : $this->getResourceUrl('image/resized/100x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" width="100" height="100"/>
+                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="100" height="100"/>
                         </td>
                         <td class="text-vtop">
                             <h4 class="product-name"><?php echo $product['name'] ?></h4>

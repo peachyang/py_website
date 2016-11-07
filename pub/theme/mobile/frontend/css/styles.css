@@ -859,3 +859,25 @@ overflow:hidden;}
 .header-m .quick-search{margin: 35px 0 0; border: 2px solid #fdbb30;}
 .header-m .quick-search .input-group-addon {padding: 0; border: none;}
 .header-m .quick-search select.form-control{background: #f1f1f1; width: auto; padding: 0 0 0 6px; box-shadow: none; border-radius: 0; border: none;}
+.page-home  .product-store{position: fixed; bottom: 0; z-index: 100; height: 50px; background: #f5f5f5;}
+.page-home .nav-main{background:#fff}
+.page-home .nav-main .nav>li>a{background:none;font-size:16px;line-height:36px;color:#000;padding:0 18px}
+.page-home .nav-main .nav .dropdown-menu{padding:9px 0;border:none;box-shadow:none}
+.page-home .nav-main .nav .dropdown-menu a{font-size:14px;line-height:36px}
+.page-home .nav-main .nav>.dropdown>.dropdown-toggle:after{content:" ";display:inline-block;border:5px solid transparent;border-bottom:none;border-top:8px solid #007dc6;margin-left:8px}
+.page-home .nav-main .nav>.dropdown>.dropdown-menu{background:#f5f6f9}
+.page-home .header .nav-main .nav>.dropdown>.dropdown-menu{display:block}
+.page-home .nav-main .dropdown a:hover,.header .nav-main .dropdown a:focus{background:none}
+.page-home .nav-main .dropdown:hover>.dropdown-menu{display:block;border-radius:0;border-top:none}
+.page-home .nav-main .dropdown .dropdown{position:static;border:1px solid transparent}
+.page-home .nav-main .dropdown .dropdown:hover{background:#fff;color:#007dc6;border:1px solid;border-right:none}
+.page-home .nav-main .dropdown .dropdown ul a:hover{text-decoration:underline}
+.page-home .nav-main .dropdown .dropdown>.dropdown-menu{left:100%;top:0;min-height:100%;border:1px solid #007dc6;z-index:-1;margin-left:-1px;padding:10px}
+.page-home .nav-main .dropdown .dropdown img{float:left;max-width:50px;max-height:50px}
+.page-home .nav-main .dropdown .dropdown img~*{float:right;width:calc(100% - 60px);clear:none}
+.page-home .nav-main .dropdown-menu.children{width:600px}
+.page-home .nav-main .dropdown-menu.children>li{height:60px;margin-bottom:10px}
+.page-home.nav-main .dropdown-menu.children>li>a{font-size:14px;line-height:24px;color:#007dc6;font-weight:bold;padding:0}
+.page-home .nav-main .dropdown-menu.children ul{font-size:12px;max-height:3em;overflow:hidden;line-height:1.5}
+.page-home .nav-main .dropdown-menu.children ul li{margin-right:1em;line-height:inherit}
+.page-home .nav-main .dropdown-menu.children ul a{font-size:inherit;line-height:inherit;color:#444}

@@ -54,7 +54,7 @@ class OrderController extends AuthActionController
                         $result['filted'][$diff->h + 1] ++;
                     }
                 }
-                if ($diff->m < 1) {
+                if ($diff->m < 1 && $diff->d < 30) {
                     $result['monthly'] ++;
                     if ($filter === 'm') {
                         $result['filted'][$diff->d + 1] ++;
@@ -92,6 +92,99 @@ class OrderController extends AuthActionController
                 $result['keys'] = array_keys($keys);
             }
         }
+        return $result;
+    }
+
+    public function amountAction()
+    {
+        $filter = $this->getRequest()->getQuery('filter', 'd');
+        $collection = new Collection;
+        $collection->columns(['base_currency', 'base_total', 'base_total_refunded', 'created_at'])
+                ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
+                ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
+                ->where(['sales_order_phase.code' => 'complete']);
+        if ($filter === 'd') {
+            $filted = array_fill(1, 24, 0);
+        } else if ($filter === 'm') {
+            $filted = array_fill(1, 30, 0);
+        } else if ($filter === 'y') {
+            $filted = array_fill(1, 12, 0);
+        } else {
+            $filted = [];
+            $from1 = strtotime($this->getRequest()->getQuery('from1', 0));
+            $from2 = strtotime($this->getRequest()->getQuery('from2', 0));
+            $to1 = strtotime($this->getRequest()->getQuery('to1', 0));
+            $to2 = strtotime($this->getRequest()->getQuery('to2', 0));
+        }
+        $result = [
+            'amount' => 0,
+            'daily' => 0,
+            'monthly' => 0,
+            'yearly' => 0,
+            'filted' => $filted,
+            'keys' => array_keys($filted)
+        ];
+        $currency = $this->getContainer()->get('currency');
+        $code = $currency->offsetGet('code');
+        if ($collection->count()) {
+            $current = new DateTime;
+            $keys = [];
+            foreach ($collection as $item) {
+                $time = new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
+                $diff = $current->diff($time);
+                if ($item->offsetGet('base_currency') == $code) {
+                    $total = $item->offsetGet('base_total') - $item->offsetGet('base_total_refunded');
+                } else {
+                    $total = $item->getBaseCurrency()->rconvert($item->offsetGet('base_total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('base_total_refunded'), false);
+                }
+                if ($diff->d < 1) {
+                    $result['daily'] += $total;
+                    if ($filter === 'd') {
+                        $result['filted'][$diff->h + 1] += $total;
+                    }
+                }
+                if ($diff->m < 1 && $diff->d < 30) {
+                    $result['monthly'] += $total;
+                    if ($filter === 'm') {
+                        $result['filted'][$diff->d + 1] += $total;
+                    }
+                }
+                if ($diff->y < 1) {
+                    $result['yearly'] += $total;
+                    if ($filter === 'y') {
+                        $result['filted'][$diff->m + 1] += $total;
+                    }
+                }
+                if ($filter === 'c') {
+                    $ts = $time->getTimestamp();
+                    $key = date('Y-m-d', $ts);
+                    $result['compared'] = [];
+                    if ($ts >= $from1 && $ts <= $to1) {
+                        if (!isset($result['filted'][$key])) {
+                            $result['filted'][$key] = 0;
+                        }
+                        $result['compared'][$key] = null;
+                        $result['filted'][$key] += $total;
+                        $keys[$key] = 1;
+                    }
+                    if ($ts >= $from2 && $ts <= $to2) {
+                        if (!isset($result['compared'][$key])) {
+                            $result['compared'][$key] = 0;
+                        }
+                        $result['compared'][$key] += $total;
+                        $keys[$key] = 1;
+                    }
+                }
+                $result['amount'] += $total;
+            }
+            if (!empty($keys)) {
+                $result['keys'] = array_keys($keys);
+            }
+        }
+        $result['amount'] = $currency->format($result['amount']);
+        $result['daily'] = $currency->format($result['daily']);
+        $result['monthly'] = $currency->format($result['monthly']);
+        $result['yearly'] = $currency->format($result['yearly']);
         return $result;
     }
 

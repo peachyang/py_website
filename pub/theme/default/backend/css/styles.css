@@ -304,7 +304,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard .table .cell .detail>li{display:table-row}
 .admin .dashboard .table .cell{display:table-cell}
 .admin .dashboard .table .cell+.cell{border-left:1px solid #ccc}
-.admin .dashboard .table .cell .title{width:50%;text-align:right;font-size:12px;line-height:24px}
+.admin .dashboard .table .cell .title{text-align:center;font-size:12px;line-height:24px}
 .admin .dashboard .table .cell .title .data{font-size:24px}
 .admin .dashboard .table .cell .detail{display:table;margin:0 auto;padding:15px 0}
 .admin .dashboard .table .cell .detail>li>span{display:table-cell;width:50%;font-size:13px;line-height:18px}

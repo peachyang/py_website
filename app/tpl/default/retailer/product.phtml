@@ -99,8 +99,9 @@ $sales_status = $this->getAllSalesStatus();
                 <?php
                 if (!empty($transaction['items'])) {
                     ?>
-                    <table class="list-info">
+                    <table class="table list-info">
                         <?php
+                        $flag = true;
                         foreach ($transaction['items'] as $key => $item) {
                             $thumbnail = $this->getProduct($item['product_id'])->getThumbnail();
                             ?>
@@ -135,7 +136,20 @@ $sales_status = $this->getAllSalesStatus();
                                         <p class="text-center"><?php echo $this->translate('%d', [$item['qty']]); ?></p>
                                     </div>
                                 </td>
-                                <td class="border-right" style="width: 8%;">&nbsp; </td>
+                                <?php if($flag) : ?>
+                                <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 8%;">
+                                    <?php if ($transaction->canRefund()): ?>
+                                        <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $transaction['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
+                                    <?php endif ?>
+                                </td>
+                                <?php
+                                $flag= FALSE;
+                                else:
+                                    ?>
+                                <td class="border-right" style="width: 8%;"></td>
+                                <?php
+                                endif;
+                                ?>
                                 <?php
                                 if ($key == 0) {
                                     ?>

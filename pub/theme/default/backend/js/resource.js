@@ -150,7 +150,7 @@
                     if (l.length) {
                         $(l).last().after(oli);
                     } else {
-                        $('.resource-list .item:first-child', p).before(oli);
+                        $('.resource-list ul', p).prepend(oli);
                     }
                     $(oli).children('.filename').focus();
                 }).on('click', '.rename', function () {

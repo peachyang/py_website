@@ -51,63 +51,67 @@ abstract class AbstractHandler
                     ->limit(50);
             for ($i = 0;; $i++) {
                 $entitySelect->offset(50 * $i);
-                $ids = $entity->selectWith($entitySelect)->toArray();
-                if (empty($ids)) {
+                $items = $entity->selectWith($entitySelect)->toArray();
+                if (empty($items)) {
                     break;
                 }
-                foreach ($ids as $item) {
-                    $select->reset('where')
-                            ->where($where + [$result[0]['entity_table'] . '.id' => $item['id']]);
-                    $data = $tableGateway->selectWith($select)->toArray();
-                    $items = [];
-                    foreach ($data as $record) {
-                        if (!isset($record['id']) || !$record['id']) {
-                            continue;
+                $ids = [];
+                foreach ($items as $item) {
+                    $ids[] = $item['id'];
+                }$a = array_sum(explode(' ', microtime()));
+                $select->reset('where')
+                        ->where($where)
+                ->where->in($result[0]['entity_table'] . '.id', $ids);
+                $data = $tableGateway->selectWith($select)->toArray();
+                $items = [];
+                foreach ($data as $record) {
+                    if (!isset($record['id']) || !$record['id']) {
+                        continue;
+                    }
+                    $languageId = $record['language_varchar'] ?: (
+                            $record['language_int'] ?: (
+                            $record['language_decimal'] ?: (
+                            $record['language_text'] ?:
+                            $record['language_datetime']
+                            )));
+                    if (!$languageId) {
+                        continue;
+                    }
+                    if (!isset($items[$languageId])) {
+                        $items[$languageId] = [];
+                    }
+                    if (!isset($items[$languageId][$record['id']])) {
+                        $items[$languageId][$record['id']] = [];
+                        foreach (array_diff($keys, [
+                            'updated_at', 'type_id', 'attr', 'type',
+                            'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
+                            'value_table_prefix', 'is_form', 'entity_type'
+                        ]) as $key) {
+                            $items[$languageId][$record['id']][$key] = $record[$key];
                         }
-                        $languageId = $record['language_varchar'] ?: (
-                                $record['language_int'] ?: (
-                                $record['language_decimal'] ?: (
-                                $record['language_text'] ?:
-                                $record['language_datetime']
+                    }
+                    if ($record['attr']) {
+                        $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar'] ?: (
+                                $record['value_int'] ?: (
+                                $record['value_decimal'] ?: (
+                                $record['value_text'] ?:
+                                $record['value_datetime']
                                 )));
-                        if (!$languageId) {
-                            continue;
-                        }
-                        if (!isset($items[$languageId])) {
-                            $items[$languageId] = [];
-                        }
-                        if (!isset($items[$languageId][$record['id']])) {
-                            $items[$languageId][$record['id']] = [];
-                            foreach (array_diff($keys, [
-                                'updated_at', 'type_id', 'attr', 'type',
-                                'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
-                                'value_table_prefix', 'is_form', 'entity_type'
-                            ]) as $key) {
-                                $items[$languageId][$record['id']][$key] = $record[$key];
-                            }
-                        }
-                        if ($record['attr']) {
-                            $items[$languageId][$record['id']][$record['attr']] = $record['value_varchar'] ?: (
-                                    $record['value_int'] ?: (
-                                    $record['value_decimal'] ?: (
-                                    $record['value_text'] ?:
-                                    $record['value_datetime']
-                                    )));
-                        }
                     }
-                    $languages = new Language;
-                    $languages->columns(['id'])->order('id ASC');
-                    $ids = $languages->load(false)->toArray();
-                    foreach ($ids as $key => $language) {
-                        if (!isset($items[$language['id']])) {
-                            for ($i = $key - 1; $i >= 0 && isset($items[$ids[$i]['id']]); $i--) {
-                                $items[$language['id']] = $items[$ids[$i]['id']];
-                            }
-                        }
-                    }
-                    $this->buildData($items);
                 }
+                $languages = new Language;
+                $languages->columns(['id'])->order('id ASC');
+                $languageIds = $languages->load(false)->toArray();
+                foreach ($languageIds as $key => $language) {
+                    if (!isset($items[$language['id']])) {
+                        for ($i = $key - 1; $i >= 0 && isset($items[$languageIds[$i]['id']]); $i--) {
+                            $items[$language['id']] = $items[$languageIds[$i]['id']];
+                        }
+                    }
+                }
+                $this->buildData($items);
             }
+            $this->createIndexes($result, $keys);
         }
     }
 
@@ -126,6 +130,12 @@ abstract class AbstractHandler
      * @param array $data
      */
     abstract public function buildData($data);
+
+    /**
+     * Create indexes
+     * @param array $columns
+     */
+    abstract public function createIndexes($columns, $keys = null);
 
     /**
      * Select data from indexer

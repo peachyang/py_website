@@ -333,6 +333,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .form-rma table>tbody>tr{border-bottom: 1px solid #e1e3e9}
 .customer-account .form-rma table>tbody>tr>td{padding:15px}
 .customer-account .form-rma .fieldset{margin-top:60px;margin-left:35px}
+.customer-account .form-rma .fieldset .cell #comment-error{color:#ff4e00}
 .customer-account .refund-list .store>th,.retailer-account .refund-list .store>th{padding:40px 10px 5px}
 .customer-account .refund-list .list,.retailer-account .refund-list .list{border:1px solid #e1e3ea;padding:15px}
 .customer-account .refund-list .list>td,.retailer-account .refund-list .list>td{padding:15px}

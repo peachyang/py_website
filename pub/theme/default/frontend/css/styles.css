@@ -352,7 +352,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-detail .log .input-box,.retailer-account .refund-detail .log .input-box,.customer-account .refund-detail .log .buttons-set,.retailer-account .refund-detail .log .buttons-set{padding:6px 15px}
 .customer-account .refund-detail .nav,.retailer-account .refund-detail .nav{margin-bottom:20px;padding-top:20px;background:#e3f4fd}
 .customer-account .refund-detail .nav>li>a,.retailer-account .refund-detail .nav>li>a{padding:4px 15px}
-.customer-account .refund-detail .nav-tabs>li.active>a,.retailer-account .refund-detail .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6}
+.customer-account .refund-detail .nav-tabs>li.active>a,.retailer-account .refund-detail .nav-tabs>li.active>a, .customer-account .refund-detail .nav-tabs>li.active>a:focus, .retailer-account .refund-detail .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6}
 .customer-account .refund-detail .images li,.retailer-account .refund-detail .images li{text-indent:0;border:1px solid #f5f6f9;border-radius:0;width:50px;height:50px;text-align:center;margin-right:10px;position:relative}
 .customer-account .refund-detail .images .thumbnail,.retailer-account .refund-detail .images .thumbnail{max-width:48px;max-height:48px;cursor:pointer}
 .customer-account .refund-detail .flow,.retailer-account .refund-detail .flow,.customer-account .refund-detail .log,.retailer-account .refund-detail .log{border:1px solid #e1e3ea;padding:40px 0}

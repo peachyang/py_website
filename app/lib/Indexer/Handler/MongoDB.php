@@ -249,6 +249,16 @@ class MongoDB extends AbstractHandler
         $languages = new Language;
         foreach ($languages as $language) {
             $this->getCollection($language['id'])->drop();
+        }
+    }
+
+    /**
+     * {@inhertdoc}
+     */
+    public function createIndexes($columns, $keys = null)
+    {
+        $languages = new Language;
+        foreach ($languages as $language) {
             $indexes = [
                     ['key' => ['id' => 1]]
             ];

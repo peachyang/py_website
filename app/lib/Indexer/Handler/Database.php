@@ -9,8 +9,11 @@ use Seahinet\Lib\Db\Sql\Ddl\Column\{
     UnsignedInteger
 };
 use Seahinet\Lib\Model\Collection\Language;
-use Zend\Db\Sql\Select;
-use Zend\Db\Sql\Ddl;
+use Zend\Db\Sql\{
+    Ddl,
+    Insert,
+    Select
+};
 use Zend\Db\TableGateway\TableGateway;
 
 /**
@@ -53,14 +56,11 @@ class Database extends AbstractHandler
             $ddl = new Ddl\CreateTable($table);
             $ddl->addColumn(new UnsignedInteger('id', false, 0))
                     ->addColumn(new UnsignedInteger('store_id', false, 0))
-                    ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
-                    ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_' . strtoupper($entityTable) . '_ID', 'id', $entityTable, 'id', 'CASCADE', 'CASCADE'))
-                    ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'));
+                    ->addConstraint(new Ddl\Constraint\PrimaryKey('id'));
             if (!is_null($keys)) {
                 $ddl->addColumn(new UnsignedInteger('attribute_set_id', false, 0))
                         ->addColumn(new Ddl\Column\Boolean('status', true, 1))
-                        ->addColumn(new Timestamp('created_at', true, 'CURRENT_TIMESTAMP'))
-                        ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ATTR_SET_ID_EAV_ATTR_SET_ID', 'attribute_set_id', 'eav_attribute_set', 'id', 'CASCADE', 'CASCADE'));
+                        ->addColumn(new Timestamp('created_at', true, 'CURRENT_TIMESTAMP'));
                 foreach (array_diff($keys, [
                     'id', 'store_id', 'status', 'created_at',
                     'updated_at', 'type_id', 'attribute_set_id', 'attr', 'type',
@@ -84,10 +84,6 @@ class Database extends AbstractHandler
                         $column = new Ddl\Column\Text($attr['attr'], 65535, true);
                     }
                     $ddl->addColumn($column);
-                    if ($attr['is_unique'] && $attr['type'] !== 'text') {
-                        #$ddl->addConstraint(new Ddl\Constraint\UniqueKey($attr['attr'], 'UNQ_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
-                        $ddl->addConstraint(new Ddl\Index\Index($attr['attr'], 'IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr'])));
-                    }
                 }
             }
             if (is_callable($extra)) {
@@ -105,22 +101,59 @@ class Database extends AbstractHandler
     public function buildData($data)
     {
         $adapter = $this->getContainer()->get('dbAdapter');
-        $connection = $adapter->getDriver()->getConnection();
-        $connection->beginTransaction();
-        $tableGateways = [];
+        $platform = $adapter->getPlatform();
         try {
             foreach ($data as $languageId => $values) {
-                if (!isset($tableGateways[$languageId])) {
-                    $tableGateways[$languageId] = new TableGateway($this->entityType . '_' . $languageId . '_index', $adapter);
+                $table = $this->entityType . '_' . $languageId . '_index';
+                $columns = [];
+                foreach ($values as $sets) {
+                    if (count($columns) < count($sets)) {
+                        $columns = array_keys($sets);
+                    }
                 }
-                foreach ($values as $set) {
-                    $tableGateways[$languageId]->insert($set);
+                $sql = 'INSERT INTO ' . $platform->quoteIdentifierInFragment($table) . '(';
+                foreach ($columns as $key) {
+                    $sql .= $platform->quoteIdentifierInFragment($key) . ',';
+                }
+                $sql = rtrim($sql, ',') . ') VALUES ';
+                foreach ($values as $sets) {
+                    $set = '';
+                    foreach ($columns as $key) {
+                        $set .= (isset($sets[$key]) ? $platform->quoteValue($sets[$key]) : 'null') . ',';
+                    }
+                    $sql .= '(' . rtrim($set, ',') . '),';
+                }
+                $adapter->query(rtrim($sql, ','), $adapter::QUERY_MODE_EXECUTE);
+            }
+        } catch (Exception $e) {
+            $this->getContainer()->get('log')->logException($e);
+        }
+    }
+
+    /**
+     * {@inhertdoc}
+     */
+    public function createIndexes($columns, $keys = null)
+    {
+        $adapter = $this->getContainer()->get('dbAdapter');
+        $languages = new Language;
+        $entityTable = $columns[0]['entity_table'];
+        foreach ($languages as $language) {
+            $table = $this->entityType . '_' . $language['id'] . '_index';
+            foreach ($columns as $attr) {
+                if ($attr['attr'] && $attr['is_unique'] && $attr['type'] !== 'text') {
+                    $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr']) . ' ON ' . $table . '(' . $attr['attr'] . ');', $adapter::QUERY_MODE_EXECUTE);
                 }
             }
-            $connection->commit();
-        } catch (Exception $e) {
-            $connection->rollback();
-            $this->getContainer()->get('log')->logException($e);
+            $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_STORE_ID ON ' . $table . '(store_id);', $adapter::QUERY_MODE_EXECUTE);
+            $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) .
+                    '_ID_' . strtoupper($entityTable) . '_ID FOREIGN KEY (id) REFERENCES ' . $entityTable . '(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
+            $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) .
+                    '_STORE_ID_CORE_STORE_ID FOREIGN KEY (store_id) REFERENCES core_store(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
+            if ($keys) {
+                $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_ATTRIBUTE_SET_ID' . ' ON ' . $table . '(attribute_set_id);', $adapter::QUERY_MODE_EXECUTE);
+                $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) . '_ATTRIBUTE_SET_ID_EAV_ATTRIBUTE_SET_ID FOREIGN KEY (attribute_set_id) REFERENCES eav_attribute_set(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
+            }
         }
     }
 

@@ -10,7 +10,7 @@ $sales_status = $this->getAllSalesStatus();
             <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
                 <li class="active col-xs-3 col-sm-3">
                     <a href="#all" data-toggle="tab">
-                        <?php echo $this->translate('All');?>(<span><?php $this->getBaseUrl('sales/order/list/');?><span>)
+                        <?php echo $this->translate('All');?>(<span><?php echo count($transactions);?><span>)
                     </a>
                 </li>
                 <li class="col-xs-3 col-sm-3">
@@ -31,63 +31,94 @@ $sales_status = $this->getAllSalesStatus();
             </ul>
         <div class="search padding-5 col-xs-12 col-sm-12">
             <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
-                <span class="fa fa-search" aria-hidden="true"></span><input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+                <span class="fa fa-search" aria-hidden="true"></span>
+                <input type="search" name="increment_id" value="<?php echo isset($filter['increment_id']) ? $filter['increment_id'] : ''; ?>" class="col-xs-10 col-sm-10" />
+                <button type="submit" class="btn btn-default"><?php echo $this->translate('Search');?></button>
             </form>
         </div>
-        <?php
-            foreach ($transactions as $transaction) {
-        ?>
         <div id="Product-details" class="tab-content">
-            <?php
-                    if (!empty($transaction['items'])) {
-            ?>
             <div class="tab-pane fade in active" id="all">
                 <?php
-                    foreach ($transaction['items'] as $key => $item) {
-                        $thumbnail = $this->getProduct($item['product_id'])->getThumbnail();
+                 foreach ($transactions as $transaction) :
                 ?>
+                <div class="transaction-list">
                     <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
-                        <?php
-                            if ($key == 0) :
-                            ?>
                         <li class="col-xs-6 col-sm-6 text-left font-14"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
-                        <?php                        
-                        endif;
-                            if ($key == 0) :
-                            ?>
-                        <li class="col-xs-6 col-sm-6 text-right font-14"><?php echo $this->getCurrency()->format($item['total']); ?><span class="font-12">(含快递:<?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span></li>
-                        <?php endif; ?>
+                        <li class="col-xs-6 col-sm-6 text-right font-14"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)',[ $transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
                     </ul>
-                    <ul class="col-xs-12 col-sm-12 inline bt padding-5">
-                        <li class="col-xs-2 col-sm-2">
+                     <?php
+                        if (!empty($transaction['items'])) :
+                        $items = $transaction->getItems();
+                    ?>  
+                    <table class="table inline bt padding-5">
+                        <?php
+                                               $flag = TRUE;
+                        foreach ($transaction['items'] as $key => $item) :
+                            $product = $item['product'];
+                            $thumbnail = $product->getThumbnail();
+  
+                        ?>
+                        <tr>
+                            <td class="col-xs-2 col-sm-2">
                             <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
-                                <?php if (strpos($thumbnail, 'http') === false) { ?>
-                                <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50px/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" width="50" height="50" />
-                                    <?php } else { ?>
-                                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" width="50" height="50" />
-                                    <?php } ?>
+                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x50/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
                             </a>
-                        </li>
-                        <li class="col-xs-7 col-sm-7">
-                            <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
+                            </td>
+                            <td class="col-xs-6 col-sm-6">
+                            <h4 class="font-12">
+                                <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
                                 <span><?php echo $item['product_name'] ?></span>
                             </a>
-                            <p class="choose col-xs-12 col-sm-12"><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p>
-                        </li>
-                        <li class="col-xs-3 col-sm-3 text-right">
-                            <span class="price"><?php echo $this->getCurrency()->format($item['price']); ?></span>
-                            <span ><?php echo $this->translate('%d', [$item['qty']]); ?></span>
-                            <?php if($key == 0) { ?>
+                            </h4>
+                            <?php
+                            $options = json_decode($item['options'], true);
+                            if ($item['product_id'] && count($options)):
+                                ?>
+                                <dl class="options">
+                                    <?php
+                                    foreach ($product->getOptions() as $option):
+                                        if (isset($options[$option->getId()])):
+                                            ?>
+                                            <dt><?php echo $option['title'] ?></dt>
+                                            <dd>
+                                                <?php
+                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                ?>
+                                            </dd>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+                                </dl>
+                            <?php endif; ?>
+                            </td>
+                            <td class="col-xs-1 col-sm-1 text-right">
+                                <span class="price"><?php echo $transaction->getCurrency()->format($item->offsetGet('price')); ?></span>
+                                <span><?php echo (float) $item->offsetGet('qty'); ?></span>
+                            </td>                          
+                       <?php if($flag) : ?>
+                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 action text-right">
                             <span class="color-blue font-14"><?php echo $this->translate($transaction['status_name']); ?></span>
-                            <?php } ?>
-                        </li>
-                    </ul>
-                    <ul class="col-xs-12 col-sm-12 inline text-right operation">
-                        <?php
-                            if ($key == 0) {
-                                $order_obj = $this->getOrder($transaction['id']);
+                            </td>
+                            <?php 
+                            $flag = FALSE;
+                            endif;
+                            ?>
+                    </tr>
+                    <?php
+                    endforeach;
+                    ?>
+                    </table>
+                    <?php
+
+                    endif;
+                    ?>
+                    <ul>
+                       <?php
+                               $order_obj = $this->getOrder($transaction['id']);
                         ?>
-                        <li>
+                        <li class="col-xs-12 col-sm-12 text-right">
                         <?php if ($order_obj->canCancel()) { ?>
                             <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>')) return false;" class="btn btn-cancel">
                                 <?php echo $this->translate('Cancel', [], 'sales') ?>
@@ -122,13 +153,12 @@ $sales_status = $this->getAllSalesStatus();
                         <?php echo $this->translate('Print', [], 'sales') ?>
                             </a>
                         </li>
-                        <?php } ?>
                     </ul>
+                </div>
                 <?php
-                }
+                    endforeach;
                 ?>
             </div>
-            <?php } ?>
            <div class="tab-pane fade " id="delivery">
                 2
             </div>
@@ -139,9 +169,6 @@ $sales_status = $this->getAllSalesStatus();
                 4
             </div>
         </div>
-        <?php                     
-        }
-        ?>
     </div>
     <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">
         <div class="modal-dialog" role="document">

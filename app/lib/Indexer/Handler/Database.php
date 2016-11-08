@@ -11,7 +11,6 @@ use Seahinet\Lib\Db\Sql\Ddl\Column\{
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\{
     Ddl,
-    Insert,
     Select
 };
 use Zend\Db\TableGateway\TableGateway;

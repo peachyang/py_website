@@ -24,13 +24,13 @@ class Indexer extends AbstractCli
         if ($indexer === false) {
             echo $this->usageHelp();
         } else if ($indexer === 'all' || $indexer === true) {
-            $type = new Type;
+            $type = array_merge((new Type)->toArray(), array_keys($this->getContainer()->get('config')['indexer']));
             $manager = $this->getContainer()->get('indexer');
             touch(BP . 'maintence');
             try {
                 foreach ($type as $indexer) {
-                    $manager->reindex($indexer['code']);
-                    echo $indexer['code'], ' indexer has been rebuild successfully.', PHP_EOL;
+                    $manager->reindex(is_string($indexer) ? $indexer : $indexer['code']);
+                    echo is_string($indexer) ? $indexer : $indexer['code'], ' indexer has been rebuild successfully.', PHP_EOL;
                 }
             } catch (\Exception $e) {
                 echo $e->getMessage(), PHP_EOL;
@@ -42,7 +42,7 @@ class Indexer extends AbstractCli
             touch(BP . 'maintence');
             try {
                 $manager->reindex($indexer);
-                echo ucfirst($indexer), ' indexer has been rebuild successfully.', PHP_EOL;
+                echo $indexer, ' indexer has been rebuild successfully.', PHP_EOL;
             } catch (\Exception $e) {
                 echo $e->getMessage(), PHP_EOL;
             } finally {
@@ -60,7 +60,7 @@ class Indexer extends AbstractCli
 Usage:  php -f script.php -- [options]
 
     help|-h           Help
-    reindex|-r        Reindex
+    reindex|-r [code] Reindex specified indexer
 
 USAGE;
     }

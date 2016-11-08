@@ -11,7 +11,8 @@ class CategoryController extends ActionController
 {
 
     use \Seahinet\Catalog\Traits\Breadcrumb,
-        \Seahinet\Lib\Traits\DB;
+        \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\Filter;
 
     public function indexAction()
     {
@@ -84,33 +85,9 @@ class CategoryController extends ActionController
         } else if ($category && $default = $category['default_sortable']) {
             $select->order($default);
         }
-        foreach ($condition as $key => $value) {
-            if (trim($value) === '') {
-                unset($condition[$key]);
-            } else if (strpos($key, ':')) {
-                if (strpos($value, '%') !== false) {
-                    $select->where->like(str_replace(':', '.', $key), $value);
-                } else {
-                    $condition[str_replace(':', '.', $key)] = $value;
-                }
-                unset($condition[$key]);
-            } else if (strpos($value, '%') !== false) {
-                $select->where->like($key, $value);
-                unset($condition[$key]);
-            } else {
-                $attribute = new Attribute;
-                $attribute->load($key, 'code');
-                if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
-                    $select->where('(' . $key . ' LIKE \'' . $value . ',%\' OR '
-                            . $key . ' LIKE \'%,' . $value . '\' OR '
-                            . $key . ' LIKE \'%,' . $value . ',%\' OR '
-                            . $key . ' = \'' . $value . '\')');
-                    unset($condition[$key]);
-                }
-            }
-        }
-        $condition['status'] = 1;
-        $select->where($condition);
+        $this->filter($collection, $condition, ['limit' => 1, 'order' => 1], function($select, &$condition) {
+            $condition['status'] = 1;
+        });
         return $collection;
     }
 

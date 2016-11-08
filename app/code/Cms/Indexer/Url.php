@@ -51,11 +51,10 @@ class Url implements Provider
 
     public function provideData(AbstractHandler $handler)
     {
-        $data = [];
         $languages = new Language;
         $languages->columns(['id']);
         foreach ($languages as $language) {
-            $data[$language['id']] = [];
+            $data = [$language['id'] => []];
             $tree = [];
             $categories = new Category($language['id']);
             $categories->where(['status' => 1]);
@@ -75,31 +74,40 @@ class Url implements Provider
                     ];
                 }
             }
+            $handler->buildData($data);
             $pages = new Page;
-            $pages->where(['status' => 1]);
-            $pages->load(false);
-            foreach ($pages as $page) {
-                $page = new PageModel($page);
-                $categories = $page['category'];
-                if (empty($categories)) {
-                    $data[$language['id']][] = [
-                        'page_id' => $page['id'],
-                        'category_id' => null,
-                        'path' => $page['uri_key']
-                    ];
-                } else {
-                    foreach ($categories as $category => $name) {
+            $pages->where(['status' => 1])->limit(50);
+            $init = $data;
+            for ($i = 0;; $i++) {
+                $data = [$language['id'] => []];
+                $pages->reset('offset')->offset(50 * $i);
+                $pages->load(false);
+                if (!$pages->count()) {
+                    break;
+                }
+                foreach ($pages as $page) {
+                    $page = new PageModel($page);
+                    $categories = $page['category'];
+                    if (empty($categories)) {
                         $data[$language['id']][] = [
                             'page_id' => $page['id'],
-                            'category_id' => $category,
-                            'path' => $data[$language['id']][$category]['path'] . '/' . $page['uri_key']
+                            'category_id' => null,
+                            'path' => $page['uri_key']
                         ];
+                    } else {
+                        foreach ($categories as $category => $name) {
+                            $data[$language['id']][] = [
+                                'page_id' => $page['id'],
+                                'category_id' => $category,
+                                'path' => $init[$language['id']][$category]['path'] . '/' . $page['uri_key']
+                            ];
+                        }
                     }
                 }
+                $data[$language['id']] = array_values($data[$language['id']]);
+                $handler->buildData($data);
             }
-            $data[$language['id']] = array_values($data[$language['id']]);
         }
-        $handler->buildData($data);
         return true;
     }
 

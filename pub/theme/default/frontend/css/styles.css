@@ -378,6 +378,13 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-processing .page-content .notice{font-size:14px;line-height:48px;color:#007dc6}
 .retailer-processing .page-content .notice .btn,.retailer-apply .page-content .form>.btn{display:block;margin:10px auto;width:162px;height:42px;font-size:20px;color:#fff;line-height:1.5;border:none;background:linear-gradient(to bottom,#1da7f8,#007ec7)}
 .retailer-processing .page-content .notice .btn:hover,.retailer-apply .page-content .form>.btn:hover{background:linear-gradient(to bottom,#007ec7,#1da7f8)}
+.retailer-account .review-list{margin:20px 0}
+.retailer-account .review-list td>.fa{font-size:22px;color:#7e7f7f}
+.retailer-account .review-list .product-name{padding:0 4px;margin-bottom:10px}
+.retailer-account .review-list .table td,.retailer-account .review-list .table th{padding:0 4px}
+.retailer-account .review-list .rating .fa{color:#007DC6}
+.retailer-account .review-list .comment{color:#7e7f7f;font-size:12px}
+.retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -980,29 +987,6 @@ dl.options dd{float:left;margin-left:4px}
 .layer_table .btn_sub button{padding:5px 15px;background:#fff;font-size:16px;border:1px solid #ccc}
 .layer_table .btn_sub{margin-left:120px}
 /*end*/
-/*Evaluation Management*/
-.evaluate .down_icon {margin:20px 0 20px 70px}
-.details .table{font-size:13px;color:#7e7f7f}
-.evaluate .details .table .buyer{color:#007dc6}
-.evaluate .details .table td{padding:2px 8px}
-.evaluate .details .table .star{color:#007dc6}
-.evaluate .details .table .price{color:#fc021f;padding: 5px 0;}
- .details .border_left{height: 100%;border-left: 1px solid #eee;position: absolute;left:60px;bottom:-45px}
-.evaluate .down_icon .span{border:1px solid #eee;padding:3px 10px;font-size:12px;color:#9C9292;margin:0 20px}
- .details .table td{border-top:none}
- .details .table .title_img { width:90px }
-.details .table button{color:#fff;background:#007dc6;padding:3px 15px;border:none}
- .details .table .title_img img{border-radius:50px;width:35px}
- .details .table .title_img .title_img_mg{margin:0 1px 0 15px}
- .details .table .title_img  .icon_comment{font-size:22px}
- .details .table .img_left_bd{width: 15px;background: #eee;height: 1px;/* display: table-caption;  */   position: absolute;left: 80px;top: 24px;}
- .details .table td i{padding:0 3px;font-size:18px;color:#007dc6}
- .details .table .border_bt {border-bottom: 3px #eee dotted;}
-  .details .table .bt-time{margin-bottom: 10px;display: inline-block;}     
-.details .table  .title_txt a{display: list-item;width:310px;white-space: nowrap;text-overflow:ellipsis; overflow:hidden;}
-.details{margin:30px 0;position:relative}
- .details:last-child .border_left{display:none}
-/*end*/
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}
 .page-home .menu .menu_left .menus{background-color:#f5f6f9;width:165px}
@@ -1106,7 +1090,6 @@ dl.options dd{float:left;margin-left:4px}
 .catalog-product .store_info{width:19%;overflow: hidden;float:left}
 .catalog-product .store_info h3.tops{height:52px;line-height:35px;background:#fd9030;color:#fff;padding:10px;font-size:18px}
 .catalog-product .store_detail{border: 1px solid #eee;border-top:none;width:100%;overflow:hidden;padding-bottom: 30px}
-.catalog-product .store_detail .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{ padding:0; padding-top: 10px; line-height: 1.42857143; vertical-align: middle; border-top:0;}
 .catalog-product .store_detail .fa{color: #fd9030}
 .catalog-product .store_detail h4{color:#af0029;font-size:26px;font-weight:bold;text-align:right}
 .catalog-product .store_detail .store_entry{border: 1px solid #d5d5d6;border-radius:2px;padding:10px 40px;background:#f1f1f1}

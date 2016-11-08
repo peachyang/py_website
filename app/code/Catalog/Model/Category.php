@@ -62,13 +62,12 @@ class Category extends Entity
 
     public function getUrl()
     {
-        if (isset($this->storage['path'])) {
-            return $this->getBaseUrl($this->storage['path']);
+        if (!isset($this->storage['path'])) {
+            $constraint = ['product_id' => null, 'category_id' => $this->getId()];
+            $result = $this->getContainer()->get('indexer')->select('catalog_url', $this->languageId, $constraint);
+            $this->storage['path'] = isset($result[0]) ? $result[0]['path'] . '.html' : '';
         }
-        $constraint = ['product_id' => null, 'category_id' => $this->getId()];
-        $result = $this->getContainer()->get('indexer')->select('catalog_url', $this->languageId, $constraint);
-        $this->storage['path'] = $result[0]['path'] . '.html';
-        return $this->getBaseUrl($result[0]['path'] . '.html');
+        return $this->getBaseUrl($this->storage['path']);
     }
 
     public function beforeSave()

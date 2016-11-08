@@ -3,13 +3,12 @@
 namespace Seahinet\Admin\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
-use Seahinet\Lib\Model\Collection\Eav\Collection;
-use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\ViewModel\Template;
-use Zend\Db\Sql\Predicate\Like;
 
 class Grid extends Template
 {
+
+    use \Seahinet\Lib\Traits\Filter;
 
     protected $count = null;
     protected $action = [];
@@ -120,50 +119,7 @@ class Grid extends Template
         if (is_null($collection)) {
             return [];
         }
-        $condition = $this->getQuery();
-        $limit = $condition['limit'] ?? 20;
-        if (isset($condition['page'])) {
-            $collection->offset(($condition['page'] - 1) * $limit);
-            unset($condition['page']);
-        }
-        $collection->limit((int) $limit);
-        unset($condition['limit']);
-        if (isset($condition['asc'])) {
-            $collection->order((strpos($condition['asc'], ':') ?
-                            str_replace(':', '.', $condition['asc']) :
-                            $condition['asc']) . ' ASC');
-            unset($condition['asc']);
-        } else if (isset($condition['desc'])) {
-            $collection->order((strpos($condition['desc'], ':') ?
-                            str_replace(':', '.', $condition['desc']) :
-                            $condition['desc']) . ' DESC');
-            unset($condition['desc']);
-        }
-        if (!empty($condition)) {
-            foreach ($condition as $key => $value) {
-                if (in_array($key, $this->bannedFields) || trim($value) === '') {
-                    unset($condition[$key]);
-                } else if (strpos($key, ':')) {
-                    if (strpos($value, '%') !== false) {
-                        $collection->where(new Like(str_replace(':', '.', $key), $value));
-                    } else {
-                        $condition[str_replace(':', '.', $key)] = $value;
-                    }
-                    unset($condition[$key]);
-                } else if (strpos($value, '%') !== false) {
-                    $collection->where(new Like($key, $value));
-                    unset($condition[$key]);
-                } else if ($collection instanceof Collection) {
-                    $attribute = new Attribute;
-                    $attribute->load($key, 'code');
-                    if (in_array($attribute->offsetGet('input'), ['checkbox', 'multiselect'])) {
-                        $collection->where('FIND_IN_SET("' . $value . '",' . $key . ')');
-                        unset($condition[$key]);
-                    }
-                }
-            }
-            $collection->where($condition);
-        }
+        $this->filter($collection, $this->getQuery());
         return $collection;
     }
 

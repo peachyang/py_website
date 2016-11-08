@@ -1,0 +1,82 @@
+<div class="review-list">
+    <ul class="nav nav-tabs">
+        <li role="presentation"<?php if ($this->getQuery('status') == 0): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => null]) ?>"><?php echo $this->translate('All') ?></a></li>
+        <li role="presentation"<?php if ($this->getQuery('status') == 1): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => 1]) ?>"><?php echo $this->translate('Pending') ?></a></li>
+    </ul>
+    <div class="tab-content">
+        <table>
+            <?php foreach ($this->getReviews() as $review): ?>
+                <tr>
+                    <td><span class="fa fa-pencil-square-o" aria-hidden="true"></span></td>
+                    <td>
+                        <?php foreach ($review->getRatings() as $rating): ?>
+                            <div class="rating">
+                                <span class="fa fa-star" style="width:<?php echo $rating->offsetGet('value') * 20 ?>%"></span>
+                                <span class="fa fa-star-o"></span>
+                            </div>
+                        <?php endforeach ?>
+                    </td>
+                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-reply"><?php echo $this->translate('Reply') ?></button></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+    </div>
+    <div class="evaluate">
+        <div class="down_icon"> <span class="span"><span>评价</span><i class="fa fa-caret-down text-center"></i></span><span class="span"><span>评语</span><i class="fa fa-caret-down text-center"></i></span></div>
+        <div class="details">
+            <table class="panel-body table">
+                <tbody>
+                    <tr>
+                        <td class="title_img"> <span class="fa fa-pencil-square-o icon_comment"  aria-hidden="true" ></span><span class="title_img_mg"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/45x/TB1fWOsLXXXXXXrXVXXXXXXXXXX_!!0-item_pic.jpg" alt="" data-label="" data-group="" width="45"><div class="img_left_bd"></div></span></td>
+                        <td class="col-md-3" ><span>买家：</span><a href="" class="buyer">万物生dy</a></td>
+                        <td class="title_txt"><a href="">现货Eagle Energy雄鹰能量棒吸入式咖啡因缓解疲劳</a><div class="price" colspan="2">￥198.00</div></td>
+                        <td class="text-right"><button data-toggle="modal" data-target="#modal-reply">回复</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="star"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></td>
+                        <td class=""><span class="buyer">买家评价：</span><span>味道还可以</span></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="">
+                        <td class=""></td>
+                        <td class="border_bt"></td>
+                        <td class="border_bt"><span class="bt-time">[2016-09-19&nbsp;&nbsp;12:30:37]</span></td>
+                        <td class="border_bt"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="details">
+            <table class="panel-body table">
+                <tbody>
+                <div class="border_left"></div>
+                <tr>
+                    <td class="title_img"> <span class="fa fa-pencil-square-o icon_comment"  aria-hidden="true" ></span><span class="title_img_mg"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/45x/TB1fWOsLXXXXXXrXVXXXXXXXXXX_!!0-item_pic.jpg" alt="" data-label="" data-group="" width="45"><div class="img_left_bd"></div></span></td>
+                    <td class="col-md-3" ><span>买家：</span><a href="" class="buyer">万物生dy</a></td>
+                    <td class="title_txt"><a href="">现货Eagle Energy雄鹰能量棒吸入式咖啡因缓解疲劳</a><div class="price" colspan="2">￥198.00</div></td>
+                    <td class="text-right"><button data-toggle="modal" data-target="#modal-reply">回复</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="star"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></td>
+                    <td class=""><span class="buyer">买家评价：</span><span>味道还可以</span></td>
+                    <td class=""></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="star"></td>
+                    <td class=""><span class="buyer">卖家回复：</span><span>欢迎亲下次光临</span></td>
+                    <td class=""></td>
+                </tr>
+                <tr class="">
+                    <td class=""></td>
+                    <td class="border_bt"></td>
+                    <td class="border_bt"><span class=" bt-time">[2016-09-19&nbsp;&nbsp;12:30:37]</span></td>
+                    <td class="border_bt"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

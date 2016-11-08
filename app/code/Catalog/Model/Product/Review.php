@@ -2,6 +2,8 @@
 
 namespace Seahinet\Catalog\Model\Product;
 
+use Seahinet\Catalog\Model\Collection\Product\Rating;
+use Seahinet\Lib\Exception\SpamException;
 use Seahinet\Lib\Model\AbstractModel;
 
 class Review extends AbstractModel
@@ -15,6 +17,9 @@ class Review extends AbstractModel
     protected function beforeSave()
     {
         $this->beginTransaction();
+        if ($this->getContainer()->get('akismet')->isSpam($this->storage['content'])) {
+            throw new SpamException;
+        }
         $this->storage['content'] = gzencode($this->storage['content']);
         parent::beforeSave();
     }
@@ -41,6 +46,20 @@ class Review extends AbstractModel
             }
         }
         parent::afterLoad($result);
+    }
+
+    public function getRatings()
+    {
+        if ($this->getId()) {
+            $collection = new Rating;
+            $collection->join('review_rating', 'review_rating.rating_id=rating.id', ['value'], 'left')
+                    ->where([
+                        'status' => 1,
+                        'review_rating.review_id' => $this->getId()
+            ]);
+            return $collection;
+        }
+        return [];
     }
 
 }

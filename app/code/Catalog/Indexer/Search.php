@@ -64,23 +64,29 @@ class Search implements Provider
         $languages = new Language;
         $languages->columns(['id']);
         foreach ($languages as $language) {
-            $collection = new Collection($language['id']);
-            $collection->where(['status' => 1]);
-            $collection->load(false);
             $data[$language['id']] = [];
-            foreach ($collection as $product) {
-                $text = '|';
-                foreach ($attributes as $attribute) {
-                    $text .= $this->getOption($product, $attribute['code'], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
+            $collection = new Collection($language['id']);
+            $collection->where(['status' => 1])->limit(50);
+            for ($i = 0;; $i++) {
+                $collection->reset('offset')->offset(50 * $i);
+                $collection->load(false);
+                if (!$collection->count()) {
+                    break;
                 }
-                $data[$language['id']][] = [
-                    'id' => $product['id'],
-                    'store_id' => $product['store_id'],
-                    'data' => $text
-                ];
+                foreach ($collection as $product) {
+                    $text = '|';
+                    foreach ($attributes as $attribute) {
+                        $text .= $this->getOption($product, $attribute['code'], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
+                    }
+                    $data[$language['id']][] = [
+                        'id' => $product['id'],
+                        'store_id' => $product['store_id'],
+                        'data' => $text
+                    ];
+                }
             }
+            $handler->buildData($data);
         }
-        $handler->buildData($data);
         return true;
     }
 

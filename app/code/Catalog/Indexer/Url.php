@@ -76,24 +76,33 @@ class Url implements Provider
                 }
             }
             $products = new Product($language['id']);
-            $products->where(['status' => 1]);
-            $products->load(false);
-            foreach ($products as $product) {
-                $product = new ProductModel($language['id'], $product);
-                $categories = $product->getCategories();
-                foreach ($categories as $category) {
-                    $data[$language['id']][] = [
-                        'product_id' => $product['id'],
-                        'category_id' => $category['id'],
-                        'path' => (isset($data[$language['id']][$category['id']]['path']) ?
-                        ($data[$language['id']][$category['id']]['path'] . '/') : '') .
-                        $product['uri_key']
-                    ];
+            $products->where(['status' => 1])->limit(50);
+            for ($i = 0;; $i++) {
+                if ($i) {
+                    $data[$language['id']] = [];
                 }
+                $products->reset('offset')->offset(50 * $i);
+                $products->load(false);
+                if (!$products->count()) {
+                    break;
+                }
+                foreach ($products as $product) {
+                    $product = new ProductModel($language['id'], $product);
+                    $categories = $product->getCategories();
+                    foreach ($categories as $category) {
+                        $data[$language['id']][] = [
+                            'product_id' => $product['id'],
+                            'category_id' => $category['id'],
+                            'path' => (isset($data[$language['id']][$category['id']]['path']) ?
+                            ($data[$language['id']][$category['id']]['path'] . '/') : '') .
+                            $product['uri_key']
+                        ];
+                    }
+                }
+                $data[$language['id']] = array_values($data[$language['id']]);
             }
-            $data[$language['id']] = array_values($data[$language['id']]);
+            $handler->buildData($data);
         }
-        $handler->buildData($data);
         return true;
     }
 

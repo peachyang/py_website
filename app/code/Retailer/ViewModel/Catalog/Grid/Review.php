@@ -15,7 +15,7 @@ class Review extends AbstractViewModel
         $collection = new Collection;
         $collection->join('product_entity', 'product_entity.id=review.product_id', [], 'left')
                 ->where(['product_entity.store_id' => $this->getRetailer()->offsetGet('store_id')])
-                ->order('updated_at DESC, created_at DESC');
+                ->order('created_at DESC');
         $condition = $this->getQuery();
         if (!empty($condition['status'])) {
             $collection->where(['reply' => null]);

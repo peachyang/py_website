@@ -2,6 +2,7 @@
 
 namespace Seahinet\Catalog\Model\Product;
 
+use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Catalog\Model\Collection\Product\Rating;
 use Seahinet\Lib\Exception\SpamException;
 use Seahinet\Lib\Model\AbstractModel;
@@ -17,10 +18,15 @@ class Review extends AbstractModel
     protected function beforeSave()
     {
         $this->beginTransaction();
-        if ($this->getContainer()->get('akismet')->isSpam($this->storage['content'])) {
-            throw new SpamException;
+        if (!empty($this->storage['content'])) {
+            if ($this->getContainer()->get('akismet')->isSpam($this->storage['content'])) {
+                throw new SpamException;
+            }
+            $this->storage['content'] = gzencode($this->storage['content']);
         }
-        $this->storage['content'] = gzencode($this->storage['content']);
+        if (!empty($this->storage['reply'])) {
+            $this->storage['reply'] = gzencode($this->storage['reply']);
+        }
         parent::beforeSave();
     }
 
@@ -44,8 +50,22 @@ class Review extends AbstractModel
             if ($data !== false) {
                 $result[0]['content'] = $data;
             }
+            $data = @gzdecode($result[0]['reply']);
+            if ($data !== false) {
+                $result[0]['reply'] = $data;
+            }
         }
         parent::afterLoad($result);
+    }
+
+    public function getProduct()
+    {
+        if (!empty($this->storage['product_id'])) {
+            $product = new Model;
+            $product->load($this->storage['product_id']);
+            return $product;
+        }
+        return null;
     }
 
     public function getRatings()

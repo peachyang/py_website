@@ -60,11 +60,10 @@ class Search implements Provider
         $attributes = new Attribute;
         $attributes->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
                 ->where(['eav_entity_type.code' => Collection::ENTITY_TYPE, 'searchable' => 1]);
-        $data = [];
         $languages = new Language;
         $languages->columns(['id']);
         foreach ($languages as $language) {
-            $data[$language['id']] = [];
+            $data = [$language['id'] => []];
             $collection = new Collection($language['id']);
             $collection->where(['status' => 1])->limit(50);
             for ($i = 0;; $i++) {
@@ -81,7 +80,7 @@ class Search implements Provider
                     $data[$language['id']][] = [
                         'id' => $product['id'],
                         'store_id' => $product['store_id'],
-                        'data' => $text
+                        'data' => preg_replace('/\|{2,}/','|',$text)
                     ];
                 }
             }

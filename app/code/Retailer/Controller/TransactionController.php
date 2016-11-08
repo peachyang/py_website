@@ -2,6 +2,8 @@
 
 namespace Seahinet\Retailer\Controller;
 
+use Exception;
+use Seahinet\Catalog\Model\Product\Review;
 use Seahinet\Lib\Session\Segment;
 
 class TransactionController extends AuthActionController
@@ -44,6 +46,28 @@ class TransactionController extends AuthActionController
     public function reviewAction()
     {
         return $this->getLayout('retailer_review');
+    }
+
+    public function replyAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id', 'reply']);
+            if ($result['error'] === 0) {
+                try {
+                    $review = new Review;
+                    $review->setData([
+                        'id' => $data['id'],
+                        'reply' => $data['reply']
+                    ])->save();
+                    $result['message'][] = ['message' => $this->translate('Replied successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'danger'];
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
     }
 
 }

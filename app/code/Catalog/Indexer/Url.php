@@ -51,14 +51,13 @@ class Url implements Provider
 
     public function provideData(AbstractHandler $handler)
     {
-        $data = [];
         $languages = new Language;
         $languages->columns(['id']);
         foreach ($languages as $language) {
             $categories = new Category($language['id']);
             $categories->where(['status' => 1]);
             $categories->load(false);
-            $data[$language['id']] = [];
+            $data = [$language['id'] => []];
             $tree = [];
             foreach ($categories as $category) {
                 $tree[$category['id']] = [
@@ -75,12 +74,12 @@ class Url implements Provider
                     ];
                 }
             }
+            $handler->buildData($data);
             $products = new Product($language['id']);
             $products->where(['status' => 1])->limit(50);
+            $init = $data;
             for ($i = 0;; $i++) {
-                if ($i) {
-                    $data[$language['id']] = [];
-                }
+                $data = [$language['id'] => []];
                 $products->reset('offset')->offset(50 * $i);
                 $products->load(false);
                 if (!$products->count()) {
@@ -93,15 +92,15 @@ class Url implements Provider
                         $data[$language['id']][] = [
                             'product_id' => $product['id'],
                             'category_id' => $category['id'],
-                            'path' => (isset($data[$language['id']][$category['id']]['path']) ?
-                            ($data[$language['id']][$category['id']]['path'] . '/') : '') .
+                            'path' => (isset($init[$language['id']][$category['id']]['path']) ?
+                            ($init[$language['id']][$category['id']]['path'] . '/') : '') .
                             $product['uri_key']
                         ];
                     }
                 }
                 $data[$language['id']] = array_values($data[$language['id']]);
+                $handler->buildData($data);
             }
-            $handler->buildData($data);
         }
         return true;
     }

@@ -367,6 +367,9 @@ retailer_review:
                     main:
                         type: Seahinet\Retailer\ViewModel\Catalog\Grid\Review
                         template: retailer/catalog/review/list
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
             extra:
                 children:
                     reply:

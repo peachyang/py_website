@@ -8,6 +8,8 @@ use Seahinet\Sales\Model\Collection\Order as Collection;
 class Order extends Account
 {
 
+    use \Seahinet\Lib\Traits\Filter;
+
     public function getOrders()
     {
         $collection = new Collection;
@@ -29,49 +31,12 @@ class Order extends Account
                         ->where([
                             'sales_order_phase.code' => 'complete',
                             'sales_order_status.is_default' => 0
-                        ])->having(['count(review.id)=0','sales_order.id is not null']);
+                        ])->having(['count(review.id)=0', 'sales_order.id is not null']);
             }
         }
         unset($condition['status']);
         $select = $collection->getSelect();
-        if (isset($condition['limit']) && $condition['limit'] === 'all') {
-            $select->reset('limit')->reset('offset');
-        } else {
-            $limit = $condition['limit'] ?? 10;
-            if (isset($condition['page'])) {
-                $select->offset(($condition['page'] - 1) * $limit);
-                unset($condition['page']);
-            }
-            $select->limit((int) $limit);
-        }
-        unset($condition['limit']);
-        if (isset($condition['asc'])) {
-            $select->order((strpos($condition['asc'], ':') ?
-                            str_replace(':', '.', $condition['asc']) :
-                            $condition['asc']) . ' ASC');
-            unset($condition['asc'], $condition['desc']);
-        } else if (isset($condition['desc'])) {
-            $select->order((strpos($condition['desc'], ':') ?
-                            str_replace(':', '.', $condition['desc']) :
-                            $condition['desc']) . ' DESC');
-            unset($condition['desc']);
-        }
-        foreach ($condition as $key => $value) {
-            if (trim($value) === '') {
-                unset($condition[$key]);
-            } else if (strpos($key, ':')) {
-                if (strpos($value, '%') !== false) {
-                    $select->where->like(str_replace(':', '.', $key), $value);
-                } else {
-                    $condition[str_replace(':', '.', $key)] = $value;
-                }
-                unset($condition[$key]);
-            } else if (strpos($value, '%') !== false) {
-                $select->where->like($key, $value);
-                unset($condition[$key]);
-            }
-        }
-        $select->where($condition);
+        $this->filter($select, $condition);
         return $collection;
     }
 

@@ -19,6 +19,10 @@ class Review extends AbstractCollection
             if ($content !== false) {
                 $item['content'] = $content;
             }
+            $reply = @gzdecode($item['reply']);
+            if ($reply !== false) {
+                $item['reply'] = $reply;
+            }
         }
         return parent::afterLoad($result);
     }

@@ -347,7 +347,7 @@ retailer_order_view:
                     main:
                         type: Seahinet\Retailer\ViewModel\Product
                         template: retailer/orderview
-retailer_comment:
+retailer_review:
     update: retailer_account
     root:
         children:
@@ -355,40 +355,26 @@ retailer_comment:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Comment Management
+                        params: Review Management
             content:
-                children:
-                    main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/comment
-retailer_after:
-    update: retailer_account
-    root:
-        children:
-            head:
                 action:
                     -
-                        method: setTitle
-                        params: After Service
-            content:
+                        method: setVariable
+                        params:
+                            - title
+                            - Review Management
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\After
-                        template: retailer/after
-retailer_after_view:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer After Service View
-            content:
+                        type: Seahinet\Retailer\ViewModel\Catalog\Grid\Review
+                        template: retailer/catalog/review/list
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+            extra:
                 children:
-                    main:
-                            type: Seahinet\Retailer\ViewModel\Afterview
-                            template: retailer/afterview
+                    reply:
+                        type: Seahinet\Retailer\ViewModel\Catalog\Grid\Review
+                        template: retailer/catalog/review/reply
 retailer_products_release:
     update: retailer_account
     root:

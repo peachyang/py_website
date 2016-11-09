@@ -4,7 +4,10 @@ namespace Seahinet\Sales\ViewModel;
 
 use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Sales\Model\Collection\Rma;
-use Seahinet\Sales\Source\Refund\Service;
+use Seahinet\Sales\Source\Refund\{
+    Service,
+    Status
+};
 
 class Refund extends Account
 {
@@ -12,6 +15,7 @@ class Refund extends Account
     protected $service = null;
     protected $orderUrl = 'sales/order/view/';
     protected $viewUrl = 'sales/refund/view/';
+    protected $commentUrl = 'sales/refund/addcomment/';
 
     public function getApplication()
     {
@@ -33,10 +37,11 @@ class Refund extends Account
     {
         $template = $service . '-' . $status;
         if (in_array($template, [
+                    '1-0', '2-0', '0-0',
                     '1-1', '2-1', '2-4'
                 ])) {
             $viewModel = new static;
-            $viewModel->setTemplate('sales/refund/handler/' . $template);
+            $viewModel->setTemplate('sales/refund/handler/frontend/' . $template);
         }
         return $viewModel ?? '';
     }
@@ -49,6 +54,17 @@ class Refund extends Account
     public function getViewUrl()
     {
         return $this->viewUrl;
+    }
+
+    public function getCommentUrl()
+    {
+        return $this->getBaseUrl($this->commentUrl);
+    }
+
+    public function getStatus($service, $key)
+    {
+        $status = (new Status)->getSourceArray($key == -1 ? $key : $service);
+        return $status[$key] ?? '' ;
     }
 
 }

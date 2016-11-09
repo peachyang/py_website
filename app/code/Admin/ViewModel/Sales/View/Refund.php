@@ -16,6 +16,7 @@ class Refund extends Template
     protected $status = null;
     protected $phase = null;
     protected $service = null;
+    protected $commentUrl = 'sales_refund/addcomment/';
 
     public function getService($key)
     {
@@ -81,12 +82,17 @@ class Refund extends Template
         $template = $this->getRefund()['service'] . '-' . $this->getRefund()['status'];
         if (in_array($template, [
                     '0-0', '1-0', '2-0',
-                    '1-2', '2-2', '2-3'
+                    '1-2', '1-3', '2-2', '2-3'
                 ])) {
             $viewModel = new static;
             $viewModel->setTemplate('admin/sales/refund/' . $template);
         }
         return $viewModel ?? '';
+    }
+
+    public function getCommentUrl()
+    {
+        return $this->getAdminUrl($this->commentUrl);
     }
 
 }

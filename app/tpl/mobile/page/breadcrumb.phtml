@@ -4,36 +4,31 @@ if (count($crumbs)):
     $last = array_pop($crumbs);
     ?>
     <div class="container">
-       <div class="breadcrumb-m">
-    <div class="col-xs-1 col-sm-1 wrapperhovertree">
-        <div class="container">
-        <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
-<!--             <a href="javascript:void(0);" class="fa fa-bars fa-2x breadcrumb-right slide-menu" target="_self"></a> -->
+        <div class="breadcrumb-m">
+            <div class="col-xs-1 col-sm-1 wrapperhovertree">
+                <div class="container">
+                    <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
+                    <!--             <a href="javascript:void(0);" class="fa fa-bars fa-2x breadcrumb-right slide-menu" target="_self"></a> -->
+                </div>
+            </div>
+            <?php echo $this->getChild('category'); ?>
+            <div class="content-list col-xs-10 col-sm-10">
+                <input class="form-control " name="" value="" aria-required="true" type="search"><a href=""><i class="fa fa-search"></i> </a>                                                                <!--  <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>-->
+            </div>
+            <div cass="dropdown navigation">
+                <a href="javascript:void(0);" class="fa fa- fa-bars fa-2x col-xs-1 col-sm-1 dropdown-toggle in" data-toggle="dropdown"></a>
+                <ul class="filters clearfix dropdown-menu col-xs-12" role="menu" > 
+                    <li class="col-xs-4">
+                        <a href=""><?php echo $this->translate('Home page') ?><i class="fa  fa-bank font-color-orange font-14"></i></a>
+                    </li>
+                    <li class="col-xs-4">
+                        <a href=""><?php echo $this->translate('The shopping cart') ?><i class="fa fa-shopping-cart font-color-orange font-14"></i></a>
+                    </li>
+                    <li class="col-xs-4">
+                        <a href=""><?php echo $this->translate('Personal Center') ?><i class="fa   fa-user font-color-orange font-14"></i></a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <?php echo $this->getChild('category'); ?>
-    <div class="content-list col-xs-10 col-sm-10">
-    
-    <input class="form-control " name="" value="" aria-required="true" type="search"><a href=""><i class="fa fa-search"></i> </a>
-   
-        <!--  <a href="<?php echo $this->getBaseUrl(); ?>"><img src="<?php echo $this->getBaseUrl('/pub/theme/mobile/frontend/images/breadcrumb-logo.png') ?>" width="40" /></a>-->
-    </div>
-    <div cass="dropdown navigation">
-    	<a href="javascript:void(0);" class="fa fa- fa-bars fa-2x col-xs-1 col-sm-1 dropdown-toggle in" data-toggle="dropdown"></a>
-    	<ul class="filters clearfix dropdown-menu col-xs-12" role="menu" > 
-	    	<li class="col-xs-4">
-	    		<a href=""><?php echo $this->translate('Home page') ?><i class="fa  fa-bank font-color-orange font-14"></i></a>
-	    	</li>
-	    	<li class="col-xs-4">
-	    		<a href=""><?php echo $this->translate('The shopping cart') ?><i class="fa fa-shopping-cart font-color-orange font-14"></i></a>
-	    	</li>
-	    	<li class="col-xs-4">
-	    		<a href=""><?php echo $this->translate('Personal Center') ?><i class="fa   fa-user font-color-orange font-14"></i></a>
-	    	</li>
-    	</ul>
-    </div>
-     
-     
-</div>
     </div>
 <?php endif; ?>

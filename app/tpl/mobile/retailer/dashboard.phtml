@@ -11,31 +11,31 @@ $store = $this->getStore();
             </label>
             <div class="title_oic">
                 <h4><?php echo $store['name'] ?></h4>
-                <p><a href="">账户管理</a></p>
+                <p><a href=""><?PHP echo $this->translate(''); ?></a></p>
             </div>   
         </div>
         <div class="info col-xs-12 col-sm-10">
             <div class="wishlist_track">
                 <ul class="col-xs-12 col-sm-12">
                     <li class="col-xs-4 col-sm-4 text-center">
-                        <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/">0</a>
+                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>">0</a>
                         <span><?php echo $this->translate('Order today'); ?></span>
                     </li>
                     <li class="col-xs-4 col-sm-4 text-center">
-                        <a href="<?php echo $this->getBaseUrl() ?>customer/wishlist/">0</a>
+                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>">0</a>
                         <span><?php echo $this->translate('Wait for delivery'); ?></span>
                     </li>
                     <li class="col-xs-4 col-sm-4 text-center">
-                        <a href="<?php echo $this->getBaseUrl() ?>customer/history/">0</a>
+                        <a href="<?php echo $this->getBaseUrl('customer/history/') ?>">0</a>
                         <span><?php echo $this->translate('waiting for payment'); ?></span>
                     </li>
 
                     <li class="col-xs-4 col-sm-4 text-center ">
-                        <a href="<?php echo $this->getBaseUrl() ?>customer/history/">0</a>
+                        <a href="<?php echo $this->getBaseUrl('customer/history/') ?>">0</a>
                         <span><?php echo $this->translate('Refunding'); ?></span>
                     </li>
                     <li class="col-xs-4 col-sm-4 text-center">
-                        <a href="<?php echo $this->getBaseUrl() ?>customer/history/">0</a>
+                        <a href="<?php echo $this->getBaseUrl('customer/history/') ?> ">0</a>
                         <span><?php echo $this->translate('Total visitors yesterday'); ?></span>
                     </li>
                     <li class="col-xs-4 col-sm-4 text-center">
@@ -91,7 +91,7 @@ $store = $this->getStore();
                     </a>
                 </div>
                 <div class="panel-heading panel-menu">
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/after/">
+                    <a href="<?php echo $this->getBaseUrl('retailer/refund/') ?>">
                         <h3 class="panel-title" onclick="">
                             <span>
                                 <?php

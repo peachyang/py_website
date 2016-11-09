@@ -54,30 +54,34 @@ $customer = $this->getVariable('customer');
         <div class="content-box">
             <span class="fa fa-credit-card-alt"></span>
             <p><a href="">
-                    <?php echo $this->translate('&nbsp;&nbsp;Non-payment') ?>
+                    <?php echo $this->translate('Non-payment') ?>
                     <span class="num-span"><?php echo $this->translate('(') . $this->translate('%d', [0]) . $this->translate(')') ?></span>
-                </a></p>
+                </a>
+            </p>
         </div>
         <div class="content-box">
             <span class="fa fa-truck font-fa"></span>
             <p><a href="">
-                    <?php echo $this->translate('&nbsp;&nbsp;Non-receiving') ?>
+                    <?php echo $this->translate('Non-receiving') ?>
                     <span class="num-span"><?php echo $this->translate('(') . $this->translate('%d', [0]) . $this->translate(')') ?></span>
-                </a></p>
+                </a>
+            </p>
         </div>
         <div class="content-box">
             <span class="fa fa-commenting-o font-fa"></span>
             <p><a href="">
-                    <?php echo $this->translate('&nbsp;&nbsp;Non-evaluation') ?>
+                    <?php echo $this->translate('Non-evaluation') ?>
                     <span class="num-span"><?php echo $this->translate('(') . $this->translate('%d', [0]) . $this->translate(')') ?></span>
                 </a></p>
         </div>
         <div class="content-box">
             <span class="fa badge">￥</span>
-            <p><a href="">
+            <p>
+                <a href="">
                     <?php echo $this->translate('Return &amp; Refund') ?>
                     <span class="num-span"><?php echo $this->translate('(') . $this->translate('%d', [0]) . $this->translate(')') ?></span>
-                </a></p>
+                </a>
+            </p>
         </div>
     </div>
     <table class="table" style="display:none">

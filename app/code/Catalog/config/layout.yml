@@ -62,9 +62,6 @@ catalog_product:
                     -
                         method: addScript
                         params: frontend/js/magnifying.js
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/enhancement.css
             content:
                 children:
                     messages:
@@ -101,7 +98,7 @@ catalog_product:
                                 type: Seahinet\Catalog\ViewModel\Product\Upsells
                                 template: catalog/product/link
                             review:
-                                type: Seahinet\Catalog\ViewModel\Product\View
+                                type: Seahinet\Catalog\ViewModel\Product\Review
                                 template: catalog/product/review
 admin_catalog_category_list:
     update: grid

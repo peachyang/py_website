@@ -3,7 +3,8 @@
 namespace Seahinet\Catalog\Model\Product;
 
 use Seahinet\Catalog\Model\Product as Model;
-use Seahinet\Catalog\Model\Collection\Product\Rating;
+use Seahinet\Catalog\Model\Collection\Product\Rating as Collection;
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Exception\SpamException;
 use Seahinet\Lib\Model\AbstractModel;
 
@@ -68,10 +69,20 @@ class Review extends AbstractModel
         return null;
     }
 
+    public function getCustomer()
+    {
+        if (!empty($this->storage['customer_id'])) {
+            $customer = new Customer;
+            $customer->load($this->storage['customer_id']);
+            return $customer;
+        }
+        return null;
+    }
+
     public function getRatings()
     {
         if ($this->getId()) {
-            $collection = new Rating;
+            $collection = new Collection;
             $collection->join('review_rating', 'review_rating.rating_id=rating.id', ['value'], 'left')
                     ->where([
                         'status' => 1,

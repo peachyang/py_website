@@ -1,6 +1,6 @@
 <?php
 $customer = $this->getCustomer();
-$order = $this->getOrder();
+$order = $this->getLatestOrder();
 if ($order && $order->getId()):
     $flag = true;
     ?>

@@ -27,7 +27,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                         <?php echo $this->getPriceBox() ?>
                     </div>
                     <div class="hidden-xs col-sm-2 review">
-                        <span class="count"><?php echo count($product->getReviews()) ?></span>
+                        <span class="count">0</span>
                         <span><?php echo $this->translate('Review(s)', [], 'catalog'); ?></span>
                     </div>
                     <div class="hidden-xs col-sm-2 order">
@@ -85,36 +85,46 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                         ])
                 ?>
             </div>
-        </div>        
-    </form>
-    <div class="store_info retailer-store">
-        <h3 class="tops"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>"><?php echo $store['name'] ?></a></h3>
-        <div class="store_detail" style="margin-bottom:9px">
-            <table class="table text-center">
-                <tbody>
-                    <tr><td></td></tr>
-                    <tr>
-                        <td rowspan="3"><h4>9.7</h4></td>
-                        <td><?php echo $this->translate('Commodity Evaluation'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                    </tr>
-                    <tr>                
-                        <td><?php echo $this->translate('Service Attitude'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $this->translate('Logistics Speed'); ?>&nbsp;9.57&nbsp;<span class="fa fa-arrow-up" aria-hidden="true"></span></td>
-                    </tr> 
-                    <tr><td></td></tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>" class="store_entry"><span class="fa fa-home" aria-hidden="true"></span>&nbsp;<?php echo $this->translate('Store Entry'); ?></a></td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
-        <?php echo !empty($decorations) ? $decorations['src_model'] : ''; ?>
-		
-    </div>
+    </form>
+    <?php if ($retailer->getId()): ?>
+        <div class="customize">
+            <div class="panel panel-store">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>"><?php echo $store['name'] ?></a></h3>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    $ratings = $retailer->getRatings();
+                    if (count($ratings)):
+                        ?>
+                        <div class="ratings clearfix">
+                            <table class="table table-no-border text-center">
+                                <?php
+                                $sum = 0;
+                                foreach ($ratings as $rating):
+                                    $sum += $rating['value'];
+                                    ?>
+                                    <tr>
+                                        <th><?php echo $this->translate($rating['title']) ?></th>
+                                        <td><?php printf('%.2f', $rating['value']) ?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </table>
+                            <div class="avg"><?php printf('%.2f', $sum / count($ratings)) ?></div>
+                        </div>
+                    <?php endif ?>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>" class="btn">
+                        <span class="fa fa-home" aria-hidden="true"></span>
+                        <span><?php echo $this->translate('Go Shopping') ?></span>
+                    </a>
+                </div>
+            </div>
+            <?php echo!empty($decorations) ? $decorations['src_model'] : '' ?>		
+        </div>
+    <?php endif ?>
     <div class="product-detail">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>

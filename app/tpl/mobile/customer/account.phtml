@@ -5,16 +5,16 @@
     </div>
     <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1 text-left" data-toggle="dropdown"></a>
     <ul class="filters clearfix dropdown-menu col-xs-12" role="menu"> 
-	    	<li class="col-xs-4">
-	    		<a href="">首页<i class="fa  fa-bank font-color-orange font-14"></i></a>
-	    	</li>
-	    	<li class="col-xs-4">
-	    		<a href="">购物车<i class="fa fa-shopping-cart font-color-orange font-14"></i></a>
-	    	</li>
-	    	<li class="col-xs-4">
-	    		<a href="">个人中心<i class="fa   fa-user font-color-orange font-14"></i></a>
-	    	</li>
-    	</ul>
+        <li class="col-xs-4">
+            <a href="<?php echo $this->getBaseUrl('') ?>"><?php echo $this->translate('Home') ?><span class="fa  fa-bank font-color-orange font-14"></span></a>
+        </li>
+        <li class="col-xs-4">
+            <a href="<?php echo $this->getBaseUrl('') ?>"><?php echo $this->translate('Cart') ?><span class="fa fa-shopping-cart font-color-orange font-14"></span></a>
+        </li>
+        <li class="col-xs-4">
+            <a href="<?php echo $this->getBaseUrl('customer/account/') ?>"><?php echo $this->translate('Personal Center') ?><span class="fa   fa-user font-color-orange font-14"></span></a>
+        </li>
+    </ul>
 </header>
 <div class="container">
     <?php if ($this->getSegment('customer')->get('hasLoggedIn')): ?>
@@ -24,8 +24,8 @@
         <main class="col-main col-xs-12 col-sm-12 col-md-12">
         <?php else: ?>
             <main class="col-main col-xs-12 col-sm-12">
-        <?php endif ?>
+            <?php endif ?>
             <?php echo $this->getChild('messages'), $this->getChild('main') ?>
-            </main>
         </main>
+    </main>
 </div>

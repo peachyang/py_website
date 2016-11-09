@@ -187,6 +187,8 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .retailer-account .myorder .panel-menu span{padding-left:20px}
 .customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4;padding:10px 10px}
 .retailer-account .myorder h3 .fa{color:#007ecc;padding-right:5px}
+.retailer-account .border-left{border-left:1px solid #ddd}
+.retailer-account .sale_status{overflow: hidden;background:#eee}
 .customer-account-dashboard .order h3,.customer-account-dashboard .assets h3 {line-height:30px;display:inline-block;width:100%;font-size: 13px;}
 .customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}
 .customer-account-dashboard .assets h3 .fa{color:#007ecc;padding-right:5px}
@@ -667,7 +669,7 @@ overflow:hidden;}
 .retailer-product .wishlist  .seller-tab .nav,.retailer-order-view .wishlist  .seller-tab .nav{font-size:13px}
 .retailer-product .wishlist  .seller-tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,.retailer-order-view .wishlist  .seller-tab .nav-tabs>li.active>a,.sales-order-list .seller-tab .nav-tabs>li.active>a, .sales-order-invoice  .nav-tabs>li.active>a{color:#02a0e9;border-bottom:1px solid #02a0e9}
 .seller-tab  .search{margin: 10px 0;}
-.seller-tab  .search .fa-search{ position: absolute; z-index: 2; font-size: 18px; color: #ccc; top: 5; top: 3px; left: 10px;}
+.seller-tab  .search .fa-search{ position: absolute; z-index: 2; font-size: 18px; color: #ccc; top: 5px; top: 3px; left: 10px;}
 .seller-tab  .search {margin:10px 0}
 .seller-tab  .search input,.sales-order-list .seller-tab  .search input{border:1px solid #ccc;line-height:2}
 .seller-tab  .search input[value],.sales-order-list .seller-tab  .search input[value]{padding-left:40px;color:#ccc;font-size:12px}
@@ -687,7 +689,7 @@ overflow:hidden;}
 .seller-tab  .tab-content .bg{background:#f9f9f9}
 .seller-tab .tab-content .bg span{padding:7px 5px}
 .seller-tab  .tab-content .bg li{padding:0 5px}
-.seller-tab  .tab-content .bt,.sales-order-list .seller-tab  .tab-content .bt{border-top:1px solid #eee}
+.seller-tab  .tab-content .bt,.sales-order-list .seller-tab .tab-content .bt{border:1px solid #eee}
 .seller-tab  .tab-content .margin-bj div{margin:10px 0}
 .sales-order-list .seller-tab  .tab-content .inline{padding:10px 0}
 .seller-tab  .tab-content .padding-0{padding:0}
@@ -960,8 +962,6 @@ overflow:hidden;}
 .sidebar-menu-arrow:active::after {
 	top: 2px;
 }
-
-
 /*Hamburger Button*/
 .toggle-button {
 	position: fixed;

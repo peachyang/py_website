@@ -77,22 +77,18 @@ $store = $this->getStore();
                 <h3 class="panel-title">
                     <span class="fa fa-calculator" aria-hidden="true">
                     </span>
-                    <?php
-                    echo $this->translate('Transaction Management')
-                    ?>
-                    <a href="javascript:void(0) " class="fa fa-chevron-up text-right" aria-hidden="true">
-                    </a>
+                    <?php echo $this->translate('Transaction Management') ?>
+                    <a href="javascript:void(0)" class="fa fa-chevron-down text-right" aria-hidden="true"></a>
                 </h3>
             </div>
             <div class="Management-menu">
 
                 <div class="panel-heading panel-menu" >
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/product/">
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/') ?>">
                         <h3 class="panel-title">
                             <span>
                                 <?php
-                                echo $this->
-                                        translate('Has sold the baby')
+                                echo $this->translate('Has sold the baby')
                                 ?>
                             </span>
                             <i class="fa fa-chevron-right pull-right" aria-hidden="true">
@@ -100,18 +96,10 @@ $store = $this->getStore();
                         </h3>
                     </a>	
                 </div>
-
                 <div class="panel-heading panel-menu">
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/comment/">
-                        <h3 class="panel-title" onclick="">
-                            <span>
-                                <?php
-                                echo $this->
-                                        translate('Comment Management')
-                                ?>
-                            </span>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/review/') ?>">
+                        <h3 class="panel-title" onclick=""><span><?php echo $this->translate('Comment Management') ?></span>
                             <i class="fa fa-chevron-right pull-right"></i>
-
                         </h3>
                     </a>
                 </div>
@@ -120,8 +108,7 @@ $store = $this->getStore();
                         <h3 class="panel-title" onclick="">
                             <span>
                                 <?php
-                                echo $this->
-                                        translate('Return &amp; Refund')
+                                echo $this->translate('Return &amp; Refund')
                                 ?>
                             </span>
                             <i class="fa fa-chevron-right pull-right">

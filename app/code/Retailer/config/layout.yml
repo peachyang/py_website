@@ -45,7 +45,7 @@ retailer_account:
                                 params: [{link:'retailer/transaction/product/',label:'Sold Product',priority:1,group:'Transaction Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/transaction/comment/',label:'Comment Management',priority:2,group:'Transaction Management'}]
+                                params: [{link:'retailer/transaction/review/',label:'Review Management',priority:2,group:'Transaction Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/refund/',label:'Return &amp; Refund',priority:3,group:'Transaction Management'}]

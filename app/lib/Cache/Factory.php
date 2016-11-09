@@ -117,6 +117,7 @@ abstract class Factory
     {
         $client = new Redis;
         $client->connect(($config['host'] ?? 'localhost'), ($config['port'] ?? 6379));
+        $client->select((int) ($config['db'] ?? 0));
         $pool = new DoctrineCache\RedisCache();
         $pool->setRedis($client);
         return $pool;
@@ -132,6 +133,7 @@ abstract class Factory
             'scheme' => $config['scheme'] ?? 'tcp',
             'host' => $config['host'] ?? '127.0.0.1',
             'port' => $config['port'] ?? 6379,
+            'database' => (int) ($config['db'] ?? 0)
         ];
         $client = new Predis($server);
         $pool = new DoctrineCache\PredisCache($client);

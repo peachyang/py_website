@@ -1,0 +1,75 @@
+<?php
+$reviews = $this->getReviews();
+$count = count($reviews);
+?>
+<ul class="nav nav-tabs">
+    <li role="presentation"<?php if ($this->getQuery('status') == 0): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => null]) ?>"><?php echo $this->translate('All') ?></a></li>
+    <li role="presentation"<?php if ($this->getQuery('status') == 1): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => 1]) ?>"><?php echo $this->translate('Pending') ?></a></li>
+</ul>
+<div class="tab-content  font-12">
+    <table class="table review-list">
+        <tbody>
+            <?php
+            if ($count):
+                foreach ($reviews as $review):
+                    $product = $review->getProduct();
+                    if ($product):
+                        ?>
+                        <tr>
+                            <td class="text-vtop">
+                                <h4 class="product-name  font-12">
+                                    <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product->offsetGet('name') ?>"><?php echo $product->offsetGet('name') ?></a>
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table table-no-border">
+                                    <?php foreach ($review->getRatings() as $rating): ?>
+                                        <tr>
+                                            <th class="text-nowrap col-xs-2 col-sm-2"><?php echo $this->translate($rating['title']) ?></th>
+                                            <td class="text-nowrap">
+                                                <div class="rating">
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star-o"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-vtop">
+                                <p class="comment"><?php echo $this->translate('Content'), ': ', $review->offsetGet('content') ?></p>
+                                <?php if ($review->offsetGet('reply')): ?>
+                                    <p class="reply"><?php echo $this->translate('Reply'), ': ', $review->offsetGet('reply') ?></p>
+                                <?php endif ?>
+                                <p class="date">[<?php echo $review->offsetGet('created_at') ?>]</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right background"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-reply" data-info='{id:"<?php echo $review->offsetGet('id') ?>",content:"<?php echo $review->offsetGet('content') ?>",reply:"<?php echo $review->offsetGet('reply') ?>"}'><?php echo $this->translate('Reply') ?></button></td>
+                        </tr>
+                        <?php
+                    endif;
+                endforeach;
+            else:
+                ?>
+                <tr>
+                    <td colspan="4"><?php echo $this->translate('There is no review about your products.') ?></td>
+                </tr>
+            <?php
+            endif;
+            ?>
+        </tbody>
+        <?php if ($count): ?>
+            <tfoot>
+                <tr>
+                    <td colspan="4"><?php echo $this->getChild('pager')->setCollection($reviews) ?></td>
+                </tr>
+            </tfoot>
+        <?php endif ?>
+    </table>
+</div>
+

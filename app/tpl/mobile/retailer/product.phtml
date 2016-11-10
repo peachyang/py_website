@@ -97,7 +97,7 @@ $sales_status = $this->getAllSalesStatus();
                                             <span><?php echo (float) $item->offsetGet('qty'); ?></span>
                                         </td>                          
                                         <?php if ($flag) : ?>
-                                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-right">
+                                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
                                                 <span class="color-blue font-14"><?php echo $this->translate($transaction['status_name']); ?></span>
                                             </td>
                                             <?php

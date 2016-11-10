@@ -384,8 +384,8 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .review-list .table td,.retailer-account .review-list .table th{padding:0 4px}
 .retailer-account .review-list .rating .fa{color:#007DC6}
 .retailer-account .review-list .comment{color:#7e7f7f;font-size:12px}
-.retailer-account .review-list .image li{border:1px solid #eee;margin-right:5px}
-.retailer-account .review-list .image img{max-width:50px;max-height:50px}
+.retailer-account .review-list .images li{border:1px solid #eee;margin-right:5px}
+.retailer-account .review-list .images img{max-width:50px;max-height:50px}
 .retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}

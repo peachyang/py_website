@@ -106,6 +106,10 @@ class RefundController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['order_id', 'reason', 'qty', 'comment']);
+            if ($result['error'] === 0 && array_sum($data['qty']) === 0) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('Please select 1 product at least.'), 'level' => 'danger'];
+            }
             if ($result['error'] === 0) {
                 $segment = new Segment('customer');
                 $order = (new Order)->load($data['order_id']);
@@ -208,7 +212,7 @@ class RefundController extends AuthActionController
     public function confirmAction()
     {
         $id = $this->getRequest()->getQuery('id');
-        $result = empty($id) ? ['error' => 1, 'message' => [['message' => $this->translate('Invalid application ID'), 'level' => 'danger']]]:
+        $result = empty($id) ? ['error' => 1, 'message' => [['message' => $this->translate('Invalid application ID'), 'level' => 'danger']]] :
                 ['error' => 0, 'message' => []];
         if ($result['error'] === 0) {
             try {
@@ -223,6 +227,37 @@ class RefundController extends AuthActionController
                 } else {
                     $this->beginTransaction();
                     $refund->setData('status', 5)->save();
+                    $refund->getOrder()->rollbackStatus();
+                    $result['message'][] = ['message' => $this->translate('The application has been complete.'), 'level' => 'success'];
+                    $this->commit();
+                }
+            } catch (Exception $e) {
+                $this->rollback();
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+            }
+        }
+        return $this->response($result, 'sales/refund/view/?id=' . $id, 'customer');
+    }
+
+    public function cancelAction()
+    {
+        $id = $this->getRequest()->getQuery('id');
+        $result = empty($id) ? ['error' => 1, 'message' => [['message' => $this->translate('Invalid application ID'), 'level' => 'danger']]] :
+                ['error' => 0, 'message' => []];
+        if ($result['error'] === 0) {
+            try {
+                $refund = new Rma;
+                $refund->load($id);
+                $segment = new Segment('customer');
+                if ($segment->get('hasLoggedIn') && $segment->get('customer')->getId() != $refund['customer_id'] ||
+                        !$segment->get('hasLoggedIn') && $refund['customer_id'] ||
+                        $refund['status'] != 0) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
+                } else {
+                    $this->beginTransaction();
+                    $refund->setData('status', -1)->save();
                     $refund->getOrder()->rollbackStatus();
                     $result['message'][] = ['message' => $this->translate('The application has been complete.'), 'level' => 'success'];
                     $this->commit();

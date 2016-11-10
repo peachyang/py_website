@@ -335,11 +335,11 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .form-rma .fieldset{margin-top:60px;margin-left:35px}
 .customer-account .form-rma .fieldset .cell #comment-error{color:#ff4e00}
 .customer-account .refund-list .store>th,.retailer-account .refund-list .store>th{padding:40px 10px 5px}
+.customer-account .refund-list .date span,.retailer-account .refund-list .date span{display:block}
 .customer-account .refund-list .list,.retailer-account .refund-list .list{border:1px solid #e1e3ea;padding:15px}
 .customer-account .refund-list .list>td,.retailer-account .refund-list .list>td{padding:15px}
 .customer-account .refund-list .amount,.retailer-account .refund-list .amount{color:#007dc6}
 .customer-account .refund-list .detail span,.retailer-account .refund-list .detail span{display:block;white-space:nowrap}
-/*.customer-account .refund-list,.retailer-account .refund-list{border:1px solid #e1e3ea} */
 .customer-account .refund-detail .refund-list,.retailer-account .refund-detail .refund-list{border:1px solid #e1e3ea}
 .customer-account .refund-list .action a,.retailer-account .refund-list .action a{display:block}
 .customer-account .refund-list>td,.retailer-account .refund-list>td{padding:15px}
@@ -442,14 +442,12 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .product-detail .product-attributes .label:after{content:":"}
 .product-detail #description img{max-width:100%}
-.product-detail .reviews .empty-list{display:none}
+.product-detail .reviews .empty-list{display:none;}
 .product-detail .reviews :empty+.empty-list{display:block}
-.product-detail .reviews .title{padding:0 15px;font-size:14px;line-height:40px;}
-.product-detail .review-form{background:#fff}
-.product-detail .review-form span{font-size:16px}
-.product-detail .review-form .review-padding{padding:10px;background:#f1f1f1;height:224px}
-.product-detail .review-form textarea{width:100%}
-.product-detail .review-form .btn{float:right;min-width:100px;height:30px;background-color:#fd9233;color:#fff;border-radius:0;margin-top:5px;font-size:16px;padding:0 20px}
+.product-detail .reviews .title{padding:0 15px;font-size:14px;line-height:40px;border:1px solid #eee;background:#f7f7f7}
+.product-detail .reviews .review-list .content,.product-detail .reviews .review-list .reply{font-size:12px;line-height:1.5}
+.product-detail .reviews .ratings th,.product-detail .reviews .ratings td,.product-detail .reviews .username{padding:0 5px;font-size:12px;line-height:1.5}
+.product-detail .review-form{background:#f1f1f1}
 .catalog-product .customize{width:20%;overflow:hidden;float:left}
 .catalog-product .customize+.product-detail{width:80%}
 .catalog-product .customize .panel,.catalog-product .customize .panel-heading,.catalog-product .customize .panel-body,.catalog-product .customize .panel-footer{padding:0;border-radius:0;margin:0;border:none;box-shadow:none}
@@ -458,7 +456,7 @@ dl.options dd{float:left;margin-left:4px}
 .catalog-product .customize .panel-title{line-height:1;background:#fd9030;color:#fff;padding:15px 10px;font-size:18px}
 .catalog-product .customize .panel-store .ratings{display:flex}
 .catalog-product .customize .panel-store .ratings .avg{order:0;width:40%;color:#af0029;font-size:26px;font-weight:bold;text-align:center;align-self:center}
-.catalog-product .customize .panel-store .ratings .table{order:1;width:60%}
+.catalog-product .customize .panel-store .ratings .table{order:1;width:60%;white-space:nowrap}
 .catalog-product .customize .panel-store .panel-footer .btn{border:1px solid #d5d5d6;border-radius:2px;line-height:20px;background:#f1f1f1}
 .catalog-product .customize .panel-store .panel-footer .fa{color:#fd9233;vertical-align:middle;font-size:26px}
 .qty{font-size:0}

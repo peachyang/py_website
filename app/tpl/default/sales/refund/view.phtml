@@ -96,7 +96,8 @@ $currency = $this->getCurrency();
                 <div class="step<?php if ($status > 3): ?> active<?php endif ?>"><?php echo $this->translate('Delivering') ?></div>
             <?php elseif ($application['service']): ?>
                 <div class="step<?php if ($status > 1): ?> active<?php endif ?>"><?php echo $this->translate('Delivering') ?></div>
-                <div class="step<?php if ($status > 2): ?> active<?php endif ?>"><?php echo $this->translate('Refunding') ?></div>
+                <div class="step<?php if ($status > 2): ?> active<?php endif ?>"><?php echo $this->translate('Confirming') ?></div>
+                <div class="step<?php if ($status > 3): ?> active<?php endif ?>"><?php echo $this->translate('Refunding') ?></div>
             <?php endif ?>
             <div class="step<?php if ($status > 4): ?> active<?php endif ?>"><?php echo $this->translate('Complete') ?></div>
         <?php endif ?>
@@ -121,7 +122,7 @@ $currency = $this->getCurrency();
             </div>
         <?php endforeach; ?>
         <?php if ($status != -1 && $status < 5): ?>
-            <form action="<?php echo $this->getBaseUrl('sales/refund/addcomment/') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?php echo $this->getCommentUrl() ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                 <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />
                 <div class="input-box">

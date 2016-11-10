@@ -12,8 +12,12 @@ class SearchController extends CategoryController
 
     public function indexAction()
     {
-        $query = explode(' ', $this->getRequest()->getQuery('q'));
+        $data = $this->getRequest()->getQuery();
+        $query = explode(' ', $data['q']);
         $where = new Where;
+        if (!empty($data['store_id'])) {
+            $where->equalTo('store_id', $data['store_id']);
+        }
         foreach ($query as $q) {
             $where->like('data', '%' . $q . '%');
         }

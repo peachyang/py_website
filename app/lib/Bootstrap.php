@@ -40,6 +40,11 @@ final class Bootstrap
     private static $language = null;
 
     /**
+     * @var bool
+     */
+    private static $isMobile = null;
+
+    /**
      * @var int
      */
     const SHMOP_SIZE = 524288;
@@ -260,6 +265,19 @@ final class Bootstrap
             }
         }
         return static::$merchant;
+    }
+
+    /**
+     * Mobile agent
+     * 
+     * @return bool
+     */
+    public static function isMobile()
+    {
+        if (is_null(self::$isMobile)) {
+            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']) ? 'mobile_' : '';
+        }
+        return self::$isMobile;
     }
 
 }

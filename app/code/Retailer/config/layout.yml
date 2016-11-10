@@ -1330,6 +1330,9 @@ retailer_refund_view:
                     -
                         method: setTitle
                         params: Return &amp; Refund
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/zoombox.js',defer:'defer',async:'async'}]
             content:
                 action:
                     -

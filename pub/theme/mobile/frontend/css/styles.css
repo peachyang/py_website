@@ -187,6 +187,8 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .retailer-account .myorder .panel-menu span{padding-left:20px}
 .customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4;padding:10px 10px}
 .retailer-account .myorder h3 .fa{color:#007ecc;padding-right:5px}
+.retailer-account .border-left{border-left:1px solid #ddd}
+.retailer-account .sale_status{overflow: hidden;background:#eee}
 .customer-account-dashboard .order h3,.customer-account-dashboard .assets h3 {line-height:30px;display:inline-block;width:100%;font-size: 13px;}
 .customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}
 .customer-account-dashboard .assets h3 .fa{color:#007ecc;padding-right:5px}
@@ -279,7 +281,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .product-essential .price-box .share .dropdown-menu>li>a{padding:3px 4px}
 .customer-account-dashboard .profile .head_pic .avatar,.retailer-account .profile .head_pic .avatar{position: relative;width: 100px;text-align: center;margin: 0 auto;display: block;}
 .customer-account-dashboard .profile .head_pic .avatar .update,.retailer-account .profile .head_pic .avatar .update{position: absolute;bottom: 0;left: 0;display: block;width: 100%;font-size: 12px;line-height: 21px;background: #000;color: #fff;text-align: center;}
-
 @media(min-width:320px){
 .product-essential .price-box .share .dropdown-menu{border:none;background:#fff;font-size:12px;padding:0}
 .product-essential .price-box .share .dropdown-menu>li>a{padding:2px 2px}
@@ -296,9 +297,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
     .product-essential{padding:10px}
     .product-essential .price-box .share .dropdown-menu{border:none;background:#fff}
     .product-essential .price-box .share .dropdown-menu>li>a{padding:2px 5px}
-   
-
-    
 }
 @media(min-width:1024px){
     .product-essential{padding:10px}
@@ -586,8 +584,10 @@ overflow:hidden;}
 .retailer-account-dashboard .main-container .dashboard .coupon-title{border-bottom:1px solid #dbdee5;margin-bottom:20px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
 .retailer-account-dashboard .main-container .coupon{margin-bottom:30px}
 .retailer-apply .page-content>.alert-warning,.retailer-processing .page-content>.alert-warning{border-radius:0;border-color:#fdd685;margin-top:10px;padding:6px 30px;font-size:12px;line-height:24px;color:#7c7c7c}
-.retailer-account .profile .head_pic .title_oic{ position: absolute; top: 30; right: 40px; top: 40px;}
-.retailer-account .profile .head_pic .title_oic p{ color: #7fcefe;font-size:12px}
+.retailer-account .profile .head_pic .update .btn{padding: 0;margin: 0;background:#000}
+.retailer-account .profile .head_pic .title_oic{line-height: 30px;text-align: center}
+.retailer-account .profile .head_pic .modal-header h4{color:#333333}
+.retailer-account .profile .head_pic .title_oic p{line-height: 20px;color:#fff;text-align: center}
 .retailer-account .wishlist .soldout .form-control,.retailer-account  .wishlist .activity .form-control{width:70%;display: inline-block;}   
 .retailer-account .wishlist .soldout .form-time{width:35%} 
 .retailer-account .wishlist .batch_button{margin:10px 0}
@@ -620,11 +620,11 @@ overflow:hidden;}
 .retailer-account .activity_body .nav-tabs{border-bottom: 1px solid #007dc6}
 .retailer-account .wishlist  .filter-bar{margin:20px 0}
 .retailer-account .evaluation .evaluation_left{padding:5px}
-.retailer-account  .btn{color: #fff;background: #007dc6;padding: 4px 15px;border: none; margin: 10px 0px;font-size:12px}
+.retailer-account .btn{color: #fff;background: #007dc6;padding: 4px 15px;border: none; margin: 10px 0px;font-size:12px}
 .retailer-account .evaluation .evaluation_left .btn{width:25%;color: #fff;background: #007dc6;padding: 3px 15px;border: none;font-size:12px}
 .retailer-account .wishlist  .filter-bar .btn{margin:10px 0;background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;padding:5px 10px;text-decoration:none}
-.retailer-account  .fieldset .mobile-img img{width:20%}
-.retailer-account  .fieldset .mobile-img {font-size:12px}
+.retailer-account .fieldset .mobile-img img{width:20%}
+.retailer-account .fieldset .mobile-img {font-size:12px}
 .retailer-account .wishlist .table .add_classify{background: #007dc6; color: #fff;padding: 3px 10px;  border: none;}
 .retailer-account .wishlist  .category_table tbody{font-size:12px}
 .retailer-account .wishlist .shop_classify{padding:10px;margin-top: 30px;}
@@ -635,6 +635,9 @@ overflow:hidden;}
 .retailer-account .after-border{margin:20px 0}
 .retailer-account .seperation-title{margin:20px 0}
 .retailer-account .seller-tab .search .btn{margin: 0;margin-left:3px;padding:4px 12px;float:left}
+.retailer-refund .table-responsive .refund-list h4,.retailer-refund .table-responsive .refund-list dt+dd{font-size:12px}
+.retailer-refund .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{vertical-align:middle}
+.retailer-account dt,.retailer-account dd{display:inline-block}
 .mg-bottom-40  .class_menu dt{padding:5px 15px}
 .mg-bottom-40  .class_menu .dl_border{border:1px solid #eee;text-align: center;}
 .mg-bottom-40  .class_menu dd{padding:5px 10px}
@@ -646,7 +649,7 @@ overflow:hidden;}
 .retailer-account .class_icon .class_menu{display: inline-flex;}
 .mg-bottom-40 .class_menu .border_bt{width: 40px; height: 1px; background: #eee; position: absolute; top: 30px; left: 0;bottom: 177px;right: 0;}
 .retailer-account .activity_body .activity_search  {margin-bottom:20px;margin-top:20px}
-.retailer-account  .activity_body .enroll .whole {background: #007dc6;color: #fff; margin: 0 15px 0 0;font-size: 12px;border: none;}
+.retailer-account .activity_body .enroll .whole {background: #007dc6;color: #fff; margin: 0 15px 0 0;font-size: 12px;border: none;}
 .retailer-account .activity_body .enroll .filter {font-size: 12px;border: none;padding: 5px 15px; background: #b8e5ff; color: #646565;}
 .retailer-apply .page-content>.flow li,.retailer-processing .page-content>.flow li{counter-increment:item;display:block;border-top:1px dashed #dee1e8;float:left;width:33.33333333%;color:#7a7a7a}
 .retailer-apply .page-content>.flow li:last-child,.retailer-processing .page-content>.flow li:last-child{border:none}
@@ -666,7 +669,7 @@ overflow:hidden;}
 .retailer-product .wishlist  .seller-tab .nav,.retailer-order-view .wishlist  .seller-tab .nav{font-size:13px}
 .retailer-product .wishlist  .seller-tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,.retailer-order-view .wishlist  .seller-tab .nav-tabs>li.active>a,.sales-order-list .seller-tab .nav-tabs>li.active>a, .sales-order-invoice  .nav-tabs>li.active>a{color:#02a0e9;border-bottom:1px solid #02a0e9}
 .seller-tab  .search{margin: 10px 0;}
-.seller-tab  .search .fa-search{ position: absolute; z-index: 2; font-size: 18px; color: #ccc; top: 5; top: 3px; left: 10px;}
+.seller-tab  .search .fa-search{ position: absolute; z-index: 2; font-size: 18px; color: #ccc; top: 5px; top: 3px; left: 10px;}
 .seller-tab  .search {margin:10px 0}
 .seller-tab  .search input,.sales-order-list .seller-tab  .search input{border:1px solid #ccc;line-height:2}
 .seller-tab  .search input[value],.sales-order-list .seller-tab  .search input[value]{padding-left:40px;color:#ccc;font-size:12px}
@@ -686,7 +689,7 @@ overflow:hidden;}
 .seller-tab  .tab-content .bg{background:#f9f9f9}
 .seller-tab .tab-content .bg span{padding:7px 5px}
 .seller-tab  .tab-content .bg li{padding:0 5px}
-.seller-tab  .tab-content .bt,.sales-order-list .seller-tab  .tab-content .bt{border-top:1px solid #eee}
+.seller-tab  .tab-content .bt,.sales-order-list .seller-tab .tab-content .bt{border:1px solid #eee}
 .seller-tab  .tab-content .margin-bj div{margin:10px 0}
 .sales-order-list .seller-tab  .tab-content .inline{padding:10px 0}
 .seller-tab  .tab-content .padding-0{padding:0}
@@ -969,8 +972,6 @@ overflow:hidden;}
 .sidebar-menu-arrow:active::after {
 	top: 2px;
 }
-
-
 /*Hamburger Button*/
 .toggle-button {
 	position: fixed;

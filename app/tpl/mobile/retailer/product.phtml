@@ -7,159 +7,158 @@ $sales_status = $this->getAllSalesStatus();
 <div class="wishlist">
     <h3 class="title"><?php echo $this->translate($subtitle); ?></h3>
     <div id="Has-sold" class="seller-tab">
-            <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
-                <li class="active col-xs-3 col-sm-3">
-                    <a href="#all" data-toggle="tab">
-                        <?php echo $this->translate('All');?>(<span><?php echo count($transactions);?><span>)
-                    </a>
-                </li>
-                <li class="col-xs-3 col-sm-3">
-                    <a href="#delivery" data-toggle="tab">
-                        <?php echo $this->translate('Non-payment');?>(<span><?php $this->getBaseUrl('sales/order/list/');?><span>)
-                    </a>
-                </li>
-                <li class="col-xs-3 col-sm-3">
-                    <a href="#payment" data-toggle="tab">
-                        <?php echo $this->translate('Non-receiving');?>(<span><?php $this->getBaseUrl('sales/order/list/');?><span>)
-                    </a>
-                </li>
-                <li class="col-xs-3 col-sm-3">
-                    <a href="#refund" data-toggle="tab">
-                        <?php echo $this->translate('Non-evaluation');?>(<span><?php $this->getBaseUrl();?><span>)
-                    </a>
-                </li>
-            </ul>
+        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+            <li class="active col-xs-3 col-sm-3">
+                <a href="#all" data-toggle="tab">
+                    <?php echo $this->translate('All'); ?>(<span><?php echo count($transactions); ?></span>)
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#delivery" data-toggle="tab">
+                    <?php echo $this->translate('Non-payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#payment" data-toggle="tab">
+                    <?php echo $this->translate('Non-receiving'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#refund" data-toggle="tab">
+                    <?php echo $this->translate('Non-evaluation'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+                </a>
+            </li>
+        </ul>
         <div class="search padding-5 col-xs-12 col-sm-12">
             <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
                 <span class="fa fa-search" aria-hidden="true"></span>
                 <input type="search" name="increment_id" value="<?php echo isset($filter['increment_id']) ? $filter['increment_id'] : ''; ?>" class="col-xs-10 col-sm-10" />
-                <button type="submit" class="btn btn-default"><?php echo $this->translate('Search');?></button>
+                <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
             </form>
         </div>
         <div id="Product-details" class="tab-content">
             <div class="tab-pane fade in active" id="all">
                 <?php
-                 foreach ($transactions as $transaction) :
-                ?>
-                <div class="transaction-list">
-                    <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
-                        <li class="col-xs-6 col-sm-6 text-left font-14"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
-                        <li class="col-xs-6 col-sm-6 text-right font-14"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)',[ $transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
-                    </ul>
-                     <?php
-                        if (!empty($transaction['items'])) :
-                        $items = $transaction->getItems();
-                    ?>  
-                    <table class="table inline bt padding-5">
+                foreach ($transactions as $transaction) :
+                    ?>
+                    <div class="transaction-list">
+                        <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
+                            <li class="col-xs-6 col-sm-6 text-left font-14"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
+                            <li class="col-xs-6 col-sm-6 text-right font-14"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)', [$transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
+                        </ul>
                         <?php
-                                               $flag = TRUE;
-                        foreach ($transaction['items'] as $key => $item) :
-                            $product = $item['product'];
-                            $thumbnail = $product->getThumbnail();
-  
-                        ?>
-                        <tr>
-                            <td class="col-xs-2 col-sm-2">
-                            <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
-                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x50/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
-                            </a>
-                            </td>
-                            <td class="col-xs-6 col-sm-6">
-                            <h4 class="font-12">
-                                <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
-                                <span><?php echo $item['product_name'] ?></span>
-                            </a>
-                            </h4>
-                            <?php
-                            $options = json_decode($item['options'], true);
-                            if ($item['product_id'] && count($options)):
-                                ?>
-                                <dl class="options">
-                                    <?php
-                                    foreach ($product->getOptions() as $option):
-                                        if (isset($options[$option->getId()])):
-                                            ?>
-                                            <dt><?php echo $option['title'] ?></dt>
-                                            <dd>
-                                                <?php
-                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
-                                                ?>
-                                            </dd>
-                                            <?php
-                                        endif;
-                                    endforeach;
+                        if (!empty($transaction['items'])) :
+                            $items = $transaction->getItems();
+                            ?>  
+                            <table class="table inline bt padding-5">
+                                <?php
+                                $flag = TRUE;
+                                foreach ($transaction['items'] as $key => $item) :
+                                    $product = $item['product'];
+                                    $thumbnail = $product->getThumbnail();
                                     ?>
-                                </dl>
-                            <?php endif; ?>
-                            </td>
-                            <td class="col-xs-1 col-sm-1 text-right">
-                                <span class="price"><?php echo $transaction->getCurrency()->format($item->offsetGet('price')); ?></span>
-                                <span><?php echo (float) $item->offsetGet('qty'); ?></span>
-                            </td>                          
-                       <?php if($flag) : ?>
-                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 action text-right">
-                            <span class="color-blue font-14"><?php echo $this->translate($transaction['status_name']); ?></span>
-                            </td>
-                            <?php 
-                            $flag = FALSE;
-                            endif;
-                            ?>
-                    </tr>
-                    <?php
-                    endforeach;
-                    ?>
-                    </table>
-                    <?php
-
-                    endif;
-                    ?>
-                    <ul>
-                       <?php
-                               $order_obj = $this->getOrder($transaction['id']);
+                                    <tr>
+                                        <td class="col-xs-2 col-sm-2">
+                                            <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
+                                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x50/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                                            </a>
+                                        </td>
+                                        <td class="col-xs-6 col-sm-6">
+                                            <h4 class="font-12">
+                                                <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
+                                                    <?php echo $item['product_name'] ?>
+                                                </a>
+                                            </h4>
+                                            <?php
+                                            $options = json_decode($item['options'], true);
+                                            if ($item['product_id'] && count($options)):
+                                                ?>
+                                                <dl class="options">
+                                                    <?php
+                                                    foreach ($product->getOptions() as $option):
+                                                        if (isset($options[$option->getId()])):
+                                                            ?>
+                                                            <dt><?php echo $option['title'] ?></dt>
+                                                            <dd>
+                                                                <?php
+                                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                                ?>
+                                                            </dd>
+                                                            <?php
+                                                        endif;
+                                                    endforeach;
+                                                    ?>
+                                                </dl>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="col-xs-1 col-sm-1 text-right">
+                                            <span class="price"><?php echo $transaction->getCurrency()->format($item->offsetGet('price')); ?></span>
+                                            <span><?php echo (float) $item->offsetGet('qty'); ?></span>
+                                        </td>                          
+                                        <?php if ($flag) : ?>
+                                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-right">
+                                                <span class="color-blue font-14"><?php echo $this->translate($transaction['status_name']); ?></span>
+                                            </td>
+                                            <?php
+                                            $flag = FALSE;
+                                        endif;
+                                        ?>
+                                    </tr>
+                                    <?php
+                                endforeach;
+                                ?>
+                            </table>
+                            <?php
+                        endif;
                         ?>
-                        <li class="col-xs-12 col-sm-12 text-right">
-                        <?php if ($order_obj->canCancel()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>')) return false;" class="btn btn-cancel">
-                                <?php echo $this->translate('Cancel', [], 'sales') ?>
-                            </a>
-                        <?php } ?>
-                        <?php if ($order_obj->canHold()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/hold/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Hold', [], 'sales') ?>
-                            </a>
-                        <?php } ?>
-                        <?php if ($order_obj->canUnhold()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/unhold/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Unhold', [], 'sales') ?>
-                            </a>
-                        <?php } ?>
-                        <?php if ($order_obj->canInvoice()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Invoice', [], 'sales') ?>
-                            </a>
-                        <?php } ?>
-                        <?php if ($order_obj->canShip()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Ship', [], 'sales') ?>
-                            </a>
-                        <?php } ?>
-                        <?php if ($order_obj->canRefund()) { ?>
-                            <a href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Refund', [], 'sales') ?>
-                        </a>
-                        <?php } ?>
-                            <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
-                        <?php echo $this->translate('Print', [], 'sales') ?>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <?php
-                    endforeach;
+                        <ul class="sale_status">
+                            <?php
+                            $order_obj = $this->getOrder($transaction['id']);
+                            ?>
+                            <li class="col-xs-12 col-sm-12 text-right">
+                                <?php if ($order_obj->canCancel()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>'))
+                                                return false;" class="btn btn-cancel">
+                                        <?php echo $this->translate('Cancel', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_obj->canHold()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/hold/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <?php echo $this->translate('Hold', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_obj->canUnhold()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/unhold/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <?php echo $this->translate('Unhold', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_obj->canInvoice()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <?php echo $this->translate('Invoice', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_obj->canShip()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <?php echo $this->translate('Ship', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_obj->canRefund()) : ?>
+                                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <?php echo $this->translate('Refund', [], 'sales') ?>
+                                    </a>
+                                <?php endif; ?>
+                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                    <?php echo $this->translate('Print', [], 'sales') ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php
+                endforeach;
                 ?>
             </div>
-           <div class="tab-pane fade " id="delivery">
+            <div class="tab-pane fade " id="delivery">
                 2
             </div>
             <div class="tab-pane fade" id="payment">
@@ -167,99 +166,6 @@ $sales_status = $this->getAllSalesStatus();
             </div>
             <div class="tab-pane fade " id="refund">
                 4
-            </div>
-        </div>
-    </div>
-    <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="receiveModalLabel">收到货款</h4>
-                </div>
-                <div class="modal-body">
-                    <div >
-                        <h1>您确定已经收到买家的货款了吗？</h1>
-                        <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
-                        <dl>
-                            <dt>操作原因:</dt>
-                            <dd><textarea name="remark"></textarea></dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-price" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="priceModalLabel">费用调整</h4>
-                </div>
-                <div class="modal-body">
-                    <div>买家:&nbsp;&nbsp;Stone<br>订单号&nbsp;&nbsp;:<strong>88888888888</strong></div>
-                    <div>
-                        <ul>
-                            <li>
-                                <h3>商品总价:<strong>¥100.00</strong></h3>
-                                <p><input type="text" value="100.00" name="products_amount"></p>
-                            </li>
-                            <li>
-                                <h3>配送费用:<strong>¥10.00</strong></h3>
-                                <p><input type="text" value="10.00" name="shipping_fee"></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div><h3>订单总价:<strong>¥110.00</strong></h3></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-cancel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="cancelModalLabel">费用调整</h4>
-                </div>
-                <div class="modal-body">
-                    <h1>您是否确定要取消以下订单？</h1>
-                    <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
-                    <dl>
-                        <dt>取消原因:</dt>
-                        <dd>
-                            <div class="li">
-                                <input type="radio" value="无法备齐货物" id="d1" name="cancel_reason" checked=""> <label for="d1">无法备齐货物</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="不是有效的订单" id="d2" name="cancel_reason"> <label for="d2">不是有效的订单</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="买家主动要求" id="d3" name="cancel_reason"> <label for="d3">买家主动要求</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="其他原因" id="d4" flag="other_reason" name="cancel_reason"> <label for="d4">其他原因</label>
-                            </div>
-                        </dd>
-                        <dd id="other_reason">
-                            <textarea name="remark" id="other_reason_input"></textarea>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
             </div>
         </div>
     </div>

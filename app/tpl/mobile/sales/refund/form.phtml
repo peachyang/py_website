@@ -2,113 +2,92 @@
 $order = $this->getVariable('model');
 $currency = $this->getCurrency();
 ?>
-<div class="form-rma">
+
+<div class="panel-heading">
+            <h4 class="panel-title">退货退款</h4>
+        </div>
+<div class="form-rma col-xs-12 col-sm-12">
     <form action="<?php echo $this->getBaseUrl('/sales/refund/save/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="order_id" value="<?php echo $order->getId() ?>" />
-        <div class="service">
-            <label for="service" class="control-label required"><?php echo $this->translate('Service') ?></label>
-            <select name="service" id="service" class="form-control required">
+        <div class="service col-xs-12 col-sm-12"> 
+        <div class="input-box">
+          <label for="service " class="control-label required col-xs-2 col-sm-1"><?php echo $this->translate('Service') ?></label>
+           <div class="cell col-xs-10 col-sm-11">
+            <select name="service" id="service" class="form-control required ">
                 <?php foreach ($this->getServices() as $key => $service): ?>
                     <option value="<?php echo $key ?>"><?php echo $this->translate($service) ?></option>
                 <?php endforeach ?>
             </select>
+            </div>
+            </div>
         </div>
-        <table class="table table-no-border">
-            <colgroup>
-                <col width="116" />
-                <col />
-                <col width="1" />
-                <col width="1" />
-                <col width="1" />
-                <col width="1" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="text-left text-nowrap" colspan="2">
-                        <?php echo $this->translate('Product Infomation') ?>
-                    </th>
-                    <th class="text-nowrap text-center">
-                        <?php echo $this->translate('Price', [], 'checkout') ?>
-                    </th>
-                    <th class="text-nowrap text-center">
-                        <?php echo $this->translate('Bought Qty') ?>
-                    </th>
-                    <th class="text-nowrap text-center">
-                        <?php echo $this->translate('Subtotal') ?>
-                    </th>
-                    <th class="text-nowrap text-center">
-                        <?php echo $this->translate('Refund Qty') ?>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="table-no-border">
                 <?php
                 foreach ($this->getItems() as $item):
                     if ($item['qty']):
                         $product = $item['product'];
                         $thumbnail = $product->getThumbnail();
                         ?>
-                        <tr>
-                            <td>
-                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $item['product_name'] ?>" />
-                            </td>
-                            <td>
+                        <ul  class="col-xs-12 col-sm-12 product">
+                            <li  class="col-xs-2 col-sm-1">
+                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $item['product_name'] ?>" />
+                            </li>
+                            <li  class="col-xs-7 col-sm-7">
                                 <h4 class="product-name"><?php echo $item['product_name'] ?></h4>
                                 <?php
                                 $options = json_decode($item['options'], true);
                                 if ($item['product_id'] && count($options)):
                                     ?>
-                                    <dl class="options">
+                                    <ul class="options">
                                         <?php
                                         foreach ($product->getOptions() as $option):
                                             if (isset($options[$option->getId()])):
                                                 ?>
-                                                <dt><?php echo $option['title'] ?></dt>
-                                                <dd>
+                                                <li><?php echo $option['title'] ?>
+                                                <span>
                                                     <?php
                                                     echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                                             $option->getValue($options[$option->getId()]) : $options[$option->getId()])
                                                     ?>
-                                                </dd>
+                                                </pan>
+                                                </li>
                                                 <?php
                                             endif;
                                         endforeach;
                                         ?>
-                                    </dl>
+                                    </ul>
                                 <?php endif; ?>
-                            </td>
-                            <td>
-                                <?php echo $currency->convert($item['base_price'], true) ?>
-                            </td>
-                            <td class="text-center">
-                                <?php echo (float) $item['qty'] ?>
-                            </td>
-                            <td>
+                            </li>
+                            <li class="text-right">
+                               x <?php echo (float) $item['qty'] ?>
+                            </li>
+                            <li class="font-12 text-right">
                                 <?php echo $currency->convert($item['base_total'], true) ?>
-                            </td>
-                            <td>
+                            </li>
+                            <li class=" text-right">
                                 <div class="qty text-nowrap">
                                     <label class="spin minus" for="qty-<?php echo $item['id'] ?>">-</label>
                                     <input type="number" name="qty[<?php echo $item['id'] ?>]" id="qty-<?php echo $item['id'] ?>"
                                            min="0"
                                            max="<?php echo (float) $item['qty'] ?>"
-                                           class="form-control required" value="<?php echo (float) $item['qty'] ?>" />
+                                           class=" required" value="<?php echo (float) $item['qty'] ?>" />
                                     <label class="spin plus" for="qty-<?php echo $item['id'] ?>">+</label>
                                 </div>
-                            </td>
-                        </tr>
+                            </li>
+                      
                         <?php
                     endif;
                 endforeach;
                 ?>
-            </tbody>
-        </table>
+            </li>
+            </ul>
+        </div>
         <div class="fieldset">
             <div class="input-box">
-                <label for="reason" class="control-label"><?php echo $this->translate('Reason') ?></label>
-                <div class="cell">
-                    <select name="reason" id="reason" class="form-control required">
+                <label for="reason" class="control-label col-xs-2 col-sm-1"><?php echo $this->translate('Reason') ?></label>
+                <div class="cell col-xs-10 col-sm-11">
+                    <select name="reason" id="reason" class="form-control required ">
                         <?php foreach ($this->getReasons() as $key => $reason): ?>
                             <option value="<?php echo $key ?>"><?php echo $this->translate($reason) ?></option>
                         <?php endforeach ?>
@@ -117,20 +96,21 @@ $currency = $this->getCurrency();
                 </div>
             </div>
             <div class="input-box">
-                <label for="comment" class="control-label"><?php echo $this->translate('Comment') ?></label>
-                <div class="cell">
-                    <textarea name="comment" class="form-control required" id="comment" style="width:85%" placeholder="<?php echo $this->translate('Please describe the reasons for refunding in detail.') ?>"></textarea>
+                <label for="comment" class="control-label col-xs-2 col-sm-1"><?php echo $this->translate('Comment') ?></label>
+                <div class="cell col-xs-10 col-sm-11">
+                    <textarea name="comment" class="form-control required " id="comment" placeholder="<?php echo $this->translate('Please describe the reasons for refunding in detail.') ?>"></textarea>
                 </div>
             </div>
             <div class="input-box">
-                <label for="voucher" class="control-label"><?php echo $this->translate('Voucher') ?></label>
-                <div class="cell images">
+                <label for="voucher" class="control-label col-xs-2 col-sm-1"><?php echo $this->translate('Voucher') ?></label>
+                <div class="cell images col-xs-10 col-sm-11">
                     <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />
                     <label for="voucher" class="add-image"><span class="fa fa-camera"></span></label>
                     <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
                 </div>
             </div>
-            <div class="buttons-set">
+            <div class="buttons-set text-right">
+
                 <div class="cell">&nbsp;</div>
                 <div class="cell">
                     <button type="submit" class="btn btn-theme">

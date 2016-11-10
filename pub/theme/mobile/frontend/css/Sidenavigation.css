@@ -1,0 +1,252 @@
+a {
+	text-decoration: none;
+}
+ul {
+	padding-left: 0;
+}
+li {
+	list-style: none;
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Montserrat', Arial, serif;
+}
+::selection {
+	background-color: #EBEBF2;
+	color: #83828D;
+}
+
+
+/* ==================================== */
+/*		  	  Navigaton Menu		
+/* ==================================== */
+
+.menu-wrap {
+	background-color: #007dc6;
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width:75%;
+	margin-left: -1000px;
+	font-size: 1em;
+	font-weight: 700;
+	overflow: auto;
+	transition: .25s;
+	z-index: 10;
+	opacity: 0.98;
+}
+.menu-show {
+	margin-left: 0;
+	box-shadow: 4px 2px 15px 1px #B9ADAD;
+	z-index: 999;
+    padding: 20px 0;
+}
+.menu-sidebar {
+	margin: 40px 0 30px 10px;
+	position: relative;
+	top: 0;
+}
+.menu-sidebar li {
+	padding: 0px 20px 0;
+	line-height: 10px
+}
+.menu-sidebar li > a {
+	color: #f3f3f3;
+	font-size: 13px;
+	position: relative;
+}
+.menu-sidebar li > a::after {
+	content: "";
+	display: block;
+	height: 0.14em;
+	position: absolute;
+	top: 100%;
+	width: 100px;
+	left: 25%;
+	transform: translate(-50%);
+	background-image: linear-gradient(to right, transparent 50%, #FFFA3B 50%);
+	transition: background-position .2s .1s ease-out;
+	background-size: 200% auto;
+}
+@media (min-width:768px) and (max-width:1190px){.menu-sidebar li > a::after {
+	content: "";
+	display: block;
+	height: 0.14em;
+	position: absolute;
+	top: 100%;
+	width: 100px;
+	left: 8%;
+	transform: translate(-50%);
+	background-image: linear-gradient(to right, transparent 50%, #FFFA3B 50%);
+	transition: background-position .2s .1s ease-out;
+	background-size: 200% auto;
+}}
+.menu-sidebar li > a:hover::after {
+	background-position: -100% 0;
+}
+.menu-sidebar .menu-item-has-children {
+	position: relative;
+}
+.menu-sidebar .menu-item-has-children .sub-menu {
+	display: none;
+}
+.sidebar-menu-arrow::after {
+	content: "\f107";
+	font-family: 'FontAwesome';
+	padding: 10px;
+	color: #FFFA3B;
+	position: relative;
+}
+.sidebar-menu-arrow:hover::after {
+	cursor: pointer;
+	color: #fff;
+}
+.sidebar-menu-arrow:active::after {
+	top: 2px;
+}
+
+
+/*Hamburger Button*/
+.toggle-button {
+	position: fixed;
+	width: 44px;
+	height: 40px;
+	top:-3px;
+	left: 5px;
+	padding: 4px;
+	transition: .25s;
+	z-index: 15;
+}
+.toggle-button:hover {
+	cursor: pointer;
+}
+.toggle-button .menu-bar {
+	position: absolute;
+	border-radius: 2px;
+	width: 80%;
+	transition: .5s;
+}
+.toggle-button .menu-bar-top {
+	border: 4px solid #555;
+	border-bottom: none;
+	top: 0;
+}
+.toggle-button .menu-bar-middle {
+	height: 4px;
+	background-color: #555;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	top: 4px;
+}
+.toggle-button .menu-bar-bottom {
+	border: 4px solid #555;
+	border-top: none;
+	top: 22px;
+}
+.button-open {
+	left: 25px;
+}
+.button-open .menu-bar-top {
+	border-color: #fff;
+	transform: rotate(45deg) translate(8px, 8px);
+	transition: .5s;
+}
+.button-open .menu-bar-middle {
+	background-color: #fff;
+	transform: translate(230px);
+	transition: .1s ease-in;
+	opacity: 0;
+}
+.button-open .menu-bar-bottom {
+	border-color: #fff;
+	transform: rotate(-45deg) translate(7px, -7px);
+	transition: .5s;
+}
+
+
+
+/* Text Block */
+.wrapper {
+	width: 40%;
+	margin: 100px auto 0;
+	color: #83828D;
+}
+.wrapper .text {
+	padding: 30px;
+}
+.wrapper .text .heading {
+	margin-bottom: 40px;
+	font-size: 2em;
+}
+.wrapper .text p {
+	line-height: 1.6em;
+}
+.wrapper .text .buttons {
+	margin-top: 40px;
+}
+
+/* Buttons */
+.wrapper .buttons .button {
+	display: inline-block;
+	margin-right: 20px;
+	padding: 20px 25px;
+	border-radius: 2em;
+	background-color: #70CE64;
+	color: #fff;
+	font-size: .9em;
+	font-weight: 700;
+	transition: background-color .3s;
+}
+.wrapper .buttons .button-secondary {
+	background-color: #FF6746;
+}
+.wrapper .buttons .button-primary:hover {
+	background-color: #84D07A;
+}
+.wrapper .buttons .button-secondary:hover {
+	background-color: #FF7D60;
+}
+
+/*Active state for the buttons*/
+.wrapper .buttons .button-primary:active {
+	background-color: #70CE64;
+}
+.wrapper .buttons .button-secondary:active {
+	background-color: #FF6746;
+}
+
+/*Icons*/
+.wrapper .buttons .button span {
+	position: relative;
+	display: inline-block;
+	padding-right: 20px;
+}
+.wrapper .buttons .button span::after {
+	position: absolute;
+	font-family: "FontAwesome";
+	right: -3px;
+	font-size: 14px;
+	top: 0;
+	transition: top .3s, right .3s;
+}
+.wrapper .buttons .button-primary span::after {
+	content: "\f019";
+}
+.wrapper .buttons .button-secondary span::after {
+	content: "\f178";
+}
+/*Slight icons animation*/
+.wrapper .buttons .button-primary:hover span::after {
+	top: 4px;
+}
+.wrapper .buttons .button-secondary:hover span::after {
+	right: -6px;
+}
+.nav>li>a:focus, .nav>li>a:hover{background:none}
+.nav>li>a:focus, .nav>li>a:hover{border:none}
+.collapse.in li{padding:}
+.menu-show .nav li a[data-toggle="collapse"]::after{}
+.menu-show  .nav-header i{padding:0 10px;font-size:13px}
+.color-33{color:red}

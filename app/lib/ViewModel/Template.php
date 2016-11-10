@@ -14,14 +14,9 @@ use Seahinet\Lib\Session\Segment;
 class Template extends AbstractViewModel
 {
 
-    private static $isMobile = null;
-
     public function isMobile()
     {
-        if (is_null(self::$isMobile)) {
-            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']) ? 'mobile_' : '';
-        }
-        return self::$isMobile;
+        return Bootstrap::isMobile();
     }
 
     /**

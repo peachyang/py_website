@@ -26,6 +26,9 @@ class Page extends Route
         } else {
             return false;
         }
+        if ($path && Bootstrap::isMobile()) {
+            $path .= '-mobile';
+        }
         if ($result = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
             if ($result[0]['page_id']) {
                 return new RouteMatch([

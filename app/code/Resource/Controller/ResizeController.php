@@ -18,7 +18,7 @@ class ResizeController extends ActionController
         $resized = BP . 'pub/resource/image/resized/' . $this->getOption('width') . 'x' . $this->getOption('height') . '/' . $this->getOption('file');
         $path = dirname($resized);
         if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+            mkdir($path, 0644, true);
         }
         if (preg_match('/@(?P<retina>\d+)x/', $this->getOption('file'), $matches)) {
             $retina = (int) $matches['retina'];

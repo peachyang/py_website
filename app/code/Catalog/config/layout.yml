@@ -62,6 +62,9 @@ catalog_product:
                     -
                         method: addScript
                         params: frontend/js/magnifying.js
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/zoombox.js',defer:'defer',async:'async'}]
             content:
                 children:
                     messages:
@@ -100,6 +103,22 @@ catalog_product:
                             review:
                                 type: Seahinet\Catalog\ViewModel\Product\Review
                                 template: catalog/product/review
+                                children:
+                                    pager:
+                                        type: Seahinet\Lib\ViewModel\Pager
+catalog_review:
+    update: frontend
+    root:
+        unset: ['head']
+        template: page/ajax
+        content:
+            children:
+                review:
+                    type: Seahinet\Catalog\ViewModel\Product\Review
+                    template: catalog/product/review
+                    children:
+                        pager:
+                            type: Seahinet\Lib\ViewModel\Pager
 admin_catalog_category_list:
     update: grid
     root:

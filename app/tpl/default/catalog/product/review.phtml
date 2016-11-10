@@ -1,7 +1,10 @@
 <div class="reviews">
     <h4 class="title"><?php echo $this->translate('Reviews') ?></h4>
-    <dl class="review-list clearfix"><?php foreach ($this->getReviews() as $review): ?>
-        <dt class="col-xs-12 col-sm-4 col-md-3">
+    <dl class="review-list clearfix"><?php
+        $reviews = $this->getReviews();
+        foreach ($reviews as $review):
+            ?>
+            <dt class="col-xs-12 col-sm-4 col-md-3">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
                 <table class="ratings table table-no-border text-center">
@@ -24,9 +27,9 @@
             </dt>
             <dd class="col-xs-12 col-sm-8 col-md-9">
                 <p class="content"><?php echo $review->offsetGet('content') ?></p>
-                <?php if ($review->offsetGet('image')): ?>
+                <?php if ($review->offsetGet('images')): ?>
                     <ul class="images list-inline">
-                        <?php foreach (json_decode($review->offsetGet('image')) as $image): ?>
+                        <?php foreach (json_decode($review->offsetGet('images')) as $image): ?>
                             <li><img src="<?php echo $this->getBaseUrl('pub/upload/review/'), $image ?>" class="zoombox" alt="" /></li>
                         <?php endforeach ?>
                     </ul>
@@ -37,8 +40,12 @@
             </dd>
         <?php endforeach ?></dl>
     <p class="empty-list text-center"><?php echo $this->translate('There has been no review yet.') ?></p>
+    <?php echo $this->getChild('pager')->setCollection($reviews) ?>
     <h4 class="title"><?php echo $this->translate('Inquiries') ?></h4>
-    <dl class="inquiry-list clearfix"><?php foreach ($this->getInquiries() as $review): ?>
+    <dl class="inquiry-list clearfix"><?php
+        $reviews = $this->getInquiries();
+        foreach ($reviews as $review):
+            ?>
             <dt class="col-xs-12 col-sm-4 col-md-3">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
@@ -50,6 +57,7 @@
             </dd>
         <?php endforeach ?></dl>
     <p class="empty-list text-center"><?php echo $this->translate('There has been no inquiry yet.') ?></p>
+    <?php echo $this->getChild('pager')->setCollection($reviews) ?>
 </div>
 <?php if ($this->canReview()): ?>
     <div class="review-form">

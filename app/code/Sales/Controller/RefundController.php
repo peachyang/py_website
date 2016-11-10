@@ -65,7 +65,7 @@ class RefundController extends AuthActionController
                         $images = [];
                         $path = BP . 'pub/upload/refund/';
                         if (!is_dir($path)) {
-                            mkdir($path, 0755, true);
+                            mkdir($path, 0644, true);
                         }
                         $count = 0;
                         $files = $this->getRequest()->getUploadedFile();
@@ -133,7 +133,7 @@ class RefundController extends AuthActionController
                     try {
                         $path = BP . 'pub/upload/refund/';
                         if (!is_dir($path)) {
-                            mkdir($path, 0755, true);
+                            mkdir($path, 0644, true);
                         }
                         $count = 0;
                         $files = $this->getRequest()->getUploadedFile();

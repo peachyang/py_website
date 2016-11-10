@@ -30,7 +30,7 @@ $count = count($reviews);
                                             <th class="text-nowrap col-xs-2 col-sm-2"><?php echo $this->translate($rating['title']) ?></th>
                                             <td class="text-nowrap">
                                                 <div class="rating">
-                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star" style="width:<?php echo $rating['value'] * 20 ?>%"></span>
                                                     <span class="fa fa-star-o"></span>
                                                 </div>
                                             </td>

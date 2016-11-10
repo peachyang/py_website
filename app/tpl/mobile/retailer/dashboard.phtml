@@ -4,16 +4,41 @@ $store = $this->getStore();
 ?>
 <div class="dashboard account-bg">
     <div class="profile clearfix">
-        <div class="head_pic">
-            <label for="avatar" class="avatar">
-                <img src="<?php echo $retailer['profile'] ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png') ?>"  height="100" width="100" />
-                <span class="update"><?php echo $this->translate('Update Image') ?></span>
-            </label>
-            <div class="title_oic">
-                <h4><?php echo $store['name'] ?></h4>
-                <p><a href=""><?PHP echo $this->translate(''); ?></a></p>
-            </div>   
-        </div>
+        <form action="<?php echo $this->getBaseUrl('retailer/store/save/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <div class="head_pic">
+                <div class="cell">
+                    <label for="profile" class="avatar mobile-img">
+                        <img src="<?php if ($retailer->offsetGet('profile')): ?>data:image/png;base64, <?php
+                            echo base64_encode($retailer->offsetGet('profile'));
+                        else:
+                            echo $this->getPubUrl('frontend/images/placeholder.png');
+                        endif;
+                        ?>" width="100" height="100" />
+                        <span class="update"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"><?php echo $this->translate('Update Image') ?></button></span>
+                    </label>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php echo $this->translate('Close') ?></span></button>
+                                <h4 class="modal-title" id="myModalLabel"><?php echo $this->translate('Avatar') ?></h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="file" name="profile" id="profile" accept="image/*" class="form-control required" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close') ?></button>
+                                <button type="submit" class="btn btn-primary"><?php echo $this->translate('Submit') ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title_oic">
+                    <span><a href="<?php echo $this->translate('retailer/store/view/'); ?>"><?php echo $store['name'] ?></a></span>
+                    <p><a href="<?php echo $this->getBaseUrl('customer/account/edit/'); ?>"><?PHP echo $this->translate('Account Management'); ?></a></p>
+                </div>
+            </div>
+        </form>
         <div class="info col-xs-12 col-sm-10">
             <div class="wishlist_track">
                 <ul class="col-xs-12 col-sm-12">
@@ -52,22 +77,18 @@ $store = $this->getStore();
                 <h3 class="panel-title">
                     <span class="fa fa-calculator" aria-hidden="true">
                     </span>
-                    <?php
-                    echo $this->translate('Transaction Management')
-                    ?>
-                    <a href="javascript:void(0) " class="fa fa-chevron-up text-right" aria-hidden="true">
-                    </a>
+                    <?php echo $this->translate('Transaction Management') ?>
+                    <a href="javascript:void(0)" class="fa fa-chevron-down text-right" aria-hidden="true"></a>
                 </h3>
             </div>
             <div class="Management-menu">
 
                 <div class="panel-heading panel-menu" >
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/product/">
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/') ?>">
                         <h3 class="panel-title">
                             <span>
                                 <?php
-                                echo $this->
-                                        translate('Has sold the baby')
+                                echo $this->translate('Has sold the baby')
                                 ?>
                             </span>
                             <i class="fa fa-chevron-right pull-right" aria-hidden="true">
@@ -75,18 +96,10 @@ $store = $this->getStore();
                         </h3>
                     </a>	
                 </div>
-
                 <div class="panel-heading panel-menu">
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/transaction/comment/">
-                        <h3 class="panel-title" onclick="">
-                            <span>
-                                <?php
-                                echo $this->
-                                        translate('Comment Management')
-                                ?>
-                            </span>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/review/') ?>">
+                        <h3 class="panel-title" onclick=""><span><?php echo $this->translate('Comment Management') ?></span>
                             <i class="fa fa-chevron-right pull-right"></i>
-
                         </h3>
                     </a>
                 </div>
@@ -95,8 +108,7 @@ $store = $this->getStore();
                         <h3 class="panel-title" onclick="">
                             <span>
                                 <?php
-                                echo $this->
-                                        translate('Return &amp; Refund')
+                                echo $this->translate('Return &amp; Refund')
                                 ?>
                             </span>
                             <i class="fa fa-chevron-right pull-right">
@@ -335,7 +347,7 @@ $store = $this->getStore();
                     </a>
                 </div>
                 <div class="panel-heading panel-menu">
-                    <a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/relationship/">
+                    <a href="<?php echo $this->getBaseUrl('retailer/marketing/relationship/') ?>">
                         <h3 class="panel-title" onclick="">
                             <span>
                                 <?php
@@ -358,18 +370,16 @@ $store = $this->getStore();
                 <a href="<?php echo $this->getBaseUrl() ?>"><?php echo $this->translate('Shopping'); ?></a>
             </li>
             <li class="col-xs-3 col-sm-3 text-center">
-                <a href="<?php echo $this->getBaseUrl() ?>retailer/account/processing/"><?php echo $this->translate('Enter the Store Center'); ?></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/account/processing/') ?>"><?php echo $this->translate('Enter the Store Center'); ?></a>
             </li>
             <li class="col-xs-3 col-sm-3 text-center">
-                <a href="<?php echo $this->getBaseUrl() ?>customer/account/logout/"><?php echo $this->translate('Log out'); ?></a>
+                <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out'); ?></a>
             </li>
             <li class="col-xs-3 col-sm-3 text-center">
-                <a href="<?php echo $this->getBaseUrl() ?>customer/account/logout/"><?php echo $this->translate('Give Feedback'); ?></a>
+                <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Give Feedback'); ?></a>
             </li>
         </ul>
     </div>			
-
-
     <script>
         function i_btn(env) {
             env.next('.Management-menu').find('.panel-menu').toggle();

@@ -155,7 +155,7 @@ class RefundController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {
-                    if ($refund['service'] == 0 || $refund['service'] == 1 && $refund['status'] == 2) {
+                    if ($refund['service'] == 0 || $refund['service'] == 1 && $refund['status'] == 3) {
                         $url = ':ADMIN/sales_order/refund/?id=' . $refund['order_id'] . '&rma_id=' . $id;
                     }
                     $this->beginTransaction();

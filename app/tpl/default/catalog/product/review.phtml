@@ -1,19 +1,7 @@
 <div class="reviews">
-    <h4 class="title"><?php echo $this->translate('Inqueries') ?></h4>
-    <dl class="inquiry-list"><?php foreach ($this->getInquiries() as $review): ?>
-        <dt>
-                <?php $customer = $review->getCustomer() ?>
-                <h5 class="username"><?php echo $review->offsetGet('anonymous') || $customer ? $this->translate('Guest') : $review->getCustomer()->offsetGet('username') ?></h5>
-            </dt>
-            <dd>
-                <p class="content"><?php echo $review->offsetGet('content') ?></p>
-                <p class="reply"><?php echo $review->offsetGet('reply') ?></p>
-            </dd>
-        <?php endforeach ?></dl>
-    <p class="empty-list text-center"><?php echo $this->translate('There has been no inquiry yet.') ?></p>
     <h4 class="title"><?php echo $this->translate('Reviews') ?></h4>
-    <dl class="review-list"><?php foreach ($this->getReviews() as $review): ?>
-            <dt>
+    <dl class="review-list clearfix"><?php foreach ($this->getReviews() as $review): ?>
+        <dt class="col-xs-12 col-sm-4 col-md-3">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || $customer ? $this->translate('Guest') : $review->getCustomer()->offsetGet('username') ?></h5>
                 <table class="ratings table table-no-border text-center">
@@ -25,23 +13,38 @@
                     <?php endforeach ?>
                 </table>
             </dt>
-            <dd>
+            <dd class="col-xs-12 col-sm-8 col-md-9">
+                <p class="content"><?php echo $review->offsetGet('content') ?></p>
+                <?php if ($reply = $review->offsetGet('reply')): ?>
+                    <p class="reply"><?php echo $this->translate('Reply'), ': ', $reply ?></p>
+                <?php endif ?>
+            </dd>
+        <?php endforeach ?></dl>
+    <p class="empty-list text-center"><?php echo $this->translate('There has been no review yet.') ?></p>
+    <h4 class="title"><?php echo $this->translate('Inquiries') ?></h4>
+    <dl class="inquiry-list clearfix"><?php foreach ($this->getInquiries() as $review): ?>
+            <dt class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <?php $customer = $review->getCustomer() ?>
+                <h5 class="username"><?php echo $review->offsetGet('anonymous') || $customer ? $this->translate('Guest') : $review->getCustomer()->offsetGet('username') ?></h5>
+                <span class="date"><?php echo $review->offsetGet('created_at') ?></span>
+            </dt>
+            <dd class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
                 <p class="content"><?php echo $review->offsetGet('content') ?></p>
                 <p class="reply"><?php echo $review->offsetGet('reply') ?></p>
             </dd>
         <?php endforeach ?></dl>
-    <p class="empty-list text-center"><?php echo $this->translate('There has been no review yet.') ?></p>
+    <p class="empty-list text-center"><?php echo $this->translate('There has been no inquiry yet.') ?></p>
 </div>
 <?php if ($this->canReview()): ?>
     <div class="review-form">
-        <span><br /><?php echo $this->translate('Discussion') ?>:</span>
-        <div class="review-padding">
-            <form action="<?php echo $this->getBaseUrl('catalog/review/save') ?>" method="post">
-                <p><?php echo $this->translate('Subject') ?>：<input type="text" name="subject" /></p>
-                <p><?php echo $this->translate('Content') ?>：<textarea rows="4" name="content" ></textarea></p>
-                <input type="hidden" name="product_id" value="<?php echo $this->getProduct()->getId() ?>" />
-                <button class="btn" type="submit" ><?php echo $this->translate('Submit') ?></button>
-            </form>
-        </div>
+        <form action="<?php echo $this->getBaseUrl('catalog/review/save') ?>" method="post" class="form-inline">
+            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+            <input type="hidden" name="product_id" value="<?php echo $this->getProduct()->getId() ?>" />
+            <div class="input-box">
+                <label for="review-content" class="control-label"><?php echo $this->translate('Content') ?></label>
+                <textarea rows="4" name="content" id="review-content" class="form-control required"></textarea>
+            </div>
+            <button class="btn" type="submit"><?php echo $this->translate('Submit') ?></button>
+        </form>
     </div>
 <?php endif; ?>

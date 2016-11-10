@@ -1,86 +1,71 @@
 <?php
 $orders = $this->getOrders();
 ?>
-
 <div id="Has-sold" class="seller-tab">
-<div class="tab-nav">
-	<ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
-	    <li class="active col-xs-3 col-sm-3">
-	        <a href="#all" data-toggle="tab">
-	            全部
-	        </a>
-	    </li>
-	    <li class="col-xs-3 col-sm-3">
-	    	<a href="#delivery" data-toggle="tab">
-	    		待付款
-	    	</a>
-	    </li>
-	    <li class="col-xs-3 col-sm-3">
-	      <a href="#payment" data-toggle="tab">
-	    		待发货
-	    	</a>
-	    </li>
-	    <li class="col-xs-3 col-sm-3">
-	      <a href="#refund" data-toggle="tab">
-	    		待收货
-	    	</a>
-	    </li>
-	    
-	</ul>
-</div>	
-
-	<div class="search col-xs-12 col-sm-12 padding-5" >
-		<div class="search_center">
-			<i class="fa fa-search" aria-hidden="true"></i>
-			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
-		</div>
-		
-	</div>
-	<div id="Product-details" class="tab-content">
-	    <div class="tab-pane fade in active" id="all">
-	      <div class="menu-ctn padding-5">
-        	<ul  class="col-xs-12 col-sm-12 title-nav  name">
-	        		<li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
-	        		<li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
-	        			
-	        			
-	        </ul>
-	          <ul class="col-xs-12 col-sm-12 inline bt">
-	        		<li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
-	        		<li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-	        		<li class="col-xs-3  col-sm-3 text-right">
-	        			<span class="price ">￥198.00</span>
-						<span>x1</span>
-						<span class=" color-blue font-14">已付款</span>
-	        		</li>
-	        			
-	       </ul>
-	       </div>
-	     <div class="bt-link">
-	       <ul class="col-xs-12 col-sm-12 inline text-center operation ">
-	       			<li class="col-xs-2 col-sm-6" ></li>
-	        		<li class="col-xs-2 col-sm-6"></li>	
-	        		<li class="col-xs-4 col-sm-6" data-toggle="modal" data-target="#modal-refund"><span><a href="">退换申请</a></span></li>
-	        		<li class="col-xs-4 col-sm-6"><a href="">查看详情</a></li>		
-	       </ul>	
-	     </div>
-	        
-	        
-	        
-	        
-	        
-	    </div>
-	     <div class="tab-pane fade " id="delivery">
-	        2
-	    </div>
-	     <div class="tab-pane fade" id="payment">
-	        3
-	    </div>
-	     <div class="tab-pane fade " id="refund">
-	        4
-	    </div>
-	
-	
-	</div>
-		
+    <div class="tab-nav">
+        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+            <li class="active col-xs-3 col-sm-3">
+                <a href="#all" data-toggle="tab">
+                    全部
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#delivery" data-toggle="tab">
+                    待付款
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#payment" data-toggle="tab">
+                    待发货
+                </a>
+            </li>
+            <li class="col-xs-3 col-sm-3">
+                <a href="#refund" data-toggle="tab">
+                    待收货
+                </a>
+            </li>
+        </ul>
+    </div>	
+    <div class="search col-xs-12 col-sm-12 padding-5" >
+        <div class="search_center">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+        </div>
+    </div>
+    <div id="Product-details" class="tab-content">
+        <div class="tab-pane fade in active" id="all">
+            <div class="menu-ctn padding-5">
+                <ul  class="col-xs-12 col-sm-12 title-nav  name">
+                    <li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
+                    <li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
+                </ul>
+                <ul class="col-xs-12 col-sm-12 inline bt">
+                    <li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
+                    <li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+                    <li class="col-xs-3  col-sm-3 text-right">
+                        <span class="price ">￥198.00</span>
+                        <span>x1</span>
+                        <span class=" color-blue font-14">已付款</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="bt-link">
+                <ul class="col-xs-12 col-sm-12 inline text-center operation ">
+                    <li class="col-xs-2 col-sm-6" ></li>
+                    <li class="col-xs-2 col-sm-6"></li>	
+                    <li class="col-xs-4 col-sm-6" data-toggle="modal" data-target="#modal-refund"><span><a href="">退换申请</a></span></li>
+                    <li class="col-xs-4 col-sm-6"><a href="">查看详情</a></li>		
+                </ul>	
+            </div>
+        </div>
+        <div class="tab-pane fade " id="delivery">
+            2
+        </div>
+        <div class="tab-pane fade" id="payment">
+            3
+        </div>
+        <div class="tab-pane fade " id="refund">
+            4
+        </div>
+    </div>
 </div>

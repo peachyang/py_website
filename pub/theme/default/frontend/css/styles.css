@@ -453,7 +453,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail .reviews .ratings th,.product-detail .reviews .ratings td,.product-detail .reviews .username{padding:0 5px;font-size:12px;line-height:1.5}
 .product-detail .reviews .images li{border:1px solid #eee;margin-right:5px}
 .product-detail .reviews .images img{max-width:50px;max-height:50px}
-.product-detail .review-form{background:#f1f1f1}
+.product-detail .review-form{background:#f1f1f1;padding: 10px}
+.product-detail .review-form .btn{background:#007dc6;color:#ffffff;margin: 10px 45%}
 .catalog-product .customize{width:20%;overflow:hidden;float:left}
 .catalog-product .customize+.product-detail{width:80%}
 .catalog-product .customize .panel,.catalog-product .customize .panel-heading,.catalog-product .customize .panel-body,.catalog-product .customize .panel-footer{padding:0;border-radius:0;margin:0;border:none;box-shadow:none}

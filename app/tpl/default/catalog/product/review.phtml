@@ -4,7 +4,7 @@
         $reviews = $this->getReviews();
         foreach ($reviews as $review):
             ?>
-            <dt class="col-xs-12 col-sm-4 col-md-3">
+            <dt class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
                 <table class="ratings table table-no-border text-center">

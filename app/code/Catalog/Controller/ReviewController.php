@@ -11,6 +11,17 @@ use Seahinet\Lib\Session\Segment;
 class ReviewController extends ActionController
 {
 
+    public function loadAction()
+    {
+        $root = $this->getLayout('catalog_review');
+        $data = $this->getRequest()->getQuery();
+        $content = $root->getChild('content');
+        $content->getChild('review')->setVariable('id', $data['id']);
+        $content->getChild('inquiry')->setVariable('id', $data['id']);
+        $content->getChild('form')->setVariable('id', $data['id']);
+        return empty($data['part']) ? $root : $root->getChild('content')->getChild($data['part']);
+    }
+
     public function saveAction()
     {
         if ($this->getRequest()->isPost()) {

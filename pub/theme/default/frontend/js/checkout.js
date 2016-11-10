@@ -29,7 +29,7 @@
                 var s = store.pop();
                 var url = GLOBAL.BASE_URL + 'checkout/order/shipping/?store=';
                 if (GLOBAL.AJAX[url + s]) {
-                    GLOBAL.AJAX[url + s].abort();
+                    GLOBAL.AJAX[url + s].readyState < 4 ? GLOBAL.AJAX[url + s] = null : GLOBAL.AJAX[url + s].abort();
                 }
                 GLOBAL.AJAX[url + s] = $.ajax(url + s, {
                     type: 'get',
@@ -55,7 +55,7 @@
                 var s = store.pop();
                 var url = GLOBAL.BASE_URL + 'checkout/order/coupon/?store=';
                 if (GLOBAL.AJAX[url + s]) {
-                    GLOBAL.AJAX[url + s].abort();
+                    GLOBAL.AJAX[url + s].readyState < 4 ? GLOBAL.AJAX[url + s] = null : GLOBAL.AJAX[url + s].abort();
                 }
                 GLOBAL.AJAX[url + s] = $.ajax(url + s, {
                     type: 'get',
@@ -73,7 +73,7 @@
         var loadPayment = function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/payment/';
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             load();
             GLOBAL.AJAX[url] = $.ajax(url, {
@@ -87,7 +87,7 @@
         var loadReview = function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/review/';
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             load();
             GLOBAL.AJAX[url] = $.ajax(url, {
@@ -139,7 +139,7 @@
             $('.section.address .form-edit-address').slideUp();
             var url = GLOBAL.BASE_URL + 'checkout/order/selectaddress/';
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
@@ -178,7 +178,7 @@
         $('.section.review').on('change', '[name^=shipping_method]', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/selectshipping/';
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
@@ -191,7 +191,7 @@
         }).on('click', '.coupon [type=radio]', function () {
             var url = GLOBAL.BASE_URL + 'checkout/order/selectcoupon/';
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
@@ -207,7 +207,7 @@
             var url = GLOBAL.BASE_URL + 'checkout/order/selectpayment/';
             $(this).siblings('[data-toggle=tab]').tab('show');
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
@@ -234,7 +234,7 @@
             var url = GLOBAL.BASE_URL + 'checkout/order/place/';
             var o = this;
             if (GLOBAL.AJAX[url]) {
-                GLOBAL.AJAX[url].abort();
+                GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',

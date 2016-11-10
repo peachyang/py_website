@@ -292,7 +292,7 @@
                 if (!GLOBAL.AJAX) {
                     GLOBAL.AJAX = {};
                 } else if (GLOBAL.AJAX['load.nav']) {
-                    GLOBAL.AJAX['load.nav'].abort();
+                    GLOBAL.AJAX['load.nav'].readyState < 4 ? GLOBAL.AJAX['load.nav'] = null : GLOBAL.AJAX['load.nav'].abort();
                 }
                 var url = GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/nav/' : 'retailer/resource/nav/') +
                         '?category_id=' + $('.resource-explorer .nav a.active').data('id');
@@ -306,7 +306,7 @@
                 if (!GLOBAL.AJAX) {
                     GLOBAL.AJAX = {};
                 } else if (GLOBAL.AJAX['load.resource']) {
-                    GLOBAL.AJAX['load.resource'].abort();
+                    GLOBAL.AJAX['load.resource'].readyState < 4 ? GLOBAL.AJAX['load.resource'] = null : GLOBAL.AJAX['load.resource'].abort();
                 }
                 $('.resource-list').addClass('loading');
                 var page = $('.resource-explorer .pager .active');
@@ -335,7 +335,7 @@
         widgetUpload.init();
         $(window).on('popstate', function () {
             if (GLOBAL.AJAX['load.resource']) {
-                GLOBAL.AJAX['load.resource'].abort();
+                GLOBAL.AJAX['load.resource'].readyState < 4 ? GLOBAL.AJAX['load.resource'] = null : GLOBAL.AJAX['load.resource'].abort();
             }
             $('.resource-list').addClass('loading');
             GLOBAL.AJAX['load.resource'] = $.get(location.href).success(function (r) {

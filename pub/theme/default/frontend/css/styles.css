@@ -444,15 +444,16 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .product-detail .product-attributes .label:after{content:":"}
 .product-detail #description img{max-width:100%}
-.product-detail .reviews .review-list{padding: 10px}
-.product-detail .reviews .review-list dt,.product-detail .reviews .review-list dd{line-height:30px}
+.product-detail .reviews dl{padding:10px}
+.product-detail .reviews dt,.product-detail .reviews dd{line-height:30px}
 .product-detail .reviews .empty-list{display:none;}
 .product-detail .reviews :empty+.empty-list{display:block}
 .product-detail .reviews .title{padding:0 15px;font-size:14px;line-height:40px;border:1px solid #eee;background:#f7f7f7}
-.product-detail .reviews .review-list .content,.product-detail .reviews .review-list .reply{font-size:12px;line-height:1.5}
+.product-detail .reviews .content,.product-detail .reviews .reply{font-size:12px;line-height:1.5}
 .product-detail .reviews .ratings th,.product-detail .reviews .ratings td,.product-detail .reviews .username{padding:0 5px;font-size:12px;line-height:1.5}
 .product-detail .reviews .images li{border:1px solid #eee;margin-right:5px}
 .product-detail .reviews .images img{max-width:50px;max-height:50px}
+.product-detail .reviews dt{clear:both}
 .product-detail .review-form{background:#f1f1f1;padding: 10px}
 .product-detail .review-form .btn{background:#007dc6;color:#ffffff;margin: 10px 45%}
 .catalog-product .customize{width:20%;overflow:hidden;float:left}

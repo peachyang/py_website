@@ -15,7 +15,7 @@ $count = count($reviews);
                     $product = $review->getProduct();
                     if ($product):
                         ?>
-                        <tr>
+                        <tr class="border-top">
                             <td class="text-vtop">
                                 <h4 class="product-name  font-12">
                                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product->offsetGet('name') ?>"><?php echo $product->offsetGet('name') ?></a>
@@ -24,9 +24,9 @@ $count = count($reviews);
                         </tr>
                         <tr>
                             <td>
-                                <table class="table table-no-border">
+                                <table class="table">
                                     <?php foreach ($review->getRatings() as $rating): ?>
-                                        <tr>
+                                        <tr class="table-no-border">
                                             <th class="text-nowrap col-xs-2 col-sm-2"><?php echo $this->translate($rating['title']) ?></th>
                                             <td class="text-nowrap">
                                                 <div class="rating">
@@ -39,12 +39,19 @@ $count = count($reviews);
                                 </table>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="border-bottom">
                             <td class="text-vtop">
                                 <p class="comment"><?php echo $this->translate('Content'), ': ', $review->offsetGet('content') ?></p>
+                                <?php if ($review->offsetGet('images')): ?>
+                                    <ul class="images list-inline">
+                                        <?php foreach (json_decode($review->offsetGet('images')) as $image): ?>
+                                            <li><img src="<?php echo $this->getBaseUrl('pub/upload/review/'), $image ?>" class="zoombox" alt="" /></li>
+                                        <?php endforeach ?>
+                                    </ul>
+                                <?php endif ?>
                                 <?php if ($review->offsetGet('reply')): ?>
                                     <p class="reply"><?php echo $this->translate('Reply'), ': ', $review->offsetGet('reply') ?></p>
-                                <?php endif ?>
+                                <?php endif; ?>
                                 <p class="date">[<?php echo $review->offsetGet('created_at') ?>]</p>
                             </td>
                         </tr>
@@ -56,7 +63,7 @@ $count = count($reviews);
                 endforeach;
             else:
                 ?>
-                <tr>
+                <tr class="border-bottom">
                     <td colspan="4"><?php echo $this->translate('There is no review about your products.') ?></td>
                 </tr>
             <?php

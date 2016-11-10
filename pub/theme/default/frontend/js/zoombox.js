@@ -11,8 +11,12 @@
         "use strict";
         $('img[data-zoombox],img.zoombox').click(function () {
             var oimg = document.createElement('img');
-            $(oimg).attr({'src': $(this).is('[data-zoombox]') ? $(this).data('zoombox') : $(this).attr('src'), 'class': 'loading'}).on('load',function(){
-                $(this).parents('.loading').removeClass('loading');
+            $(oimg).attr({'src': $(this).is('[data-zoombox]') ? $(this).data('zoombox') : $(this).attr('src'), 'class': 'loading'}).on('load', function () {
+                var p = $(this).parents('.loading');
+                if(this.naturalWidth){
+                    $(p).width(this.naturalWidth + 20).height(this.naturalHeight + 20);
+                }
+                $(p).removeClass('loading');
             });
             var m = $('<div class="modal fade modal-zoombox" tabindex="-1"><div class="modal-dialog loading"><div class="modal-content"><span class="fa fa-spinner fa-spin"></span></div></div></div>');
             $('.modal-content', m).prepend(oimg);

@@ -118,9 +118,9 @@ class ServiceProvider implements ServiceProviderInterface
                 return null;
             };
         }
-        if (!$container->has('akismet')) {
+        if (!$container->has('akismet') && $config['catalog/review/akismet']) {
             $container['akismet'] = function($container) {
-                return new \TijsVerkoyen\Akismet\Akismet('b23b6cd0b44a', $container->get('config')['global/url/base_url']);
+                return new \TijsVerkoyen\Akismet\Akismet($container->get('config')['catalog/review/akismet'], $container->get('config')['global/url/base_url']);
             };
         }
         if (!$container->has('htmlpurifier')) {

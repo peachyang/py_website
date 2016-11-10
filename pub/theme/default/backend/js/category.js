@@ -35,7 +35,7 @@
                     confirm();
                 });
                 if (ajax) {
-                    ajax.abort();
+                    ajax.readyState < 4 ? ajax = null : ajax.abort();
                 }
                 ajax = $.post(GLOBAL.BASE_URL + GLOBAL.ADMIN_PATH + '/catalog_category/order/', $('.grid .table input').serialize(), function () {
                     $(window).off('beforeupload.seahinet.ajax');

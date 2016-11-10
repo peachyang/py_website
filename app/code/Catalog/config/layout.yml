@@ -100,25 +100,29 @@ catalog_product:
                             upsells:
                                 type: Seahinet\Catalog\ViewModel\Product\Upsells
                                 template: catalog/product/link
-                            review:
-                                type: Seahinet\Catalog\ViewModel\Product\Review
-                                template: catalog/product/review
-                                children:
-                                    pager:
-                                        type: Seahinet\Lib\ViewModel\Pager
 catalog_review:
     update: frontend
     root:
-        unset: ['head']
         template: page/ajax
-        content:
-            children:
-                review:
-                    type: Seahinet\Catalog\ViewModel\Product\Review
-                    template: catalog/product/review
-                    children:
-                        pager:
-                            type: Seahinet\Lib\ViewModel\Pager
+        children:
+            content:
+                unset: ['breadcrumb','messages']
+                children:
+                    review:
+                        type: Seahinet\Catalog\ViewModel\Product\Review
+                        template: catalog/product/review/review
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                    inquiry:
+                        type: Seahinet\Catalog\ViewModel\Product\Review
+                        template: catalog/product/review/inquiry
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                    form:
+                        type: Seahinet\Catalog\ViewModel\Product\Review
+                        template: catalog/product/review/form
 admin_catalog_category_list:
     update: grid
     root:

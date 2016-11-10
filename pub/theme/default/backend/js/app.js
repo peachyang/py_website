@@ -113,7 +113,7 @@
                 if (!GLOBAL.AJAX) {
                     GLOBAL.AJAX = {};
                 } else if (GLOBAL.AJAX[$(o).attr('href')]) {
-                    GLOBAL.AJAX[$(o).attr('href')].abort();
+                    GLOBAL.AJAX[$(o).attr('href')].readyState < 4 ? GLOBAL.AJAX[$(o).attr('href')] = null : GLOBAL.AJAX[$(o).attr('href')].abort();
                 }
                 GLOBAL.AJAX[$(o).attr('href')] = $.ajax($(o).attr('href'), {
                     type: $(o).data('method'),
@@ -129,7 +129,7 @@
             if (!GLOBAL.AJAX) {
                 GLOBAL.AJAX = {};
             } else if (GLOBAL.AJAX[$(o).attr('action')]) {
-                GLOBAL.AJAX[$(o).attr('action')].abort();
+                GLOBAL.AJAX[$(o).attr('action')].readyState < 4 ? GLOBAL.AJAX[$(o).attr('action')] = null : GLOBAL.AJAX[$(o).attr('action')].abort();
             }
             GLOBAL.AJAX[$(o).attr('action')] = $.ajax($(o).attr('action'), {
                 type: $(o).attr('method'),

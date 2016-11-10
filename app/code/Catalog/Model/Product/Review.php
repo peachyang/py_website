@@ -20,7 +20,7 @@ class Review extends AbstractModel
     {
         $this->beginTransaction();
         if (!empty($this->storage['content'])) {
-            if ($this->getContainer()->get('akismet')->isSpam($this->storage['content'])) {
+            if ($this->getContainer()->has('akismet') && $this->getContainer()->get('akismet')->isSpam($this->storage['content'])) {
                 throw new SpamException;
             }
             $this->storage['content'] = gzencode($this->storage['content']);
@@ -79,7 +79,7 @@ class Review extends AbstractModel
         return null;
     }
 
-    public function getRatings()
+    public function getRatings($productOnly = false)
     {
         if ($this->getId()) {
             $collection = new Collection;
@@ -88,6 +88,9 @@ class Review extends AbstractModel
                         'status' => 1,
                         'review_rating.review_id' => $this->getId()
             ]);
+            if ($productOnly) {
+                $collection->where(['type' => 0]);
+            }
             return $collection;
         }
         return [];

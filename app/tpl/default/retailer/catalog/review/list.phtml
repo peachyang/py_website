@@ -43,6 +43,13 @@ $count = count($reviews);
                             </td>
                             <td class="text-vtop">
                                 <p class="comment"><?php echo $this->translate('Content'), ': ', $review->offsetGet('content') ?></p>
+                                <?php if ($review->offsetGet('image')): ?>
+                                    <ul class="images list-inline">
+                                        <?php foreach (json_decode($review->offsetGet('image')) as $image): ?>
+                                            <li><img src="<?php echo $this->getBaseUrl('pub/upload/review/'), $image ?>" class="zoombox" alt="" /></li>
+                                        <?php endforeach ?>
+                                    </ul>
+                                <?php endif ?>
                                 <?php if ($review->offsetGet('reply')): ?>
                                     <p class="reply"><?php echo $this->translate('Reply'), ': ', $review->offsetGet('reply') ?></p>
                                 <?php endif ?>

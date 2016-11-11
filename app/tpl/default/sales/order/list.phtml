@@ -8,6 +8,7 @@ $orders = $this->getOrders();
                 <th class="text-left" colspan="2"><?php echo $this->translate('Product(s)') ?></th>
                 <th class="text-center"><?php echo $this->translate('Price') ?></th>
                 <th class="text-center"><?php echo $this->translate('Qty') ?></th>
+                <th class="text-center"><?php echo $this->translate('After-sales') ?></th>
                 <th class="text-center"><?php echo $this->translate('Total') ?></th>
                 <th class="text-center"><?php echo $this->translate('Action') ?></th>
             </tr>
@@ -30,7 +31,7 @@ $orders = $this->getOrders();
                         <td>
                             <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
                         </td>
-                        <td class="text-left text-vtop" title="<?php echo $product->offsetGet('name') ?>">
+                        <td class="text-left text-vtop col-xs-3 col-sm-3" title="<?php echo $product->offsetGet('name') ?>">
                             <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>
                             <?php
                             $options = json_decode($item['options'], true);
@@ -57,17 +58,19 @@ $orders = $this->getOrders();
                         </td>
                         <td><?php echo $order->getCurrency()->format($item->offsetGet('price')) ?></td>
                         <td><?php echo (float) $item->offsetGet('qty') ?></td>
-                        <?php if ($flag): ?>
-                            <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue">
-                                <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?><p><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></p>
-                            </td>
-                           
-                          
-                            <td rowspan="<?php echo count($items) ?>" class="action">
-                              <?php echo  $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?>
+                      	<td >
                                 <?php if ($order->canRefund()): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
                                 <?php endif ?>
+                        </td>
+                       <td  class="text-nowrap color-blue">
+                                <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?><p><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></p>
+                       </td>
+                            
+                        <?php if ($flag): ?>
+                            <td rowspan="<?php echo count($items) ?>" class="action ">
+                              <?php echo  $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?>
+                               
                                 <?php if ($order->canReview()): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>"><?php echo $this->translate('Add Review') ?></a>
                                 <?php endif ?>

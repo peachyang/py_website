@@ -355,7 +355,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .color-blue{color:#007dc6}
 .color-hui{color:#777}
 .font-family-x{font-family:-webkit-pictograph;} 
-.seller-tab  .tab-content .li-padding li{padding:0 5px}
+.seller-tab  .tab-content .li-padding li{padding:5px}
 .qty .required {display:inline-block;font-size: 14px;line-height: 15px;border: 1px solid #d4d4d4;border-left: none;border-right: none;width: 20px;height: 15px;border-radius: 0;padding: 0;text-align: center;margin:0}
 .qty .spin {font-size: 18px;line-height: 15px;border: 1px solid #d4d4d4;width: 15px;height: 15px;text-align: center;color: #cbcbcb;background: #ededed;}
 .modal-dialog .modal-footer{padding:0}
@@ -387,21 +387,33 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .product-detail .review-form span,.review-padding p{margin-left: 15px}
 .product-detail .tab-content #description{margin-top:60px;background:#fff}
 .product-detail .tab-content #description h3{font-size:16px;}
-.container .nav-tabs>li>a{margin-right:0;border:0}
-.container .nav-tabs>li>a:hover{border: none;background:none}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;border:0}
-.container .nav-tabs{border:none}
-.container .nav-tabs li a{line-height:30px;height:50px;text-align:center}
 .product-detail .review-form input,textarea{width:100%;border:1px solid #ccc;margin:10px 0}
-.retailer-account #modal-reply .modal-content .reply{display: inline-flex;width: 80%;}
-.retailer-account #modal-reply .modal-content{margin-top:200px}
-.retailer-account #modal-reply .modal-footer .btn{margin: 10px 10px;padding: 3px 20px;float:right}
-.retailer-account #modal-reply .modal-content li{margin:10px 0}
 .product-detail .review-form button{width:100%;background:#ff8a00;color:#fff}
 .product-detail .tab-content .tab-pane img{width:100%}
 .product-detail .info{margin-bottom:10px;background:#e7e7e7}
 .product-detail .affix{position:fixed;z-index:1001;top:0;background:#8f8f8f;color:#c8c6c6}
 .product-detail .fa{line-height:50px;color:#a7a7a7}
+.retailer-account .review-list{margin:20px 0}
+.retailer-account .review-list td>.fa{font-size:22px;color:#7e7f7f}
+.retailer-account .review-list .product-name{padding:0 4px;margin-bottom:10px}
+.retailer-account .review-list .table td,.retailer-account .review-list .table th{padding:0 4px}
+.retailer-account .review-list .rating .fa{color:#007DC6}
+.retailer-account .review-list .comment{color:#7e7f7f;font-size:12px}
+.retailer-account .review-list .images li{border:1px solid #eee;margin-right:5px}
+.retailer-account .review-list .images img{max-width:50px;max-height:50px}
+.retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
+.retailer-account .table>tbody>tr>td, .retailer-account .table>tbody>tr>th, .retailer-account .table>tfoot>tr>td, .retailer-account .table>tfoot>tr>th, .retailer-account .table>thead>tr>td, .retailer-account .table>thead>tr>th{border-top:0;vertical-align: middle}
+.retailer-account .table>tbody>.border-top{border-top:1px solid #ddd}
+.retailer-account .table>tbody>.border-bottom{border-bottom:1px solid #ddd}
+
+/*.container .nav-tabs>li>a{margin-right:0;border:0}*/
+.container .nav-tabs>li>a:hover{border: none;background:none}
+/*.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;border:0}
+.container .nav-tabs li a{line-height:30px;height:50px;text-align:center}*/
+.retailer-account #modal-reply .modal-content .reply{display: inline-flex;width: 80%;}
+.retailer-account #modal-reply .modal-content{margin-top:200px}
+.retailer-account #modal-reply .modal-footer .btn{margin: 10px 10px;padding: 3px 20px;float:right}
+.retailer-account #modal-reply .modal-content li{margin:10px 0}
 .product-info .modal-body{width:100%;overflow:hidden}
 .container .products-grid .product-list{box-shadow: 0 5px 10px rgba(0,0,0,.150);width:48%;background:#ffffff;padding: 1% 1%;margin: 1%}
 .container .products-grid .product-list .product-image{display:block;vertical-align: middle;}
@@ -451,6 +463,11 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
+.rating{position:relative;width:6em}
+.rating .fa{display:block;letter-spacing:.25em}
+.rating .fa-star{position:absolute;top:0;left:0;white-space:nowrap;overflow:hidden;max-width:100%}
+.rating .fa-star-o:before{content:"\f006\f006\f006\f006\f006"}
+.rating .fa-star:before{content:"\f005\f005\f005\f005\f005"}
 #cart{color:#696868;font-size:12px;margin-bottom:50px;overflow:hidden}
 #cart .store{background:#e7e7e7;line-height:40px;border-bottom:1px solid #e3e5eb}
 #cart .store .link{padding-right:10px}
@@ -658,6 +675,7 @@ overflow:hidden;}
 .retailer-apply .page-content>.flow li span,.retailer-processing .page-content>.flow li span{display:block;margin-left:-1.4375em}
 .retailer-apply .page-content .form,.retailer-processing .page-content .form{border:1px solid #dfe1e8;padding:70px 30%;text-align:center;min-height:430px;margin-bottom:20px}
 .retailer-apply .page-content .fieldset{text-align:left}
+.retailer-sales-shipment-edit .logistics  .input-box .form-control{width:82%;}
 .retailer-processing .page-content .notice{font-size:14px;line-height:48px;color:#007dc6}
 .retailer-processing .page-content .notice .btn,.retailer-apply .page-content .form>.btn{display:block;margin:10px auto;width:162px;height:42px;font-size:20px;color:#fff;line-height:1.5;border:none;background:linear-gradient(to bottom,#1da7f8,#007ec7)}
 .retailer-processing .page-content .notice .btn:hover,.retailer-apply .page-content .form>.btn:hover{background:linear-gradient(to bottom,#007ec7,#1da7f8)}
@@ -676,6 +694,7 @@ overflow:hidden;}
 .seller-tab  .tab-content .inline li, .wishlist .after-sales .inline li,.sales-order-list  .seller-tab  .tab-content .inline li{line-height: 20px;}
 .wishlist .title{padding:5px;font-size:15px;margin:5px 0 20px 0;    border-bottom: 1px solid #eee;}
 .wishlist .bt{border-top:1px solid #eee;}
+.retailer-sales-invoice-edit .col-main{background:#fff}
 .sales-order-invoice .container{padding:0 3px}
 .seller-tab  .tab-content .inline li span,.sales-order-list  .seller-tab  .tab-content .inline li span{display: inherit;}
 .seller-tab .tab-content .inline li .choose{color:#777;font-size:12px}
@@ -688,7 +707,9 @@ overflow:hidden;}
 .wishlist  .seller-tab  .tab-content ul{/* border-top:1px solid #eee */}
 .seller-tab  .tab-content .bg{background:#f9f9f9}
 .seller-tab .tab-content .bg span{padding:7px 5px}
-.seller-tab  .tab-content .bg li{padding:0 5px}
+.margin-15-0{margin:15px 0}
+.seller-tab  .tab-content .bg
+.retailer-sales-invoice-edit .col-main{background:#fff}
 .seller-tab  .tab-content .bt,.sales-order-list .seller-tab .tab-content .bt{border:1px solid #eee}
 .seller-tab  .tab-content .margin-bj div{margin:10px 0}
 .sales-order-list .seller-tab  .tab-content .inline{padding:10px 0}
@@ -867,6 +888,7 @@ overflow:hidden;}
 .catalog-product .store_detail h4{color:#af0029;font-size:26px;font-weight:bold;text-align:right}
 .catalog-product .store_detail .store_entry{border: 1px solid #d5d5d6;border-radius:2px;padding:10px 40px;background:#f1f1f1}
 .catalog-product .store_detail tfoot .fa{color:#fd9233;font-size:26px}
+
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
 .page-home .menu .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{cursor: default;border: none;border-bottom-color: transparent;font-size: 14px;}
 .page-home  .message-box { margin-top: 0px;}

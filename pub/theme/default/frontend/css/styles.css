@@ -310,8 +310,15 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .orders-list .action a{display:block}
 .customer-account .sales-order-view .nav-tabs{margin:2% 0}
 .customer-account .sales-order-view .panel{width:49%;float:left;margin-bottom:2%}
+.retailer-sales-shipment-edit .panel{width:49%;float:left;margin-bottom:2%}
+.retailer-sales-shipment-edit .panel:nth-child(2n){margin-left:2%}
+.retailer-sales-shipment-edit  .wide{clear:both;width:100%;margin-left:0}
+.retailer-sales-invoice-edit .panel{width:49%;float:left;margin-bottom:2%}
+.retailer-sales-invoice-edit .panel{width:49%;float:left;margin-bottom:2%}
+/* .retailer-sales-invoice-edit .panel:nth-child(2n){margin-left:2%} */
+.retailer-sales-invoice-edit .wide{clear:both;width:100%;margin-left:0}
 .customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
-.customer-account .sales-order-view .panel.wide{clear:both;width:100%;margin-left:0}
+.customer-account .sales-order-view .wide{clear:both;width:100%;margin-left:0}
 .customer-account .review-form .store .profile{display:inline-block;width:70px;height:70px}
 .customer-account .review-form .store .profile img{max-width:100%;max-height:100%}
 .customer-account .review-form .store .info{display:inline-block;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
@@ -998,6 +1005,8 @@ dl.options dd{float:left;margin-left:4px}
 .layer_table .btn_sub input{padding:5px 15px;background:#007dc6;color:#fff;font-size:16px;border:none;margin:0 20px}
 .layer_table .btn_sub button{padding:5px 15px;background:#fff;font-size:16px;border:1px solid #ccc}
 .layer_table .btn_sub{margin-left:120px}
+.sales-order-list .thead_body{font-size:12px;margin:10px 0}
+.retailer-product .list-info,.retailer-product .list-info .btn{font-size:12px}
 /*end*/
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}

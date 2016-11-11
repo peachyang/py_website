@@ -116,11 +116,23 @@ retailer_account_dashboard:
                     -
                         method: setTitle
                         params: Retailer Center
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/stat.js',defer:'defer',async:'async'}]
             content:
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\Dashboard
-                        template: retailer/dashboard
+                        type: Seahinet\Lib\ViewModel\Wrapper
+                        children:
+                            profile:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Profile
+                                template: retailer/dashboard/profile
+                            stat:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Stat
+                                template: retailer/dashboard/stat
+                            rank:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Ranking
+                                template: retailer/dashboard/ranking
 retailer_apply:
     update: retailer_account
     root:

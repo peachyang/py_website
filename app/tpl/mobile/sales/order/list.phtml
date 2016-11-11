@@ -39,7 +39,7 @@ $orders = $this->getOrders();
                         <?php foreach ($orders as $order): ?>  
                             <tr class="thead_title">
                                 <td colspan="2" class="text-left"><?php echo $order->getStore()->offsetGet('name') ?></td>
-                                <td colspan="2" class="text-nowrap text-right">
+                                <td colspan="2" class="text-right">
                                     <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
                                     <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
                                 </td>
@@ -51,11 +51,11 @@ $orders = $this->getOrders();
                                 $product = $item['product'];
                                 $thumbnail = $product->getThumbnail();
                                 ?>
-                                <tr class="thead_body">
+                                <tr>
                                     <td>
                                         <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
                                     </td>
-                                    <td class="text-left text-vtop col-xs-3 col-sm-3" title="<?php echo $product->offsetGet('name') ?>">
+                                    <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
                                         <h4 class="product-name font-12"><?php echo $product->offsetGet('name') ?></h4>
                                         <?php
                                         $options = json_decode($item['options'], true);
@@ -83,6 +83,7 @@ $orders = $this->getOrders();
                                     <td>
                                         <span class="price"><?php echo $order->getCurrency()->format($item->offsetGet('price')) ?></span>
                                         <span><?php echo (float) $item->offsetGet('qty') ?></span>
+                                    </td>
                                     <td>
                                         <?php
                                         if ($flag):
@@ -98,12 +99,12 @@ $orders = $this->getOrders();
                             <tr class="sale_status  padding-5 text-right">
                                 <td class="2">
                                     <?php if ($order->canRefund()): ?>
-                                    <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Refund Application') ?></a>
+                                        <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Refund Application') ?></a>
                                     <?php endif ?>
                                 </td>
                                 <td rowspan="<?php echo count($items) ?>" class="action">
                                     <?php if ($order->canReview()): ?>
-                                    <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Add Review') ?></a>
+                                        <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Add Review') ?></a>
                                     <?php endif ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('View Details') ?></a>
                                 </td>
@@ -112,14 +113,14 @@ $orders = $this->getOrders();
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="4">
                                 <?php echo $this->getChild('pager')->setCollection($orders) ?>
                             </td>
                         </tr>
                     </tfoot>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
+                        <td colspan="4" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
                     </tr>
                 <?php endif; ?>
             </table>

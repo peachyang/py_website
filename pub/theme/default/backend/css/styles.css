@@ -300,14 +300,14 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard{padding:30px 0 30px 30px}
 .admin .dashboard .table{border:1px solid #ccc}
 .admin .dashboard .table .caption{border-bottom:1px solid #ccc;text-indent:30px}
-.admin .dashboard .table .row{display:table;padding:20px 0;width:100%}
+.admin .dashboard .table .row{display:table;display:flex;padding:20px 0;width:100%}
 .admin .dashboard .table .cell .detail>li{display:table-row}
-.admin .dashboard .table .cell{display:table-cell}
+.admin .dashboard .table .cell{display:table-cell;flex:1}
 .admin .dashboard .table .cell+.cell{border-left:1px solid #ccc}
 .admin .dashboard .table .cell .title{text-align:center;font-size:12px;line-height:24px}
 .admin .dashboard .table .cell .title .data{font-size:24px}
 .admin .dashboard .table .cell .detail{display:table;margin:0 auto;padding:15px 0}
-.admin .dashboard .table .cell .detail>li>span{display:table-cell;width:50%;font-size:13px;line-height:18px}
+.admin .dashboard .table .cell .detail>li>span{display:table-cell;font-size:13px;line-height:18px;padding:0 4px}
 .admin .dashboard .chart{margin-top:30px;border:1px solid #ccc}
 .admin .dashboard .chart #canvas{padding:20px;max-width:100%}
 .admin .dashboard .chart .filter{padding:0 20px;border-bottom:1px solid #ccc}

@@ -1,195 +1,82 @@
 <?php
-$after = new \Seahinet\Sales\Model\Collection\Rma;
-$subtitle = $this->getVariable("subtitle");
-$filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
-
 ?>
 <div class="wishlist">
-   
-<div id="Has-sold" class="seller-tab">
-
-
-	<div class="search col-xs-12 col-sm-12 padding-5">
-		<div class="search_center">
-			<i class="fa fa-search" aria-hidden="true"></i>
-			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
-		</div>
-		
-	</div>
-	<div id="Product-details" class="tab-content">
-	    <div class="tab-pane fade in active margin-bj" id="all">
-	    
-	     <div class="order col-xs-12 col-sm-12">
-	     	 <ul class="col-xs-12 col-sm-12 bg" >
-	       		<li class="col-xs-8 col-sm-8">订单编号：1216102011092481</li>
-	       		<li class="col-xs-4 col-sm-4 text-right"> 已发货</li>
-	       </ul>
-	       <ul  class="col-xs-12 col-sm-12 title-nav padding-5">
-	        		<li class="col-xs-6 col-sm-6 text-left font-14"><a href="" target="_blank">denny</a></li>
-	        		<li class="col-xs-6 col-sm-6 text-right font-14"><a href="">实付:￥123.00(包邮)</a></li>	
-	        			
-	        			
-	        </ul>
-	        <ul class="col-xs-12 col-sm-12 inline padding-10-5">
-	        		<li class="col-xs-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
-	        		<li class="col-xs-7 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-	        		<li class="col-xs-3 text-right">
-	        			<span class="price ">￥198.00</span>
-						<span>x1</span>
-						<span class="color-blue">已付款</span>
-						<button class="padding-0 color-blue">未确认收货</button>
-						
-	        		</li>
-	        			
-	       </ul>
-	     
-	     </div>
-	     
-        	
-	        
-	       <div class="address col-xs-12 col-sm-12">
-	       		<ul class="col-xs-12 col-sm-12 font-12">
-	       		<li class="bg font-14 "><span>收货信息</span></li>
-	       		<ul class="padding-5">
-		       		<li class="col-xs-4 col-sm-4">刘筱菲</li>
-		       		<li class="col-xs-8 col-sm-8">18865529426</li>
-		       		<li>山东省烟台市莱山区港城东大街100号3号楼206</li>	
-	       		</ul>
-	       		
-	       		</ul>
-	       </div>
-	       <div class="logistics-ct col-xs-12 col-sm-12">
-	       	<ul class="logistics font-12">
-	       			<li class="bg font-14"><span>物流状态</span></li>
-	       			<ul class="padding-5">
-	       				<li class="col-xs-9 col-sm-9 padding-5"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
-	       				<li class="col-xs-3 col-sm-3 padding-5"><button>发货</button></li>
-	       			</ul>
-	       			
-	       		</ul>
-	       		<ul class="col-xs-12 col-sm-12 font-12 padding-5 ">
-		       		<li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
-		       		<li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">付款时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
-	       		</ul>
-	       </div>
-	       <div class="xq col-xs-12 col-sm-12">
-	       	 <ul class="col-xs-12 col-sm-12 inline text-center operation padding-0-10">
-	        		<li class="col-xs-3"><span><a href="">详情</a></span></li>
-	        		<li class="col-xs-3 "><span><a href="">账单</a></span></li>
-	        		<li class="col-xs-3 "><span><a href="">发货</a></span></li>
-	        		<li class="col-xs-3"><span><a href="">打印</a></span></li>		
-	       </ul>
-	       </div>
-	      
-	        	
-	        </div>  
-	  
-	     <div class="tab-pane fade " id="delivery">
-	        2
-	    </div>
-	     <div class="tab-pane fade" id="payment">
-	        3
-	    </div>
-	     <div class="tab-pane fade " id="refund">
-	        4
-	    </div>
-	</div>		
-</div>
-
-
-    <div id="modal-receive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="receiveModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="receiveModalLabel">收到货款</h4>
-                </div>
-                <div class="modal-body">
-                    <div >
-                        <h1>您确定已经收到买家的货款了吗？</h1>
-                        <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
-                        <dl>
-                            <dt>操作原因:</dt>
-                            <dd><textarea name="remark"></textarea></dd>
-                        </dl>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
-            </div>
+    <div id="Has-sold" class="seller-tab">
+        <div class="search padding-5 col-xs-12 col-sm-12">
+            <form class="form-inline" action="" method="get" novalidate = "novalidate">
+                <span class="fa fa-search" aria-hidden="true"></span>
+                <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+                <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
+            </form>
         </div>
-    </div>
+        <div id="Product-details" class="tab-content">
+            <div class="tab-pane fade in active margin-bj" id="all">
 
-    <div id="modal-price" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="priceModalLabel">费用调整</h4>
-                </div>
-                <div class="modal-body">
-                    <div>买家:&nbsp;&nbsp;Stone<br>订单号&nbsp;&nbsp;:<strong>88888888888</strong></div>
-                    <div>
-                        <ul>
-                            <li>
-                                <h3>商品总价:<strong>¥100.00</strong></h3>
-                                <p><input type="text" value="100.00" name="products_amount"></p>
-                            </li>
-                            <li>
-                                <h3>配送费用:<strong>¥10.00</strong></h3>
-                                <p><input type="text" value="10.00" name="shipping_fee"></p>
+                <div class="order col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
+                        <li class="col-xs-6 col-sm-6 text-left font-12"><?php echo $this->translate('Order Number'); ?>:<?php echo $transactions->offsetGet('increment_id'); ?></li>
+                        <li class="col-xs-6 col-sm-6 text-right font-12"></li>
+                    </ul>
+                        <ul class="col-xs-12 col-sm-12 title-nav name  padding-5 font-12">
+                            <li class="text-left col-xs-6 col-sm-6" colspan="2"><?php echo $customer = $this->getCustomerByID($transactions['customer_id'])->username; ?></li>
+                            <li class="col-xs-6 col-sm-6 text-right" colspan="2">
                             </li>
                         </ul>
-                    </div>
-                    <div><h3>订单总价:<strong>¥110.00</strong></h3></div>
+                        <ul class="col-xs-12 col-sm-12 inline padding-10-5">
+                            <li class="col-xs-2"><img src="" width="50" height="50"></li>
+                            <li class="col-xs-6 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+                            <li class="col-xs-3 text-right">
+                                <span class="price ">￥198.00</span>
+                                <span>x1</span>
+                                <span class="color-blue">已付款</span>
+                                <button class="padding-0 color-blue">未确认收货</button>
+                            </li>
+                        </ul>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                <div class="address col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 font-12">
+                        <li class="bg font-14 "><span>收货信息</span></li>
+                        <ul class="padding-5">
+                            <li class="col-xs-4 col-sm-4">刘筱菲</li>
+                            <li class="col-xs-8 col-sm-8">18865529426</li>
+                            <li>山东省烟台市莱山区港城东大街100号3号楼206</li>	
+                        </ul>
+                    </ul>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="logistics-ct col-xs-12 col-sm-12">
+                    <ul class="logistics font-12">
+                        <li class="bg font-14"><span>物流状态</span></li>
+                        <ul class="padding-5">
+                            <li class="col-xs-9 col-sm-9 padding-5"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
+                            <li class="col-xs-3 col-sm-3 padding-5"><button>发货</button></li>
+                        </ul>
+                    </ul>
+                    <ul class="col-xs-12 col-sm-12 font-12 padding-5 ">
+                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
+                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">付款时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
+                    </ul>
+                </div>
+                <div class="xq col-xs-12 col-sm-12">
+                    <ul class="col-xs-12 col-sm-12 inline text-center operation padding-0-10">
+                        <li class="col-xs-3"><span><a href="">详情</a></span></li>
+                        <li class="col-xs-3 "><span><a href="">账单</a></span></li>
+                        <li class="col-xs-3 "><span><a href="">发货</a></span></li>
+                        <li class="col-xs-3"><span><a href="">打印</a></span></li>		
+                    </ul>
+                </div>
+            </div>  
 
-    <div id="modal-cancel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="cancelModalLabel">费用调整</h4>
-                </div>
-                <div class="modal-body">
-                    <h1>您是否确定要取消以下订单？</h1>
-                    <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
-                    <dl>
-                        <dt>取消原因:</dt>
-                        <dd>
-                            <div class="li">
-                                <input type="radio" value="无法备齐货物" id="d1" name="cancel_reason" checked=""> <label for="d1">无法备齐货物</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="不是有效的订单" id="d2" name="cancel_reason"> <label for="d2">不是有效的订单</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="买家主动要求" id="d3" name="cancel_reason"> <label for="d3">买家主动要求</label>
-                            </div>
-                            <div class="li">
-                                <input type="radio" value="其他原因" id="d4" flag="other_reason" name="cancel_reason"> <label for="d4">其他原因</label>
-                            </div>
-                        </dd>
-                        <dd id="other_reason">
-                            <textarea name="remark" id="other_reason_input"></textarea>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确认</button>
-                </div>
+            <div class="tab-pane fade " id="delivery">
+                2
             </div>
-        </div>
+            <div class="tab-pane fade" id="payment">
+                3
+            </div>
+            <div class="tab-pane fade " id="refund">
+                4
+            </div>
+        </div>		
     </div>
 </div>

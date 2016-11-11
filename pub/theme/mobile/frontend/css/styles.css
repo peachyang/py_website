@@ -256,6 +256,36 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account .header-m,.retailer-account .header-m{width:100%;height:50px;line-height:50px;background:#007ecc;color:#ffffff;position: relative;}
 .customer-account .header-m a,.retailer-account .header-m a{height:40px;line-height:40px}
 .customer-account .header-m .container,.retailer-account .header-m .container{font-size:20px;line-height:50px}
+.customer-account .refund-detail .refund-list,.retailer-account .refund-detail .refund-list{border:1px solid #e1e3ea}
+.customer-account .refund-list .action a,.retailer-account .refund-list .action a{display:block}
+.customer-account .refund-detail .handler:not(:empty),.retailer-account .refund-detail .handler:not(:empty){border:1px solid #e1e3ea;padding:10px;margin-bottom:15px}
+.customer-account .refund-detail .handler:not(:empty),.retailer-account .refund-detail .handler:not(:empty){border:1px solid #e1e3ea;padding:10px;margin-bottom:15px}
+.customer-account .refund-detail .handler h3,.retailer-account .refund-detail .handler h3{font-size:12px;color:#8d8c8c}
+.customer-account .refund-detail .btn-submit,.retailer-account .refund-detail .btn-submit,.customer-account .refund-detail .btn-theme,.retailer-account .refund-detail .btn-theme{padding:4px 15px;background: #3fb5fa;border:#007dc6}
+.customer-account .refund-detail .log,.retailer-account .refund-detail .log{padding-left:90px;border-top:none}
+.customer-account .refund-detail .log .item,.retailer-account .refund-detail .log .item{padding:10px 15px}
+.customer-account .refund-detail .log .item+.item,.retailer-account .refund-detail .log .item+.item{border-top:1px dotted #e1e3ea}
+.customer-account .refund-detail .log .input-box,.retailer-account .refund-detail .log .input-box,.customer-account .refund-detail .log .buttons-set,.retailer-account .refund-detail .log .buttons-set{padding:6px 15px}
+.customer-account .refund-detail .nav,.retailer-account .refund-detail .nav{margin-bottom:20px;padding-top:20px;background:#e3f4fd}
+.customer-account .refund-detail .nav>li>a,.retailer-account .refund-detail .nav>li>a{padding:4px 15px}
+.customer-account .refund-detail .nav-tabs>li.active>a,.retailer-account .refund-detail .nav-tabs>li.active>a, .customer-account .refund-detail .nav-tabs>li.active>a:focus, .retailer-account .refund-detail .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent}
+.customer-account .refund-detail .images li,.retailer-account .refund-detail .images li{text-indent:0;border:1px solid #f5f6f9;border-radius:0;width:50px;height:50px;text-align:center;margin-right:10px;position:relative}
+.customer-account .refund-detail .images .thumbnail,.retailer-account .refund-detail .images .thumbnail{max-width:48px;max-height:48px;cursor:pointer}
+.customer-account .refund-detail .flow,.retailer-account .refund-detail .flow,.customer-account .refund-detail .log,.retailer-account .refund-detail .log{border:1px solid #e1e3ea;padding:20px 0}
+.customer-account .refund-detail .flow,.retailer-account .refund-detail .flow{text-align:center;font-size:0;border-bottom:none;margin-top:30px}
+.customer-account .refund-detail .flow .step,.retailer-account .refund-detail .flow .step{display:inline-block;color:#d2d2d2;font-size:12px;line-height:4;position:relative;width:50px}
+.customer-account .refund-detail .flow .step:before,.retailer-account .refund-detail .flow .step:before{content:" ";display:block;width:30px;height:30px;border:4px solid;margin:0 auto;border-radius:15px}
+.customer-account .refund-detail .flow .step:not(:last-child):after,.retailer-account .refund-detail .flow .step:not(:last-child):after{content:" ";display:block;width:0;height:0;border-width:4px 11px;border-width:4px calc(50% - 14px);border-style:solid;position:absolute;top:11px;left:64px;left:calc(50% + 14px)}
+.customer-account .refund-detail .flow .step.active,.retailer-account .refund-detail .flow .step.active{display:inline-block;color:#007dc6}
+.customer-account .images .preview,.retailer-account .images .preview,.customer-account .images .add-image,.retailer-account .images .add-image{position:relative;width:50px;margin-right:6px;height:50px;display:inline-block;border:1px solid #ccc;color:#ccc;padding:0;line-height:2;font-size:24px;text-align:center;vertical-align:middle;cursor:pointer}
+.customer-account .images .preview:hover:after,.retailer-account .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
+.customer-account .images .preview img,.retailer-account .images .preview img{max-width:48px;max-height:48px;vertical-align:top}
+.customer-account .images .preview~.preview~.preview~.preview~.preview~.add-image,.retailer-account .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
+.customer-account .refund-detail .refund-list dt,.customer-account .refund-detail .refund-list dd,.retailer-account .refund-detail .refund-list dt,.retailer-account .refund-detail .refund-list dd{display: inline-block}
+.customer-account .refund-detail .refund-list dd,.retailer-account .refund-detail .refund-list dd{margin-bottom:none}
+.customer-account .refund-detail .refund-list h4,.retailer-account .refund-detail .refund-list h4,.retailer-account .wishlist .seller-tab .transaction-list h4{height:18px;line-height: 18px;overflow-y: hidden}
+.customer-account .refund-detail #address,.retailer-account .refund-detail #address{padding:0 10px}
+
 .sales-refund .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}

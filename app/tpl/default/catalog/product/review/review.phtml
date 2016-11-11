@@ -1,10 +1,10 @@
-<div class="reviews">
+<div class="reviews" data-part="review">
     <h4 class="title"><?php echo $this->translate('Reviews') ?></h4>
     <dl class="review-list clearfix"><?php
         $reviews = $this->getReviews();
         foreach ($reviews as $review):
             ?>
-            <dt class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+            <dt class="col-xs-12 col-sm-4 col-md-2">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
                 <table class="ratings table table-no-border text-center">
@@ -24,7 +24,7 @@
                     <?php endforeach ?>
                 </table>
             </dt>
-            <dd class="col-xs-12 col-sm-4 col-md-7 col-lg-7">
+            <dd class="col-xs-12 col-sm-4 col-md-7">
                 <p class="content"><?php echo $review->offsetGet('content') ?></p>
                 <?php if ($review->offsetGet('images')): ?>
                     <ul class="images list-inline">
@@ -37,43 +37,10 @@
                     <p class="reply"><?php echo $this->translate('Reply'), ': ', $reply ?></p>
                 <?php endif ?>
             </dd>
-            <dd class="col-xs-12 col-sm-4 col-md-3 col-lg-3 text-right">
+            <dd class="col-xs-12 col-sm-4 col-md-3 text-right">
                 <span class="date"><?php echo date('Y-m-d H:i', strtotime($review->offsetGet('created_at'))) ?></span>
             </dd>
         <?php endforeach ?></dl>
     <p class="empty-list text-center"><?php echo $this->translate('There has been no review yet.') ?></p>
     <?php echo $this->getChild('pager')->setCollection($reviews) ?>
 </div>
-<div class="reviews">
-    <h4 class="title"><?php echo $this->translate('Inquiries') ?></h4>
-    <dl class="inquiry-list clearfix"><?php
-        $reviews = $this->getInquiries();
-        foreach ($reviews as $review):
-            ?>
-            <dt class="col-xs-12 col-sm-4 col-md-3">
-                <?php $customer = $review->getCustomer() ?>
-                <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
-                <span class="date"><?php echo date('Y-m-d H:i', strtotime($review->offsetGet('created_at'))) ?></span>
-            </dt>
-            <dd class="col-xs-12 col-sm-8 col-md-9">
-                <p class="content"><?php echo $review->offsetGet('content') ?></p>
-                <p class="reply"><?php echo $review->offsetGet('reply') ?></p>
-            </dd>
-        <?php endforeach ?></dl>
-    <p class="empty-list text-center"><?php echo $this->translate('There has been no inquiry yet.') ?></p>
-    <?php echo $this->getChild('pager')->setCollection($reviews) ?>
-</div>
-<?php if ($this->canReview()): ?>
-    <div class="review-form">
-        <form action="<?php echo $this->getBaseUrl('catalog/review/save') ?>" method="post" class="form-inline">
-            
-            <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <input type="hidden" name="product_id" value="<?php echo $this->getProduct()->getId() ?>" />
-            <div class="input-box">
-                <label for="review-content" class="control-label"><?php echo $this->translate('Content') ?></label>
-                <textarea rows="4" name="content" id="review-content" class="form-control required" style="width:90%"></textarea>
-            </div>
-            <button class="btn" type="submit"><?php echo $this->translate('Submit') ?></button>
-        </form>
-    </div>
-<?php endif; ?>

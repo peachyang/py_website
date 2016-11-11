@@ -391,8 +391,8 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .review-list .table td,.retailer-account .review-list .table th{padding:0 4px}
 .retailer-account .review-list .rating .fa{color:#007DC6}
 .retailer-account .review-list .comment{color:#7e7f7f;font-size:12px}
-.retailer-account .review-list .image li{border:1px solid #eee;margin-right:5px}
-.retailer-account .review-list .image img{max-width:50px;max-height:50px}
+.retailer-account .review-list .images li{border:1px solid #eee;margin-right:5px}
+.retailer-account .review-list .images img{max-width:50px;max-height:50px}
 .retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
@@ -451,12 +451,18 @@ dl.options dd{float:left;margin-left:4px}
 .product-detail .product-attributes li{padding:0 20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .product-detail .product-attributes .label:after{content:":"}
 .product-detail #description img{max-width:100%}
+.product-detail .reviews dl{padding:10px}
+.product-detail .reviews dt,.product-detail .reviews dd{line-height:30px}
 .product-detail .reviews .empty-list{display:none;}
 .product-detail .reviews :empty+.empty-list{display:block}
 .product-detail .reviews .title{padding:0 15px;font-size:14px;line-height:40px;border:1px solid #eee;background:#f7f7f7}
-.product-detail .reviews .review-list .content,.product-detail .reviews .review-list .reply{font-size:12px;line-height:1.5}
+.product-detail .reviews .content,.product-detail .reviews .reply{font-size:12px;line-height:1.5}
 .product-detail .reviews .ratings th,.product-detail .reviews .ratings td,.product-detail .reviews .username{padding:0 5px;font-size:12px;line-height:1.5}
-.product-detail .review-form{background:#f1f1f1}
+.product-detail .reviews .images li{border:1px solid #eee;margin-right:5px}
+.product-detail .reviews .images img{max-width:50px;max-height:50px}
+.product-detail .reviews dt{clear:both}
+.product-detail .review-form{background:#f1f1f1;padding: 10px}
+.product-detail .review-form .btn{background:#007dc6;color:#ffffff;margin: 10px 45%}
 .catalog-product .customize{width:20%;overflow:hidden;float:left}
 .catalog-product .customize+.product-detail{width:80%}
 .catalog-product .customize .panel,.catalog-product .customize .panel-heading,.catalog-product .customize .panel-body,.catalog-product .customize .panel-footer{padding:0;border-radius:0;margin:0;border:none;box-shadow:none}

@@ -12,7 +12,7 @@
         $('.grid').on('click', '.filters [formaction],.sort-by a,.pager a', function () {
             var p = $(this).parents('.grid');
             if (ajax) {
-                ajax.abort();
+                ajax.readyState < 4 ? ajax = null : ajax.abort();
             }
             var u = $(p).find('.filters [formaction]').attr('formaction');
             var m = $(p).find('.filters [name]').serialize() + '&id=' + $('[type=hidden][name=id]').val();
@@ -27,7 +27,7 @@
         }).on('click', '.filters [href].btn', function () {
             var p = $(this).parents('.grid');
             if (ajax) {
-                ajax.abort();
+                ajax.readyState < 4 ? ajax = null : ajax.abort();
             }
             ajax = $.get($(this).attr('href'), 'id=' + $('[type=hidden][name=id]').val(), function (response) {
                 var fg = document.createDocumentFragment();

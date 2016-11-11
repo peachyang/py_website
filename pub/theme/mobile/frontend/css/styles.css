@@ -387,21 +387,33 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .product-detail .review-form span,.review-padding p{margin-left: 15px}
 .product-detail .tab-content #description{margin-top:60px;background:#fff}
 .product-detail .tab-content #description h3{font-size:16px;}
-.container .nav-tabs>li>a{margin-right:0;border:0}
-.container .nav-tabs>li>a:hover{border: none;background:none}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;border:0}
-.container .nav-tabs{border:none}
-.container .nav-tabs li a{line-height:30px;height:50px;text-align:center}
 .product-detail .review-form input,textarea{width:100%;border:1px solid #ccc;margin:10px 0}
-.retailer-account #modal-reply .modal-content .reply{display: inline-flex;width: 80%;}
-.retailer-account #modal-reply .modal-content{margin-top:200px}
-.retailer-account #modal-reply .modal-footer .btn{margin: 10px 10px;padding: 3px 20px;float:right}
-.retailer-account #modal-reply .modal-content li{margin:10px 0}
 .product-detail .review-form button{width:100%;background:#ff8a00;color:#fff}
 .product-detail .tab-content .tab-pane img{width:100%}
 .product-detail .info{margin-bottom:10px;background:#e7e7e7}
 .product-detail .affix{position:fixed;z-index:1001;top:0;background:#8f8f8f;color:#c8c6c6}
 .product-detail .fa{line-height:50px;color:#a7a7a7}
+.retailer-account .review-list{margin:20px 0}
+.retailer-account .review-list td>.fa{font-size:22px;color:#7e7f7f}
+.retailer-account .review-list .product-name{padding:0 4px;margin-bottom:10px}
+.retailer-account .review-list .table td,.retailer-account .review-list .table th{padding:0 4px}
+.retailer-account .review-list .rating .fa{color:#007DC6}
+.retailer-account .review-list .comment{color:#7e7f7f;font-size:12px}
+.retailer-account .review-list .images li{border:1px solid #eee;margin-right:5px}
+.retailer-account .review-list .images img{max-width:50px;max-height:50px}
+.retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
+.retailer-account .table>tbody>tr>td, .retailer-account .table>tbody>tr>th, .retailer-account .table>tfoot>tr>td, .retailer-account .table>tfoot>tr>th, .retailer-account .table>thead>tr>td, .retailer-account .table>thead>tr>th{border-top:0;vertical-align: middle}
+.retailer-account .table>tbody>.border-top{border-top:1px solid #ddd}
+.retailer-account .table>tbody>.border-bottom{border-bottom:1px solid #ddd}
+
+/*.container .nav-tabs>li>a{margin-right:0;border:0}*/
+.container .nav-tabs>li>a:hover{border: none;background:none}
+/*.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;border:0}
+.container .nav-tabs li a{line-height:30px;height:50px;text-align:center}*/
+.retailer-account #modal-reply .modal-content .reply{display: inline-flex;width: 80%;}
+.retailer-account #modal-reply .modal-content{margin-top:200px}
+.retailer-account #modal-reply .modal-footer .btn{margin: 10px 10px;padding: 3px 20px;float:right}
+.retailer-account #modal-reply .modal-content li{margin:10px 0}
 .product-info .modal-body{width:100%;overflow:hidden}
 .container .products-grid .product-list{box-shadow: 0 5px 10px rgba(0,0,0,.150);width:48%;background:#ffffff;padding: 1% 1%;margin: 1%}
 .container .products-grid .product-list .product-image{display:block;vertical-align: middle;}
@@ -451,6 +463,11 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
+.rating{position:relative;width:6em}
+.rating .fa{display:block;letter-spacing:.25em}
+.rating .fa-star{position:absolute;top:0;left:0;white-space:nowrap;overflow:hidden;max-width:100%}
+.rating .fa-star-o:before{content:"\f006\f006\f006\f006\f006"}
+.rating .fa-star:before{content:"\f005\f005\f005\f005\f005"}
 #cart{color:#696868;font-size:12px;margin-bottom:50px;overflow:hidden}
 #cart .store{background:#e7e7e7;line-height:40px;border-bottom:1px solid #e3e5eb}
 #cart .store .link{padding-right:10px}
@@ -1109,6 +1126,6 @@ overflow:hidden;}
 	right: -6px;
 }
 /* end */
-
+.retailer-account .review-list .table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{border-top: none}
 
 

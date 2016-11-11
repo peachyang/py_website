@@ -76,7 +76,7 @@ class IndexController extends ActionController
             $result = file_get_contents($file);
         } else {
             if (!is_dir(BP . 'var/captcha')) {
-                mkdir(BP . 'var/captcha', 0777);
+                mkdir(BP . 'var/captcha', 0644);
             }
             $builder = new CaptchaBuilder($phrase);
             $builder->setBackgroundColor(0xff, 0xff, 0xff);

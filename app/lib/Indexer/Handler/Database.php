@@ -150,8 +150,8 @@ class Database extends AbstractHandler
             $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) .
                     '_STORE_ID_CORE_STORE_ID FOREIGN KEY (store_id) REFERENCES core_store(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
             if ($keys) {
-                $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_ATTRIBUTE_SET_ID' . ' ON ' . $table . '(attribute_set_id);', $adapter::QUERY_MODE_EXECUTE);
-                $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) . '_ATTRIBUTE_SET_ID_EAV_ATTRIBUTE_SET_ID FOREIGN KEY (attribute_set_id) REFERENCES eav_attribute_set(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
+                $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_ATTR_SET_ID' . ' ON ' . $table . '(attribute_set_id);', $adapter::QUERY_MODE_EXECUTE);
+                $adapter->query('ALTER TABLE ' . $table . ' ADD CONSTRAINT FK_' . strtoupper($table) . '_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (attribute_set_id) REFERENCES eav_attribute_set(id) ON DELETE CASCADE ON UPDATE CASCADE;', $adapter::QUERY_MODE_EXECUTE);
             }
         }
     }

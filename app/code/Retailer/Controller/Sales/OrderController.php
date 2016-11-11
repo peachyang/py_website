@@ -5,8 +5,9 @@ namespace Seahinet\Retailer\Controller\Sales;
 use DateTime;
 use Exception;
 use Seahinet\Customer\Model\Address;
-use Seahinet\Retailer\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Retailer\Controller\AuthActionController;
+use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Sales\Model\Collection\Order as Collection;
 use Seahinet\Sales\Model\Collection\Order\Status;
 use Seahinet\Sales\Model\Order as Model;
@@ -16,98 +17,63 @@ use TCPDF;
 class OrderController extends AuthActionController
 {
 
+    use \Seahinet\Admin\Traits\Stat;
+
     public function chartAction()
     {
-        $filter = $this->getRequest()->getQuery('filter', 'd');
+        $segment = new Segment('customer');
+        $retailer = new Retailer;
+        $retailer->load($segment->get('customer'), 'customer_id');
         $collection = new Collection;
-        $collection->columns(['created_at']);
-        if ($filter === 'd') {
-            $filted = array_fill(1, 24, 0);
-        } else if ($filter === 'm') {
-            $filted = array_fill(1, 30, 0);
-        } else if ($filter === 'y') {
-            $filted = array_fill(1, 12, 0);
-        } else {
-            $filted = [];
-            $from1 = strtotime($this->getRequest()->getQuery('from1', 0));
-            $from2 = strtotime($this->getRequest()->getQuery('from2', 0));
-            $to1 = strtotime($this->getRequest()->getQuery('to1', 0));
-            $to2 = strtotime($this->getRequest()->getQuery('to2', 0));
-        }
-        $result = [
-            'amount' => 0,
-            'daily' => 0,
-            'monthly' => 0,
-            'yearly' => 0,
-            'filted' => $filted,
-            'keys' => array_keys($filted)
-        ];
-        if ($collection->count()) {
-            $current = new DateTime;
-            $keys = [];
-            foreach ($collection as $item) {
-                $time = new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-                $diff = $current->diff($time);
-                if ($diff->d < 1) {
-                    $result['daily'] ++;
-                    if ($filter === 'd') {
-                        $result['filted'][$diff->h + 1] ++;
-                    }
-                }
-                if ($diff->m < 1) {
-                    $result['monthly'] ++;
-                    if ($filter === 'm') {
-                        $result['filted'][$diff->d + 1] ++;
-                    }
-                }
-                if ($diff->y < 1) {
-                    $result['yearly'] ++;
-                    if ($filter === 'y') {
-                        $result['filted'][$diff->m + 1] ++;
-                    }
-                }
-                if ($filter === 'c') {
-                    $ts = $time->getTimestamp();
-                    $key = date('Y-m-d', $ts);
-                    $result['compared'] = [];
-                    if ($ts >= $from1 && $ts <= $to1) {
-                        if (!isset($result['filted'][$key])) {
-                            $result['filted'][$key] = 0;
-                        }
-                        $result['compared'][$key] = null;
-                        $result['filted'][$key] ++;
-                        $keys[$key] = 1;
-                    }
-                    if ($ts >= $from2 && $ts <= $to2) {
-                        if (!isset($result['compared'][$key])) {
-                            $result['compared'][$key] = 0;
-                        }
-                        $result['compared'][$key] ++;
-                        $keys[$key] = 1;
-                    }
-                }
-                $result['amount'] ++;
-            }
-            if (!empty($keys)) {
-                $result['keys'] = array_keys($keys);
-            }
-        }
+        $collection->columns(['created_at'])
+                ->where(['store_id' => $retailer->offsetGet('store_id')]);
+        return $this->stat($collection, function($item) {
+                    return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
+                });
+    }
+
+    public function amountAction()
+    {
+        $segment = new Segment('customer');
+        $retailer = new Retailer;
+        $retailer->load($segment->get('customer'), 'customer_id');
+        $collection = new Collection;
+        $collection->columns(['base_currency', 'base_total', 'base_total_refunded', 'created_at'])
+                ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
+                ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
+                ->where([
+                    'sales_order_phase.code' => 'complete',
+                    'store_id' => $retailer->offsetGet('store_id')
+        ]);
+        $currency = $this->getContainer()->get('currency');
+        $code = $currency->offsetGet('code');
+        $result = $this->stat($collection, function($item) {
+            return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
+        }, function($item) use ($code) {
+            return $item->offsetGet('base_currency') == $code ?
+                    $item->offsetGet('base_total') - $item->offsetGet('base_total_refunded') :
+                    $item->getBaseCurrency()->rconvert($item->offsetGet('base_total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('base_total_refunded'), false);
+        });
+        $result['amount'] = $currency->format($result['amount']);
+        $result['daily'] = $currency->format($result['daily']);
+        $result['monthly'] = $currency->format($result['monthly']);
+        $result['yearly'] = $currency->format($result['yearly']);
         return $result;
     }
 
     public function indexAction()
-        {
-            $root = $this->getLayout('admin_sales_order_list');
-            return $root;
+    {
+        $root = $this->getLayout('admin_sales_order_list');
+        return $root;
+    }
+
+    public function viewAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            return $this->getLayout('admin_sales_order_view');
         }
-    
-        public function viewAction()
-        {
-            if ($id = $this->getRequest()->getQuery('id')) {
-                return $this->getLayout('admin_sales_order_view');
-            }
-            return $this->notFoundAction();
-        }
+        return $this->notFoundAction();
+    }
 
     public function cancelAction()
     {

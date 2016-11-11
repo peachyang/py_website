@@ -8,7 +8,9 @@ use Seahinet\Retailer\Model\Application;
 
 abstract class AuthActionController extends ActionController
 {
+
     use \Seahinet\Lib\Traits\DB;
+
     public function dispatch($request = null, $routeMatch = null)
     {
         $options = $routeMatch->getOptions();

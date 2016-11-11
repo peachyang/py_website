@@ -285,7 +285,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account .refund-detail .refund-list dd,.retailer-account .refund-detail .refund-list dd{margin-bottom:none}
 .customer-account .refund-detail .refund-list h4,.retailer-account .refund-detail .refund-list h4,.retailer-account .wishlist .seller-tab .transaction-list h4{height:18px;line-height: 18px;overflow-y: hidden}
 .customer-account .refund-detail #address,.retailer-account .refund-detail #address{padding:0 10px}
-
+.customer-account .seller-tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;font-size: 12px}
 .sales-refund .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
@@ -667,7 +667,7 @@ overflow:hidden;}
 .retailer-account .activity_body .nav-tabs{border-bottom: 1px solid #007dc6}
 .retailer-account .wishlist  .filter-bar{margin:20px 0}
 .retailer-account .evaluation .evaluation_left{padding:5px}
-.retailer-account .btn{color: #fff;background: #007dc6;padding: 4px 15px;border: none; margin: 10px 0px;font-size:12px}
+.retailer-account .btn,.customer-account .btn{color: #fff;background: #007dc6;padding: 4px 15px;border: none; margin: 10px 0px;font-size:12px}
 .retailer-account .evaluation .evaluation_left .btn{width:25%;color: #fff;background: #007dc6;padding: 3px 15px;border: none;font-size:12px}
 .retailer-account .wishlist  .filter-bar .btn{margin:10px 0;background:#02a0e9 none repeat scroll 0 0;border-radius:3px;box-shadow:0 0 4px 1px #0286c4 inset;color:#fff;font-size:14px;line-height:1;padding:5px 10px;text-decoration:none}
 .retailer-account .fieldset .mobile-img img{width:20%}
@@ -681,7 +681,7 @@ overflow:hidden;}
 .retailer-account .account-bg{background:#e7e7e7;}
 .retailer-account .after-border{margin:20px 0}
 .retailer-account .seperation-title{margin:20px 0}
-.retailer-account .seller-tab .search .btn{margin: 0;margin-left:3px;padding:4px 12px;float:left}
+.retailer-account .seller-tab .search .btn,.customer-account .seller-tab .search .btn{margin: 0;margin-left:3px;padding:4px 12px;float:left}
 .retailer-refund .table-responsive .refund-list h4,.retailer-refund .table-responsive .refund-list dt+dd{font-size:12px}
 .retailer-refund .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{vertical-align:middle}
 .retailer-account dt,.retailer-account dd{display:inline-block}

@@ -992,6 +992,8 @@ dl.options dd{float:left;margin-left:4px}
 .layer_table .btn_sub{margin-left:120px}
 .sales-order-list .thead_body{font-size:12px;margin:10px 0}
 .retailer-product .list-info,.retailer-product .list-info .btn{font-size:12px}
+.customer-account-dashboard  .table-no-border .action{font-size:12px}
+.customer-account-dashboard  .table-no-border .shipping{font-size:12px}
 /*end*/
 .page-home .menu .menu_left{float:left}
 .page-home .menu .menu_contre{float:left;margin:0 8px}

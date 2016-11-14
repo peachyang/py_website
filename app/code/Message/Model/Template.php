@@ -24,8 +24,8 @@ class Template extends AbstractModel
         if (isset($this->storage['language_id'])) {
             $tableGateway = $this->getTableGateway('message_template_language');
             $tableGateway->delete(['template_id' => $this->getId()]);
-            foreach ($this->storage['language_id'] as $language_id) {
-                $tableGateway->insert(['template_id' => $this->getId(), 'language_id' => $language_id]);
+            foreach ($this->storage['language_id'] as $languageId) {
+                $tableGateway->insert(['template_id' => $this->getId(), 'language_id' => $languageId]);
             }
         }
         parent::afterSave();

@@ -24,8 +24,8 @@ class Block extends AbstractModel
         if (isset($this->storage['language_id'])) {
             $tableGateway = $this->getTableGateway('cms_block_language');
             $tableGateway->delete(['block_id' => $this->getId()]);
-            foreach ($this->storage['language_id'] as $language_id) {
-                $tableGateway->insert(['block_id' => $this->getId(), 'language_id' => $language_id]);
+            foreach ($this->storage['language_id'] as $languageId) {
+                $tableGateway->insert(['block_id' => $this->getId(), 'language_id' => $languageId]);
             }
         }
         parent::afterSave();

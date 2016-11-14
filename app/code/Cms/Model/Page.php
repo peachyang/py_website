@@ -25,8 +25,8 @@ class Page extends AbstractModel
         if (isset($this->storage['language_id'])) {
             $tableGateway = $this->getTableGateway('cms_page_language');
             $tableGateway->delete(['page_id' => $this->getId()]);
-            foreach ($this->storage['language_id'] as $language_id) {
-                $tableGateway->insert(['page_id' => $this->getId(), 'language_id' => $language_id]);
+            foreach ($this->storage['language_id'] as $languageId) {
+                $tableGateway->insert(['page_id' => $this->getId(), 'language_id' => $languageId]);
             }
         }
         if (isset($this->storage['category_id'])) {

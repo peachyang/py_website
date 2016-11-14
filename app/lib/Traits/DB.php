@@ -63,7 +63,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return ResultSet
      */
-    public function select($where = null, $tableGateway = null)
+    protected function select($where = null, $tableGateway = null)
     {
         $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
@@ -77,7 +77,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return int
      */
-    public function insert($set, $tableGateway = null)
+    protected function insert($set, $tableGateway = null)
     {
         $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
@@ -92,7 +92,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return int
      */
-    public function update($set, $where = null, $tableGateway = null)
+    protected function update($set, $where = null, $tableGateway = null)
     {
         $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {
@@ -107,7 +107,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return int
      */
-    public function upsert($set, $where, $tableGateway = null)
+    protected function upsert($set, $where, $tableGateway = null)
     {
         $select = $this->select($where, $tableGateway)->toArray();
         if (count($select)) {
@@ -122,7 +122,7 @@ trait DB
      * @param TableGateway $tableGateway
      * @return int
      */
-    public function delete($where, $tableGateway = null)
+    protected function delete($where, $tableGateway = null)
     {
         $tableGateway = is_null($tableGateway) ? $this->getTableGateway() : $tableGateway;
         if (!is_null($tableGateway)) {

@@ -56,8 +56,8 @@ class Category extends AbstractModel
         parent::afterSave();
         if (isset($this->storage['name'])) {
             $tableGateway = $this->getTableGateway('cms_category_language');
-            foreach ((array) $this->storage['name'] as $language_id => $name) {
-                $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
+            foreach ((array) $this->storage['name'] as $languageId => $name) {
+                $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $languageId], $tableGateway);
             }
         }
         $this->commit();

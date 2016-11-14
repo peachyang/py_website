@@ -405,6 +405,15 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account-dashboard .panel-stat .panel-body .row .detail li{display:table-row}
 .retailer-account-dashboard .panel-stat .panel-body .row .detail .label{display:table-cell;text-align:right;padding-right:4px}
 .retailer-account-dashboard .panel-stat .panel-body .row .detail .data{display:table-cell;text-align:left;padding-left:4px}
+.retailer-category .page-content>.buttons-set{margin:20px 0}
+.retailer-category .categories-list .category-name{width:70%;float:left}
+.retailer-category .categories-list>li>.category-name{cursor:pointer}
+.retailer-category .categories-list>li>.category-name:before{content:"\f054";display:inline-block;width:1.25em;text-align:center;vertical-align:1px;font:normal normal normal 14px/1 FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.retailer-category .categories-list>li>.category-name.active:before{content:"\f078"}
+.retailer-category .categories-list .action{width:30%;float:right;text-align:right}
+.retailer-category .categories-list .action .move{cursor:move}
+.retailer-category .categories-list .children{clear:both}
+.retailer-category .categories-list .ui-sortable-placeholder{display:block;width:100%;height:30px;border:1px dashed #ccc}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -647,35 +656,12 @@ dl.options dd{float:left;margin-left:4px}
 .border-right{border-right:1px solid #ececec}
 .font-12{font-size:12px!important}
 .word-break-all{word-break:break-all}
-.shop_classify{margin:35px 0}
-.shop_classify button{padding:2px}
-.shop_classify .check{margin-right:5px}
-.shop_classify .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
-.shop_classify .fa-plus{padding:0 8px}
 .mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
-.shop_classify .add_class{padding-right:5px;}
-.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 6px 16px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
 .Brand_name{margin:10px 0}
-.mg-bottom-40 .category_table{border: 1px solid #eee;}
-.mg-bottom-40 .category_table .table_head{background:#fbfbfb}
-.mg-bottom-40 .category_table .table_head th{padding:5px 0}
-.retailer-account .wishlist .checke{padding:5px 0}
-.mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
 .evaluate .down_icon i{font-size:18px;color:#c1c1c1;margin: 0 10px 0 20px;}
-.mg-bottom-40 .class_menu{display:inline-table}
-.mg-bottom-40 .class_menu dt{padding:5px 30px}
-.mg-bottom-40 .class_menu .dl_border{border:1px solid #eee;}
-.mg-bottom-40 .class_menu .border_left{border-left: 1px solid #eee;height: 8%;position: absolute;left: 105px;}
-.mg-bottom-40 .class_menu .border_bt{width: 29px;height: 1px;background: #eee;position: absolute;left: 105px;bottom: 177px;right: 0;}
-.mg-bottom-40 .class_menu dd{padding:5px 10px 5px 5px; }
-.mg-bottom-40 .dd_left{margin:15px 0 0 40px}
-.mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
-.mg-bottom-40 .class_menu .dd_content{position: relative;}
-.mg-bottom-40 .class_menu .border_lf{border-left: 1px solid #eee;position: absolute;width: 1px;height: 26px;bottom:12px}
-.mg-bottom-40 .class_menu .border_bt{width: 40px;height: 1px;background: #eee;position: absolute;top: 20px;left:0}
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,

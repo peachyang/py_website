@@ -87,19 +87,6 @@ class StoreController extends AuthActionController
     }
 
     /**
-     * cotegoryAction  
-     * Show category management view
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function cotegoryAction()
-    {
-        $root = $this->getLayout('retailer_store_category');
-        return $root;
-    }
-
-    /**
      * brandAction  
      * Show brand management view
      * @access public 

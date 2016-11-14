@@ -2,61 +2,127 @@
 $orders = $this->getOrders();
 ?>
 <div id="Has-sold" class="seller-tab">
-    <div class="tab-nav">
-        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
-            <li class="active col-xs-3 col-sm-3">
-                <a href="#all" data-toggle="tab">
-                    全部
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#delivery" data-toggle="tab">
-                    待付款
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#payment" data-toggle="tab">
-                    待发货
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#refund" data-toggle="tab">
-                    待收货
-                </a>
-            </li>
-        </ul>
-    </div>	
+    <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12">
+        <li class="active col-xs-3 col-sm-3">
+            <a href="#all" data-toggle="tab">
+                <?php echo $this->translate('All'); ?>(<span><?php echo count($orders); ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="#delivery" data-toggle="tab">
+                <?php echo $this->translate('Non-payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="#payment" data-toggle="tab">
+                <?php echo $this->translate('Non-receiving'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="#refund" data-toggle="tab">
+                <?php echo $this->translate('Non-evaluation'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+            </a>
+        </li>
+    </ul>	
     <div class="search col-xs-12 col-sm-12 padding-5" >
-        <div class="search_center">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
-        </div>
+        <form class="form-inline" action="" method="get" novalidate = "novalidate">
+            <span class="fa fa-search" aria-hidden="true"></span>
+            <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+            <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
+        </form>
     </div>
     <div id="Product-details" class="tab-content">
         <div class="tab-pane fade in active" id="all">
-            <div class="menu-ctn padding-5">
-                <ul  class="col-xs-12 col-sm-12 title-nav  name">
-                    <li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
-                    <li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
-                </ul>
-                <ul class="col-xs-12 col-sm-12 inline bt">
-                    <li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
-                    <li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-                    <li class="col-xs-3  col-sm-3 text-right">
-                        <span class="price ">￥198.00</span>
-                        <span>x1</span>
-                        <span class=" color-blue font-14">已付款</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="bt-link">
-                <ul class="col-xs-12 col-sm-12 inline text-center operation ">
-                    <li class="col-xs-2 col-sm-6" ></li>
-                    <li class="col-xs-2 col-sm-6"></li>	
-                    <li class="col-xs-4 col-sm-6" data-toggle="modal" data-target="#modal-refund"><span><a href="">退换申请</a></span></li>
-                    <li class="col-xs-4 col-sm-6"><a href="">查看详情</a></li>		
-                </ul>	
-            </div>
+            <table class="table">
+                <?php if (count($orders)): ?>
+                    <tbody>
+                        <?php foreach ($orders as $order): ?>  
+                            <tr class="thead_title">
+                                <td colspan="2" class="text-left"><?php echo $order->getStore()->offsetGet('name') ?></td>
+                                <td colspan="2" class="text-nowrap text-right">
+                                    <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
+                                    <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                                </td>
+                            </tr>
+                            <?php
+                            $items = $order->getItems();
+                            $flag = true;
+                            foreach ($items as $item):
+                                $product = $item['product'];
+                                $thumbnail = $product->getThumbnail();
+                                ?>
+                                <tr class="thead_body">
+                                    <td>
+                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                                    </td>
+                                    <td class="text-left text-vtop col-xs-3 col-sm-3" title="<?php echo $product->offsetGet('name') ?>">
+                                        <h4 class="product-name font-12"><?php echo $product->offsetGet('name') ?></h4>
+                                        <?php
+                                        $options = json_decode($item['options'], true);
+                                        if ($item['product_id'] && count($options)):
+                                            ?>
+                                            <dl class="options">
+                                                <?php
+                                                foreach ($product->getOptions() as $option):
+                                                    if (isset($options[$option->getId()])):
+                                                        ?>
+                                                        <dt><?php echo $option['title'] ?></dt>
+                                                        <dd>
+                                                            <?php
+                                                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                                    $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                            ?>
+                                                        </dd>
+                                                        <?php
+                                                    endif;
+                                                endforeach;
+                                                ?>
+                                            </dl>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <span class="price"><?php echo $order->getCurrency()->format($item->offsetGet('price')) ?></span>
+                                        <span><?php echo (float) $item->offsetGet('qty') ?></span>
+                                    <td>
+                                        <?php
+                                        if ($flag):
+                                            ?>
+                                            <?php echo $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?>
+                                            <?php
+                                            $flag = FALSE;
+                                        endif;
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <tr class="sale_status  padding-5 text-right">
+                                <td class="2">
+                                    <?php if ($order->canRefund()): ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Refund Application') ?></a>
+                                    <?php endif ?>
+                                </td>
+                                <td rowspan="<?php echo count($items) ?>" class="action">
+                                    <?php if ($order->canReview()): ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Add Review') ?></a>
+                                    <?php endif ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('View Details') ?></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <?php echo $this->getChild('pager')->setCollection($orders) ?>
+                            </td>
+                        </tr>
+                    </tfoot>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6" class="text-center"><?php echo $this->translate('You have placed no orders.') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </table>
         </div>
         <div class="tab-pane fade " id="delivery">
             2
@@ -68,4 +134,77 @@ $orders = $this->getOrders();
             4
         </div>
     </div>
+</div>
+
+<div id="Has-sold" class="seller-tab">
+    <?php if (count($orders)): ?>
+        <div class="tab-nav">
+            <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+                <li class="active col-xs-3 col-sm-3">
+                    <a href="#all" data-toggle="tab">
+                        全部
+                    </a>
+                </li>
+                <li class="col-xs-3 col-sm-3">
+                    <a href="#delivery" data-toggle="tab">
+                        待付款
+                    </a>
+                </li>
+                <li class="col-xs-3 col-sm-3">
+                    <a href="#payment" data-toggle="tab">
+                        待发货
+                    </a>
+                </li>
+                <li class="col-xs-3 col-sm-3">
+                    <a href="#refund" data-toggle="tab">
+                        待收货
+                    </a>
+                </li>
+            </ul>
+        </div>	
+        <div class="search col-xs-12 col-sm-12 padding-5" >
+            <div class="search_center">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+            </div>
+        </div>
+        <div id="Product-details" class="tab-content">
+            <div class="tab-pane fade in active" id="all">
+                <div class="menu-ctn padding-5">
+                    <ul  class="col-xs-12 col-sm-12 title-nav  name">
+                        <li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
+                        <li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
+                    </ul>
+                    <ul class="col-xs-12 col-sm-12 inline bt">
+                        <li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
+                        <li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+                        <li class="col-xs-3  col-sm-3 text-right">
+                            <span class="price ">￥198.00</span>
+                            <span>x1</span>
+                            <span class=" color-blue font-14">已付款</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bt-link">
+                    <ul class="col-xs-12 col-sm-12 inline text-center operation ">
+                        <li class="col-xs-2 col-sm-6" ></li>
+                        <li class="col-xs-2 col-sm-6"></li>	
+                        <li class="col-xs-4 col-sm-6" data-toggle="modal" data-target="#modal-refund"><span><a href="">退换申请</a></span></li>
+                        <li class="col-xs-4 col-sm-6"><a href="">查看详情</a></li>		
+                    </ul>	
+                </div>
+            </div>
+            <div class="tab-pane fade " id="delivery">
+                2
+            </div>
+            <div class="tab-pane fade" id="payment">
+                3
+            </div>
+            <div class="tab-pane fade " id="refund">
+                4
+            </div>
+        </div>
+        <?php
+    endif;
+    ?>
 </div>

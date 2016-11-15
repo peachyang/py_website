@@ -10,17 +10,17 @@ $orders = $this->getOrders();
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#delivery" data-toggle="tab">
-                <?php echo $this->translate('Non-payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#payment" data-toggle="tab">
-                <?php echo $this->translate('Non-receiving'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#refund" data-toggle="tab">
-                <?php echo $this->translate('Non-evaluation'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+                <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
             </a>
         </li>
     </ul>	

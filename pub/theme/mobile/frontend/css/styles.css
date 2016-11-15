@@ -485,7 +485,9 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
-.rating{position:relative;width:6em}
+retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
+.retailer-account .profile .info p{margin:10px 0}
+.retailer-account .profile .info p>a{margin-right: 10px}
 .rating .fa{display:block;letter-spacing:.25em}
 .rating .fa-star{position:absolute;top:0;left:0;white-space:nowrap;overflow:hidden;max-width:100%}
 .rating .fa-star-o:before{content:"\f006\f006\f006\f006\f006"}
@@ -725,7 +727,7 @@ overflow:hidden;}
 .seller-tab .search input,.sales-order-list .seller-tab .search input{border:1px solid #ccc;line-height:2}
 .seller-tab .search input[value],.sales-order-list .seller-tab .search input[value]{padding-left:40px;color:#ccc;font-size:12px}
 .seller-tab .tab-content .inline li, .wishlist .after-sales .inline li,.sales-order-list .seller-tab .tab-content .inline li{line-height: 20px;}
-.wishlist .title{padding:5px;font-size:15px;margin:5px 0 20px 0;    border-bottom: 1px solid #eee;}
+.wishlist .title{padding:5px;font-size:15px;line-height: 30px}
 .wishlist .bt{border-top:1px solid #eee;}
 .retailer-sales-invoice-edit .col-main{background:#fff}
 .sales-order-invoice .container{padding:0 3px}
@@ -761,9 +763,9 @@ overflow:hidden;}
 .wishlist .seller-tab .tab-content .title-nav li{padding:10px 0 0 0}
 .wishlist .seller-tab .tab-content .title-nav {border-bottom:1px solid #eee}
 .retailer-sales-invoice-edit{background:#eee}
-.retailer-sales-invoice-edit .view .panel-body{font-size:12px}
-.retailer-sales-invoice-edit .view .panel-heading{padding:6px 15px}
-.retailer-sales-invoice-edit .view .panel{margin-bottom:5px}s
+.retailer-sales-invoice-edit .view .panel,.retailer-sales-shipment-edit .view .panel{margin-bottom: 0}
+.retailer-sales-invoice-edit .view .panel-body{}
+.retailer-sales-invoice-edit .view .panel-heading,.retailer-sales-shipment-edit .view .panel-heading{padding:10px 15px;background:#f5f5f5}
 .retailer-product .container .menu-ctn .name li{padding:0 0}
 .customer-account-coupon .coupon .item .content{padding:10px 0;color:#dcf0fb;font-size:12px;line-height:18px}
 .coupon .item .content .inner{padding: 0 15px 12px; background: url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top; background-repeat: repeat-y; background-color: #007dc6;}
@@ -1160,5 +1162,7 @@ overflow:hidden;}
 }
 /* end */
 .retailer-account .review-list .table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{border-top: none}
+.retailer-review .nav-tabs>li{margin-right:10px}
+.retailer-review .nav-tabs>li.active>a,retailer-review .nav-tabs>li.active>a:focus,retailer-review .nav-tabs>li.active>a:hover{cursor: default;border: none; margin-right: 10px;border-bottom-color: 1px solid #007ecc;font-size:14px;}
 
 

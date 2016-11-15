@@ -37,9 +37,9 @@ retailer_account:
                             -
                                 method: addGroup
                                 params: [{label:'Store Management',priority:20,icon:'bank'}]
-                            -                                   
-                                method: addGroup
-                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
+#                            -
+#                                method: addGroup
+#                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/transaction/product/',label:'Sold Product',priority:1,group:'Transaction Management'}]
@@ -75,25 +75,22 @@ retailer_account:
                                 params: [{link:'retailer/resource/',label:'Resource Management',priority:11,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/mobile/',label:'Mobile Phone Store',priority:12,group:'Store Management'}]
-                            -
-                                method: addLink
                                 params: [{link:'retailer/category/',label:'Category Management',priority:13,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/setting/',label:'Store Settings',priority:14,group:'Store Management'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:15,group:'Store Management'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:16,group:'Marketing Center'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:17,group:'Marketing Center'}] 
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:18,group:'Marketing Center'}] 
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:15,group:'Store Management'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:16,group:'Marketing Center'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:17,group:'Marketing Center'}] 
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:18,group:'Marketing Center'}] 
                     messages:
                         action:
                             -

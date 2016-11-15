@@ -7,7 +7,7 @@ $sales_status = $this->getAllSalesStatus();
 <div class="wishlist">
     <h3 class="title"><?php echo $this->translate($subtitle); ?></h3>
     <div id="Has-sold" class="seller-tab">
-        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 text-center">
             <li class="active col-xs-3 col-sm-3">
                 <a href="#all" data-toggle="tab">
                     <?php echo $this->translate('All'); ?>(<span><?php echo count($transactions); ?></span>)
@@ -15,17 +15,17 @@ $sales_status = $this->getAllSalesStatus();
             </li>
             <li class="col-xs-3 col-sm-3">
                 <a href="#delivery" data-toggle="tab">
-                    <?php echo $this->translate('Non-payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                    <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
                 </a>
             </li>
             <li class="col-xs-3 col-sm-3">
                 <a href="#payment" data-toggle="tab">
-                    <?php echo $this->translate('Non-receiving'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                    <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
                 </a>
             </li>
             <li class="col-xs-3 col-sm-3">
                 <a href="#refund" data-toggle="tab">
-                    <?php echo $this->translate('Non-evaluation'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+                    <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
                 </a>
             </li>
         </ul>

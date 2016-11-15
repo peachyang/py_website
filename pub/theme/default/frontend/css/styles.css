@@ -406,14 +406,16 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account-dashboard .panel-stat .panel-body .row .detail .label{display:table-cell;text-align:right;padding-right:4px}
 .retailer-account-dashboard .panel-stat .panel-body .row .detail .data{display:table-cell;text-align:left;padding-left:4px}
 .retailer-category .page-content>.buttons-set{margin:20px 0}
-.retailer-category .categories-list .category-name{width:70%;float:left}
+.retailer-category .categories-list .category-name{width:70%;float:left;line-height:30px}
 .retailer-category .categories-list>li>.category-name{cursor:pointer}
 .retailer-category .categories-list>li>.category-name:before{content:"\f054";display:inline-block;width:1.25em;text-align:center;vertical-align:1px;font:normal normal normal 14px/1 FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .retailer-category .categories-list>li>.category-name.active:before{content:"\f078"}
-.retailer-category .categories-list .action{width:30%;float:right;text-align:right}
+.retailer-category .categories-list .action{width:30%;float:right;text-align:right;line-height:30px}
 .retailer-category .categories-list .action .move{cursor:move}
-.retailer-category .categories-list .children{clear:both}
+.retailer-category .categories-list .children{clear:both;padding-left:30px}
+.retailer-category .categories-list .children .category-name:before{content:" ";display:inline-block;width:30px;height:15px;vertical-align:top;border-left:1px solid;border-bottom:1px solid}
 .retailer-category .categories-list .ui-sortable-placeholder{display:block;width:100%;height:30px;border:1px dashed #ccc}
+
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -618,36 +620,6 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-30{margin-bottom:30px}
 .mg-bottom-40{margin-bottom:40px}
 /*activity*/
-.activity_body .enroll button{font-size:12px;border: none;padding: 5px 15px;}
-.activity_body .enroll .whole{background: #007dc6;color: #fff;margin:0 15px 0 0}
-.activity_body .activity_table table{border:1px solid #eee;padding:0 20px}
-.activity_body .activity_table table .margin{padding-left:15px}
-.activity_body .enroll .filter{background: #b8e5ff;color: #646565;}
-.activity_body .activity_table thead{border-bottom:1px solid #eee;background: #fbfbfb;}
-.activity_body .activity_table tr{border-top:1px solid #eee;}
-.activity_body .activity_table td{border-top:none;padding:30px 0}
-.activity_body .activity_list {margin:40px 0}
-.activity_body .activity_table th{padding:10px 0}
-.activity_body .enroll{margin:20px 0;}
-.activity_body .activity_table .link{background: #007dc6;padding: 5px 20px;color: #fff;font-size: 13px;}
-.activity_body .nav-tabs > li.active > a{color:#007dc6;}
-.activity_body .nav-tabs{border-bottom:1px solid #5bc4fc}
-.activity_body .nav-tabs > li > a{color: #000;font-weight: 700;font-size: 14px;}
-.Promotion{margin:20px 0}
-
-.evaluation {margin: 40px 0 20px 0;}
-.evaluation_left{display:inline-block;margin:0 15px 10px 0;}
-.evaluation .evaluation_left .btn{margin-left:34px}
-
-.activity_body .activity{margin:30px 0}
-.retailer-account #modal-reply .modal-content textarea{width: 90%;}
-.retailer-account #modal-reply .modal-content li{margin:10px 0}
-.activity_body .activity_search div{margin:0 10px;display: inline-table;}
-.retailer-account .activity_body .activity_search .button_ctn{margin:40px 0;}
-.retailer-account .activity_body .activity_search .btn{background: #007dc6; color: #fff; padding: 5px 30px; border-radius: 0;margin:0 10px} 
-.retailer-account .activity_body .activity_search .btn-2{background: #fff; border: 1px solid #ccc;padding: 5px 30px;margin:0 10px}
-.retailer-account .activity_body .activity_search .padding-0-5 input,.retailer-account .activity_body .activity_search select{display: block; height: 34px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 0; box-shadow: inset 0 1px 1px rgba(0,0,0,.075); transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;}
-.activity_body #activity{margin:30px 0}
 .sale{margin:20px 0}
 .shop_img{margin:20px 0}
 .shop_img .shop_button button{border-radius:0;margin:0 10px 10px 0}

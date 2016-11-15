@@ -66,7 +66,7 @@ retailer_account:
                                 params: [{link:'retailer/store/view/',label:'View Store',priority:8,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/freight/',label:'Freight Setting',priority:9,group:'Store Management'}]
+                                params: [{link:'retailer/shipping/',label:'Shipping Method',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:10,group:'Store Management'}]
@@ -544,7 +544,7 @@ retailer_brand:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/brand
-freight_setting:
+retailer_shipping:
     update: retailer_account
     root:
         children:
@@ -552,12 +552,18 @@ freight_setting:
                 action:
                     -
                         method: setTitle
-                        params: Freight Setting
+                        params: Shipping Method
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Shipping Method
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/freight
+                        type: Seahinet\Retailer\ViewModel\Shipping
+                        template: retailer/store/shipping
 retailer_activity:
     update: retailer_account
     root:

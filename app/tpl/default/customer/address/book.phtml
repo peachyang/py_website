@@ -25,7 +25,7 @@ $attributes = $this->getAddressAttribute();
                 <td><?php echo $address['address'] ?></td>
                 <td><?php echo $address['postcode'] ?></td>
                 <td class="modify_book">
-                    <a href="javascript:void(0);" data-info='<?php echo json_encode($address) ?>' data-toggle="modal" data-target="#modal-address">
+                    <a href="#modal-address" data-info='<?php echo json_encode($address) ?>' data-toggle="modal">
                         <?php echo $this->translate('Modify') ?>
                     </a>
                     /

@@ -68,7 +68,12 @@
                             calcSize(s / 1024, u + 1) :
                             s.toFixed(2) + unit[u];
                 };
-                $('#modal-upload').on('click', '.upload-remove', function () {
+                $('#modal-upload').on('show.bs.modal', function (e) {
+                    var t = $(e.relatedTarget).parents('.resource-explorer').first().find('.nav a.active');
+                    $('.nav a.active', this).removeClass('active');
+                    $('.folder-name', this).text($(t).text());
+                    $('#upload-form [name=category_id]', this).val($(t).data('id'));
+                }).on('click', '.upload-remove', function () {
                     $(this).parents('tr.item').remove();
                 });
                 $("#modal-upload #upload-element").fileupload({

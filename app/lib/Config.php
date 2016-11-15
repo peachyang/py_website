@@ -125,7 +125,7 @@ final class Config extends ArrayObject implements Singleton
         }
     }
 
-    private function getConfigByScope(array $array)
+    private function getConfigByScope(array $array, $scope = null)
     {
         if (empty($this->keys)) {
             $this->keys = [
@@ -134,24 +134,23 @@ final class Config extends ArrayObject implements Singleton
                 'm' => 'm' . Bootstrap::getMerchant()->getId()
             ];
         }
-        $result = $array[$this->keys['s']] ?? ($array[$this->keys['m']] ?? $array);
-        return $result;
+        return is_null($scope) ? ($array[$this->keys['s']] ?? ($array[$this->keys['m']] ?? $array)) : ($array[$scope] ?? ($array[$this->keys['m']] ?? $array));
     }
 
-    private function getConfigByPath($path, $config = null)
+    private function getConfigByPath($path, $config = null, $scope = null)
     {
         if (count($path) > 1) {
             $key = array_shift($path);
             $config = is_null($config) ? $this->offsetGet($key) :
                     (isset($config[$key]) ? $config[$key] : null);
             if (!is_null($config)) {
-                return $this->getConfigByPath($path, $config);
+                return $this->getConfigByPath($path, $config, $scope);
             }
         } else if (isset($config[$path[0]])) {
-            return $this->getConfigByScope($config[$path[0]]);
+            return $this->getConfigByScope($config[$path[0]], $scope);
         } else if (strpos($path[0], '[]')) {
             $path[0] = str_replace('[]', '', $path[0]);
-            return explode(',', $this->getConfigByPath($path, $config));
+            return explode(',', $this->getConfigByPath($path, $config, $scope));
         }
         return null;
     }
@@ -176,7 +175,10 @@ final class Config extends ArrayObject implements Singleton
             return $this->cache[$key];
         } else if (strpos($key, '/')) {
             $path = explode('/', trim($key, '/'));
-            $result = $this->getConfigByPath($path);
+            if (preg_match('/^[slm]\d+$/', $path[0])) {
+                $scope = array_shift($path);
+            }
+            $result = $this->getConfigByPath($path, null, $scope ?? null);
             if (is_null($result)) {
                 $result = $this->getDefaultConfig($path, $this->storage['system']);
             }

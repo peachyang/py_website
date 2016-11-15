@@ -112,6 +112,9 @@
                     var info = $(e.relatedTarget).data('info');
                     if (typeof info === 'string') {
                         info = eval('(' + info + ')');
+                        if (typeof info === 'string') {
+                            info = eval('(' + info + ')');
+                        }
                     }
                     $(this).find('form').trigger('reset');
                     for (var i in info) {

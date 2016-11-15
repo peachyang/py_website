@@ -3,7 +3,68 @@ $order = $this->getVariable('order');
 $creditmemo = $this->getVariable('model');
 $currency = $order->getCurrency();
 ?>
-<div class="clearfix">
+<div id="Product-details" class="tab-content font-12">
+    <div class="search col-xs-12 col-sm-12">
+        <form class="form-inline" action="" method="get" novalidate = "novalidate">
+            <span class="fa fa-search" aria-hidden="true"></span>
+            <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+            <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
+        </form>
+    </div>
+    <div class="tab-pane fade in active" id="all">
+        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
+            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()->offsetGet('name') ?></li>
+            <li class="col-xs-7 col-sm-7 text-right font-14">
+                <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
+                <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+            </li>	
+        </ul>
+        <table class="table inline bt padding-5">
+            <?php
+            foreach ($creditmemo->getItems() as $item):
+                $product = $item['product'];
+                $thumbnail = $product->getThumbnail();
+                ?>
+                <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
+                    <td class="col-xs-2 col-sm-2">
+                        <a href="<?php echo $product->getUrl() ?>">
+                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                        </a>
+                    </td>
+                    <td class="col-xs-6 col-sm-6 text-left" title="<?php echo $product->offsetGet('name') ?>">
+                        <h4 class="font-12"><a href="<?php echo $product->getUrl() ?>">
+                                <?php echo $item['product_name'] ?>
+                            </a>
+                        </h4>
+                        <?php
+                        $options = json_decode($item['options'], true);
+                        if ($item['product_id'] && count($options)):
+                            ?>
+                            <dl class="options">
+                                <?php
+                                foreach ($item['product']->getOptions() as $option):
+                                    if (isset($options[$option->getId()])):
+                                        ?>
+                                        <dt><?php echo $option['title'] ?></dt>
+                                        <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd>
+                                        <?php
+                                    endif;
+                                endforeach;
+                                ?>
+                            </dl>
+                        <?php endif ?>
+                    </td>
+                    <td class="col-xs-1 col-sm-1 text-right">
+                        <span class="price"><?php echo $currency->format($item['price']) ?></span>
+                        <span><?php echo (float) $item['qty'] ?></span>                        
+                    </td>
+                    <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
+                        <span class="color-blue"><?php echo $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?></span>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><?php echo $this->translate('Credit Memo Infomation', [], 'sales') ?></h4>
@@ -29,87 +90,6 @@ $currency = $order->getCurrency();
         </div>
         <div class="panel-body">
             <?php echo $creditmemo['comment'] ?>
-        </div>
-    </div>
-    <div class="panel panel-default wide">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Product(s)') ?></h4>
-        </div>
-        <div class="panel-body grid table-responsive">
-            <table class="table table-hover table-striped table-no-border">
-                <thead class="sort-by">
-                    <tr>
-                        <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Price', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Qty', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Total', [], 'sales') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($creditmemo->getItems() as $item):
-                        $product = $item['product'];
-                        $thumbnail = $product->getThumbnail();
-                        ?>
-                        <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
-                            <td>
-                                <a href="<?php echo $product->getUrl() ?>">
-                                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" width="100" alt="<?php echo $item['product_name'] ?>" />
-                                </a>
-                            </td>
-                            <td>
-                                <a href="<?php echo $product->getUrl() ?>">
-                                    <?php echo $item['product_name'] ?>
-                                </a>
-                                <?php
-                                $options = json_decode($item['options'], true);
-                                if ($item['product_id'] && count($options)):
-                                    ?>
-                                    <dl class="options">
-                                        <?php
-                                        foreach ($item['product']->getOptions() as $option):
-                                            if (isset($options[$option->getId()])):
-                                                ?>
-                                                <dt><?php echo $option['title'] ?></dt>
-                                                <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd>
-                                                <?php
-                                            endif;
-                                        endforeach;
-                                        ?>
-                                    </dl>
-                                <?php endif ?>
-                            </td>
-                            <td><?php echo $item['sku'] ?></td>
-                            <td><?php echo $currency->format($item['price']) ?></td>
-                            <td><?php echo (float) $item['qty'] ?></td>
-                            <td><?php echo $currency->format($item['total']) ?></td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6">
-                            <dl class="dl-horizontal pull-right">
-                                <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($creditmemo->offsetGet('subtotal')) ?></dd>
-                                <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($creditmemo->offsetGet('shipping')) ?></dd>
-                                <?php if ((float) $creditmemo->offsetGet('tax')): ?>
-                                    <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
-                                    <dd><?php echo $currency->format($creditmemo->offsetGet('tax')) ?></dd>
-                                <?php endif; ?>
-                                <?php if ((float) $creditmemo->offsetGet('discount')): ?>
-                                    <dt><?php echo $this->translate('Discount', [], 'sales') ?></dt>
-                                    <dd><?php echo $currency->convert($creditmemo->offsetGet('discount'), true) ?></dd>
-                                <?php endif; ?>
-                                <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
-                                <dd><?php echo $currency->format($creditmemo->offsetGet('total')) ?></dd>
-                            </dl>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
     </div>
 </div>

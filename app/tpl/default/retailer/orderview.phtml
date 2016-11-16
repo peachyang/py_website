@@ -1,7 +1,6 @@
 <?php
-    $transactions = $this->getRetailerTransaction();
-    $transaction = isset($transactions[0]) ? $transactions[0] : null;
-    $order = $this->getOrder($transaction['id']);
+$order = $this->getOrder($this->getQuery('id'));
+$items = $order->getItems();
 ?>
 <div class="container">
     <div class="col-md-9">
@@ -9,20 +8,16 @@
             <div class="bd">
                 <div class="trade-status">
                     <strong>当前订单状态：<span class="wait">
-                        <?php echo $this->translate($transaction['status_name']); ?>
-                    </span>
+                            <?php echo $this->translate($order->getStatus()['name']); ?>
+                        </span>
                     </strong>
                 </div>
                 <div class="tbnotes" style="display: none;">
-                <span>提醒您</span>
-                <p>交易已成功，如果买家提出售后要求，请积极与买家协商，做好售后服务。</p>
+                    <span>提醒您</span>
+                    <p>交易已成功，如果买家提出售后要求，请积极与买家协商，做好售后服务。</p>
                 </div>
             </div>
         </div>
-        
-        <?php
-            if($transaction){
-        ?>
         <div class="tabs-container">
             <ul class="tabs-nav">
                 <li class="current"><a name="tab0">订单信息</a></li>
@@ -37,14 +32,14 @@
                                     <th colspan="6"><h4>买家信息</h4></th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">昵称：<span class="nickname"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></span></td>
-                                    <td colspan="4">邮件：<span><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->email; ?></span></td>
+                                    <td colspan="2">昵称：<span class="nickname"><?php echo $customer = $this->getCustomerByID($order['customer_id'])->username; ?></span></td>
+                                    <td colspan="4">邮件：<span><?php echo $customer = $this->getCustomerByID($order['customer_id'])->email; ?></span></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                    <?php
-                                    echo nl2br($transaction['billing_address']);
-                                    ?>
+                                        <?php
+                                        echo nl2br($order['billing_address']);
+                                        ?>
                                     </td>
                                 </tr>
                             </tbody>
@@ -61,129 +56,120 @@
                                     <th class="order-price last">商品总价(元)</th>
                                 </tr>
                                 <?php
-                                    foreach($transaction['items'] as $key => $item){
-                                        $thumbnail =  $this->getProduct($item['product_id'])->getThumbnail();
-                                ?>
-                                <tr class="order-item">
-                                    <td class="item border-right">
-                                        <div class="pic-info">
-                                            <div class="pic s50">
-                                                <a target="_blank" href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
-                                                <?php if (strpos($thumbnail, 'http') === false){ ?>
-                                                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
-                                                <?php }else{ ?>
-                                                    <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
-                                                <?php } ?>
-                                                </a>
+                                foreach ($items as $key => $item) {
+                                    $thumbnail = $this->getProduct($item['product_id'])->getThumbnail();
+                                    ?>
+                                    <tr class="order-item">
+                                        <td class="item border-right">
+                                            <div class="pic-info">
+                                                <div class="pic s50">
+                                                    <a target="_blank" href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
+                                                        <?php if (strpos($thumbnail, 'http') === false) { ?>
+                                                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
+                                                        <?php } else { ?>
+                                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" />
+                                                        <?php } ?>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="txt-info">
-                                            <div class="desc">
-                                                <span class="name"><a target="_blank" title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></span>
+                                            <div class="txt-info">
+                                                <div class="desc">
+                                                    <span class="name"><a target="_blank" title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="options border-right">
-                                    <?php
-                                        $options = $this->getProductOptions($item['product_id'], $item['options']);
-                                        if(!empty($options)){
-                                            foreach($options as $oitem){
-                                                echo $oitem['title'] . ' : ' . $oitem['option_value'].'<br />';
+                                        </td>
+                                        <td class="options border-right">
+                                            <?php
+                                            $options = $this->getProductOptions($item['product_id'], $item['options']);
+                                            if (!empty($options)) {
+                                                foreach ($options as $oitem) {
+                                                    echo $oitem['title'] . ' : ' . $oitem['option_value'] . '<br />';
+                                                }
+                                            } else {
+                                                echo '';
                                             }
-                                        }else{
-                                            echo '';
+                                            ?>
+                                        </td>
+                                        <td class="price border-right"><?php echo $this->getCurrency()->format($item['price']); ?></td>
+                                        <td class="num border-right"><?php echo $this->translate('%d', [$item['qty']]); ?></td>
+                                        <td class="discount border-right">
+                                            <ul>
+                                                <li>(未知)</li>
+                                            </ul>
+                                        </td>
+                                        <?php
+                                        if ($key == 0) {
+                                            ?>
+                                            <td rowspan="<?php echo count($items); ?>" class="order-price border-right"><?php echo $this->getCurrency()->format($order['total']); ?><br />
+                                                <span>满减包邮(未知)</span><br />
+                                                <span>(快递: <?php echo $this->getCurrency()->format($order['shipping']); ?>)</span>
+                                            </td>
+                                            <?php
                                         }
-                                    ?>
-                                    </td>
-                                    <td class="price border-right"><?php echo $this->getCurrency()->format($item['price']); ?></td>
-                                    <td class="num border-right"><?php echo $this->translate('%d', [$item['qty']]); ?></td>
-                                    <td class="discount border-right">
-                                        <ul>
-                                        <li>(未知)</li>
-                                        </ul>
-                                    </td>
+                                        ?>
+                                    </tr>
                                     <?php
-                                        if($key == 0){
-                                    ?>
-                                    <td rowspan="<?php echo count($transaction['items']); ?>" class="order-price border-right"><?php echo $this->getCurrency()->format($transaction['total_order_price']); ?><br />
-                                    <span>满减包邮(未知)</span><br />
-                                    <span>(快递: <?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span>
-                                    </td>
-                                    <?php
-                                    }
-                                    ?>
-                                </tr>
-                                <?php
-                                    }
+                                }
                                 ?>
-                            <tr class="order-ft">
-                                <td colspan="6">
-                                    <div colspan="6" class="get-money">实收款：<strong><?php echo $this->getCurrency()->format($item['total']); ?></strong></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr  />
-                    <table>
-                        <!-- 其它信息 -->
-                        <tbody class="misc-info">
-                            <tr class="sep-row">
-                                <td colspan="6"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <span class="label">订单编号:</span>
-                                    <span class="order-num"><?php echo $transaction['increment_id']; ?></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <span class="label">创建时间:</span>
-                                    <span class="trade-time"><?php echo $transaction['created_at']; ?></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <span class="label">付款时间:</span>
-                                    <span class="pay-time"><?php echo $transaction['created_at']; ?></span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr class="order-ft">
+                                    <td colspan="6">
+                                        <div colspan="6" class="get-money">实收款：<strong><?php echo $this->getCurrency()->format($item['total']); ?></strong></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr  />
+                        <table>
+                            <!-- 其它信息 -->
+                            <tbody class="misc-info">
+                                <tr class="sep-row">
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <span class="label">订单编号:</span>
+                                        <span class="order-num"><?php echo $order['increment_id']; ?></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <span class="label">创建时间:</span>
+                                        <span class="trade-time"><?php echo $order['created_at']; ?></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box" style="display: none;">
+                    <div class="bd">
+                        <h4>物流信息</h4>
+                        <table class="simple-list logistics-info">
+                            <tbody>
+                                <tr>
+                                    <th>收货地址：</th>
+                                    <td>
+                                        <span><?php echo $order['shipping_address']; ?></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo $this->translate('Shipping Method', [], 'sales'); ?>：</th>
+                                    <td><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo $this->translate('Payment Method', [], 'sales'); ?>：</th>
+                                    <td><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>运单号：</th>
+                                    <td><?php echo $order['increment_id']; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div class="info-box" style="display: none;">
-                <div class="bd">
-                    <h4>物流信息</h4>
-                    <table class="simple-list logistics-info">
-                    <tbody>
-                        <tr>
-                            <th>收货地址：</th>
-                            <td>
-                                <span><?php echo $transaction['shipping_address']; ?></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><?php echo $this->translate('Shipping Method', [], 'sales'); ?>：</th>
-                            <td><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></td>
-                        </tr>
-                        <tr>
-                            <th><?php echo $this->translate('Payment Method', [], 'sales'); ?>：</th>
-                            <td><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
-                        </tr>
-                        <tr style="display: none;">
-                            <th>运单号：</th>
-                            <td><?php echo $order['increment_id']; ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
-    </div>
-</div>
-            <?php
-                }
-            ?>
     </div>
 </div>

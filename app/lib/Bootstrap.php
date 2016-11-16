@@ -45,11 +45,6 @@ final class Bootstrap
     private static $isMobile = null;
 
     /**
-     * @var int
-     */
-    const SHMOP_SIZE = 524288;
-
-    /**
      * Prepare or get container singleton
      * 
      * @param array $config         DI config
@@ -106,38 +101,18 @@ final class Bootstrap
      */
     private static function prepareConfig()
     {
-        if (extension_loaded('shmop')) {
-            $ftok = function_exists('ftok') ? 'ftok' : function($pathname, $proj) {
-                $st = @stat($pathname);
-                if (!$st) {
-                    return -1;
-                }
-                $key = sprintf("%u", (($st['ino'] & 0xffff) | (($st['dev'] & 0xff) << 16) | (($proj & 0xff) << 24)));
-                return $key;
-            };
-            $shmid = shmop_open($ftok(__FILE__, 'R'), 'c', 0644, self::SHMOP_SIZE);
-            $data = @gzdecode(trim(shmop_read($shmid, 0, self::SHMOP_SIZE)));
-            $config = $data ? json_decode($data, true) : false;
-        } else {
-            $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
-            $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
-            $config = $cache->fetch('SYSTEM_CONFIG');
-        }
-        if (!$config) {
-            $config = Config::instance();
-            static::getContainer();
-            $config->loadFromDB();
-            if (isset($shmid)) {
-                shmop_write($shmid, gzencode(json_encode($config->getArrayCopy())), 0);
-            } else {
-                $cache->save('SYSTEM_CONFIG', $config->getArrayCopy());
-            }
-        } else {
+        $adapter = Yaml::parse(file_get_contents(BP . 'app/config/adapter.yml'));
+        $cache = Cache::instance($adapter['cache'] ?? ['adapter' => '']);
+        $config = ['adapter' => $adapter];
+        $config['db'] = $cache->fetch('db', 'SYSTEM_CONFIG');
+        if ($config['db']) {
             $config = Config::instance($config);
             static::getContainer();
-        }
-        if (isset($shmid)) {
-            shmop_close($shmid);
+        } else {
+            unset($config['db']);
+            $config = Config::instance($config);
+            static::getContainer();
+            $cache->save('db', $config->loadFromDB(), 'SYSTEM_CONFIG');
         }
         return $config;
     }
@@ -149,8 +124,8 @@ final class Bootstrap
      */
     private static function handleConfig($config)
     {
-        if (isset($config['event'])) {
-            static::$eventDispatcher = static::getContainer()->get('eventDispatcher');
+        static::$eventDispatcher = static::getContainer()->get('eventDispatcher');
+        if (!empty($config['event'])) {
             foreach ($config['event'] as $name => $events) {
                 if (!is_array($events)) {
                     $events = [$events];

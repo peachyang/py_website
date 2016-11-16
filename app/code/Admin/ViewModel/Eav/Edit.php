@@ -54,11 +54,11 @@ abstract class Edit extends PEdit
                     'type' => 'csrf'
                 ],
                 'increment_id' => ($this->getQuery('id') ? [
-                    'type' => 'label',
-                    'label' => 'Human-Friendly ID'
-                        ] : [
-                    'type' => 'hidden'
-                        ]),
+            'type' => 'label',
+            'label' => 'Human-Friendly ID'
+                ] : [
+            'type' => 'hidden'
+                ]),
                 'attribute_set_id' => [
                     'type' => 'select',
                     'label' => 'Attribute Set',
@@ -70,14 +70,14 @@ abstract class Edit extends PEdit
                     ]
                 ],
                 'store_id' => ($user->getStore() ? [
-                    'type' => 'hidden',
-                    'value' => $user->getStore()->getId()
-                        ] : [
-                    'type' => 'select',
-                    'options' => (new Store)->getSourceArray(),
-                    'label' => 'Store',
-                    'required' => 'required'
-                        ]),
+            'type' => 'hidden',
+            'value' => $user->getStore()->getId()
+                ] : [
+            'type' => 'select',
+            'options' => (new Store)->getSourceArray(),
+            'label' => 'Store',
+            'required' => 'required'
+                ]),
                 'status' => [
                     'type' => 'select',
                     'label' => 'Status',
@@ -110,6 +110,9 @@ abstract class Edit extends PEdit
                 }
                 if ($attribute['is_required']) {
                     $columns[$attribute['code']]['required'] = 'required';
+                }
+                if ($attribute['type'] === 'varchar') {
+                    $columns[$attribute['code']]['attrs'] = ['maxlength' => 127];
                 }
             }
         }

@@ -763,9 +763,9 @@ overflow:hidden;}
 .wishlist .seller-tab .tab-content .title-nav li{padding:10px 0 0 0}
 .wishlist .seller-tab .tab-content .title-nav {border-bottom:1px solid #eee}
 .retailer-sales-invoice-edit{background:#eee}
-.retailer-sales-invoice-edit .view .panel,.retailer-sales-shipment-edit .view .panel{margin-bottom: 0}
+.retailer-sales-invoice-edit .view .panel,.retailer-sales-shipment-edit .view .panel,.retailer-sales-creditmemo-edit .view .panel{margin-bottom: 0}
 .retailer-sales-invoice-edit .view .panel-body{}
-.retailer-sales-invoice-edit .view .panel-heading,.retailer-sales-shipment-edit .view .panel-heading{padding:10px 15px;background:#f5f5f5}
+.retailer-sales-invoice-edit .view .panel-heading,.retailer-sales-shipment-edit .view .panel-heading,.retailer-sales-creditmemo-edit .view .panel-heading{padding:10px 15px;background:#f5f5f5}
 .retailer-product .container .menu-ctn .name li{padding:0 0}
 .customer-account-coupon .coupon .item .content{padding:10px 0;color:#dcf0fb;font-size:12px;line-height:18px}
 .coupon .item .content .inner{padding: 0 15px 12px; background: url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top; background-repeat: repeat-y; background-color: #007dc6;}

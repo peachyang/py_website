@@ -24,7 +24,9 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
             </ul>
             <table class="table inline bt padding-5">
                 <?php
-                foreach ($this->getCollection() as $item):
+                $items = $this->getCollection();
+                $flag = TRUE;
+                foreach ($items as $item):
                     $product = $item['product'];
                     $thumbnail = $product->getThumbnail();
                     $max = $this->getMaxQty($item);
@@ -50,14 +52,18 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                             </td>
                             <td class="col-xs-1 col-sm-1 text-right">
                                 <span class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></span>
-                                <span>
-                                    <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
-                                    <input type="range" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo $max ?>" />
-                                </span>
+                                <span><?php echo (float) $max ?></span>
                             </td>
-                            <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 total border-left action text-center">
-                                <span class="color-blue"><?php echo $this->translate($this->getStatus()->offsetGet('name'), [], 'sales') ?></span>
-                            </td>
+                            <?php
+                            if ($flag):
+                                ?>
+                                <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 total border-left action text-center">
+                                    <span class="color-blue"><?php echo $this->translate($this->getStatus()->offsetGet('name'), [], 'sales') ?></span>
+                                </td>
+                                <?php
+                                $flag = FALSE;
+                            endif;
+                            ?>
                         </tr>
                         <?php
                     endif;

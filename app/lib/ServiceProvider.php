@@ -65,7 +65,7 @@ class ServiceProvider implements ServiceProviderInterface
             };
         }
         if (!$container->has('translator')) {
-            $container['translator'] = Translator::instance($config['locale'] ?: $container);
+            $container['translator'] = Translator::instance($container);
         }
         if (!$container->has('dbAdapter')) {
             $container['dbAdapter'] = new Adapter($config['adapter']['db']);

@@ -287,6 +287,7 @@ final class Head extends Template implements Singleton
     protected function getCombinedFile(array $files, $isCss)
     {
         $content = '';
+        sort($files);
         foreach ($files as $file) {
             $temp = file_get_contents(BP . $file);
             if ($isCss && substr($file, -4) !== '.css') {

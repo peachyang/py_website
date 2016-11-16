@@ -41,21 +41,19 @@ class Translator implements Singleton
     protected static $defaultLocale = null;
 
     /**
-     * @param string|Container $locale
+     * @param Container $container
      */
-    private function __construct($locale = null)
+    private function __construct($container = null)
     {
-        if ($locale instanceof Container) {
-            $this->setContainer($locale);
-            $locale = null;
+        if ($container instanceof Container) {
+            $this->setContainer($container);
         }
-        $this->setLocale($locale ?: $this->getContainer()->get('config')['locale']);
     }
 
-    public static function instance($locale = null)
+    public static function instance($container = null)
     {
         if (is_null(static::$instance)) {
-            static::$instance = new static($locale);
+            static::$instance = new static($container);
         }
         return static::$instance;
     }

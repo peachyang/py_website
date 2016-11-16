@@ -38,9 +38,6 @@ final class Config extends ArrayObject implements Singleton
             $this->setContainer($config);
             $config = [];
         }
-        if (empty($config)) {
-            $config = $this->loadFromYaml();
-        }
         $this->storage = $config;
     }
 
@@ -63,28 +60,40 @@ final class Config extends ArrayObject implements Singleton
     /**
      * @return array
      */
-    private function loadFromYaml()
+    private function loadFromYaml($type = '*')
     {
-        $finder = new Finder;
-        $finder->files()->in(BP . 'app')->name('*.yml');
-        if ($this->bannedYml) {
-            $finder->notName($this->bannedYml);
+        if ($type !== '*') {
+            $cache = $this->getContainer()->get('cache');
+            $config = $cache->fetch($type, 'SYSTEM_CONFIG');
         }
-        $parser = new Parser;
-        $config = [];
-        foreach ($finder as $file) {
-            $key = str_replace('.yml', '', $file->getFilename());
-            if (!isset($config[$key])) {
-                $config[$key] = [];
+        if (empty($config) && !is_array($config)) {
+            $finder = new Finder;
+            $finder->files()->in(BP . 'app')->name($type . '.yml');
+            if ($this->bannedYml) {
+                $finder->notName($this->bannedYml);
             }
-            try {
-                $array = $parser->parse($file->getContents());
-            } catch (ParseException $e) {
-                throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
+            $parser = new Parser;
+            $config = $type !== '*' ? [] : [$type => []];
+            foreach ($finder as $file) {
+                $key = str_replace('.yml', '', $file->getFilename());
+                if (!isset($config[$key])) {
+                    $config[$key] = [];
+                }
+                try {
+                    $array = $parser->parse($file->getContents());
+                } catch (ParseException $e) {
+                    throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
+                }
+                if ($array) {
+                    $config[$key] = $this->arrayMerge($config[$key], $array);
+                }
             }
-            if ($array) {
-                $config[$key] = $this->arrayMerge($config[$key], $array);
+            $this->storage = $this->arrayMerge($this->storage, $config);
+            if ($type !== '*') {
+                $cache->save($type, $this->storage[$type] ?? [], 'SYSTEM_CONFIG');
             }
+        } else {
+            $this->storage = $this->arrayMerge($this->storage, [$type => $config]);
         }
         return $config;
     }
@@ -105,7 +114,7 @@ final class Config extends ArrayObject implements Singleton
             }
             $config = $this->arrayMerge($config, $this->generateConfig(explode('/', $item['path']), $value));
         }
-        $this->storage = $this->arrayMerge($this->storage, $config);
+        $this->storage['db'] = $config;
         return $config;
     }
 
@@ -141,7 +150,7 @@ final class Config extends ArrayObject implements Singleton
     {
         if (count($path) > 1) {
             $key = array_shift($path);
-            $config = is_null($config) ? $this->offsetGet($key) :
+            $config = is_null($config) ? ($this->storage['db'][$key] ?? null) :
                     (isset($config[$key]) ? $config[$key] : null);
             if (!is_null($config)) {
                 return $this->getConfigByPath($path, $config, $scope);
@@ -172,7 +181,7 @@ final class Config extends ArrayObject implements Singleton
     public function offsetGet($key)
     {
         if (isset($this->cache[$key])) {
-            return $this->cache[$key];
+            $result = $this->cache[$key];
         } else if (strpos($key, '/')) {
             $path = explode('/', trim($key, '/'));
             if (preg_match('/^[slm]\d+$/', $path[0])) {
@@ -180,13 +189,25 @@ final class Config extends ArrayObject implements Singleton
             }
             $result = $this->getConfigByPath($path, null, $scope ?? null);
             if (is_null($result)) {
-                $result = $this->getDefaultConfig($path, $this->storage['system']);
+                $result = $this->getDefaultConfig($path, $this->offsetGet('system'));
             }
             $this->cache[$key] = $result;
-            return $result;
         } else {
-            return parent::offsetGet($key);
+            $result = parent::offsetGet($key);
+            if (is_null($result)) {
+                $result = $this->loadFromYaml($key);
+            }
         }
+        return $result;
+    }
+
+    public function offsetExists($key)
+    {
+        $result = parent::offsetExists($key);
+        if (!$result) {
+            $this->loadFromYaml($key);
+        }
+        return parent::offsetExists($key);
     }
 
 }

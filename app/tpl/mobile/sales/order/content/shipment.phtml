@@ -21,7 +21,8 @@ $shipment = $this->getVariable('model');
         </ul>
         <table class="table inline bt padding-5">
             <?php
-            foreach ($shipment->getItems() as $item):
+            $items = $shipment->getItems();
+            foreach ($items as $item):
                 $product = $item['product'];
                 $thumbnail = $product->getThumbnail();
                 ?>

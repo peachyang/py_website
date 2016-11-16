@@ -21,7 +21,8 @@ $currency = $order->getCurrency();
         </ul>
         <table class="table inline bt padding-5">
             <?php
-            foreach ($order->getItems() as $item):
+            $items = $order->getItems();
+            foreach ($items as $item):
                 $product = $item['product'];
                 $thumbnail = $product->getThumbnail();
                 ?>

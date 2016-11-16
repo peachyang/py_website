@@ -300,7 +300,6 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .main-container .breadcrumb-m .content-list .fa-search{ position: absolute; right: 40px; font-size: 19px;}
 .main-container .breadcrumb-m .content-list a:hover{color:#ffffff}
 .main-container .breadcrumb-m .content-list a{color:#c8c6c6}
-.main-container .message-box{margin-top:50px} 
 .product-essential .carousel .carousel-indicators{bottom:-10px}
 .product-essential .carousel .carousel-indicators .active{width:10px;height:10px;background:#ff8a00;border:1px solid #ff8a00}
 .product-essential .carousel .carousel-indicators li{background-color:rgba(196,196,196,158);border:1px solid #c4c4c4}
@@ -336,6 +335,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
    .product-essential .product-info .selected{border-top:12px solid #e7e7e7;border-bottom:12px solid #e7e7e7;background:#fff;margin-top: 30px;margin-left:10px}
 }
 .catalog-product #description .product-attributes{padding:15px}
+.catalog-product .message-box{margin-top:50px} 
 .catalog-product #description .product-attributes li{min-width:128px;white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;overflow: hidden;}
 .product-essential .product-info .selected span{text-align:right;float:right;color:#b5b4b4}
 .product-essential .product-info .selected a{width:90%;margin:0 5%;padding: 10px 0;display:inline-block;font-size:12px}

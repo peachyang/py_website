@@ -1,6 +1,6 @@
 <?php
-$transactions = $this->getRetailerTransaction();
-$sales_status = $this->getAllSalesStatus();
+$order = $this->getOrder($this->getQuery('id'));
+$items = $order->getItems();
 ?>
 <div class="wishlist">
     <div id="Has-sold" class="seller-tab">
@@ -13,49 +13,90 @@ $sales_status = $this->getAllSalesStatus();
         </div>
         <div id="Product-details" class="tab-content">
             <div class="tab-pane fade in active margin-bj" id="all">
-
-                <div class="order col-xs-12 col-sm-12">
-                    <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
-                        <li class="col-xs-6 col-sm-6 text-left font-12"><?php echo $this->translate('Order Number'); ?>:<?php echo $transactions->offsetGet('increment_id'); ?></li>
-                        <li class="col-xs-6 col-sm-6 text-right font-12"></li>
-                    </ul>
-                        <ul class="col-xs-12 col-sm-12 title-nav name  padding-5 font-12">
-                            <li class="text-left col-xs-6 col-sm-6" colspan="2"><?php echo $customer = $this->getCustomerByID($transactions['customer_id'])->username; ?></li>
-                            <li class="col-xs-6 col-sm-6 text-right" colspan="2">
-                            </li>
-                        </ul>
-                        <ul class="col-xs-12 col-sm-12 inline padding-10-5">
-                            <li class="col-xs-2"><img src="" width="50" height="50"></li>
-                            <li class="col-xs-6 "><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-                            <li class="col-xs-3 text-right">
-                                <span class="price ">￥198.00</span>
-                                <span>x1</span>
-                                <span class="color-blue">已付款</span>
-                                <button class="padding-0 color-blue">未确认收货</button>
-                            </li>
-                        </ul>
-                </div>
+                <ul  class="col-xs-12 col-sm-12 title-nav name padding-5 font-12">
+                    <li class="col-xs-6 col-sm-6 text-left"><?php echo $this->translate('Order Number'), $order['increment_id'] ?></li>
+                    <li class="col-xs-6 col-sm-6 text-right">
+                        <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
+                        <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                    </li>	
+                </ul>
+                <table class="table inline bt padding-5">
+                    <?php
+                    $flag = TRUE;
+                    foreach ($items as $key => $item) :
+                        $thumbnail = $this->getProduct($item['product_id'])->getThumbnail();
+                        ?>
+                        <tr>
+                            <td class="col-xs-2 col-sm-2">
+                                <a href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
+                                    <?php if (strpos($thumbnail, 'http') === false) { ?>
+                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" width="50" height="50" />
+                                    <?php } else { ?>
+                                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['product_name']; ?>" width="50" height="50" />
+                                    <?php } ?>
+                                </a>
+                            </td>
+                            <td class="col-xs-6 col-sm-6 text-left">
+                                <h4 class="font-12"><a title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></h4>
+                                <?php
+                                $options = $this->getProductOptions($item['product_id'], $item['options']);
+                                if (!empty($options)) {
+                                    foreach ($options as $oitem) {
+                                        echo $oitem['title'] . ' : ' . $oitem['option_value'] . '<br />';
+                                    }
+                                } else {
+                                    echo '';
+                                }
+                                ?>
+                            </td>
+                            <td class="col-xs-1 col-sm-1 text-right">
+                                <span class="price"><?php echo $this->getCurrency()->format($item['price']); ?></span>
+                                <span><?php echo $this->translate('%d', [$item['qty']]); ?></span>
+                            </td>
+                            <?php
+                            if ($flag):
+                                ?>
+                                <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
+                                    <span class="color-blue"><?php echo $this->translate($order->getStatus()['name']); ?></span>
+                                </td>
+                                <?php
+                                $flag = FALSE;
+                            endif;
+                            ?>
+                        </tr>
+                        <?php
+                    endforeach;
+                    ?>
+                </table>
                 <div class="address col-xs-12 col-sm-12">
                     <ul class="col-xs-12 col-sm-12 font-12">
                         <li class="bg font-14 "><span>收货信息</span></li>
                         <ul class="padding-5">
-                            <li class="col-xs-4 col-sm-4">刘筱菲</li>
-                            <li class="col-xs-8 col-sm-8">18865529426</li>
-                            <li>山东省烟台市莱山区港城东大街100号3号楼206</li>	
+                            <li class="col-xs-4 col-sm-4">
+                                <?php
+                                echo nl2br($order['billing_address']);
+                                ?> 
+                            </li>
                         </ul>
                     </ul>
                 </div>
                 <div class="logistics-ct col-xs-12 col-sm-12">
                     <ul class="logistics font-12">
-                        <li class="bg font-14"><span>物流状态</span></li>
+                        <li class="bg font-14"><span>物流信息</span></li>
                         <ul class="padding-5">
-                            <li class="col-xs-9 col-sm-9 padding-5"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
-                            <li class="col-xs-3 col-sm-3 padding-5"><button>发货</button></li>
+                            <li class="col-xs-3 col-sm-3">收货地址:</li>
+                            <li class="col-xs-9 col-sm-9"><?php echo $order['shipping_address']; ?></li>
+                            <li class="col-xs-3 col-sm-3"><?php echo $this->translate('Shipping Method', [], 'sales'); ?>：</li>
+                            <li class="col-xs-9 col-sm-9"><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></li>
+                            <li class="col-xs-3 col-sm-3"><?php echo $this->translate('Payment Method', [], 'sales'); ?>：</li>
+                            <li class="col-xs-9 col-sm-9"><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></li>
+                            <li class="col-xs-9 col-sm-9"><span class="col-xs-4 col-sm-4">物流单号：</span> <input class="form-control " type="text" value="" name=""></li>
+                            <li class="col-xs-3 col-sm-3"><button>发货</button></li>
                         </ul>
                     </ul>
                     <ul class="col-xs-12 col-sm-12 font-12 padding-5 ">
-                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
-                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">付款时间:</span> <span class="col-xs-6 col-sm-6">2016-10-20 11:09:33</span></li>
+                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">订单编号:</span> <span class="col-xs-6 col-sm-6"><?php echo $order['increment_id']; ?></span></li>
+                        <li class="col-xs-12 col-sm-12 padding-0"><span class="col-xs-6 col-sm-6">创建时间:</span> <span class="col-xs-6 col-sm-6"><?php echo $order['created_at']; ?></span></li>
                     </ul>
                 </div>
                 <div class="xq col-xs-12 col-sm-12">

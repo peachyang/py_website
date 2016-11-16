@@ -25,7 +25,7 @@ class ShippingController extends AuthActionController
                     $this->getTableGateway('core_config');
                     foreach ($data as $path => $value) {
                         if (!in_array($path, ['key', 'csrf', 'scope'])) {
-                            $this->upsert(['value' => is_array($value) ? implode(',', $value) : $value], $where + ['path' => $path]);
+                            $this->upsert(['value' => is_array($value) ? implode(',', $value) : $value], $where + ['path' => 'shipping/' . $path]);
                             $this->getContainer()->get('eventDispatcher')->trigger('system.config.' . $path . '.save.after', ['value' => $value, 'scope' => $where]);
                         }
                     }

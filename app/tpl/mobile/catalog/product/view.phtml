@@ -80,7 +80,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                 <div class="shop">
                     <div class="shop_cont">
                         <ul class="shop_ul">
-                            <li class="shop_icon"><img alt="" src="http://ecomv2.seahinet.test1/pub/theme/default/frontend/images/placeholder.png" height="35" width="120"></li>
+                            <li class="shop_icon"><img alt="" src="<?php echo $this->getPubUrl('frontend/images/placeholder.png') ?>" height="35" width="120"></li>
                             <li class="shop_name">
                                 <span class="font-color-0 font-13"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>"><?php echo $store['name'] ?></a></span>
                                 <div class="font-12 font-family-x">

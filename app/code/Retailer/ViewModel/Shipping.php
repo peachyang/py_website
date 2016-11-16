@@ -28,7 +28,7 @@ class Shipping extends AbstractViewModel
                 $item['value'] = $this->getConfig()['s' . $this->getRetailer()['store_id'] . '/shipping/' . $code . '/' . $key];
                 $box = new $class;
                 $box->setVariables([
-                    'key' => 'shipping/' . $code . '/' . $key,
+                    'key' => $code . '/' . $key,
                     'item' => $item,
                     'parent' => $this
                 ]);

@@ -7,12 +7,6 @@ ul {
 li {
 	list-style: none;
 }
-* {
-	box-sizing: border-box;
-}
-body {
-	font-family: 'Montserrat', Arial, serif;
-}
 ::selection {
 	background-color: #EBEBF2;
 	color: #83828D;

@@ -2,6 +2,11 @@
 $retailer = $this->getRetailer();
 $store = $this->getStore();
 $ratings = $retailer->getRatings();
+$stat1 = new Seahinet\Retailer\ViewModel\Dashboard\Stat;
+$stat = $stat1->getStat();
+$rankings = new Seahinet\Retailer\ViewModel\Dashboard\Ranking;
+$ranking = $rankings->getItems();
+
 ?>
 <div class="profile clearfix">
     <div class="pull-right col-xs-12 col-md-6">

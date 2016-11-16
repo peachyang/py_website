@@ -137,8 +137,8 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
     <div class="product-detail clearfix" id="myAffix">
         <div class="col-xs-12 col-sm-12 info" data-spy="affix" data-offset-top="718" data-offset-bottom="200">
             <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
-            <div class="content-list col-xs-10 col-sm-10">
-                <ul class="nav nav-tabs" role="tablist">
+            <div class="content-list col-xs-10 col-sm-10 text-center">
+                <ul class="nav nav-tabs font-13" role="tablist">
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab"><?php echo $this->translate('Description') ?></a></li>
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
@@ -150,9 +150,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
             <div role="tabpanel" class="tab-pane active" id="description">
                 <?php echo $this->getChild('attribute'), $product->offsetGet('description') ?>
             </div>
-            <div role="tabpanel" class="tab-pane" id="review">
-                <?php echo $this->getChild('review') ?>
-            </div>
+            <div role="tabpanel" class="tab-pane padding-10" id="review"></div>
         </div>
     </div>
 </div>

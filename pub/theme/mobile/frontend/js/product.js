@@ -9,6 +9,7 @@
 }(function ($) {
     $(function () {
         "use strict";
+        var pid = $('[name=product_id]').val();
         $('.product-essential .product-info .options .input-box.radio,.product-essential .product-info .options .input-box.checkbox').each(function () {
             var f = false;
             $(this).find('.cell label').each(function () {
@@ -89,6 +90,22 @@
             }
         });
         $(".magnifying").imagezoom();
+        $('.product-detail .nav a[href="#review"][data-toggle="tab"]').one('show.bs.tab', function () {
+            $('.product-detail .tab-content #review.tab-pane').on('click', '.pager a', function () {
+                var p = $(this).parents('.reviews').first();
+                var c = $(p).data('part');
+                var h = $(this).attr('href') + '&part=' + c;
+                if (GLOBAL.AJAX[h] && GLOBAL.AJAX[h].readyState < 4) {
+                    GLOBAL.AJAX[h].abort();
+                }
+                $(p).addClass('loading');
+                GLOBAL.AJAX[h] = $.get(h, function (response) {
+                    $(p).after(response);
+                    $(p).remove();
+                });
+                return false;
+            }).load(GLOBAL.BASE_URL + 'catalog/review/load/?id=' + pid);
+        });
     });
     $('#myAffix').affix({
         offset: {

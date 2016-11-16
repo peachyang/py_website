@@ -21,8 +21,7 @@ $currency = $order->getCurrency();
         </ul>
         <table class="table inline bt padding-5">
             <?php
-            $items = $order->getItems();
-            foreach ($items as $item):
+            foreach ($order->getItems() as $item):
                 $product = $item['product'];
                 $thumbnail = $product->getThumbnail();
                 ?>
@@ -58,7 +57,7 @@ $currency = $order->getCurrency();
                         <span class="price"><?php echo $currency->format($item['price']) ?></span>
                         <span><?php echo (float) $item['qty'] ?></span>                        
                     </td>
-                    <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
+                    <td class="col-xs-3 col-sm-3 border-left action text-center">
                         <span class="color-blue"><?php echo $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?></span>
                     </td>
                 </tr>

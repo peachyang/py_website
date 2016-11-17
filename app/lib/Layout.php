@@ -26,7 +26,7 @@ class Layout extends ArrayObject implements Singleton
         if (empty($config)) {
             $config = $this->getContainer()->get('config')['layout'];
         }
-        $this->storage = $config;
+        $this->storage = $config[Bootstrap::isMobile() ? 'mobile' : 'pc'];
     }
 
     public static function instance($config = [])

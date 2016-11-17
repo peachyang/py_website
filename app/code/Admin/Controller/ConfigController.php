@@ -65,7 +65,7 @@ class ConfigController extends AuthActionController
                             }
                         }
                         $this->commit();
-                        $this->getContainer()->get('cache')->delete('SYSTEM_CONFIG');
+                        $this->getContainer()->get('cache')->delete('', 'SYSTEM_CONFIG');
                         $result['message'][] = ['message' => $this->translate('Configuration saved successfully.'), 'level' => 'success'];
                     } catch (Exception $e) {
                         $this->getContainer()->get('log')->logException($e);

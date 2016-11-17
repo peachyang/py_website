@@ -62,28 +62,33 @@ final class Config extends ArrayObject implements Singleton
         $default = new Finder;
         $default->files()->in(BP . 'app/layout/default')->name('*.yml');
         $files = [];
+        $parser = new Parser;
+        $config = [[], []];
         foreach ($default as $file) {
             $files[$file->getFilename()] = $file;
         }
-        if (($theme = $this->offsetGet('theme/global/' . (Bootstrap::isMobile() ? 'mobile_' : '') . 'layout')) !== 'default' && is_dir(BP . 'app/layout/' . $theme)) {
-            $finder = new Finder;
-            $finder->files()->in(BP . 'app/layout/' . $theme)->name('*.yml');
-            foreach ($finder as $file) {
-                $files[$file->getFilename()] = $file;
+        $bak = $files;
+        foreach ([$this->offsetGet('theme/global/layout'), $this->offsetGet('theme/global/mobile_layout')] as $key => $theme) {
+            $files = $bak;
+            if ($theme !== 'default' && is_dir(BP . 'app/layout/' . $theme)) {
+                $finder = new Finder;
+                $finder->files()->in(BP . 'app/layout/' . $theme)->name('*.yml');
+                foreach ($finder as $file) {
+                    $files[$file->getFilename()] = $file;
+                }
+            }
+            foreach ($files as $file) {
+                try {
+                    $array = $parser->parse($file->getContents());
+                } catch (ParseException $e) {
+                    throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
+                }
+                if ($array) {
+                    $config[$key] = $this->arrayMerge($config[$key], $array);
+                }
             }
         }
-        $parser = new Parser;
-        $result = [];
-        foreach ($files as $file) {
-            try {
-                $array = $parser->parse($file->getContents());
-            } catch (ParseException $e) {
-                throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
-            }
-            if ($array) {
-                $result = $this->arrayMerge($result, $array);
-            }
-        }
+        list($result['pc'], $result['mobile']) = $config;
         return ['layout' => $result];
     }
 

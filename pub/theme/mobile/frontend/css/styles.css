@@ -483,7 +483,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .filters .all .values ul{height:auto}
 .filters .values.open ul{height:auto}
 .filters .values li{margin-right:20px;padding:1px 0}
-.view-by{border-bottom:1px solid #fdcb60;background-color:#f5f6f9;height:41px}
+.view-by{border-bottom:1px solid #fdcb60;background-color:#f5f6f9;height:41px;margin-top:50px}
 .view-by a{display:block;font-size:14px;line-height:40px;padding:0 5px}
 .view-by .sort-by{float:left}
 .view-by .sort-by a{padding:0 20px}
@@ -491,6 +491,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
+.view-by p{line-height: 26px}
 retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 .retailer-account .profile .info p{margin:10px 0}
 .retailer-account .profile .info p>a{margin-right: 10px}

@@ -43,7 +43,6 @@ class SetController extends AuthActionController
                     $model->setData('type_id', $type->getId());
                 }
         );
-        $this->getContainer()->get('indexer')->reindex('customer');
         return $response;
     }
 

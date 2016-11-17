@@ -14,7 +14,7 @@ customer_account:
                                 params: [{link:'sales/order/list/',label:'My Orders',group:'Order Center'}]
                             -
                                 method: addLink
-                                params: [{link:'customer/account/coupon/',label:'Coupons',group:'Order Center'}]
+                                params: [{link:'customer/coupon/',label:'Coupons',group:'Order Center'}]
                             -
                                 method: addLink
                                 params: [{link:'checkout/cart/',label:'Shopping Cart',group:'Order Center'}]    

@@ -37,6 +37,16 @@ class Category extends Entity
         return [];
     }
 
+    public function getParentCategory()
+    {
+        if ($this->storage['parent_id']) {
+            $category = new static;
+            $category->load($this->storage['parent_id']);
+            return $category->getId() ? $category : null;
+        }
+        return null;
+    }
+
     public function getChildrenCategories($shownInMenu = null)
     {
         if ($this->getId()) {

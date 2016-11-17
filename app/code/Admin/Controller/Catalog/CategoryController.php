@@ -53,7 +53,7 @@ class CategoryController extends AuthActionController
                 $model = clone $model;
                 $model->load($id)->setData([
                     'sort_order' => $order,
-                    'parent_id' => $data['order'][$order]? : null
+                    'parent_id' => $data['order'][$order] ?: null
                 ])->save();
             }
             $this->commit();

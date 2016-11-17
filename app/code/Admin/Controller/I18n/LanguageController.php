@@ -73,7 +73,6 @@ class LanguageController extends AuthActionController
                         }
                     }
                 }
-                $this->getContainer()->get('indexer')->reindex($prefix['code']);
             }
         }
         return $response;

@@ -3,6 +3,7 @@
 namespace Seahinet\Lib;
 
 use Seahinet\Lib\Indexer\Factory;
+use Seahinet\Lib\Model\Collection\Language;
 
 /**
  * Indexer manager
@@ -99,6 +100,27 @@ class Indexer implements Stdlib\Singleton
     public function reindex($entityType)
     {
         $this->getHandler($entityType)->reindex();
+        $this->getCacheInstance()->delete('', 'INDEX_');
+    }
+
+    /**
+     * Replace data into indexer
+     * 
+     * @param string $entityType
+     * @param array $values
+     * @param array $constraint
+     */
+    public function replace($entityType, $values, $constraint)
+    {
+        $languages = new Language;
+        $languages->where(['status' => 1]);
+        $languages->load(true, true);
+        foreach ($languages as $language) {
+            $this->delete($entityType, $language['id'], $constraint);
+            foreach ($values as $item) {
+                $this->insert($entityType, $language['id'], $item + $constraint);
+            }
+        }
         $this->getCacheInstance()->delete('', 'INDEX_');
     }
 

@@ -57,6 +57,36 @@ final class Config extends ArrayObject implements Singleton
         return static::$instance;
     }
 
+    private function loadLayout()
+    {
+        $default = new Finder;
+        $default->files()->in(BP . 'app/layout/default')->name('*.yml');
+        $files = [];
+        foreach ($default as $file) {
+            $files[$file->getFilename()] = $file;
+        }
+        if (($theme = $this->offsetGet('theme/global/' . (Bootstrap::isMobile() ? 'mobile_' : '') . 'layout')) !== 'default' && is_dir(BP . 'app/layout/' . $theme)) {
+            $finder = new Finder;
+            $finder->files()->in(BP . 'app/layout/' . $theme)->name('*.yml');
+            foreach ($finder as $file) {
+                $files[$file->getFilename()] = $file;
+            }
+        }
+        $parser = new Parser;
+        $result = [];
+        foreach ($files as $file) {
+            try {
+                $array = $parser->parse($file->getContents());
+            } catch (ParseException $e) {
+                throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
+            }
+            if ($array) {
+                $result = $this->arrayMerge($result, $array);
+            }
+        }
+        return ['layout' => $result];
+    }
+
     /**
      * @return array
      */
@@ -67,25 +97,29 @@ final class Config extends ArrayObject implements Singleton
             $config = $cache->fetch($type, 'SYSTEM_CONFIG');
         }
         if (empty($config) && !is_array($config)) {
-            $finder = new Finder;
-            $finder->files()->in(BP . 'app')->name($type . '.yml');
-            if ($this->bannedYml) {
-                $finder->notName($this->bannedYml);
-            }
-            $parser = new Parser;
-            $config = $type !== '*' ? [] : [$type => []];
-            foreach ($finder as $file) {
-                $key = str_replace('.yml', '', $file->getFilename());
-                if (!isset($config[$key])) {
-                    $config[$key] = [];
+            if ($type === 'layout') {
+                $config = $this->loadLayout();
+            } else {
+                $finder = new Finder;
+                $finder->files()->in(BP . 'app')->notPath(BP . 'app/layout')->name($type . '.yml');
+                if ($this->bannedYml) {
+                    $finder->notName($this->bannedYml);
                 }
-                try {
-                    $array = $parser->parse($file->getContents());
-                } catch (ParseException $e) {
-                    throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
-                }
-                if ($array) {
-                    $config[$key] = $this->arrayMerge($config[$key], $array);
+                $parser = new Parser;
+                $config = $type !== '*' ? [] : [$type => []];
+                foreach ($finder as $file) {
+                    $key = $type !== '*' ? str_replace('.yml', '', $file->getFilename()) : $type;
+                    if (!isset($config[$key])) {
+                        $config[$key] = [];
+                    }
+                    try {
+                        $array = $parser->parse($file->getContents());
+                    } catch (ParseException $e) {
+                        throw new ParseException($e->getMessage() . ' File: ' . $file->getRealPath());
+                    }
+                    if ($array) {
+                        $config[$key] = $this->arrayMerge($config[$key], $array);
+                    }
                 }
             }
             $this->storage = $this->arrayMerge($this->storage, $config);

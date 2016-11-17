@@ -36,7 +36,7 @@ class Log
     public function __construct($config = [])
     {
         if ($config instanceof Container) {
-            $config = $config->get('config')['config']['log'];
+            $config = $config->get('config')['adapter']['log'] ?? [];
         }
         if (!empty($config)) {
             $this->setLogger($config);

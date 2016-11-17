@@ -34,8 +34,8 @@ li {
 .menu-show {
 	margin-left: 0;
 	box-shadow: 4px 2px 15px 1px #B9ADAD;
-	z-index: 999;
-    padding: 20px 0;
+	z-index: 9999;
+    top:40px;
 }
 .menu-sidebar {
 	margin: 40px 0 30px 10px;

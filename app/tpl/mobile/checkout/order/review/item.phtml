@@ -20,12 +20,12 @@ $thumbnail = $product->getThumbnail();
                         if (isset($options[$option->getId()])):
                             ?>
                             <li><?php echo $option['title'] ?>
-                            <span>
-                                <?php
-                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
-                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
-                                ?>
-                            </span>
+                                <span>
+                                    <?php
+                                    echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                            $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                    ?>
+                                </span>
                             </li>
                             <?php
                         endif;
@@ -36,14 +36,12 @@ $thumbnail = $product->getThumbnail();
         </div>
     </li>  
     <li class="col-xs-2 col-sm-2 qty">
-    	x
+        x
         <?php echo (float) $item['qty'] ?>
     </li>
-	<li>
-		 <div class="price" data-price="<?php echo $item['price'] ?>">
+    <li>
+        <div class="price" data-price="<?php echo $item['price'] ?>">
             <p><?php echo $this->getCurrency()->format($item['price']) ?></p>
         </div>
-	</li>
-
-    
+    </li>    
 </ul>

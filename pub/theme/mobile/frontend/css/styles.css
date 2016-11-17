@@ -522,13 +522,6 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 /* #cart .store{padding-right:5%} */
 .tab-content .products-grid .item{text-align:center}
 .tab-content .products-grid .item p{height:20px;line-height:20px;overflow-y:hidden;margin:0 5%}
-.checkout-order .message-box{margin-top:50px}
-.checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
-.checkout-order .checkout-steps .payment{margin-bottom:60px}
-.checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold;}
-.checkout-order .address .list{height:60px;line-height:60px;overflow-y:hidden}
-.checkout-order .address .list li{display:inline-block;line-height:30px}
-.checkout-order .address .list li input{float:left;margin: 10px 5px 0 10px;}
 .retailer-account .wishlist .filter-bar .commodity .form-control { width: 73%;}
 .retailer-account .wishlist .filter-bar .commodity  #form-time{width:36%} 
 @media(min-width:768px){
@@ -536,12 +529,6 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
    .checkout-order .address .list li .fa{line-height:30px}
    
 }
-/* .checkout-order .address .list li label{width:90%} */
-.checkout-order .address .list li .fa{float:right;color:#b5b5b5;line-height:30px}
-.checkout-order .checkout-steps .payment li{margin-right:10px}
-.checkout-order .coupon a{position:relative;z-index: 10;display:inline-block; background: url(../images/bg-coupon-yellow.png) left top,url(../images/bg-coupon-yellow.png) right top; background-repeat: repeat-y;background-color: #f7bc44;color: #fff;font-size: 12px;padding: 0 9px;line-height:30px}
-.checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff}
-.checkout-order .coupon .dropdown-menu label{padding:0 .5em;display:block}
 @media(min-width:768px){
    .checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff;left: 50%}
     .retailer-account .wishlist .activity .form-control { width: 40%;display: inline-block;}
@@ -563,8 +550,6 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 .checkout-cart #cart .product-list .product-name h4{font-size:13px;color:#696868;height:20px;line-height:20px;overflow-y:hidden}
 .checkout-cart #cart .product-list .price{    padding: 10px 0 0 0;color:#007ecc;font-weight:bold;text-align:center;font-size:14px}
 .checkout-cart #cart .product-list .qty p{line-height:16px;text-align:center;margin-bottom:0}
-.checkout-order-success h3, .checkout-order-success h4, .checkout-order-successli{line-height:30px}
-.checkout-order-success li{margin:0 10px}
 .product-info .list-inline .dropdown-menu{background: none;color:#ffffff}
 .checkout-steps .review .order{overflow:hidden}
 .checkout-steps .review .order .store{height:40px;line-height:40px;border-bottom:1px solid #e3e5eb}
@@ -579,10 +564,9 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 .checkout-steps .review .order .product-list .product-name .options dd{float:left;margin-right:5px}
 .checkout-steps .review .order .product-list .price{color:#007ecc;font-weight:bold}
 .checkout-steps .review .order .product-list .qty{color:#000;line-height:26px;text-align:right}
-.checkout-order .review .order .shipping{padding-top:5px;    border-bottom: 1px solid #f7f7f7;font-size:12px}
-.checkout-steps .review .order .shipping,.subtotal{/* line-height:40px; */width:100%;overflow:hidden}
 .checkout-steps .review .order .total .table{overflow: hidden}
 .checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}
+.checkout-order .review .order .shipping,.checkout-order .review .tfoot .subtotal>li{border-bottom: 1px solid #f7f7f7;line-height:30px}
 .checkout-order .review .tfoot .buttons-set{background:#ffffff;position:fixed;bottom:0;z-index:1001;margin-left:-5px}
 .checkout-order .review .tfoot .buttons-set p{width:70%;height: 50px;line-height:50px;float:left;margin-bottom:0}
 .checkout-order .review .tfoot .buttons-set p span{color: #007ecc;font-size:20px;font-weight:bold}
@@ -592,6 +576,20 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 .checkout-order .review .grand-total{position:fixed;z-index: 1002;bottom:0;width:70%;margin-left:-5px}
 .checkout-order .review .grand-total li{height:50px;line-height:50px}
 .checkout-order .review .grand-total .text-left{color:#007ecc;font-size:16px;font-weight:bold}
+.checkout-order .message-box{margin-top:50px}
+.checkout-order .checkout-steps section{background:#fff;margin-bottom:5px;font-size:13px;width:100%;overflow:hidden;padding:0 5px}
+.checkout-order .checkout-steps .payment{margin-bottom:60px}
+.checkout-order .checkout-steps h4{line-height: 50px;font-size: 1em;font-weight:bold;}
+.checkout-order .address .list{height:60px;line-height:60px;overflow-y:hidden}
+.checkout-order .address .list li{display:inline-block;line-height:30px}
+.checkout-order .address .list li input{float:left;margin: 10px 5px 0 10px;}
+.checkout-order .address .list li .fa{float:right;color:#b5b5b5;line-height:30px}
+.checkout-order .checkout-steps .payment li{margin-right:10px}
+.checkout-order .coupon a{position:relative;z-index: 10;display:inline-block; background: url(../images/bg-coupon-yellow.png) left top,url(../images/bg-coupon-yellow.png) right top; background-repeat: repeat-y;background-color: #f7bc44;color: #fff;font-size: 12px;padding: 0 9px;line-height:30px}
+.checkout-order .coupon .dropdown-menu{min-width:100%;width:100%;border-top-left-radius:0;background-color: #f7bc44;color: #fff}
+.checkout-order .coupon .dropdown-menu label{padding:0 .5em;display:block}
+.checkout-order-success h3, .checkout-order-success h4, .checkout-order-successli{line-height:30px}
+.checkout-order-success li{margin:0 10px}
 .col-xs-3{display:inline-block}
 .customer-account-edit .fieldset [type=checkbox]:not(:checked)~.input-box{display:none}
 .modal-dialog .modal-footer .btn{;width:20%;float:left;background:#007ecc;color:#ffffff;padding: 3px 15px;margin: 10px 10px;float: right;}

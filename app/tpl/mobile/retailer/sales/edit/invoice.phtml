@@ -52,7 +52,8 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                             </td>
                             <td class="col-xs-1 col-sm-1 text-right">
                                 <span class="price" data-price="<?php echo $item['price'] ?>"><?php echo $currency->format($item['price']) ?></span>
-                                <span><?php echo (float) $max ?></span>
+                                <input type="hidden" name="item_id[]" value="<?php echo $item['id'] ?>" />
+                                <input type="number" name="qty[]" max="<?php echo $max ?>" min="0" value="<?php echo (float) $max ?>" />
                             </td>
                             <?php
                             if ($flag):

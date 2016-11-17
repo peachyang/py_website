@@ -53,7 +53,7 @@ class Locate
             if ($id) {
                 $select->where(['parent_id' => (int) $id]);
             }
-            if (file_exists(BP . 'var/i18n.db')) {
+            if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
                 $adapter = new PDO('sqlite:' . BP . 'var\i18n.db');
                 $resultSet = $adapter->query($select->getSqlString(new Sqlite));
             } else {

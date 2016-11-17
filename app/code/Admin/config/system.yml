@@ -41,6 +41,20 @@ theme:
                     label: Global Notice
                     priority: 0
                     scope: merchant
+                layout:
+                    type: text
+                    required: required
+                    label: Layout
+                    priority: 0
+                    scope: merchant
+                    default: default
+                mobile_layout:
+                    type: text
+                    required: required
+                    label: Layout for Mobile Terminal
+                    priority: 1
+                    scope: merchant
+                    default: default
                 default_title:
                     type: text
                     label: Default Title

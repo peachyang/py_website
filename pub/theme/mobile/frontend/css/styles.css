@@ -822,9 +822,9 @@ overflow:hidden;}
 .page-home-mobile .menu .menu_right .menu_rg_bt{border:1px solid #eee;width:170px;height:198px;overflow:hidden;text-overflow:ellipsis;margin-top:7px}
 .page-home-mobile .menu .menu_right img{width:170px;height:247px}
 .page-home-mobile .menu .menu_right .menu_rg_bt .tab-content ul{padding:10px 20px}
-.header-top{z-index: 9999;width: 100%;height: 40px;line-height: 40px;background: #007ecc;color: #ffffff;position: fixed; border-width: 0 0 1px;border-style: solid;border-color: #57aadd;}
+.header-top{z-index: 9999;width: 100%;height: 50px;line-height: 56px;background: #007ecc;color: #ffffff;position: fixed; border-width: 0 0 1px;border-style: solid;border-color: #57aadd;}
 .page-home-mobile .quick-search .invalid {color:red;font-size:12px}
-.page-home-mobile .quick-search .search-cs{background: #fdbb30; border: 1px solid #fdbb30; display: inherit; height: 38px; top: 30px;position: relative; margin: 10px 0 30px 0;}
+.page-home-mobile .quick-search .search-cs{background: #fdbb30; border: 1px solid #fdbb30; display: inherit; height: 38px; top: 50px;position: relative; margin: 10px 0 50px 0;}
 .page-home-mobile .quick-search .btn{height: 36px; }  
 .page-home-mobile .quick-search .required{height:36px}
 #page .open{display:block}

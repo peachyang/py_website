@@ -10,13 +10,13 @@ $sales_status = $this->getAllSalesStatus();
         <form class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="soldout">
                 <div class=" col-md-3 col-xs-12 col-sm-6">
-                    <label>订单号:</label>
+                    <label><?php echo $this->translate('Order Number'); ?>:</label>
                     <input class="form-control " type="text" value="<?php echo isset($filter['increment_id']) ? $filter['increment_id'] : ''; ?>" name="increment_id">
                 </div>
                 <div class="col-md-3 col-xs-12 col-sm-6">
-                    <label>交易状态:</label>
+                    <label><?php echo $this->translate('trading status'); ?>:</label>
                     <select class="form-control " id="order_status" name="order_status">
-                        <option value="0">全部</option>
+                        <option value="0"><?php echo $this->translate('All'); ?></option>
                         <?php
                         foreach ($sales_status as $item) {
                             $selected = (isset($filter['order_status']) && $filter['order_status'] == $item['id']) ? 'selected' : '';
@@ -26,23 +26,23 @@ $sales_status = $this->getAllSalesStatus();
                     </select>
                 </div>
                 <div class=" col-md-6 col-xs-12 col-sm-6">
-                    <label>成交时间:</label>
+                    <label><?php echo $this->translate('Closing Time'); ?>:</label>
                     <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from"><input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
                 </div>
                 <div class=" col-md-3 col-xs-12 col-sm-6">
-                    <label>收件人:</label>
+                    <label><?php echo $this->translate('Rcpt To'); ?>:</label>
                     <input class="form-control " type="text" value="<?php echo isset($filter['receiver']) ? $filter['receiver'] : ''; ?>" id="receiver" name="receiver" />
                 </div>
                 <div class=" col-md-3 col-xs-12 col-sm-6">
-                    <label>快递单号:</label>
+                    <label><?php echo $this->translate('Tracking Number'); ?>:</label>
                     <input class="form-control " type="text" value="<?php echo isset($filter['track_id']) ? $filter['track_id'] : ''; ?>" id="track_id" name="track_id">
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-6">
-                    <label>收货人手机:</label>     
+                    <label><?php echo $this->translate('Telephone / Cell phone'); ?>:</label>     
                     <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone']) ? $filter['receiver_phone'] : ''; ?>" id="receiver_phone" name="receiver_phone" />              
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">重置</a>&nbsp;&nbsp;
+                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>"><?php></a>&nbsp;&nbsp;
                     <button class="btn" type="submit">搜索</button>
                 </div>
             </div>
@@ -89,8 +89,7 @@ $sales_status = $this->getAllSalesStatus();
                     <tr>
                         <td colspan="7">
                             <label>
-                                <input type="checkbox" value="<?php echo $transaction['id']; ?>" name="orderid">
-                                <span>订单号: </span><span><?php echo $transaction['increment_id']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>成交时间: </span><span> </span><span><?php echo $transaction['created_at']; ?></span>
+                                <span><?php echo $this->translate('Order ID'); ?>: </span><span><?php echo $transaction['increment_id']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>成交时间: </span><span> </span><span><?php echo $transaction['created_at']; ?></span>
                             </label>
                         </td>
                         <td>&nbsp;</td>

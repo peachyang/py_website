@@ -222,12 +222,11 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account-dashboard .profile .info .wishlist_track li,.retailer-account .profile .info .wishlist_track li{line-height:40px;margin-top:10px}
 .customer-account-dashboard .profile .info .wishlist_track span,.retailer-account .profile .info .wishlist_track span{font-size:12px}
 .customer-account-dashboard .profile .info .wishlist_track a{width:40px;height:40px;line-height:40px;background:#0185d7;display:block;margin:0 auto}
-.retailer-account .profile .info .cell{margin:0 15px;float:left}
+.retailer-account .profile .info .row{padding: 10px 0}
+.retailer-account .profile .info .row .cell span{display: inline-block;width: 46px;height: 30px;line-height: 30px;text-align: center;background: #0185d7}
 .retailer-account .profile .info .wishlist_track a{width: 41px; height: 30px; line-height: 30px; background: #0185d7; display: block; margin: 0 auto; overflow-x: hidden;}
 .retailer-account .panel{background:#007ecc;color:#ffffff;border-radius:0;margin-bottom: 0;padding-bottom:50px}
-.retailer-account .panel .panel-body,.retailer-account .panel .panel-body .row{padding: 0;margin:0}
-.retailer-account .panel .panel-body .row .cell{margin:5px 7px;float:left}
-.retailer-account .panel .panel_body .row .cell h4{line-height: 30px}
+.retailer-account .panel .panel-body,.retailer-account .panel .panel-body .row{padding:0;margin:0}
 .customer-account-dashboard .profile .info .order .panel-title{display:inline-block}
 .customer-account-dashboard .profile .info .order .panel-title span{float:right;display:block}
 .customer-account-dashboard .info-box{float:left;width:33.33333333%;font-size:12px}

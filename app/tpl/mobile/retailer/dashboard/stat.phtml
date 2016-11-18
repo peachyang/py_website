@@ -11,11 +11,10 @@ $stat = $this->getStat();
                 ?>
                 <div class="row">
                 <?php endif; ?>
-                <div class="cell text-center" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">
-                    <h4 class="title font-14">
-                        <span class="label"><?php echo $this->translate($item['title']) ?>: </span>
+                <div class="cell col-xs-4 col-sm-4 text-center" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">
+                        
+                        <?php echo $this->translate($item['title']) ?><br />
                         &#40;<span class="data amount">-</span>&#41; 
-                    </h4>
                 </div>
                 <?php
                 if (++$col % 4 === 0):

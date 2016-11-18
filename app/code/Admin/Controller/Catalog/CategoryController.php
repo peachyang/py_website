@@ -5,9 +5,10 @@ namespace Seahinet\Admin\Controller\Catalog;
 use Exception;
 use Seahinet\Catalog\Model\Category as Model;
 use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Lib\Model\Collection\Language;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Session\Segment;
 
@@ -110,16 +111,41 @@ class CategoryController extends AuthActionController
                 }
                 try {
                     $model->save();
+                    $languages = new Language;
+                    $languages->columns(['id']);
+                    $languages->load(true, false);
+                    foreach ($languages as $language) {
+                        $this->reindex($model->getId(), $language['id']);
+                    }
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
-                $this->getContainer()->get('indexer')->reindex('catalog_url');
             }
         }
         return $this->response($result, ':ADMIN/catalog_category/');
+    }
+
+    private function reindex($id, $languageId)
+    {
+        $model = new Model($languageId);
+        $model->load($id);
+        $tmp = $model;
+        $path = [$model['uri_key']];
+        while (($tmp = $tmp->getParentCategory()) && $tmp['uri_key']) {
+            array_unshift($path, $tmp['uri_key']);
+        }
+        $path = implode('/', $path);
+        $values = [['product_id' => null, 'category_id' => $id, 'path' => $path]];
+        foreach ($model->getProducts() as $product) {
+            $values[] = ['product_id' => $product['id'], 'category_id' => $id, 'path' => $path . '/' . $product['uri_key']];
+        }
+        $this->getContainer()->get('indexer')->replace('catalog_url', $languageId, $values, ['category_id' => $id]);
+        foreach ($model->getChildrenCategories() as $child) {
+            $this->reindex($child['id'], $languageId);
+        }
     }
 
 }

@@ -39,10 +39,28 @@ class CategoryController extends AuthActionController
             if (empty($data['parent_id'])) {
                 $model->setData('parent_id', null);
             }
-        }
-        );
-        $this->getContainer()->get('indexer')->reindex('cms_url');
+        }, false, [$this, 'reindex']);
         return $response;
+    }
+
+    protected function reindex($model)
+    {
+        $tmp = $model;
+        $path = [$model['uri_key']];
+        while (($tmp = $tmp->getParentCategory()) && $tmp['uri_key']) {
+            array_unshift($path, $tmp['uri_key']);
+        }
+        $path = implode('/', $path);
+        $values = [['page_id' => null, 'category_id' => $model->getId(), 'path' => $path]];
+        foreach ($model->getPages() as $page) {
+            $values[] = ['page_id' => $page['id'], 'category_id' => $model->getId(), 'path' => $path . '/' . $page['uri_key']];
+        }
+        foreach ((array) $model['language_id'] as $languageId) {
+            $this->getContainer()->get('indexer')->replace('cms_url', $languageId, $values, ['category_id' => $model->getId()]);
+            foreach ($model->getChildrenCategories() as $child) {
+                $this->reindex($child);
+            }
+        }
     }
 
 }

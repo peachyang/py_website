@@ -56,8 +56,9 @@ class Url implements Provider
         foreach ($languages as $language) {
             $data = [$language['id'] => []];
             $tree = [];
-            $categories = new Category($language['id']);
-            $categories->where(['status' => 1]);
+            $categories = new Category;
+            $categories->join('cms_category_language', 'cms_category_language.category_id=cms_category.id', [], 'left')
+                    ->where(['status' => 1, 'cms_category_language.language_id' => $language['id']]);
             $categories->load(false);
             foreach ($categories as $category) {
                 $tree[$category['id']] = [

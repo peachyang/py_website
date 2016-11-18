@@ -444,7 +444,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-essential .product-info .options .input-box{display:table-row}
 .product-essential .product-info .options .control-label{display:table-cell;vertical-align:top;padding:0 10px 0 16px;font-size:12px;line-height:28px;width:1%;white-space:nowrap}
 .product-essential .product-info .options .cell{display:table-cell;padding-bottom:15px}
-.product-essential .product-info .options .cell label.invalid{display:block;padding:0}
+.product-essential .product-info .options .cell label.invalid{display:block;padding:0;color:#f00!important;animation:blink .6s}
+@keyframes blink{0%{opacity:1}50%{opacity:.3}100%{opacity:1}}
 .product-essential .product-info .options .cell [type=radio],.product-essential .product-info .options .cell [type=checkbox]{display:none}
 .product-essential .product-info .options .cell [type=radio]+label,.product-essential .product-info .options .cell [type=checkbox]+label{margin:0 20px 10px 0;line-height:26px;border:1px solid #f4f4f4;color:#999;padding:0 6px}
 .product-essential .product-info .options .cell [type=radio]:checked+label,.product-essential .product-info .options .cell [type=checkbox]:checked+label{border-color:#666;color:#666}

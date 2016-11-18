@@ -1,6 +1,9 @@
 <?php
 $customer = $this->getCustomer();
-//$wishlist = new 
+$wishlist1 = new Seahinet\Customer\ViewModel\Wishlist;
+$wishlist = $wishlist1->getItems();
+$viewed1 = new Seahinet\Customer\ViewModel\ViewedProduct;
+$viewed = $viewed1->getProducts();
 ?>
 <div class="profile clearfix">
     <div class="head_pic">
@@ -33,15 +36,15 @@ $customer = $this->getCustomer();
         <div class="wishlist_track">
             <ul class="col-xs-12 col-sm-12">
                 <li class="col-xs-4 col-sm-4 text-center">
-                    <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count(); ?></a>
+                    <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count($wishlist); ?></a>
                     <span><?php echo $this->translate('Focus on shop'); ?></span>
                 </li>
                 <li class="col-xs-4 col-sm-4 text-center">
-                    <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count(); ?></a>
+                    <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count($wishlist); ?></a>
                     <span><?php echo $this->translate('My Wishlist'); ?></span>
                 </li>
                 <li class="col-xs-4 col-sm-4 text-center">
-                    <a href="<?php echo $this->getBaseUrl('customer/history/') ?>"><?php echo count(); ?></a>
+                    <a href="<?php echo $this->getBaseUrl('customer/history/') ?>"><?php echo count($viewed); ?></a>
                     <span><?php echo $this->translate('My Tracks'); ?></span>
                 </li>
             </ul>

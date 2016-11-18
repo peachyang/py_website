@@ -48,12 +48,10 @@ class Profile extends AbstractViewModel
         $collection->columns(['count' => new Expression('count(sales_order.id)')])
                 ->join('sales_order_status', 'sales_order_status.id=sales_order.status_id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
-                ->join('review', 'review.order_id=sales_order.id', [], 'left')
                 ->where([
-                    'sales_order_phase.code' => 'hold',
+                    'sales_order_phase.code' => 'holded',
                     'store_id' => $this->getStore()->getId()
-                ])->group('sales_order_phase.id')
-                ->having(['count(review.id)=0']);
+                ]);
         $collection->load(true, true);
         return count($collection) ? $collection[0]['count'] : 0;
     }

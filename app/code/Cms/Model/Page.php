@@ -2,8 +2,11 @@
 
 namespace Seahinet\Cms\Model;
 
+use Seahinet\Cms\Model\Collection\Category as CategoryCollection;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Resource\Model\Collection\Resource;
+use Zend\Db\Sql\Select;
 
 class Page extends AbstractModel
 {
@@ -71,9 +74,21 @@ class Page extends AbstractModel
         parent::afterLoad($result);
     }
 
+    public function getCategories()
+    {
+        if ($this->getId()) {
+            $collection = new CategoryCollection;
+            $collection->in('id', (new Select('cms_category_page'))
+                            ->columns(['category_id'])
+                            ->where(['page_id' => $this->getId()]));
+            return $collection;
+        }
+        return [];
+    }
+
     public function getImage()
     {
-        if ($this->isLoaded && !empty($this->storage['image'])) {
+        if (!empty($this->storage['image'])) {
             $collection = new Resource;
             $collection->where(['id' => $this->storage['image']]);
             return $collection;
@@ -83,7 +98,7 @@ class Page extends AbstractModel
 
     public function getThumbnail()
     {
-        if ($this->isLoaded && !empty($this->storage['thumbnail'])) {
+        if (!empty($this->storage['thumbnail'])) {
             $collection = new Resource;
             $collection->where(['id' => $this->storage['thumbnail']]);
             return $collection;
@@ -98,7 +113,7 @@ class Page extends AbstractModel
             if (!is_null($category)) {
                 $constraint['category_id'] = $category['id'];
             }
-            $result = $this->getContainer()->get('indexer')->select('cms_url', \Seahinet\Lib\Bootstrap::getLanguage()->getId(), $constraint);
+            $result = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), $constraint);
             if ($result) {
                 return $result[0]['path'];
             }

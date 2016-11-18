@@ -107,19 +107,15 @@ class Indexer implements Stdlib\Singleton
      * Replace data into indexer
      * 
      * @param string $entityType
+     * @param int $languageId
      * @param array $values
      * @param array $constraint
      */
-    public function replace($entityType, $values, $constraint)
+    public function replace($entityType, $languageId, $values, $constraint)
     {
-        $languages = new Language;
-        $languages->where(['status' => 1]);
-        $languages->load(true, true);
-        foreach ($languages as $language) {
-            $this->delete($entityType, $language['id'], $constraint);
-            foreach ($values as $item) {
-                $this->insert($entityType, $language['id'], $item + $constraint);
-            }
+        $this->delete($entityType, $languageId, $constraint);
+        foreach ($values as $item) {
+            $this->insert($entityType, $languageId, $item + $constraint);
         }
         $this->getCacheInstance()->delete('', 'INDEX_');
     }

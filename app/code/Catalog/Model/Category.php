@@ -40,7 +40,7 @@ class Category extends Entity
     public function getParentCategory()
     {
         if ($this->storage['parent_id']) {
-            $category = new static;
+            $category = new static($this->languageId);
             $category->load($this->storage['parent_id']);
             return $category->getId() ? $category : null;
         }

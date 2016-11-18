@@ -34,7 +34,7 @@ class Url implements Provider
                 $ddl = new Ddl\CreateTable($table);
                 $ddl->addColumn(new UnsignedInteger('product_id', true, 0))
                         ->addColumn(new UnsignedInteger('category_id', false, 0))
-                        ->addColumn(new Ddl\Column\Varchar('path', 255, false))
+                        ->addColumn(new Ddl\Column\Text('path', 255, false))
                         ->addConstraint(new Ddl\Constraint\UniqueKey(['category_id', 'product_id'], 'UNQ_' . strtoupper($table) . '_CATEGORY_ID_PRODUCT_ID'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_PRODUCT_ENTITY_ID', 'product_id', 'product_entity', 'id', 'CASCADE', 'CASCADE'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_CATEGORY_ENTITY_ID', 'category_id', 'category_entity', 'id', 'CASCADE', 'CASCADE'))

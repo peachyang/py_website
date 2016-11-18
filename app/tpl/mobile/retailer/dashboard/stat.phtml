@@ -1,14 +1,7 @@
 <?php
 $stat = $this->getStat();
 ?>
-<!--
-<div class="panel panel-stat">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            <span><?php echo $this->translate('Statistics') ?></span>
-        </h3>
-        <small><?php echo $this->translate('Updated at'), date('Y-m-d H:i:s') ?></small>
-    </div>
+<div class="panel panel-stat padding-5">
     <div class="panel-body">
         <?php
         $col = 0;
@@ -18,25 +11,10 @@ $stat = $this->getStat();
                 ?>
                 <div class="row">
                 <?php endif; ?>
-                <div class="cell" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">
-                    <h4 class="title">
-                        <span class="label"><?php echo $this->translate($item['title']) ?>: </span>
-                        <span class="data amount">-</span>
-                    </h4>
-                    <ul class="detail">
-                        <li>
-                            <span class="label"><?php echo $this->translate('Last 24 Hours') ?>: </span>
-                            <span class="data daily">-</span>
-                        </li>
-                        <li>
-                            <span class="label"><?php echo $this->translate('Last 30 Days') ?>: </span>
-                            <span class="data monthly">-</span>
-                        </li>
-                        <li>
-                            <span class="label"><?php echo $this->translate('Last 12 Months') ?>: </span>
-                            <span class="data yearly">-</span>
-                        </li>
-                    </ul>
+                <div class="cell col-xs-4 col-sm-4 text-center" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">
+                        
+                        <?php echo $this->translate($item['title']) ?><br />
+                        &#40;<span class="data amount">-</span>&#41; 
                 </div>
                 <?php
                 if (++$col % 4 === 0):
@@ -51,4 +29,296 @@ $stat = $this->getStat();
         ?>
     </div>
 </div>
--->
+<div class="myorder-cont">	
+    <div class="myorder">
+        <div class="panel-heading" onclick="i_btn($(this))">
+            <h3 class="panel-title">
+                <span class="fa fa-calculator" aria-hidden="true">
+                </span>
+                <?php echo $this->translate('Transaction Management') ?>
+                <a href="javascript:void(0)" class="fa fa-chevron-down text-right" aria-hidden="true"></a>
+            </h3>
+        </div>
+        <div class="Management-menu">
+
+            <div class="panel-heading panel-menu" >
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/') ?>">
+                    <h3 class="panel-title">
+                        <span>
+                            <?php
+                            echo $this->translate('Has sold the baby')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right" aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>	
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/review/') ?>">
+                    <h3 class="panel-title" onclick=""><span><?php echo $this->translate('Review Management') ?></span>
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl('retailer/refund/') ?>">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->translate('Return &amp; Refund')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="myorder" style="display: none">
+        <div class="panel-heading" onclick="i_btn($(this))">
+            <h3 class="panel-title">
+                <span class="fa fa-cart-plus" aria-hidden="true">
+                </span>
+                <?php
+                echo $this->
+                        translate('Product Management')
+                ?>
+                <a href="javascript:void(0) " class="fa fa-chevron-up text-right" aria-hidden="true">
+                </a>
+            </h3>
+        </div>
+        <div class="Management-menu">
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/product/release/">
+                    <h3 class="panel-title">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Release Product')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/product/sales/">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Sales of Product')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>	
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/product/stock/">
+                    <h3 class="panel-title" >
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Stock')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>	
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/product/history/">
+
+                    <h3 class="panel-title" >
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('History Record')
+                            ?>
+                        </span>
+                        <i  class="fa fa-chevron-right pull-right"
+                            aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>	
+            </div>
+        </div>
+    </div>
+    <div class="myorder "style="display: none">
+        <div class="panel-heading" onclick="i_btn($(this))">
+            <h3 class="panel-title">
+                <span class="fa fa-bank" aria-hidden="true">
+                </span>
+                <?php
+                echo $this->
+                        translate('Store Management')
+                ?>
+                <a href="javascript:void(0)" class="fa fa-chevron-up text-right" aria-hidden="true">
+                </a>
+            </h3>
+        </div>
+        <div class="Management-menu">
+
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/view/">
+                    <h3 class="panel-title">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('View Store')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/freight/">
+                    <h3 class="panel-title">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Freight Setting')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/mobile/">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Mobile Phone Store')
+                            ?>
+                        </span>
+                        <i  class="fa fa-chevron-right pull-right"
+                            aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/cotegory/">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Product Category')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/setting/ ">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Store Settings')
+                            ?>
+                        </span>
+                        <i  class="fa fa-chevron-right pull-right"
+                            aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/store/brand/">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Brand Management')
+                            ?>
+                        </span>
+                        <i  class="fa fa-chevron-right pull-right"
+                            aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="myorder" style="display: none">
+        <div class="panel-heading" onclick="i_btn($(this))">
+            <h3 class="panel-title">
+                <span class="fa  fa-volume-up " aria-hidden="true">
+                </span>
+                <?php
+                echo $this->
+                        translate('Marketing Center')
+                ?>
+                <a href="javascript:void(0) " class="fa fa-chevron-up text-right" aria-hidden="true">
+                </a>
+            </h3>
+        </div>
+        <div class="Management-menu">
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/activity/">
+                    <h3 class="panel-title">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Activity Registration')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl() ?>retailer/marketing/promotion/">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Promotion Management')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+            <div class="panel-heading panel-menu">
+                <a href="<?php echo $this->getBaseUrl('retailer/marketing/relationship/') ?>">
+                    <h3 class="panel-title" onclick="">
+                        <span>
+                            <?php
+                            echo $this->
+                                    translate('Member Relationship Management')
+                            ?>
+                        </span>
+                        <i class="fa fa-chevron-right pull-right"
+                           aria-hidden="true">
+                        </i>
+                    </h3>
+                </a>
+            </div>
+        </div>
+    </div>	
+</div>

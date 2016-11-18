@@ -179,7 +179,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account-dashboard .header-m,.retailer-account .header-m{background:#007ecc;height:40px;border-width:0 0 1px;border-style:solid;border-color:#57aadd}
 .customer-account-dashboard .col-main{width:100%;overflow:hidden;margin-bottom:50px}
 .customer-account-dashboard .profile,.retailer-account .profile{background:#007ecc;color:#fff;width:100%;overflow:hidden}
-.customer-account-dashboard .profile .info,.retailer-account .profile .info{width:90%;margin:15px 5%;text-align:center;}
+.customer-account-dashboard .profile .info,.retailer-account .profile .info{width:90%;margin:15px 5% 5px;text-align:center;}
 .customer-account-dashboard .profile .info ul,.retailer-account .profile .info ul{border: 1px solid #0185d7;margin:20px 0}
 .customer-account-dashboard .order{background:#ffffff;margin-bottom:5px;width:100%;overflow:hidden}
 .customer-account-dashboard .coupon{width:100%;overflow:hidden}
@@ -222,7 +222,11 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account-dashboard .profile .info .wishlist_track li,.retailer-account .profile .info .wishlist_track li{line-height:40px;margin-top:10px}
 .customer-account-dashboard .profile .info .wishlist_track span,.retailer-account .profile .info .wishlist_track span{font-size:12px}
 .customer-account-dashboard .profile .info .wishlist_track a{width:40px;height:40px;line-height:40px;background:#0185d7;display:block;margin:0 auto}
+.retailer-account .profile .info .row{padding: 10px 0}
+.retailer-account .profile .info .row .cell span{display: inline-block;width: 46px;height: 30px;line-height: 30px;text-align: center;background: #0185d7}
 .retailer-account .profile .info .wishlist_track a{width: 41px; height: 30px; line-height: 30px; background: #0185d7; display: block; margin: 0 auto; overflow-x: hidden;}
+.retailer-account .panel{background:#007ecc;color:#ffffff;border-radius:0;margin-bottom: 0;padding-bottom:50px}
+.retailer-account .panel .panel-body,.retailer-account .panel .panel-body .row{padding:0;margin:0}
 .customer-account-dashboard .profile .info .order .panel-title{display:inline-block}
 .customer-account-dashboard .profile .info .order .panel-title span{float:right;display:block}
 .customer-account-dashboard .info-box{float:left;width:33.33333333%;font-size:12px}
@@ -567,7 +571,7 @@ retailer-account .profile .rating{position:relative;width:6em;margin-left:36%}
 .checkout-steps .review .order .product-list .qty{color:#000;line-height:26px;text-align:right}
 .checkout-steps .review .order .total .table{overflow: hidden}
 .checkout-steps .review .order .total .table span{color: #007ecc;font-weight:bold}
-.checkout-order .review .order .shipping,.checkout-order .review .tfoot .subtotal>li{border-bottom: 1px solid #f7f7f7;line-height:30px}
+.checkout-order .review .order .shipping,.checkout-order .review .tfoot .subtotal>li{border-bottom: 1px solid #f7f7f7;line-height:36px}
 .checkout-order .review .tfoot .buttons-set{background:#ffffff;position:fixed;bottom:0;z-index:1001;margin-left:-5px}
 .checkout-order .review .tfoot .buttons-set p{width:70%;height: 50px;line-height:50px;float:left;margin-bottom:0}
 .checkout-order .review .tfoot .buttons-set p span{color: #007ecc;font-size:20px;font-weight:bold}

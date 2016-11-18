@@ -41,13 +41,13 @@ $ranking = $rankings->getItems();
             </p>
             <div class="row">
                 <div class="cell">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?status=1') ?>"><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1') ?>"><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
                 </div>
                 <div class="cell">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?status=2') ?>"><?php echo $this->translate('Processing', [], 'customer') ?><span class="count">(<?php echo $this->getProcessing() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3') ?>"><?php echo $this->translate('Processing', [], 'customer') ?><span class="count">(<?php echo $this->getProcessing() ?>)</span></a>
                 </div>
                 <div class="cell">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?status=3') ?>"><?php echo $this->translate('On Hold', [], 'customer') ?><span class="count">(<?php echo $this->getHolding() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=7') ?>"><?php echo $this->translate('On Hold', [], 'customer') ?><span class="count">(<?php echo $this->getHolding() ?>)</span></a>
                 </div>
             </div>
         </div>

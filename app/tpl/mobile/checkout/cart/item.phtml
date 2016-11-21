@@ -25,8 +25,8 @@ $inventory = $item->getInventory();
                     foreach ($item['product']->getOptions() as $option):
                         if (isset($options[$option->getId()])):
                             ?>
-                            <dt><?php echo $option['title'] ?></dt>
-                            <dd class="col-xs-7 col-sm-6">
+                            <dt class="col-xs-5"><?php echo $option['title'] ?></dt>
+                            <dd class="col-xs-7">
                                 <?php
                                 echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                         $option->getValue($options[$option->getId()]) : $options[$option->getId()])

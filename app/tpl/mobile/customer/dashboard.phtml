@@ -218,7 +218,6 @@ $customer = $this->getVariable('customer');
                         <div class="title-content content-last">
                             <div class="content-box box-line"><?php echo $this->translate(ucwords($customer->username)) ?></div>
                             <div class="content-box box-line"><a href=""><?php echo $this->translate('Enter the Store Center') ?></a></div>
-                            <div class="content-box box-line"><a href=""><?php echo $this->translate('Logout') ?></a></div>
-                            <div class="content-box"><a href=""><?php echo $this->translate('Give Feedback') ?></a></div>
+                            <div class="content-box"><a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out') ?></a></div>
                         </div>
                         </div>

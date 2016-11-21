@@ -1,5 +1,9 @@
 <?php
 $orders = $this->getOrders();
+$profile1 = new Seahinet\Customer\ViewModel\Dashboard\Profile;
+$profile = $profile1->getPendingPayment();
+$shipping = $profile1->getShipping();
+$reviewing = $profile1->getReviewing();
 ?>
 <div id="Has-sold" class="seller-tab">
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
@@ -9,18 +13,18 @@ $orders = $this->getOrders();
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#delivery" data-toggle="tab">
-                <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1') ?>" data-toggle="tab">
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile1->getPendingPayment() ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#payment" data-toggle="tab">
-                <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2') ?>" data-toggle="tab">
+                <?php echo $this->translate('Delivering'); ?>(<span><?php echo $profile1->getShipping() ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#refund" data-toggle="tab">
-                <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3') ?>" data-toggle="tab">
+                <?php echo $this->translate('Reviewing'); ?>(<span><?php echo $profile1->getReviewing() ?></span>)
             </a>
         </li>
     </ul>	

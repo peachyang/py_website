@@ -61,6 +61,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                             </div>
                             <div class="modal-footer">
                                 <div class="clearfix action">
+                                    <button type="submit" formaction="<?php echo $this->getBaseUrl('customer/wishlist/add/') ?>" class="btn"><?php echo $this->translate('Add to Wishlist') ?></button>
                                     <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
                                     <button type="submit" class="btn btn-checkout" style="float:left">
                                         <span class="fa fa-shopping-cart" aria-hidden="true"></span>
@@ -102,10 +103,10 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
             <div class="col-xs-12 col-sm-12 product-store">
                 <ul class="col-xs-12 col-sm-12">
                     <li class="col-xs-2 col-sm-2">
-                        <a href=""> <span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?>
+                        <a href=""><span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?></a>
                     </li>
                     <li class="col-xs-2 col-sm-2">
-                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add/') ?> "><span class="fa fa-star"></span><?php echo $this->translate('Wishlist'); ?></a>
+                        <a href="#modal-color-size" data-toggle="modal"><span class="fa fa-star"></span><?php echo $this->translate('Wishlist'); ?></a>
                     </li>
                     <li class="col-xs-2 col-sm-2">
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>"> <span class="fa fa-shopping-cart"></span><?php echo $this->translate('Cart'); ?></a>

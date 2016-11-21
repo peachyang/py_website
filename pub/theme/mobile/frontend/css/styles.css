@@ -391,8 +391,8 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .qty .spin {font-size: 14px;line-height:14px;border: 1px solid #d4d4d4;width:14px;height:14px;text-align: center;color: #cbcbcb;background: #ededed;}
 .modal-dialog .modal-footer{padding:0}
 .modal-dialog .modal-footer .btn{float: left;padding: 6px 12px;margin-bottom: 0;font-size: 14px;line-height: 1.42857143;text-align: center;white-space: nowrap;vertical-align: middle;-ms-touch-action: manipulation;touch-action: manipulation;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-image: none;border: 1px solid transparent;border-radius: 4px;}
-.product-essential .product-info .action .btn {min-width: 50%;margin:0;float: left;height: 40px;background-color: #ff8a00;color: #ffffff;border-radius: 0;font-size: 16px;padding: 0 25px;}
-.product-essential .product-info .action .btn-checkout{min-width: 50%;margin:0;float: left;height: 40px;background-color: #ff440a;color: #ffffff;border-radius: 0;font-size: 16px;padding: 0 25px;}
+.product-essential .product-info .action .btn {min-width:33.33333333%;margin:0;float: left;height: 40px;background-color: #ff8a00;color: #ffffff;border-radius: 0;font-size: 16px;padding: 0 25px;}
+.product-essential .product-info .action .btn-checkout{min-width:33.33333333%;margin:0;float: left;height: 40px;background-color: #ff440a;color: #ffffff;border-radius: 0;font-size: 16px;padding: 0 25px;}
 @media (min-width:1024px){
    .carousel-inner>.item {
         transition: transform .6s ease-in-out;

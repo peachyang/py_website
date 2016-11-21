@@ -42,7 +42,7 @@ $sales_status = $this->getAllSalesStatus();
                     <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone']) ? $filter['receiver_phone'] : ''; ?>" id="receiver_phone" name="receiver_phone" />              
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>"><?php></a>&nbsp;&nbsp;
+                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>"><?php echo $this->translate('Reset')?></a>&nbsp;&nbsp;
                     <button class="btn" type="submit">搜索</button>
                 </div>
             </div>

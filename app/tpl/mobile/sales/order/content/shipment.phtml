@@ -98,7 +98,7 @@ $shipment = $this->getVariable('model');
             <h4 class="panel-title font-14"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
         </div>
         <div class="panel-body">
-            <?php echo nl2br($order->offsetGet('shipping_address')) ?>
+            <?php echo $order->offsetGet('shipping_address') ?>
         </div>
     </div>
     <div class="panel panel-default">

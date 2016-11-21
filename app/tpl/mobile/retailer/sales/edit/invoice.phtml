@@ -1,0 +1,102 @@
+<?php
+$order = $this->getOrder();
+$currency = $this->getOrder()->getCurrency();
+$back_url = $this->getRequest()->getHeader('HTTP_REFERER');
+?>
+
+
+<div id="Has-sold" class="seller-tab">
+
+	<div class="search col-xs-12 col-sm-12 padding-5">
+		<div class="search_center">
+			<i class="fa fa-search" aria-hidden="true"></i>
+			<input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
+		</div>
+	</div>
+	 <form action="<?php echo $this->getBaseUrl('retailer/sales_invoice/save/') ?>" method="post" class="form-sales">
+        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+        <input type="hidden" name="order_id" value="<?php echo $this->getQuery('id') ?>" />
+        <input type="hidden" name="back_url" value="<?php echo $back_url; ?>" />
+	<div id="Product-details" class="tab-content">
+	    <div class="tab-pane fade in active" id="all">
+	      <div class="order-details col-xs-12 col-sm-12 ">
+	      	
+        	<ul  class="col-xs-12 col-sm-12 title-nav bt bg padding-5">
+	        		<li class="col-xs-5 col-sm-5 text-left font-12">
+	        	<?php if ($customer = $this->getCustomer()): ?>
+                   
+                    <?php echo  $customer['username'] ?>
+                <?php endif ?>
+	        		</li>
+	        		<li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:<?php echo $currency->format($order->offsetGet('total')) ?>(含运费: <?php echo $currency->format($order->offsetGet('shipping')) ?>)</a></li>	      			
+	        </ul>
+	          <ul class="col-xs-12 col-sm-12 inline bt padding-5">
+	        		<li class="col-xs-2 col-sm-2"><img src="" style="display: inline;" width="50" height="50"></li>
+	        		<li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
+	        		<li class="col-xs-3  col-sm-3 text-right">
+	        			<span class="price "><?php echo $currency->format($order->offsetGet('total')) ?></span>
+						<span>x1</span>
+						<span class="color-blue font-14">  <?php echo  $this->translate($this->getStatus()->offsetGet('name'), [], 'sales') ?></span>
+	        		</li>
+	        			
+	       </ul>
+	      </div>
+	      <div class="billing col-xs-12 col-sm-12  margin-15-0">
+	       		<ul class="col-xs-12 col-sm-12 font-12 ">
+	       		<li class="bg font-14"><span class="padding-5">账单信息</span></li>
+	       		<ul class="li-padding">
+		       		<li class="col-xs-12 col-sm-12"> <?php
+                if ($store = $order->getStore()) {
+                    echo $this->translate('Store'), ': ', $store->offsetGet('name');
+                }
+                ?></li>
+		       		<li class="col-xs-12 col-sm-5"> <?php echo $this->translate('ID'), ': ', $order['increment_id'] ?></li>
+		       		<li class="col-xs-12 col-sm-7 ">订单号:1216102111365186</li>
+	       		</ul>
+	       		
+	       		</ul>
+	      </div>
+	       <div class="address col-xs-12 col-sm-12 margin-15-0">
+	       		<ul class="col-xs-12 col-sm-12 font-12">
+	       		<li class="bg font-14"><span class="padding-5">收货信息</span></li>
+	       		<ul class="li-padding">
+	       		<li>
+	       			 <?php echo nl2br($order->offsetGet('billing_address')) ?>
+	       			 </li>
+	       		</ul>
+	       		
+	       		</ul>
+	       </div>
+	      <div class="payment col-xs-12 col-sm-12 margin-15-0">
+	       		<ul class="col-xs-12 col-sm-12 font-12">
+	       		<li class="bg font-14"><span class="padding-5">支付方式</span></li>
+	       		<ul  class="li-padding">
+	       			<li class="col-xs-6 col-sm-6"> <?php echo $this->translate($order->getPaymentMethod()->getLabel()) ?></li>
+	       			<li class="col-xs-6 col-sm-6"><?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></li>
+	       		</ul>
+	       		
+	       		</ul>
+	      </div> 
+	       <div class="transport col-xs-12 col-sm-12 margin-15-0">
+	       		<ul class="col-xs-12 col-sm-12 font-12">
+	       		<li class="bg font-14"><span class="padding-5">运输方式</span></li>
+	       		<ul  class="li-padding">
+	  				<li class="col-xs-12 col-sm-12">固定运费</li>
+	       		</ul>
+	       		
+	       		</ul>
+	       </div>
+	       
+	    </div>
+	     <div class="tab-pane fade " id="delivery">
+	        2
+	    </div>
+	     <div class="tab-pane fade" id="payment">
+	        3
+	    </div>
+	     <div class="tab-pane fade " id="refund">
+	        4
+	    </div>
+	</div>
+	</form>	
+</div>

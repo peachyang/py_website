@@ -172,7 +172,7 @@ class ProductController extends AuthActionController
                 }
                 try {
                     $model->save();
-                    $languages = new Language;
+                    $languages = new Lcollection;
                     $languages->columns(['id']);
                     $languages->load(true, false);
                     foreach ($languages as $language) {

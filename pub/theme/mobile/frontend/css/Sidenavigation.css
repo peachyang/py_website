@@ -240,7 +240,6 @@ li {
 }
 .nav>li>a:focus, .nav>li>a:hover{background:none}
 .nav>li>a:focus, .nav>li>a:hover{border:none}
-.collapse.in li{padding:}
 .menu-show .nav li a[data-toggle="collapse"]::after{}
 .menu-show  .nav-header i{padding:0 10px;font-size:13px}
 .color-33{color:red}

@@ -224,6 +224,98 @@
                 }
             });
         });
+        
+        $('[data-base]').each(function () {
+            var o = this;
+            var p = $(o).parents('.input-box').first();
+            $(p).hide();
+            $(o).find('input,select,textarea,button').each(function () {
+                this.disabled = true;
+            });
+            o.disabled = true;
+            var base = $(o).data('base');
+            try {
+                var target = eval('(' + base + ')');
+            } catch (e) {
+                var target = base.indexOf(':') === -1 ? eval('({"' + base + '":"1"})') : eval('({' + base + '})');
+            }
+            var toggle = function (s, t) {
+                if (typeof s !== 'object') {
+                    s = [s];
+                }
+                if (typeof t !== 'object') {
+                    t = [t];
+                }
+                var f = false;
+                for (var i in s) {
+                    if ($.inArray(s[i], t) !== -1) {
+                        f = true;
+                        break;
+                    }
+                }
+                if (f) {
+                    $(p).show();
+                    o.disabled = false;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = false;
+                    });
+                } else {
+                    $(p).hide();
+                    o.disabled = true;
+                    $(o).find('input,select,textarea,button').each(function () {
+                        this.disabled = true;
+                    });
+                }
+            };
+            for (var i in target) {
+                toggle($(i).is('[type=radio],[type=checkbox]') ? i.checked : $(i).val(), target[i]);
+                if ($(i).is('[type=radio],[type=checkbox]')) {
+                    $(i).click(function () {
+                        toggle(this.checked ? this.value : null, target[i]);
+                    });
+                } else {
+                    $(i).change(function () {
+                        toggle($(this).val(), target[i]);
+                    });
+                }
+            }
+        });
+        $('form[enctype="multipart/form-data"]').on('change', '.images [hidden][type=file][accept^=image]', function () {
+            var odiv = $('<div class="preview"></div>');
+            if (typeof FileReader !== 'undefined') {
+                if (this.files[0].size > 2097152) {
+                    alert(translate('Each image should not be over 2MB.'));
+                } else {
+                    var oimg = document.createElement('img');
+                    $(odiv).append(oimg);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        oimg.src = e.target.result;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            } else {
+                this.select();
+                var src = document.selection.createRange().text;
+                $(odiv).css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="' + src + '"');
+            }
+            $(this).before(odiv);
+            if ($(this).siblings('[name="' + $(this).attr('name') + '"]').length < 4) {
+                $(this).after('<input type="file" hidden="hidden" name="' + $(this).attr('name') + '" id="' + $(this).attr('id') + '" accept="' + $(this).attr('accept') + '" />').removeAttr('id');
+            }
+        }).on('click', '.images .preview', function () {
+            var o = $(this).next('[type=file]');
+            if ($(this).siblings('.preview').length) {
+                if ($(o).is('[id]')) {
+                    $(this).siblings('[type=file]').last().attr('id', $(o).attr('id'));
+                }
+                $(o).remove();
+                $(this).remove();
+            } else {
+                $(o).val('');
+                $(this).remove();
+            }
+        });
     });
     $(function () {
         $('aside.slide-wrapper').on(function (e) {

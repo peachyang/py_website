@@ -63,10 +63,10 @@ $flag = false;
                         <li class="col-xs-4 col-sm-4 text-right ">
                             <div class="price-box">
                                 <?php if (($price += $sum) == $item['price']): ?>
-                                    <span class="regular-price  col-xs-12 col-sm-12"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
+                                    <span class="regular-price  col-xs-12 col-sm-12"><span class="price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span></span>
                                 <?php else: ?>
-                                    <span class="old-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
-                                    <span class="special-price"><?php echo $this->getCurrency()->convert($price, true) ?></span>
+                                    <span class="old-price"><span class="price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span></span>
+                                    <span class="special-price"><span class="price"><?php echo $this->getCurrency()->convert($price, true) ?></span></span>
                                 <?php endif ?>
 
                                 <div class="color-hui font-12 ">

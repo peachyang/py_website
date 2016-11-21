@@ -61,6 +61,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                             </div>
                             <div class="modal-footer">
                                 <div class="clearfix action">
+                                    <button type="submit" formaction="<?php echo $this->getBaseUrl('customer/wishlist/add/') ?>" class="btn"><?php echo $this->translate('Add to Wishlist') ?></button>
                                     <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
                                     <button type="submit" class="btn btn-checkout" style="float:left">
                                         <span class="fa fa-shopping-cart" aria-hidden="true"></span>
@@ -102,10 +103,10 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
             <div class="col-xs-12 col-sm-12 product-store">
                 <ul class="col-xs-12 col-sm-12">
                     <li class="col-xs-2 col-sm-2">
-                        <a href=""> <span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?>
+                        <a href=""><span class="fa fa-qq"></span><?php echo $this->translate('Custom Service'); ?></a>
                     </li>
                     <li class="col-xs-2 col-sm-2">
-                        <a href="<?php echo $this->getBaseUrl('customer/wishlist/add/') ?> "><span class="fa fa-star"></span><?php echo $this->translate('Wishlist'); ?></a>
+                        <a href="#modal-color-size" data-toggle="modal"><span class="fa fa-star"></span><?php echo $this->translate('Wishlist'); ?></a>
                     </li>
                     <li class="col-xs-2 col-sm-2">
                         <a href="<?php echo $this->getBaseUrl('checkout/cart/') ?>"> <span class="fa fa-shopping-cart"></span><?php echo $this->translate('Cart'); ?></a>
@@ -136,7 +137,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
     </div>
     <div class="product-detail clearfix" id="myAffix">
         <div class="col-xs-12 col-sm-12 info" data-spy="affix" data-offset-top="718" data-offset-bottom="200">
-            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
+            <a href="javascript:void(0);" onclick="javascript:history.back(-1);" class="fa fa-angle-left fa-3x text-right col-xs-1 col-sm-1"></a>
             <div class="content-list col-xs-10 col-sm-10 text-center">
                 <ul class="nav nav-tabs font-13" role="tablist">
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#product" aria-controls="product" role="tab" data-toggle="tab"><?php echo $this->translate('Product'); ?></a></li>
@@ -144,7 +145,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                     <li class="col-xs-4 col-sm-4" role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab"><?php echo $this->translate('Review(s)') ?></a></li>
                 </ul>
             </div>
-            <a href="javascript:viod(0);" class="fa fa-bars fa-2x text-left col-xs-1 col-sm-1"></a>
+            <a href="javascript:void(0);" class="fa fa-bars fa-2x text-left col-xs-1 col-sm-1"></a>
         </div>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="description">

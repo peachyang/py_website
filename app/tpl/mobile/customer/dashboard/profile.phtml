@@ -10,27 +10,21 @@ $coupon = $coupon1->getCoupons();
 <div class="profile clearfix">
     <div class="head_pic">
         <label for="avatar" class="avatar">
-            <img src="<?php if ($customer->offsetGet('avatar')): ?>data:image/png;base64, <?php
-                echo $customer->offsetGet('avatar');
-            else:
-                echo $this->getPubUrl('frontend/images/placeholder.png');
-            endif;
-            ?>" alt="" width="100" height="100" />
-            <span class="update"><?php echo $this->translate('Update Image') ?></span>
+            <a href="<?php echo $this->getBaseUrl('customer/account/edit/') ?>">
+                <img src="<?php if ($customer->offsetGet('avatar')): ?>data:image/png;base64, <?php
+                    echo $customer->offsetGet('avatar');
+                else:
+                    echo $this->getPubUrl('frontend/images/placeholder.png');
+                endif;
+                ?>" alt="" width="100" height="100" />
+                <span class="update"><?php echo $this->translate('Update Image') ?></span>
+            </a>
         </label>
     </div>
     <div class="info col-xs-12 col-sm-10">
         <div class="name">
             <span><?php echo $customer->offsetGet('username') ?></span>
             <a class="level badge"><?php echo $customer->getLevel() ?></a>
-            <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                <i class="fa fa-star-o"></i>
-                <i class="fa fa-star-o"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-            <span class=""></span>
         </div>
         <div class="wishlist_track">
             <ul class="col-xs-12 col-sm-12">

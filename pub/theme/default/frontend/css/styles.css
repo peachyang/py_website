@@ -288,6 +288,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-address .address-list .action{text-align:right}
 .customer-account-address .address-list .action a{margin-left:4px}
 .customer-wishlist .wishlist{margin:40px 0;border:1px solid #fbf9f9}
+.customer-wishlist .wishlist .btn{display:none}
 .customer-wishlist .wishlist td{border-top:1px solid #fbf9f9;padding:10px}
 .customer-wishlist .wishlist .vtop_width{width:250px}
 .customer-wishlist .wishlist .product-name{font-size:14px;line-height:22px;margin-bottom:12px}

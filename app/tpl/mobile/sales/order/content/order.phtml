@@ -11,9 +11,9 @@ $currency = $order->getCurrency();
         </form>
     </div>
     <div class="tab-pane fade in active" id="all">
-        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
-            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()->offsetGet('name') ?></li>
-            <li class="col-xs-7 col-sm-7 text-right font-14">
+        <ul class="col-xs-12 col-sm-12 title-nav name  padding-5">
+            <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()->offsetGet('name') ?></li>
+            <li class="col-xs-7 col-sm-7 text-right">
                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
                 <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
             </li>	
@@ -46,7 +46,7 @@ $currency = $order->getCurrency();
                                     if (isset($options[$option->getId()])):
                                         ?>
                                         <dt><?php echo $option['title'] ?></dt>
-                                        <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd><br />
+                                        <dd><?php echo in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $option->getValue($options[$option->getId()]) : $options[$option->getId()] ?></dd>
                                         <?php
                                     endif;
                                 endforeach;
@@ -96,7 +96,7 @@ $currency = $order->getCurrency();
             <h4 class="panel-title pull-left font-14"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
         </div>
         <div class="panel-body">
-            <?php echo nl2br($order->offsetGet('shipping_address')) ?>
+            <?php echo $order->offsetGet('shipping_address') ?>
         </div>
     </div>
     <div class="panel panel-default">

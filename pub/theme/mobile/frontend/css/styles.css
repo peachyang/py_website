@@ -158,6 +158,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .checkout-cart .additional .tab-content .carousel-indicators{bottom:-20px}
 .checkout-cart .additional .tab-content .carousel-indicators li{background:#ffffff;border:#ffffff 1px solid}
 .checkout-cart .additional .tab-content .carousel-indicators .active{background:#ff8a00;border:#ff8a00 1px solid}
+.checkout-cart .breadcrumb-m .open .dropdown-menu{top:50px}
 /*breadcrumb-m*/
 .wrapperhovertree {text-align:right;min-height: 100%;height:auto;-webkit-background-size: 100% 100%;-moz-background-size: 100% 100%;
                    -o-background-size: 100% 100%;background-size: 100% 100%;}
@@ -194,6 +195,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .retailer-account .border-left,.customer-account .border-left{border-left:1px solid #ddd}
 .retailer-account .sale_status,.customer-account .sale_status{overflow: hidden;background:#eee}
 .retailer-account .state{background:#007ecc;border-radius:0;color:#ffffff;padding-bottom:30px}
+.retailer-account .profile .info .details .cell span,.retailer-account .state .cell span{padding:5px 12px;background: #0185d7;line-height: 30px}
 .customer-account-dashboard .order h3,.customer-account-dashboard .assets h3 {line-height:30px;display:inline-block;width:100%;font-size: 13px;}
 .customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}
 .customer-account-dashboard .assets h3 .fa{color:#007ecc;padding-right:5px}
@@ -234,7 +236,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account-dashboard .custom-info h3 a{width:10%;display:block;float:right;color:#b5b5b5;padding-top:7px}
 .customer-account-dashboard .custom-info h3 .fa{color:#007ecc;padding-right:5px}
 .customer-account-dashboard .custom-info h3 .text-right{color:#b5b5b5}
-.customer-account-dashboard .profile-foot,.retailer-account .profile-foot{position:fixed;z-index:1000;bottom:0;height:40px;background:#ffffff;width:100%;color:#5a5a5a;line-height:50px}
+.customer-account-dashboard .profile-foot,.retailer-account .profile-foot{position:fixed;z-index:1000;bottom:0;height:40px;background:#ffffff;width:100%;color:#5a5a5a;line-height:50px;background-color: hsla(0, 0%, 100%, 0.85);box-shadow: -1px 0px 10px #b5b5b5}
 .customer-account-dashboard .profile-foot li,.retailer-account .profile-foot li{line-height:40px;border-right: 1px solid #eee;font-size: 13px;}
 .customer-account-dashboard .profile-foot li:last-child,.retailer-account .profile-foot li:last-child{border-right:none}
 .customer-account-dashboard .notop{margin-top:0;padding-left:4px}
@@ -259,8 +261,9 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account .profile .info .name .badge{background: #fdbb30;font-size: 12px;line-height: 20px;padding: 0 5px;border-radius: 2px;color: #fff;width:20px;height:20px}
 .customer-account .profile .info .name .level{position:relative;z-index:1}
 .customer-account .header-m,.retailer-account .header-m{width:100%;height:50px;line-height:50px;background:#007ecc;color:#ffffff;position: relative;}
-.customer-account .header-m a,.retailer-account .header-m a{height:40px;line-height:40px}
+.customer-account .header-m a,.retailer-account .header-m a{height:50px;line-height:50px}
 .customer-account .header-m .container,.retailer-account .header-m .container{font-size:20px;line-height:50px}
+.customer-account .header-m .filters span.fa{margin-left: 5px}
 .customer-account .refund-detail .refund-list,.retailer-account .refund-detail .refund-list{border:1px solid #e1e3ea}
 .customer-account .refund-list .action a,.retailer-account .refund-list .action a{display:block}
 .customer-account .refund-detail .handler:not(:empty),.retailer-account .refund-detail .handler:not(:empty){border:1px solid #e1e3ea;padding:10px;margin-bottom:15px}
@@ -292,6 +295,7 @@ aside.slide-wrapper li.current > a {background-color: #f1f1f1}
 .customer-account .refund-detail #address,.retailer-account .refund-detail #address{padding:0 10px}
 .customer-account .seller-tab ul li,.retailer-account .seller-tab ul li{line-height: 30px}
 .customer-account .seller-tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{background:none;font-size: 12px;color: #007dc6;border-bottom: 1px solid #007dc6}
+.customer-account .coupon{color:#ffffff}
 .sales-refund .buttons-set .btn{padding:6px 46%;background:#007ecc;color:#ffffff}
 .main-container .breadcrumb-m {position:fixed;top:0;z-index:100;width:100%;background: #757576;height:50px;}
 .main-container .breadcrumb-m .breadcrumb-right{text-align:right}
@@ -742,7 +746,6 @@ overflow:hidden;}
 .seller-tab .tab-content .inline li .choose{color:#777;font-size:12px}
 .wishlist .seller-tab .tab-content .inline li .choose span{text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
 .seller-tab .tab-content .inline{font-size:12px}
-.seller-tab ul li,.sales-order-list .seller-tab ul li{padding:7px 0}
 .seller-tab .tab-content  li,.sales-order-list .seller-tab .tab-content .name li{padding:0 0}
 .wishlist .seller-tab .tab-content .logistics .form-control{width:60%}
 .wishlist .seller-tab .tab-content .logistics button {background:#02a0e9;color:#fff;padding:2px 18px;border:none;font-size:12px}

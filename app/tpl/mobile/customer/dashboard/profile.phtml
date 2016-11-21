@@ -4,6 +4,8 @@ $wishlist1 = new Seahinet\Customer\ViewModel\Wishlist;
 $wishlist = $wishlist1->getItems();
 $viewed1 = new Seahinet\Customer\ViewModel\ViewedProduct;
 $viewed = $viewed1->getProducts();
+$coupon1 = new Seahinet\Customer\ViewModel\Coupon;
+$coupon = $coupon1->getCoupons();
 ?>
 <div class="profile clearfix">
     <div class="head_pic">
@@ -27,17 +29,14 @@ $viewed = $viewed1->getProducts();
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
-                <div class="start">
-                    <span class="start-v">V</span><span class="start-num">0</span>
-                </div>
             </div>
             <span class=""></span>
         </div>
         <div class="wishlist_track">
             <ul class="col-xs-12 col-sm-12">
                 <li class="col-xs-4 col-sm-4 text-center">
-                    <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count($wishlist); ?></a>
-                    <span><?php echo $this->translate('Focus on shop'); ?></span>
+                    <a href="<?php echo $this->getBaseUrl('customer/coupon/') ?>"><?php echo count($coupon); ?></a>
+                    <span><?php echo $this->translate('Coupon'); ?></span>
                 </li>
                 <li class="col-xs-4 col-sm-4 text-center">
                     <a href="<?php echo $this->getBaseUrl('customer/wishlist/') ?>"><?php echo count($wishlist); ?></a>

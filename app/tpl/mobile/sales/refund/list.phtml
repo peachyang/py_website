@@ -1,27 +1,33 @@
 <?php
 $applications = $this->getApplication();
 $currency = $this->getCurrency();
+$profile = new Seahinet\Retailer\ViewModel\Dashboard\Profile;
+$payment = $profile->getPendingPayment();
+$processing = $profile->getProcessing();
+$refund1 = new Seahinet\Retailer\ViewModel\Refund;
+$refund = $refund1->getApplication();
+$refund->getSelect()->where->notEqualTo('status',5);
 ?>
 <div id="Has-sold" class="seller-tab">
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
-        <li class="active col-xs-3 col-sm-3">
-            <a href="#all" data-toggle="tab">
+        <li class="active col-xs-3 col-sm-3" id="all">
+            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/');?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="#delivery" data-toggle="tab">
-                <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+        <li class="col-xs-3 col-sm-3" id="delivery">
+            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1'); ?>">
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile->getPendingPayment(); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="#payment" data-toggle="tab">
-                <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+        <li class="col-xs-3 col-sm-3" id="payment">
+            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3'); ?>">
+                <?php echo $this->translate('Processing', [], 'customer'); ?>(<span><?php echo $profile->getProcessing(); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="#refund" data-toggle="tab">
-                <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+        <li class="col-xs-3 col-sm-3" id="refund">
+            <a href="<?php echo $this->getBaseUrl('retailer/refund/?status=1'); ?>" id="refund">
+                <?php echo $this->translate('Refund rights'); ?>(<span><?php echo count($refund); ?></span>)
             </a>
         </li>
     </ul>

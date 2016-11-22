@@ -31,7 +31,7 @@ $stat = $this->getStat();
 </div>
 <div class="myorder-cont">	
     <div class="myorder">
-        <div class="panel-heading" onclick="i_btn($(this))">
+        <div class="panel-heading" onclick="i_btn($(this))" >
             <h3 class="panel-title">
                 <span class="fa fa-calculator" aria-hidden="true"></span>
                 <?php echo $this->translate('Transaction Management') ?>
@@ -39,12 +39,12 @@ $stat = $this->getStat();
             </h3>
         </div>
         <div class="Management-menu">
-            <div class="panel-heading panel-menu" >
+            <div class="panel-heading panel-menu">
                 <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/') ?>">
                     <h3 class="panel-title">
                         <span>
                             <?php
-                            echo $this->translate('Has sold the baby')
+                            echo $this->translate('Sold Products')
                             ?>
                         </span>
                         <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>

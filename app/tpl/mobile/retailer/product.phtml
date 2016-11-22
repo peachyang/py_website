@@ -11,7 +11,6 @@ $refund = $refund1->getApplication();
 $refund->getSelect()->where->notEqualTo('status',5);
 ?>
 <div class="wishlist">
-    <h3 class="title"><?php echo $this->translate($subtitle); ?></h3>
     <div id="Has-sold" class="seller-tab">
         <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 text-center">
             <li class="col-xs-3 col-sm-3" <?php if (count($transactions) != 0): ?> class="active"<?php endif ?>>

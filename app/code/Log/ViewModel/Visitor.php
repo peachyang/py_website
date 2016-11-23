@@ -20,11 +20,11 @@ class Visitor extends AbstractViewModel
             $result = '
         <script>(function() {
 var os = document.createElement("script");
-os.src = "' . $config['log/url'] ?: ($this->getBaseUrl('log') . str_replace(array('+', '/', '='), array('-', '_', ''), base64_encode((
+os.src = "' . ($config['log/url'] ?: ($this->getBaseUrl('log/') . str_replace(array('+', '/', '='), array('-', '_', ''), base64_encode((
                                     $customer->get('hasLoggedIn') ? $customer->get('customer')->getId() : 'n') . '-' .
                                     Bootstrap::getStore()->getId() . '-' .
                                     $catalog->get('product_id', 'n'))
-                    )) . '.js";
+                    ))) . '.js";
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(os, s);
 })();</script>';

@@ -10,7 +10,7 @@ $products = $this->getProducts();
                 ?>
                 <li class="item col-xs-12 col-sm-6 col-md-4">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image col-xs-4">
-                        <?php if (strpos($thumbnail, 'http') === false): ?>
+                        <?php if (strpos($thumbnail, '//') === false): ?>
                             <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/130x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
                         <?php else: ?>
                             <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />

@@ -19,7 +19,7 @@ if (count($products)):
                 <li class="item <?php echo $class;?>">
                         <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
                             <?php
-                            if (strpos($thumbnail, 'http') !== false):
+                            if (strpos($thumbnail, '//') !== false):
                                 ?>
                                 <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                             <?php elseif ($width): ?>

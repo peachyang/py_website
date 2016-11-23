@@ -28,7 +28,8 @@ class OrderController extends AuthActionController
         }
         return $this->stat($collection, function($item) {
                     return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-                });
+                }
+        );
     }
 
     public function amountAction()

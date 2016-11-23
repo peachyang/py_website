@@ -40,6 +40,7 @@ class Customer extends Entity
         parent::afterSave();
         if (isset($this->storage['group_id'])) {
             $tableGateway = $this->getTableGateway('customer_in_group');
+            $tableGateway->delete(['customer_id' => $this->getId()]);
             $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
             foreach ($groups as $id) {
                 $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);

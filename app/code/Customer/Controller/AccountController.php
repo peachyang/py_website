@@ -24,7 +24,7 @@ class AccountController extends AuthActionController
 {
 
     use \Seahinet\Lib\Traits\DB;
-    
+
     public function createAction()
     {
         return $this->getLayout('customer_account_create');
@@ -341,27 +341,34 @@ class AccountController extends AuthActionController
                 $result['error'] = 1;
             }
             if ($result['error'] === 0) {
-                $files = $this->getRequest()->getUploadedFile();
-                foreach ($files as $key => $file) {
-                    $data[$key] = base64_encode($file->getStream()->getContents());
+                try {
+                    $files = $this->getRequest()->getUploadedFile();
+                    foreach ($files as $key => $file) {
+                        if ($file->getError() == 0) {
+                            $data[$key] = base64_encode($file->getStream()->getContents());
+                        }
+                    }
+                    $model = new Model;
+                    $model->load($customer['id']);
+                    $model->setData($data);
+                    $model->save();
+                    $subscriber = new Subscriber;
+                    $subscriber->load($data['email'], 'email');
+                    if (empty($data['subscribe']) && $subscriber->getId()) {
+                        $subscriber->setData('status', 0)->save();
+                    } else if (!empty($data['subscribe'])) {
+                        $subscriber->setData([
+                            'email' => $data['email'],
+                            'language_id' => Bootstrap::getLanguage()->getId(),
+                            'status' => 1
+                        ])->save();
+                    }
+                    $segment->set('customer', clone $model);
+                    $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving.'), 'level' => 'success'];
                 }
-                $model = new Model;
-                $model->load($customer['id']);
-                $model->setData($data);
-                $model->save();
-                $subscriber = new Subscriber;
-                $subscriber->load($data['email'], 'email');
-                if (empty($data['subscribe']) && $subscriber->getId()) {
-                    $subscriber->setData('status', 0)->save();
-                } else if (!empty($data['subscribe'])) {
-                    $subscriber->setData([
-                        'email' => $data['email'],
-                        'language_id' => Bootstrap::getLanguage()->getId(),
-                        'status' => 1
-                    ])->save();
-                }
-                $segment->set('customer', clone $model);
-                $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
             }
         }
         return $this->response($result ?? ['error' => 0, 'message' => []], 'customer/account/edit/', 'customer');

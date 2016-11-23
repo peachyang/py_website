@@ -100,6 +100,10 @@ catalog_product:
                             upsells:
                                 type: Seahinet\Catalog\ViewModel\Product\Upsells
                                 template: catalog/product/link
+            extra:
+                children:
+                    log:
+                        type: Seahinet\Log\ViewModel\Visitor
 catalog_review:
     update: frontend
     root:

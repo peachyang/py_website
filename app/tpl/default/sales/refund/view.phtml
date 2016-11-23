@@ -126,7 +126,7 @@ $currency = $this->getCurrency();
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                 <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />
                 <div class="input-box">
-                    <textarea name="comment" class="form-control"></textarea>
+                    <textarea name="comment" class="form-control required"></textarea>
                 </div>
                 <div class="input-box images">
                     <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />

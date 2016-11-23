@@ -6,8 +6,8 @@ $products = $this->getProducts();
         <?php
         $current = '';
         foreach ($products as $item):
-            $product = $item['product'];
-            $date = date('Y-m-d', strtotime($item['updated_at'] ?: $item['created_at']));
+            $product = $item->getProduct();
+            $date = date('Y-m-d', strtotime($item['created_at']));
             $thumbnail = $product->getThumbnail();
             if ($current !== $date):
                 if ($current !== ''):
@@ -27,7 +27,7 @@ $products = $this->getProducts();
                 ?>
                 <li class="item col-xs-6 col-sm-4 col-md-3">
                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
-                        <?php if (strpos($thumbnail, 'http') !== false): ?>
+                        <?php if (strpos($thumbnail, '//') !== false): ?>
                             <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
                         <?php elseif ($thumbnail): ?>
                             <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php

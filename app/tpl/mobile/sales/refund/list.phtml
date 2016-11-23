@@ -13,6 +13,8 @@ $refund->getSelect()->where->notEqualTo('status', 5);
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
         <li class="active col-xs-3 col-sm-3">
             <a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>">
+        <li class="active col-xs-3 col-sm-3" id="all">
+            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
             </a>
         </li>
@@ -33,9 +35,10 @@ $refund->getSelect()->where->notEqualTo('status', 5);
         </li>
     </ul>
     <div class="search padding-5 col-xs-12 col-sm-12">
-        <form class="form-inline" action="" method="get" novalidate = "novalidate">
+        <form class="form-inline" action="<?php echo $this->getUri()->withQuery('') ?>" method="get" novalidate = "novalidate">
+            <input type="hidden" name="status" value="<?php echo $this->getQuery('status') ?>" />
             <span class="fa fa-search" aria-hidden="true"></span>
-            <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+            <input type="search" name="increment_id" value="<?php echo $this->getQuery('increment_id') ?>" class="col-xs-10 col-sm-10" />
             <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
         </form>
     </div>

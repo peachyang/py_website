@@ -2,11 +2,11 @@
 $reviews = $this->getReviews();
 $count = count($reviews);
 ?>
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs padding-10">
     <li role="presentation"<?php if ($this->getQuery('status') == 0): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => null]) ?>"><?php echo $this->translate('All') ?></a></li>
     <li role="presentation"<?php if ($this->getQuery('status') == 1): ?> class="active"<?php endif ?>><a href="<?php echo $this->getFilterUrl(['status' => 1]) ?>"><?php echo $this->translate('Pending') ?></a></li>
 </ul>
-<div class="tab-content  font-12">
+<div class="tab-content font-12">
     <table class="table review-list">
         <tbody>
             <?php
@@ -15,7 +15,7 @@ $count = count($reviews);
                     $product = $review->getProduct();
                     if ($product):
                         ?>
-                        <tr class="border-top">
+                        <tr>
                             <td class="text-vtop">
                                 <h4 class="product-name  font-12">
                                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product->offsetGet('name') ?>"><?php echo $product->offsetGet('name') ?></a>

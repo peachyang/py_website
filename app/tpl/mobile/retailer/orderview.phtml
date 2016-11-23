@@ -136,9 +136,7 @@ $items = $order->getItems();
                                 <?php echo $this->translate('Refund', [], 'sales') ?>
                             </a>
                         <?php endif; ?>
-                        <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
-                            <?php echo $this->translate('Print', [], 'sales') ?>
-                        </a>
+                        <a class="btn" style="background:#eee"></a>
                     </li>
                 </ul>
             </div>  

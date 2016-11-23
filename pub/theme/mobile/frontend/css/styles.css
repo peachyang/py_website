@@ -72,19 +72,19 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-edit .buttons-set{width:100%;margin:10px 0}
 .customer-account-edit .buttons-set .btn{width:100%;background:#007ecc;color:#ffffff}
 .customer-account-edit .col-main{padding:10px}
-.customer-account-edit .fieldset .input-box{line-height:30px;width:100%;overflow:hidden;margin:5px 0}
-.customer-account-edit .fieldset .input-box label{text-align:right;float:left;display:table-cell;width:1%;padding:6px 12px 0 0;vertical-align:top;white-space:nowrap}
-.customer-account-edit .fieldset .input-box .cell{text-align:left;float:left}
-.customer-account-edit .fieldset .input-box .cell input{width:200px;text-align:left;margin-left:55px}
+.customer-account-edit .fieldset .input-box{width:100%;overflow:hidden;margin:5px 0}
+.customer-account-edit .fieldset .input-box .control-label{text-align:right;line-height: 34px;float:left;display:table-cell;width:1%;vertical-align:top;white-space:nowrap}
+.customer-account-edit .fieldset .input-box .cell{text-align:left;float:left;margin-left:60px;line-height: 34px}
+.customer-account-edit .fieldset .input-box .cell .form-control{width:200px;text-align:left}
 @media(min-width:768px){
-.customer-account-edit .fieldset .input-box label{width:15%;text-align:right;float:left}
-.customer-account-edit .fieldset .input-box .cell{width:85%;text-align:left;float:left}
-.customer-account-edit .fieldset .input-box .cell input{width:90%;text-align:left}
+.customer-account-edit .fieldset .input-box .control-label{width:15%;text-align:right;float:left;line-height: 34px}
+.customer-account-edit .fieldset .input-box .cell{width:85%;text-align:left;float:left;margin-left:60px;line-height: 34px}
+.customer-account-edit .fieldset .input-box .cell .form-control{width:90%;text-align:left}
 }
 @media(min-width:1024px){
-.customer-account-edit .fieldset .input-box label{width:15%;text-align:right;float:left}
-.customer-account-edit .fieldset .input-box .cell{width:85%;text-align:left;float:left}
-.customer-account-edit .fieldset .input-box .cell input{width:100%;text-align:left}
+.customer-account-edit .fieldset .input-box .control-label{width:15%;text-align:right;float:left;line-height: 34px}
+.customer-account-edit .fieldset .input-box .cell{width:85%;text-align:left;float:left;margin-left:60px;line-height: 34px}
+.customer-account-edit .fieldset .input-box .cell .form-control{width:100%;text-align:left}
 }
 .customer-account-address .col-main{padding:10px}
 .customer-account-address .sub-add{width:100%;color:#ffffff;color:#ffffff}
@@ -228,7 +228,7 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .customer-account .header-m,.retailer-account .header-m{width:100%;height:50px;line-height:50px;background:#007ecc;color:#ffffff;position:relative}
 .customer-account .header-m a,.retailer-account .header-m a{height:50px;line-height:50px}
 .customer-account .header-m .container,.retailer-account .header-m .container{font-size:20px;line-height:50px}
-.customer-account .header-m .filters span.fa,.retailer-account-dashboard .header-m .filters span.fa{margin-left: 5px}
+.customer-account .header-m .filters span.fa,.retailer-account .header-m .filters span.fa{margin-left: 5px}
 .customer-account .refund-detail .refund-list,.retailer-account .refund-detail .refund-list{border:1px solid #e1e3ea}
 .customer-account .refund-list .action a,.retailer-account .refund-list .action a{display:block}
 .customer-account .refund-detail .handler:not(:empty),.retailer-account .refund-detail .handler:not(:empty){border:1px solid #e1e3ea;padding:10px;margin-bottom:15px}
@@ -953,5 +953,5 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .wrapper .buttons .button-primary:hover span::after{top:4px}
 .wrapper .buttons .button-secondary:hover span::after{right:-6px}
 .retailer-account .review-list .table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{border-top:none}
-.retailer-review .nav-tabs>li{margin-right:10px}
-.retailer-review .nav-tabs>li.active>a,retailer-review .nav-tabs>li.active>a:focus,retailer-review .nav-tabs>li.active>a:hover{cursor:default;border:none;margin-right:10px;border-bottom-color:1px solid #007ecc;font-size:14px}
+.retailer-review .nav-tabs>li{margin:0 10px}
+.retailer-review .nav-tabs>li.active>a,retailer-review .nav-tabs>li.active>a:focus,retailer-review .nav-tabs>li.active>a:hover{cursor:default;border-bottom:1px solid #007ecc}

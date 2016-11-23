@@ -13,7 +13,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <li class="col-xs-5 col-sm-5 text-left">
                     <?php
                     if ($store = $order->getStore()) {
-                        echo $this->translate('Store'), ': ', $store->offsetGet('name');
+                        echo $store->offsetGet('name');
                     }
                     ?>
                 </li>

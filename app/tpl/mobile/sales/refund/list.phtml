@@ -1,33 +1,34 @@
 <?php
 $applications = $this->getApplication();
 $currency = $this->getCurrency();
-$profile = new Seahinet\Retailer\ViewModel\Dashboard\Profile;
+$profile = new Seahinet\Customer\ViewModel\Dashboard\Profile;
 $payment = $profile->getPendingPayment();
-$processing = $profile->getProcessing();
-$refund1 = new Seahinet\Retailer\ViewModel\Refund;
+$shipment = $profile->getShipping();
+$review = $profile->getReviewing();
+$refund1 = new Seahinet\Sales\ViewModel\Refund;
 $refund = $refund1->getApplication();
-$refund->getSelect()->where->notEqualTo('status',5);
+$refund->getSelect()->where->notEqualTo('status', 5);
 ?>
 <div id="Has-sold" class="seller-tab">
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
-        <li class="active col-xs-3 col-sm-3" id="all">
-            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/');?>">
+        <li class="active col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3" id="delivery">
-            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1'); ?>">
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1'); ?>">
                 <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile->getPendingPayment(); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3" id="payment">
-            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3'); ?>">
-                <?php echo $this->translate('Processing', [], 'customer'); ?>(<span><?php echo $profile->getProcessing(); ?></span>)
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2'); ?>">
+                <?php echo $this->translate('Delivering', [], 'customer'); ?>(<span><?php echo $profile->getShipping(); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3" id="refund">
-            <a href="<?php echo $this->getBaseUrl('retailer/refund/?status=1'); ?>" id="refund">
-                <?php echo $this->translate('Refund rights'); ?>(<span><?php echo count($refund); ?></span>)
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3'); ?>">
+                <?php echo $this->translate('Reviewing', [], 'customer'); ?>(<span><?php echo $profile->getReviewing(); ?></span>)
             </a>
         </li>
     </ul>
@@ -47,9 +48,9 @@ $refund->getSelect()->where->notEqualTo('status',5);
                     $flag = true;
                     ?>
                     <div class="menu-ctn">
-                        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
-                            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()['name'] ?></li>
-                            <li class="col-xs-7 col-sm-7 text-right font-14">
+                        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5 font-12">
+                            <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()['name'] ?></li>
+                            <li class="col-xs-7 col-sm-7 text-right">
                                 <?php echo $currency->format($order->offsetGet('total')); ?>
                                 <span class="font-12">
                                     <?php echo $this->translate('(Including Shipping Fee: %s)', [$currency->format($order->offsetGet('shipping'))]); ?>

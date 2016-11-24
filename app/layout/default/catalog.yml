@@ -158,9 +158,9 @@ admin_catalog_category_list:
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
-                            -
-                                method: addAdditional
-                                params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
+#                            -
+#                                method: addAdditional
+#                                params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
                     grid:
                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Category
                        template: admin/catalog/category/tree

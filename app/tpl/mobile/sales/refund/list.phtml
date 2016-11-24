@@ -13,8 +13,6 @@ $refund->getSelect()->where->notEqualTo('status', 5);
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
         <li class="active col-xs-3 col-sm-3">
             <a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>">
-        <li class="active col-xs-3 col-sm-3" id="all">
-            <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
             </a>
         </li>

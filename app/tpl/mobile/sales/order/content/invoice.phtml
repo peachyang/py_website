@@ -13,8 +13,8 @@ $currency = $order->getCurrency();
     </div>
     <div class="tab-pane fade in active" id="all">
         <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
-            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()->offsetGet('name') ?></li>
-            <li class="col-xs-7 col-sm-7 text-right font-14">
+            <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()->offsetGet('name') ?></li>
+            <li class="col-xs-7 col-sm-7 text-right">
                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
                 <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
             </li>	

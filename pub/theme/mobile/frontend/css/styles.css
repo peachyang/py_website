@@ -695,7 +695,6 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .wishlist .title{padding:5px;font-size:15px;line-height:30px}
 .wishlist .bt{border-top:1px solid #eee}
 .retailer-sales-invoice-edit .col-main{background:#fff}
-.sales-order-invoice .container{padding:0 3px}
 .seller-tab .tab-content .inline li span,.sales-order-list .seller-tab .tab-content .inline li span{display:inherit}
 .seller-tab .tab-content .inline li .choose{color:#777;font-size:12px}
 .wishlist .seller-tab .tab-content .inline li .choose span{text-overflow:ellipsis;overflow:hidden;white-space:nowrap}

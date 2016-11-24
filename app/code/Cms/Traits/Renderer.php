@@ -2,7 +2,10 @@
 
 namespace Seahinet\Cms\Traits;
 
-use Seahinet\Cms\ViewModel\Block;
+use Seahinet\Cms\ViewModel\{
+    Block,
+    Category
+};
 
 /**
  * Replace variables from cms
@@ -60,6 +63,22 @@ trait Renderer
             return '';
         }
         return $block ? $block->__toString() : '';
+    }
+
+    protected function replaceCategory($param)
+    {
+        preg_match_all('#\s+(?P<key>[^\=]+)\=([\'\"])(?P<value>[^\2]+?)\2#', $param, $matches);
+        $params = array_combine($matches['key'], $matches['value']);
+        if (empty($params['id'])) {
+            return '';
+        }
+        $category = new Category;
+        if (!empty($params['template'])) {
+            $category->setTemplate($params['template']);
+            unset($params['template']);
+        }
+        $category->setVariables($params);
+        return $category->__toString();
     }
 
 }

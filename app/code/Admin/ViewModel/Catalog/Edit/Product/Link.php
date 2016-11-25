@@ -85,6 +85,9 @@ class Link extends Product
     {
         $collection = new Collection;
         $collection->getSelect()->where->notEqualTo('id', $this->getRequest()->getQuery('id'));
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
+        }
         return parent::prepareCollection(new Collection);
     }
 

@@ -66,7 +66,7 @@
             legend: {align: 'right'},
             series: []
         });
-        loadData(canvas, '');
+        loadData(canvas, '?filter=d');
     };
     $(function () {
         drawChart('#canvas');

@@ -47,7 +47,7 @@ trait Filter
         }
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {
-                if (trim($value) === '') {
+                if (isset($this->bannedFields) && in_array($key, $this->bannedFields) || trim($value) === '') {
                     unset($condition[$key]);
                 } else if (strpos($key, ':')) {
                     if (strpos($value, '%') !== false) {

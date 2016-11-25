@@ -34,7 +34,7 @@ class SearchController extends CategoryController
         $content = $root->getChild('content');
         $content->getChild('breadcrumb')->addCrumb(['label' => $crumb]);
         $products = new Product($languageId);
-        $products->where(new In('id', $ids));
+        $products->where(empty($ids) ? '0' : new In('id', $ids));
         $products = $this->prepareCollection($products);
         $content->getChild('toolbar')->setCollection($products);
         $content->getChild('list')->setProducts($products);

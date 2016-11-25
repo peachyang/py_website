@@ -152,8 +152,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .products-list .item .product-image img{width:100%}
 .products-list .item .product-name{font-size:11px;line-height:19px;height:38px;overflow:hidden}
 .price-box .label{display:none}
-.price-box .old-price .price,.price-box .old-price .label{text-decoration:line-through;font-size:14px;line-height:42px;color:#9b9a9a!important}
-.price-box .special-price .price,.price-box .regular-price .price{font-size:16px;line-height:42px;color:#fd9030;font-weight:bold}
+.price-box .old-price .price,.price-box .old-price .label{text-decoration:line-through;font-size:14px;line-height:42px;vertical-align:text-bottom;color:#9b9a9a!important}
+.price-box .special-price .price,.price-box .regular-price .price{font-size:16px;line-height:42px;vertical-align:text-bottom;color:#fd9030;font-weight:bold}
 dl.options{margin-bottom:0;line-height:14px;color:#9C9C9C;font-size: 12px;}
 dl.options:after{content:" ";display:block;width:0;height:0;clear:both}
 dl.options dt{clear:left;float:left}

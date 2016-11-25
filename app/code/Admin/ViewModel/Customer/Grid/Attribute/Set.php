@@ -59,6 +59,9 @@ class Set extends Grid
         $collection = new Collection;
         $collection->join('eav_entity_type', 'eav_entity_type.id=eav_attribute_set.type_id', [], 'left')
                 ->where(['eav_entity_type.code' => Customer::ENTITY_TYPE]);
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'eav_attribute_set.created_at';
+        }
         return parent::prepareCollection($collection);
     }
 

@@ -2,8 +2,8 @@
 
 namespace Seahinet\Retailer\Controller;
 
-use DateTime;
 use Seahinet\Log\Model\Collection\Visitor;
+use Zend\Db\Sql\Expression;
 
 class DashboardController extends AuthActionController
 {
@@ -14,11 +14,10 @@ class DashboardController extends AuthActionController
     {
         $collection = new Visitor;
         $collection->group('session_id')
-                ->columns(['created_at'])
-                ->where(['store_id' => $this->getRetailer()->offsetGet('store_id')])
-        ->where->greaterThanOrEqualTo('created_at', date('Y-m-d h:i:s', strtotime('-1year')));
-        return $this->stat($collection, function($item) {
-                    return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
+                ->columns([new Expression('1')])
+                ->where(['store_id' => $this->getRetailer()->offsetGet('store_id')]);
+        return $this->stat($collection, function($collection) {
+                    return count($collection);
                 }
         );
     }

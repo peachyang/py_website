@@ -57,8 +57,10 @@ class Queue extends Grid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        return parent::prepareCollection($collection);
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
+        }
+        return parent::prepareCollection(new Collection);
     }
 
 }

@@ -91,10 +91,10 @@ class Review extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        if (is_null($collection)) {
-            $collection = new Collection;
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
         }
-        return parent::prepareCollection($collection);
+        return parent::prepareCollection(new Collection);
     }
 
 }

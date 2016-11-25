@@ -12,6 +12,7 @@ class ViewController extends ActionController
     {
         $retailer = $this->getOption('retailer');
         $root = $this->getLayout('view_store');
+        $root->getChild('head')->setTitle($retailer->getStore()->offsetGet('name'));
         $root->getChild('main', true)->setVariable('store_id', $this->getOption('store_id'));
         $root->getChild('main', true)->setVariable('retailer', $retailer);
         $root->getChild('main', true)->setVariable('key', $retailer);

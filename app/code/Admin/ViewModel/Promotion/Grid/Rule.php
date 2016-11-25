@@ -128,6 +128,9 @@ class Rule extends Grid
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
+        }
         return parent::prepareCollection($collection);
     }
 

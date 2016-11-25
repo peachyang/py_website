@@ -109,6 +109,9 @@ class Token extends PGrid
     {
         $collection = new Collection;
         $collection->join('oauth_consumer', 'oauth_consumer.id=oauth_token.consumer_id', ['name'], 'left');
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'oauth_token.created_at';
+        }
         return parent::prepareCollection($collection);
     }
 

@@ -5,6 +5,8 @@ namespace Seahinet\Catalog\Controller;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Customer\Model\Media;
+use Seahinet\Log\Model\SocialMedia as Log;
 
 class ProductController extends ActionController
 {
@@ -33,6 +35,24 @@ class ProductController extends ActionController
             }
         }
         return $this->notFoundAction();
+    }
+
+    public function shareAction()
+    {
+        $data = $this->getRequest()->getQuery();
+        if (isset($data['media_id'])) {
+            try {
+                $segment = new Segment('customer');
+                $media = new Media;
+                $media->load($data['media_id']);
+                $model = new Log;
+                $model->setData($data + ['customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null])->save();
+                return $this->redirect($media->getUrl($data['params'] ? json_decode(base64_decode($data['params']), true) : [], $data['product_id'] ?? 0));
+            } catch (Exception $e) {
+                $this->getContainer()->get('dbAdapter')->logException($e);
+            }
+        }
+        return $this->redirectReferer();
     }
 
 }

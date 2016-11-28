@@ -5,4 +5,4 @@ system:
             link: 'config/log/'
             operation: 'Admin\Config::log'
             title: 'Log Configuration'
-            priority: 110
+            priority: 120

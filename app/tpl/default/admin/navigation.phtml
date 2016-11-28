@@ -11,15 +11,15 @@
                 usort($item['children'], [$this, 'sortItems']);
                 foreach ($item['children'] as $child) {
                     if (!isset($child['operation']) || $this->hasPermission($child['operation'])) {
-                        $html .= '<li role="presentation" class="item"><a href="' . $this->getUrl($child['link']) . '" role="menuitem">' . $this->translate($child['title']) . '</a></li>';
+                        $html .= '<li role="presentation" class="item" tabindex="' . ($child['priority'] ?? 0) . '"><a href="' . $this->getUrl($child['link']) . '" role="menuitem">' . $this->translate($child['title']) . '</a></li>';
                     }
                 }
-                if($html === ''){
+                if ($html === '') {
                     continue;
                 }
             }
             ?>
-            <li role="presentation" class="item<?php if ($hasChildren): ?> dropdown<?php endif ?>">
+            <li role="presentation" class="item<?php if ($hasChildren): ?> dropdown<?php endif ?>" tabindex="<?php echo $item['priority'] ?? 0 ?>">
                 <a href="<?php if (!empty($item['children']) || !isset($item['link'])): ?>javascript:void(0);<?php
                 else:
                     echo $this->getUrl($item['link']);

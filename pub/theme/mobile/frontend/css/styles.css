@@ -851,7 +851,8 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .page-home-mobile .menu_contre_top img{width:816px}
 .page-home-mobile .carousel-indicators{bottom:0}
 .page-home-mobile .menu_ad_img img{max-height:35px;height:35px;margin:20px 15px 20px 0;float:right}
-.page-home-mobile .elct_top_l .carousel-indicators{position:absolute}
+.page-home-mobile .elct_top_l .carousel-indicators{position:absolute;top: 90%}
+.page-home-mobile .electron .electron_ct .carousel{overflow: hidden}
 .page-home-mobile .clothing_img{text-align:center;padding:0 1px}
 .page-home-mobile .electron_ct_bt{float:left;margin-bottom:30px}
 .page-home-mobile .brand_right td{border:1px solid #eee}

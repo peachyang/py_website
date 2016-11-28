@@ -754,9 +754,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
 /* .product-edit input.form-control{height:auto;width:87px} */
 .product-edit .control-label{display:inline-block;margin-right:2px;width:auto}
-.product-edit .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
-
-
+.product-edit .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top}
 #resource-modal .modal-dialog {margin: 10px; position: relative; width: auto;}
 #resource-modal .tab-pane {padding: 10px 0 0 30px;}
 #resource-modal .nav-tabs {margin-left: 30px; padding: 0; width: calc(100% - 30px); border-bottom: 1px solid #cce0e9; margin-top: 10px;}

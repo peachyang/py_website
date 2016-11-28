@@ -15,12 +15,7 @@ class Share extends View
 
     public function getLink($media)
     {
-        $replace = base64_encode(json_encode([
-            '{url}' => rawurlencode($this->getRequest()->getUri()->__toString()),
-            '{title}' => rawurlencode(Head::instance()->getTitle()),
-            '{image}' => rawurlencode($this->getBaseUrl('pub/resource/image/resized/704x' . $this->getProduct()->getThumbnail()))
-        ]));
-        return $this->getBaseUrl('catalog/product/share/?media_id=' . $media['id'] . '&product_id=' . $this->getProduct()->getId() . '&params=' . $replace);
+        return $this->getBaseUrl('catalog/product/share/?media_id=' . $media['id'] . '&product_id=' . $this->getProduct()->getId());
     }
 
 }

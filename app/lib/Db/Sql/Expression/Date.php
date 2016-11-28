@@ -17,7 +17,7 @@ class Date extends AbstractExpression
     {
         $this->field = $field;
         $this->format = $format;
-        $this->platform = preg_replace('\W+', '_', $this->getContainer()->get('dbAdapter')->getPlatform()->getName());
+        $this->platform = preg_replace('/\W+/', '_', $this->getContainer()->get('dbAdapter')->getPlatform()->getName());
     }
 
     public function getExpressionData()

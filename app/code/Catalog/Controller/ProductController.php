@@ -40,17 +40,19 @@ class ProductController extends ActionController
     public function shareAction()
     {
         $data = $this->getRequest()->getQuery();
-        if (isset($data['media_id'])) {
-            try {
-                $segment = new Segment('customer');
-                $media = new Media;
-                $media->load($data['media_id']);
-                $model = new Log;
-                $model->setData($data + ['customer_id' => $segment->get('hasLoggedIn') ? $segment->get('customer')->getId() : null])->save();
-                return $this->redirect($media->getUrl($data['params'] ? json_decode(base64_decode($data['params']), true) : [], $data['product_id'] ?? 0));
-            } catch (Exception $e) {
-                $this->getContainer()->get('dbAdapter')->logException($e);
+        if (isset($data['media_id']) && $url = $this->getRequest()->getHeader('HTTP_REFERER')) {
+            $media = new Media;
+            $media->load($data['media_id']);
+            $segment = new Segment('customer');
+            if ($segment->get('hasLoggedIn') && !empty($data['product_id'])) {
+                try {
+                    $model = new Log;
+                    $model->setData($data + ['customer_id' => $segment->get('customer')->getId()])->save();
+                } catch (Exception $e) {
+                    $this->getContainer()->get('dbAdapter')->logException($e);
+                }
             }
+            return $this->redirect($media->getUrl(['{url}' => rawurlencode($url)], $data['product_id'] ?? 0));
         }
         return $this->redirectReferer();
     }

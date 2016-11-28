@@ -88,7 +88,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
         </div>
     </form>
     <?php if ($retailer->getId()): ?>
-        <div class="customize">
+        <div class="customize retailer-store">
             <div class="panel panel-store">
                 <div class="panel-heading">
                     <h3 class="panel-title"><a href="<?php echo $this->getBaseUrl($retailer->getStoreUrl()); ?>"><?php echo $store['name'] ?></a></h3>

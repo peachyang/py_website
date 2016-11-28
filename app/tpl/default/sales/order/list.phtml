@@ -29,7 +29,7 @@ $orders = $this->getOrders();
                     ?>
                     <tr class="thead_body">
                         <td>
-                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
+                            <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" /></a>
                         </td>
                         <td class="text-left text-vtop col-xs-3 col-sm-3" title="<?php echo $product->offsetGet('name') ?>">
                             <h4 class="product-name"><?php echo $product->offsetGet('name') ?></h4>

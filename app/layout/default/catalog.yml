@@ -54,6 +54,9 @@ catalog_product:
             head:
                 action:
                     -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
                     -

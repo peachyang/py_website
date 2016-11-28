@@ -247,7 +247,7 @@ class StoreDecoration extends Template
 			
 			$content .= '<li class="col-md-3" >
                             <div>
-                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'"  /></a>
+                                <a href="'.$urls.'" target=_blank ><img class="pic" src="'.$picURL.'" width="100%" /></a>
                                 <p class="price"><span class="actural">'.$products->getCurrency()->format($value['price']).' </span><span class="discount">'.$products->getCurrency()->format($value['price']).'</span></p>
                                 <h3 class="product-name"><a href="'.$urls.'" target=_blank >'.$value['name'].'</a></h3>
                                 <p class="paid-count"></p>

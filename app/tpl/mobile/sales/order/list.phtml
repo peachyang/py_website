@@ -59,7 +59,7 @@ $reviewing = $profile1->getReviewing();
                                 ?>
                                 <tr>
                                     <td class="col-xs-2 col-sm-2">
-                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                                        <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" /></a>
                                     </td>
                                     <td class="col-xs-6 col-sm-6 text-left" title="<?php echo $product->offsetGet('name') ?>">
                                         <h4 class="font-12"><?php echo $product->offsetGet('name') ?></h4>

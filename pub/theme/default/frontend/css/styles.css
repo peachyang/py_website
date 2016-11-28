@@ -206,6 +206,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
+.retailer-account .wishlist .product-edit .grid input[type=checkbox], input[type=radio]{margin: 0}
 .customer-account .message-box:not(:empty)+.page-content,.retailer-account .message-box:not(:empty)+.page-content{margin-top:15px}
 .customer-account:not(.customer-account-dashboard) .col-main .message-box:not(:empty),.retailer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account .fieldset,.retailer-account .fieldset{display:table;width:100%;padding:20px 25px}
@@ -752,7 +753,7 @@ dl.options dd{float:left;margin-left:4px}
 .product-edit label.invalid{background:#000 none repeat scroll 0 0;border-radius:3px;bottom:100%;color:#fff;display:inline-block;font-size:12px;left:0;margin-bottom:3px;padding:2px 8px;position:absolute;text-align:center}
 .product-edit label.invalid::after{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;border-color:#000 transparent -moz-use-text-color;border-image:none;border-style:solid solid none;border-width:3px 3px medium;content:" ";left:50%;position:absolute;top:100%}
 /* .product-edit input.form-control{height:auto;width:87px} */
-.product-edit .control-label{display:inline-block;margin-right:2px;vertical-align:top;width:auto}
+.product-edit .control-label{display:inline-block;margin-right:2px;width:auto}
 .product-edit .grid .filters .input-box {display: inline-block !important; margin: 0; padding: 12px 0 10px 23px; vertical-align: top;}
 
 

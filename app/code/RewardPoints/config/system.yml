@@ -2,4 +2,177 @@
 rewardpoints:
     label: Reward Points
     children:
-        
+        general:
+            label: General
+            scope: [merchant]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+                title:
+                    type: text
+                    label: Displayed Title
+                    required: required
+                    poriority: 10
+                    default: Reward Points
+                expiration:
+                    type: tel
+                    label: Expiration in Days
+                    required: required
+                    priority: 20
+                    default: 0
+        gathering:
+            label: Gathering
+            scope: [merchant,store]
+            children:
+                rate:
+                    label: Gathering Rate
+                    type: tel
+                    required: required
+                    priority: 0
+                    default: 1
+                    comment: X points per unit.
+                refunded:
+                    type: select
+                    label: Cancel Earned Points After Order Refunding
+                    required: required
+                    priority: 10
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No
+                min_amount:
+                    label: Minimal Amount of Orders
+                    type: number
+                    required: required
+                    priority: 10
+                    default: 0
+                max_amount:
+                    label: Maximum Points for Each Order
+                    type: tel
+                    required: required
+                    priority: 20
+                    comment: Leave empty to avoid the limitation.
+                registration:
+                    label: Registration
+                    type: tel
+                    priority: 30
+                    default: 0
+                newsletter:
+                    label: Newsletter Signup
+                    type: tel
+                    priority: 40
+                    default: 0
+                    comment: Points won't be earned if a customer is subscribed by admin
+                reviewing:
+                    label: Reviewing Product
+                    type: tel
+                    priority: 50
+                    default: 0
+                words_limitation:
+                    label: Minimum Number of Words in the Review
+                    type: tel
+                    priority: 51
+                    default: 0
+                birthday:
+                    label: "Customer's Birthday"
+                    type: tel
+                    priority: 60
+                    default: 0
+                inviting:
+                    label: Inviting a Friend
+                    type: tel
+                    priority: 70
+                    default: 0
+                inviting_limitation:
+                    label: Daily Maximum Points for Inviting a Friend
+                    type: tel
+                    priority: 70
+                    comment: Leave empty to avoid the limitation.
+        using:
+            label: Using
+            scope: [merchant,store]
+            children:
+                rate:
+                    label: Using Rate
+                    type: tel
+                    required: required
+                    priority: 0
+                    default: 1
+                    comment: X units per point
+                refunded:
+                    type: select
+                    label: Restore Spent Points After Order Refunding
+                    required: required
+                    priority: 10
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No
+                remain:
+                    type: tel
+                    label: Minimum Points Balance to Be Available to Redeem
+                    required: required
+                    priority: 20
+                    default: 0
+                min_amount:
+                    label: Minimal Amount of Orders
+                    type: number
+                    required: required
+                    priority: 30
+                    default: 0
+                max_amount:
+                    label: Maximum Points for Each Order
+                    type: number
+                    required: required
+                    priority: 40
+                    default: 0
+                    comment: Leave empty to avoid the limitation.
+                max_amount_calculation:
+                    label: Maximum Points Calculation
+                    type: select
+                    required: required
+                    priority: 41
+                    default: 0
+                    options:
+                        - Fixed
+                        - Percent
+        notifications:
+            label: Notifications
+            scope: merchant
+            children:
+                updated:
+                    label: Balance Updated Email
+                    type: select
+                    required: required
+                    priority: 0
+                    default: reward_points_updated
+                    source: \Seahinet\Email\Source\Template
+                expiring:
+                    label: Points Expiring Email
+                    type: select
+                    required: required
+                    priority: 0
+                    default: reward_points_expiring
+                    source: \Seahinet\Email\Source\Template
+                birthday:
+                    label: "Points for Customer's Birthday Email"
+                    type: select
+                    required: required
+                    priority: 0
+                    default: reward_points_birthday
+                    source: \Seahinet\Email\Source\Template
+                invitation:
+                    label: Invitation Email
+                    type: select
+                    required: required
+                    priority: 0
+                    default: reward_points_invitation
+                    source: \Seahinet\Email\Source\Template
+            

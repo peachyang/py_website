@@ -206,7 +206,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
-.retailer-account .wishlist .product-edit .grid input[type=checkbox], input[type=radio]{margin: 0}
+.retailer-account .wishlist .product-edit .grid input[type=checkbox], input[type=radio],.retailer-account .wishlist .product-edit .categories-list input[type=checkbox], input[type=radio]{margin: 0}
 .customer-account .message-box:not(:empty)+.page-content,.retailer-account .message-box:not(:empty)+.page-content{margin-top:15px}
 .customer-account:not(.customer-account-dashboard) .col-main .message-box:not(:empty),.retailer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account .fieldset,.retailer-account .fieldset{display:table;width:100%;padding:20px 25px}
@@ -742,7 +742,7 @@ dl.options dd{float:left;margin-left:4px}
 /* .product-edit .required{width:260px} */
 .product-edit .tab-pane.active{display:table}
 .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
-.product-edit .grid .table.category ul{clear:both;padding-left:2em}
+.product-edit .grid .table.category ul,.product-edit .table.categories-list ul{clear:both;padding-left:2em}
 .product-edit .control-label{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;color:#000;display:block;font-size:13px;line-height:26px;width:100%}
 .product-edit td.checkbox{display:table-cell}
 .product-edit .checkbox input[type=checkbox]{margin-left:0;position:relative}

@@ -1,0 +1,30 @@
+<?php
+$category = new Seahinet\Retailer\ViewModel\Category;
+$categories = $category->getCategories();
+?>
+<ul class="form-inline table categories-list">
+    <?php
+    if (count($categories)):
+        foreach ($categories[0] as $category):
+            ?>
+            <li class="clearfix" data-id="<?php echo $category->getId() ?>">
+                <input type="checkbox" name="order[]" id="category1-<?php echo $category['id'] ?>" value="<?php echo $category->getId() ?>" <?php if(): ?>checked="checked"<?php endif; ?> class="form-control required" />
+                <label for="category1-<?php echo $category['id'] ?>" class="control-label"><?php echo $category->getName() ?></label>
+                <?php if (!empty($categories[$category->getId()])): ?>
+                    <ul class="children">
+                        <?php foreach ($categories[$category->getId()] as $child): ?>
+                            <li class="child clearfix" data-id="<?php echo $child->getId() ?>">
+                                <input type="checkbox" name="order[]" id="category1-<?php echo $child['id'] ?>" value="<?php echo $child->getId() ?>" class="form-control required" />
+                                <label for="category1-<?php echo $child['id'] ?>" class="control-label"><?php echo $child->getName() ?></label>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif ?>
+            </li>
+            <?php
+        endforeach;
+    else:
+        ?>
+        <li class="text-center"><?php echo $this->translate('There is no category available.') ?></li>
+        <?php endif ?>
+</ul>

@@ -15,6 +15,7 @@
                 for (var i in r) {
                     $(o).find('.data.' + i).text(r[i]);
                 }
+                $('.data.time').text(r.time);
             });
         });
     });

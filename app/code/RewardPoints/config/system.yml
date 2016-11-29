@@ -27,6 +27,7 @@ rewardpoints:
                     required: required
                     priority: 20
                     default: 0
+                
         gathering:
             label: Gathering
             scope: [merchant,store]
@@ -38,6 +39,15 @@ rewardpoints:
                     priority: 0
                     default: 1
                     comment: X points per unit.
+                calculation:
+                    label: Calculation
+                    type: select
+                    required: required
+                    priority: 1
+                    default: 0
+                    options:
+                        - Subtotal Only
+                        - Including Shipping &amp; Tax
                 refunded:
                     type: select
                     label: Cancel Earned Points After Order Refunding
@@ -55,10 +65,19 @@ rewardpoints:
                     default: 0
                 max_amount:
                     label: Maximum Points for Each Order
-                    type: tel
+                    type: number
                     required: required
                     priority: 20
                     comment: Leave empty to avoid the limitation.
+                max_amount_calculation:
+                    label: Maximum Points Calculation
+                    type: select
+                    required: required
+                    priority: 41
+                    default: 0
+                    options:
+                        - Fixed
+                        - Percent
                 registration:
                     label: Registration
                     type: tel
@@ -85,6 +104,7 @@ rewardpoints:
                     type: tel
                     priority: 60
                     default: 0
+                    comment: Not available until cron job runs.
                 inviting:
                     label: Inviting a Friend
                     type: tel
@@ -105,7 +125,7 @@ rewardpoints:
                     required: required
                     priority: 0
                     default: 1
-                    comment: X units per point
+                    comment: X units per point.
                 refunded:
                     type: select
                     label: Restore Spent Points After Order Refunding
@@ -117,7 +137,7 @@ rewardpoints:
                         0: No
                 remain:
                     type: tel
-                    label: Minimum Points Balance to Be Available to Redeem
+                    label: Minimum Points Balance
                     required: required
                     priority: 20
                     default: 0

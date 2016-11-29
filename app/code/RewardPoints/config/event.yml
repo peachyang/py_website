@@ -1,1 +1,9 @@
 ---
+Seahinet\Catalog\Model\Product\Review.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterReview]
+        priority: 10
+order.place.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderPlace]
+        priority: 20

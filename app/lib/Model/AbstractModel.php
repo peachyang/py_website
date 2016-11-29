@@ -209,6 +209,7 @@ abstract class AbstractModel extends ArrayObject
                 if ($columns) {
                     $this->update($this->prepareColumns(), $constraint);
                 }
+                $this->isNew = false;
                 $this->afterSave();
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
@@ -221,6 +222,7 @@ abstract class AbstractModel extends ArrayObject
                     $this->insert($this->prepareColumns());
                 }
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
+                $this->isNew = true;
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());
             }
@@ -332,7 +334,8 @@ abstract class AbstractModel extends ArrayObject
      */
     protected function afterSave()
     {
-        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this, 'isNew' => $this->isNew]);
+        $this->isNew = false;
     }
 
     /**

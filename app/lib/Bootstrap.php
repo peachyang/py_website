@@ -250,7 +250,7 @@ final class Bootstrap
     public static function isMobile()
     {
         if (is_null(self::$isMobile)) {
-            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']) ? 'mobile_' : '';
+            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']);
         }
         return self::$isMobile;
     }

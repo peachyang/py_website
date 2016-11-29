@@ -13,6 +13,7 @@ class Link extends Product
     protected $action = [];
     protected $type = '';
     protected $activeIds = null;
+    protected $bannedFields = ['id', 'linktype', 'attribute_set', 'product_type'];
 
     public function __construct()
     {

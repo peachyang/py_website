@@ -88,7 +88,7 @@ class Link extends Product
         if (!$this->getQuery('desc')) {
             $this->query['desc'] = 'created_at';
         }
-        return parent::prepareCollection(new Collection);
+        return parent::prepareCollection($collection);
     }
 
     public function getActiveIds()

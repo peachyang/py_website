@@ -8,7 +8,7 @@ $categories = $category->getCategories();
         foreach ($categories[0] as $category):
             ?>
             <li class="clearfix" data-id="<?php echo $category->getId() ?>">
-                <input type="checkbox" name="order[]" id="category1-<?php echo $category['id'] ?>" value="<?php echo $category->getId() ?>" <?php if(): ?>checked="checked"<?php endif; ?> class="form-control required" />
+                <input type="checkbox" name="order[]" id="category1-<?php echo $category['id'] ?>" value="<?php echo $category->getId() ?>" class="form-control required" />
                 <label for="category1-<?php echo $category['id'] ?>" class="control-label"><?php echo $category->getName() ?></label>
                 <?php if (!empty($categories[$category->getId()])): ?>
                     <ul class="children">

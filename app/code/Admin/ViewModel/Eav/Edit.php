@@ -99,11 +99,23 @@ abstract class Edit extends PEdit
                 $groups[] = $attribute['attribute_group_id'];
             }
             if ($this->group && $attribute['attribute_group_id'] == $this->group) {
+                $validation = $attribute['validation'] ? explode(' ', $attribute['validation']) : [];
+                $attrs = [];
+                $class = [];
+                foreach ($validation as $v) {
+                    if (strpos($v, ':')) {
+                        list($key, $value) = explode(':', $v);
+                        $attrs[$key] = $value;
+                    } else {
+                        $class[] = $v;
+                    }
+                }
                 $columns[$attribute['code']] = [
                     'label' => $attribute['label'],
                     'type' => $attribute['input'],
                     'view_model' => $attribute['view_model'],
-                    'class' => $attribute['validation']
+                    'class' => implode(' ', $class),
+                    'attrs' => $attrs
                 ];
                 if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                     $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);

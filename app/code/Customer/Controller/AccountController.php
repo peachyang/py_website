@@ -355,7 +355,7 @@ class AccountController extends AuthActionController
                     $subscriber = new Subscriber;
                     $subscriber->load($data['email'], 'email');
                     if (empty($data['subscribe']) && $subscriber->getId()) {
-                        $subscriber->setData('status', 0)->save();
+                        $subscriber->unsubscribe();
                     } else if (!empty($data['subscribe'])) {
                         $subscriber->setData([
                             'email' => $data['email'],

@@ -88,7 +88,6 @@ rewardpoints:
                     type: tel
                     priority: 40
                     default: 0
-                    comment: Points won't be earned if a customer is subscribed by admin
                 reviewing:
                     label: Reviewing Product
                     type: tel
@@ -105,13 +104,13 @@ rewardpoints:
                     priority: 60
                     default: 0
                     comment: Not available until cron job runs.
-                inviting:
-                    label: Inviting a Friend
+                share:
+                    label: Sharing to Social Medias
                     type: tel
                     priority: 70
                     default: 0
-                inviting_limitation:
-                    label: Daily Maximum Points for Inviting a Friend
+                share_limitation:
+                    label: Daily Maximum Points for Sharing
                     type: tel
                     priority: 70
                     comment: Leave empty to avoid the limitation.
@@ -126,6 +125,15 @@ rewardpoints:
                     priority: 0
                     default: 1
                     comment: X units per point.
+                calculation:
+                    label: Calculation
+                    type: select
+                    required: required
+                    priority: 1
+                    default: 0
+                    options:
+                        - Subtotal Only
+                        - Including Shipping &amp; Tax
                 refunded:
                     type: select
                     label: Restore Spent Points After Order Refunding
@@ -187,12 +195,5 @@ rewardpoints:
                     required: required
                     priority: 0
                     default: reward_points_birthday
-                    source: \Seahinet\Email\Source\Template
-                invitation:
-                    label: Invitation Email
-                    type: select
-                    required: required
-                    priority: 0
-                    default: reward_points_invitation
                     source: \Seahinet\Email\Source\Template
             

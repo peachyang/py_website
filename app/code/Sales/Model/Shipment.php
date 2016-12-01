@@ -38,6 +38,12 @@ class Shipment extends AbstractModel
         return $this->items;
     }
 
+    public function getOrder()
+    {
+        return isset($this->storage['order_id']) ?
+                (new Order)->load($this->storage['order_id']) : null;
+    }
+
     public function getShippingMethod()
     {
         if (isset($this->storage['shipping_method'])) {

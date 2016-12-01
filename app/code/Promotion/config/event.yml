@@ -3,9 +3,6 @@ promotion.calc:
     -
         listener: [\Seahinet\Promotion\Listeners\Regular, calc]
         priority: 10
-    -
-        listener: [\Seahinet\Promotion\Listeners\RewardPoints, calc]
-        priority: 20
 order.place.after:
     -
         listener: [\Seahinet\Promotion\Listeners\Coupon, log]

@@ -7,3 +7,26 @@ order.place.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderPlace]
         priority: 20
+Seahinet\Sales\Model\Order.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderComplete]
+        priority: 20
+Seahinet\Email\Model\Subscriber.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterSubscribe]
+        priority: 20
+Seahinet\Log\Model\SocialMedia.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterShare]
+        priority: 20
+promotion.calc:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, calc]
+        priority: 100
+Seahinet\Sales\Model\CreditMemo.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterRefund]
+        priority: 20
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, afterRefund]
+        priority: 20

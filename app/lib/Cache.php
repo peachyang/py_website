@@ -46,6 +46,21 @@ final class Cache implements ArrayAccess, Singleton
     private $salt = '';
 
     /**
+     * @var callable
+     */
+    private $decoder;
+
+    /**
+     * @var callable
+     */
+    private $encoder;
+
+    /**
+     * @var bool
+     */
+    private $disabled;
+
+    /**
      * @param array|Container $config
      * @throws \UnexpectedValueException
      */
@@ -55,16 +70,28 @@ final class Cache implements ArrayAccess, Singleton
             $this->setContainer($config);
             $config = [];
         }
-        if (empty($config)) {
-            $adapterObject = $this->getContainer()->get('config')['adapter'];
-            $config = $adapterObject['cache'] ?? [];
-        }
         $this->pool = Factory::getCachePool($config);
         if (isset($config['persistent'])) {
             $this->persistentPrefix = (array) $config['persistent'];
         }
         if (isset($config['salt'])) {
             $this->salt = $config['salt'];
+        }
+        $this->disabled = (bool) ($config['disabled'] ?? false);
+        if (!isset($config['compress']) || $config['compress']) {
+            $this->encoder = function ($data) {
+                return gzencode(serialize($data));
+            };
+            $this->decoder = function ($data) {
+                return unserialize(@gzdecode($data));
+            };
+        } else {
+            $this->encoder = function ($data) {
+                return serialize($data);
+            };
+            $this->decoder = function ($data) {
+                return unserialize($data);
+            };
         }
     }
 
@@ -118,21 +145,21 @@ final class Cache implements ArrayAccess, Singleton
             }
             $list = $this->pool->fetch($this->salt . 'CACHE_LIST_' . $prefix);
             if ($list) {
-                $list = unserialize(gzdecode($list));
+                $list = call_user_func($this->decoder, $list);
                 unset($list[$id]);
             } else {
                 $list = [];
             }
-            $this->pool->save($this->salt . 'CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+            $this->pool->save($this->salt . 'CACHE_LIST_' . $prefix, call_user_func($this->encoder, $list));
             if (empty($list)) {
                 $list = $this->pool->fetch($this->salt . 'CACHE_LIST');
                 if ($list) {
-                    $list = unserialize(gzdecode($list));
+                    $list = call_user_func($this->decoder, $list);
                     unset($list[$prefix]);
                 } else {
                     $list = [];
                 }
-                $this->pool->save($this->salt . 'CACHE_LIST', gzencode(serialize($list)));
+                $this->pool->save($this->salt . 'CACHE_LIST', call_user_func($this->encoder, $list));
             } else if (!$id) {
                 foreach ($list as $key => $value) {
                     $this->pool->delete($this->salt . $prefix . $key);
@@ -150,10 +177,10 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetch($id, $prefix = '')
     {
-        if (count($this->unhitPrefix) && in_array($prefix, $this->unhitPrefix)) {
+        if ($this->disabled || count($this->unhitPrefix) && in_array($prefix, $this->unhitPrefix)) {
             return null;
         }
-        return unserialize(@gzdecode($this->pool->fetch($this->salt . $prefix . $id)));
+        return call_user_func($this->decoder, $this->pool->fetch($this->salt . $prefix . $id));
     }
 
     /**
@@ -178,29 +205,32 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function save($id, $data, $prefix = '', $lifeTime = 0)
     {
+        if ($this->disabled) {
+            return true;
+        }
         if ($prefix) {
             $list = $this->pool->fetch($this->salt . 'CACHE_LIST_' . $prefix);
             if ($list) {
-                $list = unserialize(gzdecode($list));
+                $list = call_user_func($this->decoder, $list);
             } else {
                 $list = [];
             }
             if (!isset($list[$id])) {
                 $list[$id] = 1;
-                $this->pool->save($this->salt . 'CACHE_LIST_' . $prefix, gzencode(serialize($list)));
+                $this->pool->save($this->salt . 'CACHE_LIST_' . $prefix, call_user_func($this->encoder, $list));
             }
             $list = $this->pool->fetch($this->salt . 'CACHE_LIST');
             if ($list) {
-                $list = unserialize(gzdecode($list));
+                $list = call_user_func($this->decoder, $list);
             } else {
                 $list = [];
             }
             if (!isset($list[$prefix])) {
                 $list[$prefix] = 1;
-                $this->pool->save($this->salt . 'CACHE_LIST', gzencode(serialize($list)));
+                $this->pool->save($this->salt . 'CACHE_LIST', call_user_func($this->encoder, $list));
             }
         }
-        return $this->pool->save($this->salt . $prefix . $id, gzencode(serialize($data)), $lifeTime);
+        return $this->pool->save($this->salt . $prefix . $id, call_user_func($this->encoder, $data), $lifeTime);
     }
 
     /**
@@ -210,6 +240,9 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetchMultiple(array $keys, $prefix = '')
     {
+        if ($this->disabled) {
+            return [];
+        }
         $result = [];
         $fetchKey = $keys;
         if (count($this->unhitPrefix)) {
@@ -223,7 +256,7 @@ final class Cache implements ArrayAccess, Singleton
         }
         $values = $this->pool->fetchMultiple($fetchKey);
         foreach ($values as $value) {
-            $result[] = unserialize(@gzdecode($value));
+            $result[] = call_user_func($this->decoder, $value);
         }
         return array_combine($fetchKey, $result);
     }
@@ -236,9 +269,12 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function saveMultiple(array $keysAndValues, $lifetime = 0)
     {
+        if ($this->disabled) {
+            return true;
+        }
         $pairs = [];
         foreach ($keysAndValues as $key => $value) {
-            $pairs[$this->salt . $key] = gzencode(serialize($value));
+            $pairs[$this->salt . $key] = call_user_func($this->encoder, $value);
         }
         return $this->pool->saveMultiple($pairs, $lifetime);
     }

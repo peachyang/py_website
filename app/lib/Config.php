@@ -146,6 +146,7 @@ final class Config extends ArrayObject implements Singleton
         $result = $tableGateway->select()->toArray();
         $config = [];
         foreach ($result as $item) {
+            $value = [];
             if (!is_null($item['store_id'])) {
                 $value['s' . $item['store_id']] = $item['value'];
             } else {

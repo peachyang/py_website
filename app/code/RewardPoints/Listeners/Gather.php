@@ -39,8 +39,11 @@ class Gather implements ListenerInterface
         $config = $this->getContainer()->get('config');
         $total = 0;
         $unavailable = 0;
-        foreach ($order->getItem() as $item) {
-            if ($item['product']['reward_points']) {
+        $points = 0;
+        foreach ($order->getItems() as $item) {
+            if ($item['product']['reward_points'] > 0) {
+                $points += $item['product']['reward_points'] * $item['qty'];
+            } else if ($item['product']['reward_points'] === '') {
                 $total += $item['base_price'] * $item['qty'];
             } else {
                 $unavailable += $item['base_price'] * $item['qty'];
@@ -48,7 +51,7 @@ class Gather implements ListenerInterface
         }
         $total += (($config['rewardpoints/gathering/calculation'] ? $order['base_shipping'] + $order['base_tax'] : 0) - $order['base_discount']) * $total / ($total + $unavailable);
         $max = $config['rewardpoints/gathering/max_amount_calculation'] ? ((int) ($total * $config['rewardpoints/gathering/max_amount'] / 100)) : ((int) $config['rewardpoints/gathering/max_amount']);
-        $calc = $total * $config['rewardpoints/gathering/rate'];
+        $calc = $total * $config['rewardpoints/gathering/rate'] + $points;
         return $total >= $config['rewardpoints/gathering/min_amount'] ? ($max ? min($max, $calc) : $calc) : 0;
     }
 
@@ -56,11 +59,11 @@ class Gather implements ListenerInterface
     {
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
-        if ($config['rewardpoints/general/enable'] && $config['rewardpoints/gathering/rate'] && $model->offsetGet('customer_id')) {
+        if ($config['rewardpoints/general/enable'] && $config['rewardpoints/gathering/rate'] && $model->offsetGet('customer_id') && ($points = $this->getPoints($model))) {
             $record = new Record([
                 'customer_id' => $model->offsetGet('customer_id'),
                 'order_id' => $model->getId(),
-                'count' => $this->getPoints($model),
+                'count' => $points,
                 'comment' => 'Consumption',
                 'status' => 0
             ]);
@@ -71,8 +74,7 @@ class Gather implements ListenerInterface
     public function afterOrderComplete($event)
     {
         $model = $event['model'];
-        $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-        if ($additional['rewardpoints'] && $model->getPhase()['code'] === 'complete') {
+        if ($model->getPhase()['code'] === 'complete') {
             $history = new History;
             $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', [], 'left')
                     ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [], 'left')

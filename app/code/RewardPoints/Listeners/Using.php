@@ -5,6 +5,7 @@ namespace Seahinet\RewardPoints\Listeners;
 use Seahinet\RewardPoints\Model\Collection\Record as Collection;
 use Seahinet\Lib\Listeners\ListenerInterface;
 use Seahinet\Sales\Model\Cart;
+use Zend\Db\Sql\Expression;
 
 class Using implements ListenerInterface
 {
@@ -81,14 +82,16 @@ class Using implements ListenerInterface
         $model = $event['model'];
         if ($config['rewardpoints/general/enable'] && $config['rewardpoints/using/rate'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-            $points = $this->getPoints($model);
-            $additional['rewardpoints'] = $additional['rewardpoints'] ?: array_sum($points);
-            $discount = $additional['rewardpoints'] * $config['rewardpoints/using/rate'];
-            $model->setData([
-                'additional' => json_encode($additional),
-                'base_discount' => (float) $model->offsetGet('base_discount', false) - $discount,
-                'discount_detail' => json_encode(['Reward Points' => $discount] + (json_decode($model['discount_detail'], true) ?: []))
-            ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
+            if (!empty($additional['rewardpoints'])) {
+                $points = $this->getPoints($model);
+                $additional['rewardpoints'] = min($additional['rewardpoints'], array_sum($points));
+                $discount = $additional['rewardpoints'] * $config['rewardpoints/using/rate'];
+                $model->setData([
+                    'additional' => json_encode($additional),
+                    'base_discount' => (float) $model->offsetGet('base_discount', false) - $discount,
+                    'discount_detail' => json_encode([$config['rewardpoints/general/title'] => $discount] + (json_decode($model['discount_detail'], true) ?: []))
+                ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
+            }
         }
     }
 

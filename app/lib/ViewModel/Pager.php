@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\ViewModel;
 
 use Seahinet\Lib\Model\AbstractCollection;
+use Zend\Db\Sql\Expression;
 
 /**
  * Pager of collection
@@ -53,7 +54,6 @@ class Pager extends Template
         $this->collection = clone $collection;
         $this->collection->reset('limit')
                 ->reset('offset');
-        $this->total = $this->collection->count();
         return $this;
     }
 
@@ -75,7 +75,9 @@ class Pager extends Template
     public function getCount()
     {
         if (is_null($this->total)) {
-            $this->total = count($this->getCollection());
+            $collection = clone $this->getCollection();
+            $collection->columns(['count' => new Expression('count(1)')]);
+            $this->total = $collection->load(true, true)[0]['count'];
         }
         return $this->total;
     }

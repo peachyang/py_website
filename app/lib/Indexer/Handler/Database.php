@@ -179,10 +179,16 @@ class Database extends AbstractHandler
     public function select($languageId, $where = [], array $options = [])
     {
         try {
-            if ($where instanceof Select) {
-                return $this->getTableGateway($languageId)->selectWith($where)->toArray();
+            if (!$where instanceof Select) {
+                $where = $this->getTableGateway($languageId)->getSql()->select()->where($where);
+                if (!empty($options['limit'])) {
+                    $where->limit($options['limit']);
+                }
+                if (!empty($options['offset'])) {
+                    $where->offset($options['offset']);
+                }
             }
-            return $this->getTableGateway($languageId)->select($where)->toArray();
+            return $this->getTableGateway($languageId)->selectWith($where)->toArray();
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }

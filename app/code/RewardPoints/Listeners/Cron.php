@@ -4,8 +4,9 @@ namespace Seahinet\RewardPoints\Listeners;
 
 use Exception;
 use Swift_SwiftException;
-use Seahinet\Customer\Model\Collection\Customer as Collection;
+use Seahinet\Customer\Model\Collection\Customer as CustomerCollection;
 use Seahinet\Email\Model\Template;
+use Seahinet\RewardPoints\Model\Collection\Record as Collection;
 use Seahinet\RewardPoints\Model\Record;
 
 class Cron
@@ -24,7 +25,7 @@ class Cron
                 $template->load($template, 'code');
             }
             try {
-                $collection = new Collection;
+                $collection = new CustomerCollection;
                 $collection->where(['status' => 1])
                         ->where->greaterThanOrEqualTo('birthday', date('Y-m-d 0:0:0'))
                         ->lessThanOrEqualTo('birthday', date('Y-m-d 23:59:59'));
@@ -46,6 +47,21 @@ class Cron
                 $this->getContainer()->logException($e);
             } catch (Exception $e) {
                 
+            }
+        }
+    }
+
+    public function expiry()
+    {
+        $config = $this->getContainer()->get('config');
+        if ($config['rewardpoints/general/enable'] && ($days = (int) $config['rewardpoints/gathering/expiration'])) {
+            $collection = new Collection;
+            $collection->where(['status' => 1])
+                    ->limit(100)
+                    ->where->greaterThan('count', 0)
+                    ->lessThanOrEqualTo('created_at', date('Y-m-d H:i:s', strtotime('-' . $days . 'days')));
+            foreach ($collection as $record) {
+                $record;
             }
         }
     }

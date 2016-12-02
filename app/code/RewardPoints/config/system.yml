@@ -27,14 +27,13 @@ rewardpoints:
                     required: required
                     priority: 20
                     default: 0
-                
         gathering:
             label: Gathering
             scope: [merchant,store]
             children:
                 rate:
                     label: Gathering Rate
-                    type: tel
+                    type: number
                     required: required
                     priority: 0
                     default: 1
@@ -66,13 +65,11 @@ rewardpoints:
                 max_amount:
                     label: Maximum Points for Each Order
                     type: number
-                    required: required
                     priority: 20
                     comment: Leave empty to avoid the limitation.
                 max_amount_calculation:
                     label: Maximum Points Calculation
                     type: select
-                    required: required
                     priority: 41
                     default: 0
                     options:
@@ -120,7 +117,7 @@ rewardpoints:
             children:
                 rate:
                     label: Using Rate
-                    type: tel
+                    type: number
                     required: required
                     priority: 0
                     default: 1

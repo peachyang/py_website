@@ -416,7 +416,15 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-category .categories-list .children{clear:both;padding-left:30px}
 .retailer-category .categories-list .children .category-name:before{content:" ";display:inline-block;width:30px;height:15px;vertical-align:top;border-left:1px solid;border-bottom:1px solid}
 .retailer-category .categories-list .ui-sortable-placeholder{display:block;width:100%;height:30px;border:1px dashed #ccc}
-
+.retailer-category .category-edit{padding: 20px 0}
+.retailer-category .category-edit input,.retailer-category .category-edit .batch-delete{margin-right: 15px}
+.retailer-category .category-edit .batch-delete{padding: 5px 8px;border: 1px solid #eee}
+.retailer-category .category-edit .buttons-set{display:inline-block}
+.retailer-category .category-edit .buttons-set .btn-theme{background:#007dc6;border: 0;border-radius: 0;color: #fff;padding:8px 18px}
+.retailer-category .category-edit .buttons-set .btn-theme .fa{margin-right: 8px}
+.retailer-category .categories-title,.retailer-category .categories-list{padding: 10px}
+.retailer-category .category-content {border: 1px solid #e1e3ea;overflow:hidden}
+.retailer-category .category-content .categories-title{background: #f5f6f9;border-bottom:1px solid #e1e3ea}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}

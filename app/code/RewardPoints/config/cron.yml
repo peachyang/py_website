@@ -2,3 +2,6 @@
 -
     time: '0 0 * * *'
     code: 'Seahinet\RewardPoints\Listeners\Cron::schedule'
+-
+    time: '0 0 * * *'
+    code: 'Seahinet\RewardPoints\Listeners\Cron::expiration'

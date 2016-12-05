@@ -72,7 +72,7 @@ class Database extends AbstractHandler
             foreach ($columns as $attr) {
                 if ($attr['attr']) {
                     if ($attr['type'] === 'int') {
-                        $column = new Ddl\Column\Integer($attr['attr'], true, (int) $attr['default_value']);
+                        $column = new Ddl\Column\Integer($attr['attr'], true, is_null($attr['default_value']) ? null : (int) $attr['default_value']);
                     } else if ($attr['type'] === 'varchar') {
                         $column = new Ddl\Column\Varchar($attr['attr'], 255, true, $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {

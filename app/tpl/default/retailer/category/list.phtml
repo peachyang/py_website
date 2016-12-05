@@ -15,8 +15,8 @@ $categories = $this->getCategories();
                     <?php echo $category->getName() ?>
                 </h4>
                 <div class="action font-12">
-                    <a href="javascript:void(0);" data-toggle="modal" data-info='{parent_id:<?php echo $category->getId() ?>}' data-target="#modal-edit-category"><?php echo $this->translate('Append') ?></a>
-                    <a href="javascript:void(0);" data-toggle="modal" data-info='{name:<?php echo $category->getName() ?>,id:<?php echo $category->getId() ?>,parent_id:<?php echo (int) $category['parent_id'] ?>,uri_key:"<?php echo $category['uri_key'] ?>"}' data-target="#modal-edit-category"><?php echo $this->translate('Edit') ?></a>
+                    <a href="#modal-edit-category" data-toggle="modal" data-info='{parent_id:<?php echo $category->getId() ?>}'><?php echo $this->translate('Append') ?></a>
+                    <a href="#modal-edit-category" data-toggle="modal" data-info='{name:<?php echo $category->getName() ?>,id:<?php echo $category->getId() ?>,parent_id:<?php echo (int) $category['parent_id'] ?>,uri_key:"<?php echo $category['uri_key'] ?>"}'><?php echo $this->translate('Edit') ?></a>
                     <a href="<?php echo $this->getBaseUrl('retailer/category/delete/') ?>" data-method="delete" data-params="id=<?php echo $category->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
                     <a href="javascript:void(0);" class="move"><span class="fa fa-arrows" aria-hidden="true"></span><span class="sr-only"><?php echo $this->translate('Move') ?></span></a>
                 </div>
@@ -29,7 +29,7 @@ $categories = $this->getCategories();
                                     <?php echo $child->getName() ?>
                                 </h4>
                                 <div class="action font-12">
-                                    <a href="javascript:void(0);" data-toggle="modal" data-info='{name:<?php echo $child->getName() ?>,id:<?php echo $child->getId() ?>,parent_id:<?php echo (int) $child['parent_id'] ?>,uri_key:"<?php echo $child['uri_key'] ?>"}' data-target="#modal-edit-category"><?php echo $this->translate('Edit') ?></a>
+                                    <a href="#modal-edit-category" data-toggle="modal" data-info='{name:<?php echo $child->getName() ?>,id:<?php echo $child->getId() ?>,parent_id:<?php echo (int) $child['parent_id'] ?>,uri_key:"<?php echo $child['uri_key'] ?>"}'><?php echo $this->translate('Edit') ?></a>
                                     <a href="<?php echo $this->getBaseUrl('retailer/category/delete/') ?>" data-method="delete" data-params="id=<?php echo $child->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
                                     <a href="javascript:void(0);" class="move"><span class="fa fa-arrows" aria-hidden="true"></span><span class="sr-only"><?php echo $this->translate('Move') ?></span></a>
                                 </div>

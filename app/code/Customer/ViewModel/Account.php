@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\ViewModel;
 
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\ViewModel\Template;
 
@@ -21,9 +22,10 @@ class Account extends Template
 
     public function getCustomer()
     {
-        if(is_null(self::$customer)){
+        if (is_null(self::$customer)) {
             $segment = new Segment('customer');
-            self::$customer = $segment->get('customer');
+            self::$customer = new Customer;
+            self::$customer->load($segment->get('customer')->getId(), 'id');
         }
         return self::$customer;
     }

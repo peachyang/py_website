@@ -23,7 +23,6 @@ class Order extends AbstractModel
 {
 
     protected $items = null;
-    protected $phase = null;
     protected $additional = null;
 
     protected function construct()
@@ -213,10 +212,10 @@ class Order extends AbstractModel
 
     public function getPhase()
     {
-        if (is_null($this->phase)) {
-            $this->phase = $this->getStatus()->getPhase();
+        if ($status = $this->getStatus()) {
+            return $status->getPhase();
         }
-        return $this->phase;
+        return null;
     }
 
     public function getStatusHistory()

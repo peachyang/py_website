@@ -43,7 +43,7 @@ class Gather implements ListenerInterface
         foreach ($order->getItems() as $item) {
             if ($item['product']['reward_points'] > 0) {
                 $points += $item['product']['reward_points'] * $item['qty'];
-            } else if ($item['product']['reward_points'] === '') {
+            } else if (is_null($item['product']['reward_points']) || $item['product']['reward_points'] === '') {
                 $total += $item['base_price'] * $item['qty'];
             } else {
                 $unavailable += $item['base_price'] * $item['qty'];
@@ -89,10 +89,8 @@ class Gather implements ListenerInterface
                 ->where->greaterThan('count', 0);
                 if (count($collection)) {
                     $record = new Record;
-                    $record->setData([
-                        'status' => 1,
-                        'id' => $collection[0]['id']
-                    ])->save();
+                    $record->load($collection[0]['id']);
+                    $record->setData('status', 1)->save();
                 }
             }
         }

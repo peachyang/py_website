@@ -34,11 +34,11 @@ class Url implements Provider
                 $ddl = new Ddl\CreateTable($table);
                 $ddl->addColumn(new UnsignedInteger('product_id', true, 0))
                         ->addColumn(new UnsignedInteger('category_id', false, 0))
-                        ->addColumn(new Ddl\Column\Text('path', 65535, false))
+                        ->addColumn(new Ddl\Column\Varchar('path', 2048, false))
                         ->addConstraint(new Ddl\Constraint\UniqueKey(['category_id', 'product_id'], 'UNQ_' . strtoupper($table) . '_CATEGORY_ID_PRODUCT_ID'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_PRODUCT_ENTITY_ID', 'product_id', 'product_entity', 'id', 'CASCADE', 'CASCADE'))
                         ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_CATEGORY_ENTITY_ID', 'category_id', 'category_entity', 'id', 'CASCADE', 'CASCADE'))
-                        ->addConstraint(new Ddl\Index\Index('path', 'IDX_' . strtoupper($table) . '_PATH', [65535]));
+                        ->addConstraint(new Ddl\Index\Index('path', 'IDX_' . strtoupper($table) . '_PATH'));
                 $adapter->query(
                         $ddl->getSqlString($platform), $adapter::QUERY_MODE_EXECUTE
                 );

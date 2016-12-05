@@ -4,11 +4,18 @@ namespace Seahinet\Retailer\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\Model\Application;
+use Seahinet\Retailer\Model\{
+    Application,
+    Retailer
+};
 
 abstract class AuthActionController extends ActionController
 {
+
     use \Seahinet\Lib\Traits\DB;
+
+    protected $retailer = null;
+
     public function dispatch($request = null, $routeMatch = null)
     {
         $options = $routeMatch->getOptions();
@@ -32,6 +39,16 @@ abstract class AuthActionController extends ActionController
             }
         }
         return parent::dispatch($request, $routeMatch);
+    }
+
+    protected function getRetailer()
+    {
+        if (is_null($this->retailer)) {
+            $session = new Segment('customer');
+            $this->retailer = new Retailer;
+            $this->retailer->load($session->get('customer')->getId(), 'customer_id');
+        }
+        return $this->retailer;
     }
 
 }

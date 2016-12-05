@@ -3,6 +3,7 @@
 namespace Seahinet\Retailer\Model;
 
 use Seahinet\Catalog\Model\Collection\Product;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\Retailer\Model\Collection\Category as Collection;
 
@@ -11,7 +12,7 @@ class Category extends AbstractModel
 
     protected function construct()
     {
-        $this->init('retailer_category', 'id', ['id', 'parent_id', 'default_name', 'store_id', 'uri_key']);
+        $this->init('retailer_category', 'id', ['id', 'parent_id', 'default_name', 'store_id', 'uri_key', 'sort_order']);
     }
 
     protected function beforeLoad($select)
@@ -32,9 +33,30 @@ class Category extends AbstractModel
         parent::afterLoad($result);
     }
 
+    protected function beforeSave()
+    {
+        $this->beginTransaction();
+        parent::beforeSave();
+    }
+
+    protected function afterSave()
+    {
+        if (isset($this->storage['name'])) {
+            $tableGateway = $this->getTableGateway('retailer_category_name');
+            foreach ($this->storage['name'] as $languageId => $name) {
+                $tableGateway->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $languageId]);
+            }
+        }
+        parent::afterSave();
+        $this->commit();
+    }
+
     public function getName($languageId = null)
     {
-        return $languageId && isset($this->storage['name'][$languageId]) ? $this->storage['name'][$languageId] : $this->storage['default_name'];
+        if (is_null($languageId)) {
+            $languageId = Bootstrap::getLanguage()->getId();
+        }
+        return $this->storage['name'][$languageId] ?? $this->storage['default_name'];
     }
 
     public function getProducts()

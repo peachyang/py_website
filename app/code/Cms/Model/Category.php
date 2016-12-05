@@ -13,11 +13,11 @@ class Category extends AbstractModel
     {
         $this->init('cms_category', 'id', ['id', 'uri_key', 'show_navigation', 'status', 'parent_id']);
     }
-
+    
     public function getParentCategory()
     {
         if (!empty($this->storage['parent_id'])) {
-            $navgiation = new Category;
+            $navgiation = new static;
             $navgiation->load($this->storage['parent_id']);
             return $navgiation;
         }
@@ -27,9 +27,9 @@ class Category extends AbstractModel
     public function getChildrenCategories()
     {
         if (isset($this->storage['id'])) {
-            $navgiation = new Collection();
-            $navgiation->where(['parent_id' => $this->storage['id']]); //print_r($navgiation);exit();
-            return $navgiation;
+            $collection = new Collection;
+            $collection->where(['parent_id' => $this->storage['id']]);
+            return $collection;
         }
         return NULL;
     }
@@ -37,7 +37,7 @@ class Category extends AbstractModel
     public function getPages()
     {
         if (isset($this->storage['id'])) {
-            $pages = new PageCollection();
+            $pages = new PageCollection;
             $pages->join('cms_category_page', 'cms_page.id=cms_category_page.page_id', [])
                     ->where(['cms_category_page.category_id' => $this->storage['id']]);
             return $pages;
@@ -56,8 +56,8 @@ class Category extends AbstractModel
         parent::afterSave();
         if (isset($this->storage['name'])) {
             $tableGateway = $this->getTableGateway('cms_category_language');
-            foreach ((array) $this->storage['name'] as $language_id => $name) {
-                $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $language_id], $tableGateway);
+            foreach ((array) $this->storage['name'] as $languageId => $name) {
+                $this->upsert(['name' => $name], ['category_id' => $this->getId(), 'language_id' => $languageId], $tableGateway);
             }
         }
         $this->commit();

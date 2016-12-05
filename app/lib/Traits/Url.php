@@ -21,6 +21,11 @@ trait Url
     protected $pubUrl = '';
 
     /**
+     * @var array
+     */
+    protected static $cachedUrl = ['b' => [], 'a' => [], 'p' => []];
+
+    /**
      * Get url based on the website root
      * 
      * @param string $path
@@ -28,10 +33,13 @@ trait Url
      */
     public function getBaseUrl($path = '')
     {
-        if ($this->baseUrl === '') {
-            $this->baseUrl = $this->getContainer()->get('config')['global/url/base_url'];
+        if (!isset(static::$cachedUrl['b'][$path])) {
+            if ($this->baseUrl === '') {
+                $this->baseUrl = $this->getContainer()->get('config')['global/url/base_url'];
+            }
+            static::$cachedUrl['b'][$path] = $this->baseUrl . ltrim($path, '/');
         }
-        return $this->baseUrl . ltrim($path, '/');
+        return static::$cachedUrl['b'][$path];
     }
 
     /**
@@ -42,11 +50,14 @@ trait Url
      */
     public function getAdminUrl($path = '')
     {
-        if (strpos($path, ':ADMIN') !== false) {
-            return $this->getBaseUrl(str_replace(':ADMIN', $this->getContainer()->get('config')['global/url/admin_path'], $path));
-        } else {
-            return $this->getBaseUrl($this->getContainer()->get('config')['global/url/admin_path'] . '/' . ltrim($path, '/'));
+        if (!isset(static::$cachedUrl['a'][$path])) {
+            if (strpos($path, ':ADMIN') !== false) {
+                static::$cachedUrl['a'][$path] = $this->getBaseUrl(str_replace(':ADMIN', $this->getContainer()->get('config')['global/url/admin_path'], $path));
+            } else {
+                static::$cachedUrl['a'][$path] = $this->getBaseUrl($this->getContainer()->get('config')['global/url/admin_path'] . '/' . ltrim($path, '/'));
+            }
         }
+        return static::$cachedUrl['a'][$path];
     }
 
     /**
@@ -57,17 +68,20 @@ trait Url
      */
     public function getPubUrl($path = '')
     {
-        if ($this->pubUrl === '') {
-            $config = $this->getContainer()->get('config');
-            $base = $config['global/url/cookie_free_domain'];
-            $mobile = (is_callable([$this, 'isMobile']) ? $this->isMobile() :
-                    preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT'])) ?
-                    'mobile_' : '';
-            $prefix = 'pub/theme/' . $config[is_callable([$this, 'isAdminPage']) && $this->isAdminPage() ?
-                    'theme/backend/' . $mobile . 'static' : 'theme/frontend/' . $mobile . 'static'] . '/';
-            $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
+        if (!isset(static::$cachedUrl['p'][$path])) {
+            if ($this->pubUrl === '') {
+                $config = $this->getContainer()->get('config');
+                $base = $config['global/url/cookie_free_domain'];
+                $mobile = (is_callable([$this, 'isMobile']) ? $this->isMobile() :
+                        preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT'])) ?
+                        'mobile_' : '';
+                $prefix = 'pub/theme/' . $config[is_callable([$this, 'isAdminPage']) && $this->isAdminPage() ?
+                        'theme/backend/' . $mobile . 'static' : 'theme/frontend/' . $mobile . 'static'] . '/';
+                $this->pubUrl = $base ? ($base . $prefix) : $this->getBaseUrl($prefix);
+            }
+            static::$cachedUrl['p'][$path] = $this->pubUrl . ltrim($path, '/');
         }
-        return $this->pubUrl . ltrim($path, '/');
+        return static::$cachedUrl['p'][$path];
     }
 
     /**

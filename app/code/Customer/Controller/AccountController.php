@@ -23,6 +23,8 @@ use Zend\Math\Rand;
 class AccountController extends AuthActionController
 {
 
+    use \Seahinet\Lib\Traits\DB;
+    
     public function createAction()
     {
         return $this->getLayout('customer_account_create');
@@ -36,11 +38,6 @@ class AccountController extends AuthActionController
     public function forgotPwdAction()
     {
         return $this->getLayout('customer_account_forgotpwd');
-    }
-
-    public function couponAction()
-    {
-        return $this->getLayout('customer_account_coupon');
     }
 
     public function captchaAction()

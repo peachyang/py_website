@@ -3,6 +3,9 @@
 namespace Seahinet\I18n\Model;
 
 use BadMethodCallException;
+use PDO;
+use Zend\Db\Sql\Select;
+use Zend\Db\Adapter\Platform\Sqlite;
 
 class Locate
 {
@@ -45,13 +48,17 @@ class Locate
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . 'c' . $id, 'I18N_');
         if (!$result) {
-            $tableGateway = $this->getTableGateway('i18n_' . $part);
-            $select = $tableGateway->getSql()->select();
+            $select = new Select('i18n_' . $part);
             $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
             if ($id) {
-                $select->where(['parent_id' => $id]);
+                $select->where(['parent_id' => (int) $id]);
             }
-            $resultSet = $tableGateway->selectWith($select)->toArray();
+            if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
+                $adapter = new PDO('sqlite:' . BP . 'var\i18n.db');
+                $resultSet = $adapter->query($select->getSqlString(new Sqlite));
+            } else {
+                $resultSet = $this->getTableGateway('i18n_' . $part)->selectWith($select)->toArray();
+            }
             $result = [];
             foreach ($resultSet as $item) {
                 if (isset($result[$item['id']])) {

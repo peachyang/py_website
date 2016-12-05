@@ -1,39 +1,39 @@
 <?php
 $addresses = $this->getAddress();
 $attributes = $this->getAddressAttribute();
-if(count($addresses)>=1) :
-?>
-<ul class="address-list">
-    <?php foreach ($addresses as $address): ?>
-        <li class="clearfix">
-            <div class="col-xs-12 col-sm-12 inline">
-                <a href="javascript:void(0);" data-info='<?php echo json_encode($address->toArray()) ?>' data-toggle="modal" data-target="#modal-address" data-type="edit">
-                    <?php echo $address->display(true); ?>
-                </a>
-            </div>
-            <div class="col-xs-12 col-sm-12 action">
-                <?php if (!$address->offsetGet('is_default')): ?>
-                <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='), $address->getId() ?>"><?php echo $this->translate('Set as Default') ?></a><?php else: ?><?php echo $this->translate('Default Address') ?><?php endif ?></a>&nbsp;&nbsp;
-                <a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
-            </div>
-        </li>
-    <?php endforeach ?>
-</ul>
-<div class="btn sub-add">
-    <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
-        <span class="fa fa-plus" aria-hidden="true"></span>
-        <span><?php echo $this->translate('Add New Address') ?></span>
-    </button>
-</div>
-<?php
+if (count($addresses) >= 1) :
+    ?>
+    <ul class="address-list">
+        <?php foreach ($addresses as $address): ?>
+            <li class="clearfix">
+                <div class="col-xs-12 col-sm-12 inline">
+                    <a href="javascript:void(0);" data-info='<?php echo json_encode($address->toArray()) ?>' data-toggle="modal" data-target="#modal-address" data-type="edit">
+                        <?php echo $address->display(true); ?>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-12 action">
+                    <?php if (!$address->offsetGet('is_default')): ?>
+                        <a href="<?php echo $this->getBaseUrl('customer/account/defaultAddress/?id='), $address->getId() ?>"><?php echo $this->translate('Set as Default') ?></a><?php else: ?><?php echo $this->translate('Default Address') ?><?php endif ?></a>&nbsp;&nbsp;
+                    <a href="<?php echo $this->getBaseUrl('customer/account/deleteAddress/') ?>" data-method="delete" data-params="id=<?php echo $address->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
+                </div>
+            </li>
+        <?php endforeach ?>
+    </ul>
+    <div class="btn sub-add">
+        <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
+            <span class="fa fa-plus" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Add New Address') ?></span>
+        </button>
+    </div>
+    <?php
 else :
     ?>
-<div class="btn sub-add">
-    <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
-        <span class="fa fa-plus" aria-hidden="true"></span>
-        <span><?php echo $this->translate('Add New Address') ?></span>
-    </button>
-</div>
+    <div class="btn sub-add">
+        <button type="button" class="btn btn-theme btn-add" data-info="{}" data-toggle="modal" data-target="#modal-address">
+            <span class="fa fa-plus" aria-hidden="true"></span>
+            <span><?php echo $this->translate('Add New Address') ?></span>
+        </button>
+    </div>
 <?php
 endif;
 ?>

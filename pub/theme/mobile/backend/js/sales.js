@@ -11,7 +11,7 @@
     $(function () {
         $('.form-sales').submit(function () {
             var q = 0;
-            $('[type=range]').each(function () {
+            $('[name^=qty]').each(function () {
                 q += $(this).val();
             });
             if (q == 0) {
@@ -19,7 +19,7 @@
                 return false;
             }
         });
-        $('[type=range]').change(function () {
+        $('[name^=qty]').change(function () {
             var p = $(this).parent().siblings('.price');
             $(this).parent().siblings('.total').text(formatPrice($(p).data('price') * $(this).val()));
             $('.totals .subtotal').trigger('collate');
@@ -30,14 +30,14 @@
         });
         $('.totals .subtotal').on('collate', function () {
             var t = 0;
-            $('[type=range]').each(function () {
+            $('[name^=qty]').each(function () {
                 t += $(this).val() * $(this).parent().siblings('.price').data('price');
             });
             $(this).text(formatPrice(t));
         });
         $('.totals .total').on('collate', function () {
             var t = 0;
-            $('[type=range]').each(function () {
+            $('[name^=qty]').each(function () {
                 t += $(this).val() * $(this).parent().siblings('.price').data('price');
             });
             $('.totals [type=checkbox]:checked').each(function () {

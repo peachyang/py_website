@@ -1,36 +1,37 @@
-<ul class="nav nav-tabs col-xs-12 col-sm-12">
-    <li class=" col-xs-3 col-sm-3"<?php if (count($this->getQuery()) === 1): ?> class="active"<?php endif ?>><a href="<?php echo $this->getBaseUrl('sales/order/view/?id='), $this->getOrder()->getId() ?>"><?php echo $this->translate('Order') ?></a></li>
-    <?php
-    $invoices = $this->getInvoice();
-    $count = count($invoices);
-    foreach ($invoices as $key => $invoice):
-        ?>
-        <li class="active col-xs-3 col-sm-3" <?php if ($invoice->getId() == $this->getQuery('invoice', false)): ?> class="active"<?php endif ?>>
-            <a href="<?php echo $this->getBaseUrl('sales/order/invoice/?id='), $this->getOrder()->getId(), '&invoice=', $invoice->getId() ?>">
-                <?php echo $this->translate('Invoice'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
-            </a>
-        </li>
-    <?php endforeach ?>
-    <?php
-    $shipments = $this->getShipment();
-    $count = count($shipments);
-    foreach ($shipments as $key => $shipment):
-        ?>
-        <li class=" col-xs-3 col-sm-3"  <?php if ($shipment->getId() == $this->getQuery('shipment', false)): ?> class="active"<?php endif ?>>
-            <a href="<?php echo $this->getBaseUrl('sales/order/shipment/?id='), $this->getOrder()->getId(), '&shipment=', $shipment->getId() ?>">
-                <?php echo $this->translate('Shipment'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
-            </a>
-        </li>
-    <?php endforeach ?>
-    <?php
-    $memos = $this->getCreditMemo();
-    $count = count($memos);
-    foreach ($memos as $key => $creditmemo):
-        ?>
-        <li class=" col-xs-3 col-sm-3"  <?php if ($creditmemo->getId() == $this->getQuery('creditmemo', false)): ?> class="active"<?php endif ?>>
-            <a href="<?php echo $this->getBaseUrl('sales/order/creditmemo/?id='), $this->getOrder()->getId(), '&creditmemo=', $creditmemo->getId() ?>">
-                <?php echo $this->translate('Credit Memo'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
-            </a>
-        </li>
-    <?php endforeach ?>
-</ul>
+<div id="Has-sold" class="seller-tab">
+    <ul class="nav nav-tabs col-xs-12 col-sm-12 text-center">
+        <li class="active col-xs-3 col-sm-3"<?php if (count($this->getQuery()) === 1): ?> class="active"<?php endif ?>><a href="<?php echo $this->getBaseUrl('sales/order/view/?id='), $this->getOrder()->getId() ?>"><?php echo $this->translate('Order') ?></a></li>
+        <?php
+        $invoices = $this->getInvoice();
+        $count = count($invoices);
+        foreach ($invoices as $key => $invoice):
+            ?>
+            <li class="col-xs-3 col-sm-3" <?php if ($invoice->getId() == $this->getQuery('invoice', false)): ?> class="active"<?php endif ?>>
+                <a href="<?php echo $this->getBaseUrl('sales/order/invoice/?id='), $this->getOrder()->getId(), '&invoice=', $invoice->getId() ?>">
+                    <?php echo $this->translate('Invoice'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+        <?php
+        $shipments = $this->getShipment();
+        $count = count($shipments);
+        foreach ($shipments as $key => $shipment):
+            ?>
+            <li class="col-xs-3 col-sm-3"  <?php if ($shipment->getId() == $this->getQuery('shipment', false)): ?> class="active"<?php endif ?>>
+                <a href="<?php echo $this->getBaseUrl('sales/order/shipment/?id='), $this->getOrder()->getId(), '&shipment=', $shipment->getId() ?>">
+                    <?php echo $this->translate('Shipment'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+        <?php
+        $memos = $this->getCreditMemo();
+        $count = count($memos);
+        foreach ($memos as $key => $creditmemo):
+            ?>
+            <li class=" col-xs-3 col-sm-3"  <?php if ($creditmemo->getId() == $this->getQuery('creditmemo', false)): ?> class="active"<?php endif ?>>
+                <a href="<?php echo $this->getBaseUrl('sales/order/creditmemo/?id='), $this->getOrder()->getId(), '&creditmemo=', $creditmemo->getId() ?>">
+                    <?php echo $this->translate('Credit Memo'), ($count > 1 ? ' ' . ($key + 1) : '') ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>

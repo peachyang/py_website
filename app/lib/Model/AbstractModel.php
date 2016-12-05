@@ -279,7 +279,7 @@ abstract class AbstractModel extends ArrayObject
             $cache = $this->getContainer()->get('cache');
             $columns = $cache->fetch($this->tableName, 'TABLE_DESCRIPTION_');
             if (!$columns) {
-                $columns = $this->getTableGateway($this->tableName)->getAdapter()->query('DESCRIBE ' . $this->getTableGateway($this->tableName)->getTable(), 'execute');
+                $columns = $this->getTableGateway($this->tableName)->getAdapter()->query('DESCRIBE ' . $this->getTableGateway($this->tableName)->getTable(), 'execute')->toArray();
                 $cache->save($this->tableName, $columns, 'TABLE_DESCRIPTION_');
             }
             foreach ($columns as $column) {

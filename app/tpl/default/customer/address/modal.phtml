@@ -11,7 +11,7 @@ $attributes = $this->getAddressAttribute();
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-                    <input type="hidden" name="id" id="addid" />
+                    <input type="hidden" name="id" />
                     <?php
                     foreach ($attributes as $attribute) {
                         $item = [

@@ -21,6 +21,12 @@ class CartController extends ActionController
         $result = $this->validateForm($data, ['product_id', 'qty', 'warehouse_id']);
         if ($result['error'] === 0) {
             try {
+                if (!empty($data['options']) && is_string($data['options'])) {
+                    $options = @json_decode($data['options'], true);
+                    if (!empty($options)) {
+                        $data['options'] = $options;
+                    }
+                }
                 $product = new Product;
                 $options = $product->load($data['product_id'])->getOptions(['is_required' => 1]);
                 foreach ($options as $option) {

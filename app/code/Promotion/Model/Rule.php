@@ -180,7 +180,7 @@ class Rule extends AbstractModel
         if (count($tree['identifier']) > 1) {
             foreach ($tree['identifier'] as $key => $identifier) {
                 $array[$key] = [
-                    'pid' => (int) $tree['pid'][$key] ?? null,
+                    'pid' => $tree['pid'][$key] ?? null,
                     'identifier' => $identifier,
                     'operator' => $tree['operator'][$key],
                     'value' => isset($tree['value'][$key]) && $tree['value'][$key] !== '' ? $tree['value'][$key] : null

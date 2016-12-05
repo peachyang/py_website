@@ -4,8 +4,7 @@ $attributes = $this->getAddressAttribute();
 ?>
 <section class="section address">
     <h4 class="title"><?php echo $this->translate('Shipping Address') ?></h4>
-    <ul class="list">
-        <?php foreach ($addresses as $address): ?>
+    <ul class="list"><?php foreach ($addresses as $address): ?>
             <li data-id="<?php echo $address->getId() ?>" data-json='<?php echo json_encode($address->toArray()) ?>'  >
                 <input type="radio" name="shipping_address_id" id="shipping-address-<?php echo $address->getId() ?>" value="<?php echo $address->getId() ?>"<?php if ($address['is_default'] == 1): ?> checked="checked"<?php endif; ?> />
                 <label for="shipping-address-<?php echo $address->getId() ?>">
@@ -19,8 +18,7 @@ $attributes = $this->getAddressAttribute();
                 <a href="javascript:void(0);" class="edit"><?php echo $this->translate('Edit') ?></a>
                 <a href="<?php echo $this->getBaseUrl('checkout/order/deleteaddress/') ?>" class="delete" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&id=<?php echo $address->getId() ?>"><?php echo $this->translate('Delete') ?></a>
             </li>
-        <?php endforeach ?>
-    </ul>
+        <?php endforeach ?></ul>
     <template id="tmpl-address-list">
         <li data-id="{id}" data-json='{json}'>
             <input type="radio" name="shipping_address_id" id="shipping-address-{id}" value="{id}" />

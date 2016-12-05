@@ -206,7 +206,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dl a:hover{text-decoration:underline}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
-.customer-account .message-box:empty+.page-content,.retailer-account .message-box:empty+.page-content{margin-top:15px}
+.customer-account .message-box:not(:empty)+.page-content,.retailer-account .message-box:not(:empty)+.page-content{margin-top:15px}
 .customer-account:not(.customer-account-dashboard) .col-main .message-box:not(:empty),.retailer-account .col-main .message-box:not(:empty){padding-top:10px}
 .customer-account .fieldset,.retailer-account .fieldset{display:table;width:100%;padding:20px 25px}
 .customer-account .fieldset .caption,.retailer-account .fieldset .caption{display:table-caption;width:100%}
@@ -256,40 +256,29 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account-dashboard .profile span:not(.label)+span{margin-left:10px}
 .customer-account-dashboard .order .action>*{display:block}
 .customer-account-dashboard .coupon .panel-body{margin-top:25px}
-.list_table{border:1px solid #e1e3e9}
-.list_table caption {color: #272323;text-align: left;font-size: 14px}
-.list_table caption .fa-qq{font-size:18px;color:#007dc6;padding-left:10px}
-.list_table .list_right{font-size:13px}
-.list_table .list_time{padding:0 15px}
-.list_table .list_delete{color:#007dc6}
-.customer-account-dashboard .order tbody .text-nowrap{/* border-bottom:1px solid #e1e3e9 */ }
 .customer-account-dashboard .coupon .carousel-control{width:25px;color:#007dc6}
 .customer-account-dashboard .coupon .carousel-control .fa{position:absolute;top:50%;margin-top:-10px;display:block}
-.customer-account-dashboard .coupon .item .content{padding:0 25px;color:#dcf0fb;font-size:12px;line-height:18px}
+.customer-account-dashboard .coupon .item .content{padding:0 25px}
 .coupon .price .receive {line-height: 25px;position: absolute;right: 10px;top: 10px;}
 .coupon .price .receive .txt{font-size:12px; text-align: center;}
 .coupon .price .receive button{font-size: 12px;border-radius: 4px;border: none;padding: 1px 15px;background: #fff;color: #007dc6;}
-.coupon .item .content{padding:10px 0;color:#dcf0fb;font-size:12px;line-height:18px}
-.coupon .item .content .inner{padding:0 15px 12px;background:url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top;background-repeat:repeat-y;background-color:#007dc6}
+.coupon .content{padding:10px 5px;color:#dcf0fb;font-size:12px;line-height:18px}
+.coupon .content .inner{padding:0 15px 12px;background:url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top;background-repeat:repeat-y;background-color:#007dc6}
+.coupon .price{font-size:35px;line-height:60px;letter-spacing:-.2px;color:#fff}
+.coupon .store:empty,.coupon .date:empty{height:18px}
 .customer-account-dashboard .coupon .item .content .inner{padding:0 15px 12px;background:url(../images/bg-coupon-left.png) left top,url(../images/bg-coupon-right.png) right top;background-repeat:repeat-y;background-color:#007dc6}
 .customer-account-dashboard .coupon .price{font-size:35px;line-height:60px;letter-spacing:-.2px;color:#fff}
- .coupon .price{font-size:35px;line-height:60px;letter-spacing:-.2px;color:#fff}
 .customer-account-dashboard .coupon .free-shipping{font-size:35px;line-height:60px;position:relative;color:#fff}
 .customer-account-dashboard .coupon .store:empty,.customer-account-dashboard .coupon .date:empty{height:18px}
- .coupon .store:empty,.coupon .date:empty{height:18px}
 .customer-account-dashboard .order .store{font-weight:bold;color:#000}
 .customer-account-dashboard .order tbody td,.list_table tbody tr td{border-color:#e1e3e9;padding:10px 0}
-.list_table tbody td .total,.list_table tbody td .status{color:#007dc6}
 .customer-account-dashboard .order tbody td:first-child,.list_table tbody td:first-child {border-left:1px solid #e1e3e9;padding-left:10px}
 .customer-account-dashboard .order tbody td[rowspan]:last-child{border-right:1px solid #e1e3e9;padding-right:24px}
 .customer-account-dashboard .order tbody td span:not(.label):not(.price){display:block}
-.list_table tbody td span:not(.label):not(.price){display:block}
 .customer-account-dashboard .order tbody tr:last-child td{border-bottom:1px solid #e1e3e9}
 .customer-account-dashboard .order .price-box .old-price .label{display:inline}
 .customer-account-dashboard .order .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden}
-.list_table .product-name{color:#666;font-size:12px;line-height:19px;height:38px;overflow:hidden;width:200px;margin-left:-20px}
 .customer-account-dashboard .order .options,.list_table .options{font-size:12px;padding:0 10px}
-.list_table td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-dashboard .order td:not([rowspan])+[rowspan]{border-left:1px solid #e1e3e9}
 .customer-account-address .btn-add{margin:30px 0 26px 0;}
 .customer-account-address .address-list li{padding:0 6px;line-height:34px;font-size:14px}
@@ -315,7 +304,6 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-sales-shipment-edit  .wide{clear:both;width:100%;margin-left:0}
 .retailer-sales-invoice-edit .panel{width:49%;float:left;margin-bottom:2%}
 .retailer-sales-invoice-edit .panel{width:49%;float:left;margin-bottom:2%}
-/* .retailer-sales-invoice-edit .panel:nth-child(2n){margin-left:2%} */
 .retailer-sales-invoice-edit .wide{clear:both;width:100%;margin-left:0}
 .customer-account .sales-order-view .panel:nth-child(2n){margin-left:2%}
 .customer-account .sales-order-view .wide{clear:both;width:100%;margin-left:0}
@@ -394,6 +382,39 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .review-list .images li{border:1px solid #eee;margin-right:5px}
 .retailer-account .review-list .images img{max-width:50px;max-height:50px}
 .retailer-account .review-list .reply,.retailer-account .review-list .date{color:#7e7f7f;font-size:12px;margin:0}
+.retailer-account-dashboard .profile{border:1px solid #dfe1e8;padding:20px 0}
+.retailer-account-dashboard .profile .info{border-right:1px dashed #ccc}
+.retailer-account-dashboard .profile .avatar{min-width:140px;text-align:center}
+.retailer-account-dashboard .profile .details{max-width:calc(100% - 140px)}
+.retailer-account-dashboard .profile .title{font-size:18px;line-height:30px}
+.retailer-account-dashboard .profile .ratings{display:table;display:flex;padding:5px}
+.retailer-account-dashboard .profile .ratings .item{display:table-cell;flex:1;text-align:center}
+.retailer-account-dashboard .profile .ratings .label{display:block;margin-bottom:10px}
+.retailer-account-dashboard .profile .ratings .value{display:block}
+.retailer-account-dashboard .profile .links a{margin-right:10px;font-size:14px}
+.retailer-account-dashboard .panel{margin:20px 0 0;box-shadow:none}
+.retailer-account-dashboard .panel .panel-heading{padding:0;margin-bottom:20px;border-bottom:1px solid #dfe1e8}
+.retailer-account-dashboard .panel .panel-title{display:inline-block;border-bottom:1px solid;color:#007dc6;height:55px;line-height:55px;width:150px;text-align:center;margin-bottom:-1px}
+.retailer-account-dashboard .panel .panel-body{padding:0;border:1px solid #dfe1e8}
+.retailer-account-dashboard .panel-stat .panel-body{padding:20px 0}
+.retailer-account-dashboard .panel-stat .panel-body .row{display:table;display:flex}
+.retailer-account-dashboard .panel-stat .panel-body .row .cell{display:table-cell;flex:1;text-align:center}
+.retailer-account-dashboard .panel-stat .panel-body .row .cell+.cell{border-left:1px solid #dfe1e8}
+.retailer-account-dashboard .panel-stat .panel-body .row .detail{display:table;margin:0 auto;padding:15px 0}
+.retailer-account-dashboard .panel-stat .panel-body .row .detail li{display:table-row}
+.retailer-account-dashboard .panel-stat .panel-body .row .detail .label{display:table-cell;text-align:right;padding-right:4px}
+.retailer-account-dashboard .panel-stat .panel-body .row .detail .data{display:table-cell;text-align:left;padding-left:4px}
+.retailer-category .page-content>.buttons-set{margin:20px 0}
+.retailer-category .categories-list .category-name{width:70%;float:left;line-height:30px}
+.retailer-category .categories-list>li>.category-name{cursor:pointer}
+.retailer-category .categories-list>li>.category-name:before{content:"\f054";display:inline-block;width:1.25em;text-align:center;vertical-align:1px;font:normal normal normal 14px/1 FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.retailer-category .categories-list>li>.category-name.active:before{content:"\f078"}
+.retailer-category .categories-list .action{width:30%;float:right;text-align:right;line-height:30px}
+.retailer-category .categories-list .action .move{cursor:move}
+.retailer-category .categories-list .children{clear:both;padding-left:30px}
+.retailer-category .categories-list .children .category-name:before{content:" ";display:inline-block;width:30px;height:15px;vertical-align:top;border-left:1px solid;border-bottom:1px solid}
+.retailer-category .categories-list .ui-sortable-placeholder{display:block;width:100%;height:30px;border:1px dashed #ccc}
+
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -423,7 +444,8 @@ dl.options dd{float:left;margin-left:4px}
 .product-essential .product-info .options .input-box{display:table-row}
 .product-essential .product-info .options .control-label{display:table-cell;vertical-align:top;padding:0 10px 0 16px;font-size:12px;line-height:28px;width:1%;white-space:nowrap}
 .product-essential .product-info .options .cell{display:table-cell;padding-bottom:15px}
-.product-essential .product-info .options .cell label.invalid{display:block;padding:0}
+.product-essential .product-info .options .cell label.invalid{display:block;padding:0;color:#f00!important;animation:blink .6s}
+@keyframes blink{0%{opacity:1}50%{opacity:.3}100%{opacity:1}}
 .product-essential .product-info .options .cell [type=radio],.product-essential .product-info .options .cell [type=checkbox]{display:none}
 .product-essential .product-info .options .cell [type=radio]+label,.product-essential .product-info .options .cell [type=checkbox]+label{margin:0 20px 10px 0;line-height:26px;border:1px solid #f4f4f4;color:#999;padding:0 6px}
 .product-essential .product-info .options .cell [type=radio]:checked+label,.product-essential .product-info .options .cell [type=checkbox]:checked+label{border-color:#666;color:#666}
@@ -585,32 +607,6 @@ dl.options dd{float:left;margin-left:4px}
 .catalog-product div.zoomDiv{z-index:999;position:absolute;top:0px;left:0px;width:200px;height:200px;background:#ffffff;border:1px solid #CCCCCC;display:none;text-align:center;overflow:hidden}
 .catalog-product div.zoomMask{position:absolute;cursor:move;z-index:1}
 /*=S Stone's CSS */
-/* Copy from .customer-account-dashboard */
-.retailer-account-dashboard .main-container .dashboard .myinfo{border:1px solid #dfe1e8;padding-left:20px;padding-top:20px;padding-bottom:20px}
-.retailer-account-dashboard .main-container .dashboard .myinfo h3{font-size:18px;line-height:30px}
-.retailer-account-dashboard .main-container .dashboard .myinfo dl{margin-bottom:0}
-.retailer-account-dashboard .main-container .dashboard .infodetail{display:inline-block;vertical-align:top}
-.retailer-account-dashboard .main-container .dashboard .wel{font-size:14px}
-.retailer-account-dashboard .main-container .dashboard .wel-name{font-size:20px}
-.retailer-account-dashboard .main-container .dashboard .fa-star{color:#007dc6}
-.retailer-account-dashboard .main-container .dashboard .fa-star-o{color:#bcbcbc}
-.retailer-account-dashboard .main-container .dashboard .start{display:inline-block;background-color:#007dc6;color:#ffffff;text-align:center;padding:0 5px}
-.retailer-account-dashboard .main-container .dashboard .start-v{font-size:17px}
-.retailer-account-dashboard .main-container .dashboard .start-num{font-size:12px}
-.retailer-account-dashboard .main-container .dashboard .bal-text{font-size:12px;color:#9e9e9e}
-.retailer-account-dashboard .main-container .dashboard .bal-num{font-size:13px;color:#007dc6;font-weight:bold}
-.retailer-account-dashboard .main-container .dashboard .tran-num{font-size:13px;color:#007dc6}
-.retailer-account-dashboard .main-container .dashboard .order{margin-top:20px}
-.retailer-account-dashboard .main-container .dashboard .myorder{border-bottom:1px solid #dbdee5;margin-top:25px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
-.retailer-account-dashboard .main-container .dashboard .myorder-text{border-bottom:1px solid #007dc6;height:55px;line-height:55px;width:150px;text-align:center}
-.retailer-account-dashboard .main-container .dashboard .coupon-title{border-bottom:1px solid #dbdee5;margin-bottom:20px;height:55px;line-height:55px;font-size:14px;color:#007dc6}
-.retailer-account-dashboard .main-container .coupon{margin-bottom:30px}
-.retailer-account #modal-reply .modal-content {margin-top: 300px;}
-.retailer-account .dashboard .myinfo .infodetail ul,dl{display:block;overflow:hidden;width:auto}
-.retailer-account .dashboard .myinfo .infodetail li{float:left;margin-right:10px}
-.retailer-account .dashboard .myinfo .infodetail dt,.retailer-account .dashboard .myinfo .infodetail dd{float:left;margin-right:10px}
-.retailer-account .dashboard .statistics .table img,.retailer-account .dashboard .statistics .table h3{float:left;font-size:14px;line-height:30px}
-/* end copy */
 /* Common Setting */
 .pad-2{padding:2px}
 .pad-5{padding:5px}
@@ -624,36 +620,6 @@ dl.options dd{float:left;margin-left:4px}
 .mg-bottom-30{margin-bottom:30px}
 .mg-bottom-40{margin-bottom:40px}
 /*activity*/
-.activity_body .enroll button{font-size:12px;border: none;padding: 5px 15px;}
-.activity_body .enroll .whole{background: #007dc6;color: #fff;margin:0 15px 0 0}
-.activity_body .activity_table table{border:1px solid #eee;padding:0 20px}
-.activity_body .activity_table table .margin{padding-left:15px}
-.activity_body .enroll .filter{background: #b8e5ff;color: #646565;}
-.activity_body .activity_table thead{border-bottom:1px solid #eee;background: #fbfbfb;}
-.activity_body .activity_table tr{border-top:1px solid #eee;}
-.activity_body .activity_table td{border-top:none;padding:30px 0}
-.activity_body .activity_list {margin:40px 0}
-.activity_body .activity_table th{padding:10px 0}
-.activity_body .enroll{margin:20px 0;}
-.activity_body .activity_table .link{background: #007dc6;padding: 5px 20px;color: #fff;font-size: 13px;}
-.activity_body .nav-tabs > li.active > a{color:#007dc6;}
-.activity_body .nav-tabs{border-bottom:1px solid #5bc4fc}
-.activity_body .nav-tabs > li > a{color: #000;font-weight: 700;font-size: 14px;}
-.Promotion{margin:20px 0}
-
-.evaluation {margin: 40px 0 20px 0;}
-.evaluation_left{display:inline-block;margin:0 15px 10px 0;}
-.evaluation .evaluation_left .btn{margin-left:34px}
-
-.activity_body .activity{margin:30px 0}
-.retailer-account #modal-reply .modal-content textarea{width: 90%;}
-.retailer-account #modal-reply .modal-content li{margin:10px 0}
-.activity_body .activity_search div{margin:0 10px;display: inline-table;}
-.retailer-account .activity_body .activity_search .button_ctn{margin:40px 0;}
-.retailer-account .activity_body .activity_search .btn{background: #007dc6; color: #fff; padding: 5px 30px; border-radius: 0;margin:0 10px} 
-.retailer-account .activity_body .activity_search .btn-2{background: #fff; border: 1px solid #ccc;padding: 5px 30px;margin:0 10px}
-.retailer-account .activity_body .activity_search .padding-0-5 input,.retailer-account .activity_body .activity_search select{display: block; height: 34px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 0; box-shadow: inset 0 1px 1px rgba(0,0,0,.075); transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;}
-.activity_body #activity{margin:30px 0}
 .sale{margin:20px 0}
 .shop_img{margin:20px 0}
 .shop_img .shop_button button{border-radius:0;margin:0 10px 10px 0}
@@ -662,35 +628,12 @@ dl.options dd{float:left;margin-left:4px}
 .border-right{border-right:1px solid #ececec}
 .font-12{font-size:12px!important}
 .word-break-all{word-break:break-all}
-.shop_classify{margin:35px 0}
-.shop_classify button{padding:2px}
-.shop_classify .check{margin-right:5px}
-.shop_classify .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
-.shop_classify .fa-plus{padding:0 8px}
 .mg-bottom-40 .icon_up i{font-size:20px;color:#ccc;padding:0 3px}
-.shop_classify .add_class{padding-right:5px;}
-.shop_classify .batch{background: #fff;font-size: 13px;border: 1px solid #ccc;padding: 6px 16px;margin:0 15px}
 .shop_sub{margin:10px 0 5px 0}
 .StoreSettings{margin:20px 0}
 .Brand button{padding:3px}
 .Brand_name{margin:10px 0}
-.mg-bottom-40 .category_table{border: 1px solid #eee;}
-.mg-bottom-40 .category_table .table_head{background:#fbfbfb}
-.mg-bottom-40 .category_table .table_head th{padding:5px 0}
-.retailer-account .wishlist .checke{padding:5px 0}
-.mg-bottom-40 .category_table .class_icon i{font-size:25px;color:#c1c1c1;margin: 0 10px 0 40px;}
 .evaluate .down_icon i{font-size:18px;color:#c1c1c1;margin: 0 10px 0 20px;}
-.mg-bottom-40 .class_menu{display:inline-table}
-.mg-bottom-40 .class_menu dt{padding:5px 30px}
-.mg-bottom-40 .class_menu .dl_border{border:1px solid #eee;}
-.mg-bottom-40 .class_menu .border_left{border-left: 1px solid #eee;height: 8%;position: absolute;left: 105px;}
-.mg-bottom-40 .class_menu .border_bt{width: 29px;height: 1px;background: #eee;position: absolute;left: 105px;bottom: 177px;right: 0;}
-.mg-bottom-40 .class_menu dd{padding:5px 10px 5px 5px; }
-.mg-bottom-40 .dd_left{margin:15px 0 0 40px}
-.mg-bottom-40 .add_classify{background:#007dc6;color: #fff;padding: 6px 16px;border: none;}
-.mg-bottom-40 .class_menu .dd_content{position: relative;}
-.mg-bottom-40 .class_menu .border_lf{border-left: 1px solid #eee;position: absolute;width: 1px;height: 26px;bottom:12px}
-.mg-bottom-40 .class_menu .border_bt{width: 40px;height: 1px;background: #eee;position: absolute;top: 20px;left:0}
 .brand_wrap .row{margin-left:1px}
 .col-xs-15,
 .col-sm-15,

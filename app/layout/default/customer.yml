@@ -134,7 +134,7 @@ customer_account_address:
                     modal:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address/modal
-customer_account_coupon:
+customer_coupon:
     update: customer_account
     root:
         children:
@@ -152,11 +152,8 @@ customer_account_coupon:
                             - My Coupons
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Wrapper
-                        children:
-                            coupon:
-                                type: Seahinet\Customer\ViewModel\Coupon
-                                template: customer/coupon
+                        type: Seahinet\Customer\ViewModel\Coupon
+                        template: customer/coupon
     
 customer_wishlist:
     update: customer_account

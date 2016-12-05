@@ -26,7 +26,7 @@ class Layout extends ArrayObject implements Singleton
         if (empty($config)) {
             $config = $this->getContainer()->get('config')['layout'];
         }
-        $this->storage = $config;
+        $this->storage = $config[Bootstrap::isMobile() ? 'mobile' : 'pc'];
     }
 
     public static function instance($config = [])
@@ -83,7 +83,7 @@ class Layout extends ArrayObject implements Singleton
     public function renderLayout(array $layout, $name, $parent = null)
     {
         if (!isset($layout['type']) || !class_exists($layout['type'])) {
-            $this->getContainer()->get('log')->logException(new Exception('Class not found: ' . $layout['type']));
+            $this->getContainer()->get('log')->logException(new Exception('Class not found: ' . ($layout['type'] ?? '')));
             return null;
         }
         if (is_subclass_of($layout['type'], '\\Seahinet\\Lib\\Stdlib\\Singleton')) {

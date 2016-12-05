@@ -135,7 +135,8 @@
                 window.clearTimeout(GLOBAL.CAROUSELTIMEOUT);
                 GLOBAL.CAROUSELTIMEOUT = null;
             }
-            $('.carousel .item').css('transition', 'none');
+            $(this).parent('.carousel').carousel('pause');
+            $('.item', this).css('transition', 'none');
         }).on('touchmove', function (e) {
             var x = e.originalEvent.touches[0].pageX;
             var y = e.originalEvent.touches[0].pageY;
@@ -156,20 +157,21 @@
         }).on('touchend', function (e) {
             var t = $(this).children('.item.prev,.item.next');
             if (t.length) {
+                var p = $(this).parent('.carousel');
                 var c = $(this).children('.item.active');
                 if (Math.abs($(c).css('left').replace('px', '')) > $(c).width() / 20) {
                     var w = $(c).width();
                     if ($(t[0]).is('.prev')) {
                         $(t).animate({left: w}, 300);
                         $(c).animate({left: w}, 300, function () {
+                            $(t).removeClass('prev').removeClass('next').addClass('active').css('left', 0);
                             $(this).removeClass('active');
-                            $(t).removeClass('prev').removeClass('next').addClass('active');
                         });
                     } else {
                         $(t).animate({left: -w}, 300);
                         $(c).animate({left: -w}, 300, function () {
+                            $(t).removeClass('prev').removeClass('next').addClass('active').css('left', 0);
                             $(this).removeClass('active');
-                            $(t).removeClass('prev').removeClass('next').addClass('active');
                         });
                     }
                 } else {
@@ -179,9 +181,10 @@
                     });
                 }
                 GLOBAL.CAROUSELTIMEOUT = window.setTimeout(function () {
-                    $('.carousel .item').removeAttr('style');
-                    $('.carousel .carousel-indicators li').removeClass('active');
-                    $('.carousel .carousel-indicators [data-slide-to=' + $('.carousel .item.active').prevAll('item').length + ']').addClass('active');
+                    $('.item', p).removeAttr('style');
+                    $('.carousel-indicators [data-slide-to]', p).removeClass('active');
+                    $('.carousel-indicators [data-slide-to=' + $('.item.active', p).prevAll('.item').length + ']', p).addClass('active');
+                    $(p).carousel('cycle');
                 }, 600);
             }
         });

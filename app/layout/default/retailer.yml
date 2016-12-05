@@ -37,9 +37,9 @@ retailer_account:
                             -
                                 method: addGroup
                                 params: [{label:'Store Management',priority:20,icon:'bank'}]
-                            -                                   
-                                method: addGroup
-                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
+#                            -
+#                                method: addGroup
+#                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/transaction/product/',label:'Sold Product',priority:1,group:'Transaction Management'}]
@@ -66,7 +66,7 @@ retailer_account:
                                 params: [{link:'retailer/store/view/',label:'View Store',priority:8,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/freight/',label:'Freight Setting',priority:9,group:'Store Management'}]
+                                params: [{link:'retailer/shipping/',label:'Shipping Method',priority:9,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/decorationList',label:'Store Decoration',priority:10,group:'Store Management'}]
@@ -75,25 +75,22 @@ retailer_account:
                                 params: [{link:'retailer/resource/',label:'Resource Management',priority:11,group:'Store Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/store/mobile/',label:'Mobile Phone Store',priority:12,group:'Store Management'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/store/cotegory/',label:'Product Category',priority:13,group:'Store Management'}]
+                                params: [{link:'retailer/category/',label:'Category Management',priority:13,group:'Store Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/setting/',label:'Store Settings',priority:14,group:'Store Management'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:15,group:'Store Management'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:16,group:'Marketing Center'}]
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:17,group:'Marketing Center'}] 
-                            -
-                                method: addLink
-                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:18,group:'Marketing Center'}] 
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/store/brand/',label:'Brand Management',priority:15,group:'Store Management'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/activity/',label:'Activity Registration',priority:16,group:'Marketing Center'}]
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/promotion/',label:'Promotion Management',priority:17,group:'Marketing Center'}] 
+#                            -
+#                                method: addLink
+#                                params: [{link:'retailer/marketing/relationship/',label:'Member Relationship Management',priority:18,group:'Marketing Center'}] 
                     messages:
                         action:
                             -
@@ -116,11 +113,23 @@ retailer_account_dashboard:
                     -
                         method: setTitle
                         params: Retailer Center
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/stat.js',defer:'defer',async:'async'}]
             content:
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\Dashboard
-                        template: retailer/dashboard
+                        type: Seahinet\Lib\ViewModel\Wrapper
+                        children:
+                            profile:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Profile
+                                template: retailer/dashboard/profile
+                            stat:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Stat
+                                template: retailer/dashboard/stat
+                            rank:
+                                type: Seahinet\Retailer\ViewModel\Dashboard\Ranking
+                                template: retailer/dashboard/ranking
 retailer_apply:
     update: retailer_account
     root:
@@ -198,7 +207,7 @@ retailer_product:
                         params: frontend/js/jquery-ui.min.js
                     -
                         method: addScript
-                        params: frontend/js/retailer_goods.js
+                        params: frontend/js/retailer/product.js
             content:
                 children:
                     main:
@@ -281,7 +290,7 @@ retailer_sales_products:
                         params: Retailer Sales
                     -
                         method: addScript
-                        params: frontend/js/retailer_goods.js
+                        params: frontend/js/retailer/product.js
             content:
                 children:
                     main:
@@ -301,7 +310,7 @@ retailer_stock_products:
                         params: Stock
                     -
                         method: addScript
-                        params: frontend/js/retailer_goods.js
+                        params: frontend/js/retailer/product.js
             content:
                 children:
                     main:
@@ -321,7 +330,7 @@ retailer_history_products:
                         params: Stock
                     -
                         method: addScript
-                        params: frontend/js/retailer_goods.js
+                        params: frontend/js/retailer/product.js
             content:
                 children:
                     main:
@@ -341,7 +350,7 @@ retailer_order_view:
                         params: Retailer Order View
                     -
                         method: addScript
-                        params: frontend/js/retailer_goods.js
+                        params: frontend/js/retailer/product.js
             content:
                 children:
                     main:
@@ -389,7 +398,7 @@ retailer_products_release:
                     main:
                         type: Seahinet\Admin\ViewModel\Catalog\BeforeEdit
                         template: retailer/release
-retailer_store_category:
+retailer_category:
     update: retailer_account
     root:
         children:
@@ -397,12 +406,29 @@ retailer_store_category:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Store Categories
+                        params: Category Management
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/retailer/category.js',defer:'defer',async:'async'}]
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Category Management
                 children:
                     main:
+                        type: Seahinet\Retailer\ViewModel\Category
+                        template: retailer/category/list
+            extra:
+                children:
+                    form:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/category
+                        template: retailer/category/form
 retailer_resource:
     update: retailer_account
     root:
@@ -518,7 +544,7 @@ retailer_brand:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
                         template: retailer/store/brand
-freight_setting:
+retailer_shipping:
     update: retailer_account
     root:
         children:
@@ -526,12 +552,18 @@ freight_setting:
                 action:
                     -
                         method: setTitle
-                        params: Freight Setting
+                        params: Shipping Method
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Shipping Method
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/freight
+                        type: Seahinet\Retailer\ViewModel\Shipping
+                        template: retailer/store/shipping
 retailer_activity:
     update: retailer_account
     root:

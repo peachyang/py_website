@@ -1,0 +1,71 @@
+<?php
+$retailer = $this->getRetailer();
+$store = $this->getStore();
+$ratings = $retailer->getRatings();
+$stat1 = new Seahinet\Retailer\ViewModel\Dashboard\Stat;
+$stat = $stat1->getStat();
+$rankings = new Seahinet\Retailer\ViewModel\Dashboard\Ranking;
+$ranking = $rankings->getItems();
+?>
+<div class="profile clearfix">
+    <div class="pull-right col-xs-12 col-md-6">
+        <div class="ratings">
+            <?php
+            $sum = 0;
+            foreach ($ratings as $rating):
+                $sum += $rating['value'];
+                ?>
+                <div class="item">
+                    <span class="label"><?php echo $this->translate($rating['title']) ?></span>
+                    <span class="value"><?php printf('%.2f', $rating['value']) ?></span>
+                </div>
+                <?php
+            endforeach;
+            $avg = count($ratings) ? $sum / count($ratings) : 0;
+            ?>
+        </div>
+    </div>
+    <div class="info col-xs-12 col-md-6">
+        <div class="avatar col-xs-12 col-md-3">
+            <img class="img-circle" src="<?php echo $retailer['profile'] ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png') ?>"  height="100" width="100" />
+        </div>
+        <div class="details col-xs-12 col-md-9">
+            <h3 class="title font-14"><?php echo $store['name'] ?></h3>
+            <div class="rating text-center" title="<?php printf('%.2f', $avg) ?>">
+                <span class="fa fa-star" style="width:<?php echo $avg * 20 ?>%"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+            <p>
+                <a href="<?php echo $this->getBaseUrl('retailer/store/setting/') ?>"><?php echo $this->translate('Store Settings') ?></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/store/view/') ?>"><?php echo $this->translate('View Store') ?></a>
+            </p>
+            <div class="row">
+                <div class="cell col-xs-4 col-sm-4">
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1') ?>"><?php echo $this->translate('Pending Payment') ?><br /><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
+                </div>
+                <div class="cell col-xs-4 col-sm-4">
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3') ?>"><?php echo $this->translate('Processing', [], 'customer') ?><br /><span class="count">(<?php echo $this->getProcessing() ?>)</span></a>
+                </div>
+                <div class="cell col-xs-4 col-sm-4">
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=7') ?>"><?php echo $this->translate('On Hold', [], 'customer') ?><br /><span class="count">(<?php echo $this->getHolding() ?>)</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>			
+<div class="profile-foot">
+    <ul class="col-xs-12 col-sm-12">
+        <li class="col-xs-3 col-sm-3 text-center">
+            <a href="<?php echo $this->getBaseUrl('') ?>"><?php echo $this->translate('Shopping'); ?></a>
+        </li>
+        <li class="col-xs-3 col-sm-3 text-center">
+            <a href="<?php echo $this->getBaseUrl('customer/account/') ?>"><?php echo $this->translate('Personal Center'); ?></a>
+        </li>
+        <li class="col-xs-3 col-sm-3 text-center">
+            <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out'); ?></a>
+        </li>
+        <li class="col-xs-3 col-sm-3 text-center">
+            <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Give Feedback'); ?></a>
+        </li>
+    </ul>
+</div>

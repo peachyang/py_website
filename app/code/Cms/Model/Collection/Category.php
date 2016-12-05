@@ -24,6 +24,7 @@ class Category extends AbstractCollection
             foreach ($result as $item) {
                 $ids[] = $item['id'];
                 $data[$item['id']] = $item;
+                $data[$item['id']]['language_id'] = [];
                 $data[$item['id']]['language'] = [];
                 $data[$item['id']]['name'] = [];
             }
@@ -34,6 +35,7 @@ class Category extends AbstractCollection
             $languages->load(false);
             foreach ($languages as $item) {
                 if (isset($data[$item['category_id']])) {
+                    $data[$item['category_id']]['language_id'][] = $item['language_id'];
                     $data[$item['category_id']]['language'][$item['language_id']] = $item['language'];
                     $data[$item['category_id']]['name'][$item['language_id']] = $item['name'];
                 }

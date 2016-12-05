@@ -6,12 +6,15 @@ use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
+use Seahinet\Lib\Model\Collection\Language;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
 
 class ProductController extends AuthActionController
 {
+
+    private $searchable = null;
 
     public function indexAction()
     {
@@ -102,17 +105,57 @@ class ProductController extends AuthActionController
                 }
                 try {
                     $model->save();
+                    $languages = new Language;
+                    $languages->columns(['id']);
+                    $languages->load(true, false);
+                    foreach ($languages as $language) {
+                        $this->reindex($model->getId(), $language['id']);
+                    }
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please check the log report or try again.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
-                $this->getContainer()->get('indexer')->reindex('catalog_url');
-                $this->getContainer()->get('indexer')->reindex('catalog_search');
             }
         }
         return $this->response($result, ':ADMIN/catalog_product/');
+    }
+
+    private function getSearchableAttributes()
+    {
+        if (is_null($this->searchable)) {
+            $this->searchable = new Attribute;
+            $this->searchable->columns(['code'])
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE, 'searchable' => 1]);
+        }
+        return $this->searchable;
+    }
+
+    private function reindex($id, $languageId)
+    {
+        $model = new Model($languageId);
+        $model->load($id);
+        $indexer = $this->getContainer()->get('indexer');
+        $values = [];
+        foreach ($model->getCategories() as $category) {
+            if ($category['uri_key']) {
+                $record = $indexer->select('catalog_url', $languageId, ['category_id' => $category->getId(), 'product_id' => null]);
+                if (count($record)) {
+                    $values[] = ['category_id' => $category->getId(), 'product_id' => $id, 'path' => $record[0]['path'] . '/' . $model['uri_key']];
+                }
+            }
+        }
+        $indexer->replace('catalog_url', $languageId, $values, ['product_id' => $id]);
+        $data = ['id' => $id, 'store_id' => $model['store_id'], 'data' => '|'];
+        foreach ($this->getSearchableAttributes() as $attr) {
+            $value = $model[$attr['code']];
+            if ($value !== '' && $value !== null) {
+                $data['data'] .= $value . '|';
+            }
+        }
+        $indexer->replace('catalog_search', $languageId, [$data], ['id' => $id]);
     }
 
 }

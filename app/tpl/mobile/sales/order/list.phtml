@@ -1,71 +1,142 @@
 <?php
 $orders = $this->getOrders();
+$profile1 = new Seahinet\Customer\ViewModel\Dashboard\Profile;
+$profile = $profile1->getPendingPayment();
+$shipping = $profile1->getShipping();
+$reviewing = $profile1->getReviewing();
 ?>
 <div id="Has-sold" class="seller-tab">
-    <div class="tab-nav">
-        <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
-            <li class="active col-xs-3 col-sm-3">
-                <a href="#all" data-toggle="tab">
-                    全部
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#delivery" data-toggle="tab">
-                    待付款
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#payment" data-toggle="tab">
-                    待发货
-                </a>
-            </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#refund" data-toggle="tab">
-                    待收货
-                </a>
-            </li>
-        </ul>
-    </div>	
-    <div class="search col-xs-12 col-sm-12 padding-5" >
-        <div class="search_center">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="search" name="search" value="收件人姓名/电话/运单号/地址信息关键字" class="col-xs-12 col-sm-12"/>
-        </div>
+    <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
+        <li class="active col-xs-3 col-sm-3">
+            <a href="#all" data-toggle="tab">
+                <?php echo $this->translate('All'); ?>(<span><?php echo count($orders); ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1') ?>" data-toggle="tab">
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile1->getPendingPayment() ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2') ?>" data-toggle="tab">
+                <?php echo $this->translate('Delivering'); ?>(<span><?php echo $profile1->getShipping() ?></span>)
+            </a>
+        </li>
+        <li class="col-xs-3 col-sm-3">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3') ?>" data-toggle="tab">
+                <?php echo $this->translate('Reviewing'); ?>(<span><?php echo $profile1->getReviewing() ?></span>)
+            </a>
+        </li>
+    </ul>	
+    <div class="search col-xs-12 col-sm-12 padding-5">
+        <form class="form-inline" action="" method="get" novalidate = "novalidate">
+            <span class="fa fa-search" aria-hidden="true"></span>
+            <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+            <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
+        </form>
     </div>
-    <div id="Product-details" class="tab-content">
-        <div class="tab-pane fade in active" id="all">
-            <div class="menu-ctn padding-5">
-                <ul  class="col-xs-12 col-sm-12 title-nav  name">
-                    <li class="col-xs-5 col-sm-5 text-left font-12"><a href="" target="_blank">123456's Store</a></li>
-                    <li class="col-xs-7 col-sm-7 text-right font-12"><a href="">实付:￥208.00(含运费: ￥10.00)</a></li>	
-                </ul>
-                <ul class="col-xs-12 col-sm-12 inline bt">
-                    <li class="col-xs-2 col-sm-2"><img src="http://ecomv2.seahinet.test1/pub/resource/image/resized/173x/TB1jLZiNFXXXXapXFXXXXXXXXXX_!!0-item_pic.jpg" style="display: inline;" width="50" height="50"></li>
-                    <li class="col-xs-7 col-sm-7"><span class="text-ovflow">女装 打褶中裙 173805 优衣库UNIQLO</span><p class="choose col-xs-12 col-sm-12 "><span class="col-xs-4 col-sm-4">颜色:棕色</span><span  class="col-xs-4 col-sm-4">尺码:XL</span><span  class="col-xs-4 col-sm-4"></span></p></li>
-                    <li class="col-xs-3  col-sm-3 text-right">
-                        <span class="price ">￥198.00</span>
-                        <span>x1</span>
-                        <span class=" color-blue font-14">已付款</span>
-                    </li>
-                </ul>
+    <?php if (count($orders)): ?>
+        <div id="Product-details" class="tab-content font-12">
+            <div class="tab-pane fade in active" id="all">
+                <?php
+                foreach ($orders as $order):
+                    ?>  
+                    <div class="menu-ctn">
+                        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
+                            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()->offsetGet('name') ?></li>
+                            <li class="col-xs-7 col-sm-7 text-right font-14">
+                                <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
+                                <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                            </li>	
+                        </ul>
+                        <table class="table inline bt padding-5">
+                            <?php
+                            $items = $order->getItems();
+                            $flag = true;
+                            foreach ($items as $item):
+                                $product = $item['product'];
+                                $thumbnail = $product->getThumbnail();
+                                ?>
+                                <tr>
+                                    <td class="col-xs-2 col-sm-2">
+                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                                    </td>
+                                    <td class="col-xs-6 col-sm-6 text-left" title="<?php echo $product->offsetGet('name') ?>">
+                                        <h4 class="font-12"><?php echo $product->offsetGet('name') ?></h4>
+                                        <?php
+                                        $options = json_decode($item['options'], true);
+                                        if ($item['product_id'] && count($options)):
+                                            ?>
+                                            <dl class="options">
+                                                <?php
+                                                foreach ($product->getOptions() as $option):
+                                                    if (isset($options[$option->getId()])):
+                                                        ?>
+                                                        <dt><?php echo $option['title'] ?></dt>
+                                                        <dd>
+                                                            <?php
+                                                            echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                                    $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                            ?>
+                                                        </dd>
+                                                        <?php
+                                                    endif;
+                                                endforeach;
+                                                ?>
+                                            </dl>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="col-xs-1 col-sm-1 text-right">
+                                        <span class="price"><?php echo $order->getCurrency()->format($item->offsetGet('price')) ?></span>
+                                        <span><?php echo (float) $item->offsetGet('qty') ?></span>
+                                    </td>
+                                    <?php
+                                    if ($flag):
+                                        ?>
+                                        <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
+                                            <span class="color-blue"><?php echo $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?></span>
+                                        </td>
+                                        <?php
+                                        $flag = FALSE;
+                                    endif;
+                                    ?>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                        <ul class="sale_status padding-5">
+                            <li class="col-xs-12 col-sm-12 text-right">
+                                <?php if ($order->canRefund()): ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Refund Application') ?></a>
+                                <?php endif ?>
+                                <?php if ($order->canReview()): ?>
+                                    <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('Add Review') ?></a>
+                                <?php endif ?>
+                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>" class="btn"><?php echo $this->translate('View Details') ?></a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="page">
+                    <p>
+                        <?php echo $this->getChild('pager')->setCollection($orders) ?>
+                    </p>
+
+                </div>
             </div>
-            <div class="bt-link">
-                <ul class="col-xs-12 col-sm-12 inline text-center operation ">
-                    <li class="col-xs-2 col-sm-6" ></li>
-                    <li class="col-xs-2 col-sm-6"></li>	
-                    <li class="col-xs-4 col-sm-6" data-toggle="modal" data-target="#modal-refund"><span><a href="">退换申请</a></span></li>
-                    <li class="col-xs-4 col-sm-6"><a href="">查看详情</a></li>		
-                </ul>	
+            <div class="tab-pane fade " id="delivery">
+                2
+            </div>
+            <div class="tab-pane fade" id="payment">
+                3
+            </div>
+            <div class="tab-pane fade " id="refund">
+                4
             </div>
         </div>
-        <div class="tab-pane fade " id="delivery">
-            2
+    <?php else: ?>
+        <div>
+            <p class="text-center"><?php echo $this->translate('You have placed no orders.') ?></p>
         </div>
-        <div class="tab-pane fade" id="payment">
-            3
-        </div>
-        <div class="tab-pane fade " id="refund">
-            4
-        </div>
-    </div>
+    <?php endif; ?>
 </div>

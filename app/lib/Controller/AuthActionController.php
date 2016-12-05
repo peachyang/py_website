@@ -95,7 +95,7 @@ class AuthActionController extends ActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], is_null($redirect) ? $this->getRequest()->getHeader('HTTP_REFERER') : $redirect);
     }
 
-    protected function doSave($modelName, $redirect = null, $required = [], callable $beforeSave = null, $transaction = false)
+    protected function doSave($modelName, $redirect = null, $required = [], callable $beforeSave = null, $transaction = false, callable $afterSave = null)
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -117,6 +117,9 @@ class AuthActionController extends ActionController
                         $beforeSave($model, $data);
                     }
                     $model->save();
+                    if (is_callable($afterSave)) {
+                        $afterSave($model);
+                    }
                     $result['data'] = $model->getArrayCopy();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                     if ($transaction) {

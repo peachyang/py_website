@@ -46,12 +46,6 @@ class StoreController extends AuthActionController
         return $root;
     }
 
-    public function freightAction()
-    {
-        $root = $this->getLayout('freight_setting');
-        return $root;
-    }
-
     public function saveAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -84,19 +78,6 @@ class StoreController extends AuthActionController
             }
         }
         return $this->response($result ?? ['error' => 1], 'retailer/store/setting/', 'retailer');
-    }
-
-    /**
-     * cotegoryAction  
-     * Show category management view
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function cotegoryAction()
-    {
-        $root = $this->getLayout('retailer_store_category');
-        return $root;
     }
 
     /**

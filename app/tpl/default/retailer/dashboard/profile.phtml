@@ -1,0 +1,51 @@
+<?php
+$retailer = $this->getRetailer();
+$store = $this->getStore();
+$ratings = $retailer->getRatings();
+?>
+<div class="profile clearfix">
+    <div class="pull-right col-xs-12 col-md-6">
+        <h3 class="title text-center"><?php echo $this->translate('Store Score') ?></h3>
+        <div class="ratings">
+            <?php
+            $sum = 0;
+            foreach ($ratings as $rating):
+                $sum += $rating['value'];
+                ?>
+                <div class="item">
+                    <span class="label"><?php echo $this->translate($rating['title']) ?></span>
+                    <span class="value"><?php printf('%.2f', $rating['value']) ?></span>
+                </div>
+                <?php
+            endforeach;
+            $avg = count($ratings) ? $sum / count($ratings) : 0;
+            ?>
+        </div>
+    </div>
+    <div class="info col-xs-12 col-md-6">
+        <div class="avatar col-xs-12 col-md-3">
+            <img class="img-circle" src="<?php echo $retailer['profile'] ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png') ?>"  height="100" width="100" />
+        </div>
+        <div class="details col-xs-12 col-md-9">
+            <h3 class="title"><?php echo $store['name'] ?></h3>
+            <div class="rating" title="<?php printf('%.2f', $avg) ?>">
+                <span class="fa fa-star" style="width:<?php echo $avg * 20 ?>%"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+            <ul class="links list-inline">
+                <li>
+                    <a href="<?php echo $this->getBaseUrl('retailer/store/setting/') ?>"><?php echo $this->translate('Store Settings') ?></a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->getBaseUrl('retailer/store/view/') ?>"><?php echo $this->translate('View Store') ?></a>
+                </li>
+            </ul>
+            <div class="transaction">
+                <span class="label"><?php echo $this->translate('Transaction') ?>:</span>
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1') ?>"><?php echo $this->translate('Pending Payment') ?><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3') ?>"><?php echo $this->translate('Processing', [], 'customer') ?><span class="count">(<?php echo $this->getProcessing() ?>)</span></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=7') ?>"><?php echo $this->translate('On Hold', [], 'customer') ?><span class="count">(<?php echo $this->getHolding() ?>)</span></a>
+            </div>
+        </div>
+    </div>
+</div>

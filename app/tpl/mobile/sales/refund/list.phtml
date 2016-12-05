@@ -3,7 +3,7 @@ $applications = $this->getApplication();
 $currency = $this->getCurrency();
 ?>
 <div id="Has-sold" class="seller-tab">
-    <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12">
+    <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
         <li class="active col-xs-3 col-sm-3">
             <a href="#all" data-toggle="tab">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
@@ -11,17 +11,17 @@ $currency = $this->getCurrency();
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#delivery" data-toggle="tab">
-                <?php echo $this->translate('Non-payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#payment" data-toggle="tab">
-                <?php echo $this->translate('Non-receiving'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+                <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
             <a href="#refund" data-toggle="tab">
-                <?php echo $this->translate('Non-evaluation'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+                <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
             </a>
         </li>
     </ul>
@@ -92,7 +92,9 @@ $currency = $this->getCurrency();
                                     </td>
                                     <?php if ($flag) : ?>
                                         <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
-                                            <span class="color-blue font-14"><?php echo $this->translate($application['status']); ?></span>
+                                            <span class="color-blue">
+                                                <?php echo $this->translate($this->getStatus($application['service'], $application['status'])) ?>
+                                            </span>
                                         </td>
                                         <?php
                                         $flag = FALSE;
@@ -125,6 +127,14 @@ $currency = $this->getCurrency();
             </div>
         </div>
         <?php
+    else:
+        ?>
+        <div class="tab-content">
+            <p>
+                <?php echo $this->translate('No return products.'); ?>
+            </p>
+        </div>
+    <?php
     endif;
     ?>
 </div>

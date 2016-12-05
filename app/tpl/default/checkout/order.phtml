@@ -7,6 +7,12 @@
     <h2 class="page-title"><?php echo $this->translate('Please comfirm the order infomation') ?></h2>
     <?php echo $this->getChild('messages') ?>
     <div class="checkout-steps">
-        <?php echo $this->getChild('address'), $this->getChild('shipping'), $this->getChild('payment'), $this->getChild('review') ?>
+        <?php
+        $steps = $this->getConfig()['checkout'];
+        ksort($steps);
+        foreach ($steps as $step) {
+            echo $this->getChild($step);
+        }
+        ?>
     </div>
 </div>

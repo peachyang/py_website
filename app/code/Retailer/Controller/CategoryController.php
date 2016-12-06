@@ -62,8 +62,6 @@ class CategoryController extends AuthActionController
 
     public function removeAction()
     {
-        $data = $this->getRequest()->isGet() ? $this->getRequest()->getQuery() : $this->getRequest()->getPost();
-        $result = $this->validateForm($data);
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data);

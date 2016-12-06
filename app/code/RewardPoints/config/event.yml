@@ -3,9 +3,16 @@ Seahinet\Catalog\Model\Product\Review.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterReview]
         priority: 10
+Seahinet\Customer\Model\Customer.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterRegister]
+        priority: 20
 order.place.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderPlace]
+        priority: 20
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, afterOrderPlace]
         priority: 20
 Seahinet\Sales\Model\Order.model.save.after:
     -
@@ -19,6 +26,14 @@ Seahinet\Log\Model\SocialMedia.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterShare]
         priority: 20
+rewardpoints.apply:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, apply]
+        priority: 0
+rewardpoints.cancel:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, cancel]
+        priority: 0
 promotion.calc:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, calc]
@@ -30,3 +45,11 @@ Seahinet\Sales\Model\CreditMemo.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, afterRefund]
         priority: 20
+frontend.customer.save.before:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveFrontendCustomer]
+        priority: 10
+backend.customer.save.before:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveBackendCustomer]
+        priority: 10

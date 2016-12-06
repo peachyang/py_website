@@ -1,0 +1,28 @@
+---
+admin_customer_edit:
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        children:
+                            tabs:
+                                action:
+                                    -
+                                        method: addTab
+                                        params:
+                                            - rewardpoints
+                                            - Reward Points
+                                            - 100
+                                children:
+                                    rewardpoints:
+                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
+                                        template: admin/rewardpoints/edit
+checkout_order:
+    root:
+        children:
+            content:
+                children:
+                    rewardpoints:
+                        type: Seahinet\RewardPoints\ViewModel\Checkout
+                        template: rewardpoints/apply

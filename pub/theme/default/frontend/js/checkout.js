@@ -245,5 +245,15 @@
                 }
             });
         });
+        $('.checkout-steps').on('afterajax.seahinet', '[data-load]', function () {
+            $(this).toggleClass('clicked');
+            var load = $(this).data('load');
+            if (typeof load === 'string') {
+                load = load.indexOf(',') === -1 ? [load] : eval('(' + load + ')');
+            }
+            for (var i in load) {
+                eval('load' + load[i].substring(0, 1).toUpperCase() + load[i].substring(1).toLowerCase() + '();');
+            }
+        });
     });
 }));

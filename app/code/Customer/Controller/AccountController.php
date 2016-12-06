@@ -351,18 +351,9 @@ class AccountController extends AuthActionController
                     $model = new Model;
                     $model->load($customer['id']);
                     $model->setData($data);
+                    $this->getContainer()->get('eventDispatcher')->trigger('frontend.customer.save.before', ['model' => $model, 'data' => $data]);
                     $model->save();
-                    $subscriber = new Subscriber;
-                    $subscriber->load($data['email'], 'email');
-                    if (empty($data['subscribe']) && $subscriber->getId()) {
-                        $subscriber->unsubscribe();
-                    } else if (!empty($data['subscribe'])) {
-                        $subscriber->setData([
-                            'email' => $data['email'],
-                            'language_id' => Bootstrap::getLanguage()->getId(),
-                            'status' => 1
-                        ])->save();
-                    }
+                    $this->getContainer()->get('eventDispatcher')->trigger('frontend.customer.save.after', ['model' => $model, 'data' => $data]);
                     $segment->set('customer', clone $model);
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {

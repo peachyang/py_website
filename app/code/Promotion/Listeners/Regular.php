@@ -43,6 +43,7 @@ class Regular implements ListenerInterface
                         $this->matchRule($rule, $storeId)) {
                     $result += $this->handleRule($rule, $storeId, $block);
                     if ($block) {
+                        $event->stopPropagation();
                         break;
                     }
                 }
@@ -50,10 +51,9 @@ class Regular implements ListenerInterface
         }
         if ($result) {
             $this->model->setData([
-                'base_discount' => $result,
-                'discount' => $this->model->getCurrency()->convert($result, false),
-                'discount_detail' => json_encode(['Promotion' => $result] + (json_decode($this->model['discount_detail'], true)? : []))
-            ]);
+                'base_discount' => (float) $this->model->offsetGet('base_discount') + $result,
+                'discount_detail' => json_encode(['Promotion' => $result] + (json_decode($this->model['discount_detail'], true) ?: []))
+            ])->setData('discount', $this->model->getCurrency()->convert($this->model->offsetGet('base_discount')));
         }
     }
 

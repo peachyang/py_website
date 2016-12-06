@@ -17,20 +17,36 @@ class Gather implements ListenerInterface
     public function afterReview($event)
     {
         $config = $this->getContainer()->get('config');
-        if ($config['rewardpoints/general/enable'] && ($points = $config['rewardpoints/gathering/reviewing'])) {
-            $model = $event['model'];
-            if ($event['isNew'] && $model->offsetGet('customer_id') && $model->offsetGet('order_id')) {
-                $limits = $config['rewardpoints/gathering/words_limitation'];
-                if (!$limits || count(explode(' ', preg_replace('/[^\x00-\x7F]{3}/', ' ', preg_replace('/\s+/', ' ', trim(@gzdecode($model->offsetGet('content'))))))) > $limits) {
-                    $record = new Record([
-                        'customer_id' => $model->offsetGet('customer_id'),
-                        'count' => $points,
-                        'comment' => 'Reviewing Product',
-                        'status' => 1
-                    ]);
-                    $record->save();
-                }
+        $model = $event['model'];
+        if ($config['rewardpoints/general/enable'] &&
+                ($points = $config['rewardpoints/gathering/reviewing']) &&
+                $event['isNew'] && $model->offsetGet('customer_id') &&
+                $model->offsetGet('order_id')) {
+            $limits = $config['rewardpoints/gathering/words_limitation'];
+            if (!$limits || count(explode(' ', preg_replace('/[^\x00-\x7F]{3}/', ' ', preg_replace('/\s+/', ' ', trim(@gzdecode($model->offsetGet('content'))))))) > $limits) {
+                $record = new Record([
+                    'customer_id' => $model->offsetGet('customer_id'),
+                    'count' => $points,
+                    'comment' => 'Reviewing Product',
+                    'status' => 1
+                ]);
+                $record->save();
             }
+        }
+    }
+
+    public function afterRegister($event)
+    {
+        $config = $this->getContainer()->get('config');
+        $model = $event['model'];
+        if ($config['rewardpoints/general/enable'] && ($points = $config['rewardpoints/gathering/registration']) && $event['isNew']) {
+            $record = new Record([
+                'customer_id' => $model->getId(),
+                'count' => $points,
+                'comment' => 'Registration',
+                'status' => 1
+            ]);
+            $record->save();
         }
     }
 
@@ -49,7 +65,7 @@ class Gather implements ListenerInterface
                 $unavailable += $item['base_price'] * $item['qty'];
             }
         }
-        $total += (($config['rewardpoints/gathering/calculation'] ? $order['base_shipping'] + $order['base_tax'] : 0) - $order['base_discount']) * $total / ($total + $unavailable);
+        $total += (($config['rewardpoints/gathering/calculation'] ? $order['base_shipping'] + $order['base_tax'] : 0) + $order['base_discount']) * $total / ($total + $unavailable);
         $max = $config['rewardpoints/gathering/max_amount_calculation'] ? ((int) ($total * $config['rewardpoints/gathering/max_amount'] / 100)) : ((int) $config['rewardpoints/gathering/max_amount']);
         $calc = $total * $config['rewardpoints/gathering/rate'] + $points;
         return $total >= $config['rewardpoints/gathering/min_amount'] ? ($max ? min($max, $calc) : $calc) : 0;
@@ -160,6 +176,25 @@ class Gather implements ListenerInterface
                 }
             }
         }
+    }
+
+    public function beforeSaveFrontendCustomer($event)
+    {
+        unset($event['model']['rewardpoints']);
+    }
+
+    public function beforeSaveBackendCustomer($event)
+    {
+        $customer = $event['model'];
+        $record = new Record;
+        $record->setData([
+            'customer_id' => $customer->getId(),
+            'count' => $customer->offsetGet('adjust_rewardpoints'),
+            'comment' => 'System Adjustment',
+            'status' => 1
+        ]);
+        unset($customer['rewardpoints']);
+        $record->save();
     }
 
 }

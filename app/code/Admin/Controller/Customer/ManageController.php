@@ -52,7 +52,8 @@ class ManageController extends AuthActionController
                         'attribute_set_id' => $data['attribute_set_id']
                     ])->columns(['code'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
-                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
+                    ->where->notEqualTo('input', 'password');
             $required = ['store_id', 'language_id', 'attribute_set_id'];
             $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];
@@ -74,7 +75,9 @@ class ManageController extends AuthActionController
                         }
                         $model->setData('store_id', $user->getStore()->getId());
                     }
+                    $this->getContainer()->get('eventDispatcher')->trigger('backend.customer.save.before', ['model' => $model, 'data' => $data]);
                     $model->save();
+                    $this->getContainer()->get('eventDispatcher')->trigger('backend.customer.save.after', ['model' => $model, 'data' => $data]);
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

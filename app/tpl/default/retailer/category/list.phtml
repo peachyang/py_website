@@ -4,7 +4,7 @@ $categories = $this->getCategories();
 <div class="category-edit">
     <input type="checkbox" class="selectall" id="checkall" name="checkall[]" data-cbtype="all" />
     <label for="checkall"><?php echo $this->translate('Select All'); ?></label>
-    <a href="<?php echo $this->getBaseUrl('retailer/category/delete/'); ?>" class="batch-delete" data-method="delete"><?php echo $this->translate('Batch Delete'); ?></a>
+    <a href="<?php echo $this->getBaseUrl('retailer/category/remove/'); ?>" class="batch-delete" data-method="delete"><?php echo $this->translate('Batch Delete'); ?></a>
     <div class="buttons-set text-right">
         <button data-toggle="modal" data-target="#modal-edit-category" class="btn btn-theme"><span class="fa fa-plus" aria-hidden="true"></span><?php echo $this->translate('Add New Category') ?></button>
     </div>

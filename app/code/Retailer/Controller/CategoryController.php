@@ -60,6 +60,27 @@ class CategoryController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
     }
 
+    public function removeAction()
+    {
+        if ($this->getRequest()->isDelete()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data);
+            try {
+                $model = new Model;
+                foreach ((array) $data['id'] as $id) {
+                    $model->setId($id)->remove();
+                }
+                $result['reload'] = 1;
+                $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+            } catch (Exception $e) {
+                $this->getContainer()->get('log')->logException($e);
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please contact us or try again later.'), 'level' => 'danger'];
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
+    }
+
     public function moveAction()
     {
         $result = 0;

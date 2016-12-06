@@ -9,10 +9,10 @@ $filter = $this->getVariable('filter');
         <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="sell">
                 <ul class="commodity">
-                    <li ><span>商品名称:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
-                    <li ><span>商品编码:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
-                    <li ><span>价　　格:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
-                     <li ><span>商品类目:</span> 
+                    <li ><span>商品名称:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name']) ? $filter['name'] : ''; ?>" name="name"></li>
+                    <li ><span>商品编码:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku']) ? $filter['sku'] : ''; ?>" name="sku"></li>
+                    <li ><span>价　　格:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from']) ? $filter['price_from'] : ''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to']) ? $filter['price_to'] : ''; ?>" name="price_to"> </li>
+                    <li ><span>商品类目:</span> 
                         <select class="form-control " id="catalog" name="catalog" value="">
                             <option value="">全部</option>
                             <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
@@ -31,11 +31,9 @@ $filter = $this->getVariable('filter');
                         </select>
                     </li>
                     <div class="commodity_btn">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
+                        <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
                         &nbsp;&nbsp; <button class="btn">搜 索</button>
                     </div>
-                   
-                  	
                 </ul>
             </div>
         </form>
@@ -43,7 +41,7 @@ $filter = $this->getVariable('filter');
     <div style="clear:both"></div>
 
     <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
-   <hr class="seperation">
+    <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
             <tr>
@@ -77,7 +75,7 @@ $filter = $this->getVariable('filter');
                         <td style="width: 45%;">
                             <div class="recommend">
                                 <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
-                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
+                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : ''; ?></span>
                             </div>
 
                             <div class="product-pic">

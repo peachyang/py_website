@@ -2,8 +2,9 @@
 $categories = $this->getCategories();
 ?>
 <div class="category-edit">
-    <input type="checkbox" name="category_select" value="" />
-    <a href="" class="batch-delete"><?php echo $this->translate('Batch Delete'); ?></a>
+    <input type="checkbox" class="selectall" id="checkall" name="checkall[]" data-cbtype="all" />
+    <label for="checkall"><?php echo $this->translate('Select All'); ?></label>
+    <a href="<?php echo $this->getBaseUrl('retailer/category/delete/'); ?>" class="batch-delete" data-method="delete"><?php echo $this->translate('Batch Delete'); ?></a>
     <div class="buttons-set text-right">
         <button data-toggle="modal" data-target="#modal-edit-category" class="btn btn-theme"><span class="fa fa-plus" aria-hidden="true"></span><?php echo $this->translate('Add New Category') ?></button>
     </div>
@@ -11,19 +12,17 @@ $categories = $this->getCategories();
 <div class="category-content">
     <ul class="table categories-title col-lg-12 col-md-12">
         <li class="col-lg-1 col-md-1"></li>
-        <li class="col-lg-6 col-md-6"><?php echo $this->translate('Category Name'); ?></li>
-        <li class="col-lg-1 col-md-1 text-center"><?php echo $this->translate('Move'); ?></li>
+        <li class="col-lg-9 col-md-9"><?php echo $this->translate('Category Name'); ?></li>
         <li class="col-lg-2 col-md-2 text-center"><?php echo $this->translate('Operation'); ?></li>
-        <li class="col-lg-2 col-md-2"></li>
     </ul>
     <ul class="table categories-list">
         <?php
         if (count($categories)):
             foreach ($categories[0] as $category):
                 ?>
-        <li class="col-lg-1 col-md-1"><input type="checkbox" name="category_store" /></li>
-                <li class="clearfix col-lg-11 col-md-11" data-id="<?php echo $category->getId() ?>">
+                <li class="clearfix" data-id="<?php echo $category->getId() ?>">
                     <input type="hidden" name="order[]" value="<?php echo $category->getId() ?>" />
+                    <div class="select-category"><input type="checkbox" name="category_store" data-id="<?php echo $category->getId() ?>" /></div>
                     <h4 class="category-name active text-left font-14">
                         <?php echo $category->getName() ?>
                     </h4>

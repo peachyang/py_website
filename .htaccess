@@ -26,7 +26,7 @@ Options +FollowSymLinks
     #RewriteBase /
     RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
     RewriteRule .* - [L,R=405]
-    RewriteCond %{REQUEST_URI} !^/(pub)/
+    RewriteCond %{REQUEST_URI} !^/pub/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l

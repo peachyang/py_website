@@ -1,0 +1,7 @@
+<?php if ($this->hasLoggedIn()): ?>
+    <div class="rewardpoints">
+        <p><?php echo $this->translate('You have %d points left. You can use %d for current transaction.', [$this->getCurrentPoints(), $this->getAvailablePoints()]) ?></p>
+        <a href="<?php echo $this->getBaseUrl('rewardpoints/index/apply/') ?>" class="btn<?php if ($this->hasApplied()): ?> clicked<?php endif ?>" data-method="get" data-load='shipping'><?php echo $this->translate('Apply') ?></a>
+        <a href="<?php echo $this->getBaseUrl('rewardpoints/index/cancel/') ?>" class="btn" data-method="get" data-load='shipping'><?php echo $this->translate('Cancel') ?></a>
+    </div>
+<?php endif; ?>

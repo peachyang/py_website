@@ -1,0 +1,5 @@
+---
+frontend.customer.save.after:
+    -
+        listener: [\Seahinet\Email\Listeners\Subscribe, afterSaveCustomer]
+        priority: 10

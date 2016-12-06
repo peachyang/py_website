@@ -107,8 +107,17 @@ abstract class AbstractModel extends ArrayObject
      */
     public function offsetSet($key, $value)
     {
-        $this->updatedColumns[] = $key;
+        $this->updatedColumns[$key] = 1;
         parent::offsetSet($key, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($key)
+    {
+        unset($this->updatedColumns[$key]);
+        parent::offsetUnset($key);
     }
 
     /**
@@ -301,7 +310,7 @@ abstract class AbstractModel extends ArrayObject
         $columns = $this->getColumns();
         $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $columns) && ($this->isNew || in_array($key, $this->updatedColumns))) {
+            if (in_array($key, $columns) && ($this->isNew || isset($this->updatedColumns[$key]))) {
                 $pairs[$key] = $value === '' ? null : $value;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace Seahinet\Checkout\ViewModel\Order;
 
-use Seahinet\Customer\Model\Address as Model;
 use Seahinet\Customer\Model\Collection\Address as Collection;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\ViewModel\Template;

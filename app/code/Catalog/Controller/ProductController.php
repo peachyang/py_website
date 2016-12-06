@@ -2,6 +2,7 @@
 
 namespace Seahinet\Catalog\Controller;
 
+use Exception;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
@@ -49,7 +50,9 @@ class ProductController extends ActionController
                     $model = new Log;
                     $model->setData($data + ['customer_id' => $segment->get('customer')->getId()])->save();
                 } catch (Exception $e) {
-                    $this->getContainer()->get('dbAdapter')->logException($e);
+                    if (strpos($e->getMessage(), 'Duplicate') === false) {
+                        $this->getContainer()->get('dbAdapter')->logException($e);
+                    }
                 }
             }
             return $this->redirect($media->getUrl(['{url}' => rawurlencode($url)], $data['product_id'] ?? 0));

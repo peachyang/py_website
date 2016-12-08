@@ -31,13 +31,11 @@
             $(this).siblings('.children').slideToggle();
         });
     });
-    $(".selectall").click(
-            function () {
-                if (this.checked) {
-                    $("input[name='category_store']").prop('checked', true)
-                } else {
-                    $("input[name='category_store']").prop('checked', false)
-                }
-            }
-    );
+    $(".selectall").click(function () {
+        if (this.checked) {
+            $("input[name='category_store']").prop('checked', true)
+        } else {
+            $("input[name='category_store']").prop('checked', false)
+        }
+    });
 }));

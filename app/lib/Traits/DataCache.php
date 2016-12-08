@@ -168,10 +168,12 @@ trait DataCache
         }
         $cacheListKey = $this->getDataCacheKey() . '_LIST';
         $list = $this->readCache($cacheListKey);
-        foreach ($list as $item) {
-            $this->deleteCache($item);
+        if ($list) {
+            foreach ($list as $item) {
+                $this->deleteCache($item);
+            }
+            $this->deleteCache($cacheListKey);
         }
-        $this->deleteCache($cacheListKey);
     }
 
     /**

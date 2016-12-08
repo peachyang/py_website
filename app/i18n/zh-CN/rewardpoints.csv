@@ -1,3 +1,4 @@
+"Apply","使用"
 "Balance Updated Email","余额变更邮件"
 "Cancel Earned Points After Order Refunding","订单退款后取消已获得积分"
 "Customer's Birthday","顾客生日"
@@ -28,3 +29,4 @@
 "Using Rate","使用比例"
 "X points per unit.","每单位货币X积分"
 "X units per point.","每积分X单位货币"
+"You have %d points left. You can use %d for current transaction.","您当前有%d分。您可以使用%d进行当前操作。"

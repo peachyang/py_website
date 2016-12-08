@@ -50,7 +50,7 @@ class Explorer extends AbstractViewModel
     {
         $collection = new Resource;
         $collection->columns(['file_type'])
-                ->group(['file_type', 'store_id'])
+                ->group(['file_type'])
                 ->where(['store_id' => $this->getStore()->getId()]);
         return $collection;
     }

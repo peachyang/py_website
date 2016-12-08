@@ -61,7 +61,7 @@ class Explorer extends Template
     {
         $collection = new Resource;
         $collection->columns(['file_type'])
-                ->group(['file_type', 'store_id']);
+                ->group(['file_type']);
         if ($this->getStore()) {
             $collection->where(['store_id' => $this->getStore()->getId()]);
         }

@@ -29,7 +29,7 @@ rewardpoints:
                     default: 0
         gathering:
             label: Gathering
-            scope: [merchant,store]
+            scope: merchant
             children:
                 rate:
                     label: Gathering Rate
@@ -113,7 +113,7 @@ rewardpoints:
                     comment: Leave empty to avoid the limitation.
         using:
             label: Using
-            scope: [merchant,store]
+            scope: merchant
             children:
                 rate:
                     label: Using Rate

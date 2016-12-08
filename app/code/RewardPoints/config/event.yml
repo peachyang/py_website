@@ -47,9 +47,13 @@ Seahinet\Sales\Model\CreditMemo.model.save.after:
         priority: 20
 frontend.customer.save.before:
     -
-        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveFrontendCustomer]
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveCustomer]
         priority: 10
 backend.customer.save.before:
     -
-        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveBackendCustomer]
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, beforeSaveCustomer]
+        priority: 10
+backend.customer.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterSaveBackendCustomer]
         priority: 10

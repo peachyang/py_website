@@ -40,7 +40,10 @@ abstract class Edit extends PEdit
                 ->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->order('sort_order, eav_attribute.id')
-                ->where(['eav_entity_type.code' => $model::ENTITY_TYPE, 'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])]);
+                ->where([
+                    'eav_entity_type.code' => $model::ENTITY_TYPE,
+                    'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])
+                ])->where->notEqualTo('eav_attribute.input', 'password');
         if ($this->group) {
             $columns = [];
             $attributes->where(['eav_attribute_group.id' => $this->group]);

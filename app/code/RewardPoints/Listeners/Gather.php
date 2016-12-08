@@ -178,12 +178,12 @@ class Gather implements ListenerInterface
         }
     }
 
-    public function beforeSaveFrontendCustomer($event)
+    public function beforeSaveCustomer($event)
     {
         unset($event['model']['rewardpoints']);
     }
 
-    public function beforeSaveBackendCustomer($event)
+    public function afterSaveBackendCustomer($event)
     {
         $customer = $event['model'];
         $record = new Record;
@@ -193,7 +193,6 @@ class Gather implements ListenerInterface
             'comment' => 'System Adjustment',
             'status' => 1
         ]);
-        unset($customer['rewardpoints']);
         $record->save();
     }
 

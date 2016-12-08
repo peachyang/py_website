@@ -35,7 +35,7 @@ class OrderController extends AuthActionController
     public function amountAction()
     {
         $collection = new Collection;
-        $collection->columns(['base_currency', 'total' => new Expression('base_total'), 'refunded' => new Expression('base_total_refunded')])
+        $collection->columns(['base_currency', 'total' => new Expression('sum(base_total)'), 'refunded' => new Expression('sum(base_total_refunded)')])
                 ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
                 ->group('base_currency')

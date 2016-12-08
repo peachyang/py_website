@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
 use Seahinet\Customer\Source\Set;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
@@ -42,11 +43,11 @@ class Manage extends PEdit
                 'type' => 'csrf'
             ],
             'increment_id' => ($this->getQuery('id') ? [
-                'type' => 'label',
-                'label' => 'Human-Friendly ID'
-                    ] : [
-                'type' => 'hidden'
-                    ]),
+        'type' => 'label',
+        'label' => 'Human-Friendly ID'
+            ] : [
+        'type' => 'hidden'
+            ]),
             'attribute_set_id' => [
                 'type' => 'select',
                 'label' => 'Attribute Set',
@@ -58,14 +59,14 @@ class Manage extends PEdit
                 ]
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'required' => 'required'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'required' => 'required'
+            ]),
             'language_id' => [
                 'type' => 'select',
                 'label' => 'Language',

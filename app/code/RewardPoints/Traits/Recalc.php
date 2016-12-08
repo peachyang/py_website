@@ -18,13 +18,14 @@ trait Recalc
                     'customer_id' => $customerId,
                     'status' => 1
                 ])->group('customer_id');
+        $collection->load(true, true);
         $languages = new Language;
         $languages->columns(['id']);
         $languages->load(true, true);
         foreach ($languages as $language) {
             $customer = new Customer($language['id']);
             $customer->load($customerId);
-            $customer->setData('rewardpoints', count($collection) ? $collection[0]['count'] : 0)
+            $customer->setData('rewardpoints', count($collection) ? $collection->toArray()[0]['count'] : 0)
                     ->save();
         }
     }

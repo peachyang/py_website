@@ -8,5 +8,8 @@ use Seahinet\Lib\ViewModel\Template;
 
 class Point extends Template
 {
-    
+
+    protected $customer = null;
+    protected $point = [];
+
 }

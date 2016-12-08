@@ -666,6 +666,19 @@ CREATE TABLE IF NOT EXISTS `reward_points`(
     CONSTRAINT FK_REWARD_POINTS_ORDER_ID_SALES_ORDER_ID FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+INSERT INTO `eav_attribute` VALUES 
+(46,1,'rewardpoints','int','hidden','',0,'0',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(47,4,'can_use_reward_points','varchar','bool','',0,'1',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(48,4,'reward_points','int','tel','',0,NULL,0,NULL,NULL,0,0,0,0,NULL,NULL);
+INSERT INTO `eav_entity_attribute` VALUES 
+(1, 1, 46, 0),
+(4, 6, 47, 0),
+(4, 6, 48, 0);
+INSERT INTO `eav_attribute_label` VALUES
+(46, 1, 'Reward Points'),
+(47, 1, 'Can Use Reward Points'),
+(48, 1, 'Reward Points');
+
 CREATE TABLE IF NOT EXISTS `customer_balance`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `customer_id` INTEGER UNSIGNED NOT NULL,

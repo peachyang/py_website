@@ -61,14 +61,14 @@ class CartController extends ActionController
         if ($result['error'] === 0) {
             $cart = Cart::instance();
             try {
-                if (isset($data['id'])) {
-                    if (is_array($data['id'])) {
-                        $cart->removeItems($data['id']);
-                        $result['message'][] = ['message' => $this->translate('%d item(s) has been removed from your shopping cart.', [count($data['id'])]), 'level' => 'success'];
+                if (isset($data['item'])) {
+                    if (is_array($data['item'])) {
+                        $cart->removeItems($data['item']);
+                        $result['message'][] = ['message' => $this->translate('%d item(s) has been removed from your shopping cart.', [count($data['item'])]), 'level' => 'success'];
                     } else {
-                        $item = $cart->getItem($data['id']);
+                        $item = $cart->getItem($data['item']);
                         if ($item) {
-                            $cart->removeItem($data['id']);
+                            $cart->removeItem($data['item']);
                             $result['message'][] = ['message' => $this->translate('"%s" has been removed from your shopping cart.', [$item['product_name']]), 'level' => 'success'];
                         } else {
                             return $this->redirectReferer('checkout/cart/');

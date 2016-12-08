@@ -7,10 +7,7 @@ use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
-use Seahinet\Email\Model\{
-    Template as TemplateModel,
-    Subscriber
-};
+use Seahinet\Email\Model\Template as TemplateModel;
 use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
@@ -125,6 +122,9 @@ class AccountController extends AuthActionController
                         $customer->login($data['username'], $data['password']);
                         $url = 'customer/account/';
                         $result['message'][] = ['message' => $this->translate('Thanks for your registion.'), 'level' => 'success'];
+                    }
+                    if ($data['subscribe']) {
+                        $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
                     }
                     $collection = new TemplateCollection;
                     $collection->join('email_template_language', 'email_template_language.template_id=email_template.id', [], 'left')

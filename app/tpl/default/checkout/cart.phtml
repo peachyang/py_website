@@ -74,10 +74,10 @@
                             <label for="foot-selectall">
                                 <?php echo $this->translate('Select All') ?>
                             </label>
-                            <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-serialize="#cart input[name]">
+                            <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-serialize="#cart">
                                 <?php echo $this->translate('Delete Selected Item(s)') ?>
                             </a>
-                            <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-serialize="#cart input[name]">
+                            <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-serialize="#cart">
                                 <?php echo $this->translate('Move to Wishlist') ?>
                             </a>
                         </td>

@@ -32,7 +32,7 @@ class Checkout extends Template
     public function getAvailablePoints()
     {
         if ($this->hasLoggedIn()) {
-            return array_sum($this->getPoints(Cart::instance()));
+            return $this->getPoints(Cart::instance());
         }
         return 0;
     }

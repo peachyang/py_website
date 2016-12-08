@@ -217,7 +217,7 @@ admin_dashboard:
                         params: backend/js/highcharts/modules/no-data-to-display.js
                     -
                         method: addScript
-                        params: backend/js/highcharts/config.js
+                        params: [{src:"backend/js/highcharts/config.js",defer:"defer",async:"async"}]
             content:
                 children:
                     breadcrumb:

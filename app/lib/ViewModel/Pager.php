@@ -77,7 +77,8 @@ class Pager extends Template
         if (is_null($this->total)) {
             $collection = clone $this->getCollection();
             $collection->columns(['count' => new Expression('count(1)')]);
-            $this->total = $collection->load(true, true)[0]['count'];
+            $collection->load(true, true);
+            $this->total = $collection->toArray()[0]['count'];
         }
         return $this->total;
     }

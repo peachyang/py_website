@@ -42,8 +42,8 @@ $sales_status = $this->getAllSalesStatus();
                     <input class="form-control " type="text" value="<?php echo isset($filter['receiver_phone']) ? $filter['receiver_phone'] : ''; ?>" id="receiver_phone" name="receiver_phone" />              
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>"><?php echo $this->translate('Reset')?></a>&nbsp;&nbsp;
-                    <button class="btn" type="submit">搜索</button>
+                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?>"><?php echo $this->translate('Reset') ?></a>&nbsp;&nbsp;
+                    <button class="btn" type="submit"><?php echo $this->translate('Search'); ?></button>
                 </div>
             </div>
         </form>
@@ -55,7 +55,7 @@ $sales_status = $this->getAllSalesStatus();
                 <div class="batch_button" >
                     <label>
                         <input type="checkbox" data-cbtype="all">
-                        <span>全选</span>
+                        <span><?php echo $this->translate('Select All'); ?></span>
                     </label>
                     <button class="btn-options">批量发货</button>
                     <button class="btn-options">批量标记</button>
@@ -70,14 +70,14 @@ $sales_status = $this->getAllSalesStatus();
         <div class="clearfix mg-bottom-20"></div>
         <table class="table table-title">
             <tr>
-                <td style="width: 35%;">商品</td>
-                <td style="width: 8%;">单价</td>
-                <td style="width: 8%;">数量</td>
-                <td style="width: 8%;">售后</td>
-                <td style="width: 11%;">买家</td>
-                <td style="width: 11%;">交易状态</td>
-                <td style="width: 11%;">实收款</td>
-                <td style="width: 8%;">操作</td>
+                <td style="width: 35%;"><?php echo $this->translate('Goods'); ?></td>
+                <td style="width: 8%;"><?php echo $this->translate('Price'); ?></td>
+                <td style="width: 8%;"><?php echo $this->translate('Qty'); ?></td>
+                <td style="width: 8%;"><?php echo $this->translate('After-sales'); ?></td>
+                <td style="width: 11%;"><?php echo $this->translate('Buyer'); ?></td>
+                <td style="width: 11%;"><?php echo $this->translate('Trading Status'); ?></td>
+                <td style="width: 11%;"><?php echo $this->translate('True income'); ?></td>
+                <td style="width: 8%;"><?php echo $this->translate('Operator'); ?></td>
             </tr>
         </table>
         <div class="clearfix mg-bottom-10"></div>
@@ -89,7 +89,7 @@ $sales_status = $this->getAllSalesStatus();
                     <tr>
                         <td colspan="7">
                             <label>
-                                <span><?php echo $this->translate('Order ID'); ?>: </span><span><?php echo $transaction['increment_id']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>成交时间: </span><span> </span><span><?php echo $transaction['created_at']; ?></span>
+                                <span><?php echo $this->translate('Order ID'); ?>: </span><span><?php echo $transaction['increment_id']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><?php echo $this->translate('Closing Time'); ?>: </span><span> </span><span><?php echo $transaction['created_at']; ?></span>
                             </label>
                         </td>
                         <td>&nbsp;</td>
@@ -135,17 +135,17 @@ $sales_status = $this->getAllSalesStatus();
                                         <p class="text-center"><?php echo $this->translate('%d', [$item['qty']]); ?></p>
                                     </div>
                                 </td>
-                                <?php if($flag) : ?>
-                                <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 8%;">
-                                    <?php if ($transaction->canRefund()): ?>
-                                        <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $transaction['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
-                                    <?php endif ?>
-                                </td>
-                                <?php
-                                $flag= FALSE;
+                                <?php if ($flag) : ?>
+                                    <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 8%;">
+                                        <?php if ($transaction->canRefund()): ?>
+                                            <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $transaction['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
+                                        <?php endif ?>
+                                    </td>
+                                    <?php
+                                    $flag = FALSE;
                                 else:
                                     ?>
-                                <td class="border-right" style="width: 8%;"></td>
+                                    <td class="border-right" style="width: 8%;"></td>
                                 <?php
                                 endif;
                                 ?>
@@ -173,7 +173,7 @@ $sales_status = $this->getAllSalesStatus();
                                                 <span ><?php echo $this->translate($transaction['status_name']); ?></span>
                                             </p>
                                             <p class="text-center">
-                                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?id=' . $transaction['id']) ?>">详情</a>
+                                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?id=' . $transaction['id']) ?>"><?php echo $this->translate('Detail'); ?></a>
                                             </p>
                                         </div>
                                     </td>
@@ -188,7 +188,7 @@ $sales_status = $this->getAllSalesStatus();
                                                 <strong><span class=" color-blue"><?php echo $this->getCurrency()->format($item['total']); ?></span></strong>
                                             </p>
                                             <p class="text-center">
-                                                <span class="font-12">(含快递:<?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span>
+                                                <span class="font-12">(<?php echo $this->translate('Including Courier Charges'); ?>:<?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span>
                                             </p>
                                         </div>
                                     </td>

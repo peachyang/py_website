@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Model;
 
 use Exception;
 use Seahinet\Lib\Stdlib\ArrayObject;
+use Traversable;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 
 /**
@@ -25,9 +26,9 @@ abstract class AbstractModel extends ArrayObject
     protected $eventDispatcher = null;
     protected $tableName = '';
 
-    public function __construct($input = array())
+    public function __construct($input = [])
     {
-        $this->storage = $input;
+        $this->setData($input);
         $this->construct();
     }
 
@@ -129,7 +130,7 @@ abstract class AbstractModel extends ArrayObject
      */
     public function setData($key, $value = null)
     {
-        if (is_array($key)) {
+        if (is_array($key) || $key instanceof Traversable) {
             foreach ($key as $k => $v) {
                 $this->offsetSet($k, $v);
             }

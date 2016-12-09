@@ -333,6 +333,7 @@ class AccountController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                     $result['error'] = 1;
                 }
+                $data['modified_password'] = 1;
             } else {
                 unset($data['cpassword'], $data['password']);
             }

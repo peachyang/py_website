@@ -131,10 +131,16 @@ email:
                     type: text
                     scope: merchant
                 forgot_template:
-                    label: Forgot Email Template
+                    label: Password Forgotten Email Template
                     type: select
                     scope: merchant
                     default: forgot_password
+                    source: \Seahinet\Email\Source\Template
+                modified_template:
+                    label: Password Modified Email Template
+                    type: select
+                    scope: merchant
+                    default: modified_password
                     source: \Seahinet\Email\Source\Template
                 welcome_template:
                     label: Welcome Email Template

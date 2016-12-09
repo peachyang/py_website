@@ -37,7 +37,7 @@ class OrderController extends AuthActionController
     {
         $segment = new Segment('customer');
         $retailer = new Retailer;
-        $retailer->load($segment->get('customer'), 'customer_id');
+        $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $collection = new Collection;
         $collection->columns(['base_currency', 'total' => new Expression('base_total'), 'refunded' => new Expression('base_total_refunded')])
                 ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')

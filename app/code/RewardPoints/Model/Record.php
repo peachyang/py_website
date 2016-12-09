@@ -9,6 +9,7 @@ use Seahinet\Lib\Model\{
     AbstractModel,
     Language
 };
+use Seahinet\Sales\Model\Order;
 use Swift_SwiftException;
 
 class Record extends AbstractModel
@@ -32,6 +33,18 @@ class Record extends AbstractModel
             }
         }
         return [];
+    }
+
+    public function getOrder()
+    {
+        if (!empty($this->storage['order_id'])) {
+            $order = new Order;
+            $order->load($this->storage['order_id']);
+            if ($order->getId()) {
+                return $order;
+            }
+        }
+        return null;
     }
 
     protected function afterSave()

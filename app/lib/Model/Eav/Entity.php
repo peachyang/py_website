@@ -24,7 +24,7 @@ abstract class Entity extends AbstractModel
 
     public function __construct($languageId = 0, $input = array())
     {
-        $this->storage = $input;
+        $this->setData($input);
         if ($languageId) {
             $this->languageId = $languageId;
         } else {

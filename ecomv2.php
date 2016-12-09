@@ -827,9 +827,10 @@ CREATE TABLE IF NOT EXISTS `customer_level_language` (
 CREATE TABLE IF NOT EXISTS `oauth_client` (
     `customer_id` INTEGER UNSIGNED NOT NULL,
     `oauth_server` VARCHAR(255) NOT NULL,
-    `open_id` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`oauth_server`,`customer_id`),
-    CONSTRAINT `UNQ_OAUTH_CLIENT_OAUTH_SERVER_OPEN_ID` UNIQUE(`oauth_server`,`open_id`)
+    `open_id` VARCHAR(128) CHARACTER SET ascii NOT NULL,
+    PRIMARY KEY (`customer_id`,`oauth_server`),
+    CONSTRAINT `UNQ_OAUTH_CLIENT_OAUTH_SERVER_OPEN_ID` UNIQUE(`oauth_server`,`open_id`),
+    CONSTRAINT `FK_OAUTH_CLIENT_CUSTOMER_ENTITY_CUSTOMER_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `api_rest_role` (

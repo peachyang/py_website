@@ -37,7 +37,7 @@ rewardpoints.cancel:
 promotion.calc:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, calc]
-        priority: 100
+        priority: 1000
 Seahinet\Sales\Model\CreditMemo.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterRefund]
@@ -56,4 +56,12 @@ backend.customer.save.before:
 backend.customer.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterSaveBackendCustomer]
+        priority: 10
+customer.login.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Recalc, afterCustomerLogin]
+        priority: 10
+cart.item.remove.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, cancel]
         priority: 10

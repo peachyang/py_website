@@ -9,6 +9,7 @@ use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Session\Segment;
+use Zend\Math\Rand;
 
 class ManageController extends AuthActionController
 {
@@ -53,20 +54,34 @@ class ManageController extends AuthActionController
                     ])->columns(['code'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
-                    ->where->notEqualTo('input', 'password');
+            ->where->notEqualTo('input', 'password');
             $required = ['store_id', 'language_id', 'attribute_set_id'];
             $attributes->walk(function ($attribute) use (&$required) {
                 $required[] = $attribute['code'];
             });
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
-                $model = new Model($data['language_id'], $data);
+                if (!empty($data['generate_password'])) {
+                    $data['password'] = Rand::getString(8);
+                    $data['modified_password'] = 1;
+                } else if (empty($data['password'])) {
+                    unset($data['password']);
+                } else {
+                    $data['modified_password'] = 1;
+                }
+                $model = new Model($data['language_id']);
                 if (empty($data['id'])) {
                     $model->setId(null);
+                    unset($data['id']);
+                } else {
+                    $model->load($data['id']);
                 }
-                $type = new Type;
-                $type->load(Model::ENTITY_TYPE, 'code');
-                $model->setData('type_id', $type->getId());
+                $model->setData($data);
+                if (empty($data['type_id'])) {
+                    $type = new Type;
+                    $type->load(Model::ENTITY_TYPE, 'code');
+                    $model->setData('type_id', $type->getId());
+                }
                 try {
                     $user = (new Segment('admin'))->get('user');
                     if ($user->getStore()) {

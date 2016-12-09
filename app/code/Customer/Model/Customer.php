@@ -18,7 +18,7 @@ class Customer extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'open_id', 'confirm_token', 'confirm_token_created_at', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'confirm_token', 'confirm_token_created_at', 'status']);
     }
 
     public function __clone()

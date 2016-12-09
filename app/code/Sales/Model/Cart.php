@@ -306,6 +306,7 @@ final class Cart extends AbstractModel implements Singleton
             unset($this->items[$item['id']]);
         }
         $item->remove();
+        $this->getContainer()->get('eventDispatcher')->trigger('cart.item.remove.after', ['model' => $this]);
         $this->collateTotals();
         return $this;
     }
@@ -322,6 +323,7 @@ final class Cart extends AbstractModel implements Singleton
                 }
                 $item->remove();
             }
+        $this->getContainer()->get('eventDispatcher')->trigger('cart.item.remove.after', ['model' => $this]);
             $this->collateTotals();
         }
         return $this;
@@ -334,6 +336,7 @@ final class Cart extends AbstractModel implements Singleton
             $item->setId($item['id'])->remove();
         }
         $this->items = [];
+        $this->getContainer()->get('eventDispatcher')->trigger('cart.item.remove.after', ['model' => $this]);
         $this->collateTotals();
         return $this;
     }

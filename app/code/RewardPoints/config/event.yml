@@ -57,3 +57,11 @@ backend.customer.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterSaveBackendCustomer]
         priority: 10
+customer.login.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Recalc, afterCustomerLogin]
+        priority: 10
+cart.item.remove.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, cancel]
+        priority: 10

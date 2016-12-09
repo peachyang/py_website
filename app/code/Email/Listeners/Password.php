@@ -2,8 +2,9 @@
 
 namespace Seahinet\Email\Listeners;
 
-use Seahinet\Email\Model\Subscriber;
-use Seahinet\Lib\Bootstrap;
+use Seahinet\Email\Model\Collection\Template as TemplateCollection;
+use Seahinet\Email\Model\Template as TemplateModel;
+use Seahinet\Lib\Model\Language;
 use Seahinet\Lib\Listeners\ListenerInterface;
 
 class Password implements ListenerInterface

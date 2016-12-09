@@ -18,6 +18,27 @@ admin_customer_edit:
                                     rewardpoints:
                                         type: Seahinet\Admin\ViewModel\RewardPoints\Edit
                                         template: admin/rewardpoints/edit
+                                        admin_customer_edit:
+admin_customer_edit:    
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        children:
+                            tabs:
+                                action:
+                                    -
+                                        method: addTab
+                                        params:
+                                            - pointsdetail
+                                            - Points Detail
+                                            - 110
+                                children:
+                                    pointsdetail:
+                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
+                                        template: admin/rewardpoints/detail
+                                        
 checkout_order:
     root:
         children:

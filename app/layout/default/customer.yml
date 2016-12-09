@@ -152,7 +152,7 @@ customer_account_rewardpoints:
                             - Point Infomation
                 children:
                     main:
-                        type: Seahinet\Customer\ViewModel\Point
+                        type: Seahinet\RewardPoints\ViewModel\Checkout
                         template: customer/poit
 customer_coupon:
     update: customer_account

@@ -193,4 +193,3 @@ rewardpoints:
                     priority: 0
                     default: reward_points_birthday
                     source: \Seahinet\Email\Source\Template
-            

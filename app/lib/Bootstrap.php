@@ -45,6 +45,11 @@ final class Bootstrap
     private static $isMobile = null;
 
     /**
+     * @var bool
+     */
+    public static $transaction = false;
+    
+    /**
      * Prepare or get container singleton
      * 
      * @param array $config         DI config

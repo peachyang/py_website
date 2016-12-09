@@ -1,2 +1,28 @@
-
-<p><?php echo count($this->getCurrentPoints()); ?></p>
+<?php
+if ($this->hasLoggedIn()):
+    ?>
+    <table class="table table-hover">
+        <tr>
+            <th><?php echo $this->translate('Points'); ?></th>
+            <th><?php echo $this->translate('Point Source'); ?></th>
+            <th><?php echo $this->translate('Operator Time'); ?></th>
+        </tr>
+        <?php
+        if ($this->getCurrentPoints()):
+            ?>
+            <tr class="text-center">
+                <td><?php echo $this->getCurrentPoints()['count']; ?></td>
+                <td><?php echo $this->getCurrentPoints()['comment'] ?></td>
+                <td><?php echo $this->getCurrentPoints()['created_at'] ?></td>
+            </tr>
+            <?php
+        else :
+            ?>
+            <tr>
+                <td colspan="3" class="text-center"><?php echo $this->translate('You do not have a current points.'); ?></td>
+            </tr>
+        <?php
+        endif;
+        ?>
+    </table>
+<?php endif; ?>

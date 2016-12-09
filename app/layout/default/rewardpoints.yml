@@ -38,6 +38,7 @@ admin_customer_edit:
                                     pointsdetail:
                                         type: Seahinet\Admin\ViewModel\RewardPoints\Edit
                                         template: admin/rewardpoints/detail
+
                                         
 checkout_order:
     root:

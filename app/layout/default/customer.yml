@@ -153,7 +153,7 @@ customer_account_rewardpoints:
                 children:
                     main:
                         type: Seahinet\RewardPoints\ViewModel\Checkout
-                        template: customer/poit
+                        template: customer/point
 customer_coupon:
     update: customer_account
     root:

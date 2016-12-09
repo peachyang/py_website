@@ -193,14 +193,24 @@
             if (GLOBAL.AJAX[url]) {
                 GLOBAL.AJAX[url].readyState < 4 ? GLOBAL.AJAX[url] = null : GLOBAL.AJAX[url].abort();
             }
+            var v = $(this).val() ? $(this).siblings('label[for]').text() : '';
+            $(this).parents('.coupon').find('.dropdown-toggle .label').text(function () {
+                return v ? v : $(this).attr('title');
+            });
             GLOBAL.AJAX[url] = $.ajax(url, {
                 type: 'post',
-                data: $('.section.review .coupon [type=radio]').serialize() + '&csrf=' + csrf,
+                data: $('.section.review .coupon [type=radio]:checked').serialize() + '&csrf=' + csrf,
                 success: function () {
                     GLOBAL.AJAX[url] = null;
                     loadPayment();
                     loadReview();
                 }
+            });
+        });
+        $('.section.review .coupon [type=radio]:checked').each(function () {
+            var v = $(this).val() ? $(this).siblings('label[for]').text() : '';
+            $(this).parents('.coupon').find('.dropdown-toggle .label').text(function () {
+                return v ? v : $(this).attr('title');
             });
         });
         $('.section.payment').on('click', '[name=payment_method]', function () {

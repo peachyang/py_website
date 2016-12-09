@@ -4,7 +4,7 @@ $current = $this->getCurrent();
 if (count($coupons)):
     ?>
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <?php echo $this->translate('Coupon') ?>
+        <span class="label" title="<?php echo $this->translate('Coupon') ?>"><?php echo $this->translate('Coupon') ?></span>
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">

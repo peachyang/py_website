@@ -23,16 +23,18 @@ trait Calc
         $unavailable = [];
         if ($model instanceof Cart) {
             foreach ($model->getItems() as $item) {
-                if ($item['product']['can_use_reward_points']) {
-                    if (!isset($total[$item['store_id']])) {
-                        $total[$item['store_id']] = 0;
+                if ($item['status']) {
+                    if ($item['product']['can_use_reward_points']) {
+                        if (!isset($total[$item['store_id']])) {
+                            $total[$item['store_id']] = 0;
+                        }
+                        $total[$item['store_id']] += $item['base_price'] * $item['qty'];
+                    } else {
+                        if (!isset($unavailable[$item['store_id']])) {
+                            $unavailable[$item['store_id']] = 0;
+                        }
+                        $unavailable += $item['base_price'] * $item['qty'];
                     }
-                    $total[$item['store_id']] += $item['base_price'] * $item['qty'];
-                } else {
-                    if (!isset($unavailable[$item['store_id']])) {
-                        $unavailable[$item['store_id']] = 0;
-                    }
-                    $unavailable += $item['base_price'] * $item['qty'];
                 }
             }
         } else {

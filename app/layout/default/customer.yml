@@ -134,6 +134,26 @@ customer_account_address:
                     modal:
                         type: Seahinet\Customer\ViewModel\Address
                         template: customer/address/modal
+customer_account_rewardpoints:
+    update: customer_account
+    root:  
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: View Account Points
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Point Infomation
+                children:
+                    main:
+                        type: Seahinet\Customer\ViewModel\Point
+                        template: customer/poit
 customer_coupon:
     update: customer_account
     root:

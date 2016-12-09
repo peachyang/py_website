@@ -215,6 +215,16 @@ class Product extends Entity
         return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
+    public function getDefaultImage()
+    {
+        if (!empty($this->storage['default_image'])) {
+            $resource = new Resource;
+            $resource->load($this->storage['default_image']);
+            return $resource['real_name'];
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
+    }
+
     public function getFinalPrice($qty = 1, $convert = true)
     {
         if (empty($this->storage['prices'])) {

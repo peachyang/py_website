@@ -14,9 +14,8 @@ if (strpos($title, '/')) {
 <meta name="description" content="<?php echo $this->getDescription() ?>" />
 <meta name="keywords" content="<?php echo $this->getKeywords() ?>" />
 <meta name="robots" content="<?php echo $this->getConfig()['theme/global/robots'] ?>" />
-<?php echo $this->getMeta(), $this->getLink() ?>
+<?php echo $this->getMeta(), $this->getLink(), $this->getScript() ?>
 <script>
     window.GLOBAL = {BASE_URL: '<?php echo $this->getBaseUrl() ?>',PUB_URL:'<?php echo $this->getPubUrl() ?>',LOCALE:'<?php echo $this->getLocale() ?>',FORMAT:'<?php echo $this->getFormat() ?>'};
     <?php echo $this->translate ?>
 </script>
-<?php echo $this->getScript() ?>

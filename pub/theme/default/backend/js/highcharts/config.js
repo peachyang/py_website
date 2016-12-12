@@ -7,17 +7,6 @@
         factory(jQuery);
     }
 }(function ($) {
-    Highcharts.setOptions({
-        lang: {
-            printChart: translate("Print chart"),
-            downloadPNG: translate("Download PNG image"),
-            downloadJPEG: translate("Download JPEG image"),
-            downloadPDF: translate("Download PDF document"),
-            downloadSVG: translate("Download SVG vector image"),
-            contextButtonTitle: translate("Chart context menu"),
-            noData: translate("No data to display")
-        }
-    });
     var loadData = function (canvas, params) {
         var count = $('.dashboard [data-url]').length;
         $('.dashboard [data-url]').each(function () {
@@ -80,6 +69,17 @@
         loadData(canvas, '?filter=d');
     };
     $(function () {
+        Highcharts.setOptions({
+            lang: {
+                printChart: translate("Print chart"),
+                downloadPNG: translate("Download PNG image"),
+                downloadJPEG: translate("Download JPEG image"),
+                downloadPDF: translate("Download PDF document"),
+                downloadSVG: translate("Download SVG vector image"),
+                contextButtonTitle: translate("Chart context menu"),
+                noData: translate("No data to display")
+            }
+        });
         drawChart('#canvas');
         $('.dashboard #filter').change(function () {
             if (this.value !== 'c') {

@@ -443,11 +443,6 @@ class AccountController extends AuthActionController
         return $this->response(['error' => 0, 'message' => []], 'customer/account/address/');
     }
 
-    public function rewardpointsAction()
-    {
-        return $this->getLayout('customer_account_rewardpoints');
-    }
-
     public function logviewAction()
     {
         $root = $this->getLayout('customer_account_logview');

@@ -303,7 +303,7 @@ admin_sales_creditmemo_view:
                                 method: addCrumb
                                 params: [{label:'View'}]
                     main:
-                        type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
+                        type: Seahinet\Admin\ViewModel\Sales\View\CreditMemo
                         template: admin/sales/creditmemo
 admin_sales_creditmemo_edit:
     update: admin
@@ -332,7 +332,7 @@ admin_sales_creditmemo_print:
                 unset: [breadcrumb,messages]
                 children:
                     main:
-                        type: Seahinet\Admin\ViewModel\Sales\View\Creditmemo
+                        type: Seahinet\Admin\ViewModel\Sales\View\CreditMemo
                         template: admin/sales/print/creditmemo
 admin_order_status_list:
     update: grid

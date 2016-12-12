@@ -5,7 +5,6 @@ namespace Seahinet\Admin\ViewModel\Sales\Grid;
 use Seahinet\Admin\ViewModel\Grid;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\CreditMemo as Collection;
-use Seahinet\Sales\Source\CreditMemo\Status;
 
 class CreditMemo extends Grid
 {
@@ -28,7 +27,7 @@ class CreditMemo extends Grid
     public function getViewUrl()
     {
         if (is_null($this->viewUrl)) {
-            $this->viewUrl = $this->getAdminUrl('sales_creditMemo/view/');
+            $this->viewUrl = $this->getAdminUrl('sales_creditmemo/view/');
         }
         return $this->viewUrl;
     }
@@ -43,7 +42,7 @@ class CreditMemo extends Grid
     public function getPrintUrl()
     {
         if (is_null($this->printUrl)) {
-            $this->printUrl = $this->getAdminUrl('sales_creditMemo/print/');
+            $this->printUrl = $this->getAdminUrl('sales_creditmemo/print/');
         }
         return $this->printUrl;
     }

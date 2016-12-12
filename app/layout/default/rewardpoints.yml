@@ -18,28 +18,36 @@ admin_customer_edit:
                                     rewardpoints:
                                         type: Seahinet\Admin\ViewModel\RewardPoints\Edit
                                         template: admin/rewardpoints/edit
-                                        admin_customer_edit:
-admin_customer_edit:    
-    root:
+                                        children:
+                                            statement:
+                                                type: Seahinet\RewardPoints\ViewModel\Statement
+                                                template: rewardpoints/statement
+                                                children:
+                                                    pager:
+                                                        type: Seahinet\Lib\ViewModel\Pager
+rewardpoints_statement:
+    update: customer_account
+    root:  
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Reward Points Statement
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Reward Points Statement
                 children:
-                    edit:
+                    main:
+                        type: Seahinet\RewardPoints\ViewModel\Statement
+                        template: rewardpoints/statement
                         children:
-                            tabs:
-                                action:
-                                    -
-                                        method: addTab
-                                        params:
-                                            - pointsdetail
-                                            - Points Detail
-                                            - 110
-                                children:
-                                    pointsdetail:
-                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
-                                        template: admin/rewardpoints/detail
-
-                                        
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
 checkout_order:
     root:
         children:

@@ -1,42 +1,16 @@
-<div>
-    <div class="input-box">
-        <label class="control-label" aria-required="true"><?php echo $this->translate('Reward Points') ?></label>
-        <div class="cell"><?php echo $this->getCurrentPoints() ?></div>
-    </div>
-    <div class="input-box">
-        <label for="adjust-rewardpoints" class="control-label" aria-required="true"><?php echo $this->translate('Adjustment') ?></label>
-        <div class="cell">
-            <input type="number" name="adjust_rewardpoints" id="adjust-rewardpoints" class="form-control number" value="0" />
-        </div>
+<div class="input-box">
+    <label class="control-label" aria-required="true"><?php echo $this->translate('Reward Points') ?></label>
+    <div class="cell"><?php echo $this->getCurrentPoints() ?></div>
+</div>
+<div class="input-box">
+    <label for="adjust-rewardpoints" class="control-label" aria-required="true"><?php echo $this->translate('Adjustment') ?></label>
+    <div class="cell">
+        <input type="number" name="adjust_rewardpoints" id="adjust-rewardpoints" class="form-control number" value="0" />
     </div>
 </div>
-
-<br />
-<div style="width: 100%;height: 600px">
-    <table class="table table-hover">
-        <tr>
-            <th class="text-center"><?php echo $this->translate('Points'); ?></th>
-            <th class="text-center"><?php echo $this->translate('Point Source'); ?></th>
-            <th class="text-center"><?php echo $this->translate('Operator Time'); ?></th>
-        </tr>
-        <?php
-        if ($this->getPoints()):
-            foreach ($this->getPoints() as $point):
-                ?>
-                <tr class="text-center">
-                    <td><?php echo (int) $point['count'] ?></td>
-                    <td><?php echo $this->translate($point['comment']) ?></td>
-                    <td><?php echo $point['created_at'] ?></td>
-                </tr>
-                <?php
-            endforeach;
-        else :
-            ?>
-            <tr>
-                <td colspan="3" class="text-center"><?php echo $this->translate('You do not have a current points.'); ?></td>
-            </tr>
-        <?php
-        endif;
-        ?>
-    </table>
+<div class="input-box">
+    <div class="cell"></div>
+    <div class="cell">
+        <?php echo $this->getChild('statement')->setVariable('customer', $this->getCustomer()) ?>
+    </div>
 </div>

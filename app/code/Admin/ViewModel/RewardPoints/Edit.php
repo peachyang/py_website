@@ -8,28 +8,23 @@ use Seahinet\Lib\ViewModel\Template;
 class Edit extends Template
 {
 
-    public function getCurrentPoints()
+    protected $customer = null;
+
+    public function getCustomer()
     {
-        if ($this->getQuery('id')) {
-            $customer = new Customer;
-            $customer->load($this->getQuery('id'));
-            return (int) $customer->offsetGet('rewardpoints');
+        if (is_null($this->customer) && $this->getQuery('id')) {
+            $this->customer = new Customer;
+            $this->customer->load($this->getQuery('id'));
         }
-        return 0;
+        return $this->customer;
     }
 
-    public function getPoints()
+    public function getCurrentPoints()
     {
-        if ($this->getQuery('id')) {
-            $record = new \Seahinet\RewardPoints\Model\Collection\Record;
-            $customer = new Customer;
-            $record->where(['customer_id' => $this->getQuery('id'), 'status' => 1])
-                    ->order('created_at desc');
-            if (count($record)) {
-                return $record;
-            }
+        if ($this->getCustomer()) {
+            return (int) $this->getCustomer()->offsetGet('rewardpoints');
         }
-        return [];
+        return 0;
     }
 
 }

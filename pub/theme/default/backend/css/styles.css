@@ -124,7 +124,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .alert-warning a{color:#66512c}
 .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
 .alert-danger a{color:#843534}
-.pager li{display:inline}
+.pager li{display:inline;font-size:12px}
 .clearfix{*zoom:1}
 .clearfix:after{content:" ";display:block;clear:both;width:0;height:0;padding:0;margin:0;overflow:hidden;border:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
@@ -381,3 +381,4 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set{font-size: 14px}
 .admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set,.admin .edit .tab-pane.active .content {line-height: 26px}
 .admin .edit .tab-pane.active .content{font-size:12px;margin-bottom: 10px}
+.admin.admin-customer-edit .statement{max-width:100%;width:600px;height:400px;overflow:auto}

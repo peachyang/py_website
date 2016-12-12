@@ -43,11 +43,6 @@ final class Bootstrap
      * @var bool
      */
     private static $isMobile = null;
-
-    /**
-     * @var bool
-     */
-    public static $transaction = false;
     
     /**
      * Prepare or get container singleton

@@ -60,12 +60,12 @@ class Using implements ListenerInterface
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
         if ($config['rewardpoints/general/enable'] && $config['rewardpoints/using/rate'] && $model->offsetGet('customer_id')) {
-            $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-            if (!empty($additional['rewardpoints'])) {
+            $points = $model->getAdditional('rewardpoints');
+            if ($points) {
                 $record = new Record([
                     'customer_id' => $model->offsetGet('customer_id'),
                     'order_id' => $model->getId(),
-                    'count' => -$additional['rewardpoints'],
+                    'count' => -$points,
                     'status' => 1,
                     'comment' => 'Consumption'
                 ]);

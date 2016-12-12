@@ -65,9 +65,6 @@ class Media extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        if (!$this->getQuery('desc')) {
-            $this->query['desc'] = 'created_at';
-        }
         return parent::prepareCollection(new Collection);
     }
 

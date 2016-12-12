@@ -2,7 +2,6 @@
 
 namespace Seahinet\Lib\Traits;
 
-use Seahinet\Lib\Bootstrap;
 use Zend\Db\Adapter\Driver\ConnectionInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
@@ -25,6 +24,11 @@ trait DB
      * @var ConnectionInterface
      */
     protected $connection = null;
+
+    /**
+     * @var bool
+     */
+    protected $transaction = false;
 
     /**
      * @param string|TableIdentifier|array $table
@@ -132,7 +136,7 @@ trait DB
      */
     public function setTransaction($transaction)
     {
-        Bootstrap::$transaction = $transaction;
+        $this->transaction = $transaction;
         return $this;
     }
 
@@ -141,8 +145,10 @@ trait DB
      */
     protected function beginTransaction()
     {
-        $this->getConnection()->beginTransaction();
-        Bootstrap::$transaction = true;
+        if (!$this->getConnection()->inTransaction()) {
+            $this->getConnection()->beginTransaction();
+            $this->transaction = true;
+        }
         return $this;
     }
 
@@ -151,9 +157,9 @@ trait DB
      */
     protected function commit()
     {
-        if (Bootstrap::$transaction) {
+        if ($this->transaction) {
             $this->getConnection()->commit();
-            Bootstrap::$transaction = false;
+            $this->transaction = false;
         }
         return $this;
     }
@@ -163,9 +169,9 @@ trait DB
      */
     protected function rollback()
     {
-        if (Bootstrap::$transaction) {
+        if ($this->transaction) {
             $this->getConnection()->rollback();
-            Bootstrap::$transaction = false;
+            $this->transaction = false;
         }
         return $this;
     }

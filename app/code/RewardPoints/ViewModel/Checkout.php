@@ -43,4 +43,18 @@ class Checkout extends Template
         return $additional && !empty(@json_decode($additional, true)['rewardpoints']);
     }
 
+    public function getPoints()
+    {
+        if ($this->hasLoggedIn()) {
+            $record = new \Seahinet\RewardPoints\Model\Collection\Record;
+            $segment = new Segment('customer');
+            $record->where(['customer_id' => $segment->get('customer')->getId(), 'status' => 1])
+                    ->order('created_at desc');
+            if (count($record)) {
+                return $record;
+            }
+        }
+        return [];
+    }
+
 }

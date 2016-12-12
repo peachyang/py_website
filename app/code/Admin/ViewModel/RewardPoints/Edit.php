@@ -18,4 +18,18 @@ class Edit extends Template
         return 0;
     }
 
+    public function getPoints()
+    {
+        if ($this->getQuery('id')) {
+            $record = new \Seahinet\RewardPoints\Model\Collection\Record;
+            $customer = new Customer;
+            $record->where(['customer_id' => $this->getQuery('id'), 'status' => 1])
+                    ->order('created_at desc');
+            if (count($record)) {
+                return $record;
+            }
+        }
+        return [];
+    }
+
 }

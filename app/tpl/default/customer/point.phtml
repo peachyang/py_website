@@ -3,19 +3,21 @@ if ($this->hasLoggedIn()):
     ?>
     <table class="table table-hover">
         <tr>
-            <th><?php echo $this->translate('Points'); ?></th>
-            <th><?php echo $this->translate('Point Source'); ?></th>
-            <th><?php echo $this->translate('Operator Time'); ?></th>
+            <th class="text-center"><?php echo $this->translate('Points'); ?></th>
+            <th class="text-center"><?php echo $this->translate('Point Source'); ?></th>
+            <th class="text-center"><?php echo $this->translate('Operator Time'); ?></th>
         </tr>
         <?php
-        if ($this->getCurrentPoints()):
-            ?>
-            <tr class="text-center">
-                <td><?php echo $this->getCurrentPoints()['count']; ?></td>
-                <td><?php echo $this->getCurrentPoints()['comment'] ?></td>
-                <td><?php echo $this->getCurrentPoints()['created_at'] ?></td>
-            </tr>
-            <?php
+        if ($this->getPoints()):
+            foreach ($this->getPoints() as $point):
+                ?>
+                <tr class="text-center">
+                    <td><?php echo (int)$point['count'] ?></td>
+                    <td><?php echo $this->translate($point['comment']) ?></td>
+                    <td><?php echo $point['created_at'] ?></td>
+                </tr>
+                <?php
+            endforeach;
         else :
             ?>
             <tr>

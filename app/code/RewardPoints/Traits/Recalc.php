@@ -18,7 +18,7 @@ trait Recalc
                     'customer_id' => $customerId,
                     'status' => 1
                 ])->group('customer_id');
-        $collection->load(true, true);
+        $collection->load(false, true);
         $points = count($collection) ? $collection->toArray()[0]['amount'] : 0;
         $languages = new Language;
         $languages->columns(['id']);

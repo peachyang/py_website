@@ -347,7 +347,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .refund-list .store>th{padding:40px 10px 5px}
 .admin .refund-list .list{border:1px solid #e1e3ea;padding:15px}
 .admin .refund-list .list>td{padding:15px}
-.admin .refund-list .amount{color:#007dc6}
+.admin .refund-list .amount{color:#007dc6;font-weight:bold;font-size: 14px}
 .admin .refund-list .detail span{display:block;white-space:nowrap}
 .admin .refund-list .action a{display:block}
 .admin .refund-list>td{padding:15px}

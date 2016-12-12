@@ -364,7 +364,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .refund-detail .nav>li>a{padding:4px 15px;background:none;}
 .admin .refund-detail .nav-tabs>li.active>a,.admin .refund-detail .nav-tabs>li.active>a:focus,.admin .refund-detail .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6;background:#FFF}
 .admin .refund-detail .tab-content .tab-pane{display:none}
-.admin .refund-detail .tab-content .tab-pane.active{display:block}
+.admin .refund-detail .tab-content .tab-pane.active{display:block;font-size: 12px;line-height: 22px}
 .admin .refund-detail .images li{text-indent:0;border:1px solid #f5f6f9;border-radius:0;width:50px;height:50px;text-align:center;margin-right:10px;position:relative}
 .admin .refund-detail .images .thumbnail{max-width:48px;max-height:48px;cursor:pointer}
 .admin .refund-detail .flow,.admin .refund-detail .log{border:1px solid #e1e3ea;padding:40px 0}

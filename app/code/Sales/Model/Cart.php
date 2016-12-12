@@ -82,6 +82,7 @@ final class Cart extends AbstractModel implements Singleton
             }
         }
         if (count($items)) {
+            $this->storage['additional'] = '';
             $this->collateTotals();
         } else {
             if ($this->storage['status']) {

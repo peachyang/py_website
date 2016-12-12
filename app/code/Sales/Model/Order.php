@@ -130,6 +130,9 @@ class Order extends AbstractModel
             $this->storage['tax'] +
             $this->storage['discount']
         ]);
+        if ($this->storage['base_total'] < 0 || $this->storage['total'] < 0) {
+            throw new \Exception('An error detected.');
+        }
         $this->save();
         return $this;
     }

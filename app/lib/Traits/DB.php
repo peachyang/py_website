@@ -145,8 +145,10 @@ trait DB
      */
     protected function beginTransaction()
     {
-        $this->getConnection()->beginTransaction();
-        $this->transaction = true;
+        if (!$this->getConnection()->inTransaction()) {
+            $this->getConnection()->beginTransaction();
+            $this->transaction = true;
+        }
         return $this;
     }
 
@@ -155,8 +157,10 @@ trait DB
      */
     protected function commit()
     {
-        $this->getConnection()->commit();
-        $this->transaction = false;
+        if ($this->transaction) {
+            $this->getConnection()->commit();
+            $this->transaction = false;
+        }
         return $this;
     }
 
@@ -165,8 +169,10 @@ trait DB
      */
     protected function rollback()
     {
-        $this->getConnection()->rollback();
-        $this->transaction = false;
+        if ($this->transaction) {
+            $this->getConnection()->rollback();
+            $this->transaction = false;
+        }
         return $this;
     }
 

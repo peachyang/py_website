@@ -43,7 +43,7 @@ class Using implements ListenerInterface
         if ($config['rewardpoints/general/enable'] && $config['rewardpoints/using/rate'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['rewardpoints'])) {
-                $points = $this->getPoints($model);
+                $points = $this->getPoints($model, true);
                 $additional['rewardpoints'] = min($additional['rewardpoints'], $points);
                 $discount = $additional['rewardpoints'] * $config['rewardpoints/using/rate'];
                 $model->setData([

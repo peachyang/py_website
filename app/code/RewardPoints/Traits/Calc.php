@@ -9,7 +9,7 @@ use Zend\Db\Sql\Expression;
 trait Calc
 {
 
-    protected function getPoints($model)
+    protected function getPoints($model, $withUsed = false)
     {
         $config = $this->getContainer()->get('config');
         $collection = new Collection;
@@ -55,7 +55,7 @@ trait Calc
         $rate = $config['rewardpoints/using/rate'];
         $calculation = $config['rewardpoints/using/calculation'];
         $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-        $discount = $model['base_discount'] + ($additional['rewardpoints'] ?? 0) * $rate;
+        $discount = $model['base_discount'] + $withUsed ? ($additional['rewardpoints'] ?? 0) * $rate : 0;
         foreach ($total as $key => &$t) {
             $tmp = $t + (($calculation ? $model['base_shipping'] + $model['base_tax'] : 0) + $discount) * $t / ($t + ($unavailable[$key] ?? 0));
             $max = ($maxAmountCalc ? ((int) ($tmp * $maxAmount / 100)) : ((int) $maxAmount)) / $rate;

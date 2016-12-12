@@ -69,7 +69,13 @@ class Template extends AbstractViewModel
     {
         try {
             ob_start();
+            if (Bootstrap::isDeveloperMode()) {
+                echo '<div class="template-tip" data-template="', $template, '" data-viewmodel="', get_class($this), '">';
+            }
             include $template;
+            if (Bootstrap::isDeveloperMode()) {
+                echo '</div>';
+            }
             return ob_get_clean();
         } catch (Error $e) {
             $this->getContainer()->get('log')->logError($e);

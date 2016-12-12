@@ -33,7 +33,7 @@ class ManageController extends AuthActionController
         } else {
             $root->getChild('head')->setTitle('Add New Customer / Customer Management');
         }
-        $root->getChild('edit', true)->setVariable('model', $model);
+        $root->getChild('edit', true)->setVariable('model', $model);   
         return $root;
     }
 

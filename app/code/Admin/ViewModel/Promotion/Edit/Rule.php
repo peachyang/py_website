@@ -71,14 +71,6 @@ class Rule extends Edit
                 ],
                 'required' => 'required'
             ],
-            'stop_processing' => [
-                'type' => 'select',
-                'label' => 'Stop Processing',
-                'options' => [
-                    'No', 'Yes'
-                ],
-                'required' => 'required'
-            ],
             'sort_order' => [
                 'type' => 'tel',
                 'label' => 'Priority',

@@ -47,7 +47,7 @@ class CartController extends ActionController
                 $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'danger'];
             } catch (Exception $e) {
                 $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('Prohibit the purchase of goods sold.'), 'level' => 'danger'];
                 $this->getContainer()->get('log')->logException($e);
             }
         }

@@ -382,3 +382,4 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set,.admin .edit .tab-pane.active .content {line-height: 26px}
 .admin .edit .tab-pane.active .content{font-size:12px;margin-bottom: 10px}
 .admin.admin-customer-edit .statement{max-width:100%;width:600px;height:400px;overflow:auto}
+.admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}

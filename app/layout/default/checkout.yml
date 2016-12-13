@@ -6,6 +6,9 @@ checkout_cart:
             head:
                 action:
                     -
+                        method: setTitle
+                        params: Shopping Cart
+                    -
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
                     -
@@ -61,6 +64,9 @@ checkout_order:
         children:
             head:
                 action:
+                    -
+                        method: setTitle
+                        params: Checkout
                     -
                         method: addScript
                         params: frontend/js/locate.js
@@ -148,8 +154,13 @@ checkout_order_coupon:
                         template: checkout/order/coupon
 checkout_order_success:
     update: frontend
-    root:
+    root:  
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Complate
             content:
                 children:
                     success:

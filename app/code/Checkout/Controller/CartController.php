@@ -107,7 +107,10 @@ class CartController extends ActionController
                         $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [$cart->getItem($id)['name']]), 'level' => 'danger'];
                     }
                 }
-                $cart->setData('additional', '');
+                $cart->setData([
+                    'additional' => '',
+                    'coupon' => ''
+                ]);
                 $cart->collateTotals();
             } catch (Exception $e) {
                 $result['error'] = 1;

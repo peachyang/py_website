@@ -10,7 +10,7 @@ use Seahinet\Lib\Model\{
     Language
 };
 use Seahinet\Sales\Model\Order;
-use Swift_SwiftException;
+use Swift_TransportException;
 
 class Record extends AbstractModel
 {
@@ -78,7 +78,7 @@ class Record extends AbstractModel
                                     ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                     ->addTo($customer['email'], $customer['username']));
                 }
-            } catch (Swift_SwiftException $e) {
+            } catch (Swift_TransportException $e) {
                 $this->getContainer()->get('log')->logException($e);
             }
         }

@@ -6,7 +6,7 @@ use Exception;
 use Seahinet\Customer\Model\Collection\Customer as CustomerCollection;
 use Seahinet\RewardPoints\Model\Collection\Record as Collection;
 use Seahinet\RewardPoints\Model\Record;
-use Swift_SwiftException;
+use Swift_TransportException;
 use Zend\Db\Sql\Expression;
 
 class Cron

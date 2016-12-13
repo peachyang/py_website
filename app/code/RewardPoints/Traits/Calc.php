@@ -33,7 +33,7 @@ trait Calc
                         if (!isset($unavailable[$item['store_id']])) {
                             $unavailable[$item['store_id']] = 0;
                         }
-                        $unavailable += $item['base_price'] * $item['qty'];
+                        $unavailable[$item['store_id']] += $item['base_price'] * $item['qty'];
                     }
                 }
             }

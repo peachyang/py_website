@@ -44,7 +44,7 @@ class Rule extends AbstractModel
             if (count($coupons)) {
                 $count = [];
                 foreach ($coupons as $item) {
-                    if ($item['customer_id'] == $model['customer_id'] && $this->storage['uses_per_customer'] > 0 && $this->storage['uses_per_customer'] >= $coupons['uses']) {
+                    if ($item['customer_id'] == $model['customer_id'] && !empty($this->storage['uses_per_customer']) && $this->storage['uses_per_customer'] >= $coupons['uses']) {
                         return false;
                     }
                     if (!isset($count[$item['code']])) {
@@ -53,7 +53,7 @@ class Rule extends AbstractModel
                         $count[$item['code']] += $coupons['uses'];
                     }
                 }
-                if ($this->storage['uses_per_coupon'] > 0 && $this->storage['uses_per_coupon'] >= $count[$coupon]) {
+                if (!empty($this->storage['uses_per_coupon']) && $this->storage['uses_per_coupon'] >= $count[$coupon]) {
                     return false;
                 }
                 return true;
@@ -70,7 +70,9 @@ class Rule extends AbstractModel
                 'promotion_id' => $this->getId(),
                 'parent_id' => null
             ]);
-            return $collection->load()[0];
+            if (count($collection)) {
+                return $collection[0];
+            }
         }
         return null;
     }

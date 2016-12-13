@@ -87,6 +87,7 @@
             var result = [];
             $('#custom-options .option').each(function () {
                 var input = $(this).find('[name^="options[input]"]').val();
+                var required = $(this).find('[name~="[is_required]"]').val();
                 if ($.inArray(input, ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
                     var sku = $(this).find('[name^="options[sku]"]').val();
                     var title = $(this).find('[name^="options[label]"]').val();

@@ -8,6 +8,7 @@ use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Model\Wishlist;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Retailer\Exception\ClickFarming;
 use Seahinet\Sales\Model\Cart;
 
 class CartController extends ActionController
@@ -42,6 +43,9 @@ class CartController extends ActionController
                                 (is_string($data['options']) ? json_decode($data['options'], true) : (array) $data['options']) : [], $data['sku'] ?? '' );
                 $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
+            } catch (ClickFarming $e) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('Click farming check failed.'), 'level' => 'danger'];
             } catch (OutOfStock $e) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'danger'];

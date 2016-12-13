@@ -35,13 +35,11 @@ class Inventory implements ListenerInterface
             ]);
             $inventory = $warehouse->getInventory($item['product_id'], $item['sku']);
             $inventory['qty'] = $inventory['qty'] - $item['qty'];
-            $inventory['id'] = null;
             $warehouse->setInventory($inventory);
             $product = $item->offsetGet('product');
             if ($item['sku'] !== $product->offsetGet('sku')) {
                 $inventory = $warehouse->getInventory($item['product_id'], $product->offsetGet('sku'));
                 $inventory['qty'] = $inventory['qty'] - $item['qty'];
-                $inventory['id'] = null;
                 $warehouse->setInventory($inventory);
             }
         }

@@ -17,11 +17,15 @@ class Warehouse extends AbstractModel
     {
         if ($this->getId()) {
             $inventory = new Inventory;
-            $inventory->where([
+            $constraint = [
                 'warehouse_id' => $this->getId(),
-                'product_id' => $productId,
-                'sku' => $sku
-            ]);
+                'product_id' => $productId
+            ];
+            if ($sku) {
+                $constraint['sku'] = $sku;
+            }
+            $inventory->where($constraint);
+            $inventory->load(true, true);
             return count($inventory) ? $inventory[0] : [];
         }
         return null;

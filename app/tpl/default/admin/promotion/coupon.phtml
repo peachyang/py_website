@@ -13,10 +13,7 @@ $coupons = $this->getCoupons();
                     <?php echo $this->translate('Code') ?>
                 </th>
                 <th>
-                    <?php echo $this->translate('Uses per Coupon', [], 'promotion') ?>
-                </th>
-                <th>
-                    <?php echo $this->translate('Uses per Customer', [], 'promotion') ?>
+                    <?php echo $this->translate('Count of Usage', [], 'promotion') ?>
                 </th>
                 <th>
                     <?php echo $this->translate('Status') ?>
@@ -28,8 +25,7 @@ $coupons = $this->getCoupons();
             <?php foreach ($coupons as $coupon): ?>
                 <tr data-id="<?php echo $coupon['id'] ?>">
                     <td><?php echo $coupon['code']; ?></td>
-                    <td><?php echo $coupon['uses_per_coupon']; ?></td>
-                    <td><?php echo $coupon['uses_per_customer']; ?></td>
+                    <td><?php echo $coupon['uses']; ?></td>
                     <td><?php echo $coupon['status']; ?></td>
                     <td class="text-center action">
                         <a href="<?php echo $this->getAdminUrl('promotion/deleteCoupon/') ?>" class="delete" data-method="delete" data-params="id=<?php echo $coupon['id'] ?>&csrf=<?php echo $this->getCsrfKey() ?>">

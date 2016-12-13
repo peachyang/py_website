@@ -123,7 +123,7 @@ class AccountController extends AuthActionController
                         $url = 'customer/account/';
                         $result['message'][] = ['message' => $this->translate('Thanks for your registion.'), 'level' => 'success'];
                     }
-                    if ($data['subscribe']) {
+                    if (!empty($data['subscribe'])) {
                         $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
                     }
                     $collection = new TemplateCollection;
@@ -195,9 +195,19 @@ class AccountController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['username'], in_array('forgotpwd', $this->getContainer()->get('config')['customer/captcha/form']) ? 'customer' : false);
             if ($result['error'] === 0) {
+                $segment = new Segment('customer');
                 $customer = new Model;
                 $customer->load($data['username'], 'username');
-                $password = Rand::getString(8);
+                $key = $segment->get('reset_password');
+                if (empty($key) || $key['time'] < strtotime('-1hour')) {
+                    $password = Rand::getString(8);
+                    $segment->set('reset_password', [
+                        'key' => $password,
+                        'time' => time()
+                    ]);
+                } else {
+                    $password = $key['key'];
+                }
                 try {
                     $config = $this->getContainer()->get('config');
                     $collection = new TemplateCollection;
@@ -212,7 +222,6 @@ class AccountController extends AuthActionController
                                         ->getMessage(['username' => $data['username'], 'password' => $password])
                                         ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                         ->addTo($customer->offsetGet('email'), $customer->offsetGet('username')));
-                        $customer->setData('password', $password)->save();
                     }
                     $result['message'][] = ['message' => $this->translate('You will receive an email with a temporary password.'), 'level' => 'success'];
                 } catch (Swift_TransportException $e) {

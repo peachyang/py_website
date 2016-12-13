@@ -49,12 +49,12 @@ class Rule extends Edit
                 'comment' => 'Please introduce the condition of this promotion rule.'
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden'
-                    ] : [
-                'type' => 'multiselect',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store'
-                    ]),
+        'type' => 'hidden'
+            ] : [
+        'type' => 'multiselect',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store'
+            ]),
             'from_date' => [
                 'type' => 'datetime',
                 'label' => 'From Date'
@@ -70,6 +70,20 @@ class Rule extends Edit
                     'No', 'Yes'
                 ],
                 'required' => 'required'
+            ],
+            'uses_per_coupon' => [
+                'type' => 'tel',
+                'label' => 'Uses per Coupon',
+                'attrs' => [
+                    'data-base' => '#use_coupon'
+                ]
+            ],
+            'uses_per_customer' => [
+                'type' => 'tel',
+                'label' => 'Uses per Customer',
+                'attrs' => [
+                    'data-base' => '#use_coupon'
+                ]
             ],
             'sort_order' => [
                 'type' => 'tel',

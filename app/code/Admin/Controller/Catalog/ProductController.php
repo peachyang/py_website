@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\Controller\Catalog;
 
+use Exception;
 use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;

@@ -382,3 +382,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set,.admin .edit .tab-pane.active .content {line-height: 26px}
 .admin .edit .tab-pane.active .content{font-size:12px;margin-bottom: 10px}
 .admin.admin-customer-edit .statement{max-width:100%;width:600px;height:400px;overflow:auto}
+.template-tip{border:1px dashed red;position:relative}
+.template-tip::before{content:attr(data-template);color:#fff;background:red;position:absolute;left:0;top:0}
+.template-tip::after{content:attr(data-viewmodel);color:#fff;background:red;position:absolute;right:0;bottom:0}
+.template-tip:hover::before{z-index:9999}
+.template-tip:hover::after{z-index:9999}

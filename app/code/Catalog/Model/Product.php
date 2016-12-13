@@ -298,20 +298,22 @@ class Product extends Entity
             $warehouse = new Warehouse;
             foreach ($this->storage['inventory'] as $warehouseId => $inventory) {
                 foreach ($inventory['qty'] as $order => $qty) {
-                    $warehouse->setInventory([
-                        'warehouse_id' => $warehouseId,
-                        'product_id' => $this->getId(),
-                        'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
-                        'barcode' => $inventory['barcode'][$order - 1] ?? '',
-                        'qty' => $qty,
-                        'reserve_qty' => $inventory['reserve_qty'][$order] ?? ($inventory['reserve_qty'][0] ?? null),
-                        'min_qty' => $inventory['min_qty'][$order] ?? ($inventory['min_qty'][0] ?? null),
-                        'max_qty' => $inventory['max_qty'][$order] ?? ($inventory['max_qty'][0] ?? null),
-                        'is_decimal' => $inventory['is_decimal'][$order] ?? ($inventory['is_decimal'][0] ?? null),
-                        'backorders' => $inventory['backorders'][$order] ?? ($inventory['backorders'][0] ?? null),
-                        'increment' => $inventory['increment'][$order] ?? ($inventory['increment'][0] ?? null),
-                        'status' => $inventory['status'][$order] ?? ($inventory['status'][0] ?? null)
-                    ]);
+                    if (empty($inventory['sku'][$order]) || $inventory['sku'][$order] !== $this->storage['sku']) {
+                        $warehouse->setInventory([
+                            'warehouse_id' => $warehouseId,
+                            'product_id' => $this->getId(),
+                            'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
+                            'barcode' => $inventory['barcode'][$order - 1] ?? '',
+                            'qty' => empty($inventory['sku'][$order]) && count($inventory['qty']) > 1 ? array_sum($inventory['qty']) - $qty : $qty,
+                            'reserve_qty' => $inventory['reserve_qty'][$order] ?? ($inventory['reserve_qty'][0] ?? null),
+                            'min_qty' => $inventory['min_qty'][$order] ?? ($inventory['min_qty'][0] ?? null),
+                            'max_qty' => $inventory['max_qty'][$order] ?? ($inventory['max_qty'][0] ?? null),
+                            'is_decimal' => $inventory['is_decimal'][$order] ?? ($inventory['is_decimal'][0] ?? null),
+                            'backorders' => $inventory['backorders'][$order] ?? ($inventory['backorders'][0] ?? null),
+                            'increment' => $inventory['increment'][$order] ?? ($inventory['increment'][0] ?? null),
+                            'status' => $inventory['status'][$order] ?? ($inventory['status'][0] ?? null)
+                        ]);
+                    }
                 }
             }
         }
@@ -331,8 +333,8 @@ class Product extends Entity
         }
         if (isset($this->storage['options'])) {
             $this->getTableGateway('product_option')->delete(['product_id' => $this->getId()]);
-            $option = new OptionModel;
             foreach ($this->storage['options']['label'] as $id => $label) {
+                $option = new OptionModel;
                 $option->setData([
                     'id' => null,
                     'product_id' => $this->getId(),

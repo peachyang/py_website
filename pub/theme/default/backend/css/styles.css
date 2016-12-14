@@ -387,3 +387,5 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .template-tip::after{content:attr(data-viewmodel);color:#fff;background:red;position:absolute;right:0;bottom:0}
 .template-tip:hover::before{z-index:9999}
 .template-tip:hover::after{z-index:9999}
+.admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}
+.admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}

@@ -126,6 +126,13 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-create .btn-submit{background:#479fe3;font-size:18px;height:45px}
 .customer-account-login label.invalid,.customer-account-create label.invalid{position:absolute;top:100%;left:6px;font-size:12px;line-height:1.5}
 .customer-account-create [type=checkbox]~label.invalid{position:static}
+.customer-account-forgotpwd{background: #f6f6f6;margin-top: 100px}
+.customer-account-forgotpwd .logo{padding-bottom: 30px;background:url(../images/logo.png) no-repeat left top;max-height: 100px;width: 900px;margin: 0 auto}
+.customer-account-forgotpwd .logo a{width: 200px;height: 63px;display: block}
+.customer-account-forgotpwd fieldset{padding: 30px 10px 50px;text-align: center;max-height: 580px;width: 900px;margin: 0 auto;background: #ffffff;}
+.customer-account-forgotpwd fieldset p{font-size: 16px;font-weight:bold;line-height: 50px;}
+.customer-account-forgotpwd fieldset .cell{display: inline-block}
+.customer-account-forgotpwd fieldset .buttons-set{line-height: 50px}
 .filters{border:1px solid #e1e3ea;padding:0 15px}
 .filters dt{clear:both;padding:15px 0;text-align:left;text-indent:20px}
 .filters dd{padding:15px 0;display:table}

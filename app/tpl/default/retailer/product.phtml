@@ -14,7 +14,7 @@ $sales_status = $this->getAllSalesStatus();
                     <input class="form-control " type="text" value="<?php echo isset($filter['increment_id']) ? $filter['increment_id'] : ''; ?>" name="increment_id">
                 </div>
                 <div class="col-md-3 col-xs-12 col-sm-6">
-                    <label><?php echo $this->translate('trading status'); ?>:</label>
+                    <label><?php echo $this->translate('Trading Status'); ?>:</label>
                     <select class="form-control " id="order_status" name="order_status">
                         <option value="0"><?php echo $this->translate('All'); ?></option>
                         <?php
@@ -76,8 +76,8 @@ $sales_status = $this->getAllSalesStatus();
                 <td style="width: 8%;"><?php echo $this->translate('After-sales'); ?></td>
                 <td style="width: 11%;"><?php echo $this->translate('Buyer'); ?></td>
                 <td style="width: 11%;"><?php echo $this->translate('Trading Status'); ?></td>
-                <td style="width: 11%;"><?php echo $this->translate('True income'); ?></td>
-                <td style="width: 8%;"><?php echo $this->translate('Operator'); ?></td>
+                <td style="width: 11%;"><?php echo $this->translate('True Income'); ?></td>
+                <td style="width: 8%;"><?php echo $this->translate('operating'); ?></td>
             </tr>
         </table>
         <div class="clearfix mg-bottom-10"></div>

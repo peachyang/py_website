@@ -26,6 +26,13 @@ class Warehouse extends AbstractModel
             }
             $inventory->where($constraint);
             $inventory->load(true, true);
+            if (!$sku && count($inventory)) {
+                $count = 0;
+                foreach ($inventory as $item) {
+                    $count += $item['qty'];
+                }
+                return ['qty' => $count] + $inventory[0];
+            }
             return count($inventory) ? $inventory[0] : [];
         }
         return null;

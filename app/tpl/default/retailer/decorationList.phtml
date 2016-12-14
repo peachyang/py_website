@@ -18,7 +18,7 @@ $theme_templates = $this->getTemplateList(1);
                 </li>
                 <li>
                     <a href="#TemplateSubject" data-toggle="tab">
-                        <div class="seperation-title"><span class="title">主题模版</span> 共有  0 条记录</div>
+                        <div class="seperation-title"><span class="title">主题模版</span> 共有  <?php echo count($theme_templates) ?> 条记录</div>
                     </a>
                 </li>
             </ul>
@@ -31,7 +31,7 @@ $theme_templates = $this->getTemplateList(1);
                             <?php foreach ($templates as $key => $template) { ?>
                                 <li>
                                     <div class="top <?php echo $template['status'] == 1 ? 'active' : '' ?>">
-                                        <div class="position1">模版1</div>
+                                        <div class="position1"></div>
                                         <div class="position3">
                                             <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >修改</button>
                                             <button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
@@ -46,17 +46,15 @@ $theme_templates = $this->getTemplateList(1);
                 </div>
                 
                  <div  id="TemplateSubject" class="tab-pane fade">
-                <button class="btn btn-primary" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
                 <div class="decoration-content">
                     <ul>
-                        <?php foreach ($templates as $key => $template) { ?>
+                        <?php foreach ($theme_templates as $key => $template) { ?>
                             <li>
                                 <div class="top <?php echo $template['status'] == 1 ? 'active' : '' ?>">
-                                    <div class="position1">模版1</div>
+                                    <div class="position1"></div>
                                     <div class="position3">
-                                        <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >修改</button>
-                                        <button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
-                                        <button class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>' >设为当前模版</button>
+                                        <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >根据该主题新建模版</button>
+
                                     </div>
                                 </div>
                                 <div class="bottom"><?php echo $template['template_name'] ?></div>

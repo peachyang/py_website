@@ -48,7 +48,6 @@ class Shipment extends AbstractModel
     {
         if (isset($this->storage['shipping_method'])) {
             $className = $this->getContainer()->get('config')['shipping/' . $this->storage['shipping_method'] . '/model'];
-            //return new $className;
         }
         return null;
     }

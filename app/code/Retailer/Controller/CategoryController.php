@@ -37,7 +37,7 @@ class CategoryController extends AuthActionController
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
                 $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('You add the category already exists, please re add.'), 'level' => 'danger'];
             }
         }
         return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
@@ -65,12 +65,16 @@ class CategoryController extends AuthActionController
     public function removeAction()
     {
         if ($this->getRequest()->isDelete()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data);
+            $data = $this->getRequest()->isGet() ? $this->getRequest()->getQuery() : $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
             try {
                 $model = new Model;
-                foreach ((array) $data['id'] as $id) {
-                    $model->setId($id)->remove();
+                if (isset($data) && is_array($data)) {
+                    foreach ((array) $data['id'] as $id) {
+                        $model->setId($id)->remove();
+                    }
+                } else {
+                    $model->setId($data['id'])->remove();
                 }
                 $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];

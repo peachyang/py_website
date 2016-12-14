@@ -49,7 +49,7 @@ class Media extends PEdit
                 'type' => 'widget',
                 'label' => 'Icon',
                 'required' => 'required',
-                'widget'=>'icon'
+                'widget' => 'icon'
             ]
         ];
         return parent::prepareElements($columns);

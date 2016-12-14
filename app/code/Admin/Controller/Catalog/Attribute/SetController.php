@@ -38,10 +38,10 @@ class SetController extends AuthActionController
     public function saveAction()
     {
         $response = $this->doSave('\\Seahinet\\Lib\\Model\\Eav\\Attribute\\Set', ':ADMIN/catalog_attribute_set/', ['name'], function($model, $data) {
-                    $type = new Type;
-                    $type->load(Product::ENTITY_TYPE, 'code');
-                    $model->setData('type_id', $type->getId());
-                }
+            $type = new Type;
+            $type->load(Product::ENTITY_TYPE, 'code');
+            $model->setData('type_id', $type->getId());
+        }
         );
         return $response;
     }

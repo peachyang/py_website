@@ -42,7 +42,7 @@ class Cart extends Grid
                 ->where(['status' => 1])
                 ->where('((updated_at IS NULL AND created_at <= "' . $expired . '") OR (updated_at <= "' . $expired . '"))')
                 ->order('updated_at DESC, created_at DESC')
-                ->where->greaterThan('subtotal', 0);
+        ->where->greaterThan('subtotal', 0);
         return parent::prepareCollection($collection);
     }
 

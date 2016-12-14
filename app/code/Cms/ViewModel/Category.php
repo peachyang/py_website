@@ -35,7 +35,7 @@ class Category extends Template
         if ($pages = $this->getCategory()->getPages()) {
             $pages->order('created_at DESC');
             if ($this->getVariable('count')) {
-                $pages->limit((int)$this->getVariable('count'));
+                $pages->limit((int) $this->getVariable('count'));
             }
         }
         return $pages ?: [];

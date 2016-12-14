@@ -58,7 +58,7 @@ class Media extends PGrid
             ],
             'icon' => [
                 'label' => 'Icon',
-                'type'  => 'icon',
+                'type' => 'icon',
             ]
         ];
     }

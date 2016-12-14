@@ -10,7 +10,7 @@ class Store extends Tab
     public function getActiveIds()
     {
         if (is_null($this->activeIds)) {
-            $this->activeIds = (array)$this->getProduct()['store_category'];
+            $this->activeIds = (array) $this->getProduct()['store_category'];
         }
         return $this->activeIds;
     }

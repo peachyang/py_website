@@ -36,4 +36,5 @@ class Modal extends Explorer
         $child->setVariable('prefix', 'modal-upload-');
         return $child;
     }
+
 }

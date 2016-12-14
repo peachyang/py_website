@@ -132,7 +132,7 @@ class IndexController extends ActionController
                             $mailer = $this->getContainer()->get('mailer');
                             $mailer->send((new TemplateModel($collection[0]))
                                             ->getMessage(['{{link}}' => $this->getAdminUrl('index/reset/?token=' . $token)])
-                                            ->addFrom($config['email/admin/sender_email']? : $config['email/default/sender_email'], $config['email/admin/sender_name']? : $config['email/default/sender_name'])
+                                            ->addFrom($config['email/admin/sender_email'] ?: $config['email/default/sender_email'], $config['email/admin/sender_name'] ?: $config['email/default/sender_name'])
                                             ->addTo($user->offsetGet('email'), $user->offsetGet('username')));
                         }
                         $result['message'][] = ['message' => $this->translate('You will receive an email with a link to reset your password.'), 'level' => 'success'];

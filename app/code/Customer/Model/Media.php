@@ -9,7 +9,7 @@ class Media extends AbstractModel
 {
 
     use \Seahinet\Lib\Traits\Url;
-    
+
     protected function construct()
     {
         $this->init('social_media', 'id', ['id', 'label', 'link', 'icon']);

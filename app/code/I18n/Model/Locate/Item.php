@@ -11,7 +11,7 @@ class Item extends ArrayObject
     {
         $this->storage = $input;
     }
-    
+
     public function getName($locale = null)
     {
         if (is_null($locale) || !isset($this->storage['name'][$locale])) {

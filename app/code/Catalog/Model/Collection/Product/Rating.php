@@ -6,8 +6,10 @@ use Seahinet\Lib\Model\AbstractCollection;
 
 class Rating extends AbstractCollection
 {
+
     protected function construct()
     {
         $this->init('rating');
     }
+
 }

@@ -80,7 +80,7 @@ class Search implements Provider
                     $data[$language['id']][] = [
                         'id' => $product['id'],
                         'store_id' => $product['store_id'],
-                        'data' => preg_replace('/\|{2,}/','|',$text)
+                        'data' => preg_replace('/\|{2,}/', '|', $text)
                     ];
                 }
             }

@@ -8,7 +8,7 @@ use Zend\Db\Sql\Expression;
 
 class Coupon extends Template
 {
-    
+
     public function getCoupons()
     {
         if ($id = $this->getQuery('id')) {
@@ -21,4 +21,5 @@ class Coupon extends Template
         }
         return [];
     }
+
 }

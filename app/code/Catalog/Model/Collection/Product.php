@@ -20,22 +20,22 @@ class Product extends Collection
         $this->select->where(['store_id' => $store]);
         return $this;
     }
-	
-	/** 
-    * withInSales 
-    * Get product obj in sales
-    * 
-    * @access public
-    * @return object 
-    */ 	
-	public function withInSales($storeid = null)
+
+    /**
+     * withInSales 
+     * Get product obj in sales
+     * 
+     * @access public
+     * @return object 
+     */
+    public function withInSales($storeid = null)
     {
-echo $storeid;
-		$this->select->where->nest->isNull('new_end')->or->greaterThanOrEqualTo('new_end', date('Y-m-d H:i:s'))->unnest;
+        echo $storeid;
+        $this->select->where->nest->isNull('new_end')->or->greaterThanOrEqualTo('new_end', date('Y-m-d H:i:s'))->unnest;
         if (!empty($storeid)) {
             $this->select->where->equalTo('store_id', $storeid);
         }
-		$this->select->where->equalTo('status',1);
+        $this->select->where->equalTo('status', 1);
         return $this;
     }
 

@@ -32,7 +32,7 @@ class StatusController extends AuthActionController
     {
         $model = new Model;
         $model->load($this->getRequest()->getPost('id'));
-        if($model->offsetGet('is_default')){
+        if ($model->offsetGet('is_default')) {
             return $this->redirectReferer(':ADMIN/sales_status/');
         }
         return $this->doDelete($model, ':ADMIN/sales_status/');

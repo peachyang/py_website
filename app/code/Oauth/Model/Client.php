@@ -16,7 +16,7 @@ class Client extends AbstractModel
     {
         trigger_error('Call to undefined method Seahinet\\Oauth\\Model\\Client::load()', E_USER_ERROR);
     }
-    
+
     public function save($constraint = [], $insertForce = true)
     {
         return parent::save($constraint, $insertForce);

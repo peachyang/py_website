@@ -8,12 +8,14 @@ use Seahinet\Lib\Session\Segment;
 
 class RoleController extends AuthActionController
 {
-   public function indexAction() 
-   {
-       $root = $this->getLayout('admin_soap_role_list');
-       return $root;
-   }
-   public function editAction()
+
+    public function indexAction()
+    {
+        $root = $this->getLayout('admin_soap_role_list');
+        return $root;
+    }
+
+    public function editAction()
     {
         $root = $this->getLayout('admin_soap_role_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
@@ -31,6 +33,7 @@ class RoleController extends AuthActionController
     {
         return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\Role', ':ADMIN/api_soap_role/list/');
     }
+
     public function saveAction()
     {
         $result = ['error' => 0, 'message' => []];
@@ -59,4 +62,5 @@ class RoleController extends AuthActionController
         }
         return $this->response($result, ':ADMIN/api_soap_role/');
     }
+
 }

@@ -26,6 +26,5 @@ class View extends Template
         $box->setVariable('product', self::$product);
         return $box;
     }
-    
 
 }

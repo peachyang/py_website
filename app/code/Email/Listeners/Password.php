@@ -11,7 +11,7 @@ class Password implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container;
-    
+
     public function notify($event)
     {
         $customer = $event['model'];

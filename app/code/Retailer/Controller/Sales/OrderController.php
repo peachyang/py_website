@@ -53,8 +53,8 @@ class OrderController extends AuthActionController
             $result = 0;
             foreach ($collection as $item) {
                 $result += $item->offsetGet('base_currency') == $code ?
-                    $item->offsetGet('total') - $item->offsetGet('refunded') :
-                    $item->getBaseCurrency()->rconvert($item->offsetGet('total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('refunded'), false);
+                        $item->offsetGet('total') - $item->offsetGet('refunded') :
+                        $item->getBaseCurrency()->rconvert($item->offsetGet('total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('refunded'), false);
             }
             return $result;
         });

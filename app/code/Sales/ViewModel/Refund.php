@@ -71,7 +71,7 @@ class Refund extends Account
     public function getStatus($service, $key)
     {
         $status = (new Status)->getSourceArray($key == -1 ? $key : $service);
-        return $status[$key] ?? '' ;
+        return $status[$key] ?? '';
     }
 
 }

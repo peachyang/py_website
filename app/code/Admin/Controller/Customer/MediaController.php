@@ -36,7 +36,7 @@ class MediaController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Customer\\Model\\Media', ':ADMIN/customer_media/', ['label','link','icon']);
+        return $this->doSave('\\Seahinet\\Customer\\Model\\Media', ':ADMIN/customer_media/', ['label', 'link', 'icon']);
     }
 
 }

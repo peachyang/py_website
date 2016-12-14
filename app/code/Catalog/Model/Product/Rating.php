@@ -1,15 +1,17 @@
 <?php
 
 namespace Seahinet\Catalog\Model\Product;
+
 use Seahinet\Lib\Model\AbstractModel;
 
 class Rating extends AbstractModel
 {
+
     protected function construct()
     {
-        $this->init('rating','id',['id','type','title']);
+        $this->init('rating', 'id', ['id', 'type', 'title']);
     }
-    
+
     public function afterSave()
     {
         $adapter = $this->getContainer()->get('dbAdapter');
@@ -22,4 +24,5 @@ class Rating extends AbstractModel
         }
         return parent::afterSave();
     }
+
 }

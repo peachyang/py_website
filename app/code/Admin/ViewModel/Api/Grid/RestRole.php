@@ -19,7 +19,7 @@ class RestRole extends PGrid
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
- 
+
     public function getDeleteAction($item)
     {
         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
@@ -60,5 +60,5 @@ class RestRole extends PGrid
         }
         return parent::prepareCollection(new Collection);
     }
-    
+
 }

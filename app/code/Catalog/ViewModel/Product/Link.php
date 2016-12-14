@@ -8,7 +8,7 @@ abstract class Link extends ProductList
 {
 
     use \Seahinet\Lib\Traits\DB;
-    
+
     protected $limit = null;
 
     public function getLimit()

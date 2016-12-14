@@ -24,7 +24,7 @@ abstract class AbstractViewModel extends Template
 
     public function getStore()
     {
-        if(is_null(self::$store)){
+        if (is_null(self::$store)) {
             self::$store = $this->getRetailer()->getStore();
         }
         return self::$store;

@@ -36,7 +36,7 @@ class WishlistController extends AuthActionController
             $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             $this->getContainer()->get('log')->logException($e);
         }
-        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER')? : 'customer/wishlist/', 'customer');
+        return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER') ?: 'customer/wishlist/', 'customer');
     }
 
     function commitAction()

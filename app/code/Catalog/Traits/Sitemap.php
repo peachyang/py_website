@@ -33,7 +33,7 @@ trait Sitemap
                     } else {
                         $model = $this->getTableGateway('category_entity')->select(['id' => $url['category_id']])->toArray()[0];
                     }
-                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>' . ($url['product_id'] ? '1.0' : '0.5') . '</priority><lastmod>' . (new DateTime($model['updated_at']? : $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
+                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>' . ($url['product_id'] ? '1.0' : '0.5') . '</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
                 }
                 $result = $indexer->select('cms_url', $language->getId());
                 foreach ($result as $url) {
@@ -41,7 +41,7 @@ trait Sitemap
                         $model = new Page;
                         $model->load($url['page_id']);
                     }
-                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>0.2</priority><lastmod>' . (new DateTime($model['updated_at']? : $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
+                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>0.2</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
                 }
                 $fp = fopen($filename . ($count === 1 ? '' : ('-' . $language->getId())) . '.xml', 'w');
                 fwrite($fp, $xml . '</urlset>');

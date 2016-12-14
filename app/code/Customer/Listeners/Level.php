@@ -41,7 +41,7 @@ class Level implements ListenerInterface
         $orders->columns(['customer_id', 'amount' => new Expression('sum(base_total)')])
                 ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
-                ->where([ 'sales_order_phase.code' => 'complete'])
+                ->where(['sales_order_phase.code' => 'complete'])
                 ->group('customer_id');
         $amount = [];
         $orders->walk(function($order) use (&$amount) {

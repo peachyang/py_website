@@ -45,14 +45,14 @@ class Block extends PEdit
                 'required' => 'required'
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'empty_string' => '(NULL)'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'empty_string' => '(NULL)'
+            ]),
             'language_id[]' => [
                 'type' => 'select',
                 'label' => 'Language',

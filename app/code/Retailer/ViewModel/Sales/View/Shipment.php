@@ -49,7 +49,8 @@ class Shipment extends Template
         return $collection;
     }
 
-    public function getOrderModel(){
+    public function getOrderModel()
+    {
         error_reporting(E_ALL & ~E_NOTICE);
         $id = $this->getRequest()->getQuery('id');
         $invoice = (new Model)->load($id);

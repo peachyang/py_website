@@ -8,11 +8,13 @@ use Seahinet\Retailer\Model\Category as Model;
 class CategoryController extends AuthActionController
 {
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->getLayout('retailer_category');
     }
 
-    public function saveAction() {
+    public function saveAction()
+    {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['name', 'uri_key']);
@@ -41,7 +43,8 @@ class CategoryController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
     }
 
-    public function deleteAction() {
+    public function deleteAction()
+    {
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data, ['id']);
@@ -59,7 +62,8 @@ class CategoryController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
     }
 
-    public function removeAction() {
+    public function removeAction()
+    {
         if ($this->getRequest()->isDelete()) {
             $data = $this->getRequest()->getPost();
             $result = $this->validateForm($data);
@@ -79,7 +83,8 @@ class CategoryController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'), 'retailer');
     }
 
-    public function moveAction() {
+    public function moveAction()
+    {
         $result = 0;
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('order');

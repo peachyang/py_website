@@ -8,7 +8,7 @@ class Cart extends AbstractCollection
 {
 
     protected $arrayMode = true;
-    
+
     protected function construct()
     {
         $this->init('sales_cart');

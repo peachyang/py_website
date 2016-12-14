@@ -49,10 +49,10 @@ class Category extends Tab
                 $html .= '<li><input type="checkbox" name="category[]" id="category-' .
                         $category['id'] . '" class="form-control required" value="' .
                         $category['id'] . '"' . (in_array($category['id'], $this->getActiveIds()) ?
-                                ' checked="checked"' : '') . ' /><label for="category-' .
+                        ' checked="checked"' : '') . ' /><label for="category-' .
                         $category['id'] . '" class="control-label">' . $category['name'] .
                         '</label>' . (isset($this->getCategories()[$category['id']]) ?
-                                '<ul>' . $this->renderCategory($category['id']) . '</ul>' : ''
+                        '<ul>' . $this->renderCategory($category['id']) . '</ul>' : ''
                         ) . '</li>';
             }
         }

@@ -22,7 +22,7 @@ class Link extends Product
 
     public function getType()
     {
-        return $this->type? : $this->getQuery('linktype');
+        return $this->type ?: $this->getQuery('linktype');
     }
 
     public function setType($type)

@@ -157,6 +157,7 @@ class ResourceController extends AuthActionController
                         }
                         $model->setData('name', [Bootstrap::getLanguage()->getId() => $data['name']])
                                 ->save();
+                        $result['data'] = ['id' => $model->getId()];
                     }
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

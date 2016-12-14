@@ -165,7 +165,7 @@
                 }).on('click', '.delete', function () {
                     var ids = '';
                     $('.resource-list .item.selected', $(this).parents('.resource-explorer')).each(function () {
-                        ids += ($(this).is('.folder') ? 'f[]=' : 'r[]=') + $(this).data('id') + '&';
+                        ids += ($(this).is('.folder') ? 'f[]=' : 'r[]=') + $(this).attr('data-id') + '&';
                     });
                     if (ids !== '') {
                         $.ajax(GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/delete/' : 'retailer/resource/delete/'), {
@@ -213,22 +213,32 @@
                         }
                     }
                 }).on('blur', '.item.selected .filename[contenteditable]', function () {
-                    var p = $(this).parents('.item[data-id]').first();
-                    $(this).removeAttr('contenteditable');
-                    var name = $(this).text();
-                    if (name && name !== $(this).data('old-name')) {
+                    var o = this;
+                    var p = $(o).parents('.item[data-id]').first();
+                    $(o).removeAttr('contenteditable');
+                    var name = $(o).text();
+                    if (name && name !== $(o).data('old-name')) {
                         $.post(GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/rename/' : 'retailer/resource/rename/'),
-                                'id=' + p.data('id') + '&pid=' + $('.resource-explorer .nav a.active').data('id') + (p.is('.folder') ? '&type=f&name=' : '&type=r&name=') + $(this).text() + '&csrf=' + $('.resource-explorer .toolbar').data('csrf'), function () {
-                            widgetUpload.loadNav();
+                                'id=' + p.data('id') + '&pid=' + $('.resource-explorer .nav a.active').data('id') + (p.is('.folder') ? '&type=f&name=' : '&type=r&name=') + $(this).text() + '&csrf=' + $('.resource-explorer .toolbar').data('csrf'), function (r) {
+                            if (r.error) {
+                                if ($(o).is('[data-old-name]')) {
+                                    $(o).text($(o).data('old-name'));
+                                } else {
+                                    $(p).remove();
+                                }
+                            } else {
+                                widgetUpload.loadNav();
+                                p.attr('data-id', r.data.id);
+                            }
                         });
                         if ($(p).is('.new')) {
                             $(p).removeClass('new');
                         }
-                        $(this).removeClass('edited');
+                        $(o).removeClass('edited');
                     } else if ($(p).is('.new')) {
                         $(p).remove();
                     } else {
-                        $(this).text($(this).data('old-name'));
+                        $(o).text($(o).data('old-name'));
                     }
                 }).on('contextmenu', '.item', function (e) {
                     if (!$(this).is('.selected')) {

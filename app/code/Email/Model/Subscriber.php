@@ -18,7 +18,7 @@ class Subscriber extends AbstractModel
         $this['code'] = Rand::getString(32);
         parent::beforeSave();
     }
-    
+
     public function unsubscribe()
     {
         if ($this->isLoaded || $this->getId()) {

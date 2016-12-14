@@ -9,7 +9,7 @@ class ViewController extends ActionController
 {
 
     use \Seahinet\Lib\Traits\Filter;
-    
+
     public function indexAction()
     {
         $retailer = $this->getOption('retailer');

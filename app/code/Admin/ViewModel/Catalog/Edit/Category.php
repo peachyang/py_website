@@ -10,7 +10,7 @@ class Category extends PEdit
 {
 
     protected $hasUploadingFile = true;
-    
+
     public function getSaveUrl()
     {
         return $this->getAdminUrl('catalog_category/save/');
@@ -46,14 +46,14 @@ class Category extends PEdit
                 'value' => $this->getQuery('pid', '')
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'required' => 'required'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'required' => 'required'
+            ]),
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

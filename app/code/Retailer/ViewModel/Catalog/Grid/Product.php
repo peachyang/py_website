@@ -70,7 +70,7 @@ class Product extends PGrid
             $collection = new Collection;
             $user = (new Segment('customer'))->get('customer');
             $retailer = new Retailer;
-            $retailer->load($user->getId(),'customer_id');
+            $retailer->load($user->getId(), 'customer_id');
             if ($retailer['store_id']) {
                 $collection->where(['store_id' => $retailer['store_id']]);
             }

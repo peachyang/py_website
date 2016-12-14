@@ -14,7 +14,7 @@ class Coupon implements ListenerInterface
         if (!empty($order['coupon'])) {
             $coupon = new Model;
             $coupon->load($order->offsetGet('coupon'), 'code');
-            $coupon->apply($order->getId(), $order->offsetGet('customer_id')? : null);
+            $coupon->apply($order->getId(), $order->offsetGet('customer_id') ?: null);
         }
     }
 

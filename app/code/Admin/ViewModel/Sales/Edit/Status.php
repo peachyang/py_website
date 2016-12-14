@@ -8,11 +8,13 @@ use Seahinet\Sales\Source\Order\Phase;
 class Status extends PEdit
 {
 
-    public function getSaveUrl() {
+    public function getSaveUrl()
+    {
         return $this->getAdminUrl('sales_status/save/');
     }
 
-    public function getDeleteUrl() {
+    public function getDeleteUrl()
+    {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
             return $this->getAdminUrl('sales_status/delete/');
@@ -20,11 +22,13 @@ class Status extends PEdit
         return false;
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->getQuery('id') ? 'Edit  Status' : 'Add New Status';
     }
 
-    protected function prepareElements($columns = []) {
+    protected function prepareElements($columns = [])
+    {
         $columns = [
             'id' => [
                 'type' => 'hidden',

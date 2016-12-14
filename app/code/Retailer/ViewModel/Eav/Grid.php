@@ -25,22 +25,22 @@ abstract class Grid extends PGrid
         //$user = (new Segment('admin'))->get('user');
         $user = (new Segment('customer'))->get('customer');
         $retailer = new Retailer;
-        $retailer->load($user->getId(),'customer_id');
+        $retailer->load($user->getId(), 'customer_id');
         if (empty($columns)) {
             $columns = [
                 'id' => [
                     'label' => 'ID',
                 ],
                 'store_id' => ($retailer['store_id'] ? [
-                    'type' => 'hidden',
-                    'value' => $retailer['store_id'],
-                    'use4sort' => false,
-                    'use4filter' => false
-                        ] : [
-                    'type' => 'select',
-                    'options' => (new Store)->getSourceArray(),
-                    'label' => 'Store'
-                        ])
+            'type' => 'hidden',
+            'value' => $retailer['store_id'],
+            'use4sort' => false,
+            'use4filter' => false
+                ] : [
+            'type' => 'select',
+            'options' => (new Store)->getSourceArray(),
+            'label' => 'Store'
+                ])
             ];
         }
         foreach ($attributes as $attribute) {
@@ -71,7 +71,7 @@ abstract class Grid extends PGrid
     {
         $user = (new Segment('customer'))->get('customer');
         $retailer = new Retailer;
-        $retailer->load($user->getId(),'customer_id');
+        $retailer->load($user->getId(), 'customer_id');
         if ($retailer['store_id']) {
             $collection->where(['store_id' => $retailer['store_id']]);
         }

@@ -85,40 +85,56 @@
         });
         $('[href="#tab-inventory"]').on('show.bs.tab', function () {
             var result = [];
-            $('#custom-options .option').each(function () {
-                var input = $(this).find('[name^="options[input]"]').val();
-                var required = $(this).find('[name~="[is_required]"]').val();
-                if ($.inArray(input, ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
+            var pushStack = function (n, l, t) {
+                if ($.inArray(n, ['select', 'radio', 'checkbox', 'multiselect']) === -1) {
                     var sku = $(this).find('[name^="options[sku]"]').val();
                     var title = $(this).find('[name^="options[label]"]').val();
                     if (sku) {
-                        var l = result.length;
                         if (l) {
                             for (var i = 0; i < l; i++) {
-                                result.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
+                                t.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
                             }
+                        } else {
+                            t.push({sku: $('#sku').val() + '-' + sku, title: title});
                         }
-                        result.push({sku: $('#sku').val() + '-' + sku, title: title});
                     }
                 } else {
-                    var tmp = [];
                     $(this).find('.value tr').each(function () {
                         var sku = $(this).find('[name$="[sku][]"]').val();
                         var title = $(this).find('[name$="[label][]"]').val();
                         if (sku) {
-                            if (result.length) {
-                                for (var i = 0; i < result.length; i++) {
-                                    tmp.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
+                            if (l) {
+                                for (var i = 0; i < l; i++) {
+                                    t.push({sku: result[i].sku + '-' + sku, title: result[i].title + '-' + title});
                                 }
                             } else {
-                                tmp.push({sku: $('#sku').val() + '-' + sku, title: title});
+                                t.push({sku: $('#sku').val() + '-' + sku, title: title});
                             }
                         }
                     });
-                    result = tmp;
+                }
+                result = t;
+            };
+            var hasRequired = false;
+            $('#custom-options .option').each(function () {
+                if (parseInt($(this).find('[name^="options[is_required]"]').val())) {
+                    var input = $(this).find('[name^="options[input]"]').val();
+                    var l = result.length;
+                    hasRequired = true;
+                    pushStack.call(this, input, l, []);
+                }
+            });
+            $('#custom-options .option').each(function () {
+                if (!parseInt($(this).find('[name^="options[is_required]"]').val())) {
+                    var input = $(this).find('[name^="options[input]"]').val();
+                    var l = result.length;
+                    pushStack.call(this, input, l, result);
                 }
             });
             if (result.length) {
+                if (!hasRequired) {
+                    result.unshift({sku: $('#sku').val(), title: ''});
+                }
                 $('#tab-inventory .branch').each(function () {
                     var fg = document.createDocumentFragment();
                     var tmpl = $(this).next('.tmpl-inventory-branch');

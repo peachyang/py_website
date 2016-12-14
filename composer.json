@@ -40,9 +40,10 @@
         }
     },
     "require-dev": {
+        "firephp/firephp-core": "~0.4",
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0",
-        "firephp/firephp-core": "~0.4"
+        "sstalle/php7cc":"1.1.0"
     },
     "license": "MIT",
     "autoload": {

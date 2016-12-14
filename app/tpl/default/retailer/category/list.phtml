@@ -17,7 +17,7 @@ $categories = $this->getCategories();
     </ul>
     <ul class="table categories-list">
         <?php
-        if (count($categories)):
+        if (count($categories) && isset($categories[0])):
             foreach ($categories[0] as $category):
                 ?>
                 <li class="clearfix" data-id="<?php echo $category->getId() ?>">

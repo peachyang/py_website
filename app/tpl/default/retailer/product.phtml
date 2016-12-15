@@ -27,7 +27,7 @@ $sales_status = $this->getAllSalesStatus();
                 </div>
                 <div class=" col-md-6 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Closing Time'); ?>:</label>
-                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from"><input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
+                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from">-<input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
                 </div>
                 <div class=" col-md-3 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Rcpt To'); ?>:</label>
@@ -167,10 +167,9 @@ $sales_status = $this->getAllSalesStatus();
                                 if ($key == 0) {
                                     ?>
                                     <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 11%;">
-
                                         <div>
                                             <p class="text-center">
-                                                <strong><span class=" color-blue"><?php echo $this->getCurrency()->format($item['total']); ?></span></strong>
+                                                <strong><span class=" color-blue"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?></span></strong>
                                             </p>
                                             <p class="text-center">
                                                 <span class="font-12">(<?php echo $this->translate('Including Courier Charges'); ?>:<?php echo $this->getCurrency()->format($transaction['shipping']); ?>)</span>
@@ -185,7 +184,7 @@ $sales_status = $this->getAllSalesStatus();
                                     <td style="width: 8%;" rowspan="<?php echo count($transaction['items']); ?>"  class="text-center font-12">
                                         <?php if ($order_obj->canCancel()) { ?>
                                             <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>'))
-                                                        return false;" class="btn btn-cancel font-12">
+                                                                            return false;" class="btn btn-cancel font-12">
                                                <?php echo $this->translate('Cancel', [], 'sales') ?>
                                             </a><br />
                                         <?php } ?>
@@ -218,7 +217,6 @@ $sales_status = $this->getAllSalesStatus();
                                                 <?php echo $this->translate('Refund', [], 'sales') ?>
                                             </a><br />
                                         <?php } ?>
-
                                         <a href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
                                             <?php echo $this->translate('Print', [], 'sales') ?>
                                         </a><br />

@@ -15,7 +15,7 @@ $orders = $this->getOrders();
         <tbody>
             <?php foreach ($orders as $order): ?>  
                 <tr class="thead_title">
-                    <td colspan="2" class="text-left"><?php echo $order->getStore()->offsetGet('name') ?></td>
+                    <td colspan="3" class="text-left"><?php echo $order->getStore()->offsetGet('name') ?></td>
                     <td colspan="3" class="text-nowrap text-right"><?php echo $this->translate('Order ID'), ': ', $order->offsetGet('increment_id') ?></td>
                     <td class="text-nowrap text-right"><?php echo date('Y-m-d', strtotime($order->offsetGet('created_at'))) ?></td>
                 </tr>

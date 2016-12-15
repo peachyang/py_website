@@ -3,6 +3,7 @@ $order = $this->getOrder();
 $currency = $this->getOrder()->getCurrency();
 $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
 ?>
+
 <div class="view clearfix font-12">
     <form action="<?php echo $this->getBaseUrl('retailer/sales_shipment/save/') ?>" method="post" class="form-sales">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
@@ -175,3 +176,4 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
     </form>
 </div>
+

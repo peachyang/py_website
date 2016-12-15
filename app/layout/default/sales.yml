@@ -605,14 +605,18 @@ sales_order_inquire:
     update: frontend
     root:
         children:
-            content:
-                action:
+            head: 
+                action: 
+                    -
+                        method: setTitle
+                        params: Order Inquire
                     -
                         method: setVariable
                         params:
                             - title
-                            - Order Inquire
-                children:
+                            - Order Inquire                    
+            content:
+               children:
                     main:
                         type: Seahinet\Sales\ViewModel\Inquire
                         template: sales/order/inquire

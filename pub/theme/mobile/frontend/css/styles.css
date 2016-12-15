@@ -157,9 +157,11 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .retailer-account .myorder .panel-menu span{padding-left:20px}
 .customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4;padding:10px 10px}
 .retailer-account .myorder h3 .fa{color:#007ecc;padding-right:5px}
+
 .retailer-account .border-left,.customer-account .border-left{border-left:1px solid #ddd}
 .retailer-account .sale_status,.customer-account .sale_status{overflow:hidden;background:#eee}
 .retailer-account .state{background:#007ecc;border-radius:0;color:#ffffff;padding-bottom:30px}
+
 .retailer-account .profile .info .details .cell span,.retailer-account .state .cell span{padding:5px 12px;background:#0185d7;line-height:30px}
 .customer-account-dashboard .order h3,.customer-account-dashboard .assets h3{line-height:30px;display:inline-block;width:100%;font-size:13px}
 .customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}

@@ -98,7 +98,7 @@ $filter = $this->getVariable('filter');
                         <td style="width: 14%;">
                             <div>
                                 <p class="text-center">
-                                    <span class="money"  ><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
+                                    <span class="money"><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
                                 </p>
                             </div>
                         </td>
@@ -107,7 +107,7 @@ $filter = $this->getVariable('filter');
                                 <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
                             </div>
                         </td>
-                        <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
+                        <td class="border-right text-center" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
                             <div>
                                 <p class="text-center">

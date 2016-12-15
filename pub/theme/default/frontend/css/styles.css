@@ -597,6 +597,8 @@ dl.options dd{float:left;margin-left:4px}
 .checkout-order .review .buttons-set{padding:37px 0;border-top:0}
 .checkout-order .review .buttons-set .btn-checkout{background:#007dc6;color:#fff;border-radius:0;padding:8px 36px;font-size:18px}
 .checkout-order tfoot .total{padding:0}
+.checkout-order .rewardpoints .btn.clicked{display:none}
+.checkout-order .rewardpoints .btn.clicked+.btn{display:inline-block}
 #cms-layered-nav .title{font-size:18px;line-height:39px;background:#007dc6;color:#fff;text-align:center}
 #cms-layered-nav dt a{display:block;text-align:center;background:#f5f6f9;border-bottom:1px solid #64c4fc;font-size:16px;line-height:39px;color:#000}
 #cms-layered-nav dt a:after{content:"\2228";display:inline-block;color:#5f5f5f;margin-left:3px;font-size:18px}

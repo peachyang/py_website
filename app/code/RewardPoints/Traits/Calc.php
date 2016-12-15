@@ -55,11 +55,11 @@ trait Calc
         $rate = $config['rewardpoints/using/rate'];
         $calculation = $config['rewardpoints/using/calculation'];
         $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-        $discount = $model['base_discount'] + $withUsed ? 0 : ($additional['rewardpoints'] ?? 0) * $rate;
+        $discount = $model['base_discount'] + ($withUsed ? 0 : ($additional['rewardpoints'] ?? 0) * $rate);
         foreach ($total as $key => &$t) {
             $tmp = $t + (($calculation ? $model['base_shipping'] + $model['base_tax'] : 0) + $discount) * $t / ($t + ($unavailable[$key] ?? 0));
             $max = ($maxAmountCalc ? ((int) ($tmp * $maxAmount / 100)) : ((int) $maxAmount)) / $rate;
-            $t = $tmp >= $minAmount ? ($max ? min($max, $tmp / $rate) : min($tmp / $rate)) : 0;
+            $t = $tmp >= $minAmount ? ($max ? min($max, $tmp / $rate) : $tmp / $rate) : 0;
         }
         return min($balance, array_sum($total));
     }

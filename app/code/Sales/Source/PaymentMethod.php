@@ -26,7 +26,7 @@ class PaymentMethod implements SourceInterface
                 $max = $config['payment/' . $code . '/max_total'];
                 $country = $config['payment/' . $code . '/country'];
                 $model = new $className;
-                if ($model instanceof AbstractMethod && $model->available() &&
+                if ($model instanceof AbstractMethod && $model->available() === true &&
                         (!$address || !$country || in_array($address->offsetGet('country'), $country)) &&
                         $total >= $config['payment/' . $code . '/min_total'] &&
                         (!$max || $total <= $max)) {

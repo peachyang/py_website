@@ -37,4 +37,9 @@ class IndexController extends ActionController
         return $result;
     }
 
+    public function loadAction()
+    {
+        return $this->getLayout('checkout_order_rewardpoints');
+    }
+
 }

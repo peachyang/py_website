@@ -73,7 +73,6 @@ $sales_status = $this->getAllSalesStatus();
                 <td style="width: 35%;"><?php echo $this->translate('Goods'); ?></td>
                 <td style="width: 8%;"><?php echo $this->translate('Price'); ?></td>
                 <td style="width: 8%;"><?php echo $this->translate('Qty'); ?></td>
-                <td style="width: 8%;"><?php echo $this->translate('After-sales'); ?></td>
                 <td style="width: 11%;"><?php echo $this->translate('Buyer'); ?></td>
                 <td style="width: 11%;"><?php echo $this->translate('Trading Status'); ?></td>
                 <td style="width: 11%;"><?php echo $this->translate('True Income'); ?></td>
@@ -135,20 +134,6 @@ $sales_status = $this->getAllSalesStatus();
                                         <p class="text-center"><?php echo $this->translate('%d', [$item['qty']]); ?></p>
                                     </div>
                                 </td>
-                                <?php if ($flag) : ?>
-                                    <td class="border-right" rowspan="<?php echo count($transaction['items']); ?>" style="width: 8%;">
-                                        <?php if ($transaction->canRefund()): ?>
-                                            <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $transaction['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
-                                        <?php endif ?>
-                                    </td>
-                                    <?php
-                                    $flag = FALSE;
-                                else:
-                                    ?>
-                                    <td class="border-right" style="width: 8%;"></td>
-                                <?php
-                                endif;
-                                ?>
                                 <?php
                                 if ($key == 0) {
                                     ?>

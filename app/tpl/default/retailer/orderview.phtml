@@ -63,7 +63,7 @@ $items = $order->getItems();
                                         <td class="item border-right">
                                             <div class="pic-info">
                                                 <div class="pic s50">
-                                                    <a target="_blank" href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
+                                                    <a href="#" hidefocus="true" data-spm-anchor-id="a1z09.3.3.6">
                                                         <?php if (strpos($thumbnail, '//') === false) { ?>
                                                             <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
                                                         <?php } else { ?>
@@ -74,7 +74,7 @@ $items = $order->getItems();
                                             </div>
                                             <div class="txt-info">
                                                 <div class="desc">
-                                                    <span class="name"><a target="_blank" title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></span>
+                                                    <span class="name"><a title="<?php echo $item['product_name'] ?>" href="#"><?php echo $item['product_name']; ?></a></span>
                                                 </div>
                                             </div>
                                         </td>

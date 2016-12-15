@@ -65,7 +65,7 @@ class Item extends AbstractModel
                 }
             }
         }
-        $this->setData('base_price', $basePrice + $sum);
+        $this->setData('base_price', max(0, $basePrice + $sum));
         $this->setData('price', $this->getOrder()->getCurrency()->convert($this->storage['base_price']));
         $this->setData('base_total', $this->storage['base_price'] * $this->storage['qty'] + ($this->storage['base_tax'] ?? 0) + ($this->storage['base_discount'] ?? 0));
         $this->setData('total', $this->storage['price'] * $this->storage['qty'] + ($this->storage['tax'] ?? 0) + ($this->storage['discount'] ?? 0));

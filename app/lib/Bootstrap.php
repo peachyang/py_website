@@ -45,6 +45,11 @@ final class Bootstrap
     private static $isMobile = null;
 
     /**
+     * @var bool
+     */
+    private static $developerMode = false;
+
+    /**
      * Prepare or get container singleton
      * 
      * @param array $config         DI config
@@ -88,6 +93,7 @@ final class Bootstrap
     {
         if (is_null(static::$container)) {
             static::init($server);
+            static::$developerMode = (bool) ($server['DEVELOPER_MODE'] ?? false);
         }
         static::$eventDispatcher->trigger('route', ['routers' => static::getContainer()->get('config')['route']]);
         static::$eventDispatcher->trigger('render', ['response' => static::getContainer()->get('response')->getData()]);
@@ -250,9 +256,19 @@ final class Bootstrap
     public static function isMobile()
     {
         if (is_null(self::$isMobile)) {
-            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']) ? 'mobile_' : '';
+            self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']);
         }
         return self::$isMobile;
+    }
+
+    /**
+     * Developer mode
+     * 
+     * @return bool
+     */
+    public static function isDeveloperMode()
+    {
+        return self::$developerMode;
     }
 
 }

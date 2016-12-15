@@ -24,6 +24,12 @@ class Refund extends AbstractViewModel
                 ->join('retailer', 'sales_order.store_id=retailer.store_id', [], 'left')
                 ->where(['retailer.id' => $this->getRetailer()->getId()])
                 ->order('created_at DESC');
+        if ($this->getQuery('status')) {
+            $collection->getSelect()->where->notEqualTo('sales_rma.status', 5);
+        }
+        if ($this->getQuery('increment_id')) {
+            $collection->where(['sales_order.increment_id' => $this->getQuery('increment_id')]);
+        }
         return $collection;
     }
 

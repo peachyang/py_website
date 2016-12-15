@@ -2,7 +2,6 @@
 
 namespace Seahinet\Admin\Controller\Email;
 
-use Exception;
 use Seahinet\Email\Model\Template as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 

@@ -7,3 +7,11 @@ customer.login.after:
     -
         listener: [\Seahinet\Retailer\Listeners\Farm, beforeCombine]
         priority: 9
+Seahinet\Catalog\Model\Product.model.save.after:
+    -
+        listener: [\Seahinet\Retailer\Listeners\Category, afterSave]
+        priority: 10
+Seahinet\Catalog\Model\Product.model.load.after:
+    -
+        listener: [\Seahinet\Retailer\Listeners\Category, afterLoad]
+        priority: 10

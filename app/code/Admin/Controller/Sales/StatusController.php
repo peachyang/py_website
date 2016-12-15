@@ -32,7 +32,7 @@ class StatusController extends AuthActionController
     {
         $model = new Model;
         $model->load($this->getRequest()->getPost('id'));
-        if($model->offsetGet('is_default')){
+        if ($model->offsetGet('is_default')) {
             return $this->redirectReferer(':ADMIN/sales_status/');
         }
         return $this->doDelete($model, ':ADMIN/sales_status/');
@@ -40,7 +40,7 @@ class StatusController extends AuthActionController
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Sales\\Model\\Order\\Status', ':ADMIN/sales_status/', ['name', 'phase_id'], function($model, $data) {
+        return $this->doSave('\\Seahinet\\Sales\\Model\\Order\\Status', ':ADMIN/sales_status/', ['name'], function($model, $data) {
                     if (!isset($data['is_default'])) {
                         $model->setData('is_default', 0);
                     }

@@ -64,15 +64,11 @@ class Category extends AbstractModel
         if ($this->getId()) {
             $products = new Product($this->languageId);
             $tableGateway = $this->getTableGateway('retailer_category_with_product');
-            $result = $tableGateway->select(['category_id' => $this->getId()])->toArray();
-            $valueSet = [];
-            array_walk($result, function($item) use (&$valueSet) {
-                $valueSet[] = $item['product_id'];
-            });
-            if (count($valueSet)) {
-                $products->where(new In('id', $valueSet));
-                return $products;
-            }
+            $select = $tableGateway->getSql()->select();
+            $select->columns(['id' => 'product_id'])
+                    ->where(['category_id' => $this->getId()]);
+            $products->in('id', $select);
+            return $products;
         }
         return [];
     }

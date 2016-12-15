@@ -109,10 +109,10 @@ class AuthActionController extends ActionController
                 if (!isset($data[$model->getPrimaryKey()]) || (int) $data[$model->getPrimaryKey()] === 0) {
                     $model->setId(null);
                 }
-                if ($transaction) {
-                    $this->beginTransaction();
-                }
                 try {
+                    if ($transaction) {
+                        $this->beginTransaction();
+                    }
                     if (is_callable($beforeSave)) {
                         $beforeSave($model, $data);
                     }

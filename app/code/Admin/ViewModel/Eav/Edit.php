@@ -40,7 +40,10 @@ abstract class Edit extends PEdit
                 ->withLabel($languageId)
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'right')
                 ->order('sort_order, eav_attribute.id')
-                ->where(['eav_entity_type.code' => $model::ENTITY_TYPE, 'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])]);
+                ->where([
+                    'eav_entity_type.code' => $model::ENTITY_TYPE,
+                    'attribute_set_id' => $this->getQuery('attribute_set', $model['attribute_set_id'])
+                ])->where->notEqualTo('eav_attribute.input', 'password');
         if ($this->group) {
             $columns = [];
             $attributes->where(['eav_attribute_group.id' => $this->group]);
@@ -99,11 +102,23 @@ abstract class Edit extends PEdit
                 $groups[] = $attribute['attribute_group_id'];
             }
             if ($this->group && $attribute['attribute_group_id'] == $this->group) {
+                $validation = $attribute['validation'] ? explode(' ', $attribute['validation']) : [];
+                $attrs = [];
+                $class = [];
+                foreach ($validation as $v) {
+                    if (strpos($v, ':')) {
+                        list($key, $value) = explode(':', $v);
+                        $attrs[$key] = $value;
+                    } else {
+                        $class[] = $v;
+                    }
+                }
                 $columns[$attribute['code']] = [
                     'label' => $attribute['label'],
                     'type' => $attribute['input'],
                     'view_model' => $attribute['view_model'],
-                    'class' => $attribute['validation']
+                    'class' => implode(' ', $class),
+                    'attrs' => $attrs
                 ];
                 if (in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect'])) {
                     $columns[$attribute['code']]['options'] = (new AttributeModel($attribute))->getOptions($languageId);

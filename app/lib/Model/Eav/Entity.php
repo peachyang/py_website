@@ -24,7 +24,7 @@ abstract class Entity extends AbstractModel
 
     public function __construct($languageId = 0, $input = array())
     {
-        $this->storage = $input;
+        $this->setData($input);
         if ($languageId) {
             $this->languageId = $languageId;
         } else {
@@ -162,9 +162,14 @@ abstract class Entity extends AbstractModel
         return [];
     }
 
+    protected function isUpdate($constraint = array(), $insertForce = false)
+    {
+        return !$insertForce && $this->getId();
+    }
+    
     public function save($constraint = [], $insertForce = false)
     {
-        $isUpdate = !$insertForce && $this->getId();
+        $isUpdate = $this->isUpdate();
         try {
             if ($isUpdate || $this->isNew) {
                 if (!$this->transaction) {
@@ -176,10 +181,12 @@ abstract class Entity extends AbstractModel
                 $attributes = $this->prepareAttributes();
                 $tableGateway = $this->getTableGateway($this->getEntityTable());
                 if ($isUpdate) {
+                    $this->isNew = false;
                     if ($columns) {
                         $tableGateway->update($columns, ['id' => $this->getId()]);
                     }
                 } else {
+                    $this->isNew = true;
                     $tableGateway->insert($columns);
                     $this->setId($tableGateway->getLastInsertValue());
                 }

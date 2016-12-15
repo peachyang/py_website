@@ -6,70 +6,66 @@ $flag = false;
     <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
     <div class="wishlist">
         <div class="favorites col-xs-12 col-sm-12">
-            <ul class="col-xs-12 col-sm-12 bd-bottom padding-5">
-                <li class="col-xs-3 col-sm-3 text-left  color-blue"><a href="" target="_blank">123456<span class="fa fa-qq padding-l-5"></span></a></li>
-            </ul>
-            <ul class="col-xs-12 col-sm-12 bd-bottom padding-10-5">
-                <?php
-                foreach ($items as $item):
-                    if ($item->offsetGet('product_id') && $item->offsetGet('warehouse_id') && $item->offsetGet('store_id')):
-                        $flag = true;
-                        $product = $item->getProduct();
-                        $thumbnail = $product->getThumbnail();
-                        ?>
+           <?php
+            foreach ($items as $item):
+                if ($item->offsetGet('product_id') && $item->offsetGet('warehouse_id') && $item->offsetGet('store_id')):
+                    $flag = true;
+                    $product = $item->getProduct();
+                    $thumbnail = $product->getThumbnail();
+                    ?>
+                    <ul class="col-xs-12 col-sm-12 bd-bottom padding-10-5">
                         <li class="col-xs-2 col-sm-2">
-
                             <a href="<?php echo $product->getUrl(); ?>" title="<?php echo $product->offsetGet('name') ?>" >
-                                <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/150x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" alt="<?php echo $product->offsetGet('name') ?>" style="display: inline;" width="50" height="50" />              
+                                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />              
                             </a>
                         </li>
                         <li class="text-vtop vtop_width col-xs-6 col-sm-6">
-                            <h5 class="font-12 product-name collect"><?php echo $item['product_name'] ?></h5>
-                            <?php
-                            $price = $product->getFinalPrice($item['qty'], false);
-                            $sum = 0;
-                            $options = json_decode($item['options'], true);
-                            if ($item['product_id'] && count($options)):
-                                ?>
-                                <ul class="options collect font-12 color-hui">
-                                    <?php
-                                    foreach ($product->getOptions() as $option):
-                                        if (isset($options[$option->getId()])):
-                                            ?>
-                                            <li><?php echo $option['title'] ?>
-                                                <span>
-                                                    <?php
-                                                    if (in_array($option->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
-                                                        foreach ($option->getValues() as $value) {
-                                                            if ($value['id'] == $options[$option->getId()]) {
-                                                                echo $value['title'];
-                                                                $sum += $value['is_fixed'] ? $value['price'] : $price * $value['price'] / 100;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        echo $options[$option->getId()];
-                                                        $sum += $option['is_fixed'] ? $option['price'] : $price * $option['price'] / 100;
-                                                    }
-                                                    ?>
-                                                </span>
-                                            </li>
-                                            <?php
-                                        endif;
-                                    endforeach;
+                            <h3 class="font-12 product-name collect"><?php echo $item['product_name'] ?></h5>
+                                <?php
+                                $price = $product->getFinalPrice($item['qty'], false);
+                                $sum = 0;
+                                $options = json_decode($item['options'], true);
+                                if ($item['product_id'] && count($options)):
                                     ?>
-                                </ul>
-                            <?php endif ?>
+                                    <ul class="options collect font-12 color-hui">
+                                        <?php
+                                        foreach ($product->getOptions() as $option):
+                                            if (isset($options[$option->getId()])):
+                                                ?>
+                                                <li><?php echo $option['title'] ?>
+                                                    <span>
+                                                        <?php
+                                                        if (in_array($option->offsetGet('input'), ['select', 'radio', 'checkbox', 'multiselect'])) {
+                                                            foreach ($option->getValues() as $value) {
+                                                                if ($value['id'] == $options[$option->getId()]) {
+                                                                    echo $value['title'];
+                                                                    $sum += $value['is_fixed'] ? $value['price'] : $price * $value['price'] / 100;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            echo $options[$option->getId()];
+                                                            $sum += $option['is_fixed'] ? $option['price'] : $price * $option['price'] / 100;
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </li>
+                                                <?php
+                                            endif;
+                                        endforeach;
+                                        ?>
+                                    </ul>
+                                <?php endif ?>
+                        </li>
                         <li class="col-xs-4 col-sm-4 text-right ">
                             <div class="price-box">
                                 <?php if (($price += $sum) == $item['price']): ?>
-                                    <span class="regular-price  col-xs-12 col-sm-12"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
+                                    <span class="regular-price  col-xs-12 col-sm-12"><span class="price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span></span>
                                 <?php else: ?>
-                                    <span class="old-price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span>
-                                    <span class="special-price"><?php echo $this->getCurrency()->convert($price, true) ?></span>
+                                    <span class="old-price"><span class="price"><?php echo $this->getCurrency()->convert($item['price'], true) ?></span></span>
+                                    <span class="special-price"><span class="price"><?php echo $this->getCurrency()->convert($price, true) ?></span></span>
                                 <?php endif ?>
 
                                 <div class="color-hui font-12 ">
-                                    <a class="text-nowrap padding-right-10" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
                                     <a class="text-nowrap" href="<?php echo $this->getBaseUrl('checkout/cart/add/') ?>" data-method="post" data-params="<?php
                                     echo http_build_query([
                                         'product_id' => $item['product_id'],
@@ -78,20 +74,23 @@ $flag = false;
                                         'options' => $item['options'],
                                         'warehouse_id' => $item['warehouse_id']
                                     ])
-                                    ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a>
+                                    ?>" class="add2cart"><?php echo $this->translate('Add to Cart'); ?></a><br />
+                                    <a class="text-nowrap padding-right-10" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
                                 </div>
                             </div>  
                         </li>
-                    <?php else: ?>
+                    </ul>
+                <?php else: ?>
+                    <ul>
                         <li>
                             <a class="text-nowrap" href="<?php echo $this->getBaseUrl('customer/wishlist/delete/') ?>" data-method="delete" data-params="id=<?php echo $item->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete') ?></a>
                             <p><?php echo $this->translate('%s is out of stock.', [$item['product_name']], 'catalog') ?></p>
                         </li>
-                    <?php
-                    endif;
-                endforeach;
-                ?>
-            </ul>
+                    </ul>
+                <?php
+                endif;
+            endforeach;
+            ?>
             <div class="col-xs-12 col-sm-12 text-right padding-10-5">
                 <?php if ($flag): ?>
                     <button type="submit" class="btn btn-theme">
@@ -102,4 +101,5 @@ $flag = false;
                 <?php endif; ?>
             </div>
         </div>
+    </div>
 </form>

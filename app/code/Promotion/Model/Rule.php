@@ -12,10 +12,12 @@ use Zend\Db\Sql\Expression;
 class Rule extends AbstractModel
 {
 
+    protected $condition = null;
+
     protected function construct()
     {
         $this->init('promotion', 'id', [
-            'id', 'name', 'description', 'status', 'use_coupon',
+            'id', 'name', 'description', 'status', 'use_coupon', 'uses_per_coupon', 'uses_per_customer',
             'from_date', 'to_date', 'stop_processing', 'qty', 'price', 'is_fixed',
             'per_item', 'free_shipping', 'apply_to', 'sort_order'
         ]);
@@ -38,13 +40,23 @@ class Rule extends AbstractModel
                     ->where([
                         'code' => $coupon,
                         'status' => 1
-                    ])->columns(['id', 'uses_per_customer'])
-                    ->group(['promotion_coupon.id', 'customer_id', 'uses_per_customer']);
+                    ])->columns(['code'])
+                    ->group(['promotion_coupon.code', 'customer_id']);
+            $coupons->load(false, true);
             if (count($coupons)) {
-                foreach ($coupons as $coupon) {
-                    if ($coupon['customer_id'] == $model['customer_id'] && $coupons['uses_per_customer'] > 0 && $coupons['uses_per_customer'] <= $coupons['uses']) {
+                $count = [];
+                foreach ($coupons as $item) {
+                    if ($item['customer_id'] == $model['customer_id'] && !empty($this->storage['uses_per_customer']) && $this->storage['uses_per_customer'] >= $coupons['uses']) {
                         return false;
                     }
+                    if (!isset($count[$item['code']])) {
+                        $count[$item['code']] = $coupons['uses'];
+                    } else {
+                        $count[$item['code']] += $coupons['uses'];
+                    }
+                }
+                if (!empty($this->storage['uses_per_coupon']) && $this->storage['uses_per_coupon'] >= $count[$coupon]) {
+                    return false;
                 }
                 return true;
             }
@@ -54,15 +66,17 @@ class Rule extends AbstractModel
 
     public function getCondition()
     {
-        if ($this->getId()) {
+        if (is_null($this->condition) && $this->getId()) {
             $collection = new ConditionCollection;
             $collection->where([
                 'promotion_id' => $this->getId(),
                 'parent_id' => null
             ]);
-            return $collection->load()[0];
+            if (count($collection)) {
+                $this->condition = $collection[0];
+            }
         }
-        return null;
+        return $this->condition;
     }
 
     public function getHandler()
@@ -95,8 +109,8 @@ class Rule extends AbstractModel
                         'id' => null,
                         'promotion_id' => $this->getId(),
                         'code' => $code,
-                        'uses_per_coupon' => $this->storage['coupon']['uses_per_coupon'][$key]? : 0,
-                        'uses_per_customer' => $this->storage['coupon']['uses_per_customer'][$key]? : 0,
+                        'uses_per_coupon' => $this->storage['coupon']['uses_per_coupon'][$key] ?: 0,
+                        'uses_per_customer' => $this->storage['coupon']['uses_per_customer'][$key] ?: 0,
                         'status' => 1
                     ])->save();
                 }

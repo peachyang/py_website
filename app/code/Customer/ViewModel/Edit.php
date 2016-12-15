@@ -46,7 +46,7 @@ class Edit extends Account
     {
         $subscriber = new Subscriber;
         $subscriber->load($this->getCustomer()->offsetGet('email'), 'email');
-        return (bool) $subscriber->getId();
+        return (bool) $subscriber->getId() && $subscriber->offsetGet('status');
     }
 
 }

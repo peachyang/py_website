@@ -66,7 +66,7 @@ class AuthController extends ActionController
                                         (strpos($callback, '?') === false ? '?' : '&') .
                                         'authorization_code=' . $code .
                                         (isset($data['state']) ?
-                                                '&state=' . $data['state'] : ''));
+                                        '&state=' . $data['state'] : ''));
                     }
                 } else {
                     return $this->getResponse()->withStatus('400');

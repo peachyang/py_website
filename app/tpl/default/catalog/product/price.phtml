@@ -14,6 +14,7 @@ $symbol = $currency['symbol'];
         <span class="label"><?php echo $this->translate('Special Price') ?></span>
         <span class="price" data-price="<?php echo $product->getFinalPrice() ?>"><?php printf($format, $symbol, $product->getFinalPrice()) ?></span>
     </span>
+
     <span class="old-price">
         <span class="label"><?php echo $this->translate('Old Price') ?></span>
         <span class="price" data-price="<?php echo $product['prices']['regular'] ?>"><?php printf($format, $symbol, $product['prices']['regular']) ?></span>

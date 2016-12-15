@@ -13,7 +13,6 @@ use Seahinet\Lib\Model\Eav\Type;
 use Zend\Db\TableGateway\TableGateway;
 use Seahinet\Lib\Model\Collection\Language as Lcollection;
 
-
 /**
  * Retailer submenu products management controller
  * 
@@ -22,7 +21,7 @@ class ProductController extends AuthActionController
 {
 
     private $searchable;
-    
+
     public function indexAction()
     {
         $segment = new Segment('customer');
@@ -140,10 +139,10 @@ class ProductController extends AuthActionController
                 if (empty($data['id'])) {
                     $model->setId(null);
                     $back_url = 'retailer/product/release/';
-                }else{
-                    if(empty($data['backurl'])){
+                } else {
+                    if (empty($data['backurl'])) {
                         $back_url = 'retailer/product/release/';
-                    }else{
+                    } else {
                         $back_url = $data['backurl'];
                     }
                 }
@@ -157,7 +156,7 @@ class ProductController extends AuthActionController
                 ]);
                 $user = (new Segment('customer'))->get('customer');
                 $retailer = new Retailer;
-                $retailer->load($user->getId(),'customer_id');
+                $retailer->load($user->getId(), 'customer_id');
                 if ($retailer['store_id']) {
                     if ($model->getId() && $model->offsetGet('store_id') == $retailer['store_id']) {
                         $model->setData('store_id', $retailer['store_id']);
@@ -172,7 +171,7 @@ class ProductController extends AuthActionController
                 }
                 try {
                     $model->save();
-                    $languages = new Language;
+                    $languages = new Lcollection;
                     $languages->columns(['id']);
                     $languages->load(true, false);
                     foreach ($languages as $language) {
@@ -188,7 +187,7 @@ class ProductController extends AuthActionController
         }
         return $this->response($result, $back_url, 'retailer');
     }
-    
+
     private function getSearchableAttributes()
     {
         if (is_null($this->searchable)) {
@@ -236,7 +235,7 @@ class ProductController extends AuthActionController
     {
         return $this->getLayout('retailer_popup_images_list');
     }
-    
+
     /**
      * statusAction  
      * Ajax to change stock status.
@@ -245,28 +244,28 @@ class ProductController extends AuthActionController
      * @access public 
      * @return object 
      */
-     public function statusAction()
-     {
-         $form_data = $this->getRequest()->getPost();
-         $result = [];
-         if(empty($form_data) || empty($form_data['product_ids'])){
-             $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
-             return $result;
-         }
-         $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
-         
+    public function statusAction()
+    {
+        $form_data = $this->getRequest()->getPost();
+        $result = [];
+        if (empty($form_data) || empty($form_data['product_ids'])) {
+            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
+            return $result;
+        }
+        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
+
         $warehouse_inventory = new TableGateway(array('wi' => 'warehouse_inventory'), $this->getContainer()->get('dbAdapter'));
-        $update = $warehouse_inventory->update(['status'=>$form_data['type']], ['product_id'=> $form_data['product_ids']]);
-        if($form_data['type'] == 1){
+        $update = $warehouse_inventory->update(['status' => $form_data['type']], ['product_id' => $form_data['product_ids']]);
+        if ($form_data['type'] == 1) {
             $message = '%d product(s) have put on shelves successfully.';
-        }else{
+        } else {
             $message = '%d product(s) have pull off shelves successfully.';
         }
-        if($update > 0){
+        if ($update > 0) {
             $result['message'][] = ['message' => $this->translate($message, [$update]), 'level' => 'success'];
         }
         echo json_encode($result);
-     }
+    }
 
     /**
      * removeAction  
@@ -276,32 +275,32 @@ class ProductController extends AuthActionController
      * @access public 
      * @return object 
      */
-     public function removeAction()
-     {
+    public function removeAction()
+    {
         $form_data = $this->getRequest()->getPost();
         $result = [];
-        if(empty($form_data) || empty($form_data['product_ids'])){
+        if (empty($form_data) || empty($form_data['product_ids'])) {
             $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
             return $result;
         }
         $products_count = count($form_data['product_ids']);
         $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
-         
+
         $languages = new Lcollection;
-        foreach($languages as $language){
-            $table_name = 'product_'.$language['id'].'_index';
+        foreach ($languages as $language) {
+            $table_name = 'product_' . $language['id'] . '_index';
             $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
-            $product->update(['status'=>$form_data['type']], ['id'=> $form_data['product_ids']]);
+            $product->update(['status' => $form_data['type']], ['id' => $form_data['product_ids']]);
         }
-        if($form_data['type'] == 1){
+        if ($form_data['type'] == 1) {
             $message = '%d product(s) have been recover successfully.';
-        }else{
+        } else {
             $message = '%d product(s) have been removed successfully.';
         }
         $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
         echo json_encode($result);
-     }
-     
+    }
+
     /**
      * recommendAction  
      * Ajax to change product status.
@@ -314,26 +313,26 @@ class ProductController extends AuthActionController
     {
         $form_data = $this->getRequest()->getPost();
         $result = [];
-        if(empty($form_data) || empty($form_data['product_ids'])){
+        if (empty($form_data) || empty($form_data['product_ids'])) {
             $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
             return $result;
         }
         $products_count = count($form_data['product_ids']);
         $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
-         
+
         $languages = new Lcollection;
-        foreach($languages as $language){
-            $table_name = 'product_'.$language['id'].'_index';
+        foreach ($languages as $language) {
+            $table_name = 'product_' . $language['id'] . '_index';
             $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
-            $product->update(['recommend'=>$form_data['type']], ['id'=> $form_data['product_ids']]);
+            $product->update(['recommend' => $form_data['type']], ['id' => $form_data['product_ids']]);
         }
-        if($form_data['type'] == 1){
+        if ($form_data['type'] == 1) {
             $message = '%d product(s) have been recommended successfully.';
-        }else{
+        } else {
             $message = '%d product(s) have been unrecommended successfully.';
         }
         $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
         echo json_encode($result);
-     }
+    }
 
 }

@@ -1,15 +1,30 @@
- <div class="container">
+<div class="container">
     <?php
     if (count($this->getItems())):
         ?>
         <div class="breadcrumb-m hidden-lg">
-            <a href="javascript:viod(0);" onclick="javascript:history.back(-1);" class="fa fa-chevron-left fa-2x breadcrumb-right col-xs-1 col-sm-1">
+            <a href="javascript:void(0);" onclick="javascript:history.back(-1);" class="fa fa-chevron-left fa-2x breadcrumb-right col-xs-1 col-sm-1">
             </a>
             <div class="content-list col-xs-10 col-sm-10">
                 <a href=""><?php echo $this->translate('Shopping Cart'); ?></a>
             </div>
-            <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
+            <div class="dropdown">
+                <a href="javascript:viod(0);" class="fa fa-bars fa-2x col-xs-1 col-sm-1" data-toggle="dropdown"></a>
+                <ul class="filters dropdown-menu col-xs-12" role="menu"> 
+                    <li class="col-xs-4">
+                        <a href="<?php echo $this->getBaseUrl(); ?>"><?php echo $this->translate('Home') ?><i class="fa  fa-bank font-color-orange font-14"></i></a>
+                    </li>
+                    <li class="col-xs-4">
+                        <a href="<?php echo $this->getBaseUrl('checkout/cart/'); ?>"><?php echo $this->translate('Cart') ?><i class="fa fa-shopping-cart font-color-orange font-14"></i></a>
+                    </li>
+                    <li class="col-xs-4">
+                        <a href="<?php echo $this->getBaseUrl('customer/account/'); ?>"><?php echo $this->translate('Personal Center') ?><i class="fa   fa-user font-color-orange font-14"></i></a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
+
         <form action="<?php echo $this->getBaseUrl('checkout/cart/update/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
             <div class="table" id="cart">
@@ -18,7 +33,7 @@
                 foreach ($this->getItems() as $item) {
                     if (!isset($stores[$item['store_id']])):
                         ?>
-                       
+
                         <ul class="store clearfix">
                             <li class="col-xs-1 col-sm-1">
                                 <input type="checkbox" checked class="selectall" value="<?php echo $item['store']['id'] ?>">
@@ -51,8 +66,8 @@
             </div>
         </form>
     <?php else: ?>
-    <h2 class="text-center"><?php echo $this->translate('Shopping Cart Is Empty') ?></h2>
-    <p class="text-center"><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
+        <h2 class="text-center"><?php echo $this->translate('Shopping Cart Is Empty') ?></h2>
+        <p class="text-center"><?php echo $this->translate('You have no items in your shopping cart.<br />Click <a href="%s">here</a> to continue shopping.', [$this->getBaseUrl()]) ?></p>
     <?php endif; ?>
     <?php
     $countC = count($this->getChild('crosssell')->getProducts());

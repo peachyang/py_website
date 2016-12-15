@@ -71,7 +71,8 @@ class ShipmentController extends AuthActionController
                     $track = new Track($data['tracking']);
                     $track->setData([
                         'shipment_id' => $shipment->getId(),
-                        'order_id' => $data['order_id']
+                        'order_id' => $data['order_id'],
+                        'track_number'=>$data['tracking']['number']
                     ])->save();
                 }
                 $code = (int) !$order->canShip() + (int) !$order->canInvoice();
@@ -84,7 +85,7 @@ class ShipmentController extends AuthActionController
                     $order->setData('status_id', $status[0]->getId())->save();
                     $history = new History;
                     $history->setData([
-                        'admin_id' =>null,
+                        'admin_id' => null,
                         'order_id' => $order->getId(),
                         'status_id' => $status[0]->getId(),
                         'status' => $status[0]->offsetGet('name')

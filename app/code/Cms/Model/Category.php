@@ -13,7 +13,7 @@ class Category extends AbstractModel
     {
         $this->init('cms_category', 'id', ['id', 'uri_key', 'show_navigation', 'status', 'parent_id']);
     }
-    
+
     public function getParentCategory()
     {
         if (!empty($this->storage['parent_id'])) {

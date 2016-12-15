@@ -4,6 +4,7 @@ namespace Seahinet\Sales\ViewModel;
 
 use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Sales\Model\Collection\Order as Collection;
+use Seahinet\Catalog\Model\Collection\Product\Review;
 
 class Order extends Account
 {
@@ -27,11 +28,15 @@ class Order extends Account
                     'sales_order_status.is_default' => 1
                 ]);
             } else if ($condition['status'] == 3) {
-                $collection->join('review', 'review.order_id=sales_order.id', [], 'left')
+                $reviews = new Review;
+                $reviews->columns(['order_id'])
+                        ->where(['review.customer_id' => $this->getCustomer()->getId()])
+                ->where->isNotNull('review.order_id');
+                $collection->notIn('sales_order.id', $reviews)
                         ->where([
                             'sales_order_phase.code' => 'complete',
                             'sales_order_status.is_default' => 0
-                        ])->having(['count(review.id)=0', 'sales_order.id is not null']);
+                ]);
             }
         }
         unset($condition['status']);

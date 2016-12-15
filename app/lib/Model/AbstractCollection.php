@@ -361,4 +361,22 @@ abstract class AbstractCollection extends ArrayObject
         return $this->select;
     }
 
+    /**
+     * Create "IN" predicate
+     *
+     * Utilizes In predicate
+     * 
+     * @param string $identifier
+     * @param array|Select|AbstractCollection $valueSet
+     * @return Select
+     */
+    public function notIn($identifier, $valueSet)
+    {
+        if ($valueSet instanceof AbstractCollection) {
+            $valueSet = $valueSet->getSelect();
+        }
+        $this->select->where->notIn($identifier, $valueSet);
+        return $this->select;
+    }
+
 }

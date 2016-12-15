@@ -11,7 +11,7 @@ class Price extends Template
     {
         $this->setTemplate('catalog/product/price');
     }
-    
+
     public function getCurrency()
     {
         return $this->getContainer()->get('currency');

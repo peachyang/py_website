@@ -57,6 +57,10 @@ class Status extends PEdit
                 ]
             ]
         ];
+        $model = $this->getVariable('model');
+        if ($model && $model['is_default']) {
+            $columns['phase_id']['attrs'] = ['disabled' => 'disabled'];
+        }
         return parent::prepareElements($columns);
     }
 

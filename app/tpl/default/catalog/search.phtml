@@ -5,12 +5,11 @@ $query = $this->getQuery('q');
 <form action="<?php echo $this->getBaseUrl('catalog/search/') ?>" method="get">
     <div class="input-group">
         <div class="input-group-addon">
-            <select name="type" class="form-control">
-                <option value="0"<?php if ($type !== '1'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Product') ?></option>
-                <option value="1"<?php if ($type === '1'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Store') ?></option>
-            </select>
+            <label for="search-query" class="control-label">
+                <span class="fa fa-search"></span>
+            </label>
         </div>
-        <input type="search" class="form-control required" x-webkit-speech x-webkit-grammar="builtin:search" name="q" value="<?php echo $query ?>" />
+        <input type="search" id="search-query" class="form-control required" x-webkit-speech x-webkit-grammar="builtin:search" name="q" value="<?php echo $query ?>" />
         <div class="input-group-addon">
             <button class="btn btn-submit" type="submit"><?php echo $this->translate('Search') ?></button>
         </div>

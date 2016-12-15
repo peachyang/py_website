@@ -57,14 +57,14 @@ class Product extends PEdit
                 ]
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'required' => 'required'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'required' => 'required'
+            ]),
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

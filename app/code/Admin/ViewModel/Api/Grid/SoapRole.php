@@ -54,6 +54,9 @@ class SoapRole extends PGrid
 
     public function prepareCollection($collection = NULL)
     {
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
+        }
         return parent::prepareCollection(new Collection);
     }
 

@@ -9,7 +9,7 @@ class Tab extends Template
 {
 
     private static $product;
-    
+
     public function getProduct()
     {
         self::$product = new Product;

@@ -198,7 +198,7 @@ retailer_product:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Product
+                        params: Sold Product
                     -
                         method: addLink
                         params: frontend/css/jquery-ui.min.css
@@ -287,7 +287,7 @@ retailer_sales_products:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Sales
+                        params: Sales of Product
                     -
                         method: addScript
                         params: frontend/js/retailer/product.js
@@ -754,6 +754,12 @@ retailer_products_product_edit:
                                             - additional
                                             - Additional
                                             - 170
+                                    -
+                                        method: addTab
+                                        params:
+                                            - store_category
+                                            - Store-category
+                                            - 180
                                 children:
                                     images:
                                         type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Tab
@@ -797,6 +803,9 @@ retailer_products_product_edit:
                                     additional:
                                         type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Additional
                                         template: admin/catalog/product/additional
+                                    store_category:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Store
+                                        template: admin/catalog/product/store
             extra:
                 children:
                     insert:

@@ -72,7 +72,7 @@ class Database extends AbstractHandler
             foreach ($columns as $attr) {
                 if ($attr['attr']) {
                     if ($attr['type'] === 'int') {
-                        $column = new Ddl\Column\Integer($attr['attr'], true, (int) $attr['default_value']);
+                        $column = new Ddl\Column\Integer($attr['attr'], true, is_null($attr['default_value']) ? null : (int) $attr['default_value']);
                     } else if ($attr['type'] === 'varchar') {
                         $column = new Ddl\Column\Varchar($attr['attr'], 255, true, $attr['default_value']);
                     } else if ($attr['type'] === 'datetime') {
@@ -179,10 +179,16 @@ class Database extends AbstractHandler
     public function select($languageId, $where = [], array $options = [])
     {
         try {
-            if ($where instanceof Select) {
-                return $this->getTableGateway($languageId)->selectWith($where)->toArray();
+            if (!$where instanceof Select) {
+                $where = $this->getTableGateway($languageId)->getSql()->select()->where($where);
+                if (!empty($options['limit'])) {
+                    $where->limit($options['limit']);
+                }
+                if (!empty($options['offset'])) {
+                    $where->offset($options['offset']);
+                }
             }
-            return $this->getTableGateway($languageId)->select($where)->toArray();
+            return $this->getTableGateway($languageId)->selectWith($where)->toArray();
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());
         }

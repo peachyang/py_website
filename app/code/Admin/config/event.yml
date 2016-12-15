@@ -1,8 +1,4 @@
 ---
-route:
-    -
-        listener: [\Seahinet\Admin\Listeners\Visitors, stat]
-        priority: 20
 auth.dispatch.after:
     -
         listener: [\Seahinet\Admin\Listeners\LogEvent, log]

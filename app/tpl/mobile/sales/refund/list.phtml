@@ -1,34 +1,42 @@
 <?php
 $applications = $this->getApplication();
 $currency = $this->getCurrency();
+$profile = new Seahinet\Customer\ViewModel\Dashboard\Profile;
+$payment = $profile->getPendingPayment();
+$shipment = $profile->getShipping();
+$review = $profile->getReviewing();
+$refund1 = new Seahinet\Sales\ViewModel\Refund;
+$refund = $refund1->getApplication();
+$refund->getSelect()->where->notEqualTo('status', 5);
 ?>
 <div id="Has-sold" class="seller-tab">
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
         <li class="active col-xs-3 col-sm-3">
-            <a href="#all" data-toggle="tab">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#delivery" data-toggle="tab">
-                <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1'); ?>">
+                <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile->getPendingPayment(); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#payment" data-toggle="tab">
-                <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2'); ?>">
+                <?php echo $this->translate('Delivering', [], 'customer'); ?>(<span><?php echo $profile->getShipping(); ?></span>)
             </a>
         </li>
         <li class="col-xs-3 col-sm-3">
-            <a href="#refund" data-toggle="tab">
-                <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3'); ?>">
+                <?php echo $this->translate('Reviewing', [], 'customer'); ?>(<span><?php echo $profile->getReviewing(); ?></span>)
             </a>
         </li>
     </ul>
     <div class="search padding-5 col-xs-12 col-sm-12">
-        <form class="form-inline" action="" method="get" novalidate = "novalidate">
+        <form class="form-inline" action="<?php echo $this->getUri()->withQuery('') ?>" method="get" novalidate = "novalidate">
+            <input type="hidden" name="status" value="<?php echo $this->getQuery('status') ?>" />
             <span class="fa fa-search" aria-hidden="true"></span>
-            <input type="search" name="increment_id" value="" class="col-xs-10 col-sm-10" />
+            <input type="search" name="increment_id" value="<?php echo $this->getQuery('increment_id') ?>" class="col-xs-10 col-sm-10" />
             <button type="submit" class="btn btn-default"><?php echo $this->translate('Search'); ?></button>
         </form>
     </div>
@@ -41,9 +49,9 @@ $currency = $this->getCurrency();
                     $flag = true;
                     ?>
                     <div class="menu-ctn">
-                        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
-                            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()['name'] ?></li>
-                            <li class="col-xs-7 col-sm-7 text-right font-14">
+                        <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5 font-12">
+                            <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()['name'] ?></li>
+                            <li class="col-xs-7 col-sm-7 text-right">
                                 <?php echo $currency->format($order->offsetGet('total')); ?>
                                 <span class="font-12">
                                     <?php echo $this->translate('(Including Shipping Fee: %s)', [$currency->format($order->offsetGet('shipping'))]); ?>

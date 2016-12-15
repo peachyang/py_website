@@ -1,4 +1,5 @@
 <?php
+
 namespace Seahinet\Retailer\Model\Collection;
 
 use Seahinet\Lib\Model\AbstractCollection;
@@ -11,14 +12,14 @@ class Product extends AbstractCollection
         //$this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'name', 'address', 'account', 'photo', 'credentials', 'status']);
         $this->init('retailer');
     }
-    
-    /** 
-    * getRetailerTransaction  
-    * Fetch transaction record form database
-    * 
-    * @access public 
-    * @return object 
-    */ 
+
+    /**
+     * getRetailerTransaction  
+     * Fetch transaction record form database
+     * 
+     * @access public 
+     * @return object 
+     */
     public function getRetailerTransaction()
     {
         $this->select->join('sales_order', 'retailer.store_id = sales_order.store_id', [], 'left');

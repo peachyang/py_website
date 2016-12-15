@@ -2,7 +2,6 @@
 
 namespace Seahinet\Retailer\Controller\Sales;
 
-use DateTime;
 use Exception;
 use Seahinet\Customer\Model\Address;
 use Seahinet\Lib\Session\Segment;
@@ -13,6 +12,7 @@ use Seahinet\Sales\Model\Collection\Order\Status;
 use Seahinet\Sales\Model\Order as Model;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
+use Zend\Db\Sql\Expression;
 
 class OrderController extends AuthActionController
 {
@@ -25,34 +25,38 @@ class OrderController extends AuthActionController
         $retailer = new Retailer;
         $retailer->load($segment->get('customer'), 'customer_id');
         $collection = new Collection;
-        $collection->columns(['created_at'])
+        $collection->columns(['count' => new Expression('count(1)')])
                 ->where(['store_id' => $retailer->offsetGet('store_id')]);
-        return $this->stat($collection, function($item) {
-                    return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-                });
+        return $this->stat($collection, function($collection) {
+                    return $collection[0]['count'] ?? 0;
+                }
+        );
     }
 
     public function amountAction()
     {
         $segment = new Segment('customer');
         $retailer = new Retailer;
-        $retailer->load($segment->get('customer'), 'customer_id');
+        $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $collection = new Collection;
-        $collection->columns(['base_currency', 'base_total', 'base_total_refunded', 'created_at'])
+        $collection->columns(['base_currency', 'total' => new Expression('base_total'), 'refunded' => new Expression('base_total_refunded')])
                 ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
+                ->group('base_currency')
                 ->where([
                     'sales_order_phase.code' => 'complete',
                     'store_id' => $retailer->offsetGet('store_id')
         ]);
         $currency = $this->getContainer()->get('currency');
         $code = $currency->offsetGet('code');
-        $result = $this->stat($collection, function($item) {
-            return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-        }, function($item) use ($code) {
-            return $item->offsetGet('base_currency') == $code ?
-                    $item->offsetGet('base_total') - $item->offsetGet('base_total_refunded') :
-                    $item->getBaseCurrency()->rconvert($item->offsetGet('base_total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('base_total_refunded'), false);
+        $result = $this->stat($collection, function ($collection) use ($code) {
+            $result = 0;
+            foreach ($collection as $item) {
+                $result += $item->offsetGet('base_currency') == $code ?
+                        $item->offsetGet('total') - $item->offsetGet('refunded') :
+                        $item->getBaseCurrency()->rconvert($item->offsetGet('total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('refunded'), false);
+            }
+            return $result;
         });
         $result['amount'] = $currency->format($result['amount']);
         $result['daily'] = $currency->format($result['daily']);

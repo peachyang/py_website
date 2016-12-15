@@ -89,8 +89,8 @@ class Shipment extends Grid
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
-        if (!$this->getQuery('asc') && !$this->getQuery('desc')) {
-            $collection->order('sales_order_shipment.created_at DESC');
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'sales_order_shipment.created_at';
         }
         return parent::prepareCollection($collection);
     }

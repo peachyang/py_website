@@ -14,6 +14,7 @@ class EventDispatcher extends SymfonyEventDispatcher implements Singleton
 {
 
     protected static $instance = null;
+    protected static $singleton = [];
 
     /**
      * @param string $eventName
@@ -35,7 +36,10 @@ class EventDispatcher extends SymfonyEventDispatcher implements Singleton
     {
         foreach ($listeners as $listener) {
             if (is_array($listener) && is_subclass_of($listener[0], '\\Seahinet\\Lib\\Listeners\\ListenerInterface')) {
-                $listener[0] = new $listener[0];
+                if(!isset(static::$singleton[$listener[0]])){
+                    static::$singleton[$listener[0]] = new $listener[0];
+                }
+                $listener[0] = static::$singleton[$listener[0]];
             }
             if (is_callable($listener)) {
                 call_user_func($listener, $event, $eventName, $this);

@@ -33,7 +33,7 @@ class SortBy extends Toolbar
     {
         $query = $this->getQuery();
         return $query['asc'] ?? ($query['desc'] ?? ($this->getVariable('category') ?
-                                $this->getVariable('category')['default_sortable'] : ''));
+                $this->getVariable('category')['default_sortable'] : ''));
     }
 
     public function isAscending()

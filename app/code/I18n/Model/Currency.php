@@ -20,7 +20,7 @@ class Currency extends AbstractModel
     {
         if (isset($this->storage['rate'])) {
             if (function_exists('bcmul')) {
-                $price = bcmul($price, $this->storage['rate']);
+                $price = bcmul($price, $this->storage['rate'], 4);
             } else {
                 $price *= $this->storage['rate'];
             }
@@ -32,7 +32,7 @@ class Currency extends AbstractModel
     {
         if (isset($this->storage['rate'])) {
             if (function_exists('bcdiv')) {
-                $price = bcdiv($price, $this->storage['rate'], 2);
+                $price = bcdiv($price, $this->storage['rate'], 4);
             } else {
                 $price /= $this->storage['rate'];
             }

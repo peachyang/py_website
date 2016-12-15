@@ -24,7 +24,7 @@ class Rating extends PGrid
 
     public function getDeleteAction($item)
     {
-         return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
@@ -56,10 +56,10 @@ class Rating extends PGrid
             'type' => [
                 'label' => 'Type',
                 'type' => 'select',
-                'options' =>[
+                'options' => [
                     'Product', 'Order'
-                    ]
-                ],
+                ]
+            ],
             'title' => [
                 'type' => 'text',
                 'label' => 'Title'
@@ -71,19 +71,19 @@ class Rating extends PGrid
                     1 => 'Enabled',
                     0 => 'Disabled'
                 ],
-               
             ]
         ];
     }
 
     protected function prepareCollection($collection = null)
     {
-        if (is_null($collection)) {
-            $collection = new Collection;
-            $user = (new Segment('admin'))->get('user');
-            if ($user->getStore()) {
-                $collection->where(['store_id' => $user->getStore()->getId()]);
-            }
+        $collection = new Collection;
+        $user = (new Segment('admin'))->get('user');
+        if ($user->getStore()) {
+            $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
         }
         return parent::prepareCollection($collection);
     }

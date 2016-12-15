@@ -31,7 +31,7 @@ if ($order && $order->getId()):
                     <span><?php echo $this->translate('Reviewing', [], 'customer') ?>(<?php echo $profile1->getReviewing() ?>)</span>
                 </li>
                 <li class="col-xs-3 col-sm-3 text-center">
-                    <a href="<?php echo $this->getBaseUrl('sales/refund/') ?>" class="fa fa-jpy fa-2x pad-5" aria-hidden="true"></a>
+                    <a href="<?php echo $this->getBaseUrl('sales/refund/?status=1') ?>" class="fa fa-jpy fa-2x pad-5" aria-hidden="true"></a>
                     <span><?php echo $this->translate('Refund rights') ?>(<?php echo count($refund); ?>)</span>
                 </li>
             </ul>
@@ -59,10 +59,8 @@ if ($order && $order->getId()):
                     <a href="#" class="">400(分)</a>
                     <span><?php echo $this->translate('My points') ?>(0)</span>
                 </li>
-
             </ul>
         </div>
-
     </div>
         */ ?>
 <?php endif; ?>
@@ -78,17 +76,14 @@ if ($order && $order->getId()):
 </div>
 <div class="profile-foot">
     <ul class="col-xs-12 col-sm-12">
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl() ?>"><?php echo $this->translate('Shopping'); ?></a>
         </li>
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl('retailer/account/') ?>"><?php echo $this->translate('Enter the Store Center'); ?></a>
         </li>
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out'); ?></a>
-        </li>
-        <li class="col-xs-3 col-sm-3 text-center">
-            <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Give Feedback'); ?></a>
         </li>
     </ul>
 </div>

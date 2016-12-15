@@ -3,29 +3,34 @@ $subtitle = $this->getVariable("subtitle");
 $filter = $this->getVariable("filter");
 $transactions = $this->getRetailerTransaction();
 $sales_status = $this->getAllSalesStatus();
+$profile = new Seahinet\Retailer\ViewModel\Dashboard\Profile;
+$payment = $profile->getPendingPayment();
+$processing = $profile->getProcessing();
+$refund1 = new Seahinet\Retailer\ViewModel\Refund;
+$refund = $refund1->getApplication();
+$refund->getSelect()->where->notEqualTo('status',5);
 ?>
 <div class="wishlist">
-    <h3 class="title"><?php echo $this->translate($subtitle); ?></h3>
     <div id="Has-sold" class="seller-tab">
         <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 text-center">
-            <li class="active col-xs-3 col-sm-3">
-                <a href="#all" data-toggle="tab">
+            <li class="col-xs-3 col-sm-3" <?php if (count($transactions) != 0): ?> class="active"<?php endif ?>>
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/'); ?> ">
                     <?php echo $this->translate('All'); ?>(<span><?php echo count($transactions); ?></span>)
                 </a>
             </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#delivery" data-toggle="tab">
-                    <?php echo $this->translate('Pending Payment'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <li class="col-xs-3 col-sm-3" id="delivery">
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1'); ?>">
+                    <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile->getPendingPayment(); ?></span>)
                 </a>
             </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#payment" data-toggle="tab">
-                    <?php echo $this->translate('Delivering'); ?>(<span><?php $this->getBaseUrl('sales/order/list/'); ?></span>)
+            <li class="col-xs-3 col-sm-3" id="payment">
+                <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3'); ?>">
+                    <?php echo $this->translate('Processing', [], 'customer'); ?>(<span><?php echo $profile->getProcessing(); ?></span>)
                 </a>
             </li>
-            <li class="col-xs-3 col-sm-3">
-                <a href="#refund" data-toggle="tab">
-                    <?php echo $this->translate('Reviewing'); ?>(<span><?php $this->getBaseUrl(); ?></span>)
+            <li class="col-xs-3 col-sm-3" id="refund">
+                <a href="<?php echo $this->getBaseUrl('retailer/refund/?status=1'); ?>">
+                    <?php echo $this->translate('Refund rights'); ?>(<span><?php echo count($refund); ?></span>)
                 </a>
             </li>
         </ul>
@@ -42,9 +47,9 @@ $sales_status = $this->getAllSalesStatus();
                 foreach ($transactions as $transaction) :
                     ?>
                     <div class="transaction-list">
-                        <ul class="col-xs-12 col-sm-12 title-navw name padding-5">
-                            <li class="col-xs-6 col-sm-6 text-left font-14"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
-                            <li class="col-xs-6 col-sm-6 text-right font-14"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)', [$transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
+                        <ul class="col-xs-12 col-sm-12 title-navw name padding-5 font-12">
+                            <li class="col-xs-6 col-sm-6 text-left"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
+                            <li class="col-xs-6 col-sm-6 text-right"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)', [$transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
                         </ul>
                         <?php
                         if (!empty($transaction['items'])) :
@@ -98,7 +103,7 @@ $sales_status = $this->getAllSalesStatus();
                                         </td>                          
                                         <?php if ($flag) : ?>
                                             <td rowspan="<?php echo count($items) ?>" class="col-xs-3 col-sm-3 border-left action text-center">
-                                                <span class="color-blue font-14"><?php echo $this->translate($transaction['status_name']); ?></span>
+                                                <span class="color-blue"><?php echo $this->translate($transaction['status_name']); ?></span>
                                             </td>
                                             <?php
                                             $flag = FALSE;
@@ -120,7 +125,7 @@ $sales_status = $this->getAllSalesStatus();
                                 <?php if ($order_obj->canCancel()) : ?>
                                     <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order_obj->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>'))
                                                 return false;" class="btn btn-cancel">
-                                        <?php echo $this->translate('Cancel', [], 'sales') ?>
+                                       <?php echo $this->translate('Cancel', [], 'sales') ?>
                                     </a>
                                 <?php endif; ?>
                                 <?php if ($order_obj->canHold()) : ?>
@@ -148,9 +153,7 @@ $sales_status = $this->getAllSalesStatus();
                                         <?php echo $this->translate('Refund', [], 'sales') ?>
                                     </a>
                                 <?php endif; ?>
-                                <a target="_blank" href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
-                                    <?php echo $this->translate('Print', [], 'sales') ?>
-                                </a>
+                                <a class="btn" style="background:#eee"></a>
                             </li>
                         </ul>
                     </div>

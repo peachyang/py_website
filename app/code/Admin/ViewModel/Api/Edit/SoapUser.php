@@ -4,34 +4,40 @@ namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 
-class SoapUser extends PEdit 
+class SoapUser extends PEdit
 {
-    public function getSaveUrl() {
-  
+
+    public function getSaveUrl()
+    {
+
         return $this->getAdminUrl('api_soap_user/save/');
-              
     }
-    public function getDeleteUrl() {
-        
+
+    public function getDeleteUrl()
+    {
+
         $model = $this->getVariable('model');
-        if($model && $model->getId()) {
+        if ($model && $model->getId()) {
             return $this->getAdminUrl('api_soap_user/delete/');
         }
         return FALSE;
     }
-    public function getTitle() 
+
+    public function getTitle()
     {
         return $this->getQuery('id') ? 'Edit SOAP User' : 'Add New SOAP User';
     }
-    public function prepareElements($columns = []) {
+
+    public function prepareElements($columns = [])
+    {
         $columns = [
-          'id' => [
-              'type' => 'hidden'
-          ],
-          'csrf' => [
-             'type' => 'csrf'
-          ],
-           'name' => [
+            'id' => [
+                'type' => 'hidden'
+            ],
+            'csrf' => [
+                'type' => 'csrf'
+            ],
+            'name' => [
                 'type' => 'text',
                 'label' => 'Name',
                 'required' => 'required'
@@ -40,7 +46,7 @@ class SoapUser extends PEdit
                 'type' => 'select',
                 'label' => 'Role',
                 'options' => '1'
-                //'required' => 'required'
+            //'required' => 'required'
             ],
             'key' => [
                 'type' => 'text',
@@ -87,4 +93,5 @@ class SoapUser extends PEdit
         ];
         return parent::prepareElements($columns);
     }
+
 }

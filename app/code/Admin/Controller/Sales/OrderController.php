@@ -2,7 +2,6 @@
 
 namespace Seahinet\Admin\Controller\Sales;
 
-use DateTime;
 use Exception;
 use Seahinet\Customer\Model\Address;
 use Seahinet\Lib\Controller\AuthActionController;
@@ -12,6 +11,7 @@ use Seahinet\Sales\Model\Collection\Order\Status;
 use Seahinet\Sales\Model\Order as Model;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
+use Zend\Db\Sql\Expression;
 
 class OrderController extends AuthActionController
 {
@@ -21,22 +21,24 @@ class OrderController extends AuthActionController
     public function chartAction()
     {
         $collection = new Collection;
-        $collection->columns(['created_at']);
+        $collection->columns(['count' => new Expression('count(1)')]);
         $segment = new Segment('admin');
         if ($id = $segment->get('user')->offsetGet('store_id')) {
             $collection->where(['store_id' => $id]);
         }
-        return $this->stat($collection, function($item) {
-                    return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-                });
+        return $this->stat($collection, function($collection) {
+                    return $collection[0]['count'] ?? 0;
+                }
+        );
     }
 
     public function amountAction()
     {
         $collection = new Collection;
-        $collection->columns(['base_currency', 'base_total', 'base_total_refunded', 'created_at'])
+        $collection->columns(['base_currency', 'total' => new Expression('sum(base_total)'), 'refunded' => new Expression('sum(base_total_refunded)')])
                 ->join('sales_order_status', 'sales_order.status_id=sales_order_status.id', [], 'left')
                 ->join('sales_order_phase', 'sales_order_status.phase_id=sales_order_phase.id', [], 'left')
+                ->group('base_currency')
                 ->where(['sales_order_phase.code' => 'complete']);
         $segment = new Segment('admin');
         if ($id = $segment->get('user')->offsetGet('store_id')) {
@@ -44,13 +46,18 @@ class OrderController extends AuthActionController
         }
         $currency = $this->getContainer()->get('currency');
         $code = $currency->offsetGet('code');
-        $result = $this->stat($collection, function($item) {
-            return new DateTime(date(DateTime::RFC3339, strtotime($item['created_at'])));
-        }, function($item) use ($code) {
+        $getCount = function ($item) use ($code) {
             return $item->offsetGet('base_currency') == $code ?
-                    $item->offsetGet('base_total') - $item->offsetGet('base_total_refunded') :
-                    $item->getBaseCurrency()->rconvert($item->offsetGet('base_total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('base_total_refunded'), false);
-        });
+                    $item->offsetGet('total') - $item->offsetGet('refunded') :
+                    $item->getBaseCurrency()->rconvert($item->offsetGet('total'), false) - $item->getBaseCurrency()->rconvert($item->offsetGet('refunded'), false);
+        };
+        $result = $this->stat($collection, function ($collection) use ($getCount) {
+            $result = 0;
+            foreach ($collection as $item) {
+                $result += $getCount($item);
+            }
+            return $result;
+        }, $getCount, 'created_at');
         $result['amount'] = $currency->format($result['amount']);
         $result['daily'] = $currency->format($result['daily']);
         $result['monthly'] = $currency->format($result['monthly']);

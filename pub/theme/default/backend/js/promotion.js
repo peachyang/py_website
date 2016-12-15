@@ -109,7 +109,9 @@
         };
         $('.tree[data-json]').each(function () {
             var json = $(this).data('json');
-            generateTree.call($(this).find('.children'), json['0'][0].id, json);
+            if (json.length) {
+                generateTree.call($(this).find('.children'), json['0'][0].id, json);
+            }
             $(this).removeAttr('data-json');
         });
     });

@@ -4,18 +4,18 @@ $current = $this->getCurrent();
 if (count($coupons)):
     ?>
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <?php echo $this->translate('Coupon') ?>
+        <span class="label" title="<?php echo $this->translate('Coupon') ?>"><?php echo $this->translate('Coupon') ?></span>
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
-            <input type="radio" name="coupon[<?php echo $this->getVariable('store') ?>]"<?php if (!$current): ?> checked="checked"<?php endif ?> hidden="hidden" id="coupon-0" value="" />
-            <label for="coupon-0"><?php echo $this->translate('Do not use coupons.') ?></label>
+            <input type="radio" name="coupon[<?php echo $this->getVariable('store') ?>]"<?php if (!$current): ?> checked="checked"<?php endif ?> hidden="hidden" id="coupon-<?php echo $this->getVariable('store') ?>-0" value="" />
+            <label for="coupon-<?php echo $this->getVariable('store') ?>-0"><?php echo $this->translate('Do not use coupons.') ?></label>
         </li>
         <?php foreach ($coupons as $coupon): ?>
             <li>
-                <input type="radio" name="coupon[<?php echo $this->getVariable('store') ?>]"<?php if ($current === $coupon['code']): ?> checked="checked"<?php endif ?> hidden="hidden" data-store="<?php echo $this->getVariable('store') ?>" id="coupon-<?php echo $this->getVariable('store') ?>" value="<?php echo $coupon['code'] ?>" />
-                <label for="coupon-<?php echo $this->getVariable('store') ?>"><?php echo $this->translate($coupon['title']) ?></label>
+                <input type="radio" name="coupon[<?php echo $this->getVariable('store') ?>]"<?php if ($current === $coupon['code']): ?> checked="checked"<?php endif ?> hidden="hidden" data-store="<?php echo $this->getVariable('store') ?>" id="coupon-<?php echo $this->getVariable('store') ?>-<?php echo $coupon['code'] ?>" value="<?php echo $coupon['code'] ?>" />
+                <label for="coupon-<?php echo $this->getVariable('store') ?>-<?php echo $coupon['code'] ?>"><?php echo $this->translate($coupon['title']) ?></label>
             </li>
         <?php endforeach ?>
     </ul>

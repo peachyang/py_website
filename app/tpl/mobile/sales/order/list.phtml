@@ -7,23 +7,23 @@ $reviewing = $profile1->getReviewing();
 ?>
 <div id="Has-sold" class="seller-tab">
     <ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
-        <li class="active col-xs-3 col-sm-3">
-            <a href="#all" data-toggle="tab">
+        <li class="col-xs-3 col-sm-3" <?php if (count($this->getQuery()) === 1): ?> class="active"<?php endif ?>>
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/') ?>">
                 <?php echo $this->translate('All'); ?>(<span><?php echo count($orders); ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1') ?>" data-toggle="tab">
+        <li class="col-xs-3 col-sm-3" <?php if (count($profile1->getPendingPayment()) != 0) : ?> class="active"<?php endif; ?>>
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1') ?>">
                 <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile1->getPendingPayment() ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2') ?>" data-toggle="tab">
+        <li class="col-xs-3 col-sm-3" id="payment">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2') ?>">
                 <?php echo $this->translate('Delivering'); ?>(<span><?php echo $profile1->getShipping() ?></span>)
             </a>
         </li>
-        <li class="col-xs-3 col-sm-3">
-            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3') ?>" data-toggle="tab">
+        <li class="col-xs-3 col-sm-3" id="refund">
+            <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3') ?>">
                 <?php echo $this->translate('Reviewing'); ?>(<span><?php echo $profile1->getReviewing() ?></span>)
             </a>
         </li>
@@ -43,8 +43,8 @@ $reviewing = $profile1->getReviewing();
                     ?>  
                     <div class="menu-ctn">
                         <ul  class="col-xs-12 col-sm-12 title-nav name  padding-5">
-                            <li class="col-xs-5 col-sm-5 text-left font-14"><?php echo $order->getStore()->offsetGet('name') ?></li>
-                            <li class="col-xs-7 col-sm-7 text-right font-14">
+                            <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()->offsetGet('name') ?></li>
+                            <li class="col-xs-7 col-sm-7 text-right">
                                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
                                 <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
                             </li>	
@@ -59,7 +59,7 @@ $reviewing = $profile1->getReviewing();
                                 ?>
                                 <tr>
                                     <td class="col-xs-2 col-sm-2">
-                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" />
+                                        <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="50" height="50" alt="<?php echo $product->offsetGet('name') ?>" /></a>
                                     </td>
                                     <td class="col-xs-6 col-sm-6 text-left" title="<?php echo $product->offsetGet('name') ?>">
                                         <h4 class="font-12"><?php echo $product->offsetGet('name') ?></h4>
@@ -116,13 +116,6 @@ $reviewing = $profile1->getReviewing();
                         </ul>
                     </div>
                 <?php endforeach; ?>
-
-                <div class="page">
-                    <p>
-                        <?php echo $this->getChild('pager')->setCollection($orders) ?>
-                    </p>
-
-                </div>
             </div>
             <div class="tab-pane fade " id="delivery">
                 2

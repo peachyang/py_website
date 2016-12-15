@@ -33,7 +33,7 @@ class Rule extends Grid
 
     public function getEnableAction($item)
     {
-        return $item['status'] ? false : ('<a href="' . $this->getEnableUrl() . '?id='. $item['id'] .
+        return $item['status'] ? false : ('<a href="' . $this->getEnableUrl() . '?id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Enable') .
                 '"><span class="fa fa-fw fa-play" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Enable') . '</span></a>');
@@ -89,7 +89,7 @@ class Rule extends Grid
                 'label' => 'Name',
                 'class' => 'text-left'
             ],
-            'use_coupon' =>[
+            'use_coupon' => [
                 'label' => 'Use Coupon',
                 'type' => 'select',
                 'options' => [
@@ -127,6 +127,9 @@ class Rule extends Grid
         $collection = new Collection;
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
         }
         return parent::prepareCollection($collection);
     }

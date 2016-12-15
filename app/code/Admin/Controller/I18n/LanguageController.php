@@ -34,7 +34,7 @@ class LanguageController extends AuthActionController
         $response = $this->doSave('\\Seahinet\\Lib\\Model\\Language', ':ADMIN/i18n_language/list/', ['code', 'merchant_id'], function($model, $data) {
             if (!isset($data['name']) || $data['name'] === '') {
                 $code = (new Locale)->getSourceArray($data['code']);
-                $model->setData('name', $code? : '');
+                $model->setData('name', $code ?: '');
             }
         });
         if (!$this->getRequest()->getPost('id') && $this->responseData['error'] === 0) {

@@ -22,6 +22,13 @@ class Refund extends Account
         $collection = new Rma;
         $collection->where(['customer_id' => $this->getCustomer()->getId()])
                 ->order('created_at DESC');
+        if ($this->getQuery('status')) {
+            $collection->getSelect()->where->notEqualTo('sales_rma.status', 5);
+        }
+        if ($this->getQuery('increment_id')) {
+            $collection->join('sales_order', 'sales_order.id=sales_rma.order_id', [], 'left')
+                    ->where(['sales_order.increment_id' => $this->getQuery('increment_id')]);
+        }
         return $collection;
     }
 
@@ -64,7 +71,7 @@ class Refund extends Account
     public function getStatus($service, $key)
     {
         $status = (new Status)->getSourceArray($key == -1 ? $key : $service);
-        return $status[$key] ?? '' ;
+        return $status[$key] ?? '';
     }
 
 }

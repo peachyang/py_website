@@ -106,7 +106,7 @@ final class Config extends ArrayObject implements Singleton
                 $config = $this->loadLayout();
             } else {
                 $finder = new Finder;
-                $finder->files()->in(BP . 'app')->notPath(BP . 'app/layout')->name($type . '.yml');
+                $finder->files()->in(BP . 'app')->exclude('layout')->name($type . '.yml');
                 if ($this->bannedYml) {
                     $finder->notName($this->bannedYml);
                 }
@@ -146,6 +146,7 @@ final class Config extends ArrayObject implements Singleton
         $result = $tableGateway->select()->toArray();
         $config = [];
         foreach ($result as $item) {
+            $value = [];
             if (!is_null($item['store_id'])) {
                 $value['s' . $item['store_id']] = $item['value'];
             } else {

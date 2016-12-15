@@ -28,6 +28,7 @@ class Input implements SourceInterface
                 'radio' => 'Radio',
                 'checkbox' => 'CheckBox',
                 'multiselect' => 'Multi-Select',
+                'bool' => 'Yes/No'
             ],
             'Date/Time' => [
                 'date' => 'Date',

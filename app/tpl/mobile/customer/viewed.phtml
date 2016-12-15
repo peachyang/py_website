@@ -27,7 +27,7 @@ $products = $this->getProducts();
                 ?>
                 <li class="item col-xs-6 col-sm-3">
                     <a href="<?php echo $product->getUrl() ?>" title="<?php echo $item['name'] ?>" class="product-image">
-                        <?php if (strpos($thumbnail, 'http') !== false): ?>
+                        <?php if (strpos($thumbnail, '//') !== false): ?>
                             <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" />
                         <?php elseif ($thumbnail): ?>
                             <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php
@@ -60,6 +60,6 @@ $products = $this->getProducts();
     </dl>
     <?php
 else :
-    echo '<p>' . $this->translate('you have no browsing history!') . '<p>';
+    echo '<p class="text-center">' . $this->translate('you have no browsing history!') . '<p>';
 endif;
 ?>

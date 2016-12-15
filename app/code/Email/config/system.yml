@@ -7,11 +7,21 @@ email:
             scope: merchant
             priority: 0
             children:
+                enable:
+                    label: Enable
+                    required: required
+                    type: select
+                    priority: 0
+                    default: 0
+                    scope: merchant
+                    options:
+                        - No
+                        - Yes
                 service:
                     label: Service
                     required: required
                     type: select
-                    priority: 0
+                    priority: 1
                     scope: merchant
                     options:
                         Swift_SmtpTransport: SMTP

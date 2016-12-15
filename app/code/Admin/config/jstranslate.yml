@@ -1,4 +1,10 @@
 ---
+admin_dashboard:
+    - Print chart
+    - Download PNG image
+    - Download JPEG image
+    - Download PDF document
+    - Download SVG vector image
 admin_user_list:
     - Are you sure to delete this record?
     - Are you sure to delete these records?

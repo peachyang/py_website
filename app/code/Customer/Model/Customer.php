@@ -18,7 +18,7 @@ class Customer extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'open_id', 'confirm_token', 'confirm_token_created_at', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'confirm_token', 'confirm_token_created_at', 'status']);
     }
 
     public function __clone()
@@ -40,6 +40,7 @@ class Customer extends Entity
         parent::afterSave();
         if (isset($this->storage['group_id'])) {
             $tableGateway = $this->getTableGateway('customer_in_group');
+            $tableGateway->delete(['customer_id' => $this->getId()]);
             $groups = is_string($this->storage['group_id']) ? explode(',', $this->storage['group_id']) : (array) $this->storage['group_id'];
             foreach ($groups as $id) {
                 $tableGateway->insert(['group_id' => $id, 'customer_id' => $this->getId()]);

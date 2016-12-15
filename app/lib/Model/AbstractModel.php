@@ -4,6 +4,7 @@ namespace Seahinet\Lib\Model;
 
 use Exception;
 use Seahinet\Lib\Stdlib\ArrayObject;
+use Traversable;
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 
 /**
@@ -25,9 +26,9 @@ abstract class AbstractModel extends ArrayObject
     protected $eventDispatcher = null;
     protected $tableName = '';
 
-    public function __construct($input = array())
+    public function __construct($input = [])
     {
-        $this->storage = $input;
+        $this->setData($input);
         $this->construct();
     }
 
@@ -107,8 +108,17 @@ abstract class AbstractModel extends ArrayObject
      */
     public function offsetSet($key, $value)
     {
-        $this->updatedColumns[] = $key;
+        $this->updatedColumns[$key] = 1;
         parent::offsetSet($key, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($key)
+    {
+        unset($this->updatedColumns[$key]);
+        parent::offsetUnset($key);
     }
 
     /**
@@ -120,7 +130,7 @@ abstract class AbstractModel extends ArrayObject
      */
     public function setData($key, $value = null)
     {
-        if (is_array($key)) {
+        if (is_array($key) || $key instanceof Traversable) {
             foreach ($key as $k => $v) {
                 $this->offsetSet($k, $v);
             }
@@ -209,6 +219,7 @@ abstract class AbstractModel extends ArrayObject
                 if ($columns) {
                     $this->update($this->prepareColumns(), $constraint);
                 }
+                $this->isNew = false;
                 $this->afterSave();
                 $id = array_values($constraint)[0];
                 $key = array_keys($constraint)[0];
@@ -221,6 +232,7 @@ abstract class AbstractModel extends ArrayObject
                     $this->insert($this->prepareColumns());
                 }
                 $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
+                $this->isNew = true;
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());
             }
@@ -299,7 +311,7 @@ abstract class AbstractModel extends ArrayObject
         $columns = $this->getColumns();
         $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $columns) && ($this->isNew || in_array($key, $this->updatedColumns))) {
+            if (in_array($key, $columns) && ($this->isNew || isset($this->updatedColumns[$key]))) {
                 $pairs[$key] = $value === '' ? null : $value;
             }
         }
@@ -332,7 +344,8 @@ abstract class AbstractModel extends ArrayObject
      */
     protected function afterSave()
     {
-        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this]);
+        $this->getEventDispatcher()->trigger(get_class($this) . '.model.save.after', ['model' => $this, 'isNew' => $this->isNew]);
+        $this->isNew = false;
     }
 
     /**

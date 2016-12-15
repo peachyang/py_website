@@ -1,6 +1,6 @@
 (function (factory) {
     if (typeof define === "function" && define.amd) {
-        define(['jquery','app'], factory);
+        define(['jquery', 'app'], factory);
     } else if (typeof module === "object" && module.exports) {
         module.exports = factory(require('app'));
     } else {
@@ -26,18 +26,42 @@
                 $(".btn-checkout").attr('disabled', 'disabled');
             }
         };
-        var cartSelectItem = function () {
-            var p = $('#cart');
-            if (this && $(this).is('.selectall,.selectall [type=checkbox]')) {
-                var f = this.checked;
-                $(p).find('[type=checkbox]').each(function () {
-                    this.checked = f;
-                });
-            } else {
-                $(p).find('.selectall,.selectall [type=checkbox]').each(function () {
-                    this.checked = $(p).find('[type=checkbox]').not(':checked,.selectall,.selectall [type=checkbox]').length ? false : true;
-                });
+        var recursiveSelect = function (flag) {
+            $(this).find('[type=checkbox]').prop('checked', flag)
+            var next = $(this).next();
+            if ($(next).is('.product-list')) {
+                recursiveSelect.call(next, flag);
             }
+        };
+        var recursiveCheck = function () {
+            var flag = $(this).find('[type=checkbox]').prop('checked');
+            if (flag) {
+                var next = $(this).next();
+                if ($(next).is('.product-list')) {
+                    flag = flag && recursiveCheck.call(next, flag);
+                }
+            }
+            return flag;
+        };
+        $('#cart').on('check.seahinet', function () {
+            $(this).find('.store [type=checkbox]').each(function () {
+                this.checked = recursiveCheck.call($(this).parents('.store').first().next('.product-list'));
+            });
+            $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
+                this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
+            });
+        });
+        var cartSelectItem = function () {
+            if (this) {
+                if ($(this).is('.selectall,.selectall [type=checkbox]')) {
+                    if ($(this).is('.store [type=checkbox]')) {
+                        recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
+                    } else {
+                        $('#cart [type=checkbox]').prop('checked', this.checked);
+                    }
+                }
+            }
+            $('#cart').trigger('check.seahinet');
             collateTotals();
         };
         cartSelectItem();

@@ -42,14 +42,14 @@ class Page extends PEdit
                 'type' => 'csrf'
             ],
             'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId()
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store',
-                'empty_string' => '(NULL)'
-                    ]),
+        'type' => 'hidden',
+        'value' => $user->getStore()->getId()
+            ] : [
+        'type' => 'select',
+        'options' => (new Store)->getSourceArray(),
+        'label' => 'Store',
+        'empty_string' => '(NULL)'
+            ]),
             'title' => [
                 'type' => 'text',
                 'label' => 'Title',

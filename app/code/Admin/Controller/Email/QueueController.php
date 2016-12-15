@@ -28,7 +28,7 @@ class QueueController extends AuthActionController
                     } else {
                         $collection = new Subscriber;
                         $collection->where(['status' => 1]);
-                        $emails = $collection->load()->toArray();
+                        $emails = $collection->load(true, true)->toArray();
                     }
                     $config = $this->getContainer()->get('config');
                     $from = $config['email/newsletter/sender'];
@@ -37,7 +37,7 @@ class QueueController extends AuthActionController
                         $model->setData([
                             'template_id' => $data['template_id'],
                             'from' => $from,
-                            'to' => $email,
+                            'to' => is_scalar($email) ? $email : $email['email'],
                             'scheduled_at' => date('Y-m-d h:i:s', strtotime($data['datetime']))
                         ])->save();
                     }

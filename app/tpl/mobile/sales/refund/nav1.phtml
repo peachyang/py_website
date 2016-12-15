@@ -1,0 +1,22 @@
+<ul id="myTab" class="nav nav-tabs col-xs-12 col-sm-12 font-12 text-center">
+    <li class="active col-xs-3 col-sm-3">
+        <a href="<?php echo $this->getBaseUrl('sales/order/list/'); ?>">
+            <?php echo $this->translate('All'); ?>(<span><?php echo count($applications); ?></span>)
+        </a>
+    </li>
+    <li class="col-xs-3 col-sm-3">
+        <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=1'); ?>">
+            <?php echo $this->translate('Pending Payment'); ?>(<span><?php echo $profile->getPendingPayment(); ?></span>)
+        </a>
+    </li>
+    <li class="col-xs-3 col-sm-3">
+        <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=2'); ?>">
+            <?php echo $this->translate('Delivering', [], 'customer'); ?>(<span><?php echo $profile->getShipping(); ?></span>)
+        </a>
+    </li>
+    <li class="col-xs-3 col-sm-3">
+        <a href="<?php echo $this->getBaseUrl('sales/order/list/?status=3'); ?>">
+            <?php echo $this->translate('Reviewing', [], 'customer'); ?>(<span><?php echo $profile->getReviewing(); ?></span>)
+        </a>
+    </li>
+</ul>

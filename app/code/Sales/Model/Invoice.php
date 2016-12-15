@@ -83,6 +83,12 @@ class Invoice extends AbstractModel
         return null;
     }
 
+    public function getOrder()
+    {
+        return isset($this->storage['order_id']) ?
+                (new Order)->load($this->storage['order_id']) : null;
+    }
+
     public function collateTotals()
     {
         $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];

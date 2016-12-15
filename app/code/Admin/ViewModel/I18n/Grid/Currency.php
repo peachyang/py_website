@@ -59,8 +59,7 @@ class Currency extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        return parent::prepareCollection($collection);
+        return parent::prepareCollection(new Collection);
     }
 
 }

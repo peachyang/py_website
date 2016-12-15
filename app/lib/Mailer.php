@@ -75,4 +75,12 @@ class Mailer extends Swift_Mailer
         parent::__construct($transport);
     }
 
+    /**
+     * {@inhertDoc}
+     */
+    public function send(\Swift_Mime_Message $message, &$failedRecipients = null)
+    {
+        return 1?true:parent::send($message, $failedRecipients);
+    }
+    
 }

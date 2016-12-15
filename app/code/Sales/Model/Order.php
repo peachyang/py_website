@@ -23,7 +23,6 @@ class Order extends AbstractModel
 {
 
     protected $items = null;
-    protected $phase = null;
     protected $additional = null;
 
     protected function construct()
@@ -131,6 +130,9 @@ class Order extends AbstractModel
             $this->storage['tax'] +
             $this->storage['discount']
         ]);
+        if ($this->storage['base_total'] < 0 || $this->storage['total'] < 0) {
+            throw new \Exception('An error detected.');
+        }
         $this->save();
         return $this;
     }
@@ -213,10 +215,10 @@ class Order extends AbstractModel
 
     public function getPhase()
     {
-        if (is_null($this->phase)) {
-            $this->phase = $this->getStatus()->getPhase();
+        if ($status = $this->getStatus()) {
+            return $status->getPhase();
         }
-        return $this->phase;
+        return null;
     }
 
     public function getStatusHistory()

@@ -17,9 +17,16 @@ $current = $this->getCurrentMethod();
             <?php endforeach ?>
         </ul>
         <div class="tab-content">
-            <?php foreach ($methods as $code => $model): ?>
+            <?php
+            foreach ($methods as $code => $model):
+                $description = $model->getDescription();
+                ?>
                 <div class="tab-pane fade<?php if ($code === $current || count($methods) === 1): ?> active in<?php endif ?>" id="payment-description-<?php echo $code ?>">
-                    <?php echo $this->translate($model->getDescription()) ?>
+                    <?php
+                    echo is_scalar($description) ?
+                            $this->translate($description) :
+                            (is_callable([$description, '__toString']) ? $description->__toString() : '')
+                    ?>
                 </div>
             <?php endforeach ?>
         </div>

@@ -51,7 +51,7 @@ class Profile extends AbstractViewModel
                 ->where([
                     'sales_order_phase.code' => 'holded',
                     'store_id' => $this->getStore()->getId()
-                ]);
+        ]);
         $collection->load(true, true);
         return count($collection) ? $collection[0]['count'] : 0;
     }

@@ -71,8 +71,10 @@ class Grid extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        return parent::prepareCollection($collection);
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'created_at';
+        }
+        return parent::prepareCollection(new Collection);
     }
 
 }

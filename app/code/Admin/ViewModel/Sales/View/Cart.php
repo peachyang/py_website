@@ -2,6 +2,7 @@
 
 namespace Seahinet\Admin\ViewModel\Sales\View;
 
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Sales\Model\Cart as Model;
 use Seahinet\Sales\Model\Collection\Cart\Item as Collection;

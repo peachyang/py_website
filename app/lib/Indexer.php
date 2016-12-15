@@ -126,14 +126,15 @@ class Indexer implements Stdlib\Singleton
      * @param string $entityType
      * @param int $languageId
      * @param array $constraint
+     * @param array $options
      * @return array
      */
-    public function select($entityType, $languageId, $constraint = [])
+    public function select($entityType, $languageId, $constraint = [], $options = [])
     {
-        $key = md5($entityType . $languageId . serialize($constraint));
+        $key = md5($entityType . $languageId . serialize($constraint), serialize($options));
         $result = $this->getCacheInstance()->fetch($key, 'INDEX_');
         if (!is_array($result) && empty($result)) {
-            $result = $this->getHandler($entityType)->select($languageId, $constraint);
+            $result = $this->getHandler($entityType)->select($languageId, $constraint, $options);
             $this->getCacheInstance()->save($key, $result, 'INDEX_');
         }
         return $result;

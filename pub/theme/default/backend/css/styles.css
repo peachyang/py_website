@@ -14,7 +14,7 @@ menu.context a{display:block;font-size:12px;line-height:2;padding:0 1em 0 0.5em;
 menu.context a:hover{background:#3980cb;color:#fff;text-decoration:none}
 menu.context .fa{margin-right:4px}
 address{font-style:normal}
-input[type=number]{appearance:none;-moz-appearance:textfield}
+input[type=number]{-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 button,html input[type="button"],input[type="reset"],input[type="submit"],label[for]{cursor:pointer}
 .cookies .global-notice .no-cookie{display:none}
@@ -124,7 +124,7 @@ button,html input[type="button"],input[type="reset"],input[type="submit"],label[
 .alert-warning a{color:#66512c}
 .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
 .alert-danger a{color:#843534}
-.pager li{display:inline}
+.pager li{display:inline;font-size:12px}
 .clearfix{*zoom:1}
 .clearfix:after{content:" ";display:block;clear:both;width:0;height:0;padding:0;margin:0;overflow:hidden;border:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
@@ -204,7 +204,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav>.item>a>.title:before{content:" ";margin:0 4px 0 14px;height:0;width:0;display:inline-block;border:4px solid transparent;border-left-color:#868686;vertical-align:1px}
 .admin .nav-container .nav>.item.open>a>.title:before{border:4px solid transparent;border-top-color:#868686;vertical-align:-1px;margin:0 6px 0 12px}
 .admin .nav-container .nav>.item.open>a,.admin .nav-container .nav>.item:hover>a,.admin .nav-container .nav>.item:focus>a{background:#333;text-decoration:none}
-.admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#333;min-width:146px}
+.admin .nav-container .nav .dropdown{position:static}
+.admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#333;min-width:146px;height:100%;padding-top:54px}
 .admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d;white-space:nowrap;padding-right:10px}
 .admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";transition:margin-right ease .5s;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
 .admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px}
@@ -213,7 +214,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container.active .nav>.item{border:none}
 .admin .nav-container.active .nav>.item>a>.fa{display:none}
 .admin .nav-container.active .nav>.item>a>.title{display:block}
-.admin .nav-container.active .nav>.item.dropdown>.dropdown-menu{position:static;width:100%;background:none}
+.admin .nav-container.active .nav>.item.dropdown>.dropdown-menu{position:static;width:100%;background:none;height:auto;padding-top:0}
 .admin .nav-container.active .nav .dropdown-menu>.item a{border:none;line-height:24px;font-size:12px;padding:0 25px;white-space:normal}
 .admin .nav-container.active .nav .dropdown-menu>.item a:before{display:none}
 .admin .main-container{display:block;width:100%;float:right;height:100%;padding-top:45px;padding-left:51px;transition:padding .6s}
@@ -300,9 +301,9 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .dashboard{padding:30px 0 30px 30px}
 .admin .dashboard .table{border:1px solid #ccc}
 .admin .dashboard .table .caption{border-bottom:1px solid #ccc;text-indent:30px}
-.admin .dashboard .table .row{display:table;display:flex;padding:20px 0;width:100%}
+.admin .dashboard .table .row{display:table;display:-ms-flexbox;display:flex;padding:20px 0;width:100%}
 .admin .dashboard .table .cell .detail>li{display:table-row}
-.admin .dashboard .table .cell{display:table-cell;flex:1}
+.admin .dashboard .table .cell{display:table-cell;-ms-flex:1;flex:1}
 .admin .dashboard .table .cell+.cell{border-left:1px solid #ccc}
 .admin .dashboard .table .cell .title{text-align:center;font-size:12px;line-height:24px}
 .admin .dashboard .table .cell .title .data{font-size:24px}
@@ -346,7 +347,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .refund-list .store>th{padding:40px 10px 5px}
 .admin .refund-list .list{border:1px solid #e1e3ea;padding:15px}
 .admin .refund-list .list>td{padding:15px}
-.admin .refund-list .amount{color:#007dc6}
+.admin .refund-list .amount{color:#007dc6;font-weight:bold;font-size: 14px}
 .admin .refund-list .detail span{display:block;white-space:nowrap}
 .admin .refund-list .action a{display:block}
 .admin .refund-list>td{padding:15px}
@@ -363,7 +364,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .refund-detail .nav>li>a{padding:4px 15px;background:none;}
 .admin .refund-detail .nav-tabs>li.active>a,.admin .refund-detail .nav-tabs>li.active>a:focus,.admin .refund-detail .nav-tabs>li.active>a:hover{border:1px solid #ddd;border-bottom-color:transparent;color:#007dc6;background:#FFF}
 .admin .refund-detail .tab-content .tab-pane{display:none}
-.admin .refund-detail .tab-content .tab-pane.active{display:block}
+.admin .refund-detail .tab-content .tab-pane.active{display:block;font-size: 12px;line-height: 22px}
 .admin .refund-detail .images li{text-indent:0;border:1px solid #f5f6f9;border-radius:0;width:50px;height:50px;text-align:center;margin-right:10px;position:relative}
 .admin .refund-detail .images .thumbnail{max-width:48px;max-height:48px;cursor:pointer}
 .admin .refund-detail .flow,.admin .refund-detail .log{border:1px solid #e1e3ea;padding:40px 0}
@@ -376,3 +377,15 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
 .admin .images .preview img{max-width:48px;max-height:48px;vertical-align:top}
 .admin .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
+.admin .edit .tab-pane.active .btn{background:#02A0E9;margin-bottom: 10px;border-radius: 4px;color: #fff}
+.admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set{font-size: 14px}
+.admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set,.admin .edit .tab-pane.active .content {line-height: 26px}
+.admin .edit .tab-pane.active .content{font-size:12px;margin-bottom: 10px}
+.admin.admin-customer-edit .statement{max-width:100%;width:600px;height:400px;overflow:auto}
+.template-tip{border:1px dashed red;position:relative}
+.template-tip::before{content:attr(data-template);color:#fff;background:red;position:absolute;left:0;top:0}
+.template-tip::after{content:attr(data-viewmodel);color:#fff;background:red;position:absolute;right:0;bottom:0}
+.template-tip:hover::before{z-index:9999}
+.template-tip:hover::after{z-index:9999}
+.admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}
+.admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}

@@ -11,10 +11,10 @@ $stat = $this->getStat();
                 ?>
                 <div class="row">
                 <?php endif; ?>
-                <div class="cell col-xs-4 col-sm-4 text-center" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">
-                        
-                        <?php echo $this->translate($item['title']) ?><br />
-                        &#40;<span class="data amount">-</span>&#41; 
+                <div class="cell col-xs-4 col-sm-4 text-center" data-url="<?php echo $this->getBaseUrl('retailer/' . $item['data']) ?>">                     
+                    <span class="data amount">&#40;-&#41;</span><br />     
+                    <?php echo $this->translate($item['title']) ?>
+
                 </div>
                 <?php
                 if (++$col % 4 === 0):
@@ -31,26 +31,16 @@ $stat = $this->getStat();
 </div>
 <div class="myorder-cont">	
     <div class="myorder">
-        <div class="panel-heading" onclick="i_btn($(this))">
-            <h3 class="panel-title">
-                <span class="fa fa-calculator" aria-hidden="true">
-                </span>
-                <?php echo $this->translate('Transaction Management') ?>
-                <a href="javascript:void(0)" class="fa fa-chevron-down text-right" aria-hidden="true"></a>
-            </h3>
-        </div>
         <div class="Management-menu">
-
-            <div class="panel-heading panel-menu" >
+            <div class="panel-heading panel-menu">
                 <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/') ?>">
                     <h3 class="panel-title">
                         <span>
                             <?php
-                            echo $this->translate('Has sold the baby')
+                            echo $this->translate('Sold Products')
                             ?>
                         </span>
-                        <i class="fa fa-chevron-right pull-right" aria-hidden="true">
-                        </i>
+                        <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                     </h3>
                 </a>	
             </div>

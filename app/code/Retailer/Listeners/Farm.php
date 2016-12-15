@@ -37,7 +37,7 @@ class Farm implements ListenerInterface
         $retailer->load($customer->getId(), 'customer_id');
         $cart = Cart::instance();
         foreach ($cart->getItems() as $item) {
-            if ($retailer->offsetGet('store_id') == $item->offsetGet('store_id')) {
+            if ($retailer['store_id'] == $item['store_id']) {
                 $cart->removeItem($item);
             }
         }

@@ -27,7 +27,8 @@ class Coupon extends Template
             if ((empty($rule->offsetGet('store_id')) || in_array($storeId, (array) $rule->offsetGet('store_id'))) &&
                     (empty($rule->offsetGet('from_date')) || $time >= strtotime($rule->offsetGet('from_date'))) &&
                     (empty($rule->offsetGet('to_date')) || $time <= strtotime($rule->offsetGet('to_date'))) &&
-                    $rule->getCondition()->match(Cart::instance(), $storeId)) {
+                    (empty($condition = $rule->getCondition()) ||
+                    $condition->match(Cart::instance(), $storeId))) {
                 foreach ($rule->getCoupon() as $coupon) {
                     if ($rule->matchCoupon($coupon['code'], Cart::instance())) {
                         $result[] = [

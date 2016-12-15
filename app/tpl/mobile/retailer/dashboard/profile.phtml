@@ -8,7 +8,7 @@ $rankings = new Seahinet\Retailer\ViewModel\Dashboard\Ranking;
 $ranking = $rankings->getItems();
 ?>
 <div class="profile clearfix">
-    <div class="pull-right col-xs-12 col-md-6">
+    <div class="pull-right col-xs-12 col-md-6 text-center">
         <div class="ratings">
             <?php
             $sum = 0;
@@ -41,13 +41,13 @@ $ranking = $rankings->getItems();
             </p>
             <div class="row">
                 <div class="cell col-xs-4 col-sm-4">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1') ?>"><?php echo $this->translate('Pending Payment') ?><br /><span class="count">(<?php echo $this->getPendingPayment() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=1') ?>"><span class="count">(<?php echo $this->getPendingPayment() ?>)</span><br /><?php echo $this->translate('Pending Payment') ?></a>
                 </div>
                 <div class="cell col-xs-4 col-sm-4">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3') ?>"><?php echo $this->translate('Processing', [], 'customer') ?><br /><span class="count">(<?php echo $this->getProcessing() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=3') ?>"><span class="count">(<?php echo $this->getProcessing() ?>)</span><br /><?php echo $this->translate('Processing', [], 'customer') ?></a>
                 </div>
                 <div class="cell col-xs-4 col-sm-4">
-                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=7') ?>"><?php echo $this->translate('On Hold', [], 'customer') ?><br /><span class="count">(<?php echo $this->getHolding() ?>)</span></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/transaction/product/?order_status=7') ?>"><span class="count">(<?php echo $this->getHolding() ?>)</span><br /><?php echo $this->translate('On Hold', [], 'customer') ?></a>
                 </div>
             </div>
         </div>
@@ -55,17 +55,14 @@ $ranking = $rankings->getItems();
 </div>			
 <div class="profile-foot">
     <ul class="col-xs-12 col-sm-12">
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl('') ?>"><?php echo $this->translate('Shopping'); ?></a>
         </li>
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl('customer/account/') ?>"><?php echo $this->translate('Personal Center'); ?></a>
         </li>
-        <li class="col-xs-3 col-sm-3 text-center">
+        <li class="col-xs-4 text-center">
             <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Log out'); ?></a>
-        </li>
-        <li class="col-xs-3 col-sm-3 text-center">
-            <a href="<?php echo $this->getBaseUrl('customer/account/logout/') ?>"><?php echo $this->translate('Give Feedback'); ?></a>
         </li>
     </ul>
 </div>

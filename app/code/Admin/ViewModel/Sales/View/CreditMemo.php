@@ -3,13 +3,11 @@
 namespace Seahinet\Admin\ViewModel\Sales\View;
 
 use Seahinet\Lib\ViewModel\Template;
-use Seahinet\Sales\Model\Creditmemo as Model;
+use Seahinet\Sales\Model\CreditMemo as Model;
 use Seahinet\Customer\Model\Customer;
 use Seahinet\Sales\Model\Order;
-use TCPDFBarcode;
-use Pelago\Emogrifier;
 
-class Creditmemo extends Template
+class CreditMemo extends Template
 {
 
     protected $creditmemo = null;

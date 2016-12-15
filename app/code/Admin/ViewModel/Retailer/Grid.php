@@ -55,7 +55,7 @@ class Grid extends PGrid
     protected function prepareCollection($collection = null)
     {
         $collection = new Collection;
-        $collection->order('status ASC, customer_id DESC');
+        $collection->order('status ASC, created_at DESC');
         return parent::prepareCollection($collection);
     }
 

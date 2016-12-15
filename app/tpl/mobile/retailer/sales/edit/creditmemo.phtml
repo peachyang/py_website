@@ -107,7 +107,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h4 class="panel-title font-14"><?php echo $this->translate('Billing Address', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">
-                <?php echo nl2br($order->offsetGet('billing_address')) ?>
+                <?php echo $order->offsetGet('billing_address') ?>
             </div>
         </div>
         <div class="panel">
@@ -115,7 +115,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h4 class="panel-title font-14"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">
-                <?php echo nl2br($order->offsetGet('shipping_address')) ?>
+                <?php echo $order->offsetGet('shipping_address') ?>
             </div>
         </div>
         <div class="panel">

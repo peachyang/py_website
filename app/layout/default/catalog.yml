@@ -54,6 +54,9 @@ catalog_product:
             head:
                 action:
                     -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
                         method: addScript
                         params: frontend/js/bttrlazyloading.js
                     -
@@ -100,6 +103,10 @@ catalog_product:
                             upsells:
                                 type: Seahinet\Catalog\ViewModel\Product\Upsells
                                 template: catalog/product/link
+            extra:
+                children:
+                    log:
+                        type: Seahinet\Log\ViewModel\Visitor
 catalog_review:
     update: frontend
     root:
@@ -154,9 +161,9 @@ admin_catalog_category_list:
                             -
                                 method: addCrumb
                                 params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
-                            -
-                                method: addAdditional
-                                params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
+#                            -
+#                                method: addAdditional
+#                                params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
                     grid:
                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Category
                        template: admin/catalog/category/tree

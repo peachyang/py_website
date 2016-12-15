@@ -9,6 +9,7 @@ class Regular implements ListenerInterface
 {
 
     protected $model;
+    protected $discount = 0;
     protected $items = [];
 
     public function calc($event)
@@ -34,6 +35,7 @@ class Regular implements ListenerInterface
         $rules = new Rule;
         $rules->where(['status' => 1])
                 ->order('sort_order');
+        $this->discount = -$this->model->offsetGet('base_discount');
         foreach ($this->items as $storeId => $i) {
             $block = false;
             foreach ($rules as $rule) {
@@ -41,8 +43,11 @@ class Regular implements ListenerInterface
                         (empty($rule->offsetGet('from_date')) || $time >= strtotime($rule->offsetGet('from_date'))) &&
                         (empty($rule->offsetGet('to_date')) || $time <= strtotime($rule->offsetGet('to_date'))) &&
                         $this->matchRule($rule, $storeId)) {
-                    $result += $this->handleRule($rule, $storeId, $block);
+                    $discount = $this->handleRule($rule, $storeId, $block);
+                    $result += $discount;
+                    $this->discount += $discount;
                     if ($block) {
+                        $event->stopPropagation();
                         break;
                     }
                 }
@@ -50,17 +55,16 @@ class Regular implements ListenerInterface
         }
         if ($result) {
             $this->model->setData([
-                'base_discount' => $result,
-                'discount' => $this->model->getCurrency()->convert($result, false),
-                'discount_detail' => json_encode(['Promotion' => $result] + (json_decode($this->model['discount_detail'], true)? : []))
-            ]);
+                'base_discount' => (float) $this->model->offsetGet('base_discount') - $result,
+                'discount_detail' => json_encode(['Promotion' => - $result] + (json_decode($this->model['discount_detail'], true) ?: []))
+            ])->setData('discount', $this->model->getCurrency()->convert($this->model->offsetGet('base_discount')));
         }
     }
 
     protected function matchRule($rule, $storeId)
     {
         if (!$rule['use_coupon'] || $rule->matchCoupon($this->model->getCoupon($storeId), $this->model)) {
-            return $rule->getCondition()->match($this->model, $storeId);
+            return $rule->getCondition() ? $rule->getCondition()->match($this->model, $storeId) : true;
         }
         return false;
     }
@@ -90,7 +94,7 @@ class Regular implements ListenerInterface
                         'shipping' => 0
                     ]);
                 }
-                $discount = max(-$item['base_price'], $rule['is_fixed'] ? $rule['price'] : $item['base_price'] * $rule['price']);
+                $discount = min($item['base_price'], $rule['is_fixed'] ? $rule['price'] : $item['base_price'] * $rule['price'] / 100);
                 if ($rule['qty']) {
                     $discount *= min($rule['qty'], $item['qty']);
                 } else {
@@ -112,7 +116,7 @@ class Regular implements ListenerInterface
                 ]);
             }
             $total = $this->model['base_subtotal'] + ($rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
-            return max(-$total, $rule['is_fixed'] ? $rule['price'] : $total * $rule['price']);
+            return min($total - $this->discount, $rule['is_fixed'] ? $rule['price'] : $total * $rule['price'] / 100);
         }
     }
 

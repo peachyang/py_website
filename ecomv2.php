@@ -1,13 +1,13 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 CREATE TABLE IF NOT EXISTS `core_merchant`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Merchant ID',
-    `code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Merchant code',
-    `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Merchant name',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(20) NOT NULL DEFAULT '',
+    `name` VARCHAR(255) NOT NULL DEFAULT '',
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `is_default` BOOLEAN NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_CORE_MERCHANT_CODE UNIQUE (`code`)
 );
@@ -15,14 +15,14 @@ CREATE TABLE IF NOT EXISTS `core_merchant`(
 INSERT INTO `core_merchant`(`code`,`name`,`is_default`) VALUES ('default','Default',1);
 
 CREATE TABLE IF NOT EXISTS `core_store`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Store ID',
-    `merchant_id` INTEGER UNSIGNED NOT NULL COMMENT 'Merchant ID',
-    `code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT 'Store code',
-    `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Store name',
-    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `merchant_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(20) NOT NULL DEFAULT '',
+    `name` VARCHAR(30) NOT NULL DEFAULT '',
+    `is_default` BOOLEAN NOT NULL DEFAULT 0,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_STORE_MERCHANT_ID (`merchant_id`),
     CONSTRAINT UNQ_CORE_STORE_CODE UNIQUE (`code`),
@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS `core_store`(
 INSERT INTO `core_store`(`merchant_id`,`code`,`name`,`is_default`) VALUES (1,'default','Default',1);
 
 CREATE TABLE IF NOT EXISTS `core_language`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Language ID',
-    `merchant_id` INTEGER UNSIGNED NOT NULL COMMENT 'Merchant ID',
-    `code` VARCHAR(10) NOT NULL DEFAULT '' COMMENT 'RFC 5646 language code',
-    `name` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'Language name',
-    `is_default` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is default',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `merchant_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(10) NOT NULL DEFAULT '',
+    `name` VARCHAR(30) NOT NULL DEFAULT '',
+    `is_default` BOOLEAN NOT NULL DEFAULT 0,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_LANGUAGE_MERCHANT_ID (`merchant_id`),
     CONSTRAINT UNQ_CORE_LANGUAGE_MERCHANT_ID_CODE UNIQUE (`merchant_id`,`code`),
@@ -49,18 +49,18 @@ CREATE TABLE IF NOT EXISTS `core_language`(
 INSERT INTO `core_language`(`merchant_id`,`code`,`name`,`is_default`) VALUES (1,'en-US','English',1);
 
 CREATE TABLE IF NOT EXISTS `cms_page`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Page ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `uri_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URI Key',
-    `title` VARCHAR(255) DEFAULT '' COMMENT 'Page title',
-    `keywords` VARCHAR(255) DEFAULT '' COMMENT 'Meta keywords',
-    `description` VARCHAR(255) DEFAULT '' COMMENT 'Meta description',
-    `thumbnail` VARCHAR(255) DEFAULT '' COMMENT 'Thumbnail',
-    `image` VARCHAR(255) DEFAULT '' COMMENT 'Image',
-    `content` BLOB COMMENT 'Page content',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `uri_key` VARCHAR(255) NOT NULL DEFAULT '',
+    `title` VARCHAR(255) DEFAULT '',
+    `keywords` VARCHAR(255) DEFAULT '',
+    `description` VARCHAR(255) DEFAULT '',
+    `thumbnail` VARCHAR(255) DEFAULT '',
+    `image` VARCHAR(255) DEFAULT '',
+    `content` BLOB,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CMS_PAGE_URI_KEY (`uri_key`),
     INDEX IDX_CMS_PAGE_STORE_ID (`store_id`),
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `cms_page`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_page_language`(
-    `page_id` INTEGER UNSIGNED NOT NULL COMMENT 'Page ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
+    `page_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`page_id`,`language_id`),
     INDEX IDX_CMS_PAGE_LANGUAGE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_CMS_PAGE_LANGUAGE_PAGE_ID_CMS_PAGE_ID FOREIGN KEY (`page_id`) REFERENCES `cms_page`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -77,13 +77,13 @@ CREATE TABLE IF NOT EXISTS `cms_page_language`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_category`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `uri_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URI Key',
-    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent Category ID',
-    `show_navigation` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Is navigation shown',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `uri_key` VARCHAR(255) NOT NULL DEFAULT '',
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `show_navigation` BOOLEAN NOT NULL DEFAULT 0,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CMS_CATEGORY_PARENT_ID (`parent_id`),
     CONSTRAINT UNQ_CMS_CATEGORY_URI_KEY UNIQUE (`uri_key`),
@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS `cms_category`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_category_language`(
-    `category_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Category name',
+    `category_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(255) NOT NULL DEFAULT '',
     PRIMARY KEY (`category_id`,`language_id`),
     INDEX IDX_CMS_CATEGORY_LANGUAGE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_CMS_CATEGORY_LANGUAGE_CATEGORY_ID_CMS_CATEGORY_ID FOREIGN KEY (`category_id`) REFERENCES `cms_category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `cms_category_language`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_category_page`(
-    `category_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category ID',
-    `page_id` INTEGER UNSIGNED NOT NULL COMMENT 'Page ID',
+    `category_id` INTEGER UNSIGNED NOT NULL,
+    `page_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`category_id`,`page_id`),
     INDEX IDX_CMS_CATEGORY_PAGE_PAGE_ID (`page_id`),
     CONSTRAINT FK_CMS_CATEGORY_PAGE_CATEGORY_ID_CMS_CATEGORY_ID FOREIGN KEY (`category_id`) REFERENCES `cms_category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -110,13 +110,13 @@ CREATE TABLE IF NOT EXISTS `cms_category_page`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_block`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Block ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `code` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Identify code',
-    `content` BLOB COMMENT 'Page content',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `code` VARCHAR(255) NOT NULL DEFAULT '',
+    `content` BLOB,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CMS_BLOCK_STORE_ID (`store_id`),
     CONSTRAINT IDX_CMS_BLOCK_CODE UNIQUE (`code`),
@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS `cms_block`(
 );
 
 CREATE TABLE IF NOT EXISTS `cms_block_language`(
-    `block_id` INTEGER UNSIGNED NOT NULL COMMENT 'Block ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
+    `block_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`block_id`,`language_id`),
     INDEX IDX_CMS_BLOCK_LANGUAGE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_CMS_BLOCK_LANGUAGE_PAGE_ID_CMS_PAGE_ID FOREIGN KEY (`block_id`) REFERENCES `cms_block`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -133,12 +133,12 @@ CREATE TABLE IF NOT EXISTS `cms_block_language`(
 );
 
 CREATE TABLE IF NOT EXISTS `admin_operation` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Operation ID',
-    `name` VARCHAR(255) NOT NULL COMMENT 'Operation name',
-    `description` TEXT COMMENT 'Description',
-    `is_system` BOOLEAN DEFAULT 0 COMMENT 'Is generated by system',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `description` TEXT,
+    `is_system` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_ADMIN_ROLE_NAME UNIQUE (`name`)
 );
@@ -146,11 +146,11 @@ CREATE TABLE IF NOT EXISTS `admin_operation` (
 INSERT INTO `admin_operation`(`id`,`name`,`description`,`is_system`) VALUES(-1,'ALL','',1);
 
 CREATE TABLE IF NOT EXISTS `admin_role` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Role ID',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `name` VARCHAR(255) NOT NULL COMMENT 'Role name',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `name` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_ADMIN_ROLE_NAME UNIQUE (`name`)
 );
@@ -158,8 +158,8 @@ CREATE TABLE IF NOT EXISTS `admin_role` (
 INSERT INTO `admin_role`(`name`) VALUES ('Administrator');
 
 CREATE TABLE IF NOT EXISTS `admin_role_recursive`(
-    `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `child_id` INTEGER UNSIGNED NOT NULL COMMENT 'Child ID',
+    `role_id` INTEGER UNSIGNED NOT NULL,
+    `child_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`role_id`,`child_id`),
     INDEX IDX_ADMIN_ROLE_RECURSIVE_CHILD_ID (`child_id`),
     CONSTRAINT FK_ADMIN_ROLE_ROLE_ID_ADMIN_ROLE_ID FOREIGN KEY (`role_id`) REFERENCES `admin_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -167,10 +167,10 @@ CREATE TABLE IF NOT EXISTS `admin_role_recursive`(
 );
 
 CREATE TABLE IF NOT EXISTS `admin_permission` (
-    `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `operation_id` INTEGER NOT NULL COMMENT 'Operation ID',
-    `permission` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Permission',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    `role_id` INTEGER UNSIGNED NOT NULL,
+    `operation_id` INTEGER NOT NULL,
+    `permission` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`role_id`,`operation_id`),
     INDEX IDX_ADMIN_PERMISSION_OPERATION_ID (`operation_id`),
     CONSTRAINT FK_ADMIN_PERMISSION_ROLE_ID_ADMIN_ROLE_ID FOREIGN KEY (`role_id`) REFERENCES `admin_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -180,19 +180,19 @@ CREATE TABLE IF NOT EXISTS `admin_permission` (
 INSERT INTO `admin_permission`(`role_id`,`operation_id`) VALUES (1,-1);
 
 CREATE TABLE IF NOT EXISTS `admin_user` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Admin ID',
-    `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Is enabled',
-    `username` VARCHAR(255) NOT NULL COMMENT 'Username',
-    `password` CHAR(60) NOT NULL COMMENT 'Password',
-    `email` VARCHAR(255) NOT NULL COMMENT 'E-Mail',
-    `logdate` TIMESTAMP NULL DEFAULT NULL COMMENT 'Last login time',
-    `lognum` INTEGER UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Login number',
-    `rp_token` CHAR(32) NULL DEFAULT NULL COMMENT 'Reset password link token',
-    `rp_token_created_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Reset password link token creation date',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `role_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `username` VARCHAR(255) NOT NULL,
+    `password` CHAR(60) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `logdate` TIMESTAMP NULL DEFAULT NULL,
+    `lognum` INTEGER UNSIGNED NOT NULL DEFAULT '0',
+    `rp_token` CHAR(32) NULL DEFAULT NULL,
+    `rp_token_created_at` TIMESTAMP NULL DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_ADMIN_USER_STORE_ID (`store_id`),
     INDEX IDX_ADMIN_USER_ROLE_ID (`role_id`),
@@ -205,13 +205,13 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
 INSERT INTO `admin_user`(`role_id`,`store_id`,`status`,`username`,`password`,`email`) VALUES (1,null,1,'admin','$2y$10$5.GIrJ/AdDHso6cx6n6/MedTlhjnPRWGMOOEJT0Cf0qoB/noLnLRS','');
 
 CREATE TABLE IF NOT EXISTS `core_config` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Config ID',
-    `merchant_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Merchant ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `path` VARCHAR(255) NOT NULL COMMENT 'Config path',
-    `value` TEXT COMMENT 'Config value',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `merchant_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `path` VARCHAR(255) NOT NULL,
+    `value` MEDIUMTEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_CONFIG_STORE_ID (`store_id`),
     INDEX IDX_CORE_CONFIG_MERCHANT_ID (`merchant_id`),
@@ -224,28 +224,28 @@ CREATE TABLE IF NOT EXISTS `core_config` (
 INSERT INTO `core_config`(`merchant_id`,`store_id`,`path`,`value`) VALUES (1,null,'global/url/base_url','/'),(1,NULL,'global/url/admin_path','admin');
 
 CREATE TABLE IF NOT EXISTS `core_session` (
-    `id` CHAR(32) NOT NULL COMMENT 'Session ID',
-    `data` TEXT COMMENT 'Session data',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Session created',
+    `id` CHAR(32) NOT NULL,
+    `data` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `email_template` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Template ID',
-    `code` VARCHAR(255) NOT NULL COMMENT 'Template code',
-    `subject` VARCHAR(255) DEFAULT '' COMMENT 'Subject',
-    `content` BLOB COMMENT 'Content',
-    `css` BLOB COMMENT 'CSS',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(255) NOT NULL,
+    `subject` VARCHAR(255) DEFAULT '',
+    `content` BLOB,
+    `css` BLOB,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EMAIL_TEMPLATE_CODE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `email_template_language`(
-    `template_id` INTEGER UNSIGNED NOT NULL COMMENT 'Template ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
+    `template_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`template_id`,`language_id`),
     INDEX IDX_EMAIL_TEMPLATE_LANGUAGE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_EMAIL_TAMPLATE_LANGUAGE_TEMPLATE_ID_EMAIL_TAMPLATE_ID FOREIGN KEY (`template_id`) REFERENCES `email_template`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -253,19 +253,19 @@ CREATE TABLE IF NOT EXISTS `email_template_language`(
 );
 
 CREATE TABLE IF NOT EXISTS `message_template` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Template ID',
-    `code` VARCHAR(255) NOT NULL COMMENT 'Template code',
-    `content` BLOB COMMENT 'Content',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(255) NOT NULL,
+    `content` BLOB,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_MESSAGE_TEMPLATE_CODE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `message_template_language`(
-    `template_id` INTEGER UNSIGNED NOT NULL COMMENT 'Template ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
+    `template_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`template_id`,`language_id`),
     INDEX IDX_MESSAGE_TEMPLATE_LANGUAGE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_MESSAGE_TAMPLATE_LANGUAGE_TEMPLATE_ID_MESSAGE_TAMPLATE_ID FOREIGN KEY (`template_id`) REFERENCES `message_template`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -273,55 +273,55 @@ CREATE TABLE IF NOT EXISTS `message_template_language`(
 );
 
 CREATE TABLE IF NOT EXISTS `core_schedule`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Schedule ID',
-    `code` VARCHAR(255) NOT NULL COMMENT 'Run code',
-    `status` CHAR(1) NOT NULL DEFAULT '0' COMMENT 'Is job finished',
-    `messages` TEXT COMMENT 'Exception',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `scheduled_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Scheduled time',
-    `executed_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Executed time',
-    `finished_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Finishd time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(255) NOT NULL,
+    `status` CHAR(1) NOT NULL DEFAULT '0',
+    `messages` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `scheduled_at` TIMESTAMP NULL DEFAULT NULL,
+    `executed_at` TIMESTAMP NULL DEFAULT NULL,
+    `finished_at` TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_CORE_SCHEDULE_STATUS (`status`),
     INDEX IDX_CORE_SCHEDULE_SCHEDULED_AT (`scheduled_at`)
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_translation`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Translation ID',
-    `string` VARCHAR(255) NOT NULL COMMENT 'Translation string',
-    `translate` VARCHAR(255) NOT NULL COMMENT 'Translate',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `string` VARCHAR(255) NOT NULL,
+    `translate` VARCHAR(255) NOT NULL,
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US',
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_I18N_TRANSLATION_LOCALE_STATUS (`locale`,`status`),
     INDEX IDX_I18N_TRANSLATION_STRING_LOCALE_STATUS (`string`,`locale`,`status`)
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_country`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Country ID',
-    `iso2_code` CHAR(2) NOT NULL COMMENT 'Country iso2 code',
-    `iso3_code` CHAR(3) NOT NULL COMMENT 'Country iso3 code',
-    `default_name` VARCHAR(50) NOT NULL COMMENT 'Country name',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `iso2_code` CHAR(2) NOT NULL,
+    `iso3_code` CHAR(3) NOT NULL,
+    `default_name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_I18N_COUNTRY_ISO2_CODE UNIQUE (`iso2_code`),
     CONSTRAINT UNQ_I18N_COUNTRY_ISO3_CODE UNIQUE (`iso3_code`)
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_country_name`(
-    `country_id` INTEGER UNSIGNED NOT NULL COMMENT 'Country ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
-    `name` VARCHAR(255) NOT NULL COMMENT 'Region name',
+    `country_id` INTEGER UNSIGNED NOT NULL,
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US',
+    `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`country_id`,`locale`),
     CONSTRAINT FK_I18N_COUNTRY_NAME_COUNTRY_ID FOREIGN KEY (`country_id`) REFERENCES `i18n_country`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_region`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Region ID',
-    `parent_id` INTEGER UNSIGNED NOT NULL COMMENT 'Country ID',
-    `code` VARCHAR(10) NOT NULL COMMENT 'Region code',
-    `default_name` VARCHAR(255) NOT NULL COMMENT 'Region default name',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `parent_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(10) NOT NULL,
+    `default_name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_I18N_REGION_PARENT_ID (`parent_id`),
     CONSTRAINT UNQ_I18N_REGION_PARENT_ID_CODE UNIQUE (`parent_id`,`code`),
@@ -329,19 +329,19 @@ CREATE TABLE IF NOT EXISTS `i18n_region`(
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_region_name`(
-    `region_id` INTEGER UNSIGNED NOT NULL COMMENT 'Region ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
-    `name` VARCHAR(255) NOT NULL COMMENT 'Region name',
+    `region_id` INTEGER UNSIGNED NOT NULL,
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US',
+    `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`region_id`,`locale`),
     INDEX IDX_I18N_REGION_NAME_REGION_ID (`region_id`),
     CONSTRAINT FK_I18N_REGION_NAME_REGION_ID FOREIGN KEY (`region_id`) REFERENCES `i18n_region`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_city`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'City ID',
-    `parent_id` INTEGER UNSIGNED NOT NULL COMMENT 'Region ID',
-    `code` VARCHAR(10) NOT NULL COMMENT 'City code',
-    `default_name` VARCHAR(255) NOT NULL COMMENT 'City default name',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `parent_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(10) NOT NULL,
+    `default_name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_I18N_CITY_PARENT_ID (`parent_id`),
     CONSTRAINT UNQ_I18N_CITY_PARENT_ID_CODE UNIQUE (`parent_id`,`code`),
@@ -349,19 +349,19 @@ CREATE TABLE IF NOT EXISTS `i18n_city`(
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_city_name`(
-    `city_id` INTEGER UNSIGNED NOT NULL COMMENT 'City ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
-    `name` VARCHAR(255) NOT NULL COMMENT 'City name',
+    `city_id` INTEGER UNSIGNED NOT NULL,
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US',
+    `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`city_id`,`locale`),
     INDEX IDX_I18N_CITY_NAME_CITY_ID (`city_id`),
     CONSTRAINT FK_I18N_CITY_NAME_CITY_ID FOREIGN KEY (`city_id`) REFERENCES `i18n_city`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_county`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'County ID',
-    `parent_id` INTEGER UNSIGNED NOT NULL COMMENT 'City ID',
-    `code` VARCHAR(10) COMMENT 'County code',
-    `default_name` VARCHAR(255) NOT NULL COMMENT 'County default name',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `parent_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(10),
+    `default_name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_I18N_COUNTY_PARENT_ID (`parent_id`),
     CONSTRAINT UNQ_I18N_COUNTY_PARENT_ID_CODE UNIQUE (`parent_id`,`code`),
@@ -369,34 +369,34 @@ CREATE TABLE IF NOT EXISTS `i18n_county`(
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_county_name`(
-    `county_id` INTEGER UNSIGNED NOT NULL COMMENT 'County ID',
-    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US' COMMENT 'Locale',
-    `name` VARCHAR(255) NOT NULL COMMENT 'County name',
+    `county_id` INTEGER UNSIGNED NOT NULL,
+    `locale` VARCHAR(20) NOT NULL DEFAULT 'en-US',
+    `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`county_id`,`locale`),
     INDEX IDX_I18N_COUNTY_NAME_COUNTY_ID (`county_id`),
     CONSTRAINT FK_I18N_COUNTY_NAME_COUNTY_ID FOREIGN KEY (`county_id`) REFERENCES `i18n_county`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `i18n_currency`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Currency ID',
-    `code` CHAR(3) NOT NULL COMMENT 'ISO 4217 currency code',
-    `symbol` VARCHAR(10) NOT NULL DEFAULT '$' COMMENT 'Currency symbol',
-    `rate` DECIMAL(12,6) NOT NULL DEFAULT 1 COMMENT 'Currency rate',
-    `format` VARCHAR(30) NULL DEFAULT '%s%.2f' COMMENT 'Price format',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` CHAR(3) NOT NULL,
+    `symbol` VARCHAR(10) NOT NULL DEFAULT '$',
+    `rate` DECIMAL(12,6) NOT NULL DEFAULT 1,
+    `format` VARCHAR(30) NULL DEFAULT '%s%.2f',
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_I18N_CURRENCY_CODE UNIQUE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `newsletter_subscriber`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Subscriber ID',
-    `email` VARCHAR(255) NOT NULL COMMENT 'Subscriber email',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'Subscriber name',
-    `language_id` INTEGER UNSIGNED COMMENT 'Language ID',
-    `code` CHAR(32) NOT NULL DEFAULT '' COMMENT 'Confirm code',
-    `status` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) DEFAULT '',
+    `language_id` INTEGER UNSIGNED,
+    `code` CHAR(32) NOT NULL DEFAULT '',
+    `status` BOOLEAN NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_NEWSLETTER_SUBSCRIBER_LANGUAGE_ID (`language_id`),
     CONSTRAINT UNQ_NEWSLETTER_SUBSCRIBER_EMAIL UNIQUE (`email`),
@@ -404,26 +404,26 @@ CREATE TABLE IF NOT EXISTS `newsletter_subscriber`(
 );
 
 CREATE TABLE IF NOT EXISTS `email_queue`(
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Queue ID',
-    `template_id` INTEGER UNSIGNED COMMENT 'Template ID',
-    `from` VARCHAR(255) NOT NULL COMMENT 'Mail from',
-    `to` VARCHAR(255) NOT NULL COMMENT 'Rcpt to',
-    `status` BOOLEAN NOT NULL DEFAULT 0 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `scheduled_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Scheduled time',
-    `finished_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Finished time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `template_id` INTEGER UNSIGNED,
+    `from` VARCHAR(255) NOT NULL,
+    `to` VARCHAR(255) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `scheduled_at` TIMESTAMP NULL DEFAULT NULL,
+    `finished_at` TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_EMAIL_QUEUE_TEMPLATE_ID (`template_id`),
     CONSTRAINT FK_EMAIL_QUEUE_TEMPLATE_ID_EMAIL_TAMPLATE_ID FOREIGN KEY (`template_id`) REFERENCES `email_template`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `resource_category` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent category ID',
-    `code` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Category code',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `code` VARCHAR(45) NULL DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_RESOURCE_CATEGORY_STORE_ID (`store_id`),
     INDEX IDX_RESOURCE_CATEGORY_PARENT_ID (`parent_id`),
@@ -433,9 +433,9 @@ CREATE TABLE IF NOT EXISTS `resource_category` (
 );
 
 CREATE TABLE IF NOT EXISTS `resource_category_language` (
-    `category_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'Category name',
+    `category_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(100) NOT NULL DEFAULT '',
     PRIMARY KEY (`category_id`,`language_id`),
     INDEX IDX_RESOURCE_CATEGORY_LANGUAGE_CATEGORY_ID (`category_id`),
     INDEX IDX_RESOURCE_CATEGORY_LANGUAGE_LANGUAGE_ID (`language_id`),
@@ -444,17 +444,17 @@ CREATE TABLE IF NOT EXISTS `resource_category_language` (
 );
 
 CREATE TABLE IF NOT EXISTS `resource` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Resource ID',
-    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Store ID',
-    `category_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Category ID',
-    `real_name` VARCHAR(120) NOT NULL COMMENT 'Real files name',
-    `uploaded_name` VARCHAR(120) DEFAULT '' COMMENT 'Uploaded files name',
-    `file_type` VARCHAR(50) DEFAULT '' COMMENT 'File MIME',
-    `md5` CHAR(32) NULL DEFAULT NULL COMMENT 'Resrouce md5 hash value',
-    `size` INTEGER UNSIGNED DEFAULT 0 COMMENT 'File size',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `store_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `category_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `real_name` VARCHAR(120) NOT NULL,
+    `uploaded_name` VARCHAR(120) DEFAULT '',
+    `file_type` VARCHAR(50) DEFAULT '',
+    `md5` CHAR(32) NULL DEFAULT NULL,
+    `size` INTEGER UNSIGNED DEFAULT 0,
+    `sort_order` INTEGER DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_RESOURCE_STORE_ID (`store_id`),
     INDEX IDX_RESOURCE_CATEGORY_ID (`category_id`),
@@ -465,59 +465,59 @@ CREATE TABLE IF NOT EXISTS `resource` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_entity_type` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV entity type ID',
-    `code` VARCHAR(50) NOT NULL COMMENT 'EAV entity type code',
-    `entity_table` VARCHAR(30) DEFAULT 'eav_entity' COMMENT 'EAV entity table name',
-    `value_table_prefix` VARCHAR(20) DEFAULT 'eav_value' COMMENT 'EAV entity value table name prefix',
-    `is_form` BOOLEAN DEFAULT 0 COMMENT 'Is form entity',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(50) NOT NULL,
+    `entity_table` VARCHAR(30) DEFAULT 'eav_entity',
+    `value_table_prefix` VARCHAR(20) DEFAULT 'eav_value',
+    `is_form` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ENTITY_TYPE_IS_FORM (`is_form`),
     CONSTRAINT UNQ_EAV_ENTITY_TYPE_CODE UNIQUE (`code`)
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute_set` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV attribute set ID',
-    `type_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity type ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute set name',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(255) DEFAULT '',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ATTR_SET_TYPE_ID (`type_id`),
     CONSTRAINT FK_EAV_ATTR_SET_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute_group` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV attribute group ID',
-    `type_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity type ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute set name',
-    `is_hidden` BOOLEAN DEFAULT 0 COMMENT 'Is Hidden',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(255) DEFAULT '',
+    `is_hidden` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ATTR_GROUP_TYPE_ID (`type_id`),
     CONSTRAINT FK_EAV_ATTR_GROUP_TYPE_ID_EAV_ENTITY_TYPE_ID FOREIGN KEY (`type_id`) REFERENCES `eav_entity_type`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV attribute ID',
-    `type_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity type ID',
-    `code` VARCHAR(255) NOT NULL COMMENT 'EAV attribute code',
-    `type` VARCHAR(10) NOT NULL COMMENT 'EAV attribute type',
-    `input` VARCHAR(20) NOT NULL COMMENT 'EAV attribute form element',
-    `validation` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute form validation',
-    `is_required` BOOLEAN DEFAULT 0 COMMENT 'Is attribute required',
-    `default_value` VARCHAR(255) DEFAULT '' COMMENT 'Default value',
-    `is_unique` BOOLEAN DEFAULT 0 COMMENT 'Is attribute unique',
-    `source` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Source model',
-    `view_model` VARCHAR(255) NULL DEFAULT NULL COMMENT 'View model',
-    `searchable` BOOLEAN DEFAULT 1 COMMENT 'Is attribute use 4 searching',
-    `sortable` BOOLEAN DEFAULT 1 COMMENT 'Is attribute use 4 sorting',
-    `filterable` BOOLEAN DEFAULT 1 COMMENT 'Is attribute use 4 filter',
-    `comparable` BOOLEAN DEFAULT 0 COMMENT 'Is attribute use 4 comparison',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(255) NOT NULL,
+    `type` VARCHAR(10) NOT NULL,
+    `input` VARCHAR(20) NOT NULL,
+    `validation` VARCHAR(255) DEFAULT '',
+    `is_required` BOOLEAN DEFAULT 0,
+    `default_value` VARCHAR(255) DEFAULT '',
+    `is_unique` BOOLEAN DEFAULT 0,
+    `source` VARCHAR(255) NULL DEFAULT NULL,
+    `view_model` VARCHAR(255) NULL DEFAULT NULL,
+    `searchable` BOOLEAN DEFAULT 1,
+    `sortable` BOOLEAN DEFAULT 1,
+    `filterable` BOOLEAN DEFAULT 1,
+    `comparable` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ATTR_TYPE_ID (`type_id`),
     INDEX IDX_EAV_ATTR_SEARCHABLE (`searchable`),
@@ -530,10 +530,10 @@ CREATE TABLE IF NOT EXISTS `eav_attribute` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_entity_attribute` (
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `attribute_group_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute group ID',
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `attribute_group_id` INTEGER UNSIGNED NOT NULL,
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`attribute_id`,`attribute_set_id`,`attribute_group_id`),
     INDEX IDX_EAV_ENTITY_ATTR_ATTR_GROUP_ID (`attribute_group_id`),
     INDEX IDX_EAV_ENTITY_ATTR_ATTR_ID (`attribute_id`),
@@ -544,9 +544,9 @@ CREATE TABLE IF NOT EXISTS `eav_entity_attribute` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute_label` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `label` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute label',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `label` VARCHAR(255) DEFAULT '',
     PRIMARY KEY (`attribute_id`,`language_id`),
     INDEX IDX_EAV_ATTR_LABEL_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_EAV_ATTR_LABEL_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -554,18 +554,18 @@ CREATE TABLE IF NOT EXISTS `eav_attribute_label` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute_option` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV attribute option ID',
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ATTR_ATTR_ID (`attribute_id`),
     CONSTRAINT FK_EAV_ATTR_OPTION_ATTR_ID_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `eav_attribute_option_label` (
-    `option_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute option ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `label` VARCHAR(255) DEFAULT '' COMMENT 'EAV attribute option label',
+    `option_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `label` VARCHAR(255) DEFAULT '',
     PRIMARY KEY (`option_id`,`language_id`),
     INDEX IDX_EAV_ATTR_OPTION_LABEL_ATTR_ID (`option_id`),
     INDEX IDX_EAV_ATTR_OPTION_LABEL_LANGUAGE_ID (`language_id`),
@@ -574,14 +574,14 @@ CREATE TABLE IF NOT EXISTS `eav_attribute_option_label` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_entity` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'EAV entity ID',
-    `type_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
-    `increment_id` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Entity increment ID',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
+    `increment_id` VARCHAR(255) NULL DEFAULT NULL,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_EAV_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_EAV_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
@@ -592,11 +592,11 @@ CREATE TABLE IF NOT EXISTS `eav_entity` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_value_int` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity ID',
-    `value` INTEGER NOT NULL COMMENT 'EAV value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` INTEGER NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_EAV_VALUE_INT_LANGUAGE_ID (`language_id`),
     INDEX IDX_EAV_VALUE_INT_ENTITY_ID (`entity_id`),
@@ -608,11 +608,11 @@ CREATE TABLE IF NOT EXISTS `eav_value_int` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_value_datetime` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity ID',
-    `value` TIMESTAMP NOT NULL COMMENT 'EAV value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_EAV_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
     INDEX IDX_EAV_VALUE_DATETIME_ENTITY_ID (`entity_id`),
@@ -624,11 +624,11 @@ CREATE TABLE IF NOT EXISTS `eav_value_datetime` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_value_decimal` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity ID',
-    `value` DECIMAL(12,4) NOT NULL COMMENT 'EAV value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(12,4) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_EAV_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
     INDEX IDX_EAV_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
@@ -640,11 +640,11 @@ CREATE TABLE IF NOT EXISTS `eav_value_decimal` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_value_varchar` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity ID',
-    `value` VARCHAR(255) NOT NULL COMMENT 'EAV value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_EAV_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
     INDEX IDX_EAV_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
@@ -656,11 +656,11 @@ CREATE TABLE IF NOT EXISTS `eav_value_varchar` (
 );
 
 CREATE TABLE IF NOT EXISTS `eav_value_text` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV entity ID',
-    `value` TEXT NOT NULL COMMENT 'EAV value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` MEDIUMTEXT NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_EAV_VALUE_TEXT_LANGUAGE_ID (`language_id`),
     INDEX IDX_EAV_VALUE_TEXT_ENTITY_ID (`entity_id`),
@@ -686,17 +686,17 @@ INSERT INTO `eav_attribute_label` VALUES
 (3, 1, 'Email');
 
 CREATE TABLE IF NOT EXISTS `customer_entity` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Customer ID',
-    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 1 COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `increment_id` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Entity increment ID',
-    `confirm_token` CHAR(32) NULL DEFAULT NULL COMMENT 'Confirming link token',
-    `confirm_token_created_at` TIMESTAMP NULL DEFAULT NULL COMMENT 'Confirming link token creation date',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 1,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `increment_id` VARCHAR(255) NULL DEFAULT NULL,
+    `confirm_token` CHAR(32) NULL DEFAULT NULL,
+    `confirm_token_created_at` TIMESTAMP NULL DEFAULT NULL,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CUSTOMER_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_CUSTOMER_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
@@ -708,11 +708,11 @@ CREATE TABLE IF NOT EXISTS `customer_entity` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_value_int` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer entity ID',
-    `value` INTEGER NOT NULL COMMENT 'Customer value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` INTEGER NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CUSTOMER_VALUE_INT_LANGUAGE_ID (`language_id`),
     INDEX IDX_CUSTOMER_VALUE_INT_ENTITY_ID (`entity_id`),
@@ -724,11 +724,11 @@ CREATE TABLE IF NOT EXISTS `customer_value_int` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_value_datetime` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer entity ID',
-    `value` TIMESTAMP NOT NULL COMMENT 'Customer value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CUSTOMER_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
     INDEX IDX_CUSTOMER_VALUE_DATETIME_ENTITY_ID (`entity_id`),
@@ -740,11 +740,11 @@ CREATE TABLE IF NOT EXISTS `customer_value_datetime` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_value_decimal` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer entity ID',
-    `value` DECIMAL(12,4) NOT NULL COMMENT 'Customer value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(12,4) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CUSTOMER_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
     INDEX IDX_CUSTOMER_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
@@ -756,11 +756,11 @@ CREATE TABLE IF NOT EXISTS `customer_value_decimal` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_value_varchar` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer entity ID',
-    `value` VARCHAR(255) NOT NULL COMMENT 'Customer value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CUSTOMER_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
     INDEX IDX_CUSTOMER_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
@@ -772,11 +772,11 @@ CREATE TABLE IF NOT EXISTS `customer_value_varchar` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_value_text` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer entity ID',
-    `value` TEXT NOT NULL COMMENT 'Customer value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` MEDIUMTEXT NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CUSTOMER_VALUE_TEXT_LANGUAGE_ID (`language_id`),
     INDEX IDX_CUSTOMER_VALUE_TEXT_ENTITY_ID (`entity_id`),
@@ -786,18 +786,18 @@ CREATE TABLE IF NOT EXISTS `customer_value_text` (
 );
 
 CREATE TABLE IF NOT EXISTS `customer_group` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Customer group ID',
-    `name` VARCHAR(50) DEFAULT '' COMMENT 'Customer group name',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) DEFAULT '',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
 
 INSERT INTO `customer_group` VALUES (NULL,'Default',NULL,NULL);
 
 CREATE TABLE IF NOT EXISTS `customer_in_group` (
-    `group_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer group ID',
-    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
+    `group_id` INTEGER UNSIGNED NOT NULL,
+    `customer_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`group_id`,`customer_id`),
     INDEX IDX_CUSTOMER_IN_GROUP_CUSTOMER_ID (`customer_id`),
     CONSTRAINT FK_CUSTOMER_IN_GROUP_GROUP_ID_CUSTOMER_GROUP_ID FOREIGN KEY (`group_id`) REFERENCES `customer_group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -805,48 +805,49 @@ CREATE TABLE IF NOT EXISTS `customer_in_group` (
 ); 
 
 CREATE TABLE IF NOT EXISTS `customer_level` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Customer level ID',
-    `level` INTEGER NOT NULL DEFAULT 0 COMMENT 'Customer level',
-    `amount` DECIMAL(12,4) NOT NULL DEFAULT 0 COMMENT 'Amount',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `level` INTEGER NOT NULL DEFAULT 0,
+    `amount` DECIMAL(12,4) NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CUSTOMER_LEVEL_AMOUNT (`amount`),
     CONSTRAINT UNQ_CUSTOMER_LEVEL_LEVEL UNIQUE (`level`)
 );
 
 CREATE TABLE IF NOT EXISTS `customer_level_language` (
-    `level_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer level ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `name` VARCHAR(50) DEFAULT '' COMMENT 'Customer level name',
+    `level_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(50) DEFAULT '',
     PRIMARY KEY (`level_id`,`language_id`),
     INDEX IDX_CUSTOMER_LEVEL_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_CUSTOMER_LEVEL_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `oauth_client` (
-    `customer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Customer ID',
-    `oauth_server` VARCHAR(255) NOT NULL COMMENT 'OAuth server name',
-    `open_id` VARCHAR(255) NOT NULL COMMENT 'Open ID',
-    PRIMARY KEY (`oauth_server`,`customer_id`),
-    CONSTRAINT `UNQ_OAUTH_CLIENT_OAUTH_SERVER_OPEN_ID` UNIQUE(`oauth_server`,`open_id`)
+    `customer_id` INTEGER UNSIGNED NOT NULL,
+    `oauth_server` VARCHAR(255) NOT NULL,
+    `open_id` VARCHAR(128) CHARACTER SET ascii NOT NULL,
+    PRIMARY KEY (`customer_id`,`oauth_server`),
+    CONSTRAINT `UNQ_OAUTH_CLIENT_OAUTH_SERVER_OPEN_ID` UNIQUE(`oauth_server`,`open_id`),
+    CONSTRAINT `FK_OAUTH_CLIENT_CUSTOMER_ENTITY_CUSTOMER_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `api_rest_role` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Role ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'Role name',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) DEFAULT '',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
 
 INSERT INTO `api_rest_role` VALUES (-1,'Admin',NULL,NULL),(NULL,'Anonymous',NULL,NULL),(NULL,'Customer',NULL,NULL);
 
 CREATE TABLE IF NOT EXISTS `api_rest_attribute` (
-    `role_id` INTEGER NOT NULL COMMENT 'Role ID',
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'Attribute ID',
-    `writeable` BOOLEAN DEFAULT 0 COMMENT 'Is writeable',
-    `readable` BOOLEAN DEFAULT 0 COMMENT 'Is readable',
+    `role_id` INTEGER NOT NULL,
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `writeable` BOOLEAN DEFAULT 0,
+    `readable` BOOLEAN DEFAULT 0,
     PRIMARY KEY (`role_id`,`attribute_id`),
     INDEX IDX_API_REST_ATTR_ATTR_ID (`attribute_id`),
     CONSTRAINT FK_API_REST_ATTR_API_REST_ROLE FOREIGN KEY (`role_id`) REFERENCES `api_rest_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -854,15 +855,15 @@ CREATE TABLE IF NOT EXISTS `api_rest_attribute` (
 );
 
 CREATE TABLE IF NOT EXISTS `oauth_consumer` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Consumer ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'Consumer name',
-    `role_id` INTEGER NOT NULL COMMENT 'Role ID',
-    `key` CHAR(32) NOT NULL COMMENT 'Key code',
-    `secret` CHAR(32) NOT NULL COMMENT 'Secret code',
-    `callback_url` VARCHAR(255) NOT NULL COMMENT 'Callback Url',
-    `rejected_callback_url` VARCHAR(255) DEFAULT '' COMMENT 'Rejected callback Url',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) DEFAULT '',
+    `role_id` INTEGER NOT NULL,
+    `key` CHAR(32) NOT NULL,
+    `secret` CHAR(32) NOT NULL,
+    `callback_url` VARCHAR(255) NOT NULL,
+    `rejected_callback_url` VARCHAR(255) DEFAULT '',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT UNQ_OAUTH_CONSUMER_KEY UNIQUE (`key`),
     CONSTRAINT UNQ_OAUTH_CONSUMER_SECRET UNIQUE (`secret`),
@@ -870,13 +871,13 @@ CREATE TABLE IF NOT EXISTS `oauth_consumer` (
 );
 
 CREATE TABLE IF NOT EXISTS `oauth_token` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Token ID',
-    `consumer_id` INTEGER UNSIGNED NOT NULL COMMENT 'Consumer ID',
-    `open_id` CHAR(32) NOT NULL COMMENT 'Open ID',
-    `admin_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Admin ID',
-    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Customer ID',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Authorized',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `consumer_id` INTEGER UNSIGNED NOT NULL,
+    `open_id` CHAR(32) NOT NULL,
+    `admin_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_OAUTH_TOKEN_CONSUMER_ID (`consumer_id`),
     INDEX IDX_OAUTH_TOKEN_CUSTOMER_ID (`customer_id`),
@@ -889,28 +890,28 @@ CREATE TABLE IF NOT EXISTS `oauth_token` (
 );
 
 CREATE TABLE IF NOT EXISTS `api_soap_role` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Role ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'Role name',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) DEFAULT '',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `api_soap_permission` (
-    `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `resource` VARCHAR(255) NOT NULL COMMENT 'Resource',
-    `permission` BOOLEAN DEFAULT 1 COMMENT 'Permission',
+    `role_id` INTEGER UNSIGNED NOT NULL,
+    `resource` VARCHAR(255) NOT NULL,
+    `permission` BOOLEAN DEFAULT 1,
     PRIMARY KEY (`role_id`,`resource`)
 );
 
 CREATE TABLE IF NOT EXISTS `api_soap_user` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'User ID',
-    `role_id` INTEGER UNSIGNED NOT NULL COMMENT 'Role ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'User name',
-    `email` VARCHAR(255) DEFAULT '' COMMENT 'User email',
-    `key` CHAR(32) NOT NULL COMMENT 'Api key',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `role_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(255) DEFAULT '',
+    `email` VARCHAR(255) DEFAULT '',
+    `key` CHAR(32) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_API_SOAP_USER_ROLE_ID (`role_id`),
     CONSTRAINT UNQ_API_SOAP_USER_KEY UNIQUE (`key`),
@@ -952,15 +953,15 @@ INSERT INTO `eav_attribute_label` VALUES
 (12, 1, 'Email');
 
 CREATE TABLE IF NOT EXISTS `address_entity` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Address ID',
-    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 2 COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
-    `customer_id` INTEGER UNSIGNED NULL COMMENT 'Customer ID',
-    `is_default` BOOLEAN DEFAULT 0 COMMENT 'Is default address',
-    `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 2,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
+    `customer_id` INTEGER UNSIGNED NULL,
+    `is_default` BOOLEAN DEFAULT 0,
+    `status` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_ADDRESS_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_ADDRESS_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
@@ -972,11 +973,11 @@ CREATE TABLE IF NOT EXISTS `address_entity` (
 );
 
 CREATE TABLE IF NOT EXISTS `address_value_int` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Address entity ID',
-    `value` INTEGER NOT NULL COMMENT 'Address value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` INTEGER NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_ADDRESS_VALUE_INT_LANGUAGE_ID (`language_id`),
     INDEX IDX_ADDRESS_VALUE_INT_ENTITY_ID (`entity_id`),
@@ -988,11 +989,11 @@ CREATE TABLE IF NOT EXISTS `address_value_int` (
 );
 
 CREATE TABLE IF NOT EXISTS `address_value_datetime` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Address entity ID',
-    `value` TIMESTAMP NOT NULL COMMENT 'Address value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_ADDRESS_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
     INDEX IDX_ADDRESS_VALUE_DATETIME_ENTITY_ID (`entity_id`),
@@ -1004,11 +1005,11 @@ CREATE TABLE IF NOT EXISTS `address_value_datetime` (
 );
 
 CREATE TABLE IF NOT EXISTS `address_value_decimal` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Address entity ID',
-    `value` DECIMAL(12,4) NOT NULL COMMENT 'Address value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(12,4) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_ADDRESS_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
     INDEX IDX_ADDRESS_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
@@ -1020,11 +1021,11 @@ CREATE TABLE IF NOT EXISTS `address_value_decimal` (
 );
 
 CREATE TABLE IF NOT EXISTS `address_value_varchar` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Address entity ID',
-    `value` VARCHAR(255) NOT NULL COMMENT 'Address value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_ADDRESS_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
     INDEX IDX_ADDRESS_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
@@ -1036,11 +1037,11 @@ CREATE TABLE IF NOT EXISTS `address_value_varchar` (
 );
 
 CREATE TABLE IF NOT EXISTS `address_value_text` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Address entity ID',
-    `value` TEXT NOT NULL COMMENT 'Address value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` MEDIUMTEXT NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_ADDRESS_VALUE_TEXT_LANGUAGE_ID (`language_id`),
     INDEX IDX_ADDRESS_VALUE_TEXT_ENTITY_ID (`entity_id`),
@@ -1097,15 +1098,15 @@ INSERT INTO `eav_attribute_label` VALUES
 (25, 1, 'Default Product Listing Sort By');
 
 CREATE TABLE IF NOT EXISTS `category_entity` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Category ID',
-    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 3 COMMENT 'EAV entity type ID',
-    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Parent entity ID',
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 3,
+    `parent_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_CATEGORY_ENTITY_PARENT_ID (`parent_id`),
     INDEX IDX_CATEGORY_ENTITY_TYPE_ID (`type_id`),
@@ -1118,11 +1119,11 @@ CREATE TABLE IF NOT EXISTS `category_entity` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_value_int` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category entity ID',
-    `value` INTEGER NOT NULL COMMENT 'Category value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` INTEGER NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CATEGORY_VALUE_INT_LANGUAGE_ID (`language_id`),
     INDEX IDX_CATEGORY_VALUE_INT_ENTITY_ID (`entity_id`),
@@ -1134,11 +1135,11 @@ CREATE TABLE IF NOT EXISTS `category_value_int` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_value_datetime` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category entity ID',
-    `value` TIMESTAMP NOT NULL COMMENT 'Category value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CATEGORY_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
     INDEX IDX_CATEGORY_VALUE_DATETIME_ENTITY_ID (`entity_id`),
@@ -1150,11 +1151,11 @@ CREATE TABLE IF NOT EXISTS `category_value_datetime` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_value_decimal` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category entity ID',
-    `value` DECIMAL(12,4) NOT NULL COMMENT 'Category value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(12,4) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CATEGORY_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
     INDEX IDX_CATEGORY_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
@@ -1166,11 +1167,11 @@ CREATE TABLE IF NOT EXISTS `category_value_decimal` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_value_varchar` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category entity ID',
-    `value` VARCHAR(255) NOT NULL COMMENT 'Category value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CATEGORY_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
     INDEX IDX_CATEGORY_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
@@ -1182,11 +1183,11 @@ CREATE TABLE IF NOT EXISTS `category_value_varchar` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_value_text` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category entity ID',
-    `value` TEXT NOT NULL COMMENT 'Category value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` MEDIUMTEXT NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_CATEGORY_VALUE_TEXT_LANGUAGE_ID (`language_id`),
     INDEX IDX_CATEGORY_VALUE_TEXT_ENTITY_ID (`entity_id`),
@@ -1269,9 +1270,9 @@ INSERT INTO `eav_attribute_label` VALUES
 (45, 1, 'Additional');
 
 CREATE TABLE IF NOT EXISTS `product_type` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Product type ID',
-    `code` VARCHAR(20) NOT NULL COMMENT 'Product type code',
-    `name` VARCHAR(255) NOT NULL COMMENT 'Product type name',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(20) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_TYPE_CODE (`code`)
 );
@@ -1279,14 +1280,14 @@ CREATE TABLE IF NOT EXISTS `product_type` (
 INSERT INTO `product_type` VALUES (NULL,'simple','Simple Product'),(NULL,'virtual','Virtual Product');
 
 CREATE TABLE IF NOT EXISTS `product_entity` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Product ID',
-    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 3 COMMENT 'EAV entity type ID',
-    `attribute_set_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute set ID',
-    `product_type_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product type',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type_id` INTEGER UNSIGNED NOT NULL DEFAULT 3,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `product_type_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_ENTITY_TYPE_ID (`type_id`),
     INDEX IDX_PRODUCT_ENTITY_ATTRIBUTE_SET_ID (`attribute_set_id`),
@@ -1299,11 +1300,11 @@ CREATE TABLE IF NOT EXISTS `product_entity` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_value_int` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product entity ID',
-    `value` INTEGER NOT NULL COMMENT 'Product value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` INTEGER NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_PRODUCT_VALUE_INT_LANGUAGE_ID (`language_id`),
     INDEX IDX_PRODUCT_VALUE_INT_ENTITY_ID (`entity_id`),
@@ -1315,11 +1316,11 @@ CREATE TABLE IF NOT EXISTS `product_value_int` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_value_datetime` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product entity ID',
-    `value` TIMESTAMP NOT NULL COMMENT 'Product value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_PRODUCT_VALUE_DATETIME_LANGUAGE_ID (`language_id`),
     INDEX IDX_PRODUCT_VALUE_DATETIME_ENTITY_ID (`entity_id`),
@@ -1331,11 +1332,11 @@ CREATE TABLE IF NOT EXISTS `product_value_datetime` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_value_decimal` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product entity ID',
-    `value` DECIMAL(12,4) NOT NULL COMMENT 'Product value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(12,4) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_PRODUCT_VALUE_DECIMAL_LANGUAGE_ID (`language_id`),
     INDEX IDX_PRODUCT_VALUE_DECIMAL_ENTITY_ID (`entity_id`),
@@ -1347,11 +1348,11 @@ CREATE TABLE IF NOT EXISTS `product_value_decimal` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_value_varchar` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product entity ID',
-    `value` VARCHAR(255) NOT NULL COMMENT 'Product value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` VARCHAR(255) NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_PRODUCT_VALUE_VARCHAR_LANGUAGE_ID (`language_id`),
     INDEX IDX_PRODUCT_VALUE_VARCHAR_ENTITY_ID (`entity_id`),
@@ -1363,11 +1364,11 @@ CREATE TABLE IF NOT EXISTS `product_value_varchar` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_value_text` (
-    `attribute_id` INTEGER UNSIGNED NOT NULL COMMENT 'EAV attribute ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `entity_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product entity ID',
-    `value` TEXT NOT NULL COMMENT 'Product value',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `attribute_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `entity_id` INTEGER UNSIGNED NOT NULL,
+    `value` MEDIUMTEXT NOT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`attribute_id`,`language_id`,`entity_id`),
     INDEX IDX_PRODUCT_VALUE_TEXT_LANGUAGE_ID (`language_id`),
     INDEX IDX_PRODUCT_VALUE_TEXT_ENTITY_ID (`entity_id`),
@@ -1377,14 +1378,14 @@ CREATE TABLE IF NOT EXISTS `product_value_text` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_option` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Product option',
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `input` VARCHAR(11) NOT NULL COMMENT 'EAV attribute form element',
-    `is_required` BOOLEAN DEFAULT 0 COMMENT 'Is attribute required',
-    `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
-    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option price',
-    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `input` VARCHAR(11) NOT NULL,
+    `is_required` BOOLEAN DEFAULT 0,
+    `sku` VARCHAR(255) DEFAULT '',
+    `price` DECIMAL(12,4) DEFAULT 0,
+    `is_fixed` BOOLEAN DEFAULT 1,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_PRODUCT_ID (`product_id`),
     INDEX IDX_PRODUCT_OPTION_SORT_ORDER (`sort_order`),
@@ -1392,9 +1393,9 @@ CREATE TABLE IF NOT EXISTS `product_option` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_option_title` (
-    `option_id` INTEGER UNSIGNED NOT NULL COMMENT 'Option ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `title` VARCHAR(255) DEFAULT '' COMMENT 'Product option title',
+    `option_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `title` VARCHAR(255) DEFAULT '',
     PRIMARY KEY (`option_id`,`language_id`),
     INDEX IDX_PRODUCT_OPTION_TITLE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_PRODUCT_OPTION_TITLE_OPTION_ID_PRODUCT_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `product_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1402,12 +1403,12 @@ CREATE TABLE IF NOT EXISTS `product_option_title` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_option_value` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Product option value',
-    `option_id` INTEGER UNSIGNED NOT NULL COMMENT 'Option ID',
-    `sku` VARCHAR(255) DEFAULT '' COMMENT 'Product option sku',
-    `price` DECIMAL(12,4) DEFAULT 0 COMMENT 'Product option value price',
-    `is_fixed` BOOLEAN DEFAULT 1 COMMENT 'Is price fixed or in percent',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `option_id` INTEGER UNSIGNED NOT NULL,
+    `sku` VARCHAR(255) DEFAULT '',
+    `price` DECIMAL(12,4) DEFAULT 0,
+    `is_fixed` BOOLEAN DEFAULT 1,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_OPTION_ID (`option_id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_SORT_ORDER (`sort_order`),
@@ -1415,9 +1416,9 @@ CREATE TABLE IF NOT EXISTS `product_option_value` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_option_value_title` (
-    `value_id` INTEGER UNSIGNED NOT NULL COMMENT 'Value ID',
-    `language_id` INTEGER UNSIGNED NOT NULL COMMENT 'Language ID',
-    `title` VARCHAR(255) DEFAULT '' COMMENT 'Product option value title',
+    `value_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `title` VARCHAR(255) DEFAULT '',
     PRIMARY KEY (`value_id`,`language_id`),
     INDEX IDX_PRODUCT_OPTION_VALUE_TITLE_LANGUAGE_ID (`language_id`),
     CONSTRAINT FK_PRODUCT_OPTION_VALUE_TITLE_OPTION_ID_PRODUCT_VALUE_ID FOREIGN KEY (`value_id`) REFERENCES `product_option_value`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1425,8 +1426,8 @@ CREATE TABLE IF NOT EXISTS `product_option_value_title` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_in_store` (
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `store_id` INTEGER UNSIGNED NOT NULL COMMENT 'Store ID',
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `store_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`product_id`,`store_id`),
     INDEX IDX_PRODUCT_IN_STORE_STORE_ID (`store_id`),
     CONSTRAINT FK_PRODUCT_IN_STORE_PRODUCT_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`product_id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1434,10 +1435,10 @@ CREATE TABLE IF NOT EXISTS `product_in_store` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_link` (
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `linked_product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Linked Product ID',
-    `type` CHAR(1) NOT NULL COMMENT 'Link type',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort order',
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `linked_product_id` INTEGER UNSIGNED NOT NULL,
+    `type` CHAR(1) NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`product_id`,`linked_product_id`,`type`),
     INDEX IDX_PRODUCT_LINK_LINKED_PRODUCT_ID (`linked_product_id`),
     INDEX IDX_PRODUCT_LINK_SORT_ORDER (`sort_order`),
@@ -1446,20 +1447,20 @@ CREATE TABLE IF NOT EXISTS `product_link` (
 );
 
 CREATE TABLE IF NOT EXISTS `warehouse` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Warehouse ID',
-    `name` VARCHAR(255) DEFAULT '' COMMENT 'Warehouse Name',
-    `country` VARCHAR(3) DEFAULT '' COMMENT 'Country ISO code',
-    `region` VARCHAR(50) DEFAULT '' COMMENT 'Region name',
-    `city` VARCHAR(50) DEFAULT '' COMMENT 'City name',
-    `address` VARCHAR(255) DEFAULT '' COMMENT 'Address',
-    `contact_info` TEXT COMMENT 'Telephone number',
-    `longitude` DECIMAL(10,6) NULL DEFAULT NULL COMMENT 'Longitude',
-    `latitude` DECIMAL(10,6) NULL DEFAULT NULL COMMENT 'Latitude',
-    `open_at` TIME DEFAULT '00:00:00' COMMENT 'Opening time',
-    `close_at` TIME DEFAULT '23:59:59' COMMENT 'Closing time',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) DEFAULT '',
+    `country` VARCHAR(3) DEFAULT '',
+    `region` VARCHAR(50) DEFAULT '',
+    `city` VARCHAR(50) DEFAULT '',
+    `address` VARCHAR(255) DEFAULT '',
+    `contact_info` TEXT,
+    `longitude` DECIMAL(10,6) NULL DEFAULT NULL,
+    `latitude` DECIMAL(10,6) NULL DEFAULT NULL,
+    `open_at` TIME DEFAULT '00:00:00',
+    `close_at` TIME DEFAULT '23:59:59',
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_WAREHOUSE_OPEN_AT_CLOSE_AT (`open_at`,`close_at`),
     INDEX IDX_WAREHOUSE_STATUS (`status`)
@@ -1468,20 +1469,20 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 INSERT INTO `warehouse`(`name`) VALUES ('Default');
 
 CREATE TABLE IF NOT EXISTS `warehouse_inventory` (
-    `warehouse_id` INTEGER UNSIGNED NOT NULL COMMENT 'Warehouse ID',
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `sku` VARCHAR(255) NOT NULL COMMENT 'Product sku',
-    `barcode` VARCHAR(255) DEFAULT '' COMMENT 'Product barcode',
-    `qty` DECIMAL(12,4) NOT NULL COMMENT 'Quentity',
-    `reserve_qty` DECIMAL(12,4) DEFAULT 0 COMMENT 'Reserve quentity',
-    `min_qty` DECIMAL(12,4) DEFAULT 1 COMMENT 'Minimal quentity',
-    `max_qty` DECIMAL(12,4) DEFAULT 10000 COMMENT 'Maximal quentity',
-    `is_decimal` BOOLEAN DEFAULT 0 COMMENT 'Is quentity decimal',
-    `backorders` BOOLEAN DEFAULT 0 COMMENT 'Is backorders allowed',
-    `increment` DECIMAL(12,4) DEFAULT 1 COMMENT 'Quentity increment',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `warehouse_id` INTEGER UNSIGNED NOT NULL,
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `sku` VARCHAR(255) NOT NULL,
+    `barcode` VARCHAR(255) DEFAULT '',
+    `qty` DECIMAL(12,4) NOT NULL,
+    `reserve_qty` DECIMAL(12,4) DEFAULT 0,
+    `min_qty` DECIMAL(12,4) DEFAULT 1,
+    `max_qty` DECIMAL(12,4) DEFAULT 10000,
+    `is_decimal` BOOLEAN DEFAULT 0,
+    `backorders` BOOLEAN DEFAULT 0,
+    `increment` DECIMAL(12,4) DEFAULT 1,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`product_id`,`warehouse_id`,`sku`),
     INDEX IDX_WAREHOUSE_INVENTORY_WAREHOUSE_ID (`warehouse_id`),
     CONSTRAINT CHK_WAREHOUSE_INVENTORY_QTY CHECK (`qty` > 0),
@@ -1490,9 +1491,9 @@ CREATE TABLE IF NOT EXISTS `warehouse_inventory` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_in_category` (
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `category_id` INTEGER UNSIGNED NOT NULL COMMENT 'Category ID',
-    `sort_order` INTEGER DEFAULT 0 COMMENT 'Sort Order',
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `category_id` INTEGER UNSIGNED NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
     PRIMARY KEY (`product_id`,`category_id`),
     INDEX IDX_PRODUCT_IN_CATEGORY_CATEGORY_ID (`category_id`),
     INDEX IDX_PRODUCT_IN_CATEGORY_SORT_ORDER (`sort_order`),
@@ -1501,19 +1502,19 @@ CREATE TABLE IF NOT EXISTS `product_in_category` (
 );
 
 CREATE TABLE IF NOT EXISTS `review` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Review ID',
-    `product_id` INTEGER UNSIGNED NOT NULL COMMENT 'Product ID',
-    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Customer ID',
-    `order_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Order ID',
-    `language_id` INTEGER UNSIGNED NULL DEFAULT NULL COMMENT 'Language ID',
-    `subject` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Review subject',
-    `content` BLOB COMMENT 'Review content',
-    `reply` BLOB COMMENT 'Reply',
-    `images` TEXT COMMENT 'Images',
-    `anonymous` BOOLEAN DEFAULT 0 COMMENT 'Is anonymous',
-    `status` BOOLEAN DEFAULT 0 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `product_id` INTEGER UNSIGNED NOT NULL,
+    `customer_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `order_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `language_id` INTEGER UNSIGNED NULL DEFAULT NULL,
+    `subject` VARCHAR(255) NULL DEFAULT NULL,
+    `content` BLOB,
+    `reply` BLOB,
+    `images` TEXT,
+    `anonymous` BOOLEAN DEFAULT 0,
+    `status` BOOLEAN DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_REVIEW_PRODUCT_ID (`product_id`),
     INDEX IDX_REVIEW_CUSTOMER_ID (`customer_id`),
@@ -1527,20 +1528,20 @@ CREATE TABLE IF NOT EXISTS `review` (
 );
 
 CREATE TABLE IF NOT EXISTS `rating` (
-    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Rating ID',
-    `type` BOOLEAN NOT NULL COMMENT 'Rating for product or order',
-    `title` VARCHAR(255) NOT NULL COMMENT 'Rating name',
-    `status` BOOLEAN DEFAULT 1 COMMENT 'Status',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created time',
-    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated time',
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `type` BOOLEAN NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `status` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX IDX_RATTING_STATUS (`status`)
 );
 
 CREATE TABLE IF NOT EXISTS `review_rating` (
-    `review_id` INTEGER UNSIGNED NOT NULL COMMENT 'Review ID',
-    `rating_id` INTEGER UNSIGNED NOT NULL COMMENT 'Rating ID',
-    `value` DECIMAL(3,1) NOT NULL COMMENT 'Rating value',
+    `review_id` INTEGER UNSIGNED NOT NULL,
+    `rating_id` INTEGER UNSIGNED NOT NULL,
+    `value` DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (`review_id`, `rating_id`)
 );
 

@@ -363,6 +363,16 @@ admin_customer_edit:
                                     -
                                         method: setMainTabLabel
                                         params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - password
+                                            - Password
+                                            - 20
+                                children:
+                                    password:
+                                        type: Seahinet\Lib\ViewModel\Template
+                                        template: admin/customer/password
 admin_customer_group_list:
     update: grid
     root:

@@ -73,6 +73,9 @@ class Refund extends Grid
         foreach ($collection as $key => $refund) {
             $collection[$key]['customer_name'] = (new Customer())->load($refund['customer_id'])['username'];
         }
+        if (!$this->getQuery('desc')) {
+            $this->query['desc'] = 'sales_rma.created_at';
+        }
         return $collection;
     }
 

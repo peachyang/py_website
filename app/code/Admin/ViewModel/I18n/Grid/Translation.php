@@ -71,8 +71,10 @@ class Translation extends PGrid
 
     protected function prepareCollection($collection = null)
     {
-        $collection = new Collection;
-        return parent::prepareCollection($collection);
+        if (!$this->getQuery('asc') && !$this->getQuery('desc')) {
+            $this->query['asc'] = 'string';
+        }
+        return parent::prepareCollection(new Collection);
     }
 
 }

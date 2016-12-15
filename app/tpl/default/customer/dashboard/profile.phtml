@@ -16,6 +16,7 @@ $avatar = $customer['avatar'];
         <div class="balance">
             <span class="label"><?php echo $this->translate('My Account') ?>:</span>
             <span><?php echo $this->translate('Balance') ?><span class="count"><?php echo $this->getCurrency()->convert($customer->getBalance(), true) ?></span></span>
+            <span><?php echo $this->translate($this->getConfig()['rewardpoints/general/title']) ?><a href="<?php echo $this->getBaseUrl('rewardpoints/statement/'); ?>"><span class="count"><?php echo (int) $customer['rewardpoints'] ?></span></a></span>
         </div>
         <div class="transaction">
             <span class="label"><?php echo $this->translate('My Orders') ?>:</span>

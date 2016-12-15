@@ -192,6 +192,10 @@ class MongoDB extends AbstractHandler
     public function select($languageId, $constraint = [], array $options = [])
     {
         try {
+            if (isset($options['offset'])) {
+                $options['skip'] = $options['offset'];
+                unset($options['offset']);
+            }
             if ($constraint instanceof Select) {
                 $options += $this->getOptionFromSelect($constraint);
                 $constraint = $this->getFilterFromSelect($constraint);

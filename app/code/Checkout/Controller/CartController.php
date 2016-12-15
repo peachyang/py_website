@@ -8,6 +8,7 @@ use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Model\Wishlist;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Retailer\Exception\ClickFarming;
 use Seahinet\Sales\Model\Cart;
 
 class CartController extends ActionController
@@ -42,12 +43,15 @@ class CartController extends ActionController
                                 (is_string($data['options']) ? json_decode($data['options'], true) : (array) $data['options']) : [], $data['sku'] ?? '' );
                 $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
+            } catch (ClickFarming $e) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('Click farming check failed.'), 'level' => 'danger'];
             } catch (OutOfStock $e) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'danger'];
             } catch (Exception $e) {
                 $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('Prohibit the purchase of goods sold.'), 'level' => 'danger'];
                 $this->getContainer()->get('log')->logException($e);
             }
         }
@@ -61,14 +65,14 @@ class CartController extends ActionController
         if ($result['error'] === 0) {
             $cart = Cart::instance();
             try {
-                if (isset($data['id'])) {
-                    if (is_array($data['id'])) {
-                        $cart->removeItems($data['id']);
-                        $result['message'][] = ['message' => $this->translate('%d item(s) has been removed from your shopping cart.', [count($data['id'])]), 'level' => 'success'];
+                if (isset($data['item'])) {
+                    if (is_array($data['item'])) {
+                        $cart->removeItems($data['item']);
+                        $result['message'][] = ['message' => $this->translate('%d item(s) has been removed from your shopping cart.', [count($data['item'])]), 'level' => 'success'];
                     } else {
-                        $item = $cart->getItem($data['id']);
+                        $item = $cart->getItem($data['item']);
                         if ($item) {
-                            $cart->removeItem($data['id']);
+                            $cart->removeItem($data['item']);
                             $result['message'][] = ['message' => $this->translate('"%s" has been removed from your shopping cart.', [$item['product_name']]), 'level' => 'success'];
                         } else {
                             return $this->redirectReferer('checkout/cart/');
@@ -107,6 +111,10 @@ class CartController extends ActionController
                         $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [$cart->getItem($id)['name']]), 'level' => 'danger'];
                     }
                 }
+                $cart->setData([
+                    'additional' => '',
+                    'coupon' => ''
+                ]);
                 $cart->collateTotals();
             } catch (Exception $e) {
                 $result['error'] = 1;

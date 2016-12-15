@@ -1,0 +1,70 @@
+---
+admin_customer_edit:
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        children:
+                            tabs:
+                                action:
+                                    -
+                                        method: addTab
+                                        params:
+                                            - rewardpoints
+                                            - Reward Points
+                                            - 100
+                                children:
+                                    rewardpoints:
+                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
+                                        template: admin/rewardpoints/edit
+                                        children:
+                                            statement:
+                                                type: Seahinet\RewardPoints\ViewModel\Statement
+                                                template: rewardpoints/statement
+                                                children:
+                                                    pager:
+                                                        type: Seahinet\Lib\ViewModel\Pager
+rewardpoints_statement:
+    update: customer_account
+    root:  
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Reward Points Statement
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Reward Points Statement
+                children:
+                    main:
+                        type: Seahinet\RewardPoints\ViewModel\Statement
+                        template: rewardpoints/statement
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+checkout_order:
+    root:
+        children:
+            content:
+                children:
+                    rewardpoints:
+                        type: Seahinet\RewardPoints\ViewModel\Checkout
+                        template: rewardpoints/apply
+checkout_order_rewardpoints:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    rewardpoints:
+                        type: Seahinet\RewardPoints\ViewModel\Checkout
+                        template: rewardpoints/apply

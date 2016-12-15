@@ -12,7 +12,7 @@ class Navigation extends Template
     public function getRootCategory()
     {
         $categories = new Category;
-        $categories->where(['store_id' => Bootstrap::getStore()->getId(), 'parent_id' => null]);
+        $categories->where(['parent_id' => null]);
         if (count($categories)) {
             return $categories[0];
         }

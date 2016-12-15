@@ -9,33 +9,31 @@ $filter = $this->getVariable('filter');
         <form id="filter_form" class="form-inline" action="<?php echo $this->getCurrentUrl() ?>" method="get" novalidate = "novalidate">
             <div class="sell">
                 <ul class="commodity">
-                    <li ><span>商品名称:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name'])?$filter['name']:''; ?>" name="name"></li>
-                    <li ><span>商品编码:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku'])?$filter['sku']:''; ?>" name="sku"></li>
-                    <li ><span>价　　格:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from'])?$filter['price_from']:''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to'])?$filter['price_to']:''; ?>" name="price_to"> </li>
-                     <li ><span>商品类目:</span> 
+                    <li ><span><?php echo $this->translate('Product Name'); ?>:</span> <input class="form-control " type="text" value="<?php echo isset($filter['name']) ? $filter['name'] : ''; ?>" name="name"></li>
+                    <li ><span><?php echo $this->translate('Commodity Code'); ?>:</span> <input class="form-control " type="text" value="<?php echo isset($filter['sku']) ? $filter['sku'] : ''; ?>" name="sku"></li>
+                    <li ><span><?php echo $this->translate('Price'); ?>:</span> <input class="form-control small-text " type="text" value="<?php echo isset($filter['price_from']) ? $filter['price_from'] : ''; ?>" name="price_from"> - <input class="form-control small-text nomargin" type="text" value="<?php echo isset($filter['price_to']) ? $filter['price_to'] : ''; ?>" name="price_to"> </li>
+                    <li ><span><?php echo $this->translate('Product Category'); ?>:</span> 
                         <select class="form-control " id="catalog" name="catalog" value="">
-                            <option value="">全部</option>
+                            <option value=""><?php echo $this->translate('All'); ?></option>
                             <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
                         </select>
                     </li>
-                    <li ><span>商品分类:</span> 
+                    <li ><span><?php echo $this->translate('Commodity Classification'); ?>:</span> 
                         <select class="form-control " id="category" name="category" value="<?php echo $filter['category']; ?>">
-                            <option value="">全部</option>
+                            <option value=""><?php echo $this->translate('All'); ?></option>
                         </select>
                     </li>
-                    <li ><span>橱窗推荐:</span> 
+                    <li ><span><?php echo $this->translate('Gallery Featured'); ?>:</span> 
                         <select class="form-control " id="recomend_status" name="recomend_status">
-                            <option value="">全部</option>
-                            <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>>是</option>
-                            <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>>否</option>
+                            <option value=""><?php echo $this->translate('All'); ?></option>
+                            <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>><?php echo $this->translate('Yes'); ?></option>
+                            <option value="0" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 0) ? 'selected' : ''; ?>><?php echo $this->translate('No'); ?></option>
                         </select>
                     </li>
                     <div class="commodity_btn">
-                    <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>">重置</a> 
-                        &nbsp;&nbsp; <button class="btn">搜 索</button>
+                        <a class="btn" href="<?php echo $this->getBaseUrl('retailer/product/sales/'); ?>"><?php echo $this->translate('Reset'); ?></a> 
+                        &nbsp;&nbsp; <button class="btn"><?php echo $this->translate('Search'); ?></button>
                     </div>
-                   
-                  	
                 </ul>
             </div>
         </form>
@@ -43,24 +41,24 @@ $filter = $this->getVariable('filter');
     <div style="clear:both"></div>
 
     <div class="seperation-title">共有<span style="color:#FF0000"><?php echo count($sales_products) ?></span> 条记录</div>
-   <hr class="seperation">
+    <hr class="seperation">
     <div class="products-content">
         <table class="table table-title">
             <tr>
-                <td style="width: 45%;">商品名称</td>
-                <td style="width: 14%;">价 格</td>
-                <td style="width: 11%;"><span><a href=>库 存</a></span></td>
-                <td style="width: 15%;"><span><a href=>发布时间</a></span></td>
-                <td style="width: 15%;">操 作</td>
+                <td style="width: 45%;"><?php echo $this->translate('Product Name'); ?></td>
+                <td style="width: 14%;"><?php echo $this->translate('Price'); ?></td>
+                <td style="width: 11%;"><span><a href=><?php echo $this->translate('Inventory'); ?></a></span></td>
+                <td style="width: 15%;"><span><a href=><?php echo $this->translate('Release Time'); ?></a></span></td>
+                <td style="width: 15%;"><?php echo $this->translate('operating'); ?></td>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
                 <td colspan="6" style="text-align: left;" >
                     <input type="checkbox" class="selectall" data-cbtype="all">
-                    <span>全选</span>
+                    <span><?php echo $this->translate('All'); ?></span>
                     &nbsp;&nbsp;
-                    <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                    <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                    <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
+                    <button class="btn-options enhancement product_status" data-type=0><?php echo $this->translate('Undercarriage'); ?></button><span class="function-seperation">|</span>
+                    <button class="btn-options enhancement product_recommend" data-type=1><?php echo $this->translate('Gallery Featured'); ?></button>
+                    <button class="btn-options enhancement product_recommend" data-type=0><?php echo $this->translate('Cancel Recommendation'); ?></button>
                 </td>
             </tr>
         </table>
@@ -77,12 +75,12 @@ $filter = $this->getVariable('filter');
                         <td style="width: 45%;">
                             <div class="recommend">
                                 <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
-                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : '';  ?></span>
+                                <span><?php echo isset($sales_product['recommend']) ? ($sales_product['recommend'] == 1 ? '已推荐' : '') : ''; ?></span>
                             </div>
 
                             <div class="product-pic">
                                 <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>" target="_blank">
-                                    <?php if (strpos($thumbnail, 'http') === false) { ?>
+                                    <?php if (strpos($thumbnail, '//') === false) { ?>
                                         <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } else { ?>
                                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
@@ -100,7 +98,7 @@ $filter = $this->getVariable('filter');
                         <td style="width: 14%;">
                             <div>
                                 <p class="text-center">
-                                    <span class="money"  ><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
+                                    <span class="money"><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
                                 </p>
                             </div>
                         </td>
@@ -109,13 +107,11 @@ $filter = $this->getVariable('filter');
                                 <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
                             </div>
                         </td>
-                        <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
+                        <td class="border-right text-center" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
                             <div>
                                 <p class="text-center">
-
-                                    <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" >编辑商品</a></span>
-
+                                    <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" ><?php echo $this->translate('Edit Commodity'); ?></a></span>
                                 </p>
                             </div>
                         </td>
@@ -125,17 +121,16 @@ $filter = $this->getVariable('filter');
             <?php
         }
         ?>
-
         <div>
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">
                     <td  style="text-align: left;" >
                         <input type="checkbox" class="selectall" data-cbtype="all">
-                        <span>全选</span>
+                        <span><?php echo $this->translate('All'); ?></span>
                         &nbsp;&nbsp;
-                        <button class="btn-options enhancement product_status" data-type=0>下 架</button> <span class="function-seperation">|</span>
-                        <button class="btn-options enhancement product_recommend" data-type=1>橱窗推荐</button>
-                        <button class="btn-options enhancement product_recommend" data-type=0>取消推荐</button>
+                        <button class="btn-options enhancement product_status" data-type=0><?php echo $this->translate('Undercarriage'); ?></button> <span class="function-seperation">|</span>
+                        <button class="btn-options enhancement product_recommend" data-type=1><?php echo $this->translate('Gallery Featured'); ?></button>
+                        <button class="btn-options enhancement product_recommend" data-type=0><?php echo $this->translate('Cancel Recommendation'); ?></button>
                     </td>
                 </tr>
             </table>
@@ -163,14 +158,14 @@ $filter = $this->getVariable('filter');
                         <h1>您确定已经收到买家的货款了吗？</h1>
                         <p>订单号&nbsp;&nbsp;&nbsp;&nbsp;:<span>88888888888</span></p>
                         <dl>
-                            <dt>操作原因:</dt>
+                            <dt><?php echo $this->translate('Product Name'); ?>操作原因:</dt>
                             <dd><textarea name="remark"></textarea></dd>
                         </dl>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Product Name'); ?>取消</button>
+                    <button type="button" class="btn btn-primary"><?php echo $this->translate('Product Name'); ?>确认</button>
                 </div>
             </div>
         </div>
@@ -239,7 +234,7 @@ $filter = $this->getVariable('filter');
                     </dl>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-primary"><?php echo $this->translate('Product Name'); ?>确认</button>
                 </div>
             </div>
         </div>

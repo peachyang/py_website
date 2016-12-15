@@ -27,7 +27,7 @@ $sales_status = $this->getAllSalesStatus();
                 </div>
                 <div class=" col-md-6 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Closing Time'); ?>:</label>
-                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from"><input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
+                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from">-<input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
                 </div>
                 <div class=" col-md-3 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Rcpt To'); ?>:</label>

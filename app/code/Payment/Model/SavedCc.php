@@ -83,7 +83,7 @@ class SavedCc extends AbstractMethod
             }
             return $msg ?? true;
         }
-        return 'Invalid credit card infomation';
+        return false;
     }
 
     public function getDescription()

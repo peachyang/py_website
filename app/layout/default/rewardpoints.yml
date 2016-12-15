@@ -56,3 +56,15 @@ checkout_order:
                     rewardpoints:
                         type: Seahinet\RewardPoints\ViewModel\Checkout
                         template: rewardpoints/apply
+checkout_order_rewardpoints:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    rewardpoints:
+                        type: Seahinet\RewardPoints\ViewModel\Checkout
+                        template: rewardpoints/apply

@@ -12,6 +12,8 @@ use Zend\Db\Sql\Expression;
 class Rule extends AbstractModel
 {
 
+    protected $condition = null;
+
     protected function construct()
     {
         $this->init('promotion', 'id', [
@@ -64,17 +66,17 @@ class Rule extends AbstractModel
 
     public function getCondition()
     {
-        if ($this->getId()) {
+        if (is_null($this->condition) && $this->getId()) {
             $collection = new ConditionCollection;
             $collection->where([
                 'promotion_id' => $this->getId(),
                 'parent_id' => null
             ]);
             if (count($collection)) {
-                return $collection[0];
+                $this->condition = $collection[0];
             }
         }
-        return null;
+        return $this->condition;
     }
 
     public function getHandler()

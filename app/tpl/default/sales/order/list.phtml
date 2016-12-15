@@ -58,7 +58,7 @@ $orders = $this->getOrders();
                         </td>
                         <td><?php echo $order->getCurrency()->format($item->offsetGet('price')) ?></td>
                         <td><?php echo (float) $item->offsetGet('qty') ?></td>
-                        <td >
+                        <td>
                             <?php if ($order->canRefund()): ?>
                                 <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
                             <?php endif ?>

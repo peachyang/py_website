@@ -6,11 +6,13 @@ $inquireies = $this->getInquireies();
         <h3><?php echo $this->translate('Order Inquire'); ?></h3>
         <p><?php echo $this->translate('Enter your order number and billing address to find your order.'); ?></p>
         <form action="<?php echo $this->getBaseUrl() ?>sales/inquire/inquire/" id="orderStatusForm" method="post" novalidate="novalidate">
-            <fieldset><label class="text-left" for="orderNumber"><?php echo $this->translate('Order Number'); ?>:</label><br />
+            <fieldset>
+                <label class="text-left" for="orderNumber"><?php echo $this->translate('Order Number'); ?>:</label><br />
                 <input class="required" data-required="true" id="increment_id" name="increment_id" type="text" />
             </fieldset>
 
-            <fieldset><label class="text-left" for="zipEmail"><?php echo $this->translate('Billing Address Email'); ?>:</label><br />
+            <fieldset>
+                <label class="text-left" for="zipEmail"><?php echo $this->translate('Billing Address Email'); ?>:</label><br />
                 <input class="required" data-required="true" id="email" name="email" type="text" />
             </fieldset>
             <p class="margin-top-30"><button class="button-pink status-submit" type="submit"><?php echo $this->translate('Search') ?></button></p>
@@ -48,10 +50,10 @@ $inquireies = $this->getInquireies();
                                 ?>
                                 <tr class="thead_body">
                                     <td class="col-md-1">
-                                        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" />
+                                        <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" height="100" alt="<?php echo $product->offsetGet('name') ?>" /></a>
                                     </td>
                                     <td class="text-left" title="<?php echo $product->offsetGet('name') ?>">
-                                        <h4 class="product-name font-14"><?php echo $product->offsetGet('name') ?></h4>
+                                        <a href="<?php echo $product->getUrl(); ?>"><h4 class="product-name font-14"><?php echo $product->offsetGet('name') ?></h4></a>
                                         <?php
                                         $options = json_decode($item['options'], true);
                                         if ($item['product_id'] && count($options)):
@@ -78,19 +80,19 @@ $inquireies = $this->getInquireies();
                                     <td><?php echo $inquire->getCurrency()->format($item->offsetGet('price')) ?></td>
                                     <td><?php echo (float) $item->offsetGet('qty') ?></td>
                                     <?php if ($flag): ?>
-                                        <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue">
+                                        <td rowspan="<?php echo count($items) ?>" class="text-nowrap color-blue border-left">
                                             <?php echo $inquire->getCurrency()->format($inquire->offsetGet('total')) ?>
                                             <p><?php echo $this->translate('(Including Shipping Fee: %s)', [$inquire->getCurrency()->format($inquire->offsetGet('shipping'))]) ?></p>
                                         </td>
-                                        <td rowspan="<?php echo count($items) ?>">
+                                        <td rowspan="<?php echo count($items) ?>" class="border-left">
                                             <?php if ($inquire->canRefund()): ?>
-                                                <button type="button" class="btn btn-link" data-info="{order_id:<?php echo $inquire->getId() ?>}" data-toggle="modal" data-target="#modal-refund"><?php echo $this->translate('Refund Application') ?></button>
-                                                <br>
+                                            <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id='.$inquire['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>                      
                                             <?php endif ?>
+                                            <br>
                                             <?php if ($inquire->canReview()): ?>
                                                 <p><a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
                                             <?php endif ?>
-                                            <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
+                                            <a href="<?php echo $this->getBaseUrl('sales/inquire/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
                                         </td>
                                         <?php
                                         $flag = false;

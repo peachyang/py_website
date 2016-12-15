@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Model\Shipment;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Sales\Model\Collection\Shipment\Track;
 
 class Track extends AbstractModel
 {

@@ -10,25 +10,12 @@ class Rule extends AbstractCollection
     protected function construct()
     {
         $this->init('promotion');
-        $this->select->join('promotion_in_store', 'promotion_in_store.promotion_id=promotion.id', ['store_id'], 'left');
     }
 
-    protected function afterLoad(&$result)
+    public function withStore($inColumns = false)
     {
-        $data = [];
-        foreach ($result as $key => $item) {
-            if (isset($item['id'])) {
-                if (!isset($data[$item['id']])) {
-                    $data[$item['id']] = $item;
-                    $data[$item['id']]['store_id'] = [];
-                }
-                if (!empty($item['store_id'])) {
-                    $data[$item['id']]['store_id'][] = $item['store_id'];
-                }
-            }
-        }
-        $result = array_values($data);
-        parent::afterLoad($result);
+        $this->select->join('promotion_in_store', 'promotion_in_store.promotion_id=promotion.id', $inColumns ? [] : ['store_id'], 'left');
+        return $this;
     }
 
 }

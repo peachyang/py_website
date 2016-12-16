@@ -14,23 +14,27 @@ class Ranking extends AbstractViewModel
     {
         $items = new Item;
         $items->columns(['product_id', 'sum' => new Expression('sum(qty)')])
+                ->join('sales_order', 'sales_order.id=sales_order_item.order_id', [], 'left')
+                ->where(['sales_order.store_id' => $this->getRetailer()->offsetGet('store_id')])
                 ->group('product_id')
                 ->order('sum DESC')
                 ->limit($limit);
         $ids = [];
-        foreach ($items->load(true, true)->toArray() as $item) {
-            $ids[$item['product_id']] = $item['sum'];
-        }
-        $products = new Product;
-        $products->where(['id' => array_keys($ids)]);
-        $products = $products->toArray();
         $result = [];
-        foreach ($ids as $id => $qty) {
-            foreach ($products as $key => $product) {
-                if ($product->offsetGet('id') == $id) {
-                    $product->offsetSet('qty', $qty);
-                    $result[] = $product;
-                    unset($products[$key]);
+        if (count($ids)) {
+            foreach ($items->load(true, true)->toArray() as $item) {
+                $ids[$item['product_id']] = $item['sum'];
+            }
+            $products = new Product;
+            $products->where(['id' => array_keys($ids)]);
+            $products = $products->load(true, true)->toArray();
+            foreach ($ids as $id => $qty) {
+                foreach ($products as $key => $product) {
+                    if ($product->offsetGet('id') == $id) {
+                        $product->offsetSet('qty', $qty);
+                        $result[] = $product;
+                        unset($products[$key]);
+                    }
                 }
             }
         }

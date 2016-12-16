@@ -27,7 +27,7 @@ $sales_status = $this->getAllSalesStatus();
                 </div>
                 <div class=" col-md-6 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Closing Time'); ?>:</label>
-                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from"><input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
+                    <input class="form-control " type="text" value="<?php echo isset($filter['add_time_from']) ? $filter['add_time_from'] : ''; ?>" readonly="readonly" id="add_time_from" name="add_time_from">-<input class="form-control" readonly="readonly" type="text" value="<?php echo isset($filter['add_time_to']) ? $filter['add_time_to'] : ''; ?>" name="add_time_to" id="add_time_to">
                 </div>
                 <div class=" col-md-3 col-xs-12 col-sm-6">
                     <label><?php echo $this->translate('Rcpt To'); ?>:</label>
@@ -106,7 +106,7 @@ $sales_status = $this->getAllSalesStatus();
                             <tr>
                                 <td style="width: 35%;">
                                     <div class="product-pic">
-                                        <a  href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
+                                        <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
                                             <?php if (strpos($thumbnail, '//') === false) { ?>
                                                 <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50px/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $item['product_name']; ?>" />
                                             <?php } else { ?>
@@ -116,7 +116,7 @@ $sales_status = $this->getAllSalesStatus();
                                     </div>
                                     <div class="product-title">
                                         <p>
-                                            <a  href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
+                                            <a href="<?php echo $this->getProduct($item['product_id'])->getUrl(); ?>" title="<?php echo $item['product_name']; ?>">
                                                 <span><?php echo $item['product_name'] ?></span>
                                             </a>
                                         </p>
@@ -143,7 +143,7 @@ $sales_status = $this->getAllSalesStatus();
                                                 <a href=""><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></a><i title="查询该买家订单"></i>
                                             </p>
                                             <p class="text-center">
-                                                <a title="查询该买家订单"  href=""></a>
+                                                <a title="查询该买家订单" href=""></a>
                                             </p>
                                         </div>
                                     </td>
@@ -158,7 +158,7 @@ $sales_status = $this->getAllSalesStatus();
                                                 <span ><?php echo $this->translate($transaction['status_name']); ?></span>
                                             </p>
                                             <p class="text-center">
-                                                <a  href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?id=' . $transaction['id']) ?>"><?php echo $this->translate('Detail'); ?></a>
+                                                <a href="<?php echo $this->getBaseUrl('retailer/transaction/orderview?id=' . $transaction['id']) ?>"><?php echo $this->translate('Detail'); ?></a>
                                             </p>
                                         </div>
                                     </td>
@@ -217,8 +217,7 @@ $sales_status = $this->getAllSalesStatus();
                                                 <?php echo $this->translate('Refund', [], 'sales') ?>
                                             </a><br />
                                         <?php } ?>
-
-                                        <a  href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
+                                        <a href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order_obj->getId()) ?>"  class="btn">
                                             <?php echo $this->translate('Print', [], 'sales') ?>
                                         </a><br />
 

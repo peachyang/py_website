@@ -49,9 +49,9 @@ email:
                     label: Encryption
                     scope: merchant
                     priority: 30
-                    default: null
+                    default: ''
+                    empty_string: ''
                     options:
-                        null: ''
                         tls: TLS
                         ssl: SSL
                     attrs:
@@ -121,7 +121,7 @@ email:
                     priority: 1
                 forgot_template:
                     type: select
-                    label: Forgot Email Template
+                    label: Password Forgotten Email Template
                     scope: merchant
                     required: required
                     priority: 5

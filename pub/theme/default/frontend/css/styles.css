@@ -688,7 +688,8 @@ dl.options dd{float:left;margin-left:4px}
 .statistics-list table{width:100%}
 .statistics-list table tr{border-bottom:1px dashed #ccc}
 .statistics-list table td{padding:5px 0}
-.filter-bar .soldout{margin:20px 15px}
+.filter-bar .soldout{margin:20px 15px;overflow: hidden;line-height: 30px}
+
 .filter-bar{margin:20px 0;background:#fafafa none repeat scroll 0 0;border-bottom:1px solid #cce0e9;padding:10px 0;font-size:13px}
 .filter-bar .form-control{border-color: #eee;border-radius: 0;height:21px;line-height:21px;width:130px;padding:0 .75em}
 .filter-bar select.form-control{padding:0 .42em}

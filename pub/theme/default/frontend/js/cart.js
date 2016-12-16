@@ -43,6 +43,21 @@
             }
             return flag;
         };
+        var updateCartFlag = null;
+        var updateCart = function () {
+            var o = this;
+            if (updateCartFlag) {
+                updateCartFlag.readyState < 4 ? updateCartFlag = null : updateCartFlag.abort();
+            }
+            updateCartFlag = $.ajax(GLOBAL.BASE_URL + 'checkout/cart/update/', {
+                type: 'post',
+                data: $('#cart').parent('form').serialize(),
+                success: function (xhr) {
+                    updateCartFlag = null;
+                    responseHandler.call(o, xhr.responseText ? xhr.responseText : xhr);
+                }
+            });
+        };
         $('#cart').on('check.seahinet', function () {
             $(this).find('.store [type=checkbox]').each(function () {
                 this.checked = recursiveCheck.call($(this).parents('.store').first().next('.product-list'));
@@ -50,7 +65,7 @@
             $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
                 this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
             });
-        });
+        }).on('blur', '[name^=qty]', updateCart).on('click', '[type=checkbox]', updateCart);
         var cartSelectItem = function () {
             if (this) {
                 if ($(this).is('.selectall,.selectall [type=checkbox]')) {

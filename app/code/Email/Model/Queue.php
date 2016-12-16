@@ -9,7 +9,7 @@ class Queue extends AbstractModel
 
     protected function construct()
     {
-        $this->init('email_queue', 'id', ['id', 'from', 'to', 'template_id', 'status']);
+        $this->init('email_queue', 'id', ['id', 'from', 'to', 'template_id', 'status', 'scheduled_at', 'finished_at']);
     }
 
 }

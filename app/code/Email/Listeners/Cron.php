@@ -26,7 +26,7 @@ class Cron
                 $model = new Model([
                     'id' => $item['id'],
                     'status' => 1,
-                    'finished_at' => date('Y-m-d H:i:s', time())
+                    'finished_at' => date('Y-m-d H:i:s')
                 ]);
                 $model->save();
             }

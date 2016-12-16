@@ -85,6 +85,7 @@
 "Human-Friendly ID","人性化ID"
 "I have read and agreed to the","我已阅读并同意"
 "I discount information","我的优惠信息"
+"Invalid username or password.","无效的用户名或密码。"
 "If 0 is specified, CAPTCHA on the Login form will be always available.","如果设置为0，登录验证码将总是显示。"
 "Introduction","店铺简介"
 "Latest Order","最新订单"

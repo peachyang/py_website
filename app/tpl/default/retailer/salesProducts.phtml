@@ -18,12 +18,13 @@ $filter = $this->getVariable('filter');
                             <?php echo $this->renderCategory(0, 0, $filter['catalog']); ?>
                         </select>
                     </li>
-                    <li ><span><?php echo $this->translate('Commodity Classification'); ?>:</span> 
+                    <li><span><?php echo $this->translate('Commodity Classification'); ?>:</span> 
                         <select class="form-control " id="category" name="category" value="<?php echo $filter['category']; ?>">
                             <option value=""><?php echo $this->translate('All'); ?></option>
                         </select>
                     </li>
-                    <li ><span><?php echo $this->translate('Gallery Featured'); ?>:</span> 
+                    <li >
+                        <span><?php echo $this->translate('Gallery Featured'); ?>:</span> 
                         <select class="form-control " id="recomend_status" name="recomend_status">
                             <option value=""><?php echo $this->translate('All'); ?></option>
                             <option value="1" <?php echo (isset($filter['recommend_status']) && $filter['recommend_status'] == 1) ? 'selected' : ''; ?>><?php echo $this->translate('Yes'); ?></option>

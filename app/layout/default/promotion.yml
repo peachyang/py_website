@@ -66,6 +66,12 @@ admin_promotion_edit:
                                             - coupon
                                             - Coupon
                                             - 30
+                                    -
+                                        method: addTab
+                                        params:
+                                            - coupon_statement
+                                            - Coupon Statement
+                                            - 31
                                 children:
                                     condition:
                                         type: Seahinet\Admin\ViewModel\Promotion\Edit\Condition
@@ -129,3 +135,9 @@ admin_promotion_edit:
                                     coupon:
                                         type: Seahinet\Admin\ViewModel\Promotion\Edit\Coupon
                                         template: admin/promotion/coupon
+                                    coupon_statement:
+                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Statement
+                                        template: admin/promotion/statement
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager

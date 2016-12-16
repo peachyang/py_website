@@ -11,7 +11,7 @@ $collection = $this->getStatement();
                 <th class="text-center"><?php echo $this->translate('Date') ?></th>
             </tr>
         </thead>
-        <?php if (count($collection = $this->getStatement())): ?>
+        <?php if (count($collection)): ?>
             <tbody>
                 <?php foreach ($collection as $point): ?>
                     <tr class="text-center">

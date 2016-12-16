@@ -6,18 +6,25 @@ use Seahinet\Catalog\Model\Collection\Product\Review;
 use Seahinet\Customer\Model\Address;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Language;
-use Seahinet\Lib\Model\Store;
+use Seahinet\Lib\Model\{
+    AbstractModel,
+    Language,
+    Store
+};
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Collection\CreditMemo as CreditMemoCollection;
-use Seahinet\Sales\Model\Collection\Invoice as InvoiceCollection;
-use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
-use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
-use Seahinet\Sales\Model\Collection\Shipment as ShipmentCollection;
-use Seahinet\Sales\Model\Order\Item;
-use Seahinet\Sales\Model\Order\Status;
-use Seahinet\Sales\Model\Order\Status\History;
+use Seahinet\Sales\Model\Collection\{
+    CreditMemo as CreditMemoCollection,
+    Invoice as InvoiceCollection,
+    Order\Item as ItemCollection,
+    Order\Status\History as HistoryCollection,
+    Rma,
+    Shipment as ShipmentCollection
+};
+use Seahinet\Sales\Model\Order\{
+    Item,
+    Status,
+    Status\History
+};
 
 class Order extends AbstractModel
 {
@@ -356,6 +363,12 @@ class Order extends AbstractModel
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
         } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
+            return false;
+        }
+        $applications = new Rma;
+        $applications->where(['order_id' => $this->getId()])
+        ->where->notIn('status', [-1, 5]);
+        if (count($applications)) {
             return false;
         }
         $memos = $this->getCreditMemo();

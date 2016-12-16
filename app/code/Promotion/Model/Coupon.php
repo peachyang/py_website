@@ -3,6 +3,9 @@
 namespace Seahinet\Promotion\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Promotion\Model\Collection\Coupon\Log as Collection;
+use Seahinet\Promotion\Model\Coupon\Log as Model;
+use Zend\Db\Sql\Expression;
 
 class Coupon extends AbstractModel
 {
@@ -26,15 +29,17 @@ class Coupon extends AbstractModel
     public function apply($orderId, $customerId = null)
     {
         if ($this->getId()) {
-            $tableGateway = $this->getTableGateway('promotion_coupon_log');
-            $tableGateway->insert([
+            $model = new Model;
+            $model->setData([
                 'coupon_id' => $this->getId(),
                 'order_id' => $orderId,
                 'customer_id' => $customerId
-            ]);
+            ])->save();
             if (!empty($this->getRule()['uses_per_coupon'])) {
-                $log = $tableGateway->select(['coupon_id' => $this->getId()])->toArray();
-                if (count($log) >= $this->getRule()['uses_per_coupon']) {
+                $collection = new Collection;
+                $collection->columns(['count' => new Expression('count(1)')])
+                        ->where(['coupon_id' => $this->getId()]);
+                if (count($collection) && $collection[0]['count'] >= $this->getRule()['uses_per_coupon']) {
                     $this->setData('status', 0)->save();
                 }
             }

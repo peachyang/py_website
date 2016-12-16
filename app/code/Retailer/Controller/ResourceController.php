@@ -144,6 +144,7 @@ class ResourceController extends AuthActionController
                             'uploaded_name' => $data['name']
                         ])->save();
                     } else {
+                        $model = new Category;
                         if ($data['id']) {
                             $model->load($data['id']);
                         } else {

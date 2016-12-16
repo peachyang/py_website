@@ -63,7 +63,7 @@ $orders = $this->getOrders();
                             </td>
                             <td rowspan="<?php echo count($items) ?>" class="action ">
                                 <?php echo $this->translate($order->getStatus()->offsetGet('name'), [], 'sales') ?>
-                                <?php if ($order->canRefund()): ?>
+                                <?php if ($order->canRefund(false)): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
                                 <?php endif ?>
                                 <?php if ($order->canReview()): ?>

@@ -198,7 +198,7 @@ retailer_product:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Product
+                        params: Sold Product
                     -
                         method: addLink
                         params: frontend/css/jquery-ui.min.css

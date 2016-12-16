@@ -7,6 +7,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
     <form action="<?php echo $this->getBaseUrl('retailer/sales_creditmemo/save/') ?>" method="post" class="form-sales">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="order_id" value="<?php echo $this->getQuery('id') ?>" />
+
         <input type="hidden" name="back_url" value="<?php echo $back_url; ?>" />
         <div class="panel wide">
             <ul class="col-xs-12 col-sm-12 title-nav name padding-5 font-12">
@@ -144,6 +145,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         <div class="panel">
             <div class="panel-heading">
                 <h4 class="panel-title font-14"><?php echo $this->translate('Order Totals', [], 'sales') ?></h4>
+
             </div>
             <div class="panel-body">
                 <dl class="dl-horizontal totals">

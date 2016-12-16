@@ -49,7 +49,7 @@ $filter = $this->getVariable('filter');
                 <td style="width: 14%;"><?php echo $this->translate('Price'); ?></td>
                 <td style="width: 11%;"><span><a href=><?php echo $this->translate('Inventory'); ?></a></span></td>
                 <td style="width: 15%;"><span><a href=><?php echo $this->translate('Release Time'); ?></a></span></td>
-                <td style="width: 15%;"><?php echo $this->translate('Operator'); ?></td>
+                <td style="width: 15%;"><?php echo $this->translate('operating'); ?></td>
             </tr>
             <tr style="border-bottom: 1px solid #EDEDED;" >
                 <td colspan="6" style="text-align: left;" >
@@ -79,7 +79,7 @@ $filter = $this->getVariable('filter');
                             </div>
 
                             <div class="product-pic">
-                                <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>" target="_blank">
+                                <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>">
                                     <?php if (strpos($thumbnail, '//') === false) { ?>
                                         <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } else { ?>
@@ -89,7 +89,7 @@ $filter = $this->getVariable('filter');
                             </div>
                             <div class="product-title">
                                 <p>
-                                    <a target="_blank" href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name'] ?>">
+                                    <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name'] ?>">
                                         <span><?php echo $sales_product['name'] ?></span>
                                     </a>
                                 </p>
@@ -98,7 +98,7 @@ $filter = $this->getVariable('filter');
                         <td style="width: 14%;">
                             <div>
                                 <p class="text-center">
-                                    <span class="money"  ><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
+                                    <span class="money"><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
                                 </p>
                             </div>
                         </td>
@@ -107,7 +107,7 @@ $filter = $this->getVariable('filter');
                                 <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
                             </div>
                         </td>
-                        <td class="border-right" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
+                        <td class="border-right text-center" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
                         <td class="border-right" style="width: 15%;">
                             <div>
                                 <p class="text-center">

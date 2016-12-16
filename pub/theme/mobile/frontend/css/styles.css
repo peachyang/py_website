@@ -157,9 +157,11 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .retailer-account .myorder .panel-menu span{padding-left:20px}
 .customer-account-dashboard .order .panel-heading{border-bottom:1px solid #eff0f4;padding:10px 10px}
 .retailer-account .myorder h3 .fa{color:#007ecc;padding-right:5px}
+
 .retailer-account .border-left,.customer-account .border-left{border-left:1px solid #ddd}
 .retailer-account .sale_status,.customer-account .sale_status{overflow:hidden;background:#eee}
 .retailer-account .state{background:#007ecc;border-radius:0;color:#ffffff;padding-bottom:30px}
+
 .retailer-account .profile .info .details .cell span,.retailer-account .state .cell span{padding:5px 12px;background:#0185d7;line-height:30px}
 .customer-account-dashboard .order h3,.customer-account-dashboard .assets h3{line-height:30px;display:inline-block;width:100%;font-size:13px}
 .customer-account-dashboard .order h3 .fa{color:#007ecc;padding-right:5px}
@@ -914,7 +916,7 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .page-home-mobile .nav-main .dropdown-menu.children ul li{margin-right:1em;line-height:inherit}
 .page-home-mobile .nav-main .dropdown-menu.children ul a{font-size:inherit;line-height:inherit;color:#444}
 .menu-wrap{background-color:#6968AB;position:fixed;top:0;height:100%;width:280px;margin-left:-280px;font-size:1em;font-weight:700;overflow:auto;transition:.25s;z-index:10}
-.menu-show{margin-left:0;box-shadow:4px 2px 15px 1px #B9ADAD}
+.menu-show{margin-left:0;}
 .menu-sidebar{margin:75px 0 80px 10px;position:relative;top:70px}
 .menu-sidebar li{padding:18px 22px 0}
 .menu-sidebar li>a{color:#f3f3f3;font-size:1.18em;position:relative}
@@ -950,7 +952,7 @@ aside.slide-wrapper li.current>a{background-color:#f1f1f1}
 .wrapper .buttons .button span::after{position:absolute;font-family:"FontAwesome";right:-3px;font-size:14px;top:0;transition:top .3s,right .3s}
 .wrapper .buttons .button-primary span::after{content:"\f019"}
 .wrapper .buttons .button-secondary span::after{content:"\f178"}
-.wrapper .buttons .button-primary:hover span::after{top:4px}
+.wrapper .buttons .button-primary:hover˙ span::after{top:4px}
 .wrapper .buttons .button-secondary:hover span::after{right:-6px}
 .retailer-account .review-list .table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{border-top:none}
 .retailer-review .nav-tabs>li{margin:0 10px}

@@ -23,7 +23,7 @@ class OrderController extends AuthActionController
     {
         $segment = new Segment('customer');
         $retailer = new Retailer;
-        $retailer->load($segment->get('customer'), 'customer_id');
+        $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $collection = new Collection;
         $collection->columns(['count' => new Expression('count(1)')])
                 ->where(['store_id' => $retailer->offsetGet('store_id')]);

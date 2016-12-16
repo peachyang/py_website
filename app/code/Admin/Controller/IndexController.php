@@ -54,7 +54,7 @@ class IndexController extends ActionController
                 if ($user->login($data['username'], $data['password'])) {
                     $result['message'][] = ['message' => $this->translate('Welcome %s. Last Login: %s', [$data['username'], $user['logdate']]), 'level' => 'success'];
                     $user->setData([
-                        'logdate' => gmdate('Y-m-d h:i:s'),
+                        'logdate' => gmdate('Y-m-d H:i:s'),
                         'lognum' => $user->offsetGet('lognum') + 1
                     ])->save();
                     $this->getContainer()->get('log')->log($data['username'] . ' has logged in', 200);
@@ -118,7 +118,7 @@ class IndexController extends ActionController
                     $token = Rand::getString(32);
                     $user->setData([
                         'rp_token' => $token,
-                        'rp_token_created_at' => date('Y-m-d h:i:s')
+                        'rp_token_created_at' => date('Y-m-d H:i:s')
                     ])->save();
                     try {
                         $config = $this->getContainer()->get('dbAdapter');

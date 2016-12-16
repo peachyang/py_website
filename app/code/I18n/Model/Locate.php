@@ -3,9 +3,8 @@
 namespace Seahinet\I18n\Model;
 
 use BadMethodCallException;
-use PDO;
+use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
-use Zend\Db\Adapter\Platform\Sqlite;
 
 class Locate
 {
@@ -54,8 +53,11 @@ class Locate
                 $select->where(['parent_id' => (int) $id]);
             }
             if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
-                $adapter = new PDO('sqlite:' . BP . 'var\i18n.db');
-                $resultSet = $adapter->query($select->getSqlString(new Sqlite));
+                $adapter = new Adapter([
+                    'driver'=>'pdo',
+                    'dsn'=> 'sqlite:' . BP . 'var\i18n.db'
+                ]);
+                $resultSet = $adapter->query($select->getSqlString($adapter->getPlatform()));
             } else {
                 $resultSet = $this->getTableGateway('i18n_' . $part)->selectWith($select)->toArray();
             }

@@ -38,7 +38,7 @@ class QueueController extends AuthActionController
                             'template_id' => $data['template_id'],
                             'from' => $from,
                             'to' => is_scalar($email) ? $email : $email['email'],
-                            'scheduled_at' => date('Y-m-d h:i:s', strtotime($data['datetime']))
+                            'scheduled_at' => date('Y-m-d H:i:s', strtotime($data['datetime']))
                         ])->save();
                     }
                     $result['message'][] = ['message' => $this->translate('Scheduled successfully.'), 'level' => 'success'];

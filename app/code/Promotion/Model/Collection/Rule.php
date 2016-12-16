@@ -15,6 +15,7 @@ class Rule extends AbstractCollection
     public function withStore($inColumns = false)
     {
         $this->select->join('promotion_in_store', 'promotion_in_store.promotion_id=promotion.id', $inColumns ? [] : ['store_id'], 'left');
+        return $this;
     }
 
 }

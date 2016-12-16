@@ -1,3 +1,6 @@
 ---
 retailer_sales_products:
     - are you sure you want pull these products off shelves?
+retailer_category: 
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

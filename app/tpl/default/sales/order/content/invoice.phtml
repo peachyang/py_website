@@ -43,11 +43,11 @@ $currency = $order->getCurrency();
             <table class="table table-hover table-striped table-no-border">
                 <thead class="text-nowrap">
                     <tr>
-                        <th colspan="2"><?php echo $this->translate('Product') ?></th>
-                        <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Price', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Qty', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Total', [], 'sales') ?></th>
+                        <th class="text-center" colspan="2"><?php echo $this->translate('Product') ?></th>
+                        <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Price', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Qty', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Total', [], 'sales') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@ $currency = $order->getCurrency();
                         <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                             <td>
                                 <a href="<?php echo $product->getUrl() ?>">
-                                    <img src="<?php echo $thumbnail ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $this->getPubUrl('images/placeholder.png') ?>" width="100" alt="<?php echo $item['product_name'] ?>" />
+                                    <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" alt="<?php echo $item['product_name'] ?>" />
                                 </a>
                             </td>
                             <td>

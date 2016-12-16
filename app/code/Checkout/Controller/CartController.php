@@ -121,6 +121,8 @@ class CartController extends ActionController
                 $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                 $this->getContainer()->get('log')->logException($e);
             }
+        } else {
+        	return false;
         }
         return $this->response($result, 'checkout/cart/', 'checkout');
     }

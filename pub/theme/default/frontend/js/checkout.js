@@ -274,6 +274,7 @@
             });
         });
         $('.checkout-steps').on('afterajax.seahinet', '[data-load]', function () {
+            $(this).siblings('.clicked').removeClass('clicked');
             $(this).toggleClass('clicked');
             var load = $(this).data('load');
             if (typeof load === 'string') {

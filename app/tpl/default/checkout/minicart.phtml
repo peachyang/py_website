@@ -48,7 +48,7 @@ $items = $this->getItems();
                         </h3>
                         <div class="col-xs-3 action">
                             <div class="price"><?php echo $this->getCurrency()->format($item['price']), 'x', (float) $item['qty'] ?></div>
-                            <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id=<?php echo $item['id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                            <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="item=<?php echo $item['id'] ?>&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
                                 <span><?php echo $this->translate('Delete') ?></span>
                             </a>
                         </div>
@@ -82,7 +82,7 @@ $items = $this->getItems();
             </h3>
             <div class="col-xs-3 action">
                 <div class="price">{$price}x{$qty}</div>
-                <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="id={$id}&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
+                <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="item={$id}&csrf=<?php echo $csrf ?>" title="<?php echo $this->translate('Delete') ?>">
                     <span><?php echo $this->translate('Delete') ?></span>
                 </a>
             </div>

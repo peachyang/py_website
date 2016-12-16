@@ -6,7 +6,7 @@ $inventory = $item->getInventory();
 ?>
 <tr class="product-list">
     <td>
-        <input type="checkbox"<?php if($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
+        <input type="checkbox"<?php if ($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
     </td>
     <td>
         <a href="<?php echo $item['product']->getUrl() ?>">
@@ -58,7 +58,7 @@ $inventory = $item->getInventory();
         <?php echo $this->getCurrency()->format($item['price'] * $item['qty']) ?>
     </td>
     <td class="text-nowrap actions">
-        <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>" data-method="post" data-params="csrf=<?php echo $this->getCsrfKey() ?>&<?php echo http_build_query($item->toArray()) ?>">
+        <a href="<?php echo $this->getBaseUrl('checkout/cart/movetowishlist/') ?>?csrf=<?php echo $this->getCsrfKey() ?>&id=<?php echo $item->getId() ?>">
             <span><?php echo $this->translate('Move to Wishlist') ?></span>
         </a><br /> 
         <a href="<?php echo $this->getBaseUrl('checkout/cart/remove/') ?>" data-method="delete" data-params="csrf=<?php echo $this->getCsrfKey() ?>&item=<?php echo $item['id'] ?>">

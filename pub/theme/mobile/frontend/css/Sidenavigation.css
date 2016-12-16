@@ -33,18 +33,20 @@ li {
 }
 .menu-show {
 	margin-left: 0;
-	box-shadow: 4px 2px 15px 1px #B9ADAD;
+	/* box-shadow: 4px 2px 15px 1px #B9ADAD; */
 	z-index: 9999;
-    top:40px;
+    top:38px;
 }
 .menu-sidebar {
-	margin: 40px 0 30px 10px;
+	margin: 40px 0 30px 0px;
 	position: relative;
 	top: 0;
+	text-indent:30px
 }
 .menu-sidebar li {
-	padding: 0px 20px 0;
-	line-height: 10px
+	border-bottom:1px solid #2893d2;
+	padding: 0px;
+	line-height: 25px
 }
 .menu-sidebar li > a {
 	color: #f3f3f3;

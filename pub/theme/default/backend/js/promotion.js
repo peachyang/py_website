@@ -109,7 +109,7 @@
         };
         $('.tree[data-json]').each(function () {
             var json = $(this).data('json');
-            if (json.length) {
+            if (json && typeof json['0'][0].id !== 'undefined') {
                 generateTree.call($(this).find('.children'), json['0'][0].id, json);
             }
             $(this).removeAttr('data-json');

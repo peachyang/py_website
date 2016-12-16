@@ -611,7 +611,7 @@ dl.options dd{float:left;margin-left:4px}
 .trading-success .title{font-size:24px;line-height:3;letter-spacing:-.1px}
 .trading-success .title .fa{color:#fa9116;font-size:50px;position:absolute;right:100%;top:0}
 .trading-success .sub-title{font-size:12px;color:#838282;margin-bottom:10px}
-.trading-success ul li{margin:0 20px 0 0;font-size:14px;color:#007dc6;text-align:center}
+.trading-success ul li{margin:0 20px 0 0;font-size:14px;color:#007dc6;text-align:left;display: block;line-height: 30px}
 .product-search{margin-bottom:29px;background:#f9f9f9;border:1px solid #e4e2e2;text-indent:30px}
 .product-search ul li{float:left;margin-top:20px;line-height:25px}
 .product-search dl{clear:both;margin-bottom:20px}

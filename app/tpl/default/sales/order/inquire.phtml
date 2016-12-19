@@ -86,11 +86,11 @@ $inquireies = $this->getInquireies();
                                         </td>
                                         <td rowspan="<?php echo count($items) ?>" class="border-left">
                                             <?php if ($inquire->canRefund()): ?>
-                                            <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id='.$inquire['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>                      
+                                            <a href="<?php echo $this->getBaseUrl('sales/inquire/apply/?id='.$inquire['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>                      
                                             <?php endif ?>
                                             <br>
                                             <?php if ($inquire->canReview()): ?>
-                                                <p><a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
+                                                <p><a href="<?php echo $this->getBaseUrl('sales/inquire/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
                                             <?php endif ?>
                                             <a href="<?php echo $this->getBaseUrl('sales/inquire/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
                                         </td>

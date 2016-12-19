@@ -1,9 +1,10 @@
 <div class="reviews" data-part="review">
     <h4 class="title"><?php echo $this->translate('Reviews') ?></h4>
-    <dl class="review-list clearfix"><?php
-        $reviews = $this->getReviews();
-        foreach ($reviews as $review):
-            ?>
+    <?php
+    $reviews = $this->getReviews();
+    foreach ($reviews as $review):
+        ?>
+        <dl class="review-list clearfix">
             <dt class="col-xs-12 col-sm-4 col-md-2">
                 <?php $customer = $review->getCustomer() ?>
                 <h5 class="username"><?php echo $review->offsetGet('anonymous') || !$customer ? $this->translate('Guest') : $customer->offsetGet('username') ?></h5>
@@ -40,7 +41,7 @@
             <dd class="col-xs-12 col-sm-4 col-md-3 text-right">
                 <span class="date"><?php echo date('Y-m-d H:i', strtotime($review->offsetGet('created_at'))) ?></span>
             </dd>
-        <?php endforeach ?></dl>
+        </dl><?php endforeach ?>
     <p class="empty-list text-center"><?php echo $this->translate('There has been no review yet.') ?></p>
     <?php echo $this->getChild('pager')->setCollection($reviews) ?>
 </div>

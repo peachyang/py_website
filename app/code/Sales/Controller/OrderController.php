@@ -84,11 +84,11 @@ class OrderController extends AuthActionController
                             'rating' => ($data['rating'][0] ?? []) + ($data['rating'][$productId] ?? [])
                         ])->save();
                     }
-                    $result['message'][] = ['message' => 'We have received your review. Thanks for your support.', 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('We have received your review. Thanks for your support.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
-                    $result['message'][] = ['message' => 'An error detected while saving. Please try again later.', 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please try again later.'), 'level' => 'danger'];
                 }
             }
         }

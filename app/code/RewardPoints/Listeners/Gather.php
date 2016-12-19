@@ -65,6 +65,9 @@ class Gather implements ListenerInterface
                 $unavailable += $item['base_price'] * $item['qty'];
             }
         }
+        if ($total + $unavailable == 0) {
+            return 0;
+        }
         $total += (($config['rewardpoints/gathering/calculation'] ? $order['base_shipping'] + $order['base_tax'] : 0) + $order['base_discount']) * $total / ($total + $unavailable);
         $max = $config['rewardpoints/gathering/max_amount_calculation'] ? ((int) ($total * $config['rewardpoints/gathering/max_amount'] / 100)) : ((int) $config['rewardpoints/gathering/max_amount']);
         $calc = $total * $config['rewardpoints/gathering/rate'] + $points;

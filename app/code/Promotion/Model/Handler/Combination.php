@@ -12,7 +12,7 @@ class Combination implements HandlerInterface
             foreach ($handler->getChildren() as $child) {
                 $class = $child->getHandlerClass();
                 if ($class) {
-                    $result = $handler['value'] ? array_intersect_key($result, $class->matchItems($items, $handler)) : array_diff_key($result, $class->matchItems($items, $handler));
+                    $result = $handler['value'] ? array_intersect_key($result, $class->matchItems($items, $child)) : array_diff_key($result, $class->matchItems($items, $child));
                     if (empty($result)) {
                         break;
                     }
@@ -23,7 +23,7 @@ class Combination implements HandlerInterface
             foreach ($handler->getChildren() as $child) {
                 $class = $child->getHandlerClass();
                 if ($class) {
-                    $result += $handler['value'] ? $class->matchItems($items, $handler) : array_diff_key($items, $class->matchItems($items, $handler));
+                    $result += $handler['value'] ? $class->matchItems($items, $child) : array_diff_key($items, $class->matchItems($items, $child));
                 }
             }
         }

@@ -4,8 +4,6 @@ $currency = $this->getOrder()->getCurrency();
 ?>
 <div class="view clearfix">
     <form action="<?php echo $this->getAdminUrl('sales_shipment/save/') ?>" method="post" class="form-sales">
-        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        <input type="hidden" name="order_id" value="<?php echo $this->getQuery('id') ?>" />
         <div class="panel">
             <div class="panel-heading">
                 <h4 class="panel-title"><?php echo $this->translate('Order Infomation', [], 'sales') ?></h4>
@@ -159,5 +157,7 @@ $currency = $this->getOrder()->getCurrency();
                 </div>
             </div>
         </div>
+        <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+        <input type="hidden" name="order_id" value="<?php echo $this->getQuery('id') ?>" />
     </form>
 </div>

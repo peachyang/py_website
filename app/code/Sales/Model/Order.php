@@ -362,14 +362,16 @@ class Order extends AbstractModel
     {
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
-        } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
-            return false;
-        }
-        $applications = new RmaCollection;
-        $applications->where(['order_id' => $this->getId()])
-        ->where->notIn('status', [-1, 5]);
-        if (count($applications)) {
-            return false;
+        } else if (!$flag) {
+            if ($this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
+                return false;
+            }
+            $applications = new RmaCollection;
+            $applications->where(['order_id' => $this->getId()])
+            ->where->notIn('status', [-1, 5]);
+            if (count($applications)) {
+                return false;
+            }
         }
         $memos = $this->getCreditMemo();
         $qty = $this->getQty();

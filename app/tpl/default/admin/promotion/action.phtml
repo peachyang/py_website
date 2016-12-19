@@ -18,7 +18,7 @@ $actions = $this->getCollection();
         <div class="panel-heading">
             <h3 class="panel-title"><?php echo $this->translate('Apply the rule only to cart items matching the following conditions (leave blank for all items)') ?></h3>
         </div>
-        <div class="panel-body tree">
+        <div class="panel-body tree" data-json='<?php echo json_encode($actions) ?>'>
             <span class="title">
                 <input type="hidden" name="handler[identifier][0]" value="combination" />
                 <?php
@@ -63,7 +63,7 @@ $actions = $this->getCollection();
     </template>
     <template id="tmpl-handler-string">
         <span class="title">
-            <input type="hidden" name="condition[pid][]" value="" />
+            <input type="hidden" name="handler[pid][]" value="" />
             <span class="param">
                 <input type="hidden" name="handler[identifier][]" value="{$identifier}" />
                 {$identifier_text}
@@ -85,7 +85,7 @@ $actions = $this->getCollection();
     </template>
     <template id="tmpl-handler-numeric">
         <span class="title">
-            <input type="hidden" name="condition[pid][]" value="" />
+            <input type="hidden" name="handler[pid][]" value="" />
             <span class="param">
                 <input type="hidden" name="handler[identifier][]" value="{$identifier}" />
                 {$identifier_text}
@@ -113,7 +113,7 @@ $actions = $this->getCollection();
     </template>
     <template id="tmpl-handler-select">
         <span class="title">
-            <input type="hidden" name="condition[pid][]" value="" />
+            <input type="hidden" name="handler[pid][]" value="" />
             <span class="param">
                 <input type="hidden" name="handler[identifier][]" value="{$identifier}" />
                 {$identifier_text}

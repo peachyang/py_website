@@ -17,7 +17,7 @@ use Seahinet\Sales\Model\Collection\{
     Invoice as InvoiceCollection,
     Order\Item as ItemCollection,
     Order\Status\History as HistoryCollection,
-    Rma,
+    Rma as RmaCollection,
     Shipment as ShipmentCollection
 };
 use Seahinet\Sales\Model\Order\{
@@ -365,7 +365,7 @@ class Order extends AbstractModel
         } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
             return false;
         }
-        $applications = new Rma;
+        $applications = new RmaCollection;
         $applications->where(['order_id' => $this->getId()])
         ->where->notIn('status', [-1, 5]);
         if (count($applications)) {

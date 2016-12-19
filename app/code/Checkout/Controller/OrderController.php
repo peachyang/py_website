@@ -31,7 +31,9 @@ class OrderController extends ActionController
 
     public function indexAction()
     {
-        if (count(Cart::instance()->getItems())) {
+        $items = Cart::instance()->getItems(true);
+        $items->where(['status' => 1]);
+        if (count($items)) {
             return $this->getLayout('checkout_order');
         }
         return $this->redirectReferer('checkout/cart/');

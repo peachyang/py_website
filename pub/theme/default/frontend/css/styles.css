@@ -210,7 +210,7 @@ dl.options dd{float:left;margin-left:4px}
 .col-left .nav dt{padding-left:5px;font-size:14px;line-height:30px;color:#000;font-weight:bold;margin-top:1em}
 .col-left .nav dt .fa{font-size:20px;vertical-align:middle;margin-right:6px}
 .col-left .nav dl a{display:block;text-indent:50px;font-size:12px;line-height:24px;color:#8b8a8a}
-.col-left .nav dl a:hover{text-decoration:underline}
+.col-left .nav dl a.active{color:#007ec6;background:#eee}
 .customer-account .col-main .page-title,.retailer-account .col-main .page-title{font-size:18px;line-height:50px;font-weight:normal;border-bottom:1px solid #dfe1e8}
 .retailer-account .col-main .page-title span{color:#007dc6;display:inline-block;border-bottom:1px solid;margin-bottom:-1px}
 .retailer-account .wishlist .product-edit .grid input[type=checkbox], input[type=radio],.retailer-account .wishlist .product-edit .categories-list input[type=checkbox], input[type=radio]{margin: 0}
@@ -434,6 +434,10 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-category .categories-list .select-category{width: 8%;float: left;line-height: 30px}
 .retailer-category .category-content {border: 1px solid #e1e3ea;overflow:hidden}
 .retailer-category .category-content .categories-title{background: #f5f6f9;border-bottom:1px solid #e1e3ea}
+.retailer-shipping .page-content{margin-top: 30px}
+.retailer-shipping .page-content .input-box{margin: 15px 0px}
+.retailer-shipping .page-content .input-box .form-control{font-size: 12px}
+.retailer-shipping .page-content .input-box .comment{color: #555;font-size: 12px;line-height: 26px}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}

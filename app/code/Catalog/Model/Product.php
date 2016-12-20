@@ -39,7 +39,8 @@ class Product extends Entity
         if ($this->getId()) {
             $options = new OptionCollection;
             $options->withLabel()
-                    ->where(['product_id' => $this->getId()] + $constraint);
+                    ->where(['product_id' => $this->getId()] + $constraint)
+                    ->order('sort_order ASC');
             return $options;
         }
         return [];
@@ -290,8 +291,14 @@ class Product extends Entity
         if (!empty($this->storage['category'])) {
             $tableGateway = $this->getTableGateway('product_in_category');
             $tableGateway->delete(['product_id' => $this->getId()]);
+            $maxCount = (int) $this->getContainer()->get('config')['catalog/product/count_in_category'];
             foreach ((array) $this->storage['category'] as $category) {
-                $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
+                if ($maxCount--) {
+                    $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
+                }
+                if ($maxCount === 0) {
+                    break;
+                }
             }
         }
         if (!empty($this->storage['inventory'])) {
@@ -364,6 +371,11 @@ class Product extends Entity
             return (new Currency)->load($this->storage['currency'], 'code');
         }
         return $this->getContainer()->get('currency');
+    }
+
+    public function canSold()
+    {
+        return $this->storage['status'] && $this->getStore()->offsetGet('status');
     }
 
 }

@@ -51,7 +51,7 @@ class OrderController extends AuthActionController
                     $files = $this->getRequest()->getUploadedFile();
                     $path = BP . 'pub/upload/review/';
                     if (!is_dir($path)) {
-                        mkdir($path, 0644, true);
+                        mkdir($path, 0777, true);
                     }
                     foreach ($data['review'] as $productId => $content) {
                         $images = [];

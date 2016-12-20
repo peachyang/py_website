@@ -44,7 +44,8 @@ class Option extends AbstractModel
                     $select = $tableGateway->getSql()->select();
                     $select->where(['option_id' => $this->getId()]);
                     $select->join('product_option_value_title', 'product_option_value.id=product_option_value_title.value_id', ['title'], 'left')
-                            ->where(['product_option_value_title.language_id' => $this->getLanguageId()]);
+                            ->where(['product_option_value_title.language_id' => $this->getLanguageId()])
+                            ->order('sort_order ASC');
                     $this->storage['value'] = $tableGateway->selectWith($select)->toArray();
                 } else {
                     $this->storage['value'] = [];

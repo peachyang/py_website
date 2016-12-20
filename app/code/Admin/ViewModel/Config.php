@@ -111,7 +111,8 @@ class Config extends Edit
             $item['options'] = (new $item['source'])->getSourceArray($item);
         }
         $config = $this->getConfig()[$prefix . '/' . $key];
-        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config : (string) ($item['default'] ?? '');
+        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config :
+                (is_array($config) ? $config : (string) ($item['default'] ?? ''));
         return $item;
     }
 

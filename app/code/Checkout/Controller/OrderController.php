@@ -2,6 +2,7 @@
 
 namespace Seahinet\Checkout\Controller;
 
+use Error;
 use Exception;
 use Seahinet\Customer\Model\Address;
 use Seahinet\Lib\Bootstrap;
@@ -135,6 +136,11 @@ class OrderController extends ActionController
                     $this->commit();
                     $segment = new Segment('checkout');
                     $segment->set('hasNewOrder', 1);
+                } catch (Error $e) {
+                    $this->getContainer()->get('log')->logError($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+                    $this->rollback();
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;

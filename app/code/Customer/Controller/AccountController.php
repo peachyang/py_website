@@ -198,6 +198,11 @@ class AccountController extends AuthActionController
                 $segment = new Segment('customer');
                 $customer = new Model;
                 $customer->load($data['username'], 'username');
+                if (!$customer->getId()) {
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('Invalid username.'), 'level' => 'danger'];
+                    return $this->response($result, 'customer/account/login/', 'customer');
+                }
                 $key = $segment->get('reset_password');
                 if (empty($key) || $key['time'] < strtotime('-1hour')) {
                     $password = Rand::getString(8);

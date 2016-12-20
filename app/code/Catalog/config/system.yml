@@ -42,6 +42,16 @@ catalog:
                     options:
                         1: Yes
                         0: No
+        product:
+            label: Product
+            scope: merchant
+            children:
+                count_in_category:
+                    type: tel
+                    label: Each Product Belongs to Maximum Count of Categories
+                    required: required
+                    default: 5
+                    priority: 0
         review:
             label: Review
             scope: merchant

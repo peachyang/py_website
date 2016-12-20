@@ -112,7 +112,7 @@ class Config extends Edit
         }
         $config = $this->getConfig()[$prefix . '/' . $key];
         $item['value'] = is_scalar($config) && (string) $config !== '' ? $config :
-                (is_array($config) ? $config : (string) ($item['default'] ?? ''));
+                (is_array($config) && in_array($item['type'], ['multiselect', 'checkbox']) ? $config : (string) ($item['default'] ?? ''));
         return $item;
     }
 

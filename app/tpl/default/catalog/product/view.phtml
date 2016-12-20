@@ -37,7 +37,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                 </div>
                 <div class="options">
                     <?php echo $this->getChild('option')->setVariable('product', $product) ?>
-                    <?php if ((int) $product->offsetGet('status')): ?>
+                    <?php if ($product->canSold()): ?>
                         <div class="input-box">
                             <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
                             <div class="cell qty">
@@ -51,7 +51,7 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                         </div>
                     <?php endif ?>
                 </div>
-                <?php if ((int) $product->offsetGet('status')): ?>
+                <?php if ($product->canSold()): ?>
                     <div class="clearfix action">
                         <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
                         <button type="submit" class="btn btn-checkout">

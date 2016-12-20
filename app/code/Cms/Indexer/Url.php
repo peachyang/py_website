@@ -77,7 +77,8 @@ class Url implements Provider
             }
             $handler->buildData($data);
             $pages = new Page;
-            $pages->where(['status' => 1])->limit(50);
+            $pages->join('cms_page_language', 'cms_page.id=cms_page_language.page_id', [], 'left')
+                    ->where(['status' => 1, 'cms_page_language.language_id' => $language['id']])->limit(50);
             $init = $data;
             for ($i = 0;; $i++) {
                 $data = [$language['id'] => []];

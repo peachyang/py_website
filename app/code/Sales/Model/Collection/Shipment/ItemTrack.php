@@ -4,7 +4,7 @@ namespace Seahinet\Sales\Model\Collection\Shipment;
 
 use Seahinet\Lib\Model\AbstractCollection;
 
-class Track extends AbstractCollection
+class ItemTrack extends AbstractCollection
 {
 
     protected function construct()

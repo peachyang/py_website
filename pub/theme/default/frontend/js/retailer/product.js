@@ -18,7 +18,6 @@
                 $(".tabs-panels .info-box").hide().eq($(this).index()).show();
             }
         });
-        
         if($("#add_time_from").length > 0){
             $("#add_time_from").datepicker({
                 dateFormat:'yy-mm-dd',
@@ -47,7 +46,6 @@
                 }
             });
         }
-        
         $(".products-content").on('click', '[type=checkbox]', function () {
             var flag = this.checked;
             var parent = $(this).parents('.table').last();
@@ -62,7 +60,6 @@
                 $(".selectall[type=checkbox]").prop('checked', flag);
             }
         });
-        
         $(".product_status").click(function(){
             var  product_ids = new Array();
             $(".recommend input[type=checkbox]").each(function(){
@@ -94,7 +91,6 @@
                 }
             }
         });
-        
         $(".product_recommend").click(function(){
             var  product_ids = new Array();
             $(".recommend input[type=checkbox]").each(function(){
@@ -122,7 +118,6 @@
                 });
             }
         });
-        
         $(".product_remove").click(function(){
             var  product_ids = new Array();
             $(".recommend input[type=checkbox]").each(function(){
@@ -153,6 +148,5 @@
                 }
             }
         });
-        
     });
 }));

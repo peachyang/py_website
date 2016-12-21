@@ -7,12 +7,24 @@ $timestamp = isset($item['value']) ? strtotime($item['value']) : 0;
 ?>
 <div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
-        <label for="<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
+        <label for="<?php echo $id ?>-from" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
             <?php echo $this->translate($item['label']) ?>
         </label>
     <?php endif ?>
-    <div class="cell">
-        <input type="date" name="<?php echo $key ?>" id="<?php echo $id ?>"<?php
+    <div class="cell date-range">
+        <input type="date" name="<?php echo $key ?>" id="<?php echo $id ?>-from"<?php
+        if (!isset($item['attrs']['class'])):
+            ?> class="form-control date<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                   if (isset($item['class'])) {
+                       echo $item['class'];
+                   }
+                   ?>"<?php endif ?> value="<?php echo $timestamp ? date('Y-m-d', $timestamp) : '' ?>" <?php
+               if (isset($item['attrs'])) {
+                   echo $parent->getAttrs($item['attrs']);
+               }
+               ?>/>
+        <span class="hyphen"></span>
+        <input type="date" name="<?php echo $key ?>" id="<?php echo $id ?>-to"<?php
         if (!isset($item['attrs']['class'])):
             ?> class="form-control date<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
                    if (isset($item['class'])) {

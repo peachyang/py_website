@@ -118,7 +118,7 @@ class Order extends Grid
                 'currency' => $currency
             ],
             'status_id' => [
-                'label' => 'Status',
+                'label' => 'Order Status',
                 'type' => 'select',
                 'options' => (new Status)->getSourceArray()
             ],

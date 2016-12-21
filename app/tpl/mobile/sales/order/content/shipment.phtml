@@ -16,7 +16,7 @@ $shipment = $this->getVariable('model');
             <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()->offsetGet('name') ?></li>
             <li class="col-xs-7 col-sm-7 text-right">
                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
-                <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                <span>(<?php echo $this->translate('Including Shipping Fee: %s', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>)</span>
             </li>	
         </ul>
         <table class="table inline bt padding-5">

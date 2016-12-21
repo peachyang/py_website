@@ -1,0 +1,114 @@
+<?php
+$order = $this->getVariable('order');
+?>
+<tr>
+    <th colspan="6" class="description">
+        <dl>
+            <dt><?php echo $this->translate('Order ID') ?></dt>
+            <dd><?php echo $order['increment_id'] ?></dd>
+            <dt><?php echo $this->translate('Recipient') ?></dt>
+            <dd><?php echo $order['recipient'] ?></dd>
+            <dt><?php echo $this->translate('Order Status') ?></dt>
+            <dd><?php echo $this->translate($order->getStatus()['name']) ?></dd>
+            <dt><?php echo $this->translate('Placed at') ?></dt>
+            <dd><?php echo $order['created_at'] ?></dd>
+        </dl>
+    </th>
+</tr>
+<?php
+$flag = true;
+$items = $order->getItems();
+$currency = $order->getCurrency();
+$count = count($items);
+foreach ($items as $item):
+    $product = $item['product'];
+    $thumbnail = $product->getThumbnail();
+    ?>
+    <tr>
+        <td>
+            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="50" />
+        </td>
+        <td>
+            <h4 class="product-name"><?php echo $product['name'] ?></h4>
+            <?php
+            $options = json_decode($item['options'], true);
+            if ($item['product_id'] && count($options)):
+                ?>
+                <dl class="options">
+                    <?php
+                    foreach ($item['product']->getOptions() as $option):
+                        if (isset($options[$option->getId()])):
+                            ?>
+                            <dt><?php echo $option['title'] ?></dt>
+                            <dd>
+                                <?php
+                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                ?>
+                            </dd>
+                            <?php
+                        endif;
+                    endforeach;
+                    ?>
+                </dl>
+            <?php endif; ?>
+        </td>
+        <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
+        <td class="text-center"><?php echo (float) $item['qty'] ?></td>
+        <?php if ($flag): ?>
+            <td rowspan="<?php echo $count ?>" class="grand-total text-center">
+                <?php echo $currency->format($item['total']) ?>
+                <span class="shipping">(<?php echo $this->translate('Including Shipping Fee: %s', [$currency->format($item['shipping'])]) ?>)</span>
+            </td>
+            <td rowspan="<?php echo $count ?>" class="actions text-center">
+                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Detail') ?></a>
+                <?php if ($order->canCancel()): ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order->getId()) ?>" onclick="return confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>');">
+                        <?php echo $this->translate('Cancel', [], 'sales') ?>
+                    </a>
+                    <?php
+                endif;
+                if ($order->canHold()) :
+                    ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/hold/?id=' . $order->getId()) ?>">
+                        <?php echo $this->translate('Hold', [], 'sales') ?>
+                    </a>
+                    <?php
+                endif;
+                if ($order->canUnhold()) :
+                    ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/unhold/?id=' . $order->getId()) ?>">
+                        <?php echo $this->translate('Unhold', [], 'sales') ?>
+                    </a>
+                    <?php
+                endif;
+                if ($order->canInvoice()) :
+                    ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order->getId()) ?>">
+                        <?php echo $this->translate('Invoice', [], 'sales') ?>
+                    </a>
+                    <?php
+                endif;
+                if ($order->canShip()) :
+                    ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order->getId()) ?>">
+                        <?php echo $this->translate('Ship', [], 'sales') ?>
+                    </a>
+                    <?php
+                endif;
+                if ($order->canRefund()) :
+                    ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order->getId()) ?>">
+                        <?php echo $this->translate('Refund', [], 'sales') ?>
+                    </a>
+                <?php endif; ?>
+                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/print/?id=' . $order->getId()) ?>">
+                    <?php echo $this->translate('Print', [], 'sales') ?>
+                </a>
+            </td>
+            <?php
+            $flag = false;
+        endif;
+        ?>
+    </tr>
+<?php endforeach ?>

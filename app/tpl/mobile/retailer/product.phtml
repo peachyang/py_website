@@ -49,7 +49,7 @@ $refund->getSelect()->where->notEqualTo('status',5);
                     <div class="transaction-list">
                         <ul class="col-xs-12 col-sm-12 title-navw name padding-5 font-12">
                             <li class="col-xs-6 col-sm-6 text-left"><?php echo $customer = $this->getCustomerByID($transaction['customer_id'])->username; ?></li>
-                            <li class="col-xs-6 col-sm-6 text-right"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12"><?php echo $this->translate('(Including Shipping Fee: %s)', [$transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?></span></li>
+                            <li class="col-xs-6 col-sm-6 text-right"><?php echo $transaction->getCurrency()->format($transaction->offsetGet('total')); ?><span class="font-12">(<?php echo $this->translate('Including Shipping Fee: %s', [$transaction->getCurrency()->format($transaction->offsetGet('shipping'))]); ?>)</span></li>
                         </ul>
                         <?php
                         if (!empty($transaction['items'])) :

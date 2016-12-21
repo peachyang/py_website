@@ -17,7 +17,7 @@ $items = $order->getItems();
                     <li class="col-xs-6 col-sm-6 text-left"><?php echo $this->translate('Order Number'), $order['increment_id'] ?></li>
                     <li class="col-xs-6 col-sm-6 text-right">
                         <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
-                        <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                        <span>(<?php echo $this->translate('Including Shipping Fee: %s', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>)</span>
                     </li>	
                 </ul>
                 <table class="table inline bt padding-5">

@@ -4,7 +4,7 @@ $key = $this->getVariable('key');
 $id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
 ?>
-<div class="input-box">
+<div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
         <label for="<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
             <?php echo $this->translate($item['label']) ?>

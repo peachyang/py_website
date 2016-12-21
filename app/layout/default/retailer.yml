@@ -289,8 +289,8 @@ retailer_sales_order_list:
                             - Order Management
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\Product
-                        template: retailer/product
+                        type: Seahinet\Retailer\ViewModel\Sales\Order
+                        template: retailer/sales/order
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager

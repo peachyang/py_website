@@ -337,5 +337,16 @@
                 $(this).remove();
             }
         });
+        if ($.fn.datepicker && $('[type=date]').length) {
+            $('[type=date]').each(function () {
+                var param = {dateFormat: 'yy-mm-dd', changeMonth: true};
+                if ($(this).parent().is('.date-range') && $(this).nextAll('[type=date]').length) {
+                    param.onSelect = function () {
+                        $(this).nextAll('.date').datepicker('option', 'minDate', $.datepicker.parseDate('yy-mm-dd', this.value));
+                    };
+                }
+                $(this).attr({type: 'text', readonly: 'readonly'}).datepicker(param);
+            });
+        }
     });
 }));

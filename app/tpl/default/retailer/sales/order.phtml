@@ -1,0 +1,52 @@
+<?php
+$collection = $this->getCollection();
+$filters = $this->getFilters();
+?>
+<div class="filters">
+    <form action="<?php echo $this->getUri()->withQuery('')->withFragment('') ?>" method="get" class="form-inline">
+        <div class="fieldset clearfix">
+            <?php
+            foreach ($filters as $key => $filter) {
+                echo $this->getInputBox($key, $filter)->setVariable('boxClass', 'col-md-4 col-xs-6');
+            }
+            ?>
+            <div class="buttons-set col-md-4 col-xs-6">
+                <button type="submit" class="btn btn-theme"><?php echo $this->translate('Submit') ?></button>
+                <a href="<?php echo $this->getUri()->withQuery('')->withFragment('') ?>" class="btn btn-theme"><?php echo $this->translate('Reset') ?></a>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr class="text-center text-nowrap">
+            <th colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
+            <th><?php echo $this->translate('Price') ?></th>
+            <th><?php echo $this->translate('Qty') ?></th>
+            <th><?php echo $this->translate('Grand Total') ?></th>
+            <th><?php echo $this->translate('Action') ?></th>
+        </tr>
+    </thead>
+    <?php if (count($collection)): ?>
+        <tbody>
+            <?php
+            foreach ($collection as $order) {
+                echo $this->renderItem($order);
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <?php echo $this->getChild('pager')->setCollection($collection) ?>
+                </td>
+            </tr>
+        </tfoot>
+    <?php else: ?>
+        <tbody>
+            <tr>
+                <td colspan="6"><?php echo $this->translate('There are no orders in your store.') ?></td>
+            </tr>
+        </tbody>
+    <?php endif ?>
+</table>

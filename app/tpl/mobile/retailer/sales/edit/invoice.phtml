@@ -20,7 +20,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 </li>
                 <li class="col-xs-7 col-sm-7 text-right">
                     <?php echo $currency->format($order->offsetGet('total')) ?>
-                    <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$currency->format($order->offsetGet('shipping'))]) ?></span>
+                    <span>(<?php echo $this->translate('Including Shipping Fee: %s', [$currency->format($order->offsetGet('shipping'))]) ?>)</span>
                 </li>	
             </ul>
             <table class="table inline bt padding-5">

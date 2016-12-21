@@ -67,14 +67,13 @@ class OrderController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('retailer_sales_order_list');
-        return $root;
+        return $this->getLayout('retailer_sales_order_list');
     }
 
     public function viewAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {
-            return $this->getLayout('admin_sales_order_view');
+            return $this->getLayout('retailer_sales_order_view');
         }
         return $this->notFoundAction();
     }

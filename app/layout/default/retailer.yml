@@ -42,7 +42,7 @@ retailer_account:
 #                                params: [{label:'Marketing Center',priority:30,icon:'volume-up'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/transaction/product/',label:'Sold Product',priority:1,group:'Transaction Management'}]
+                                params: [{link:'retailer/sales_order/',label:'Order Management',priority:1,group:'Transaction Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/transaction/review/',label:'Review Management',priority:2,group:'Transaction Management'}]
@@ -190,7 +190,7 @@ retailer_store_setting:
                     main:
                         type: Seahinet\Retailer\ViewModel\Store
                         template: retailer/store/setting
-retailer_product:
+retailer_brand:
     update: retailer_account
     root:
         children:
@@ -198,7 +198,79 @@ retailer_product:
                 action:
                     -
                         method: setTitle
-                        params: Sold Product
+                        params: Retailer Brand Management
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/store/brand
+retailer_store_view:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/store/view
+view_search:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Retailer Store
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/store_view.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/jquery.hiSlider.min.css
+                    -
+                        method: addLink
+                        params: frontend/dragResource/css/enhancement.css
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/jquery.hiSlider.min.js
+                    -
+                        method: addScript
+                        params: frontend/dragResource/js/regain_component.js
+            content:
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\StoreDecoration
+                        template: retailer/store_search
+retailer_sales_order_list:
+    update: retailer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Order Management
                     -
                         method: addLink
                         params: frontend/css/jquery-ui.min.css
@@ -209,6 +281,12 @@ retailer_product:
                         method: addScript
                         params: frontend/js/retailer/product.js
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Order Management
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Product
@@ -530,20 +608,6 @@ retailer_resource_list:
                                         params: 
                                             - canJump
                                             - 0
-retailer_brand:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer Brand Management
-            content:
-                children:
-                    main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/brand
 retailer_shipping:
     update: retailer_account
     root:
@@ -822,81 +886,6 @@ retailer_products_product_edit_1:
     update: retailer_products_product_edit
 retailer_products_product_edit_2:
     update: retailer_products_product_edit
-view_store:
-    update: frontend
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer Store
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/store_view.css
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/jquery.hiSlider.min.css
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/enhancement.css
-                    -
-                        method: addScript
-                        params: frontend/dragResource/js/jquery.hiSlider.min.js
-                    -
-                        method: addScript
-                        params: frontend/dragResource/js/regain_component.js
-            content:
-                children:
-                    main:
-                        type: Seahinet\Retailer\ViewModel\StoreDecoration
-                        template: retailer/store
-view_search:
-    update: frontend
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer Store
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/store_view.css
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/jquery.hiSlider.min.css
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/enhancement.css
-                    -
-                        method: addScript
-                        params: frontend/dragResource/js/jquery.hiSlider.min.js
-                    -
-                        method: addScript
-                        params: frontend/dragResource/js/regain_component.js
-            content:
-                children:
-                    main:
-                        type: Seahinet\Retailer\ViewModel\StoreDecoration
-                        template: retailer/store_search
-view_store1:
-    update: frontend
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer Store
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/store_view.css
-            content:
-                children:
-                    main:
-                        type: Seahinet\Retailer\ViewModel\StoreDecoration
-                        template: retailer/store1
 freight_setting:
     update: retailer_account
     root:

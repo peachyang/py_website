@@ -67,7 +67,7 @@ class OrderController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_sales_order_list');
+        $root = $this->getLayout('retailer_sales_order_list');
         return $root;
     }
 

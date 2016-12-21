@@ -20,8 +20,9 @@ class Edit extends PEdit
 
     public function getDeleteUrl()
     {
+        $segment = new Segment('admin');
         $model = $this->getVariable('model');
-        if ($model && $model->getId()) {
+        if ($model && $model->getId() && $segment->get('user')->getId() == $model->getId() && $model->getId() != 1) {
             return $this->getAdminUrl('user/delete/');
         }
         return false;

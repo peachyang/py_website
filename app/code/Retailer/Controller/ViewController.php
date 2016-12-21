@@ -13,11 +13,11 @@ class ViewController extends ActionController
     public function indexAction()
     {
         $retailer = $this->getOption('retailer');
-        $root = $this->getLayout('view_store');
+        $root = $this->getLayout('retailer_store_view');
         $root->getChild('head')->setTitle($retailer->getStore()->offsetGet('name'));
-        $root->getChild('main', true)->setVariable('store_id', $this->getOption('store_id'));
-        $root->getChild('main', true)->setVariable('retailer', $retailer);
-        $root->getChild('main', true)->setVariable('key', $retailer);
+        $root->getChild('main', true)->setVariable('store_id', $this->getOption('store_id'))
+                ->setVariable('retailer', $retailer)
+                ->setVariable('key', $retailer);
         $segment = new Segment('core');
         $segment->set('store', $retailer->getStore()->offsetGet('code'));
         return $root;

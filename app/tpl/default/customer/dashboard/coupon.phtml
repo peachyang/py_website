@@ -25,7 +25,7 @@ $flag = true;
                         <div class="inner clearfix">
                             <?php if ($coupon['price']): ?>
                                 <div class="col-xs-12 price">
-                                    <?php echo $coupon['is_fixed'] ? $this->getCurrency()->convert($coupon['price'], true) : (100 * $coupon['price'] . '%') ?>
+                                    <?php echo $coupon['is_fixed'] ? $this->getCurrency()->convert(-$coupon['price'], true) : (-$coupon['price'] . '%') ?>
                                 </div>
                             <?php else: ?>
                                 <div class="col-xs-12 free-shipping">

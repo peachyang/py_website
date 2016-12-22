@@ -21,7 +21,8 @@ class Order extends AbstractViewModel
     public function getCollection()
     {
         $collection = new Collection;
-        $select = $collection->where(['store_id' => $this->getRetailer()['store_id']]);
+        $select = $collection->where(['store_id' => $this->getRetailer()['store_id']])
+                ->order('created_at DESC');
         $languageId = Bootstrap::getLanguage()->getId();
         $attribute = new Attribute;
         $attribute->columns(['id', 'type'])
@@ -42,15 +43,12 @@ class Order extends AbstractViewModel
         $attribute->load(true, true);
         $select->join(['tel_attr' => Address::ENTITY_TYPE . '_value_' . $attribute[0]['type']], new Expression('sales_order.shipping_address_id=tel_attr.entity_id AND tel_attr.language_id=' . $languageId . ' AND tel_attr.attribute_id=' . $attribute[0]['id']), ['tel' => 'value'], 'left');
         $data = $this->getQuery();
-        if (!empty($data['created_at']) && count($data['created_at']) == 2) {
-            $select->where->greaterThanOrEqualTo('created_at', $data['created_at'][0] . ' 00:00:00')
-                    ->lessThanOrEqualTo('created_at', $data['created_at'][1] . ' 23:59:59');
+        if (!empty($data['created_at'])) {
+            if (count($data['created_at']) == 2 && !empty($data['created_at'][0]) && !empty($data['created_at'][1])) {
+                $select->where->greaterThanOrEqualTo('created_at', $data['created_at'][0] . ' 00:00:00')
+                        ->lessThanOrEqualTo('created_at', $data['created_at'][1] . ' 23:59:59');
+            }
             unset($data['created_at']);
-        }
-        if (!empty($data['updated_at']) && count($data['updated_at']) == 2) {
-            $select->where->greaterThanOrEqualTo('updated_at', $data['updated_at'][0] . ' 00:00:00')
-                    ->lessThanOrEqualTo('updated_at', $data['updated_at'][1] . ' 23:59:59');
-            unset($data['updated_at']);
         }
         if (!empty($data['track_number'])) {
             $track = new Track;
@@ -59,38 +57,53 @@ class Order extends AbstractViewModel
             $collection->in('sales_order.id', $track);
             unset($data['updated_at']);
         }
+        if (!empty($data['recipient'])) {
+            $data['recipient_attr.value'] = $data['recipient'];
+            unset($data['recipient']);
+        }
+        if (!empty($data['tel'])) {
+            $data['tel_attr.value'] = $data['tel'];
+            unset($data['tel']);
+        }
         unset($data['store_id']);
-        $this->filter($collection, $data);
+        $this->filter($collection, $data, ['order' => 1]);
         return $collection;
     }
 
     public function getFilters()
     {
+        $data = $this->getQuery();
         return [
-            'id' => [
+            'increment_id' => [
                 'type' => 'text',
-                'label' => 'Order ID'
+                'label' => 'Order ID',
+                'value' => $data['increment_id'] ?? ''
             ],
             'status_id' => [
                 'type' => 'select',
                 'label' => 'Order Status',
-                'options' => (new Status)->getSourceArray()
+                'options' => (new Status)->getSourceArray(),
+                'value' => $data['status_id'] ?? ''
             ],
             'recipient' => [
                 'type' => 'text',
-                'label' => 'Recipient'
+                'label' => 'Recipient',
+                'value' => $data['recipient'] ?? ''
             ],
             'tel' => [
                 'type' => 'tel',
-                'label' => 'Telephone'
+                'label' => 'Telephone',
+                'value' => $data['tel'] ?? ''
             ],
             'track_number' => [
                 'type' => 'text',
-                'label' => 'Track Number'
+                'label' => 'Track Number',
+                'value' => $data['track_number'] ?? ''
             ],
             'created_at[]' => [
                 'type' => 'daterange',
-                'label' => 'Placed at'
+                'label' => 'Placed at',
+                'value' => $data['created_at'] ?? []
             ]
         ];
     }

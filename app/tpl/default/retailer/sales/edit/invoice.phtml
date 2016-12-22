@@ -59,7 +59,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h5 class=""><?php echo $this->translate('Payment Method', [], 'sales') ?></h5>
             </div>
             <div class="panel-body">
-                <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+                <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
             </div>
         </div>
         <div class="panel wide panel-default" >

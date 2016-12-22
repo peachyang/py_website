@@ -2,14 +2,12 @@
 $order = $this->getVariable('order');
 ?>
 <tr>
-    <th colspan="6" class="description">
+    <th colspan="7" class="description">
         <dl>
             <dt><?php echo $this->translate('Order ID') ?></dt>
             <dd><?php echo $order['increment_id'] ?></dd>
             <dt><?php echo $this->translate('Recipient') ?></dt>
             <dd><?php echo $order['recipient'] ?></dd>
-            <dt><?php echo $this->translate('Order Status') ?></dt>
-            <dd><?php echo $this->translate($order->getStatus()['name']) ?></dd>
             <dt><?php echo $this->translate('Placed at') ?></dt>
             <dd><?php echo $order['created_at'] ?></dd>
         </dl>
@@ -56,14 +54,17 @@ foreach ($items as $item):
         <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
         <td class="text-center"><?php echo (float) $item['qty'] ?></td>
         <?php if ($flag): ?>
-            <td rowspan="<?php echo $count ?>" class="grand-total text-center">
+            <td rowspan="<?php echo $count ?>" class="status text-center">
+                <?php echo $this->translate($order->getStatus()['name']) ?>
+                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Detail') ?></a>
+            </td>
+            <td rowspan="<?php echo $count ?>" class="grand-total text-center text-nowrap">
                 <?php echo $currency->format($item['total']) ?>
                 <span class="shipping">(<?php echo $this->translate('Including Shipping Fee: %s', [$currency->format($item['shipping'])]) ?>)</span>
             </td>
             <td rowspan="<?php echo $count ?>" class="actions text-center">
-                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Detail') ?></a>
                 <?php if ($order->canCancel()): ?>
-                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order->getId()) ?>" onclick="return confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>');">
+                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/cancel/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Cancel', [], 'sales') ?>
                     </a>
                     <?php

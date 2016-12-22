@@ -13,7 +13,7 @@ use Zend\Db\Sql\{
     Ddl,
     Select
 };
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 
 /**
  * Database indexer handler

@@ -3,7 +3,10 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Catalog\Model\Collection\Product\Review;
-use Seahinet\Customer\Model\Address;
+use Seahinet\Customer\Model\{
+    Address,
+    Customer
+};
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\{
@@ -86,6 +89,18 @@ class Order extends AbstractModel
         return $this;
     }
 
+    public function getCustomer()
+    {
+        if (!empty($this->storage['customer_id'])) {
+            $customer = new Customer($this->storage['language_id']);
+            $customer->load($this->storage['customer_id']);
+            if ($customer->getId()) {
+                return $customer;
+            }
+        }
+        return null;
+    }
+
     public function getItems($force = false)
     {
         if ($force || is_null($this->items)) {
@@ -113,12 +128,13 @@ class Order extends AbstractModel
         foreach ($items as $item) {
             $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
         }
+        $detail = $this->storage['discount_detail'] ? json_decode($this->storage['discount_detail'], true) : [];
         $this->setData([
             'base_subtotal' => $baseSubtotal,
             'base_shipping' => $this->offsetGet('free_shipping') || $this->offsetGet('is_virtual') ? 0 : $this->getShippingMethod()->getShippingRate($items),
-            'base_discount' => 0,
+            'base_discount' => $detail['Administrator'] ?? 0,
             'discount' => 0,
-            'discount_detail' => '',
+            'discount_detail' => $this->storage['discount_detail'],
             'base_tax' => 0,
             'tax' => 0
         ])->setData([

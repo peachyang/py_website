@@ -14,7 +14,7 @@ $items = $order->getItems();
         <div id="Product-details" class="tab-content">
             <div class="tab-pane fade in active margin-bj" id="all">
                 <ul class="col-xs-12 col-sm-12 title-nav name padding-5 font-12">
-                    <li class="col-xs-6 col-sm-6 text-left"><?php echo $this->translate('Order Number'), $order['increment_id'] ?></li>
+                    <li class="col-xs-6 col-sm-6 text-left"><?php echo $this->translate('Order ID'), $order['increment_id'] ?></li>
                     <li class="col-xs-6 col-sm-6 text-right">
                         <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
                         <span>(<?php echo $this->translate('Including Shipping Fee: %s', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>)</span>
@@ -90,7 +90,7 @@ $items = $order->getItems();
                             <li class="col-xs-3 col-sm-3"><?php echo $this->translate('Shipping Method', [], 'sales'); ?>：</li>
                             <li class="col-xs-9 col-sm-9"><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></li>
                             <li class="col-xs-3 col-sm-3"><?php echo $this->translate('Payment Method', [], 'sales'); ?>：</li>
-                            <li class="col-xs-9 col-sm-9"><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></li>
+                            <li class="col-xs-9 col-sm-9"><?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></li>
                         </ul>
                     </ul>
                     <ul class="col-xs-12 col-sm-12 font-12 padding-5 ">

@@ -4,7 +4,7 @@ namespace Seahinet\Lib\Session\SaveHandler;
 
 use Exception;
 use SessionHandlerInterface;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 
 /**
  * Handle session storage with database

@@ -17,14 +17,15 @@ $filters = $this->getFilters();
         </div>
     </form>
 </div>
-<table class="table">
+<table class="table orders-list">
     <thead>
         <tr class="text-center text-nowrap">
-            <th colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
-            <th><?php echo $this->translate('Price') ?></th>
-            <th><?php echo $this->translate('Qty') ?></th>
-            <th><?php echo $this->translate('Grand Total') ?></th>
-            <th><?php echo $this->translate('Action') ?></th>
+            <th colspan="2" class="text-center text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Price') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Qty') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Order Status') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Grand Total') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Action') ?></th>
         </tr>
     </thead>
     <?php if (count($collection)): ?>
@@ -37,7 +38,7 @@ $filters = $this->getFilters();
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                     <?php echo $this->getChild('pager')->setCollection($collection) ?>
                 </td>
             </tr>
@@ -45,7 +46,7 @@ $filters = $this->getFilters();
     <?php else: ?>
         <tbody>
             <tr>
-                <td colspan="6"><?php echo $this->translate('There are no orders in your store.') ?></td>
+                <td colspan="7" class="text-center"><?php echo $this->translate('There are no orders in your store with the condition.') ?></td>
             </tr>
         </tbody>
     <?php endif ?>

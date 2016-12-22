@@ -54,13 +54,13 @@ retailer_account:
                                 params: [{link:'retailer/product/release/',label:'Release Product',priority:4,group:'Product Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/product/sales/',label:'Sales of Product',priority:5,group:'Product Management'}]
+                                params: [{link:'retailer/product/selling/',label:'Selling Products',priority:5,group:'Product Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/product/stock/',label:'Stock',priority:6,group:'Product Management'}]
+                                params: [{link:'retailer/product/stock/',label:'Stock Products',priority:6,group:'Product Management'}]
                             -
                                 method: addLink
-                                params: [{link:'retailer/product/history/',label:'History Record',priority:7,group:'Product Management'}]
+                                params: [{link:'retailer/product/history/',label:'Release History',priority:7,group:'Product Management'}]
                             -
                                 method: addLink
                                 params: [{link:'retailer/store/view/',label:'View Store',priority:8,group:'Store Management'}]
@@ -287,7 +287,7 @@ retailer_sales_order_list:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\Sales\Order
-                        template: retailer/sales/order
+                        template: retailer/sales/order/list
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -371,7 +371,7 @@ retailer_sales_creditmemo_edit:
                     main:
                         type: Seahinet\Retailer\ViewModel\Sales\Edit\CreditMemo
                         template: retailer/sales/edit/creditmemo
-retailer_sales_products:
+retailer_selling_products:
     update: retailer_account
     root:
         children:
@@ -379,15 +379,17 @@ retailer_sales_products:
                 action:
                     -
                         method: setTitle
-                        params: Sales of Product
-                    -
-                        method: addScript
-                        params: frontend/js/retailer/product.js
+                        params: Selling Products
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Selling Products
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\SalesProducts
-                        template: retailer/salesProducts
+                        type: Seahinet\Retailer\ViewModel\Catalog\Product\Selling
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -399,15 +401,17 @@ retailer_stock_products:
                 action:
                     -
                         method: setTitle
-                        params: Stock
-                    -
-                        method: addScript
-                        params: frontend/js/retailer/product.js
+                        params: Stock Products
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Stock Products
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\SalesProducts
-                        template: retailer/stockProducts
+                        type: Seahinet\Retailer\ViewModel\Catalog\Product\Stock
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -419,15 +423,17 @@ retailer_history_products:
                 action:
                     -
                         method: setTitle
-                        params: Stock
-                    -
-                        method: addScript
-                        params: frontend/js/retailer/product.js
+                        params: Release History
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Release History
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\SalesProducts
-                        template: retailer/historyProducts
+                        type: Seahinet\Retailer\ViewModel\Catalog\Product\History
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -449,7 +455,7 @@ retailer_review:
                             - Review Management
                 children:
                     main:
-                        type: Seahinet\Retailer\ViewModel\Catalog\Grid\Review
+                        type: Seahinet\Retailer\ViewModel\Catalog\Review
                         template: retailer/catalog/review/list
                         children:
                             pager:
@@ -457,7 +463,7 @@ retailer_review:
             extra:
                 children:
                     reply:
-                        type: Seahinet\Retailer\ViewModel\Catalog\Grid\Review
+                        type: Seahinet\Retailer\ViewModel\Catalog\Review
                         template: retailer/catalog/review/reply
 retailer_products_release:
     update: retailer_account

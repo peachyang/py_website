@@ -43,29 +43,23 @@ class Order extends AbstractViewModel
         $attribute->load(true, true);
         $select->join(['tel_attr' => Address::ENTITY_TYPE . '_value_' . $attribute[0]['type']], new Expression('sales_order.shipping_address_id=tel_attr.entity_id AND tel_attr.language_id=' . $languageId . ' AND tel_attr.attribute_id=' . $attribute[0]['id']), ['tel' => 'value'], 'left');
         $data = $this->getQuery();
-        if (!empty($data['created_at'])) {
-            if (count($data['created_at']) == 2 && !empty($data['created_at'][0]) && !empty($data['created_at'][1])) {
-                $select->where->greaterThanOrEqualTo('created_at', $data['created_at'][0] . ' 00:00:00')
-                        ->lessThanOrEqualTo('created_at', $data['created_at'][1] . ' 23:59:59');
-            }
-            unset($data['created_at']);
+        if (!empty($data['created_at']) && count($data['created_at']) == 2 && !empty($data['created_at'][0]) && !empty($data['created_at'][1])) {
+            $select->where->greaterThanOrEqualTo('created_at', $data['created_at'][0] . ' 00:00:00')
+                    ->lessThanOrEqualTo('created_at', $data['created_at'][1] . ' 23:59:59');
         }
         if (!empty($data['track_number'])) {
             $track = new Track;
             $track->column(['order_id'])
                     ->where(['track_number' => $data['track_number']]);
             $collection->in('sales_order.id', $track);
-            unset($data['updated_at']);
         }
         if (!empty($data['recipient'])) {
             $data['recipient_attr.value'] = $data['recipient'];
-            unset($data['recipient']);
         }
         if (!empty($data['tel'])) {
             $data['tel_attr.value'] = $data['tel'];
-            unset($data['tel']);
         }
-        unset($data['store_id']);
+        unset($data['created_at'], $data['recipient'], $data['tel'], $data['track_number'], $data['store_id']);
         $this->filter($collection, $data, ['order' => 1]);
         return $collection;
     }
@@ -74,6 +68,10 @@ class Order extends AbstractViewModel
     {
         $data = $this->getQuery();
         return [
+            'page' => [
+                'type' => 'hidden',
+                'value' => $data['page'] ?? 1
+            ],
             'increment_id' => [
                 'type' => 'text',
                 'label' => 'Order ID',

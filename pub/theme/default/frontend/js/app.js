@@ -340,7 +340,7 @@
         if ($.fn.datepicker && $('[type=date]').length) {
             $('[type=date]').each(function () {
                 var param = {dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true};
-                if ($(this).parent().is('.date-range') && $(this).nextAll('[type=date]').length) {
+                if ($(this).parent().is('.range') && $(this).nextAll('[type=date]').length) {
                     param.onSelect = function () {
                         $(this).nextAll('.date').datepicker('option', 'minDate', $.datepicker.parseDate('yy-mm-dd', this.value));
                     };
@@ -354,5 +354,29 @@
                 $(this).attr({type: 'text', readonly: 'readonly'}).datepicker(param);
             });
         }
+        var tables = [];
+        $('[type=checkbox].selectall').each(function () {
+            var p = $(this).parents('.table').last();
+            if ($.inArray(p, tables) === -1) {
+                $(p).on('click', '[type=checkbox]', function () {
+                    var flag = this.checked;
+                    var parent = $(this).parents('.table').last();
+                    if ($(this).is('.selectall')) {
+                        $(parent).find('[type=checkbox]').not(this).each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (flag && !$(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (!flag && $(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    }
+                });
+                tables.push(p);
+            }
+        });
     });
 }));

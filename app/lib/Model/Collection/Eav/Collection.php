@@ -76,7 +76,7 @@ abstract class Collection extends AbstractCollection
 
     protected function loadFromIndexer()
     {
-        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, $this->select);
+        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, $this->select, ['noCache' => 1]);
     }
 
     protected function loadFromDb()

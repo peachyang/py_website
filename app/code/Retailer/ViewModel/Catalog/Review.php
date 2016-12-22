@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Retailer\ViewModel\Catalog\Grid;
+namespace Seahinet\Retailer\ViewModel\Catalog;
 
 use Seahinet\Catalog\Model\Collection\Product\Review as Collection;
 use Seahinet\Retailer\ViewModel\AbstractViewModel;

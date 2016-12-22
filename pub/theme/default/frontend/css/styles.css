@@ -4,9 +4,11 @@ body{min-width:320px}
 label[for]{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 input[type=number]{-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-.date-range{white-space:nowrap}
-.date-range .form-control{max-width:45%;max-width:calc(50% - 1em - 8px)}
-.date-range .hyphen:before{content:"-"}
+.range{white-space:nowrap}
+.range .form-control{max-width:45%;max-width:calc(50% - 1em - 8px)}
+.range .input-group{max-width:45%;max-width:calc(50% - 1em - 8px)}
+.range .input-group .form-control{max-width:none}
+.range .hyphen:before{content:"-"}
 .hidden,[hidden]{display:none!important}
 .global-notice .no-cookie{display:none}
 .no-cookies .global-notice .no-cookie{display:none}
@@ -401,8 +403,11 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .filters .fieldset .input-box .control-label{display:block;float:left;width:33.33333333%;padding:0 12px}
 .retailer-account .filters .fieldset .input-box .cell{display:block;float:left;width:66.66666666%;padding:0;line-height:21px}
 .retailer-account .filters .fieldset .input-box .form-control{width:100%;font-size:12px;height:21px;line-height:19px;padding:0 .75em}
+.retailer-account .filters .fieldset .input-box .input-group-addon{padding:0 .25em;font-size:12px;line-height:19px}
 .retailer-account .filters .fieldset .buttons-set{padding:0 12px}
 .retailer-account .filters .fieldset .btn{margin:10px 0;padding:5px 10px;color:#fff;font-size:14px;border-radius:3px}
+.retailer-account .table .actions a,.retailer-account .table .status a{display:block;margin:5px 0;font-size:12px;white-space:nowrap}
+.retailer-account .table .actions a:hover,.retailer-account .table .status a:hover{text-decoration:underline}
 .retailer-account-dashboard .profile{border:1px solid #dfe1e8;padding:20px 0}
 .retailer-account-dashboard .profile .info{border-right:1px dashed #ccc}
 .retailer-account-dashboard .profile .avatar{min-width:140px;text-align:center}
@@ -458,8 +463,6 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-sales-order-list .orders-list .description dt,.retailer-sales-order-list .table .description dd{display:inline}
 .retailer-sales-order-list .orders-list .description dt:after{content:": "}
 .retailer-sales-order-list .orders-list .description dd{margin-right:1em}
-.retailer-sales-order-list .orders-list .actions a,.retailer-sales-order-list .orders-list .status a{display:block;margin:5px 0;font-size:12px}
-.retailer-sales-order-list .orders-list .actions a:hover,.retailer-sales-order-list .orders-list .status a:hover{text-decoration:underline}
 .retailer-sales-order-list .orders-list .grand-total{color:#007dc6;font-size:16px}
 .retailer-sales-order-list .orders-list .grand-total span{display:block;color:#333;font-size:12px}
 .retailer-sales-order-view .page-content .alert-warning{border-radius:0;padding:0 30px;color:#000;font-weight:bold;margin-bottom:20px}

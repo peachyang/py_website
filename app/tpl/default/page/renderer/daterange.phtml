@@ -12,7 +12,7 @@ $to = isset($item['value'][1]) ? strtotime($item['value'][1]) : 0;
             <?php echo $this->translate($item['label']) ?>
         </label>
     <?php endif ?>
-    <div class="cell date-range">
+    <div class="cell range">
         <input type="date" name="<?php echo $key ?>" id="<?php echo $id ?>-from"<?php
         if (!isset($item['attrs']['class'])):
             ?> class="form-control date<?php if (isset($item['required'])): ?> required<?php endif ?> <?php

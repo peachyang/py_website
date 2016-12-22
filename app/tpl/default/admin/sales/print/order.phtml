@@ -70,7 +70,7 @@ $barcode = $this->getVariable('pdf')->serializeTCPDFtagParameters([$order['incre
     </tr>
     <tr class="background">
         <td class="colspan" colspan="2" align="center"></td>
-        <td class="colspan" colspan="2" align="center"><?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
+        <td class="colspan" colspan="2" align="center"><?php echo $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
     </tr>
     <tr>
         <td colspan="4" width="640px"></td>

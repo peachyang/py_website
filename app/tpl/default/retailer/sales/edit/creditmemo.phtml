@@ -66,7 +66,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">
-                <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+                <?php echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
             </div>
         </div>
         <div class="panel wide">
@@ -165,8 +165,7 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 </dl>
                 <div class="buttons-set text-right">
                     <a class="btn btn-reset" href="<?php echo $back_url; ?>" ><?php echo $this->translate('Back') ?></a>
-                    <button type="submit" class="btn btn-submit" onclick="if (!confirm('<?php echo $this->translate('Are you sure to refund this order?') ?>'))
-                                return false;">
+                    <button type="submit" class="btn btn-submit">
                         <span><?php echo $this->translate('Submit') ?></span>
                     </button>
                 </div>

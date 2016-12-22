@@ -10,7 +10,7 @@ use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 use Seahinet\Lib\Model\Collection\Language as Lcollection;
 
 /**

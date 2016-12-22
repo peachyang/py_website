@@ -242,7 +242,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .address-list .default_book .btn-Address{background: #cbecfe;border: 1px solid #007dc6;color: #007dc6;padding: 5px 20px;font-size: 12px;}
 .customer-account .page-content .table .sort-by th,.retailer-account .page-content .table .sort-by th{padding:5px 20px}
 .customer-account .page-content .address-list,.retailer-account .page-content .address-list{border:1px solid #eee}
-.customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;border: 1px solid #eee;}
+.customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;border:1px solid #eee;border-bottom:none}
 .customer-account .page-content .table .thead_body,.retailer-account .page-content .table .thead_body{border:1px solid #eee}
 .customer-account .page-content .table .thead_title,.retailer-account .page-content .table .thead_title{font-size:12px}
 .customer-account .page-content .color-blue,.retailer-account .page-content .color-blue{color:#007dc6;font-size:16px;font-weight:bold}
@@ -450,18 +450,40 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-shipping .page-content .input-box{margin: 15px 0px}
 .retailer-shipping .page-content .input-box .form-control{font-size: 12px}
 .retailer-shipping .page-content .input-box .comment{color: #555;font-size: 12px;line-height: 26px}
-.retailer-sales-order-list .table tbody td{border-bottom:1px solid #ddd}
-.retailer-sales-order-list .table tbody td:first-child{border-left:1px solid #ddd}
-.retailer-sales-order-list .table tbody td:last-child{border-right:1px solid #ddd}
-.retailer-sales-order-list .table .description{padding:0;border:none}
-.retailer-sales-order-list .table .description dl{margin:10px 0 00;padding:8px;background:#f1f1f1;border:1px solid #ddd;border-bottom:none}
-.retailer-sales-order-list .table .description dt,.retailer-sales-order-list .table .description dd{display:inline}
-.retailer-sales-order-list .table .description dt:after{content:": "}
-.retailer-sales-order-list .table .description dd{margin-right:1em}
-.retailer-sales-order-list .table .actions a{display:block;margin:5px 0;font-size:12px}
-.retailer-sales-order-list .table .actions a:hover{text-decoration:underline}
-.retailer-sales-order-list .table .grand-total{color:#007dc6;font-size:16px}
-.retailer-sales-order-list .table .grand-total span{display:block;color:#333;font-size:12px}
+.retailer-sales-order-list .orders-list tbody td{border-bottom:1px solid #ddd}
+.retailer-sales-order-list .orders-list tbody td:first-child{border-left:1px solid #ddd}
+.retailer-sales-order-list .orders-list tbody td:last-child{border-right:1px solid #ddd}
+.retailer-sales-order-list .orders-list .description{padding:0;border:none}
+.retailer-sales-order-list .orders-list .description dl{margin:10px 0 00;padding:8px;background:#f1f1f1;border:1px solid #ddd;border-bottom:none}
+.retailer-sales-order-list .orders-list .description dt,.retailer-sales-order-list .table .description dd{display:inline}
+.retailer-sales-order-list .orders-list .description dt:after{content:": "}
+.retailer-sales-order-list .orders-list .description dd{margin-right:1em}
+.retailer-sales-order-list .orders-list .actions a,.retailer-sales-order-list .orders-list .status a{display:block;margin:5px 0;font-size:12px}
+.retailer-sales-order-list .orders-list .actions a:hover,.retailer-sales-order-list .orders-list .status a:hover{text-decoration:underline}
+.retailer-sales-order-list .orders-list .grand-total{color:#007dc6;font-size:16px}
+.retailer-sales-order-list .orders-list .grand-total span{display:block;color:#333;font-size:12px}
+.retailer-sales-order-view .page-content .alert-warning{border-radius:0;padding:0 30px;color:#000;font-weight:bold;margin-bottom:20px}
+.retailer-sales-order-view .page-content .alert-warning .content{padding:20px 0}
+.retailer-sales-order-view .page-content .alert-warning .content+.content{border-top:1px solid #ddd}
+.retailer-sales-order-view .page-content .nav-tabs{border-bottom:1px solid #aec7e5;padding-left:20px}
+.retailer-sales-order-view .page-content .nav-tabs li{padding-top:4px;vertical-align:bottom;transition:padding linear .15s}
+.retailer-sales-order-view .page-content .nav-tabs li.active{padding-top:0}
+.retailer-sales-order-view .page-content .nav-tabs li a{border-color:#aec7e5;padding:1px 36px;background:#e8f2ff;transition:padding linear .15s}
+.retailer-sales-order-view .page-content .nav-tabs li.active a{padding:3px 36px;background:#fff;border-bottom-color:transparent}
+.retailer-sales-order-view .page-content .tab-pane{border:1px solid #aec7e5;padding:10px 20px;border-top:none}
+.retailer-sales-order-view .page-content #address .title{border-bottom:1px solid #eee;font-size:18px}
+.retailer-sales-order-view .page-content #address dt{width:125px;float:left;clear:both;font-weight:bold;line-height:34px}
+.retailer-sales-order-view .page-content #address dt:after{content:": "}
+.retailer-sales-order-view .page-content #address dd{max-width:calc(100% - 120px);float:left;line-height:34px}
+.retailer-sales-order-view .page-content .order-details{border:none;margin:10px 0 0}
+.retailer-sales-order-view .page-content .order-details thead{border-color:#ddd}
+.retailer-sales-order-view .page-content .order-details thead th{background:#e8f2ff}
+.retailer-sales-order-view .page-content .order-details tbody td{border:1px solid #ddd}
+.retailer-sales-order-view .page-content .order-details tfoot td{border:none}
+.retailer-sales-order-view .page-content .order-details .totals dt{width:calc(100% - 100px);float:left;clear:both}
+.retailer-sales-order-view .page-content .order-details .totals dt:after{content:": "}
+.retailer-sales-order-view .page-content .order-details .totals dd{float:right;width:96px;text-align:left}
+.retailer-sales-order-view .page-content .order-details .totals dd strong{color:#f50;font-size:16px;font-weight:bold}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}
@@ -657,7 +679,7 @@ dl.options dd{float:left;margin-left:4px}
 .zoomMask{position:absolute;background:url('data:image/jpg;base64, iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAAxJREFUeF5jaGBgAAABhACBADvwOQAAAABJRU5ErkJggg==') repeat scroll 0 0 transparent;cursor:crosshair;z-index:9}
 .catalog-product div.zoomDiv{z-index:999;position:absolute;top:0px;left:0px;width:200px;height:200px;background:#ffffff;border:1px solid #CCCCCC;display:none;text-align:center;overflow:hidden}
 .catalog-product div.zoomMask{position:absolute;cursor:move;z-index:1}
-/*=S Stone's CSS 
+/*=S Stone's CSS */
 .pad-2{padding:2px}
 .pad-5{padding:5px}
 .pad-10{padding:10px}

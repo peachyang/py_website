@@ -315,27 +315,9 @@ class OrderController extends AuthActionController
                     $order = new Model;
                     $order->load($data['id']);
                     if ($order->canCancel()) {
-                        $currency = $order->getCurrency();
-                        $discount = $currency->convert($data['discount']);
-                        if ((float) $order->offsetGet('discount')) {
-                            $detail = json_decode($order->offsetGet('discount_detail'), true);
-                            $detail['Administrator'] = $data['discount'];
-                            $baseDiscount = 0;
-                            foreach ($detail as $price) {
-                                $baseDiscount += $price;
-                            }
-                            $order->setData([
-                                'base_discount' => $baseDiscount,
-                                'discount' => $currency->convert($baseDiscount),
-                                'discount_detail' => json_encode($detail)
-                            ]);
-                        } else {
-                            $order->setData([
-                                'base_discount' => $data['discount'],
-                                'discount' => $discount,
-                                'discount_detail' => '{"Administrator":' . $data['discount'] . '}'
-                            ]);
-                        }
+                        $detail = json_decode($order->offsetGet('discount_detail'), true);
+                        $detail['Administrator'] = $data['discount'];
+                        $order->setData('discount_detail', json_encode($detail));
                         $order->collateTotals();
                         $result['reload'] = 1;
                         return $this->response($result, ':ADMIN/sales_order/view/?id=' . $data['id']);

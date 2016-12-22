@@ -4,9 +4,9 @@ namespace Seahinet\Lib;
 
 use Pimple\Container as PimpleContainer;
 use Pimple\ServiceProviderInterface;
+use Seahinet\Lib\Db\Adapter;
 use Seahinet\Lib\Http\Request;
 use Seahinet\Lib\Http\Response;
-use Zend\Db\Adapter\Adapter;
 
 /**
  * Pimple service provider interface.

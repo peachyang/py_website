@@ -4,10 +4,10 @@ $inquireies = $this->getInquireies();
 <div class="container main_article_content text-center">
     <div class="columns">
         <h3><?php echo $this->translate('Order Inquire'); ?></h3>
-        <p><?php echo $this->translate('Enter your order number and billing address to find your order.'); ?></p>
+        <p><?php echo $this->translate('Enter your Order ID and billing address to find your order.'); ?></p>
         <form action="<?php echo $this->getBaseUrl() ?>sales/inquire/inquire/" id="orderStatusForm" method="post" novalidate="novalidate">
             <fieldset>
-                <label class="text-left" for="orderNumber"><?php echo $this->translate('Order Number'); ?>:</label><br />
+                <label class="text-left" for="orderNumber"><?php echo $this->translate('Order ID'); ?>:</label><br />
                 <input class="required" data-required="true" id="increment_id" name="increment_id" type="text" />
             </fieldset>
 

@@ -277,9 +277,6 @@ retailer_sales_order_list:
                     -
                         method: addScript
                         params: frontend/js/jquery-ui.min.js
-                    -
-                        method: addScript
-                        params: frontend/js/retailer/product.js
             content:
                 action:
                     -
@@ -294,6 +291,23 @@ retailer_sales_order_list:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
+retailer_sales_order_view:
+    update: retailer_account
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/sales/order/view
+            extra:
+                children:
+                    address:
+                        type: Seahinet\Retailer\ViewModel\Sales\Edit\Address
+                        template: admin/customer/addressForm
+                    discount:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: retailer/sales/edit/discount
 retailer_sales_shipment_edit:
     update: retailer_account
     root:
@@ -417,23 +431,6 @@ retailer_history_products:
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
-retailer_order_view:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Retailer Order View
-                    -
-                        method: addScript
-                        params: frontend/js/retailer/product.js
-            content:
-                children:
-                    main:
-                        type: Seahinet\Retailer\ViewModel\Product
-                        template: retailer/orderview
 retailer_review:
     update: retailer_account
     root:

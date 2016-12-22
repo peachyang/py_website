@@ -88,12 +88,7 @@ $inquireies = $this->getInquireies();
                                             <?php if ($inquire->canRefund()): ?>
                                             <a href="<?php echo $this->getBaseUrl('sales/inquire/apply/?id='.$inquire['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>                      
                                             <?php endif ?>
-                                            <br>
-                                            <?php if ($inquire->canReview()): ?>
-                                                <p><a href="<?php echo $this->getBaseUrl('sales/inquire/review/?id=' . $inquire['id']) ?>"><?php echo $this->translate('Review') ?></a></p>
-                                            <?php endif ?>
-                                            <a href="<?php echo $this->getBaseUrl('sales/inquire/view/?id=' . $inquire['id']) ?>"><?php echo $this->translate('View Details') ?></a>
-                                        </td>
+                                         </td>
                                         <?php
                                         $flag = false;
                                     endif;

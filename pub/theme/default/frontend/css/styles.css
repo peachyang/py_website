@@ -433,7 +433,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-category .categories-list .action{width:30%;float:right;text-align:right;line-height:30px}
 .retailer-category .categories-list .action a{padding: 5px}
 .retailer-category .categories-list .action .move{cursor:move}
-.retailer-category .categories-list .children{clear:both;padding-left:100px}
+.retailer-category .categories-list .children{clear:both;padding-left:50px}
 .retailer-category .categories-list .children .category-name:before{content:" ";display:inline-block;width:30px;height:15px;vertical-align:top;border-left:1px solid;border-bottom:1px solid}
 .retailer-category .categories-list .ui-sortable-placeholder{display:block;width:100%;height:30px;border:1px dashed #ccc}
 .retailer-category .category-edit{padding: 20px 0}

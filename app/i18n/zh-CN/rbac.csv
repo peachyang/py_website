@@ -109,7 +109,7 @@
 "Admin\Customer\Media::edit","编辑社交媒体"
 "Admin\Customer\Media::index","查看社交媒体"
 "Admin\Customer\Media::save","保存社交媒体"
-"Admin\Dashboard::index","仪表盘"
+"Admin\Dashboard::index","统计图表"
 "Admin\Dashboard::visitors","访客记录"
 "Admin\Dataflow\Abstract::prepareImport","准备导入数据"
 "Admin\Dataflow\Address::export","导出顾客地址"

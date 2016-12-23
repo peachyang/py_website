@@ -55,7 +55,8 @@ $currency = $order->getCurrency();
                 <thead class="text-nowrap">
                     <tr>
                         <th colspan="2"><?php echo $this->translate('Product') ?></th>
-                        <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                  		<th class="text-center"></th> 
+                        <!-- <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th> -->
                         <th class="text-center"><?php echo $this->translate('Price', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Qty', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Total', [], 'sales') ?></th>
@@ -95,7 +96,8 @@ $currency = $order->getCurrency();
                                     </dl>
                                 <?php endif ?>
                             </td>
-                            <td class="text-center"><?php echo $item['sku'] ?></td>
+                            <td class="text-center"></td>
+                            <!--  <td class="text-center"><?php echo $item['sku'] ?></td>-->
                             <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
                             <td class="text-center"><?php echo (float) $item['qty'] ?></td>
                             <td class="text-center"><?php echo $currency->format($item['total']) ?></td>

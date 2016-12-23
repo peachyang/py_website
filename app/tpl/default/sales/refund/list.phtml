@@ -14,7 +14,7 @@ $currency = $this->getCurrency();
         </colgroup>
         <thead>
             <tr class="text-nowrap">
-                <th class="text-left" colspan="2"><?php echo $this->translate('Product Infomation') ?></th>
+                <th class="text-left" colspan="2"><?php echo $this->translate('Details of the refund') ?></th>
                 <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Price') ?></th>
                 <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Refund Qty') ?></th>
                 <th class="text-center col-lg-1 col-md-1"><?php echo $this->translate('Last Modified') ?></th>
@@ -79,7 +79,7 @@ $currency = $this->getCurrency();
                                 <span><?php echo date('Y-m-d<\b\r />H:i:s', strtotime($application['updated_at'])) ?></span>
                             </td>
                             <td class="text-center action text-nowrap" rowspan="<?php echo count($items) ?>">
-                                <a href="<?php echo $this->getBaseUrl($this->getViewUrl()), '?id=', $application->getId() ?>"><?php echo $this->translate('View Details') ?></a>
+                                <a href="<?php echo $this->getBaseUrl($this->getViewUrl()), '?id=', $application->getId() ?>"><?php echo $this->translate('Refund Details') ?></a>
                                 <a href="<?php echo $this->getBaseUrl($this->getOrderUrl()), '?id=', $order->getId() ?>"><?php echo $this->translate('Order Details') ?></a>
                             </td>
                             <?php

@@ -155,6 +155,10 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
 .btn:focus{outline:none}
 .btn-submit,.btn-reset,.btn-delete,.btn-theme,.btn-add{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
+.btn-submit{background:#02A0E9}
+.btn-submit:hover{background: #028ccc}
+.btn-theme,.btn-reset,.btn-delete{border: 1px solid #00A0E9;color:#ffffff}
+.btn-theme:hover,.btn-reset:hover,.btn-delete:hover{background:#028ccc}
 .btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus,.btn-theme:hover,.btn-theme:focus{background:#028ccc;text-decoration:none}
 .admin-login{background:#9c9d9d}
 .admin-login .page-title{font-size:18px;line-height:126px;text-indent:45px;text-indent:2.8125rem;color:#000}
@@ -207,6 +211,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav .dropdown{position:static}
 .admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#333;min-width:146px;height:100%;padding-top:54px}
 .admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d;white-space:nowrap;padding-right:10px}
+.admin .nav-container .nav .dropdown-menu>.item a.active{background: #4e4e4e}
+
 .admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";transition:margin-right ease .5s;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
 .admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px}
 .admin .nav-container .nav .dropdown-menu>.item a:focus,.admin .nav-container .nav .dropdown-menu>.item a:hover{text-decoration:none;color:#fff}

@@ -64,7 +64,8 @@ $shipment = $this->getVariable('model');
                 <thead class="text-nowrap">
                     <tr>
                         <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
-                        <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                        <th class="text-center"></th>
+                  		<!--  <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th>-->
                         <th><?php echo $this->translate('Options', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Price', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Qty', [], 'sales') ?></th>
@@ -75,7 +76,8 @@ $shipment = $this->getVariable('model');
                     <?php foreach ($shipment->getItems() as $item): ?>
                         <tr<?php if (isset($item['id'])): ?> data-id="<?php echo $item['id'] ?>"<?php endif ?>>
                             <td><?php echo $item['product_name'] ?></td>
-                            <td class="text-center"><?php echo $item['sku'] ?></td>
+                             <td class="text-center"></td>
+                           <!--  <td class="text-center"><?php echo $item['sku'] ?></td> -->
                             <td>
                                 <?php
                                 $options = json_decode($item['options'], true);

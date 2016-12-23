@@ -3,14 +3,11 @@ $order = $this->getVariable('order');
 ?>
 <tr>
     <th colspan="8" class="description">
-        <dl>
-            <dt><?php echo $this->translate('Order ID') ?></dt>
-            <dd><?php echo $order['increment_id'] ?></dd>
-            <dt><?php echo $this->translate('Recipient') ?></dt>
-            <dd><?php echo $order['recipient'] ?></dd>
-            <dt><?php echo $this->translate('Placed at') ?></dt>
-            <dd><?php echo $order['created_at'] ?></dd>
-        </dl>
+        <div class="clearfix">
+            <div class="col-xs-4"><?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?></div>
+            <div class="col-xs-4"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
+            <div class="col-xs-4"><?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?></div>
+        </div>
     </th>
 </tr>
 <?php
@@ -24,9 +21,9 @@ foreach ($items as $item):
     ?>
     <tr>
         <td>
-            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="50" />
+            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="65" />
         </td>
-        <td>
+        <td class="col-md-3 col-xs-3 col-sm-3">
             <h4 class="product-name"><?php echo $product['name'] ?></h4>
             <?php
             $options = json_decode($item['options'], true);
@@ -53,6 +50,7 @@ foreach ($items as $item):
         </td>
         <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
         <td class="text-center"><?php echo (float) $item['qty'] ?></td>
+        <td class="text-center"></td>
         <?php if ($flag): ?>
             <td rowspan="<?php echo $count ?>" class="status text-center">
                 <?php if ($application = $order->getRefundApplication()): ?>
@@ -116,5 +114,7 @@ foreach ($items as $item):
             $flag = false;
         endif;
         ?>
+       
     </tr>
+   <tr class="tr-height"></tr>
 <?php endforeach ?>

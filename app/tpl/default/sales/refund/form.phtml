@@ -57,7 +57,7 @@ $currency = $this->getCurrency();
                             <td>
                                 <h4 class="product-name"><?php echo $item['product_name'] ?></h4>
                                 <?php
-                                $options = json_decode($item['options'], true);
+                               $options = json_decode($item['options'], true);
                                 if ($item['product_id'] && count($options)):
                                     ?>
                                     <dl class="options">

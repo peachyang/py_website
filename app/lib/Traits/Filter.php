@@ -2,6 +2,7 @@
 
 namespace Seahinet\Lib\Traits;
 
+use Seahinet\Lib\Model\AbstractCollection;
 use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Collection;
 
@@ -12,13 +13,16 @@ trait Filter
 {
 
     /**
-     * @param \Zend\Db\Sql\Select|\Seahinet\Lib\Model\AbstractCollection $select
+     * @param \Zend\Db\Sql\Select|AbstractCollection $select
      * @param array $condition
      * @param array $skip
      * @param callable $extra
      */
     protected function filter($select, $condition = [], $skip = [], $extra = null)
     {
+        if($select instanceof AbstractCollection){
+            $select = $select->getSelect();
+        }
         if (!isset($skip['limit'])) {
             if (isset($condition['limit']) && $condition['limit'] === 'all') {
                 $select->reset('limit')->reset('offset');

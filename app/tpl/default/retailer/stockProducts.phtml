@@ -64,65 +64,70 @@ $filter = $this->getVariable('filter');
         </table>
         <div class="clearfix mg-bottom-10"></div>
         <?php
-        foreach ($sales_products as $sales_product) {
-            ?>
-            <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
-                <table class="list-info">
-                    <?php
-                    $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
-                    ?>
-                    <tr>
-                        <td style="width: 45%;">
-                            <div class="recommend">
-                                <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
-                            </div>
+        if (count($sales_products)) {
+            foreach ($sales_products as $sales_product) {
+                ?>
+                <div class="transaction-list-sales" data-id="<?php echo $sales_product['id']; ?>">
+                    <table class="list-info">
+                        <?php
+                        $thumbnail = $this->getProduct($sales_product['id'])->getThumbnail();
+                        ?>
+                        <tr>
+                            <td style="width: 45%;">
+                                <div class="recommend">
+                                    <input type="checkbox" data-id="<?php echo $sales_product['id']; ?>">
+                                </div>
 
-                            <div class="product-pic">
-                                <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>">
-                                    <?php if (strpos($thumbnail, '//') === false) { ?>
-                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
-                                    <?php } else { ?>
-                                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
-                                    <?php } ?>
-                                </a>
-                            </div>
-                            <div class="product-title">
-                                <p>
-                                    <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name'] ?>">
-                                        <span><?php echo $sales_product['name'] ?></span>
+                                <div class="product-pic">
+                                    <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>">
+                                        <?php if (strpos($thumbnail, '//') === false) { ?>
+                                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
+                                        <?php } else { ?>
+                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
+                                        <?php } ?>
                                     </a>
-                                </p>
-                            </div>
-                        </td>
-                        <td style="width: 14%;">
-                            <div>
-                                <p class="text-center">
-                                    <span class="money"><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
-                                </p>
-                            </div>
-                        </td>
-                        <td style="width: 11%;">
-                            <div>
-                                <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
-                            </div>
-                        </td>
-                        <td class="border-right text-center" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
-                        <td class="border-right" style="width: 15%;">
-                            <div>
-                                <p class="text-center">
+                                </div>
+                                <div class="product-title">
+                                    <p>
+                                        <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name'] ?>">
+                                            <span><?php echo $sales_product['name'] ?></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </td>
+                            <td style="width: 14%;">
+                                <div>
+                                    <p class="text-center">
+                                        <span class="money"><?php echo $this->getCurrency()->format($sales_product['price']); ?></span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td style="width: 11%;">
+                                <div>
+                                    <p class="text-center"><?php echo $this->translate('%d', [$this->getInventory($sales_product['id'], $sales_product['sku'])]); ?></p>
+                                </div>
+                            </td>
+                            <td class="border-right text-center" style="width: 15%;"><?php echo empty($sales_product['created_at']) ? '&nbsp;' : $sales_product['created_at']; ?></td>
+                            <td class="border-right" style="width: 15%;">
+                                <div>
+                                    <p class="text-center">
 
-                                    <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" >编辑商品</a></span>
+                                        <span class="control-right" ><a href="<?php echo $this->getBaseUrl('retailer/product/release?id=' . $sales_product['id']) ?>" class="control-right" >编辑商品</a></span>
 
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <?php
+            }
+        } else {
+            ?>
+        <p class="text-center" style="line-height: 50px"><?php echo $this->translate('No record of historical goods'); ?></p>
             <?php
         }
         ?>
-
         <div>
             <table class="table table-title">
                 <tr style="background-color:#F1F2F4;">

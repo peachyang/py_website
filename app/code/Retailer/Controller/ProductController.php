@@ -5,44 +5,34 @@ namespace Seahinet\Retailer\Controller;
 use Exception;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Catalog\Model\Collection\Warehouse;
 use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Retailer\Model\Retailer as Retailer;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
 use Seahinet\Lib\Model\Eav\Type;
-use Zend\Db\TableGateway\TableGateway;
-use Seahinet\Lib\Model\Collection\Language as Lcollection;
+use Seahinet\Lib\Model\Collection\Language;
 
-/**
- * Retailer submenu products management controller
- * 
- */
 class ProductController extends AuthActionController
 {
+    
+    use \Seahinet\Lib\Traits\DataCache;
 
-    private $searchable;
-
-    public function indexAction()
+    public function sellingAction()
     {
-        $segment = new Segment('customer');
-
-        if ($customerId = $segment->get('customer')->getId()) {
-            $customer = new Cmodel;
-            $customer->load($customerId);
-            $root = $this->getLayout('retailer_store_settings');
-            $root->getChild('main', true)->setVariable('customer', $customer);
-            return $root;
-        }
-        return $root;
+        return $this->getLayout('retailer_selling_products');
     }
 
-    /**
-     * releaseAction  
-     * Show release product view
-     * 
-     * @access public 
-     * @return object 
-     */
+    public function stockAction()
+    {
+        return $this->getLayout('retailer_stock_products');
+    }
+
+    public function historyAction()
+    {
+        return $this->getLayout('retailer_history_products');
+    }
+
     public function releaseAction()
     {
         $query = $this->getRequest()->getQuery();
@@ -65,58 +55,6 @@ class ProductController extends AuthActionController
         return $root;
     }
 
-    /**
-     * salesAction  
-     * Show the list of under sale products
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function salesAction()
-    {
-        $root = $this->getLayout('retailer_sales_products');
-        $root->getChild('main', true)->setVariable('subtitle', 'Sales of Product')->setVariable('filter', $this->getRequest()->getQuery());
-        return $root;
-    }
-
-    /**
-     * stockAction  
-     * Show the list of products in stock
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function stockAction()
-    {
-        $root = $this->getLayout('retailer_stock_products');
-        $root->getChild('main', true)->setVariable('subtitle', 'Stock')->setVariable('filter', $this->getRequest()->getQuery());
-        return $root;
-    }
-
-    /**
-     * historyAction  
-     * Show the list of history products record
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function historyAction()
-    {
-        $root = $this->getLayout('retailer_history_products');
-        $order = Array(
-            'type' => 'history'
-        );
-        $root->getChild('main', true)->setVariable('subtitle', 'History Record')->setVariable('filter', $this->getRequest()->getQuery());
-        return $root;
-    }
-
-    /**
-     * saveAction  
-     * Save new product
-     * 
-     * @access public 
-     * @return object 
-     */
     public function saveAction()
     {
         $result = ['error' => 0, 'message' => []];
@@ -171,7 +109,7 @@ class ProductController extends AuthActionController
                 }
                 try {
                     $model->save();
-                    $languages = new Lcollection;
+                    $languages = new Language;
                     $languages->columns(['id']);
                     $languages->load(true, false);
                     foreach ($languages as $language) {
@@ -224,115 +162,184 @@ class ProductController extends AuthActionController
         $indexer->replace('catalog_search', $languageId, [$data], ['id' => $id]);
     }
 
-    /**
-     * popupAction  
-     * Popup resource management window
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function popupAction()
+    public function withdrawAction()
     {
-        return $this->getLayout('retailer_popup_images_list');
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $warehouses = new Warehouse;
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        if ($product->getId() && $product['store_id'] == $this->getRetailer()['store_id']) {
+                            foreach ($warehouses as $warehouse) {
+                                $warehouse->setInventory(['status' => 0] + $warehouse->getInventory($id));
+                            }
+                        }
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $this->flushList(Model::ENTITY_TYPE);
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been withdrawed.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
     }
 
-    /**
-     * statusAction  
-     * Ajax to change stock status.
-     * Change the data of status in table warehouse_inventory status field
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function statusAction()
+    public function replenishAction()
     {
-        $form_data = $this->getRequest()->getPost();
-        $result = [];
-        if (empty($form_data) || empty($form_data['product_ids'])) {
-            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
-            return $result;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $warehouses = new Warehouse;
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        if ($product->getId() && $product['store_id'] == $this->getRetailer()['store_id']) {
+                            foreach ($warehouses as $warehouse) {
+                                $warehouse->setInventory(['status' => 1] + $warehouse->getInventory($id));
+                            }
+                        }
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $this->flushList(Model::ENTITY_TYPE);
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been replenished.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
         }
-        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
-
-        $warehouse_inventory = new TableGateway(array('wi' => 'warehouse_inventory'), $this->getContainer()->get('dbAdapter'));
-        $update = $warehouse_inventory->update(['status' => $form_data['type']], ['product_id' => $form_data['product_ids']]);
-        if ($form_data['type'] == 1) {
-            $message = '%d product(s) have put on shelves successfully.';
-        } else {
-            $message = '%d product(s) have pull off shelves successfully.';
-        }
-        if ($update > 0) {
-            $result['message'][] = ['message' => $this->translate($message, [$update]), 'level' => 'success'];
-        }
-        echo json_encode($result);
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
     }
 
-    /**
-     * removeAction  
-     * Ajax to change product status.
-     * Change the data of status in table product_*_index status field
-     * 
-     * @access public 
-     * @return object 
-     */
-    public function removeAction()
+    public function deleteAction()
     {
-        $form_data = $this->getRequest()->getPost();
-        $result = [];
-        if (empty($form_data) || empty($form_data['product_ids'])) {
-            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
-            return $result;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        $product->setData('status', 0)->save();
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been deleted.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
         }
-        $products_count = count($form_data['product_ids']);
-        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
-
-        $languages = new Lcollection;
-        foreach ($languages as $language) {
-            $table_name = 'product_' . $language['id'] . '_index';
-            $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
-            $product->update(['status' => $form_data['type']], ['id' => $form_data['product_ids']]);
-        }
-        if ($form_data['type'] == 1) {
-            $message = '%d product(s) have been recover successfully.';
-        } else {
-            $message = '%d product(s) have been removed successfully.';
-        }
-        $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
-        echo json_encode($result);
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
     }
 
-    /**
-     * recommendAction  
-     * Ajax to change product status.
-     * Change the data of status in table warehouse_inventory status field
-     * 
-     * @access public 
-     * @return object 
-     */
+    public function resellAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        $product->setData('status', 1)->save();
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
+    }
+
     public function recommendAction()
     {
-        $form_data = $this->getRequest()->getPost();
-        $result = [];
-        if (empty($form_data) || empty($form_data['product_ids'])) {
-            $result['message'][] = ['message' => 'Invalid data', 'level' => 'danger'];
-            return $result;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        $product->setData('recommended', 1)->save();
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
         }
-        $products_count = count($form_data['product_ids']);
-        $form_data['type'] = empty($form_data['type']) ? 0 : $form_data['type'];
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
+    }
 
-        $languages = new Lcollection;
-        foreach ($languages as $language) {
-            $table_name = 'product_' . $language['id'] . '_index';
-            $product = new TableGateway($table_name, $this->getContainer()->get('dbAdapter'));
-            $product->update(['recommend' => $form_data['type']], ['id' => $form_data['product_ids']]);
+    public function cancelRecommendAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $result = $this->validateForm($data, ['id']);
+            if ($result['error'] === 0) {
+                $count = 0;
+                $result['removeLine'] = [];
+                try {
+                    foreach ((array) $data['id'] as $id) {
+                        $product = new Model;
+                        $product->load($id);
+                        $product->setData('recommended', 0)->save();
+                        $result['removeLine'][] = $id;
+                        $count ++;
+                    }
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
+                } finally {
+                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                }
+            }
         }
-        if ($form_data['type'] == 1) {
-            $message = '%d product(s) have been recommended successfully.';
-        } else {
-            $message = '%d product(s) have been unrecommended successfully.';
-        }
-        $result['message'][] = ['message' => $this->translate($message, [$products_count]), 'level' => 'success'];
-        echo json_encode($result);
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/account/', 'retailer');
     }
 
 }

@@ -80,7 +80,8 @@ class Mailer extends Swift_Mailer
      */
     public function send(\Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        return 1?true:parent::send($message, $failedRecipients);
+        return $this->getContainer()->get('config')['email/transport/enable'] ?
+                parent::send($message, $failedRecipients) : true;
     }
-    
+
 }

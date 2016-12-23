@@ -11,7 +11,7 @@ if (isset($item['value']) && is_string($item['value'])) {
     $item['value'] = $value;
 }
 ?>
-<div class="input-box">
+<div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
         <label for="<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
             <?php echo $this->translate($item['label']) ?>

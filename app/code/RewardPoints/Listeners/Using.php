@@ -61,7 +61,7 @@ class Using implements ListenerInterface
         $model = $event['model'];
         if ($config['rewardpoints/general/enable'] && $config['rewardpoints/using/rate'] && $model->offsetGet('customer_id')) {
             $points = $model->getAdditional('rewardpoints');
-            if ($points) {
+            if ($points && $model['base_discount'] < json_decode($model['discount_detail'], true)['Promotion']) {
                 $record = new Record([
                     'customer_id' => $model->offsetGet('customer_id'),
                     'order_id' => $model->getId(),

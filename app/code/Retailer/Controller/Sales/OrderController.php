@@ -23,7 +23,7 @@ class OrderController extends AuthActionController
     {
         $segment = new Segment('customer');
         $retailer = new Retailer;
-        $retailer->load($segment->get('customer'), 'customer_id');
+        $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $collection = new Collection;
         $collection->columns(['count' => new Expression('count(1)')])
                 ->where(['store_id' => $retailer->offsetGet('store_id')]);
@@ -67,16 +67,22 @@ class OrderController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_sales_order_list');
-        return $root;
+        return $this->getLayout('retailer_sales_order_list');
     }
 
     public function viewAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {
-            return $this->getLayout('admin_sales_order_view');
+            $root = $this->getLayout('retailer_sales_order_view');
+            $order = new Model;
+            $order->load($id);
+            if ($order->getId()) {
+                $root->getChild('head')->setTitle($this->translate('Order') . ' #' . $order['increment_id']);
+                $root->getChild('main', true)->setVariable('order', $order);
+                return $root;
+            }
         }
-        return $this->notFoundAction();
+        return $this->redirectReferer('retailer/sales_order/');
     }
 
     public function cancelAction()
@@ -281,7 +287,7 @@ class OrderController extends AuthActionController
                 }
             }
         }
-        return $this->response($result ?? [], ':ADMIN/sales_order/');
+        return $this->response($result ?? [], 'retailer/sales_order/');
     }
 
     public function saveDiscountAction()
@@ -294,27 +300,9 @@ class OrderController extends AuthActionController
                     $order = new Model;
                     $order->load($data['id']);
                     if ($order->canCancel()) {
-                        $currency = $order->getCurrency();
-                        $discount = $currency->convert($data['discount']);
-                        if ((float) $order->offsetGet('discount')) {
-                            $detail = json_decode($order->offsetGet('discount_detail'), true);
-                            $detail['Administrator'] = $data['discount'];
-                            $baseDiscount = 0;
-                            foreach ($detail as $price) {
-                                $baseDiscount += $price;
-                            }
-                            $order->setData([
-                                'base_discount' => $baseDiscount,
-                                'discount' => $currency->convert($baseDiscount),
-                                'discount_detail' => json_encode($detail)
-                            ]);
-                        } else {
-                            $order->setData([
-                                'base_discount' => $data['discount'],
-                                'discount' => $discount,
-                                'discount_detail' => '{"Administrator":' . $data['discount'] . '}'
-                            ]);
-                        }
+                        $detail = $order->offsetGet('discount_detail') ? json_decode($order->offsetGet('discount_detail'), true) : [];
+                        $detail['Administrator'] = $data['discount'];
+                        $order->setData('discount_detail', json_encode($detail));
                         $order->collateTotals();
                         $result['reload'] = 1;
                         return $this->response($result, ':ADMIN/sales_order/view/?id=' . $data['id'], 'retailer');
@@ -326,7 +314,7 @@ class OrderController extends AuthActionController
                 }
             }
         }
-        return $this->response($result ?? [], ':ADMIN/sales_order/');
+        return $this->response($result ?? [], 'retailer/sales_order/');
     }
 
     public function printAction()

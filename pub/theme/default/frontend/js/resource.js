@@ -219,7 +219,7 @@
                     var name = $(o).text();
                     if (name && name !== $(o).data('old-name')) {
                         $.post(GLOBAL.BASE_URL + (GLOBAL.ADMIN_PATH ? GLOBAL.ADMIN_PATH + '/resource_resource/rename/' : 'retailer/resource/rename/'),
-                                'id=' + p.data('id') + '&pid=' + $('.resource-explorer .nav a.active').data('id') + (p.is('.folder') ? '&type=f&name=' : '&type=r&name=') + $(this).text() + '&csrf=' + $('.resource-explorer .toolbar').data('csrf'), function (r) {
+                                'id=' + p.attr('data-id') + '&pid=' + $('.resource-explorer .nav a.active').data('id') + (p.is('.folder') ? '&type=f&name=' : '&type=r&name=') + $(this).text() + '&csrf=' + $('.resource-explorer .toolbar').data('csrf'), function (r) {
                             if (r.error) {
                                 if ($(o).is('[data-old-name]')) {
                                     $(o).text($(o).data('old-name'));

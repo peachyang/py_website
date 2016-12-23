@@ -133,20 +133,8 @@ final class Bootstrap
         static::$eventDispatcher = static::getContainer()->get('eventDispatcher');
         if (!empty($config['event'])) {
             foreach ($config['event'] as $name => $events) {
-                if (!is_array($events)) {
-                    $events = [$events];
-                }
-                uasort($events, function($a, $b) {
-                    if (!isset($a['priority'])) {
-                        $a['priority'] = 0;
-                    }
-                    if (!isset($b['priority'])) {
-                        $b['priority'] = 0;
-                    }
-                    return $a['priority'] <=> $b['priority'];
-                });
-                foreach ($events as $event) {
-                    static::$eventDispatcher->addListener($name, ($event['listener'] ?? $event), $event['priority'] ?? 0);
+                foreach ((array) $events as $event) {
+                    static::$eventDispatcher->addListener($name, ($event['listener'] ?? $event), -(int) ($event['priority'] ?? 0));
                 }
             }
         }
@@ -255,7 +243,7 @@ final class Bootstrap
      */
     public static function isMobile()
     {
-        if (is_null(self::$isMobile)) {
+        if (is_null(self::$isMobile) && isset($_SERVER['HTTP_USER_AGENT'])) {
             self::$isMobile = preg_match('/iPhone|iPod|BlackBerry|Palm|Googlebot-Mobile|Mobile|mobile|mobi|Windows Mobile|Safari Mobile|Android|Opera Mini/', $_SERVER['HTTP_USER_AGENT']);
         }
         return self::$isMobile;

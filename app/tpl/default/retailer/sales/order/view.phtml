@@ -1,0 +1,160 @@
+<?php
+$order = $this->getVariable('order');
+$currency = $order->getCurrency();
+$customer = $order->getCustomer();
+?>
+<div class="alert alert-warning">
+    <div class="content">
+        <span class="label"><?php echo $this->translate('Order Status') ?>:</span>
+        <span><?php echo $this->translate($order->getStatus()['name']) ?></span>
+    </div>
+</div>
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#order" role="tab" data-toggle="tab"><?php echo $this->translate('Order Infomation') ?></a></li>
+    <li role="presentation"><a href="#address" role="tab" data-toggle="tab"><?php echo $this->translate('Shipping Infomation') ?></a></li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="order">
+        <div class="head">
+            <?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?><br />
+            <?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?><br />
+            <?php echo $this->translate('Email') ?>: <a href="mailto:<?php echo $customer['email'] ?>"><?php echo $customer['email'] ?></a>
+        </div>
+        <table class="table order-details">
+            <colgroup>
+                <col width="66" />
+                <col />
+                <col width="1" />
+                <col width="116" />
+                <col width="1" />
+                <col width="1" />
+                <col width="1" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="2" class="text-center text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
+                    <th class="text-center text-nowrap"><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                    <th class="text-center text-nowrap"><?php echo $this->translate('Options') ?></th>
+                    <th class="text-center text-nowrap"><?php echo $this->translate('Price') ?></th>
+                    <th class="text-center text-nowrap"><?php echo $this->translate('Qty') ?></th>
+                    <th class="text-center text-nowrap"><?php echo $this->translate('Subtotal') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($order->getItems() as $item):
+                    $product = $item['product'];
+                    $thumbnail = $product->getThumbnail();
+                    ?>
+                    <tr>
+                        <td>
+                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="50" />
+                        </td>
+                        <td>
+                            <?php echo $product['name'] ?>
+                        </td>
+                        <td class="text-center text-nowrap">
+                            <?php echo $item['sku'] ?>
+                        </td>
+                        <td class="text-center">
+                            <?php
+                            $options = json_decode($item['options'], true);
+                            if ($item['product_id'] && count($options)):
+                                ?>
+                                <dl class="options">
+                                    <?php
+                                    foreach ($item['product']->getOptions() as $option):
+                                        if (isset($options[$option->getId()])):
+                                            ?>
+                                            <dt><?php echo $option['title'] ?></dt>
+                                            <dd>
+                                                <?php
+                                                echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                                                        $option->getValue($options[$option->getId()]) : $options[$option->getId()])
+                                                ?>
+                                            </dd>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+                                </dl>
+                            <?php endif; ?>
+                        </td>
+                        <td class="text-center"><?php echo $currency->format($item['price']) ?></td>
+                        <td class="text-center"><?php echo (float) $item['qty'] ?></td>
+                        <td class="text-center"><?php echo $currency->format($item['total']) ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7" class="text-right">
+                        <?php
+                        $discount = json_decode($order->offsetGet('discount_detail'), true);
+                        ?>
+                        <?php if ($order->canCancel()): ?>
+                            <a data-info='{id:<?php echo $order->getId() ?>,discount:<?php echo $discount && isset($discount['Administrator']) ? $discount['Administrator'] : 0 ?>}' data-toggle="modal" href="#modal-edit-discount">
+                                <span><?php echo $this->translate('Edit') ?></span>
+                            </a>
+                        <?php endif ?>
+                        <dl class="totals clearfix">
+                            <dt><?php echo $this->translate('Subtotal', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->format($order->offsetGet('subtotal')) ?></dd>
+                            <dt><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->format($order->offsetGet('shipping')) ?></dd>
+                            <dt><?php echo $this->translate('Tax', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->format($order->offsetGet('tax')) ?></dd>
+                            <?php
+                            if ((float) $order->offsetGet('discount')):
+                                foreach ($discount as $type => $price):
+                                    ?>
+                                    <dt><?php echo $this->translate('Discount(' . $type . ')', [], 'sales') ?></dt>
+                                    <dd><?php echo $currency->convert($price, true) ?></dd>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                            <dt><?php echo $this->translate('Grand Total', [], 'sales') ?></dt>
+                            <dd><strong><?php echo $currency->format($order->offsetGet('total')) ?></strong></dd>
+                            <dt><?php echo $this->translate('Total Paid', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->format($order->offsetGet('total_paid')) ?></dd>
+                            <dt><?php echo $this->translate('Total Refunded', [], 'sales') ?></dt>
+                            <dd><?php echo $currency->format($order->offsetGet('total_refunded')) ?></dd>
+                        </dl>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="address">
+        <h4 class="title"><?php echo $this->translate('Shipping Infomation') ?></h4>
+        <dl class="clearfix">
+            <dt><?php echo $this->translate('Shipping Address') ?></dt>
+            <dd>
+                <?php
+                $address = $order->getShippingAddress();
+                echo $address->display();
+                ?>
+                <a data-info='<?php echo json_encode(['is_billing' => 0] + $address->toArray()) ?>' data-toggle="modal" href="#modal-edit-address">
+                    <span><?php echo $this->translate('Edit') ?></span>
+                </a>
+            </dd>
+            <?php if ($order['billing_address_id'] != $order['shipping_address_id']): ?>
+                <dt><?php echo $this->translate('Billing Address') ?></dt>
+                <dd>
+                    <?php
+                    $address = $order->getBillingAddress();
+                    echo $address->display();
+                    ?>
+                    <a data-info='<?php echo json_encode(['is_billing' => 1] + $address->toArray()) ?>' data-toggle="modal" href="#modal-edit-address">
+                        <span><?php echo $this->translate('Edit') ?></span>
+                    </a>
+                </dd>
+            <?php endif ?>
+            <dt><?php echo $this->translate('Shipping Method') ?></dt>
+            <dd><?php echo $this->translate($order->getShippingMethod()->getLabel(), [], 'shipping') ?></dd>
+            <dt><?php echo $this->translate('Payment Method') ?></dt>
+            <dd><?php echo $this->translate($order->getPaymentMethod()->getLabel(), [], 'payment') ?>(<?php echo $this->translate('The order was placed using %s', [$order['currency']]) ?>)</dd>
+        </dl>
+    </div>
+</div>

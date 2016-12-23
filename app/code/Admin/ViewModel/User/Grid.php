@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\User;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Admin\Model\Collection\User as Collection;
+use Seahinet\Lib\Session\Segment;
 
 class Grid extends PGrid
 {
@@ -21,7 +22,8 @@ class Grid extends PGrid
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        $segment = new Segment('admin');
+        return $segment->get('user')->getId() == $item['id'] || $item['id'] == 1 ? false : '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';

@@ -28,7 +28,7 @@ class FileMode extends AbstractCli
         }
         $finder->directories()->in(BP);
         foreach ($finder as $dir) {
-            chmod($dir->getRealPath(), 0644);
+            chmod($dir->getRealPath(), 0777);
         }
     }
 

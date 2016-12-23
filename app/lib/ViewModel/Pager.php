@@ -52,7 +52,8 @@ class Pager extends Template
         $this->limit = (int) $collection->getRawState('limit') ?: 20;
         $this->page = (int) ($collection->getRawState('offset') / $this->limit + 1);
         $this->collection = clone $collection;
-        $this->collection->reset('limit')
+        $this->collection->reset('order')
+                ->reset('limit')
                 ->reset('offset');
         return $this;
     }

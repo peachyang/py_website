@@ -40,10 +40,11 @@ class ApplyController extends AuthActionController
                     if ($user->getStore()) {
                         throw new \Exception('Not allowed to save.');
                     }
+                    $store = new Store;
+                    $code = 'retailer-' . $data['customer_id'];
+                    $store->load($code, 'code');
+                    $store->setData('status', $data['status'] ? 1 : 0);
                     if ($data['status']) {
-                        $store = new Store;
-                        $code = 'retailer-' . $data['customer_id'];
-                        $store->load($code, 'code');
                         if (!$store->getId()) {
                             $customer = new Customer;
                             $customer->load($data['customer_id']);
@@ -62,7 +63,11 @@ class ApplyController extends AuthActionController
                                 'name' => $customer['username'],
                                 'uri_key' => $customer['username']
                             ])->save();
+                        } else if (!$store['status']) {
+                            $store->setData('status', 1)->save();
                         }
+                    } else if ($store->getId()) {
+                        $store->setData('status', 0)->save();
                     }
                 }, true
         );

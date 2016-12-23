@@ -79,6 +79,9 @@ class Template extends AbstractViewModel
             return ob_get_clean();
         } catch (Error $e) {
             $this->getContainer()->get('log')->logError($e);
+            if (Bootstrap::isDeveloperMode()) {
+                echo '<div class="template-tip" data-template="', $template, '" data-viewmodel="', get_class($this), '">' . $e->getMessage() . '</div>';
+            }
             ob_end_clean();
             return '';
         }

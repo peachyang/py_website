@@ -11,11 +11,15 @@ class Coupon extends Account
     public function getCoupons()
     {
         $collection = new Rule;
-        $collection->where(['use_coupon' => 1]);
+        $collection->withStore(true)
+                ->where(['use_coupon' => 1]);
         $result = [];
         foreach ($collection as $rule) {
             if ($this->match($rule->getCondition())) {
-                $result[] = $rule;
+                $rule['store_id'] = [$rule['store_id']];
+                $result[$rule->getId()] = $rule;
+            } else {
+                $result[$rule->getId()]['store_id'][] = $rule['store_id'];
             }
         }
         return $result;

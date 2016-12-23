@@ -37,25 +37,29 @@ $decorations = $SDview->getProductDetailTemplateView($store->getId());
                 </div>
                 <div class="options">
                     <?php echo $this->getChild('option')->setVariable('product', $product) ?>
-                    <div class="input-box">
-                        <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
-                        <div class="cell qty">
-                            <label for="qty" class="spin minus">-</label>
-                            <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
-                                   min="<?php echo (float) $inventory['min_qty'] ?>" 
-                                   max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>" 
-                                   step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
-                            <label for="qty" class="spin plus">+</label>
+                    <?php if ($product->canSold()): ?>
+                        <div class="input-box">
+                            <label for="qty" class="control-label"><?php echo $this->translate('Qty') ?></label>
+                            <div class="cell qty">
+                                <label for="qty" class="spin minus">-</label>
+                                <input id="qty" class="form-control required" value="<?php echo (float) $inventory['min_qty'] ?>" 
+                                       min="<?php echo (float) $inventory['min_qty'] ?>" 
+                                       max="<?php echo min((float) $inventory['max_qty'], (float) $inventory['qty']) ?>" 
+                                       step="<?php echo (float) $inventory['increment'] ?>" name="qty" type="number" />
+                                <label for="qty" class="spin plus">+</label>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif ?>
                 </div>
-                <div class="clearfix action">
-                    <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
-                    <button type="submit" class="btn btn-checkout">
-                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>
-                        <span><?php echo $this->translate('Add to Cart') ?></span>
-                    </button>
-                </div> 
+                <?php if ($product->canSold()): ?>
+                    <div class="clearfix action">
+                        <button type="submit" class="btn"><?php echo $this->translate('Buy Now') ?></button>
+                        <button type="submit" class="btn btn-checkout">
+                            <span class="fa fa-shopping-cart" aria-hidden="true"></span>
+                            <span><?php echo $this->translate('Add to Cart') ?></span>
+                        </button>
+                    </div>
+                <?php endif ?>
             </div>
             <div class="col-xs-12 col-md-2 upsells">
                 <?php

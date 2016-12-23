@@ -1,0 +1,85 @@
+<?php
+$collection = $this->getProducts();
+$filters = $this->getFilters();
+?>
+<div class="filters">
+    <form action="<?php echo $this->getUri()->withQuery('')->withFragment('') ?>" method="get" class="form-inline">
+        <div class="fieldset clearfix">
+            <?php
+            foreach ($filters as $key => $filter) {
+                echo $this->getInputBox($key, $filter)->setVariable('boxClass', 'col-md-4 col-xs-6');
+            }
+            ?>
+            <div class="buttons-set col-md-4 col-xs-6">
+                <button type="submit" class="btn btn-theme"><?php echo $this->translate('Search') ?></button>
+                <a href="<?php echo $this->getUri()->withQuery('')->withFragment('') ?>" class="btn btn-theme"><?php echo $this->translate('Reset') ?></a>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table" id="products-list">
+    <colgroup>
+        <col width="1" />
+        <col width="66" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="90" />
+        <col width="1" />
+    </colgroup>
+    <thead>
+        <tr class="text-center text-nowrap">
+            <th></th>
+            <th colspan="2" class="text-center text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Price') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Inventory') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Released at') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('Action') ?></th>
+        </tr>
+        <?php if (count($collection)): ?>
+            <tr>
+                <th colspan="7">
+                    <input type="checkbox" class="selectall" id="selectall-head" />
+                    <label for="selectall-head"><?php echo $this->translate('All') ?></label>
+                    <?php
+                    foreach ($this->getActions() as $action) {
+                        echo $action;
+                    }
+                    ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($collection as $order) {
+                echo $this->renderItem($order);
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="7">
+                    <input type="checkbox" class="selectall" id="selectall-head" />
+                    <label for="selectall-head"><?php echo $this->translate('All') ?></label>
+                    <?php
+                    foreach ($this->getActions() as $action) {
+                        echo $action;
+                    }
+                    ?>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <?php echo $this->getChild('pager')->setCollection($collection) ?>
+                </td>
+            </tr>
+        </tfoot>
+    <?php else: ?>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7" class="text-center"><?php echo $this->translate('There are no products in your store with the conditions.') ?></td>
+        </tr>
+    </tbody>
+<?php endif ?>
+</table>

@@ -39,7 +39,7 @@ class RefundController extends AuthActionController
                         $images = [];
                         $path = BP . 'pub/upload/refund/';
                         if (!is_dir($path)) {
-                            mkdir($path, 0644, true);
+                            mkdir($path, 0777, true);
                         }
                         $count = 0;
                         $files = $this->getRequest()->getUploadedFile();
@@ -118,7 +118,7 @@ class RefundController extends AuthActionController
                 $segment = new Segment('admin');
                 $storeId = $segment->get('user')['store_id'];
                 if ($storeId && $refund->getOrder()['store_id'] != $storeId ||
-                        $refund['status'] != 0 && $refund['status'] != 2) {
+                        $refund['status'] != 0 && $refund['status'] != 2 && ($refund['status'] != 3 || $refund['service'] != 1)) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {
@@ -151,7 +151,7 @@ class RefundController extends AuthActionController
                 $segment = new Segment('admin');
                 $storeId = $segment->get('user')['store_id'];
                 if ($storeId && $refund->getOrder()['store_id'] != $storeId ||
-                        $refund['status'] != 0 && $refund['status'] != 2) {
+                        $refund['status'] != 0 && $refund['status'] != 2 && ($refund['status'] != 3 || $refund['service'] != 1)) {
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {

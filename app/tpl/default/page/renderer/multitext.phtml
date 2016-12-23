@@ -3,7 +3,7 @@ $item = $this->getVariable('item');
 $key = $this->getVariable('key');
 $parent = $this->getVariable('parent');
 ?>
-<div class="input-box">
+<div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
         <label class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
             <?php echo $this->translate($item['label']) ?>
@@ -11,7 +11,7 @@ $parent = $this->getVariable('parent');
     <?php endif ?>
     <div class="cell">
         <?php foreach ($item['options'] as $id => $name): ?>
-            <div class="input-box">
+            <div class="input-box <?php echo $this->getVariable('boxClass') ?>">
                 <label for="<?php echo $key ?>-<?php echo $id ?>" class="control-label<?php if (isset($item['required'])): ?> required<?php endif ?>">
                     <?php echo $name ?>
                 </label>

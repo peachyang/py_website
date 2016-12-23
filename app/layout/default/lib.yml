@@ -132,6 +132,13 @@ frontend:
                                     -
                                         method: addLink
                                         params:
+                                            - 
+                                                link: customer/account/
+                                                label: Personal Center
+                                                priority: 15
+                                    -
+                                        method: addLink
+                                        params:
                                             - {block:'language',priority:50}
                                     -
                                         method: addLink

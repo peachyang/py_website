@@ -3,16 +3,15 @@
 namespace Seahinet\Retailer\Controller;
 
 use Exception;
-use Seahinet\Retailer\Model\Retailer as Rmodel;
+use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Retailer\Model\StoreTemplate;
-use Seahinet\Retailer\Model\StorePicinfo;
+use Seahinet\Retailer\Model\StorePicInfo;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
-use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Resource\Model\Collection\Category;
-use Seahinet\Customer\Model\Customer as Cmodel;
-use Seahinet\Resource\Model\Resource as Model;
+use Seahinet\Customer\Model\Customer;
+use Seahinet\Resource\Model\Resource;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Retailer\ViewModel\StoreDecoration as SDViewModel;
+use Seahinet\Retailer\ViewModel\StoreDecoration;
 
 /**
  * Retailer submenu store management controller
@@ -26,24 +25,9 @@ class StoreController extends AuthActionController
         '产品详情页' => 2
     ];
 
-    public function indexAction()
-    {
-        $segment = new Segment('customer');
-
-        if ($customerId = $segment->get('customer')->getId()) {
-            $customer = new Cmodel;
-            $customer->load($customerId);
-            $root = $this->getLayout('retailer_store_settings');
-            $root->getChild('main', true)->setVariable('customer', $customer);
-            return $root;
-        }
-        return $root;
-    }
-
     public function settingAction()
     {
-        $root = $this->getLayout('retailer_store_setting');
-        return $root;
+        return $this->getLayout('retailer_store_setting');
     }
 
     public function saveAction()
@@ -55,7 +39,7 @@ class StoreController extends AuthActionController
             if ($result['error'] === 0) {
                 try {
                     $segment = new Segment('customer');
-                    $retailer = new Rmodel;
+                    $retailer = new Retailer;
                     $retailer->load($segment->get('customer')->getId(), 'customer_id');
                     $store = $retailer->getStore();
                     if ($store['name'] !== $data['store']['name']) {
@@ -77,52 +61,24 @@ class StoreController extends AuthActionController
                 }
             }
         }
-        return $this->response($result ?? ['error' => 1], 'retailer/store/setting/', 'retailer');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/store/setting/', 'retailer');
     }
 
-    /**
-     * brandAction  
-     * Show brand management view
-     * @access public 
-     * @return object 
-     */
     public function brandAction()
     {
         $root = $this->getLayout('retailer_brand');
         return $root;
     }
 
-    /**
-     * viewAction  
-     * Show retailer store's home page
-     * @access public 
-     * @return object 
-     */
     public function viewAction()
     {
-        $root = $this->getLayout('view_store');
-        return $root;
-    }
-
-    public function setupAction()
-    {
-        $root = $this->getLayout('store_setup');
+        $root = $this->getLayout('retailer_store_view');
         return $root;
     }
 
     public function viewSearchAction()
     {
         $root = $this->getLayout('view_search');
-        return $root;
-    }
-
-    /**
-     * temporary view
-     * 
-     */
-    public function view1Action()
-    {
-        $root = $this->getLayout('view_store1');
         return $root;
     }
 
@@ -155,9 +111,9 @@ class StoreController extends AuthActionController
     public function decorationProductDetailAction()
     {
         $template_name = $this->getRequest()->getQuery('template_name');
-        $SDViewModel = new SDViewModel;
+        $StoreDecoration = new StoreDecoration;
         $template_id = $this->getRequest()->getQuery('template_id');
-        $id = $SDViewModel->getProductDetailPageID($template_id);
+        $id = $StoreDecoration->getProductDetailPageID($template_id);
         $root = $this->getLayout('decoration_store_productdetail');
         $root->getChild('main', true)->setVariable('template_name', $template_name);
         $root->getChild('main', true)->setVariable('template_id', $template_id);
@@ -184,7 +140,7 @@ class StoreController extends AuthActionController
         $data = $this->getRequest()->getPost();
         $segment = new Segment('customer');
         $store_id = $data['store_id'];
-        $r = new Rmodel;
+        $r = new Retailer;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $data['store_id'] = $r['store_id'];
         $model = new StoreTemplate();
@@ -209,7 +165,7 @@ class StoreController extends AuthActionController
     {
         $data = $this->getRequest()->getPost();
         $segment = new Segment('customer');
-        $r = new Rmodel;
+        $r = new Retailer;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $store_id = $r['store_id'];
 
@@ -229,7 +185,7 @@ class StoreController extends AuthActionController
     {
         $data = $this->getRequest()->getPost();
         $segment = new Segment('customer');
-        $r = new Rmodel;
+        $r = new Retailer;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $store_id = $r['store_id'];
 
@@ -272,7 +228,7 @@ class StoreController extends AuthActionController
     {
         $dataParam = $this->getRequest()->getPost('dataParam');
         $dataTag = $this->getRequest()->getPost('dataTag');
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $function_name = 'template_' . $dataTag;
         $view = $storeDecoration->$function_name($dataParam);
         echo json_encode(array('status' => true, 'view' => $view));
@@ -287,7 +243,7 @@ class StoreController extends AuthActionController
         $data['limit'] = isset($data['limit']) ? $data['limit'] : 20;
 
         $products = [];
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $products = $storeDecoration->func_getProductInfo($data);
         $result['status'] = 0;
         $result['Info'] = $products['data'];
@@ -301,7 +257,7 @@ class StoreController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         $data = $this->getRequest()->getPost();
         $segment = new Segment('customer');
-        $r = new Rmodel;
+        $r = new Retailer;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $data['store_id'] = $r['store_id'];
         $model = new StoreTemplate();
@@ -315,7 +271,7 @@ class StoreController extends AuthActionController
         }
 
         $result['status'] = $result['error'];
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $data['store_id']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
@@ -330,7 +286,7 @@ class StoreController extends AuthActionController
             try {
                 $template = new StoreTemplate();
                 $template->load($data['id']);
-                $r = new Rmodel;
+                $r = new Retailer;
                 $r->load($segment->get('customer')->getId(), 'customer_id');
                 $store_id = $r['store_id'];
                 if ($template->getId() && $template['store_id'] == $r['store_id']) {
@@ -347,7 +303,7 @@ class StoreController extends AuthActionController
         }
 
         $result['status'] = $result['error'];
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $store_id);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
@@ -362,7 +318,7 @@ class StoreController extends AuthActionController
             try {
                 $template = new StoreTemplate();
                 $template->load($data['id']);
-                $r = new Rmodel;
+                $r = new Retailer;
                 $r->load($segment->get('customer')->getId(), 'customer_id');
                 $store_id = $r['store_id'];
                 if ($template->getId() && $template['store_id'] == $r['store_id']) {
@@ -376,7 +332,7 @@ class StoreController extends AuthActionController
         }
 
         $result['status'] = $result['error'];
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['Info'] = $storeDecoration->getCustomizeInfo($data['parent_id'], $data['page_type'], $store_id);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
     }
@@ -387,10 +343,10 @@ class StoreController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
-            $r = new Rmodel;
+            $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $store = $r['store_id'];
-            $storePicinfo = new StorePicinfo();
+            $storePicinfo = new StorePicInfo();
             try {
                 $storePicinfo->setData([
                     'store_id' => $store,
@@ -407,7 +363,7 @@ class StoreController extends AuthActionController
             $storePicinfo->setData(['sort_order' => $storePicinfo->getId()]);
             $storePicinfo->save();
         }
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['status'] = $result['error'];
         $result['Info'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
@@ -418,17 +374,17 @@ class StoreController extends AuthActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $segment = new Segment('customer');
-            $r = new Rmodel;
+            $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $data = $this->getRequest()->getPost();
-            $storePicinfo = new StorePicinfo;
+            $storePicinfo = new StorePicInfo;
             $storePicinfo->load($data['id']);
             if ($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
                 $storePicinfo->remove();
             else
                 $result['error'] = 1;
         }
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['status'] = $result['error'];
         $result['Info'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
@@ -443,7 +399,7 @@ class StoreController extends AuthActionController
             $current_template_id = empty($data['current_template_id']) ? null : $data['current_template_id'];
             $part_id = empty($data['part_id']) ? null : $data['part_id'];
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $r = new Rmodel;
+            $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $store = $r['store_id'];
             $result = $this->validateForm($data);
@@ -454,7 +410,7 @@ class StoreController extends AuthActionController
                 try {
                     foreach ($files as $file) {
                         $name = $file->getClientFilename();
-                        $model = new Model();
+                        $model = new Resource();
                         $model->moveFile($file)
                                 ->setData([
                                     'store_id' => $store,
@@ -470,7 +426,7 @@ class StoreController extends AuthActionController
                 }
             }
             if ($result['error'] === 0) {
-                $storePicinfo = new StorePicinfo();
+                $storePicinfo = new StorePicInfo();
                 $storePicinfo->setData([
                     'store_id' => $store,
                     'pic_title' => $data['pic_title'],
@@ -485,7 +441,7 @@ class StoreController extends AuthActionController
             }
         }
 
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code'], null, $current_template_id, $part_id);
         $result['status'] = $result['error'];
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
@@ -500,17 +456,17 @@ class StoreController extends AuthActionController
             try {
                 $path = BP . Model::$options['path'];
 
-                $model = new Model;
+                $model = new Resource;
                 $model->load($data['resource_id']);
                 if ($model->getId()) {
                     $type = $model['file_type'];
-                    $r = new Rmodel;
+                    $r = new Retailer;
                     $r->load($segment->get('customer')->getId(), 'customer_id');
                     if ($model['store_id'] == $r['store_id']) {
                         $model->remove();
                     }
 
-                    $storePicinfo = new StorePicinfo;
+                    $storePicinfo = new StorePicInfo;
                     $storePicinfo->load($data['id']);
                     if ($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
                         $storePicinfo->remove();
@@ -521,7 +477,7 @@ class StoreController extends AuthActionController
                 $result['error'] = 1;
             }
         }
-        $storeDecoration = new SDViewModel();
+        $storeDecoration = new StoreDecoration();
         $result['status'] = $result['error'];
         $result['picInfo'] = $storeDecoration->getStorePicInfo($data['resource_category_code']);
         return $this->response($result, $this->getRequest()->getHeader('HTTP_REFERER'));
@@ -534,9 +490,9 @@ class StoreController extends AuthActionController
         $data = $this->getRequest()->getPost();
         if ($result['error'] === 0) {
             try {
-                $storePicinfo = new StorePicinfo;
+                $storePicinfo = new StorePicInfo;
                 $storePicinfo->load($data['id']);
-                $r = new Rmodel;
+                $r = new Retailer;
                 $r->load($segment->get('customer')->getId(), 'customer_id');
                 if ($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id']) {
                     $storePicinfo->setData([
@@ -565,14 +521,14 @@ class StoreController extends AuthActionController
             $segment = new Segment('customer');
             $data = $this->getRequest()->getPost();
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $r = new Rmodel;
+            $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $store = $r['store_id'];
             if ($result['error'] === 0) {
                 try {
                     foreach ($files as $file) {
                         $name = $file->getClientFilename();
-                        $model = new Model();
+                        $model = new Resource();
                         $model->moveFile($file)
                                 ->setData([
                                     'store_id' => $store,
@@ -589,11 +545,11 @@ class StoreController extends AuthActionController
                 }
             }
             if ($result['error'] === 0) {
-                $Rmodel = new Rmodel;
-                $Rmodel->load($data['retailer_id']);
-                if ($Rmodel['store_id'] == $store) {
-                    $Rmodel->setData(['banner' => $model->getId()]);
-                    $Rmodel->save();
+                $Retailer = new Retailer;
+                $Retailer->load($data['retailer_id']);
+                if ($Retailer['store_id'] == $store) {
+                    $Retailer->setData(['banner' => $model->getId()]);
+                    $Retailer->save();
                 }
             }
         }
@@ -616,26 +572,26 @@ class StoreController extends AuthActionController
         $segment = new Segment('customer');
         $data = $this->getRequest()->getPost();
         if ($result['error'] === 0) {
-            $storeDecoration = new SDViewModel();
+            $storeDecoration = new StoreDecoration();
             $retailer = $storeDecoration->getStoreBanner();
             if (!empty($retailer['banner'])) {
                 try {
                     $path = BP . Model::$options['path'];
 
-                    $model = new Model;
+                    $model = new Resource;
                     $model->load($retailer['banner']);
                     if ($model->getId()) {
                         $type = $model['file_type'];
-                        $r = new Rmodel;
+                        $r = new Retailer;
                         $r->load($segment->get('customer')->getId(), 'customer_id');
                         if ($model['store_id'] == $r['store_id']) {
                             $model->remove();
                         }
                     }
-                    $Rmodel = new Rmodel;
-                    $Rmodel->load($retailer['id']);
-                    $Rmodel->setData(['banner' => null]);
-                    $Rmodel->save();
+                    $Retailer = new Retailer;
+                    $Retailer->load($retailer['id']);
+                    $Retailer->setData(['banner' => null]);
+                    $Retailer->save();
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
 

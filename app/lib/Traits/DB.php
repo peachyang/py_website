@@ -6,7 +6,7 @@ use Zend\Db\Adapter\Driver\ConnectionInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Where;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 
 /**
  * Database handler

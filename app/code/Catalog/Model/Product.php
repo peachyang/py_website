@@ -2,9 +2,12 @@
 
 namespace Seahinet\Catalog\Model;
 
-use Seahinet\Catalog\Model\Collection\Category as Categories;
-use Seahinet\Catalog\Model\Collection\Product as Collection;
-use Seahinet\Catalog\Model\Collection\Product\Option as OptionCollection;
+use Seahinet\Catalog\Model\Collection\{
+    Category as Categories,
+    Product as Collection,
+    Product\Option as OptionCollection,
+    Warehouse as WarehouseCollection
+};
 use Seahinet\Catalog\Model\Product\Option as OptionModel;
 use Seahinet\Catalog\Model\Warehouse;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
@@ -39,7 +42,8 @@ class Product extends Entity
         if ($this->getId()) {
             $options = new OptionCollection;
             $options->withLabel()
-                    ->where(['product_id' => $this->getId()] + $constraint);
+                    ->where(['product_id' => $this->getId()] + $constraint)
+                    ->order('sort_order ASC');
             return $options;
         }
         return [];
@@ -134,12 +138,23 @@ class Product extends Entity
         return null;
     }
 
-    public function getInventory($warehouse, $sku = null)
+    public function getInventory($warehouse = null, $sku = null)
     {
         if (is_null($sku)) {
             $sku = $this->storage['sku'];
         }
-        if (is_numeric($warehouse)) {
+        if (is_null($warehouse)) {
+            $warehouses = new WarehouseCollection;
+            $warehouses->where(['status' => 1]);
+            $result = 0;
+            foreach ($warehouses as $warehouse) {
+                $inventory = $warehouse->getInventory($this->getId(), $sku);
+                if ($inventory) {
+                    $result += $inventory['qty'];
+                }
+            }
+            return $result;
+        } else if (is_numeric($warehouse)) {
             $warehouse = (new Warehouse)->setId($warehouse);
         }
         return $warehouse->getInventory($this->getId(), $sku);
@@ -262,6 +277,9 @@ class Product extends Entity
         if (isset($this->storage['images']) && is_array($this->storage['images'])) {
             $images = [];
             foreach ($this->storage['images'] as $order => $id) {
+                if (is_array($id)) {
+                    break;
+                }
                 if ($id && !isset($images[$id])) {
                     $images[$id] = [
                         'id' => $id,
@@ -290,8 +308,14 @@ class Product extends Entity
         if (!empty($this->storage['category'])) {
             $tableGateway = $this->getTableGateway('product_in_category');
             $tableGateway->delete(['product_id' => $this->getId()]);
+            $maxCount = (int) $this->getContainer()->get('config')['catalog/product/count_in_category'];
             foreach ((array) $this->storage['category'] as $category) {
-                $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
+                if ($maxCount--) {
+                    $tableGateway->insert(['product_id' => $this->getId(), 'category_id' => $category]);
+                }
+                if ($maxCount === 0) {
+                    break;
+                }
             }
         }
         if (!empty($this->storage['inventory'])) {
@@ -364,6 +388,11 @@ class Product extends Entity
             return (new Currency)->load($this->storage['currency'], 'code');
         }
         return $this->getContainer()->get('currency');
+    }
+
+    public function canSold()
+    {
+        return $this->storage['status'] && $this->getStore()->offsetGet('status');
     }
 
 }

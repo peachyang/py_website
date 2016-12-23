@@ -2,6 +2,7 @@
 
 namespace Seahinet\Checkout\Controller;
 
+use Error;
 use Exception;
 use Seahinet\Customer\Model\Address;
 use Seahinet\Lib\Bootstrap;
@@ -31,7 +32,9 @@ class OrderController extends ActionController
 
     public function indexAction()
     {
-        if (count(Cart::instance()->getItems())) {
+        $items = Cart::instance()->getItems(true);
+        $items->where(['status' => 1]);
+        if (count($items)) {
             return $this->getLayout('checkout_order');
         }
         return $this->redirectReferer('checkout/cart/');
@@ -133,6 +136,11 @@ class OrderController extends ActionController
                     $this->commit();
                     $segment = new Segment('checkout');
                     $segment->set('hasNewOrder', 1);
+                } catch (Error $e) {
+                    $this->getContainer()->get('log')->logError($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
+                    $this->rollback();
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;

@@ -57,7 +57,7 @@
                 }
             });
             $('.product-essential .product-info .price-box [data-price]').text(function () {
-                return formatPrice(parseFloat($(this).data('price')) + sum);
+                return formatPrice(Math.max(parseFloat($(this).data('price')) + sum, 0));
             });
         };
         calcPrice();

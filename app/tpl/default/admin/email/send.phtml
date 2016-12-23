@@ -25,7 +25,7 @@
                     </div>
                     <div class="input-box">
                         <label for="sendmail-time" class="control-label"><?php echo $this->translate('Scheduled time') ?></label>
-                        <input type="datetime" name="datetime" id="sendmail-time" class="form-control" value="<?php echo date('Y-m-d h:i:s') ?>" />
+                        <input type="datetime" name="datetime" id="sendmail-time" class="form-control" value="<?php echo date('Y-m-d H:i:s') ?>" />
                         <div class="comment">
                             <?php echo $this->translate('Timezone'),': ',$this->getConfig()['global/locale/timezone'] ?>
                         </div>

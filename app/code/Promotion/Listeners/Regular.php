@@ -75,10 +75,11 @@ class Regular implements ListenerInterface
             $block = true;
         }
         $handler = $rule->getHandler();
+        $total = $this->model['base_subtotal'] + ($rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
+        $result = 0;
         if ($handler) {
             $count = count($this->items[$storeId]);
             $items = $handler->matchItems($this->items[$storeId]);
-            $total = $rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax'];
             if ($rule['free_shipping'] && $count === count($items)) {
                 $this->model->setData([
                     'free_shipping' => 1,
@@ -100,13 +101,8 @@ class Regular implements ListenerInterface
                 } else {
                     $discount *= $item['qty'];
                 }
-                $item->setData([
-                    'base_discount' => $discount,
-                    'discount' => $this->model->getCurrency()->convert($discount, false)
-                ])->collateTotals()->save();
-                $total += $item['base_total'];
+                $result += $discount;
             }
-            return $total;
         } else {
             if ($rule['free_shipping']) {
                 $this->model->setData([
@@ -115,9 +111,9 @@ class Regular implements ListenerInterface
                     'shipping' => 0
                 ]);
             }
-            $total = $this->model['base_subtotal'] + ($rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
-            return min($total - $this->discount, $rule['is_fixed'] ? $rule['price'] : $total * $rule['price'] / 100);
+            $result = $rule['is_fixed'] ? $rule['price'] : $total * $rule['price'] / 100;
         }
+        return min($total - $this->discount, $result);
     }
 
 }

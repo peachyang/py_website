@@ -78,7 +78,7 @@ email:
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
                 password:
-                    type: password
+                    type: text
                     label: Password
                     scope: merchant
                     required: required

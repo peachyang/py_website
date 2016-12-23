@@ -145,7 +145,7 @@ class Cron extends AbstractCli
     protected function addJob()
     {
         if (!empty($this->getConfig())) {
-            for ($count = 0, $ts = time(), $max = $ts + 300; $ts < $max; $ts+=60) {
+            for ($count = 0, $ts = time(), $max = $ts + 300; $ts < $max; $ts += 60) {
                 $d = getdate($ts);
                 foreach ($this->getConfig() as $config) {
                     if (!isset($config['time']) || !isset($config['code'])) {
@@ -161,7 +161,7 @@ class Cron extends AbstractCli
                         try {
                             $model = new Model([
                                 'code' => $config['code'],
-                                'scheduled_at' => date('Y-m-d h:i:s', $ts)
+                                'scheduled_at' => date('Y-m-d H:i:s', $ts)
                             ]);
                             $model->save();
                             $count++;
@@ -187,11 +187,11 @@ class Cron extends AbstractCli
     {
         $collection = new Collection;
         $collection->where(['status' => 0])->where(['status' => 2], 'OR');
-        $collection->load(false);
+        $collection->load(false, true);
         if (count($collection)) {
             foreach ($collection as $item) {
                 $ts = time();
-                $time = date('Y-m-d h:i:s', $ts);
+                $time = date('Y-m-d H:i:s', $ts);
                 $model = new Model([
                     'id' => $item['id']
                 ]);
@@ -215,7 +215,7 @@ class Cron extends AbstractCli
                     $class = new $code[0];
                     $class->{$code[1]}();
                     $model->setData([
-                        'finished_at' => date('Y-m-d h:i:s'),
+                        'finished_at' => date('Y-m-d H:i:s'),
                         'status' => 1
                     ]);
                 } catch (Error $e) {

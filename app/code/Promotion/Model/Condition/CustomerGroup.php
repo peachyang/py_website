@@ -2,7 +2,6 @@
 
 namespace Seahinet\Promotion\Model\Condition;
 
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Predicate\Operator;
 
 class CustomerGroup implements ConditionInterface

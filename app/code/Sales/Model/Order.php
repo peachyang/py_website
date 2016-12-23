@@ -3,21 +3,31 @@
 namespace Seahinet\Sales\Model;
 
 use Seahinet\Catalog\Model\Collection\Product\Review;
-use Seahinet\Customer\Model\Address;
+use Seahinet\Customer\Model\{
+    Address,
+    Customer
+};
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Model\Language;
-use Seahinet\Lib\Model\Store;
+use Seahinet\Lib\Model\{
+    AbstractModel,
+    Language,
+    Store
+};
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Sales\Model\Collection\CreditMemo as CreditMemoCollection;
-use Seahinet\Sales\Model\Collection\Invoice as InvoiceCollection;
-use Seahinet\Sales\Model\Collection\Order\Item as ItemCollection;
-use Seahinet\Sales\Model\Collection\Order\Status\History as HistoryCollection;
-use Seahinet\Sales\Model\Collection\Shipment as ShipmentCollection;
-use Seahinet\Sales\Model\Order\Item;
-use Seahinet\Sales\Model\Order\Status;
-use Seahinet\Sales\Model\Order\Status\History;
+use Seahinet\Sales\Model\Collection\{
+    CreditMemo as CreditMemoCollection,
+    Invoice as InvoiceCollection,
+    Order\Item as ItemCollection,
+    Order\Status\History as HistoryCollection,
+    Rma as RmaCollection,
+    Shipment as ShipmentCollection
+};
+use Seahinet\Sales\Model\Order\{
+    Item,
+    Status,
+    Status\History
+};
 
 class Order extends AbstractModel
 {
@@ -79,6 +89,18 @@ class Order extends AbstractModel
         return $this;
     }
 
+    public function getCustomer()
+    {
+        if (!empty($this->storage['customer_id'])) {
+            $customer = new Customer($this->storage['language_id']);
+            $customer->load($this->storage['customer_id']);
+            if ($customer->getId()) {
+                return $customer;
+            }
+        }
+        return null;
+    }
+
     public function getItems($force = false)
     {
         if ($force || is_null($this->items)) {
@@ -106,12 +128,13 @@ class Order extends AbstractModel
         foreach ($items as $item) {
             $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
         }
+        $detail = $this->storage['discount_detail'] ? json_decode($this->storage['discount_detail'], true) : [];
         $this->setData([
             'base_subtotal' => $baseSubtotal,
             'base_shipping' => $this->offsetGet('free_shipping') || $this->offsetGet('is_virtual') ? 0 : $this->getShippingMethod()->getShippingRate($items),
-            'base_discount' => 0,
+            'base_discount' => $detail['Administrator'] ?? 0,
             'discount' => 0,
-            'discount_detail' => '',
+            'discount_detail' => $this->storage['discount_detail'],
             'base_tax' => 0,
             'tax' => 0
         ])->setData([
@@ -355,8 +378,16 @@ class Order extends AbstractModel
     {
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
-        } else if (!$flag && $this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
-            return false;
+        } else if (!$flag) {
+            if ($this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
+                return false;
+            }
+            $applications = new RmaCollection;
+            $applications->where(['order_id' => $this->getId()])
+            ->where->notIn('status', [-1, 5]);
+            if (count($applications)) {
+                return false;
+            }
         }
         $memos = $this->getCreditMemo();
         $qty = $this->getQty();

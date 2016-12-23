@@ -2,7 +2,7 @@
 
 namespace Seahinet\Sales\Controller;
 
-use Seahinet\Customer\Controller\AuthActionController;
+use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\{
     Order,
@@ -10,7 +10,7 @@ use Seahinet\Sales\Model\{
     Rma
 };
 
-class RefundController extends AuthActionController
+class RefundController extends ActionController
 {
 
     use \Seahinet\Lib\Traits\DB;
@@ -65,7 +65,7 @@ class RefundController extends AuthActionController
                         $images = [];
                         $path = BP . 'pub/upload/refund/';
                         if (!is_dir($path)) {
-                            mkdir($path, 0644, true);
+                            mkdir($path, 0777, true);
                         }
                         $count = 0;
                         $files = $this->getRequest()->getUploadedFile();
@@ -105,7 +105,7 @@ class RefundController extends AuthActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['order_id', 'reason', 'qty', 'comment']);
+            $result = $this->validateForm($data, ['order_id', 'email', 'reason', 'qty', 'comment']);
             if ($result['error'] === 0 && array_sum($data['qty']) === 0) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('Please select 1 product at least.'), 'level' => 'danger'];
@@ -113,15 +113,16 @@ class RefundController extends AuthActionController
             if ($result['error'] === 0) {
                 $segment = new Segment('customer');
                 $order = (new Order)->load($data['order_id']);
+                $email = $order->getShippingAddress()['email'];
                 if ($segment->get('hasLoggedIn')) {
                     $customerId = $segment->get('customer')->getId();
                     if ($customerId !== $order['customer_id']) {
                         $result['error'] = 1;
                         $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
                     }
-                } else if (!$order['customer_id']) {
+                } else if ($email !== $data['email']) {
                     $result['error'] = 1;
-                    $result['message'][] = ['message' => $this->translate('Invalid order ID'), 'level' => 'danger'];
+                    $result['message'][] = ['message' => $this->translate('Invalid Email'), 'level' => 'danger'];
                 }
                 if ($order->getId() && $order->canRefund(false)) {
                     $refund = new Rma($data);
@@ -133,7 +134,7 @@ class RefundController extends AuthActionController
                     try {
                         $path = BP . 'pub/upload/refund/';
                         if (!is_dir($path)) {
-                            mkdir($path, 0644, true);
+                            mkdir($path, 0777, true);
                         }
                         $count = 0;
                         $files = $this->getRequest()->getUploadedFile();

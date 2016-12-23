@@ -108,7 +108,7 @@ $currency = $order->getCurrency();
                 <a href="javascript:void(0);" onclick="window.open('<?php echo $this->getAdminUrl('customer_creditcard/?id=' . $card) ?>', '', 'status=no,scroll=no,width=600,height=400').focus()"><?php echo $this->translate('View') ?></a>
             <?php endif ?>
             <br />
-            <?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+            <?php echo $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
         </div>
     </div>
     <?php if ($this->getCollection()): ?>

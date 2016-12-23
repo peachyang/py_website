@@ -4,7 +4,7 @@ namespace Seahinet\Lib\Indexer\Handler;
 
 use InvalidArgumentException;
 use Seahinet\Lib\Model\Collection\Language;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 
 abstract class AbstractHandler
 {

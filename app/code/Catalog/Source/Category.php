@@ -9,13 +9,15 @@ use Seahinet\Lib\Source\SourceInterface;
 class Category implements SourceInterface
 {
 
-    public function getSourceArray()
+    public function getSourceArray($isBackend = true)
     {
         $collection = new Collection;
         $result = [];
-        $user = (new Segment('admin'))->get('user');
-        if ($user->getStore()) {
-            $collection->where(['store_id' => $user->getStore()->getId()]);
+        if ($isBackend) {
+            $segment = new Segment('admin');
+            if ($segment->get('hasLoggedIn') && $segment->get('user')->getStore()) {
+                $collection->where(['store_id' => $user->getStore()->getId()]);
+            }
         }
         foreach ($collection as $category) {
             $result[$category['id']] = $category['name'];

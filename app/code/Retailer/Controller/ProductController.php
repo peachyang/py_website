@@ -189,7 +189,7 @@ class ProductController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
                     $this->flushList(Model::ENTITY_TYPE);
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been withdrawed.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) have been withdrawed successfully.', [$count]), 'level' => 'success'];
                 }
             }
         }
@@ -223,7 +223,7 @@ class ProductController extends AuthActionController
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
                     $this->flushList(Model::ENTITY_TYPE);
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been replenished.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) have been replenished successfully.', [$count]), 'level' => 'success'];
                 }
             }
         }
@@ -251,7 +251,7 @@ class ProductController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been deleted.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) have been deleted successfully.', [$count]), 'level' => 'success'];
                 }
             }
         }
@@ -279,7 +279,7 @@ class ProductController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) will been reselled.', [$count]), 'level' => 'success'];
                 }
             }
         }
@@ -307,7 +307,7 @@ class ProductController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) have been recommended successfully.', [$count]), 'level' => 'success'];
                 }
             }
         }
@@ -335,7 +335,7 @@ class ProductController extends AuthActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected while saving. Please contact us or try again later.'), 'level' => 'danger'];
                 } finally {
-                    $result['message'][] = ['message' => $this->translate('%s product(s) have been saved.', [$count > 1 ? 'A' : $count]), 'level' => 'success'];
+                    $result['message'][] = ['message' => $this->translate('%d product(s) have been canceled recommendation successfully.', [$count]), 'level' => 'success'];
                 }
             }
         }

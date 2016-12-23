@@ -4,7 +4,7 @@ rewardpoints:
     children:
         general:
             label: General
-            scope: [merchant]
+            scope: merchant
             children:
                 enable:
                     type: select

@@ -133,9 +133,9 @@ $customer = $order->getCustomer();
             <dd>
                 <?php
                 $address = $order->getShippingAddress();
-                echo $address->display();
+                echo $address ? $address->display() : $order['shipping_address'];
                 ?>
-                <a data-info='<?php echo json_encode(['is_billing' => 0] + $address->toArray()) ?>' data-toggle="modal" href="#modal-edit-address">
+                <a data-info='<?php echo json_encode(['is_billing' => 0] + ($address ? $address->toArray() : [])) ?>' data-toggle="modal" href="#modal-edit-address">
                     <span><?php echo $this->translate('Edit') ?></span>
                 </a>
             </dd>
@@ -144,9 +144,9 @@ $customer = $order->getCustomer();
                 <dd>
                     <?php
                     $address = $order->getBillingAddress();
-                    echo $address->display();
+                    echo $address ? $address->display() : $order['billing_address'];
                     ?>
-                    <a data-info='<?php echo json_encode(['is_billing' => 1] + $address->toArray()) ?>' data-toggle="modal" href="#modal-edit-address">
+                    <a data-info='<?php echo json_encode(['is_billing' => 1] + ($address ? $address->toArray() : [])) ?>' data-toggle="modal" href="#modal-edit-address">
                         <span><?php echo $this->translate('Edit') ?></span>
                     </a>
                 </dd>

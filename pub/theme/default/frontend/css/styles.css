@@ -139,6 +139,8 @@ select[multiple],select[size],textarea{resize:vertical}
 .customer-account-forgotpwd fieldset p{font-size: 16px;font-weight:bold;line-height: 50px;}
 .customer-account-forgotpwd fieldset .cell{display: inline-block}
 .customer-account-forgotpwd fieldset .buttons-set{line-height: 50px}
+.customer-account-dashboard .transaction a:hover{color:#007dc6;text-decoration: underline;}
+.customer-account-dashboard .table-no-border .action a:hover{color:#007dc6;text-decoration: underline;}
 .filters{border:1px solid #e1e3ea;padding:0 15px}
 .filters dt{clear:both;padding:15px 0;text-align:left;text-indent:20px}
 .filters dd{padding:15px 0;display:table}
@@ -244,7 +246,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .address-list .default_book .btn-Address{background: #cbecfe;border: 1px solid #007dc6;color: #007dc6;padding: 5px 20px;font-size: 12px;}
 .customer-account .page-content .table .sort-by th,.retailer-account .page-content .table .sort-by th{padding:5px 20px}
 .customer-account .page-content .address-list,.retailer-account .page-content .address-list{border:1px solid #eee}
-.customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;border:1px solid #eee;border-bottom:none}
+.customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;box-shadow: 0 0 0.22px 0 #ccc;}
 .customer-account .page-content .table .thead_body,.retailer-account .page-content .table .thead_body{border:1px solid #eee}
 .customer-account .page-content .table .thead_title,.retailer-account .page-content .table .thead_title{font-size:12px}
 .customer-account .page-content .color-blue,.retailer-account .page-content .color-blue{color:#007dc6;font-size:16px;font-weight:bold}
@@ -409,6 +411,9 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .filters .fieldset .btn{margin:10px 0;padding:5px 10px;color:#fff;font-size:14px;border-radius:3px}
 .retailer-account .table .actions a,.retailer-account .table .status a{display:block;margin:5px 0;font-size:12px;white-space:nowrap}
 .retailer-account .table .actions a:hover,.retailer-account .table .status a:hover{text-decoration:underline}
+.retailer-account .table .visible-empty{display:none}
+.retailer-account .table tbody:empty~* .hidden-empty{display:none}
+.retailer-account .table tbody:empty~* .visible-empty{display:table-row}
 .retailer-account-dashboard .profile{border:1px solid #dfe1e8;padding:20px 0}
 .retailer-account-dashboard .profile .info{border-right:1px dashed #ccc}
 .retailer-account-dashboard .profile .avatar{min-width:140px;text-align:center}
@@ -683,7 +688,7 @@ dl.options dd{float:left;margin-left:4px}
 .zoomMask{position:absolute;background:url('data:image/jpg;base64, iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAAxJREFUeF5jaGBgAAABhACBADvwOQAAAABJRU5ErkJggg==') repeat scroll 0 0 transparent;cursor:crosshair;z-index:9}
 .catalog-product div.zoomDiv{z-index:999;position:absolute;top:0px;left:0px;width:200px;height:200px;background:#ffffff;border:1px solid #CCCCCC;display:none;text-align:center;overflow:hidden}
 .catalog-product div.zoomMask{position:absolute;cursor:move;z-index:1}
-/*=S Stone's CSS */
+/*=S Stone's CSS 
 .pad-2{padding:2px}
 .pad-5{padding:5px}
 .pad-10{padding:10px}
@@ -878,6 +883,8 @@ dl.options dd{float:left;margin-left:4px}
 .sales-products .products-content .list-info .good-title{margin-left:90px}
 .sales-products .products-content .transaction-list-sales{border-bottom:1px solid #EDEDED}
 .sales-products .products-content .transaction-list-sales .money{color:#fd6a30}
+.sales-refund-view .log  .user{padding-right:15px}
+.sales-refund-view .log .content{border-left:1px dotted #e7e7e7;padding:0 15px}
 /* end */
 /* Store decoration */
 .retailer-store .banner{margin:5px auto 20px;text-align:center}

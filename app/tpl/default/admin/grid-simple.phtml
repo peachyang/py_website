@@ -46,7 +46,7 @@ $query = $this->getQuery();
                             if (isset($name['editable']) && $name['editable']) {
                                 echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
                             } else if (isset($name['type']) && $name['type'] === 'image') {
-                                echo '<img src="' . $this->getBaseUrl('pub/resource/' . $item[$attr]) . '" alt="" />';
+                                echo '<img src="' . $this->getResourceUrl('' . $item[$attr]) . '" alt="" />';
                             } else if (isset($name['type']) && $name['type'] === 'price' && isset($name['currency'])) {
                                 echo $name['currency']->format($item[$attr]);
                             } else {

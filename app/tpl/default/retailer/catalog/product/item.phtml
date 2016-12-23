@@ -2,7 +2,7 @@
 $product = $this->getVariable('product');
 $thumbnail = $product->getThumbnail();
 ?>
-<tr>
+<tr data-id="<?php echo $product->getId() ?>">
     <td>
         <input type="checkbox" name="id[]" value="<?php echo $product->getId() ?>" />
     </td>

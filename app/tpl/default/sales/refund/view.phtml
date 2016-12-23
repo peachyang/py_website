@@ -107,6 +107,7 @@ $currency = $this->getCurrency();
             <div class="item clearfix">
                 <div class="user col-xs-2 col-md-1"><?php echo $this->translate($comment['is_customer'] ? 'Buyer' : 'Seller') ?></div>
                 <div class="content col-xs-10 col-md-11">
+               
                     <p class="comment"><?php echo $comment['comment'] ?></p>
                     <p class="date">[<?php echo $comment['created_at'] ?>]</p>
                     <?php if ($images = @json_decode($comment['image'], true)): ?>

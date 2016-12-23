@@ -17,7 +17,7 @@
     <main class="col-main container">
         <form action="<?php echo $this->getBaseUrl('customer/account/loginpost/') ?>" method="post">
             <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-            <?php if ($success = $this->getQuery('success_url') || !$this->getContainer()->get('config')['customer/login/redirect_dashboard']): ?>
+            <?php if (($success = $this->getQuery('success_url')) || !$this->getConfig()['customer/login/redirect_dashboard']): ?>
                 <input type="hidden" name="success_url" value="<?php echo $success ? base64_decode($success) : $this->getRequest()->getHeader('HTTP_REFERER') ?>" />
             <?php endif ?>
             <div class="fieldset col-xs-12 pull-right">

@@ -237,7 +237,7 @@ class StoreDecoration extends Template
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();
             if (strpos($thumbnail, 'http') === false) {
-                $picURL = $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail);
+                $picURL = $this->getResourceUrl('image/resized/228x/' . $thumbnail);
             } else {
                 $picURL = $thumbnail;
             }
@@ -405,7 +405,7 @@ class StoreDecoration extends Template
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();
             if (strpos($thumbnail, 'http') === false) {
-                $picURL = $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail);
+                $picURL = $this->getResourceUrl('image/resized/228x/' . $thumbnail);
             } else {
                 $picURL = $thumbnail;
             }
@@ -481,7 +481,7 @@ class StoreDecoration extends Template
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();
             if (strpos($thumbnail, 'http') === false) {
-                $picURL = $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail);
+                $picURL = $this->getResourceUrl('image/resized/228x/' . $thumbnail);
             } else {
                 $picURL = $thumbnail;
             }
@@ -510,7 +510,7 @@ class StoreDecoration extends Template
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();
             if (strpos($thumbnail, 'http') === false) {
-                $picURL = $this->getBaseUrl('pub/resource/image/' . $thumbnail);
+                $picURL = $this->getResourceUrl('image/' . $thumbnail);
             } else {
                 $picURL = $thumbnail;
             }
@@ -630,7 +630,7 @@ class StoreDecoration extends Template
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();
             if (strpos($thumbnail, 'http') === false) {
-                $picURL = $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail);
+                $picURL = $this->getResourceUrl('image/resized/228x/' . $thumbnail);
             } else {
                 $picURL = $thumbnail;
             }

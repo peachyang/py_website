@@ -32,6 +32,7 @@ class Input implements SourceInterface
             ],
             'Date/Time' => [
                 'date' => 'Date',
+                'daterange' => 'Date Range',
                 'time' => 'Time',
                 'datetime' => 'Date&amp;Time'
             ]

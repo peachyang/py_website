@@ -2,7 +2,7 @@
 
 namespace Seahinet\Retailer\ViewModel\Catalog\Edit\Product;
 
-class Store extends Tab
+class StoreCategory extends Tab
 {
 
     protected $activeIds = null;

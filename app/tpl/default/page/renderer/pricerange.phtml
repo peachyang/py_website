@@ -3,6 +3,7 @@ $item = $this->getVariable('item');
 $key = $this->getVariable('key');
 $id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
+$value = isset($item['value']) ? ($item['value'] && is_string($item['value']) ? json_decode($item['value']) : $item['value']) : [];
 ?>
 <div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
@@ -19,7 +20,7 @@ $parent = $this->getVariable('parent');
                        if (isset($item['class'])) {
                            echo $item['class'];
                        }
-                       ?>"<?php endif ?> value="<?php echo $item['value'][0] ?? '' ?>" <?php
+                       ?>"<?php endif ?> value="<?php echo $value[0] ?? '' ?>" <?php
                    if (isset($item['attrs'])) {
                        echo $parent->getAttrs($item['attrs']);
                    }
@@ -34,7 +35,7 @@ $parent = $this->getVariable('parent');
                        if (isset($item['class'])) {
                            echo $item['class'];
                        }
-                       ?>"<?php endif ?><?php if(isset($item['value'][0])): ?> min="<?php echo $item['value'][0] ?>"<?php endif ?> value="<?php echo $item['value'][1] ?? '' ?>" <?php
+                       ?>"<?php endif ?><?php if(isset($value[0])): ?> min="<?php echo $value[0] ?>"<?php endif ?> value="<?php echo $value[1] ?? '' ?>" <?php
                    if (isset($item['attrs'])) {
                        echo $parent->getAttrs($item['attrs']);
                    }

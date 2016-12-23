@@ -430,4 +430,13 @@ class Order extends AbstractModel
         return $this;
     }
 
+    public function getRefundApplication()
+    {
+        $application = new RmaCollection;
+        $application->where(['order_id' => $this->getId()])
+                ->order('id DESC')
+                ->limit(1);
+        return count($application) ? $application[0] : null;
+    }
+
 }

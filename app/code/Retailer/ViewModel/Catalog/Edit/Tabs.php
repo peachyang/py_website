@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Retailer\ViewModel;
+namespace Seahinet\Retailer\ViewModel\Catalog\Edit;
 
 use Seahinet\Lib\ViewModel\Template;
 
@@ -13,7 +13,7 @@ class Tabs extends Template
 
     public function __construct()
     {
-        $this->setTemplate('admin/tabs');
+        $this->setTemplate('retailer/catalog/product/tabs');
     }
 
     public function getTabs()

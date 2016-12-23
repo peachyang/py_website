@@ -38,6 +38,8 @@ rewardpoints:
                     priority: 0
                     default: 1
                     comment: X points per unit.
+                    attrs:
+                        min: 0
                 calculation:
                     label: Calculation
                     type: select
@@ -122,6 +124,8 @@ rewardpoints:
                     priority: 0
                     default: 1
                     comment: X units per point.
+                    attrs:
+                        min: 0
                 calculation:
                     label: Calculation
                     type: select

@@ -14,19 +14,17 @@ class Product extends PEdit
 
     public function __construct()
     {
-        $this->setTemplate('retailer/productEdit');
+        $this->setTemplate('retailer/catalog/product/edit');
     }
 
     public function getSaveUrl()
     {
-        return $this->getBaseUrl('retailer/product/save');
+        return $this->getBaseUrl('retailer/product/save/');
     }
 
     protected function prepareElements($columns = [])
     {
-        $user = (new Segment('customer'))->get('customer');
-        $model = new Model;
-        //$model = $this->getVariable('model');
+        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden'
@@ -48,15 +46,6 @@ class Product extends PEdit
                     'onchange' => 'location.href=\'' . $this->getUri()->withQuery(http_build_query($query = array_diff_key($this->getQuery(), ['attribute_set' => '']))) . (empty($query) ? '?' : '&') . 'attribute_set=\'+this.value;'
                 ]
             ],
-            'store_id' => ($user->getRetailer() ? [
-        'type' => 'hidden',
-        'value' => $user->getRetailer()->offsetGet('store_id')
-            ] : [
-        'type' => 'select',
-        'options' => (new Store)->getSourceArray(),
-        'label' => 'Store',
-        'required' => 'required'
-            ]),
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

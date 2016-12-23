@@ -470,20 +470,184 @@ retailer_review:
                     reply:
                         type: Seahinet\Retailer\ViewModel\Catalog\Review
                         template: retailer/catalog/review/reply
-retailer_products_release:
+retailer_product_edit_before:
+    update: retailer_account
+    root:
+        children:
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Release Product
+                children:
+                    main:
+                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\BeforeEdit
+                        template: retailer/catalog/product/beforeEdit
+retailer_product_edit:
     update: retailer_account
     root:
         children:
             head:
                 action:
                     -
-                        method: setTitle
-                        params: Retailer Release Product
+                        method: addLink
+                        params: backend/css/jquery-ui.min.css
+                    -
+                        method: addLink
+                        params: frontend/css/resource.css
+                    -
+                        method: addScript
+                        params: frontend/js/jquery-ui.min.js
+                    -
+                        method: addScript
+                        params: frontend/js/jquery.fileupload/core.js
+                    -
+                        method: addScript
+                        params: frontend/js/resource.js
+                    -
+                        method: addScript
+                        params: frontend/js/retailer/product.js
+                    -
+                        method: addScript
+                        params: backend/js/product.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor/ckeditor.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor/adapters/jquery.js
+                    -
+                        method: addScript
+                        params: backend/ckeditor.js
             content:
                 children:
                     main:
-                        type: Seahinet\Admin\ViewModel\Catalog\BeforeEdit
-                        template: retailer/release
+                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product
+                        children:
+                            tabs:
+                                type: Seahinet\Retailer\ViewModel\Catalog\Edit\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - category
+                                            - Category
+                                            - 100
+                                    -
+                                        method: addTab
+                                        params:
+                                            - images
+                                            - Images
+                                            - 110
+                                    -
+                                        method: addTab
+                                        params:
+                                            - custom_options
+                                            - Custom Options
+                                            - 120
+                                    -
+                                        method: addTab
+                                        params:
+                                            - inventory
+                                            - Inventory
+                                            - 130
+                                    -
+                                        method: addTab
+                                        params:
+                                            - related_products
+                                            - Related Products
+                                            - 140
+                                    -
+                                        method: addTab
+                                        params:
+                                            - up_sells
+                                            - Up-sells
+                                            - 150
+                                    -
+                                        method: addTab
+                                        params:
+                                            - cross_sells
+                                            - Cross-sells
+                                            - 160
+                                    -
+                                        method: addTab
+                                        params:
+                                            - additional
+                                            - Product Parameters
+                                            - 170
+                                    -
+                                        method: addTab
+                                        params:
+                                            - store_category
+                                            - Store-category
+                                            - 180
+                                children:
+                                    images:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Tab
+                                        template: admin/catalog/product/images
+                                    category:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Category
+                                        template: admin/catalog/product/category
+                                    inventory:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Inventory
+                                        template: admin/catalog/product/inventory
+                                    related_products:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
+                                        action:
+                                            -
+                                                method: setType
+                                                params: related
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
+                                    up_sells:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
+                                        action:
+                                            -
+                                                method: setType
+                                                params: upsells
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
+                                    cross_sells:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
+                                        action:
+                                            -
+                                                method: setType
+                                                params: crosssells
+                                        children:
+                                            pager:
+                                                type: Seahinet\Lib\ViewModel\Pager
+                                    custom_options:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Options
+                                        template: admin/catalog/product/options
+                                    additional:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Additional
+                                        template: admin/catalog/product/additional
+                                    store_category:
+                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\StoreCategory
+                                        template: retailer/catalog/product/storeCategory
+            extra:
+                children:
+                    insert:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: resource/insert
+                        children:
+                            list:
+                                type: Seahinet\Retailer\ViewModel\Resource\Explorer
+                                template: resource/explorer
+                    upload:
+                        type: Seahinet\Retailer\ViewModel\Resource\Modal
+                        template: resource/upload
+retailer_product_edit_1:
+    update: retailer_product_edit
+retailer_product_edit_2:
+    update: retailer_product_edit
 retailer_category:
     update: retailer_account
     root:
@@ -733,181 +897,7 @@ retailer_transaction_record:
                 children:
                     main:
                         type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/transactionRecord
-retailer_products_product_edit:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: addLink
-                        params: backend/css/jquery-ui.min.css
-                    -
-                        method: addLink
-                        params: frontend/css/resource.css
-                    -
-                        method: addScript
-                        params: frontend/js/jquery-ui.min.js
-                    -
-                        method: addScript
-                        params: frontend/js/jquery.fileupload/core.js
-                    -
-                        method: addScript
-                        params: frontend/js/resource.js
-                    -
-                        method: addScript
-                        params: backend/js/product.js
-                    -
-                        method: addScript
-                        params: backend/ckeditor/ckeditor.js
-                    -
-                        method: addScript
-                        params: backend/ckeditor/adapters/jquery.js
-                    -
-                        method: addScript
-                        params: backend/ckeditor.js
-            content:
-                children:
-                    main:
-                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product
-                        children:
-                            tabs:
-                                type: Seahinet\Retailer\ViewModel\Tabs
-                                action:
-                                    -
-                                        method: setMainTabLabel
-                                        params: General
-                                    -
-                                        method: addTab
-                                        params:
-                                            - images
-                                            - Images
-                                            - 100
-                                    -
-                                        method: addTab
-                                        params:
-                                            - category
-                                            - Category
-                                            - 110
-                                    -
-                                        method: addTab
-                                        params:
-                                            - custom_options
-                                            - Custom Options
-                                            - 120
-                                    -
-                                        method: addTab
-                                        params:
-                                            - inventory
-                                            - Inventory
-                                            - 130
-                                    -
-                                        method: addTab
-                                        params:
-                                            - related_products
-                                            - Related Products
-                                            - 140
-                                    -
-                                        method: addTab
-                                        params:
-                                            - up_sells
-                                            - Up-sells
-                                            - 150
-                                    -
-                                        method: addTab
-                                        params:
-                                            - cross_sells
-                                            - Cross-sells
-                                            - 160
-                                    -
-                                        method: addTab
-                                        params:
-                                            - additional
-                                            - Additional
-                                            - 170
-                                    -
-                                        method: addTab
-                                        params:
-                                            - store_category
-                                            - Store-category
-                                            - 180
-                                children:
-                                    images:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Tab
-                                        template: admin/catalog/product/images
-                                    category:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Category
-                                        template: admin/catalog/product/category
-                                    inventory:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Inventory
-                                        template: admin/catalog/product/inventory
-                                    related_products:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
-                                        action:
-                                            -
-                                                method: setType
-                                                params: related
-                                        children:
-                                            pager:
-                                                type: Seahinet\Lib\ViewModel\Pager
-                                    up_sells:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
-                                        action:
-                                            -
-                                                method: setType
-                                                params: upsells
-                                        children:
-                                            pager:
-                                                type: Seahinet\Lib\ViewModel\Pager
-                                    cross_sells:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Link
-                                        action:
-                                            -
-                                                method: setType
-                                                params: crosssells
-                                        children:
-                                            pager:
-                                                type: Seahinet\Lib\ViewModel\Pager
-                                    custom_options:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Options
-                                        template: admin/catalog/product/options
-                                    additional:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Additional
-                                        template: admin/catalog/product/additional
-                                    store_category:
-                                        type: Seahinet\Retailer\ViewModel\Catalog\Edit\Product\Store
-                                        template: admin/catalog/product/store
-            extra:
-                children:
-                    insert:
-                        type: Seahinet\Retailer\ViewModel\Resource\Modal
-                        template: resource/insert
-                        children:
-                            list:
-                                type: Seahinet\Retailer\ViewModel\Resource\Explorer
-                                template: resource/explorer
-                    upload:
-                        type: Seahinet\Retailer\ViewModel\Resource\Modal
-                        template: resource/upload
-retailer_products_product_edit_1:
-    update: retailer_products_product_edit
-retailer_products_product_edit_2:
-    update: retailer_products_product_edit
-freight_setting:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Freight Setting
-            content:
-                children:
-                    main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/freight                        
+                        template: retailer/transactionRecordy
 decoration_store:
     update: default
     root:

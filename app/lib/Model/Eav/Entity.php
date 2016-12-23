@@ -166,7 +166,7 @@ abstract class Entity extends AbstractModel
     {
         return !$insertForce && $this->getId();
     }
-    
+
     public function save($constraint = [], $insertForce = false)
     {
         $isUpdate = $this->isUpdate();
@@ -323,7 +323,7 @@ abstract class Entity extends AbstractModel
                         $pairs[$key] = null;
                     }
                 } else {
-                    $pairs[$key] = $value === '' ? null : $value;
+                    $pairs[$key] = $value === '' ? null : is_array($value) ? json_encode($value) : $value;
                 }
             }
         }

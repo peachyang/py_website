@@ -2,7 +2,7 @@
 $order = $this->getVariable('order');
 ?>
 <tr>
-    <th colspan="7" class="description">
+    <th colspan="8" class="description">
         <dl>
             <dt><?php echo $this->translate('Order ID') ?></dt>
             <dd><?php echo $order['increment_id'] ?></dd>
@@ -55,8 +55,13 @@ foreach ($items as $item):
         <td class="text-center"><?php echo (float) $item['qty'] ?></td>
         <?php if ($flag): ?>
             <td rowspan="<?php echo $count ?>" class="status text-center">
+                <?php if ($application = $order->getRefundApplication()): ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/refund/view/?id=' . $application['id']) ?>"><?php echo $this->translate('Refund Details') ?></a>
+                <?php endif ?>
+            </td>
+            <td rowspan="<?php echo $count ?>" class="status text-center">
                 <?php echo $this->translate($order->getStatus()['name']) ?>
-                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Detail') ?></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('View Details') ?></a>
             </td>
             <td rowspan="<?php echo $count ?>" class="grand-total text-center text-nowrap">
                 <?php echo $currency->format($item['total']) ?>

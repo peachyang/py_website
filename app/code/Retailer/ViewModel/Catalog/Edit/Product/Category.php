@@ -7,56 +7,50 @@ use Seahinet\Catalog\Model\Collection\Category as Collection;
 class Category extends Tab
 {
 
-    protected $categories = null;
-    protected $activeIds = null;
+    protected static $categories = null;
+    protected static $activeIds = null;
 
     public function getCategories()
     {
-        if (is_null($this->categories)) {
+        if (is_null(self::$categories)) {
             $collection = new Collection;
             $collection->order('parent_id ASC, sort_order DESC');
-            $this->categories = [];
+            self::$categories = [];
             foreach ($collection as $item) {
                 $pid = (int) $item['parent_id'];
-                if (!isset($this->categories[$pid])) {
-                    $this->categories[$pid] = [];
+                if (!isset(self::$categories[$pid])) {
+                    self::$categories[$pid] = [];
                 }
-                $this->categories[$pid][] = $item;
+                self::$categories[$pid][] = $item;
             }
         }
-        return $this->categories;
+        return self::$categories;
     }
 
     public function getActiveIds()
     {
-        if (is_null($this->activeIds)) {
+        if (is_null(self::$activeIds)) {
             $collection = $this->getProduct()->getCategories();
-            $this->activeIds = [];
+            self::$activeIds = [];
             if (count($collection)) {
                 foreach ($collection->toArray() as $item) {
-                    $this->activeIds[] = $item['id'];
+                    self::$activeIds[] = $item['id'];
                 }
             }
         }
-        return $this->activeIds;
+        return self::$activeIds;
     }
 
     public function renderCategory($level = 0)
     {
-        $html = '';
         if (!empty($this->getCategories()[$level])) {
             foreach ($this->getCategories()[$level] as $category) {
-                $html .= '<li><input type="checkbox" name="category[]" id="category-' .
-                        $category['id'] . '" class="form-control required" value="' .
-                        $category['id'] . '"' . (in_array($category['id'], $this->getActiveIds()) ?
-                        ' checked="checked"' : '') . ' /><label for="category-' .
-                        $category['id'] . '" class="control-label">' . $category['name'] .
-                        '</label>' . (isset($this->getCategories()[$category['id']]) ?
-                        '<ul>' . $this->renderCategory($category['id']) . '</ul>' : ''
-                        ) . '</li>';
+                $child = new static;
+                $child->setTemplate('admin/catalog/product/category/item')
+                        ->setVariable('category', $category);
+                echo $child->__toString();
             }
         }
-        return $html;
     }
 
 }

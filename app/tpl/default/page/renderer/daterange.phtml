@@ -1,10 +1,12 @@
 <?php
 $item = $this->getVariable('item');
 $key = $this->getVariable('key');
+$key .= (strpos($key, '[') === false ? '[]' : '');
 $id = trim(preg_replace('/\W+/', '-', $key), '-');
 $parent = $this->getVariable('parent');
-$from = isset($item['value'][0]) ? strtotime($item['value'][0]) : 0;
-$to = isset($item['value'][1]) ? strtotime($item['value'][1]) : 0;
+$value = isset($item['value']) ? ($item['value'] && is_string($item['value']) ? json_decode($item['value']) : $item['value']) : [];
+$from = isset($value[0]) ? strtotime($value[0]) : 0;
+$to = isset($value[1]) ? strtotime($value[1]) : 0;
 ?>
 <div class="input-box <?php echo $this->getVariable('boxClass') ?>">
     <?php if (isset($item['label'])): ?>
@@ -31,7 +33,7 @@ $to = isset($item['value'][1]) ? strtotime($item['value'][1]) : 0;
                    if (isset($item['class'])) {
                        echo $item['class'];
                    }
-                   ?>"<?php endif ?><?php if($from): ?> data-min-date="<?php echo date('Y-m-d', $from) ?>"<?php endif ?> value="<?php echo $to ? date('Y-m-d', $to) : '' ?>" <?php
+                   ?>"<?php endif ?><?php if ($from): ?> data-min-date="<?php echo date('Y-m-d', $from) ?>"<?php endif ?> value="<?php echo $to ? date('Y-m-d', $to) : '' ?>" <?php
                if (isset($item['attrs'])) {
                    echo $parent->getAttrs($item['attrs']);
                }

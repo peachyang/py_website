@@ -5,7 +5,7 @@ namespace Seahinet\Retailer\Controller;
 use Exception;
 use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Retailer\Model\StoreTemplate;
-use Seahinet\Retailer\Model\StorePicinfo;
+use Seahinet\Retailer\Model\StorePicInfo;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Resource\Model\Collection\Category;
 use Seahinet\Customer\Model\Customer;
@@ -346,7 +346,7 @@ class StoreController extends AuthActionController
             $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $store = $r['store_id'];
-            $storePicinfo = new StorePicinfo();
+            $storePicinfo = new StorePicInfo();
             try {
                 $storePicinfo->setData([
                     'store_id' => $store,
@@ -377,7 +377,7 @@ class StoreController extends AuthActionController
             $r = new Retailer;
             $r->load($segment->get('customer')->getId(), 'customer_id');
             $data = $this->getRequest()->getPost();
-            $storePicinfo = new StorePicinfo;
+            $storePicinfo = new StorePicInfo;
             $storePicinfo->load($data['id']);
             if ($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
                 $storePicinfo->remove();
@@ -426,7 +426,7 @@ class StoreController extends AuthActionController
                 }
             }
             if ($result['error'] === 0) {
-                $storePicinfo = new StorePicinfo();
+                $storePicinfo = new StorePicInfo();
                 $storePicinfo->setData([
                     'store_id' => $store,
                     'pic_title' => $data['pic_title'],
@@ -466,7 +466,7 @@ class StoreController extends AuthActionController
                         $model->remove();
                     }
 
-                    $storePicinfo = new StorePicinfo;
+                    $storePicinfo = new StorePicInfo;
                     $storePicinfo->load($data['id']);
                     if ($storePicinfo->getId() && $storePicinfo['store_id'] == $r['store_id'])
                         $storePicinfo->remove();
@@ -490,7 +490,7 @@ class StoreController extends AuthActionController
         $data = $this->getRequest()->getPost();
         if ($result['error'] === 0) {
             try {
-                $storePicinfo = new StorePicinfo;
+                $storePicinfo = new StorePicInfo;
                 $storePicinfo->load($data['id']);
                 $r = new Retailer;
                 $r->load($segment->get('customer')->getId(), 'customer_id');

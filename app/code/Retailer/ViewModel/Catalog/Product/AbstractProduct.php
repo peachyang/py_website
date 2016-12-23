@@ -87,7 +87,7 @@ abstract class AbstractProduct extends AbstractViewModel implements ProductInter
             'category' => [
                 'type' => 'select',
                 'label' => 'System Category',
-                'options' => (new CatalogCategory)->getSourceArray(),
+                'options' => (new CatalogCategory)->getSourceArray(false),
                 'value' => $data['category'] ?? ''
             ],
             'store_category' => [

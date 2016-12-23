@@ -410,6 +410,9 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .filters .fieldset .btn{margin:10px 0;padding:5px 10px;color:#fff;font-size:14px;border-radius:3px}
 .retailer-account .table .actions a,.retailer-account .table .status a{display:block;margin:5px 0;font-size:12px;white-space:nowrap}
 .retailer-account .table .actions a:hover,.retailer-account .table .status a:hover{text-decoration:underline}
+.retailer-account .table .visible-empty{display:none}
+.retailer-account .table tbody:empty~* .hidden-empty{display:none}
+.retailer-account .table tbody:empty~* .visible-empty{display:table-row}
 .retailer-account-dashboard .profile{border:1px solid #dfe1e8;padding:20px 0}
 .retailer-account-dashboard .profile .info{border-right:1px dashed #ccc}
 .retailer-account-dashboard .profile .avatar{min-width:140px;text-align:center}
@@ -684,7 +687,7 @@ dl.options dd{float:left;margin-left:4px}
 .zoomMask{position:absolute;background:url('data:image/jpg;base64, iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAAxJREFUeF5jaGBgAAABhACBADvwOQAAAABJRU5ErkJggg==') repeat scroll 0 0 transparent;cursor:crosshair;z-index:9}
 .catalog-product div.zoomDiv{z-index:999;position:absolute;top:0px;left:0px;width:200px;height:200px;background:#ffffff;border:1px solid #CCCCCC;display:none;text-align:center;overflow:hidden}
 .catalog-product div.zoomMask{position:absolute;cursor:move;z-index:1}
-/*=S Stone's CSS */
+/*=S Stone's CSS 
 .pad-2{padding:2px}
 .pad-5{padding:5px}
 .pad-10{padding:10px}

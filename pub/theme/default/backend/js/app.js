@@ -92,17 +92,20 @@
                 addMessages(json.message);
             }
             if (json.removeLine) {
-                if ($(o).is('menu a')) {
-                    var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
-                } else {
-                    var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
-                }
-                if ($(t).is('tr,li,dt,dd')) {
-                    $(t).remove();
-                } else {
+                if (typeof json.removeLine == 'object') {
+                    var t = $(o).parents('table,ul,ol,dl').first();
                     $(json.removeLine).each(function () {
-                        $(o).parents('[data-id=' + this + ']').first().remove();
+                        $(t).find('[data-id=' + this + ']').remove();
                     });
+                } else {
+                    if ($(o).is('menu a')) {
+                        var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
+                    } else {
+                        var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
+                    }
+                    if ($(t).is('tr,li,dt,dd')) {
+                        $(t).remove();
+                    }
                 }
             }
             $(o).trigger('afterajax.seahinet', json);

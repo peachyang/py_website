@@ -54,7 +54,10 @@ class Template extends AbstractViewModel
             }
             return $rendered;
         } catch (Exception $e) {
-            $this->getContainer()->get('log')->logException($e);
+            $this->getContainer()->get('log')->logException(new Exception($e->getMessage() . ' in ' . $template, $e->getCode(), $e->getPrevious()));
+            if (Bootstrap::isDeveloperMode()) {
+                echo '<div class="template-tip" data-template="', $template ?? $this->getTemplate(), '" data-viewmodel="', get_class($this), '">' . $e->getMessage() . '</div>';
+            }
             return '';
         }
     }
@@ -78,7 +81,7 @@ class Template extends AbstractViewModel
             }
             return ob_get_clean();
         } catch (Error $e) {
-            $this->getContainer()->get('log')->logError($e);
+            $this->getContainer()->get('log')->logError(new Error($e->getMessage() . ' in ' . $template, $e->getCode(), $e->getPrevious()));
             if (Bootstrap::isDeveloperMode()) {
                 echo '<div class="template-tip" data-template="', $template, '" data-viewmodel="', get_class($this), '">' . $e->getMessage() . '</div>';
             }

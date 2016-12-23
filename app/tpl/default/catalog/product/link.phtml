@@ -23,9 +23,9 @@ if (count($products)):
                             ?>
                             <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                         <?php elseif ($width): ?>
-                            <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
+                            <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getResourceUrl('image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
                         <?php else: ?>
-                            <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                            <img src="<?php echo $this->getResourceUrl('image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
                         <?php endif ?>
                     </a>
                     <div class="price-box">

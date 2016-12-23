@@ -50,7 +50,7 @@ $filter = $this->getVariable('filter');
                             <div class="product-pic">
                                 <a href="<?php echo $sales_product->getUrl(); ?>" title="<?php echo $sales_product['name']; ?>">
                                     <?php if (strpos($thumbnail, '//') === false) { ?>
-                                        <img src="<?php echo $this->getBaseUrl('pub/resource/image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
+                                        <img src="<?php echo $this->getResourceUrl('image/' . $thumbnail) ?>" class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getResourceUrl('image/resized/50x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getResourceUrl('image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getResourceUrl('image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getResourceUrl('image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } else { ?>
                                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $sales_product['name']; ?>" />
                                     <?php } ?>

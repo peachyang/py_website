@@ -11,7 +11,7 @@ $products = $this->getProducts();
                 <li class="item col-xs-6 col-sm-4 col-md-3 col-lg-2">
                     <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image">
                         <?php if(strpos($thumbnail, '//') === false): ?>
-                        <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/173x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/221x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/228x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getBaseUrl('pub/resource/image/resized/362x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                        <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getResourceUrl('image/resized/173x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getResourceUrl('image/resized/221x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getResourceUrl('image/resized/228x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getResourceUrl('image/resized/362x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
                         <?php else: ?>
                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                         <?php endif ?>

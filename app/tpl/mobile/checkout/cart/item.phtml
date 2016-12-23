@@ -11,7 +11,7 @@ $inventory = $item->getInventory();
     <li class="col-xs-8 col-sm-8">
         <div class="product-img">
             <a href="<?php echo $item['product']->getUrl() ?>">
-                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getBaseUrl('pub/resource/image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" width="90%" />
+                <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/88x/' . $thumbnail) : $thumbnail ?>" alt="" width="90%" />
             </a>
         </div>
         <div class="product-name">

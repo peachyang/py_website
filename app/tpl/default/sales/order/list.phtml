@@ -73,7 +73,7 @@ $orders = $this->getOrders();
                                 <?php if ($order->canReview()): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/order/review/?id=' . $order['id']) ?>"><?php echo $this->translate('Add Review') ?></a>
                                 <?php endif ?>
-                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>"><?php echo $this->translate('The order details') ?></a>
+                                <a href="<?php echo $this->getBaseUrl('sales/order/view/?id=' . $order['id']) ?>"><?php echo $this->translate('Order Details') ?></a>
                             </td>
                             <?php
                             $flag = false;

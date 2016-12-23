@@ -207,6 +207,8 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .nav-container .nav .dropdown{position:static}
 .admin .nav-container .nav .dropdown-menu{left:100%;top:0;background:#333;min-width:146px;height:100%;padding-top:54px}
 .admin .nav-container .nav .dropdown-menu>.item a{border-bottom:1px solid #494848;display:block;width:100%;line-height:32px;font-size:12px;color:#9e9d9d;white-space:nowrap;padding-right:10px}
+.admin .nav-container .nav .dropdown-menu>.item a.active{background: #4e4e4e}
+.admin .nav-container .nav .dropdown-menu>.item a.active:before{}
 .admin .nav-container .nav .dropdown-menu>.item a:before{content:"\f105";transition:margin-right ease .5s;font-family:FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0 10px}
 .admin .nav-container .nav .dropdown-menu>.item:hover a:before{margin-right:15px}
 .admin .nav-container .nav .dropdown-menu>.item a:focus,.admin .nav-container .nav .dropdown-menu>.item a:hover{text-decoration:none;color:#fff}

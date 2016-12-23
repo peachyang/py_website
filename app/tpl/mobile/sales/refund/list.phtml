@@ -54,7 +54,7 @@ $refund->getSelect()->where->notEqualTo('status', 5);
                             <li class="col-xs-7 col-sm-7 text-right">
                                 <?php echo $currency->format($order->offsetGet('total')); ?>
                                 <span class="font-12">
-                                    <?php echo $this->translate('(Including Shipping Fee: %s)', [$currency->format($order->offsetGet('shipping'))]); ?>
+                                    (<?php echo $this->translate('Including Shipping Fee: %s', [$currency->format($order->offsetGet('shipping'))]); ?>)
                                 </span>
                             </li>	
                         </ul>

@@ -13,7 +13,7 @@ class Refund extends AbstractViewModel
 
     protected $status = null;
     protected $service = null;
-    protected $orderUrl = 'retailer/transaction/orderview/';
+    protected $orderUrl = 'retailer/sales_order/view/';
     protected $viewUrl = 'retailer/refund/view/';
     protected $commentUrl = 'retailer/refund/addcomment/';
 

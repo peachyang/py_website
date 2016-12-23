@@ -37,6 +37,14 @@ $shipment = $this->getVariable('model');
         </div>
         <div class="panel-body">
             <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
+            <?php foreach ($track = $shipment->getShippingMethod() as $item): ?>
+                <ul>
+                    <li><?php echo $this->translate('Carrier'); ?>:<?php echo $this->translate($item['carrier']); ?></li>
+                    <li><?php echo $this->translate('Shipment ID'); ?>:<?php echo $this->translate($item['track_number']); ?></li>
+                </ul>
+                <?php
+            endforeach;
+            ?>
         </div>
     </div>
     <div class="panel panel-default">
@@ -56,11 +64,11 @@ $shipment = $this->getVariable('model');
                 <thead class="text-nowrap">
                     <tr>
                         <th><?php echo $this->translate('Product Name', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('SKU', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th>
                         <th><?php echo $this->translate('Options', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Price', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Qty', [], 'sales') ?></th>
-                        <th><?php echo $this->translate('Total', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Price', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Qty', [], 'sales') ?></th>
+                        <th class="text-center"><?php echo $this->translate('Total', [], 'sales') ?></th>
                     </tr>
                 </thead>
                 <tbody>

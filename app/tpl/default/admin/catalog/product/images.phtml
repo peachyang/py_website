@@ -23,7 +23,7 @@ $default = $product['default_image'];
             <tr class="inline-box">
                 <td>
                     <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" data-param="file_type=image%25" title="<?php echo $this->translate('Select Resource') ?>">
-                        <img src="<?php echo isset($images[$i]) ? $this->getBaseUrl('pub/resource/image/resized/100x100/' . $images[$i]['src']) : $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
+                        <img src="<?php echo isset($images[$i]) ? $this->getResourceUrl('image/resized/100x100/' . $images[$i]['src']) : $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
                     </button>
                     <input type="hidden" name="images[]" value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" />
                 </td>

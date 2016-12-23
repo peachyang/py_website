@@ -4,7 +4,7 @@ namespace Seahinet\Retailer\Model;
 
 use Seahinet\Lib\Model\AbstractModel;
 
-class StorePicinfo extends AbstractModel
+class StorePicInfo extends AbstractModel
 {
 
     protected function construct()

@@ -86,7 +86,7 @@ $currency = $order->getCurrency();
         </div>
         <div class="panel-body">
             <?php
-            echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales'),
+            echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />', $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales'),
             '<br />', $invoice->offsetGet('comment')
             ?>
         </div>

@@ -5,6 +5,7 @@ namespace Seahinet\Sales\Model;
 use Seahinet\Lib\Model\AbstractModel;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Sales\Model\Collection\Shipment\Item as ItemCollection;
+use Seahinet\Sales\Model\Collection\Shipment\ItemTrack;
 
 class Shipment extends AbstractModel
 {
@@ -46,10 +47,12 @@ class Shipment extends AbstractModel
 
     public function getShippingMethod()
     {
-        if (isset($this->storage['shipping_method'])) {
-            $className = $this->getContainer()->get('config')['shipping/' . $this->storage['shipping_method'] . '/model'];
+        if (is_null($this->items)) {
+            $itemTrack = new ItemTrack;
+            $itemTrack->where(['shipment_id' => $this->getId()]);
+            return $itemTrack;
         }
-        return null;
+        return [];
     }
 
 }

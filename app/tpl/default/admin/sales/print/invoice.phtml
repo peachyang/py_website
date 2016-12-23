@@ -102,7 +102,7 @@ $params = $this->getVariable('pdf')->serializeTCPDFtagParameters(array($invoice[
         <td class="title" align="center"><b><?php echo $this->translate('Subtotal', [], 'sales') ?></b></td><td class="content"><?php echo $currency->format($order->offsetGet('subtotal')) ?></td>
     </tr>
     <tr class="background">
-        <td class="colspan" colspan="2" align="center"><?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
+        <td class="colspan" colspan="2" align="center"><?php echo $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?></td>
         <td class="title" align="center"><b><?php echo $this->translate('Shipping &amp; Handling', [], 'sales') ?></b></td><td class="content"><?php echo $currency->format($order->offsetGet('shipping')) ?></td>
     </tr>
     <tr >

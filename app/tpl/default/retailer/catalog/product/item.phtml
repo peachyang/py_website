@@ -1,0 +1,26 @@
+<?php
+$product = $this->getVariable('product');
+$thumbnail = $product->getThumbnail();
+?>
+<tr data-id="<?php echo $product->getId() ?>">
+    <td>
+        <input type="checkbox" name="id[]" value="<?php echo $product->getId() ?>" />
+    </td>
+    <td>
+        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" width="50" alt="<?php echo $product['name'] ?>" />
+    </td>
+    <td>
+        <?php echo $product['name'] ?>
+    </td>
+    <td class="text-center"><?php echo $this->getCurrency()->convert($product->getFinalPrice(), true) ?></td>
+    <td class="text-center"><?php echo $product->getInventory() ?></td>
+    <td class="text-center"><?php echo $product['created_at'] ?></td>
+    <td class="text-center actions">
+        <a href="<?php echo $this->getBaseUrl('retailer/product/release/?id=' . $product->getId()) ?>"><?php echo $this->translate('Edit') ?></a>
+        <?php
+        foreach ($this->getActions($product) as $action) {
+            echo $action;
+        }
+        ?>
+    </td>
+</tr>

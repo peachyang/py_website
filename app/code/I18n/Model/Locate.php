@@ -3,7 +3,7 @@
 namespace Seahinet\I18n\Model;
 
 use BadMethodCallException;
-use Zend\Db\Adapter\Adapter;
+use Seahinet\Lib\Db\Adapter;
 use Zend\Db\Sql\Select;
 
 class Locate

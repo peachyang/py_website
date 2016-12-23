@@ -6,6 +6,7 @@ $currency = $this->getCurrency();
     <form action="<?php echo $this->getBaseUrl('/sales/refund/save/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
         <input type="hidden" name="order_id" value="<?php echo $order->getId() ?>" />
+        <input type="hidden" name="email" value="<?php echo $order->getShippingAddress()['email']; ?>">
         <div class="service">
             <label for="service" class="control-label required"><?php echo $this->translate('Service') ?></label>
             <select name="service" id="service" class="form-control required">

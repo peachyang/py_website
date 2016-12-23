@@ -160,6 +160,7 @@ class AccountController extends AuthActionController
             if ($result['error'] == 0) {
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {
+                    $result['success_url'] = $data['success_url'] ?? '/';
                     $url = 'customer/account/';
                     if (!empty($data['persistent'])) {
                         $persistent = new Persistent;

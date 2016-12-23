@@ -16,7 +16,7 @@ $currency = $order->getCurrency();
             <li class="col-xs-5 col-sm-5 text-left"><?php echo $order->getStore()->offsetGet('name') ?></li>
             <li class="col-xs-7 col-sm-7 text-right">
                 <?php echo $order->getCurrency()->format($order->offsetGet('total')) ?>
-                <span><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?></span>
+                <span>(<?php echo $this->translate('Including Shipping Fee: %s', [$order->getCurrency()->format($order->offsetGet('shipping'))]) ?>)</span>
             </li>	
         </ul>
         <table class="table inline bt padding-5">
@@ -99,7 +99,7 @@ $currency = $order->getCurrency();
         <div class="panel-body">
             <?php
             echo $this->translate($order->getPaymentMethod()->getLabel()), '<br />',
-            $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales'), '<br />',
+            $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales'), '<br />',
             $invoice['comment']
             ?>
         </div>

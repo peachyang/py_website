@@ -16,7 +16,7 @@ $currency = $this->getCurrency();
                 <li class="col-xs-6 col-sm-6 text-right" colspan="2">
                     <?php echo $currency->format($order->offsetGet('total')); ?>
                     <span class="font-12">
-                        <?php echo $this->translate('(Including Shipping Fee: %s)', [$currency->format($order->offsetGet('shipping'))]); ?>
+                        (<?php echo $this->translate('Including Shipping Fee: %s', [$currency->format($order->offsetGet('shipping'))]); ?>)
                     </span>
                 </li>
             </ul>

@@ -15,16 +15,16 @@ $default = (int) $product->offsetGet('default_image');
                 endif;
                 ?>">
                     <img class="bttrlazyloading magnifying" data-bttrlazyloading-lg-src="<?php
-                    echo $this->getBaseUrl('pub/resource/image/resized/345x/'),
+                    echo $this->getResourceUrl('image/resized/345x/'),
                     $image['src']
                     ?>" data-bttrlazyloading-md-src="<?php
-                    echo $this->getBaseUrl('pub/resource/image/resized/278x/'),
+                    echo $this->getResourceUrl('image/resized/278x/'),
                     $image['src']
                     ?>" data-bttrlazyloading-sm-src="<?php
-                    echo $this->getBaseUrl('pub/resource/image/resized/205x/'),
+                    echo $this->getResourceUrl('image/resized/205x/'),
                     $image['src']
                     ?>" data-bttrlazyloading-xs-src="<?php
-                    echo $this->getBaseUrl('pub/resource/image/resized/704x/'),
+                    echo $this->getResourceUrl('image/resized/704x/'),
                     $image['src']
                     ?>" alt="<?php echo $product->offsetGet('name') ?>">
                 </div>
@@ -38,7 +38,7 @@ $default = (int) $product->offsetGet('default_image');
                     $default = true;
                 endif;
                 ?>>
-                    <img src="<?php echo $this->getBaseUrl('pub/resource/image/resized/45x/'), $image['src'] ?>" width="45" alt="" data-label="<?php echo $image['label'] ?>" data-group="<?php echo $image['group'] ?>" />
+                    <img src="<?php echo $this->getResourceUrl('image/resized/45x/'), $image['src'] ?>" width="45" alt="" data-label="<?php echo $image['label'] ?>" data-group="<?php echo $image['group'] ?>" />
                 </li>
             <?php endforeach ?>
         </ol>

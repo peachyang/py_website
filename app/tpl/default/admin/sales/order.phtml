@@ -69,7 +69,7 @@ $currency = $order->getCurrency();
     <div class="panel">
         <div class="panel-heading clearfix">
             <h4 class="panel-title pull-left"><?php echo $this->translate('Billing Address', [], 'sales') ?></h4>
-            <button type="button" class="btn pull-right" data-info='<?php echo json_encode($order->getBillingAddress()->toArray() + ['is_billing' => 1]) ?>' data-toggle="modal" data-target="#modal-edit-address">
+            <button type="button" class="btn pull-right" data-info='<?php echo json_encode(['is_billing' => 1] + (($address = $order->getBillingAddress()) ? $address->toArray() : [])) ?>' data-toggle="modal" data-target="#modal-edit-address">
                 <span><?php echo $this->translate('Edit') ?></span>
             </button>
         </div>
@@ -80,7 +80,7 @@ $currency = $order->getCurrency();
     <div class="panel">
         <div class="panel-heading clearfix">
             <h4 class="panel-title pull-left"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
-            <button type="button" class="btn pull-right" data-info='<?php echo json_encode($order->getShippingAddress()->toArray() + ['is_billing' => 0]) ?>' data-toggle="modal" data-target="#modal-edit-address">
+            <button type="button" class="btn pull-right" data-info='<?php echo json_encode(['is_billing' => 0] + (($address = $order->getShippingAddress()) ? $address->toArray() : [])) ?>' data-toggle="modal" data-target="#modal-edit-address">
                 <span><?php echo $this->translate('Edit') ?></span>
             </button>
         </div>
@@ -108,7 +108,7 @@ $currency = $order->getCurrency();
                 <a href="javascript:void(0);" onclick="window.open('<?php echo $this->getAdminUrl('customer_creditcard/?id=' . $card) ?>', '', 'status=no,scroll=no,width=600,height=400').focus()"><?php echo $this->translate('View') ?></a>
             <?php endif ?>
             <br />
-            <?php echo $this->translate('Order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
+            <?php echo $this->translate('The order was placed using %s', [$order->offsetGet('currency')], 'sales') ?>
         </div>
     </div>
     <?php if ($this->getCollection()): ?>

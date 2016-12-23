@@ -91,10 +91,11 @@ trait Url
      */
     public function getResourceUrl($path = '')
     {
-        return $this->getBaseUrl(is_scalar($path) ? Resource::$options['path'] . $path :
-                        (is_callable([$path, '__toString']) ? $path->__toString() : Resource::$options['path'] .
-                        ($path instanceof Resource ? (substr($path['file_type'], 0, strpos($path['file_type'], '/')) . '/' . $path['real_name']) : ''))
-        );
+        $base = $this->getContainer()->get('config')['global/url/cookie_free_domain'];
+        $suffix = is_scalar($path) ? Resource::$options['path'] . $path :
+                (is_callable([$path, '__toString']) ? $path->__toString() : Resource::$options['path'] .
+                ($path instanceof Resource ? (substr($path['file_type'], 0, strpos($path['file_type'], '/')) . '/' . $path['real_name']) : ''));
+        return $base ? ($base . $suffix) : $this->getBaseUrl($suffix);
     }
 
 }

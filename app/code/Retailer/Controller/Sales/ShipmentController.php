@@ -8,7 +8,7 @@ use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Collection\Order\Status as StatusCollection;
 use Seahinet\Sales\Model\Shipment;
 use Seahinet\Sales\Model\Shipment\Item;
-use Seahinet\Sales\Model\Shipment\Track as Model;
+use Seahinet\Sales\Model\Shipment\Tracks;
 use Seahinet\Sales\Model\Order;
 use Seahinet\Sales\Model\Order\Status\History;
 use TCPDF;
@@ -68,11 +68,12 @@ class ShipmentController extends AuthActionController
                     }
                 }
                 if (isset($data['tracking']) && !empty($data['tracking']['number']) && !empty($data['tracking']['carrier'])) {
-                    $track = new Model($data['tracking']);
+                    $track = new Tracks($data['tracking']);
                     $track->setData([
                         'shipment_id' => $shipment->getId(),
                         'order_id' => $data['order_id'],
-                        'track_number'=>$data['tracking']['number']
+                        'track_number' =>$data['tracking']['number'],
+                        'description' => $data['comment'] ?? ''
                     ])->save();
                 }
                 $code = (int) !$order->canShip() + (int) !$order->canInvoice();

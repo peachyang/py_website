@@ -86,7 +86,7 @@ abstract class Entity extends AbstractModel
 
     protected function loadFromIndexer($id, $key = null)
     {
-        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, [(is_null($key) ? $this->primaryKey : $key) => (string) $id]);
+        return $this->getContainer()->get('indexer')->select(static::ENTITY_TYPE, $this->languageId, [(is_null($key) ? $this->primaryKey : $key) => (string) $id], ['noCache' => 1]);
     }
 
     protected function getEntityTable()

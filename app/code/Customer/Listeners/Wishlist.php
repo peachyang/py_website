@@ -5,7 +5,7 @@ namespace Seahinet\Customer\Listeners;
 use Seahinet\Customer\Model\Wishlist as Model;
 use Seahinet\Lib\Listeners\ListenerInterface;
 use Seahinet\Lib\Session\Segment;
-use Zend\Db\TableGateway\TableGateway;
+use Seahinet\Lib\Db\TableGateway;
 
 class Wishlist implements ListenerInterface
 {

@@ -37,17 +37,20 @@
                 addMessages(json.message);
             }
             if (json.removeLine) {
-                if ($(o).is('menu a')) {
-                    var t = $('[data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
-                } else {
-                    var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
-                }
-                if ($(t).is('tr,li,dt,dd')) {
-                    $(t).remove();
-                } else {
+                if (typeof json.removeLine == 'object') {
+                    var t = $(o).parents('table,ul,ol,dl').first();
                     $(json.removeLine).each(function () {
-                        $(o).parents('[data-id=' + this + ']').first().remove();
+                        $(t).find('[data-id=' + this + ']').remove();
                     });
+                } else {
+                    if ($(o).is('menu a')) {
+                        var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
+                    } else {
+                        var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
+                    }
+                    if ($(t).is('tr,li,dt,dd')) {
+                        $(t).remove();
+                    }
                 }
             }
             $(o).trigger('afterajax.seahinet', json);
@@ -335,6 +338,47 @@
             } else {
                 $(o).val('');
                 $(this).remove();
+            }
+        });
+        if ($.fn.datepicker && $('[type=date]').length) {
+            $('[type=date]').each(function () {
+                var param = {dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true};
+                if ($(this).parent().is('.range') && $(this).nextAll('[type=date]').length) {
+                    param.onSelect = function () {
+                        $(this).nextAll('.date').datepicker('option', 'minDate', $.datepicker.parseDate('yy-mm-dd', this.value));
+                    };
+                }
+                if ($(this).is('[data-min-date]')) {
+                    param.minDate = $(this).data('min-date');
+                }
+                if ($(this).is('[data-max-date]')) {
+                    param.maxDate = $(this).data('max-date');
+                }
+                $(this).attr({type: 'text', readonly: 'readonly'}).datepicker(param);
+            });
+        }
+        var tables = [];
+        $('[type=checkbox].selectall').each(function () {
+            var p = $(this).parents('.table').last();
+            if ($.inArray(p, tables) === -1) {
+                $(p).on('click', '[type=checkbox]', function () {
+                    var flag = this.checked;
+                    var parent = $(this).parents('.table').last();
+                    if ($(this).is('.selectall')) {
+                        $(parent).find('[type=checkbox]').not(this).each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (flag && !$(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    } else if (!flag && $(parent).find('[type=checkbox]').not('.selectall,:checked').length) {
+                        $(parent).find('.selectall').each(function () {
+                            this.checked = flag;
+                        });
+                    }
+                });
+                tables.push(p);
             }
         });
     });

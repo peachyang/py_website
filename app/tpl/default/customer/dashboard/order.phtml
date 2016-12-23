@@ -85,7 +85,7 @@ if ($order && $order->getId()):
                         <?php if ($flag): ?>
                             <td rowspan="<?php echo count($order->getItems()) ?>" class="col-xs-2 com-sm-2 text-center text-nowrap">
                                 <span class="total color-blue"><?php echo $order->getCurrency()->format($order['total']) ?></span>
-                                <span class="shipping"><?php echo $this->translate('(Including Shipping Fee: %s)', [$order->getCurrency()->format($order['shipping'])]) ?></span>
+                                <span class="shipping">(<?php echo $this->translate('Including Shipping Fee: %s', [$order->getCurrency()->format($order['shipping'])]) ?>)</span>
                             </td>
                             <td rowspan="<?php echo count($order->getItems()) ?>" class="col-xs-2 com-sm-2 border-left text-center action">
                                 <span class="status">

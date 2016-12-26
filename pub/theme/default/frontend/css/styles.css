@@ -410,7 +410,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .filters .fieldset .buttons-set{padding:0 12px}
 .retailer-account .filters .fieldset .btn{margin:10px 0;padding:5px 10px;color:#fff;font-size:14px;border-radius:3px}
 .retailer-account .table .actions a,.retailer-account .table .status a{display:block;margin:5px 0;font-size:12px;white-space:nowrap}
-.retailer-account .table .action,.retailer-account .table .status a:hover{color: #02a0e9}
+.retailer-account .table .action a:hover,.retailer-account .table .status a:hover{color: #02a0e9}
 .retailer-account .table .actions .invoice,.retailer-account .table .actions .ship,.retailer-account .table .actions .refund{color:#fff;padding:4px;border-radius: 4px;background-color: #02a0e9}
 .retailer-account .table .actions a:hover,.retailer-account .table .status a:hover{text-decoration:underline}
 .retailer-account .table .visible-empty{display:none}

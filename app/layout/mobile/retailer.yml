@@ -887,21 +887,7 @@ view_store1:
                 children:
                     main:
                         type: Seahinet\Retailer\ViewModel\StoreDecoration
-                        template: retailer/store1
-freight_setting:
-    update: retailer_account
-    root:
-        children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Freight Setting
-            content:
-                children:
-                    main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: retailer/store/freight                        
+                        template: retailer/store1                     
 decoration_store:
     update: default
     root:

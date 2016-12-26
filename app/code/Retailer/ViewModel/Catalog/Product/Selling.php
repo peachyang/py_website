@@ -48,7 +48,7 @@ class Selling extends AbstractProduct
         $collection->where([
             'store_id' => $this->getRetailer()['store_id'],
             'status' => 1
-        ]);
+        ])->order('id DESC');
         $stock = new Select('warehouse_inventory');
         $stock->columns(['product_id'])
                 ->where(['status' => 1])

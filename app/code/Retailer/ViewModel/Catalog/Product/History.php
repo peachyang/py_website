@@ -23,7 +23,7 @@ class History extends AbstractProduct
         $collection->where([
             'store_id' => $this->getRetailer()['store_id'],
             'status' => 0
-        ]);
+        ])->order('id DESC');
         $this->filter($collection);
         return $collection;
     }

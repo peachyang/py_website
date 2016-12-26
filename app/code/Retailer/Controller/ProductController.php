@@ -15,7 +15,7 @@ use Seahinet\Lib\Model\Collection\Language;
 
 class ProductController extends AuthActionController
 {
-    
+
     use \Seahinet\Lib\Traits\DataCache;
 
     public function sellingAction()
@@ -39,8 +39,9 @@ class ProductController extends AuthActionController
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root = $this->getLayout('retailer_products_product_edit_' . $model['product_type_id']);
-            $root->getChild('head')->setTitle('Edit Product / Product Management');
+            $root = $this->getLayout('retailer_product_edit_' . $model['product_type_id']);
+            $root->getChild('head')->setTitle('Edit Product');
+            $root->getChild('content')->setVariable('title', 'Edit Product');
         } else {
             $model->setData('attribute_set_id', function() {
                 $set = new Set;
@@ -48,8 +49,9 @@ class ProductController extends AuthActionController
                         ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
                 return $set->load()[0]['id'];
             });
-            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_products_release' : 'retailer_products_product_edit_' . $query['product_type']);
-            $root->getChild('head')->setTitle('Add New Product / Product Management');
+            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'retailer_product_edit_before' : 'retailer_product_edit_' . $query['product_type']);
+            $root->getChild('head')->setTitle('Release Product');
+            $root->getChild('content')->setVariable('title', 'Release Product');
         }
         $root->getChild("content")->getChild("main")->setVariable('model', $model);
         return $root;

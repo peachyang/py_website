@@ -18,37 +18,30 @@ $filters = $this->getFilters();
     </form>
 </div>
 <table class="table orders-list">
+    <tbody><?php
+        foreach ($collection as $order) {
+            echo $this->renderItem($order);
+        }
+        ?></tbody>
     <thead>
         <tr class="text-center text-nowrap">
             <th colspan="2" class="text-center text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Price') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Qty') ?></th>
-            <th class="text-center text-nowrap"><?php echo $this->translate('after-sales') ?></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('After-sales') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Order Status') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Grand Total') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Action') ?></th>
         </tr>
     </thead>
-    <?php if (count($collection)): ?>
-        <tbody>
-            <?php
-            foreach ($collection as $order) {
-                echo $this->renderItem($order);
-            }
-            ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="7">
-                    <?php echo $this->getChild('pager')->setCollection($collection) ?>
-                </td>
-            </tr>
-        </tfoot>
-    <?php else: ?>
-        <tbody>
-            <tr>
-                <td colspan="7" class="text-center"><?php echo $this->translate('There are no orders in your store with the condition.') ?></td>
-            </tr>
-        </tbody>
-    <?php endif ?>
+    <tfoot>
+        <tr class="visible-empty">
+            <td colspan="8"><?php echo $this->translate('There are no orders in your store with the condition.') ?></td>
+        </tr>
+        <tr class="hidden-empty">
+            <td colspan="8">
+                <?php echo count($collection) ? $this->getChild('pager')->setCollection($collection) : '' ?>
+            </td>
+        </tr>
+    </tfoot>
 </table>

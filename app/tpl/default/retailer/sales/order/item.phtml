@@ -1,27 +1,15 @@
 <?php
 $order = $this->getVariable('order');
 ?>
- 
 <tr>
     <th colspan="8" class="description">
-        <dl class="col-md-12">
-       		<span class="col-md-6">
-       			<dt><?php echo $this->translate('Recipient') ?></dt>
-           		<dd><?php echo $order['recipient'] ?></dd>
-       		</span>
-       		<span  class="col-md-3 text-right">
-       			 <dt><?php echo $this->translate('Order ID') ?></dt>
-           		 <dd><?php echo $order['increment_id'] ?></dd>
-       		</span>
-           	<span  class="col-md-3 text-right">
-       			<dt><?php echo $this->translate('Placed at') ?></dt>
-           		<dd><?php echo $order['created_at'] ?></dd>
-       		</span>
-            
-        </dl>
+        <div class="clearfix">
+            <div class="col-xs-4"><?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?></div>
+            <div class="col-xs-4"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
+            <div class="col-xs-4"><?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?></div>
+        </div>
     </th>
 </tr>
-
 <?php
 $flag = true;
 $items = $order->getItems();
@@ -65,8 +53,13 @@ foreach ($items as $item):
         <td class="text-center"></td>
         <?php if ($flag): ?>
             <td rowspan="<?php echo $count ?>" class="status text-center">
+                <?php if ($application = $order->getRefundApplication()): ?>
+                    <a href="<?php echo $this->getBaseUrl('retailer/refund/view/?id=' . $application['id']) ?>"><?php echo $this->translate('Refund Details') ?></a>
+                <?php endif ?>
+            </td>
+            <td rowspan="<?php echo $count ?>" class="status text-center">
                 <?php echo $this->translate($order->getStatus()['name']) ?>
-                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('Detail') ?></a>
+                <a href="<?php echo $this->getBaseUrl('retailer/sales_order/view/?id=' . $order->getId()) ?>"><?php echo $this->translate('View Details') ?></a>
             </td>
             <td rowspan="<?php echo $count ?>" class="grand-total text-center text-nowrap">
                 <?php echo $currency->format($item['total']) ?>
@@ -123,6 +116,7 @@ foreach ($items as $item):
         ?>
        
     </tr>
-   
+
+   <tr class="tr-height"></tr>
 <?php endforeach ?>
-<tr class="tr-height"></tr>
+

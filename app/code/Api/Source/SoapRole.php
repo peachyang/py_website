@@ -5,7 +5,7 @@ namespace Seahinet\Api\Source;
 use Seahinet\Api\Model\Collection\Soap\Role as Collection;
 use Seahinet\Lib\Source\SourceInterface;
 
-class Role implements SourceInterface
+class SoapRole implements SourceInterface
 {
 
     public function getSourceArray()

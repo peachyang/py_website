@@ -13,6 +13,8 @@ use Zend\Math\Rand;
 class AuthController extends ActionController
 {
 
+    protected $cache = null;
+
     public function dispatch($request = null, $routeMatch = null)
     {
         if (!isset($_SERVER['HTTPS'])) {
@@ -34,6 +36,8 @@ class AuthController extends ActionController
         $consumer->load($query['client_id'], 'key');
         if (!$consumer->getId() && strpos(base64_decode($query['redirect_url']), $consumer['callback_url']) !== 0) {
             return $this->getResponse()->withStatus('400');
+        } else if ($consumer['role_id'] === '0') {
+            return $this->grant($consumer, $query['redirect_url']);
         } else {
             $root = $this->getLayout('oauth_login');
             $root->getChild('form', true)->setConsumer($consumer);
@@ -41,36 +45,51 @@ class AuthController extends ActionController
         }
     }
 
+    protected function grant($consumer, $callback = '', $user = null)
+    {
+        if (is_null($this->cache)) {
+            $this->cache = $this->getContainer()->get('cache');
+        }
+        do {
+            $code = Rand::getString(32, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+        } while ($this->cache->fetch('$AUTHORIZATION_CODE$' . $code, 'OAUTH_'));
+        if (empty($callback)) {
+            $callback = $consumer['callback_url'];
+        } else {
+            $callback = base64_decode($callback);
+            if (strpos($callback, $consumer['callback_url']) !== 0) {
+                return $this->getResponse()->withStatus(400);
+            }
+        }
+        $data = [
+            'consumer_id' => $consumer->getId(),
+            'redirect_url' => $callback
+        ];
+        if ($user) {
+            $data['user_id'] = $user->getId();
+        }
+        $this->cache->save('$AUTHORIZATION_CODE$' . $code, $data, 'OAUTH_', 600);
+        return $this->redirect($callback .
+                        (strpos($callback, '?') === false ? '?' : '&') .
+                        'authorization_code=' . $code .
+                        (isset($data['state']) ?
+                        '&state=' . $data['state'] : ''));
+    }
+
     public function loginAction()
     {
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            $result = $this->validateForm($data, ['username', 'password', 'response_type', 'client_id']);
-            if ($result['error'] === 0) {
-                $consumer = new Consumer;
-                $consumer->load($data['client_id'], 'key');
-                if ($consumer->getId()) {
-                    $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
-                    if ($user->valid($data['username'], $data['password'])) {
-                        $cache = $this->getContainer()->get('cache');
-                        do {
-                            $code = Rand::getString(32, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-                        } while ($cache->fetch('$AUTHORIZATION_CODE$' . $code, 'OAUTH_'));
-                        $callback = base64_decode($data['redirect_url']);
-                        $cache->save('$AUTHORIZATION_CODE$' . $code, [
-                            'consumer_id' => $consumer->getId(),
-                            'user_id' => $user->getId(),
-                            'redirect_url' => $callback
-                                ], 'OAUTH_', 600);
-                        return $this->redirect($callback .
-                                        (strpos($callback, '?') === false ? '?' : '&') .
-                                        'authorization_code=' . $code .
-                                        (isset($data['state']) ?
-                                        '&state=' . $data['state'] : ''));
-                    }
-                } else {
-                    return $this->getResponse()->withStatus('400');
+        $data = $this->getRequest()->getPost();
+        $result = $this->validateForm($data, ['username', 'password', 'response_type', 'client_id']);
+        if ($result['error'] === 0) {
+            $consumer = new Consumer;
+            $consumer->load($data['client_id'], 'key');
+            if ($consumer->getId()) {
+                $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
+                if ($user->valid($data['username'], $data['password'])) {
+                    return $this->grant($consumer, $data['redirect_url'], $user);
                 }
+            } else {
+                return $this->getResponse()->withStatus('400');
             }
         }
         if (isset($result)) {
@@ -97,13 +116,19 @@ class AuthController extends ActionController
                         return $this->getResponse()->withStatus(400);
                     }
                     if ($consumer->getId() && base64_decode($data['redirect_url']) === $info['redirect_url']) {
-                        $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
-                        $user->load($info['user_id']);
-                        if ($user->getId()) {
+                        if ($consumer['role_id'] == 0) {
+                            $user = true;
+                        } else {
+                            $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
+                            $user->load($info['user_id']);
+                        }
+                        if ($user === true || $user->getId()) {
                             $constraint = [
-                                'consumer_id' => $consumer->getId(),
-                                ($consumer['role_id'] === -1 ? 'admin_id' : 'customer_id') => $user->getId()
+                                'consumer_id' => $consumer->getId()
                             ];
+                            if ($user !== true) {
+                                $constraint[($consumer['role_id'] === -1 ? 'admin_id' : 'customer_id')] = $user->getId();
+                            }
                             $collection = new TokenCollection;
                             $collection->columns(['open_id'])->where($constraint);
                             if (!count($collection)) {
@@ -120,7 +145,11 @@ class AuthController extends ActionController
                             do {
                                 $code = Rand::getString(32, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
                             } while ($cache->fetch('$ACCESS_TOKEN$' . $code, 'OAUTH_'));
-                            $cache->save('$ACCESS_TOKEN$' . $code, ['consumer_id' => $consumer->getId(), 'user_id' => $user->getId(), 'open_id' => $openId], 'OAUTH_', 3600);
+                            $data = ['consumer_id' => $consumer->getId(), 'open_id' => $openId];
+                            if ($user !== true) {
+                                $data['user_id'] = $user->getId();
+                            }
+                            $cache->save('$ACCESS_TOKEN$' . $code, $data, 'OAUTH_', 3600);
                             return ['access_token' => $code, 'open_id' => $openId, 'expired_at' => date('l, d-M-Y H:i:s T', time() + 3600)];
                         }
                     }

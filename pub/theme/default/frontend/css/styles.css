@@ -504,6 +504,8 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .product-edit .tab-pane{padding:10px 0 0 10px}
 .retailer-account .product-edit .nav-tabs{border-bottom:1px solid #cce0e9;margin-top:15px}
 .retailer-account .product-edit .nav-tabs~.tab-pane{display:none}
+.retailer-account .product-edit .nav-tabs:not(.show-all) .tab-inventory~li:not(.view-more){display:none}
+.retailer-account .product-edit .view-more .btn{color:#fff;background:#02a0e9;box-shadow:0 0 4px 1px #0286c4 inset;padding:5px 10px;font-size:14px;line-height:1;margin-left:36px;border-radius:3px;margin:8px 0 0}
 .retailer-account .product-edit .tab-pane.active{display:table}
 .retailer-account .product-edit .widget-upload .add{font-size:32px;line-height:139.2px;text-decoration:none;vertical-align:middle}
 .retailer-account .product-edit .grid .table.category ul,.retailer-account .product-edit .table.categories-list ul{clear:both;padding-left:2em}

@@ -841,7 +841,7 @@ CREATE TABLE IF NOT EXISTS `api_rest_role` (
     PRIMARY KEY (`id`)
 );
 
-INSERT INTO `api_rest_role` VALUES (-1,'Admin',NULL,NULL),(NULL,'Anonymous',NULL,NULL),(NULL,'Customer',NULL,NULL);
+INSERT INTO `api_rest_role` VALUES (-1,'Admin',NULL,NULL),(0,'Anonymous',NULL,NULL),(1,'Customer',NULL,NULL);
 
 CREATE TABLE IF NOT EXISTS `api_rest_attribute` (
     `role_id` INTEGER NOT NULL,

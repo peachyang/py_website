@@ -80,7 +80,7 @@ class IndexController extends ActionController
             }
             $builder = new CaptchaBuilder($phrase);
             $builder->setBackgroundColor(0xff, 0xff, 0xff);
-            $builder->build(70, 26);
+            $builder->build(105, 39);
             $builder->save($file);
             $result = $builder->get();
         }

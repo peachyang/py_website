@@ -3,7 +3,6 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
-use Seahinet\Lib\Model\Eav\Attribute;
 use Seahinet\Lib\Controller\ActionController;
 use Zend\Db\Sql\Expression;
 
@@ -19,17 +18,25 @@ class CategoryController extends ActionController
         if ($this->getOption('category_id')) {
             $category = new Category;
             $category->load($this->getOption('category_id'));
-            $root = $this->getLayout('catalog_category');
-            $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
-                    ->setDescription($category['meta_description'])
-                    ->setKeywords($category['meta_keywords']);
-            $content = $root->getChild('content');
-            $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
             $products = $this->prepareCollection($category->getProducts(), $category);
-            $content->getChild('toolbar')->setCategory($category)->setCollection($products);
-            $content->getChild('list')->setCategory($category)->setProducts($products);
-            $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($products);
-            return $root;
+            if ($this->getOption('is_json')) {
+                $result = [];
+                $products->walk(function($item) use (&$result, $category) {
+                    $result[] = ['absolute_url' => $item->getUrl($category)] + $item->toArray();
+                });
+                return $result;
+            } else {
+                $root = $this->getLayout('catalog_category');
+                $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
+                        ->setDescription($category['meta_description'])
+                        ->setKeywords($category['meta_keywords']);
+                $content = $root->getChild('content');
+                $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
+                $content->getChild('toolbar')->setCategory($category)->setCollection($products);
+                $content->getChild('list')->setCategory($category)->setProducts($products);
+                $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($products);
+                return $root;
+            }
         }
         return $this->notFoundAction();
     }

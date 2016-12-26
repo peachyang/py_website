@@ -359,7 +359,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-detail .btn-submit,.retailer-account .refund-detail .btn-submit,.customer-account .refund-detail .btn-theme,.retailer-account .refund-detail .btn-theme{padding:9px 15px;background: #3fb5fa;border:#007dc6}
 .customer-account .refund-detail .log,.retailer-account .refund-detail .log{padding-left:90px;border-top:none}
 .customer-account .refund-detail .log .item,.retailer-account .refund-detail .log .item{padding:10px 15px}
-.customer-account .refund-detail .log .item .content,.retailer-account .refund-detail .log .item .content{padding-left: 10px;border-left: 1px solid #eee}
+.customer-account .refund-detail .log .item .content,.retailer-account .refund-detail .log .item .content{border-left: 1px solid #eee}
 .customer-account .refund-detail .log .item+.item,.retailer-account .refund-detail .log .item+.item{border-top:1px dotted #e1e3ea}
 .customer-account .refund-detail .log .input-box,.retailer-account .refund-detail .log .input-box,.customer-account .refund-detail .log .buttons-set,.retailer-account .refund-detail .log .buttons-set{padding:6px 15px}
 .customer-account .refund-detail .nav,.retailer-account .refund-detail .nav{margin-bottom:20px;padding-top:20px;background:#e3f4fd}
@@ -465,7 +465,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-sales-order-list .orders-list tbody td{border-bottom:1px solid #ddd;padding: 20px 10px;}
 .retailer-sales-order-list .orders-list tbody td:first-child{border-left:1px solid #ddd}
 .retailer-sales-order-list .orders-list tbody td:last-child{border-right:1px solid #ddd}
-.retailer-sales-order-list .orders-list .description{padding:0;border:none}
+.retailer-sales-order-list .orders-list .description{padding:10px 0;border:none}
 .retailer-sales-order-list .orders-list .description dl{margin:10px 0 00;padding:8px;background:#f1f1f1;border:1px solid #ddd;border-bottom:none}
 .retailer-sales-order-list .orders-list .description dt,.retailer-sales-order-list .table .description dd{display:inline}
 .retailer-sales-order-list .orders-list .description dt:after{content:": "}

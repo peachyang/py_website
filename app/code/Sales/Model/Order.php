@@ -379,7 +379,8 @@ class Order extends AbstractModel
         if ($flag && !in_array($this->getPhase()->offsetGet('code'), ['holded', 'complete'])) {
             return false;
         } else if (!$flag) {
-            if ($this->getPhase()->offsetGet('code') === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
+            $code = $this->getPhase()->offsetGet('code');
+            if (in_array($code, ['pending', 'pending_payment']) || $code === 'processing' && !$this->getStatus()->offsetGet('is_default')) {
                 return false;
             }
             $applications = new RmaCollection;

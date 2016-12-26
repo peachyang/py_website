@@ -3,9 +3,9 @@
 namespace Seahinet\Retailer\ViewModel\Catalog\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
-use Seahinet\Catalog\Model\Product as Model;
 use Seahinet\Catalog\Source\Set;
 use Seahinet\Lib\Session\Segment;
+use Seahinet\Retailer\Model\Retailer;
 
 class Product extends PEdit
 {
@@ -25,12 +25,19 @@ class Product extends PEdit
     protected function prepareElements($columns = [])
     {
         $model = $this->getVariable('model');
+        $segment = new Segment('customer');
+        $retailer = new Retailer;
+        $retailer->load($segment->get('customer')->getId(), 'customer_id');
         $columns = [
             'id' => [
                 'type' => 'hidden'
             ],
             'csrf' => [
                 'type' => 'csrf'
+            ],
+            'store_id' => [
+                'type' => 'hidden',
+                'value' => $retailer['store_id']
             ],
             'product_type_id' => [
                 'type' => 'hidden',

@@ -59,7 +59,7 @@ trait Calc
         foreach ($total as $key => &$t) {
             $tmp = $t + ($unavailable[$key] ?? 0) ?
                     $t + (($calculation ? $model['base_shipping'] + $model['base_tax'] : 0) + $discount) * $t / ($t + ($unavailable[$key] ?? 0)) : 0;
-            $max = ($maxAmountCalc ? ((int) ($tmp * $maxAmount / 100)) : ((int) $maxAmount)) / $rate;
+            $max = ($maxAmountCalc ? ((int) ($tmp * $maxAmount / 100)) : ((int) $maxAmount));
             $t = $tmp >= $minAmount ? ($max ? min($max, $tmp / $rate) : $tmp / $rate) : 0;
         }
         return min($balance, array_sum($total));

@@ -23,7 +23,9 @@ class Apply extends Template
 
     public function getServices()
     {
-        return (new Service)->getSourceArray();
+        $services = (new Service)->getSourceArray();
+        $order = $this->getVariable('model');
+        return $order->getPhase()['code'] === 'complete' ? $services : [$services[0]];
     }
 
     public function getItems()

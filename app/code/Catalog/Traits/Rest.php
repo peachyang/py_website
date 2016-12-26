@@ -3,8 +3,14 @@
 namespace Seahinet\Catalog\Traits;
 
 use Exception;
-use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
-use Seahinet\Catalog\Model\Product;
+use Seahinet\Catalog\Model\Collection\{
+    Category as CategoryCollection,
+    Product as ProductCollection
+};
+use Seahinet\Catalog\Model\{
+    Category,
+    Product
+};
 
 trait Rest
 {
@@ -20,21 +26,33 @@ trait Rest
             $products = new ProductCollection;
             $products->columns($columns);
             $this->filter($products, $data);
-            $products->load(true, true);
-            return $products->toArray();
+            $result = [];
+            foreach ($products as $product) {
+                $options = [];
+                foreach ($product->getOptions()->withLabel() as $option) {
+                    $options[] = (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
+                            ['values' => $option->getValues()] : []
+                            ) + $option->toArray();
+                }
+                $result[] = [
+                    'absolute_url' => $product->getURl(),
+                    'options' => $options
+                        ] + $product->toArray();
+            }
+            return $result;
         }
         return $this->getResponse()->withStatus(400);
     }
 
     protected function deleteProduct()
     {
-        if ($this->authOptions['role_id'] === -1 &&
-                count($this->getAttributes('customer', false))) {
+        $attributes = $this->getAttributes(Product::ENTITY_TYPE, false);
+        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
-                $customer = new Customer;
+                $product = new Product;
                 try {
-                    $customer->setId($id)->remove();
+                    $product->setId($id)->remove();
                     return $this->getResponse()->withStatus(202);
                 } catch (Exception $e) {
                     return $this->getResponse()->withStatus(400);
@@ -47,14 +65,14 @@ trait Rest
 
     protected function putProduct()
     {
-        if ($this->authOptions['role_id'] === -1) {
+        $attributes = $this->getAttributes(Product::ENTITY_TYPE, false);
+        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
-            $customer = new Customer;
+            $product = new Product;
             if ($id) {
-                $customer->load($id);
+                $product->load($id);
             }
             $data = $this->getRequest()->getPost();
-            $attributes = $this->getAttributes('customer', false);
             $set = [];
             foreach ($attributes as $attribute) {
                 if (isset($data[$attribute['code']])) {
@@ -63,8 +81,73 @@ trait Rest
             }
             try {
                 if ($set) {
-                    $customer->setData($set);
-                    $customer->save();
+                    $product->setData($set);
+                    $product->save();
+                }
+                return $this->getResponse()->withStatus(202);
+            } catch (Exception $e) {
+                return $this->getResponse()->withStatus(400);
+            }
+        }
+        return $this->getResponse()->withStatus(403);
+    }
+
+    public function getCategory()
+    {
+        $data = $this->getRequest()->getQuery();
+        $columns = [];
+        $this->getAttributes(Category::ENTITY_TYPE)->walk(function($item) use (&$columns) {
+            $columns[] = $item['code'];
+        });
+        if (count($columns)) {
+            $categories = new CategoryCollection;
+            $categories->columns($columns);
+            $this->filter($categories, $data);
+            $categories->load(true, true);
+            return $categories->toArray();
+        }
+        return $this->getResponse()->withStatus(400);
+    }
+
+    protected function deleteCategory()
+    {
+        $attributes = $this->getAttributes(Category::ENTITY_TYPE, false);
+        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+            $id = $this->getRequest()->getQuery('id');
+            if ($id) {
+                $category = new Category;
+                try {
+                    $category->setId($id)->remove();
+                    return $this->getResponse()->withStatus(202);
+                } catch (Exception $e) {
+                    return $this->getResponse()->withStatus(400);
+                }
+            }
+            return $this->getResponse()->withStatus(400);
+        }
+        return $this->getResponse()->withStatus(403);
+    }
+
+    protected function putCategory()
+    {
+        $attributes = $this->getAttributes(Category::ENTITY_TYPE, false);
+        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+            $id = $this->getRequest()->getQuery('id');
+            $category = new Category;
+            if ($id) {
+                $category->load($id);
+            }
+            $data = $this->getRequest()->getPost();
+            $set = [];
+            foreach ($attributes as $attribute) {
+                if (isset($data[$attribute['code']])) {
+                    $set[$attribute['code']] = $data[$attribute['code']];
+                }
+            }
+            try {
+                if ($set) {
+                    $category->setData($set);
+                    $category->save();
                 }
                 return $this->getResponse()->withStatus(202);
             } catch (Exception $e) {

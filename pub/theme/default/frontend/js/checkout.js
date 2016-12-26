@@ -41,7 +41,7 @@
                         $(t).after(xhr.html);
                         $(t).remove();
                         if (!store.length) {
-                            loadCoupon();
+                            $('.section.review [name^=shipping_method]').first().on('change').trigger('change');
                             $('.checkout-steps [data-load-after="shipping"]').trigger('afterload.seahinet');
                         }
                     }

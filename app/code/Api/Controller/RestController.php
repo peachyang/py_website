@@ -14,7 +14,8 @@ class RestController extends ApiActionController
     {
         $method = $this->getRequest()->getMethod() . substr($name, 0, -6);
         if (method_exists($this, $method)) {
-            return $this->$method();
+            $response = $this->$method();
+            return $response;
         }
         return $this->getResponse()->withStatus(400);
     }

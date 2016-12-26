@@ -2,11 +2,12 @@
 $order = $this->getVariable('order');
 ?>
 <tr>
-    <th colspan="8" class="description">
+    <th colspan="10" class="description">
         <div class="clearfix">
-            <div class="col-xs-4"><?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?></div>
-            <div class="col-xs-4"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
-            <div class="col-xs-4"><?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?></div>
+        		<div class="col-xs-6 text-left"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
+            <div class="col-xs-3 text-right"><?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?></div>
+            
+            <div class="col-xs-3 text-right"><?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?></div>
         </div>
     </th>
 </tr>
@@ -116,5 +117,8 @@ foreach ($items as $item):
         ?>
        
     </tr>
-   <tr class="tr-height"></tr>
+
+
 <?php endforeach ?>
+   <tr class="tr-height"></tr>
+

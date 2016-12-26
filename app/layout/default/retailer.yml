@@ -537,13 +537,13 @@ retailer_product_edit:
                                         params:
                                             - category
                                             - Category
-                                            - 100
+                                            - -2
                                     -
                                         method: addTab
                                         params:
                                             - images
                                             - Images
-                                            - 110
+                                            - -1
                                     -
                                         method: addTab
                                         params:

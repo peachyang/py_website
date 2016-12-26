@@ -15,10 +15,14 @@ class Router extends Route
     public function match(Request $request)
     {
         $path = trim($request->getUri()->getPath(), '/');
+        $isJson = false;
         if (substr($path, -5) === '.html') {
             $path = substr($path, 0, -5);
         } else if (substr($path, -4) === '.htm') {
             $path = substr($path, 0, -4);
+        } else if (substr($path, -5) === '.json') {
+            $path = substr($path, 0, -5);
+            $isJson = true;
         } else {
             return false;
         }
@@ -28,13 +32,15 @@ class Router extends Route
                     'controller' => 'Seahinet\\Catalog\\Controller\\ProductController',
                     'action' => 'index',
                     'product_id' => $result[0]['product_id'],
-                    'category_id' => $result[0]['category_id']
+                    'category_id' => $result[0]['category_id'],
+                    'is_json' => $isJson
                         ], $request);
             } else {
                 return new RouteMatch([
                     'controller' => 'Seahinet\\Catalog\\Controller\\CategoryController',
                     'action' => 'index',
-                    'category_id' => $result[0]['category_id']
+                    'category_id' => $result[0]['category_id'],
+                    'is_json' => $isJson
                         ], $request);
             }
         }

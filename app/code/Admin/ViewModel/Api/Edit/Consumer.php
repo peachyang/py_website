@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Api\Source\RestRole;
 use Seahinet\Oauth\Model\Collection\Consumer as Collection;
 use Zend\Math\Rand;
 
@@ -51,6 +52,12 @@ class Consumer extends PEdit
             ],
             'csrf' => [
                 'type' => 'csrf'
+            ],
+            'role_id' => [
+                'type' => 'select',
+                'label' => 'Role',
+                'required' => 'required',
+                'options' => (new RestRole)->getSourceArray()
             ],
             'name' => [
                 'type' => 'text',

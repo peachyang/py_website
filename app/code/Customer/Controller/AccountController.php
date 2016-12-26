@@ -42,7 +42,7 @@ class AccountController extends AuthActionController
         $config = $this->getContainer()->get('config');
         $builder = new CaptchaBuilder(null, new PhraseBuilder($config['customer/captcha/number'], $config['customer/captcha/symbol']));
         $builder->setBackgroundColor(0xff, 0xff, 0xff);
-        $builder->build(70, 26);
+        $builder->build(105, 39);
         $segment = new Segment('customer');
         $segment->set('captcha', strtoupper($builder->getPhrase()));
         $this->getResponse()

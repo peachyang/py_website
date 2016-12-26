@@ -5,24 +5,28 @@ if (count($tabs)):
     ?>
     <ul class="nav nav-tabs clearfix" role="tablist">
         <?php if ($flag): ?>
-            <li role="presentation" class="active">
+            <li role="presentation" class="active tab-main-tab">
                 <a href="#main-tab" aria-controls="main-tab" role="tab" data-toggle="tab">
                     <?php echo $this->translate($this->getMainTabLabel()) ?>
                 </a>
             </li>
         <?php endif ?>
         <?php foreach ($tabs as $id => $tab): ?>
-            <li role="presentation"<?php
+            <li role="presentation" class="tab-<?php
+            echo $id, ' ';
             if (!$flag) {
-                echo ' class="active"';
+                echo 'active';
                 $flag = true;
             }
-            ?>>
+            ?>">
                 <a href="#tab-<?php echo $id ?>" aria-controls="<?php echo $id ?>" role="tab" data-toggle="tab">
                     <?php echo $this->translate($tab) ?>
                 </a>
             </li>
         <?php endforeach ?>
+        <li class="view-more">
+            <a href="javascript:void(0);" class="btn" style="display:none"><?php echo $this->translate('More') ?></a>
+        </li>
     </ul>
     <?php
     if ($this->generateTabPane()):

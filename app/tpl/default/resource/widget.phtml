@@ -22,7 +22,7 @@ if (count($values)):
                 <span class="fa fa-trash-o" aria-hidden="true"></span>
                 <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
             </a>
-            <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value['real_name'] ?>" />
+            <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value['id'] ?>" />
         </div>
         <?php
     endforeach;

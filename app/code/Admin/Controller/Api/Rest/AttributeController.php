@@ -18,7 +18,7 @@ class AttributeController extends AuthActionController
 
     public function editAction()
     {
-        if ($this->getRequest()->getQuery('id')) {
+        if ($this->getRequest()->getQuery('id') !== '') {
             return $this->getLayout('admin_rest_attribute_edit');
         } else {
             return $this->redirect(':ADMIN/api_rest_attribute/');

@@ -23,12 +23,12 @@ rewardpoints:
                     default: Reward Points
                 expiration:
                     type: tel
-                    label: Expiration in Days
+                    label: Effective of Days
                     required: required
                     priority: 20
                     default: 0
         gathering:
-            label: Gathering
+            label: Gathering Rule
             scope: merchant
             children:
                 rate:
@@ -114,7 +114,7 @@ rewardpoints:
                     priority: 70
                     comment: Leave empty to avoid the limitation.
         using:
-            label: Using
+            label: Using Rule
             scope: merchant
             children:
                 rate:

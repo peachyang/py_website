@@ -333,7 +333,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .review-form .ratings{width:6.42857145em;display:inline-block}
 .customer-account .review-form .ratings .fa{float:right}
 .customer-account .review-form .ratings .fa:before{content:'\f006'}
-.customer-account .review-form .ratings :checked~.fa:before,.customer-account .review-form .ratings .fa:hover:before,.customer-account .review-form .ratings .fa:hover~.fa:before{content:'\f005'}
+.customer-account .review-form .ratings :checked~.fa:before,.customer-account .review-form .ratings .fa:hover:before,.customer-account .review-form .ratings .fa:hover~.fa:before{content:'\f005';color: #f3bd50}
 .customer-account .review-form .images{margin-top:10px}
 .customer-account .form-rma{margin-top:30px;border:1px solid #e1e3ea}
 .customer-account .form-rma .service{background:#f5f6f9;border-bottom:1px solid #e1e3ea;padding:16px 0 12px 20px}
@@ -1145,6 +1145,10 @@ dl.options dd{float:left;margin-left:4px}
 .sales-order-inquire .main_article_content .order-list{margin-bottom: 30px}
 .sales-order-inquire .main_article_content .order-list .table thead{background:#eee}
 .sales-order-inquire .main_article_content .order-list .table thead th{padding-top:0px;padding:5px 0}
+.sales-order-review .page-content .review-form{font-size: 12px;margin: 30px 0}
+.sales-order-review .page-content .review-form h4{text-align: left}
+.sales-order-review .page-content .review-form .images,.sales-order-review .page-content .review-form tfoot label{font-size:10px;color: #999}
+.sales-order-review .page-content .review-form th{padding-right: 35px}
 /* Quick properties */
 
 .font-12{font-size:12px}

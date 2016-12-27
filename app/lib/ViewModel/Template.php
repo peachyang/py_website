@@ -56,7 +56,7 @@ class Template extends AbstractViewModel
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException(new Exception($e->getMessage() . ' in ' . $template, $e->getCode(), $e->getPrevious()));
             if (Bootstrap::isDeveloperMode()) {
-                echo '<div class="template-tip" data-template="', $template ?? $this->getTemplate(), '" data-viewmodel="', get_class($this), '">' . $e->getMessage() . '</div>';
+                echo '<div class="template-tip" data-template="', $template ?? $this->getTemplate(), '" data-viewmodel="', get_class($this), '">' . $e->__toString() . '</div>';
             }
             return '';
         }
@@ -81,12 +81,11 @@ class Template extends AbstractViewModel
             }
             return ob_get_clean();
         } catch (Error $e) {
-            $this->getContainer()->get('log')->logError(new Error($e->getMessage() . ' in ' . $template, $e->getCode(), $e->getPrevious()));
-            if (Bootstrap::isDeveloperMode()) {
-                echo '<div class="template-tip" data-template="', $template, '" data-viewmodel="', get_class($this), '">' . $e->getMessage() . '</div>';
-            }
+            $this->getContainer()->get('log')->logError($e);
             ob_end_clean();
-            return '';
+            return Bootstrap::isDeveloperMode() ?
+                    ('<div class="template-tip" data-template="' . $template .
+                    '" data-viewmodel="' . get_class($this) . '">' . $e->__toString() . '</div>') : '';
         }
     }
 

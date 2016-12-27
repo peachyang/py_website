@@ -78,40 +78,29 @@ class Regular implements ListenerInterface
         $total = $this->model['base_subtotal'] + ($rule['apply_to'] ? 0 : (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
         $result = 0;
         if ($handler) {
-            $count = count($this->items[$storeId]);
             $items = $handler->matchItems($this->items[$storeId]);
-            if ($rule['free_shipping'] && $count === count($items)) {
-                $this->model->setData([
-                    'free_shipping' => 1,
-                    'base_shipping' => 0,
-                    'shipping' => 0
-                ]);
-            }
-            foreach ($items as $item) {
-                if ($rule['free_shipping']) {
-                    $item->setData([
-                        'free_shipping' => 1,
-                        'base_shipping' => 0,
-                        'shipping' => 0
-                    ]);
-                }
-                $discount = min($item['base_price'], $rule['is_fixed'] ? $rule['price'] : $item['base_price'] * $rule['price'] / 100);
-                if ($rule['qty']) {
-                    $discount *= min($rule['qty'], $item['qty']);
-                } else {
-                    $discount *= $item['qty'];
-                }
-                $result += $discount;
-            }
         } else {
-            if ($rule['free_shipping']) {
-                $this->model->setData([
-                    'free_shipping' => 1,
-                    'base_shipping' => 0,
-                    'shipping' => 0
-                ]);
+            $items = $this->items[$storeId];
+        }
+        if ($rule['free_shipping']) {
+            $this->model->setData([
+                'free_shipping' => 1,
+                'base_shipping' => 0,
+                'shipping' => 0
+            ]);
+        }
+        $negative = 0;
+        foreach ($items as $item) {
+            $discount = $rule['is_fixed'] ? $rule['price'] : $item['base_price'] * $rule['price'] / 100;
+            $qty = $rule['qty'] ? min($rule['qty'], $item['qty']) : $item['qty'];
+            if ($discount > $item['base_price']) {
+                $negative += ($discount - $item['base_price']) * $qty;
+                $discount = $item['base_price'];
             }
-            $result = $rule['is_fixed'] ? $rule['price'] : $total * $rule['price'] / 100;
+            $result += $discount * $qty;
+        }
+        if (!$rule['apply_to'] && $negative) {
+            $result += min($negative, (float) $this->model['base_shipping'] + (float) $this->model['base_tax']);
         }
         return min($total - $this->discount, $result);
     }

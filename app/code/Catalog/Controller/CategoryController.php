@@ -22,7 +22,10 @@ class CategoryController extends ActionController
             if ($this->getOption('is_json')) {
                 $result = [];
                 $products->walk(function($item) use (&$result, $category) {
-                    $result[] = ['absolute_url' => $item->getUrl($category)] + $item->toArray();
+                    $result[] = [
+                        'absolute_url' => $item->getUrl($category),
+                        'thumbnail_url' => $item->getThumbnail()
+                            ] + $item->toArray();
                 });
                 return $result;
             } else {

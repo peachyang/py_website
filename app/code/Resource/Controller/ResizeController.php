@@ -13,7 +13,7 @@ class ResizeController extends ActionController
     {
         $retina = 1;
         $filename = rawurldecode($this->getOption('file'));
-        if (preg_match('/@(?P<retina>\d+)x\./', $filename, $matches)) {
+        if (preg_match('/@(?P<retina>\d+\.)x\./', $filename, $matches)) {
             $retina = (int) $matches['retina'];
             $filename = str_replace('@' . $retina . 'x', '', $filename);
         }
@@ -26,7 +26,7 @@ class ResizeController extends ActionController
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
-        $image = $this->resize($file, $this->getOption('width') * $retina, $this->getOption('height') * $retina);
+        $image = $this->resize($file, (int) ($this->getOption('width') * $retina), (int) ($this->getOption('height') * $retina));
         $image->save($resized);
         $image->show(substr($resized, strrpos($resized, '.') + 1));
         exit;

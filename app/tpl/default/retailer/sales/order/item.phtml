@@ -1,12 +1,12 @@
 <?php
 $order = $this->getVariable('order');
 ?>
+<tr class="tr-height"></tr>
 <tr>
-    <th colspan="10" class="description">
+    <th colspan="9" class="description">
         <div class="clearfix">
-        		<div class="col-xs-6 text-left"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
+            <div class="col-xs-6 text-left"><?php echo $this->translate('Recipient') ?>: <?php echo $order['recipient'] ?></div>
             <div class="col-xs-3 text-right"><?php echo $this->translate('Order ID') ?>: <?php echo $order['increment_id'] ?></div>
-            
             <div class="col-xs-3 text-right"><?php echo $this->translate('Placed at') ?>: <?php echo $order['created_at'] ?></div>
         </div>
     </th>
@@ -89,21 +89,21 @@ foreach ($items as $item):
                 endif;
                 if ($order->canInvoice()) :
                     ?>
-                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order->getId()) ?>">
+                    <a class="invoice" href="<?php echo $this->getBaseUrl('retailer/sales_order/invoice/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Invoice', [], 'sales') ?>
                     </a>
                     <?php
                 endif;
                 if ($order->canShip()) :
                     ?>
-                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order->getId()) ?>">
+                <a class="ship" href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Ship', [], 'sales') ?>
                     </a>
                     <?php
                 endif;
                 if ($order->canRefund()) :
                     ?>
-                    <a href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order->getId()) ?>">
+                <a class="refund" href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Refund', [], 'sales') ?>
                     </a>
                 <?php endif; ?>
@@ -115,10 +115,6 @@ foreach ($items as $item):
             $flag = false;
         endif;
         ?>
-       
     </tr>
-
-
 <?php endforeach ?>
-   <tr class="tr-height"></tr>
 

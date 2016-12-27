@@ -20,14 +20,18 @@ $flag = true;
                         <span><?php echo $this->translate('Free Shipping') ?></span>
                     </div>
                 <?php endif ?>
-                <div class="col-xs-12 store"><?php if ($stores = $coupon->getStores()): ?>
+                <div class="col-xs-12 store">
+                    <?php if ($stores = $coupon->getStores()): ?>
                         <span class="label"><?php echo $this->translate('AvailableIn') ?>:</span>
                         <?php foreach ($stores as $store): ?>
                             <span>
                                 <?php echo $store->offsetGet('name') ?>
                             </span>
                         <?php endforeach ?>
-                    <?php endif ?></div>
+                    <?php else: ?>
+                        <span><?php echo $this->translate('Total station effective'); ?></span>
+                    <?php endif; ?>
+                </div>
                 <div class="col-xs-12 condition">
                     <span class="label"><?php echo $this->translate('Condition', [], 'customer') ?>:</span>
                     <span><?php echo $coupon['description'] ?></span>

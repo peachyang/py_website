@@ -14,7 +14,10 @@ $orders = $this->getOrders();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($orders as $order): ?>  
+            <?php foreach ($orders as $order): ?>
+                <tr>
+                    <td colspan="7" height="26"></td>
+                </tr>
                 <tr class="thead_title">
                     <td colspan="2" class="text-left"><?php echo $order->getStore()->offsetGet('name') ?></td>
                     <td colspan="4" class="text-nowrap text-right"><?php echo $this->translate('Order ID'), ': ', $order->offsetGet('increment_id') ?></td>
@@ -81,9 +84,6 @@ $orders = $this->getOrders();
                         ?>
                     </tr>
                 <?php endforeach; ?>
-                <tr>
-                    <td colspan="7" height="26"></td>
-                </tr>
             <?php endforeach; ?>
         </tbody>
         <tfoot>

@@ -18,17 +18,21 @@ $filters = $this->getFilters();
     </form>
 </div>
 <table class="table orders-list">
-    <tbody><?php
+    <tbody>
+        <?php
         foreach ($collection as $order) {
             echo $this->renderItem($order);
         }
-        ?></tbody>
+        ?>
+    </tbody>
     <thead>
         <tr class="text-center text-nowrap">
-            <th colspan="3" class="text-center text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
+            <th class="text-nowrap"><?php echo $this->translate('Product Infomation') ?></th>
+            <th></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Price') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Qty') ?></th>
-            <th class="text-center text-nowrap"><?php echo $this->translate('After-sales') ?></th>
+            <th></th>
+            <th class="text-center text-nowrap"><?php echo $this->translate('After Sales') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Order Status') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Grand Total') ?></th>
             <th class="text-center text-nowrap"><?php echo $this->translate('Action') ?></th>

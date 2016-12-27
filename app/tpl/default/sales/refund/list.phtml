@@ -44,10 +44,10 @@ $currency = $this->getCurrency();
                     ?>
                     <tr class="list">
                         <td>
-                            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" />
+                            <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="100" height="100" /></a>
                         </td>
                         <td>
-                            <h4 class="product-name"><?php echo $product['name'] ?></h4>
+                            <a href="<?php echo $product->getUrl(); ?>"><h4 class="product-name"><?php echo $product['name'] ?></h4></a>
                             <?php
                             $options = json_decode($item['options'], true);
                             if ($item['product_id'] && count($options)):

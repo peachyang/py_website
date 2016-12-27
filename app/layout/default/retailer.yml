@@ -212,7 +212,7 @@ retailer_store_view:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Store
+                        params: Store Settings
                     -
                         method: addLink
                         params: frontend/dragResource/css/store_view.css
@@ -1035,7 +1035,7 @@ decoration_list:
                 action:
                     -
                         method: setTitle
-                        params: Retailer Store
+                        params: Store Settings 
             content:
                 children:
                     main:

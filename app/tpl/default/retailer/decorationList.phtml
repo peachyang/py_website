@@ -5,7 +5,6 @@ $theme_templates = $this->getTemplateList(1);
 <main class="col-main col-xs-12 col-sm-12 col-md-10 mg-bottom-40 sales-products">
     <div class="wishlist decorationlist" style="width:935px">
         <h3><?php echo $this->translate('Store Decoration'); ?></h3>
-
         <div style="clear:both"></div>
         <!-- tab -->
         <div class="deccoration_topbg" ></div>
@@ -28,14 +27,36 @@ $theme_templates = $this->getTemplateList(1);
                     <button class="btn btn-primary" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=-1') ?>'"><i class="fa fa-plus" style="padding: 0 6px"></i>新建模版</button>
                     <div class="decoration-content">
                         <ul>
-                            <?php foreach ($templates as $key => $template) { ?>
+                            <?php foreach ($templates as $key => $template): ?>
                                 <li>
                                     <div class="top <?php echo $template['status'] == 1 ? 'active' : '' ?>">
                                         <div class="position1"></div>
                                         <div class="position3">
-                                            <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >修改</button>
-                                            <button class="btn btn-danger btn-sm delTemplateBtn" template_id='<?php echo $template['id'] ?>'  >删除</button>
-                                            <button class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>' >设为当前模版</button>
+                                            <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'"><?php echo $this->translate('Edit'); ?></button>
+                                            <a class="btn btn-danger btn-sm delTemplateBtn" href="<?php echo $this->getBaseUrl('retailer/store/delTemplate/') ?>" data-method="delete" data-params="id=<?php echo $template['id'] ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete'); ?></a>
+                                            <?php if ($template['status'] != 1): ?>
+                                                <a class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>'><?php echo $this->translate('Set as Template'); ?></a>
+                                            <?php else : ?>
+                                                <span class="btn btn-default btn-sm setTemplateBtn"><?php echo $this->translate('Current Template'); ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="bottom"><?php echo $template['template_name'] ?></div>
+                                </li>
+                            <?php endforeach;
+                            ?> 
+                        </ul>
+                    </div>
+                </div>
+                <div  id="TemplateSubject" class="tab-pane fade">
+                    <div class="decoration-content">
+                        <ul>
+                            <?php foreach ($theme_templates as $key => $template) { ?>
+                                <li>
+                                    <div class="top <?php echo $template['status'] == 1 ? 'active' : '' ?>">
+                                        <div class="position1"></div>
+                                        <div class="position3">
+                                            <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >根据该主题新建模版</button>
                                         </div>
                                     </div>
                                     <div class="bottom"><?php echo $template['template_name'] ?></div>
@@ -44,32 +65,8 @@ $theme_templates = $this->getTemplateList(1);
                         </ul>
                     </div>
                 </div>
-                
-                 <div  id="TemplateSubject" class="tab-pane fade">
-                <div class="decoration-content">
-                    <ul>
-                        <?php foreach ($theme_templates as $key => $template) { ?>
-                            <li>
-                                <div class="top <?php echo $template['status'] == 1 ? 'active' : '' ?>">
-                                    <div class="position1"></div>
-                                    <div class="position3">
-                                        <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'" >根据该主题新建模版</button>
-
-                                    </div>
-                                </div>
-                                <div class="bottom"><?php echo $template['template_name'] ?></div>
-                            </li>
-                        <?php } ?> 
-                    </ul>
-                </div>
             </div>
-                
-            </div>
-
-
-           
         </div>
-
     </div>
 
 

@@ -163,22 +163,25 @@ class StoreController extends AuthActionController
 
     public function delTemplateAction()
     {
-        $data = $this->getRequest()->getPost();
-        $segment = new Segment('customer');
-        $r = new Retailer;
-        $r->load($segment->get('customer')->getId(), 'customer_id');
-        $store_id = $r['store_id'];
-
-        $model = new StoreTemplate();
-        $model->load($data['id']);
-        if ($model['store_id'] != $store_id)
-            $result = ['status' => FALSE];
-        else {
-            $model->remove();
-            $result = ['status' => TRUE];
+        if ($this->getRequest()->isDelete()) {
+            $data = $this->getRequest()->getPost();
+            $segment = new Segment('customer');
+            $r = new Retailer;
+            $r->load($segment->get('customer')->getId(), 'customer_id');
+            $store_id = $r['store_id'];
+            $model = new StoreTemplate();
+            $model->load($data['id']);
+            $result = $this->validateForm($data, ['id']);
+            if ($model['store_id'] != $store_id) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected while deleting. Please contact us or try again later.'), 'level' => 'success'];
+            } else {
+                $model->remove();
+                $result['removeLine'] = 1;
+                $result['message'][] = ['message' => $this->translate('Template has been deleted successfully.'), 'level' => 'success'];
+            }
         }
-
-        echo json_encode($result);
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'retailer/store/decorationList/', 'retailer');
     }
 
     public function setTemplateAction()
@@ -188,7 +191,6 @@ class StoreController extends AuthActionController
         $r = new Retailer;
         $r->load($segment->get('customer')->getId(), 'customer_id');
         $store_id = $r['store_id'];
-
         $model = new StoreTemplate();
         $model->load($data['id']);
         if ($model['store_id'] != $store_id)
@@ -202,12 +204,11 @@ class StoreController extends AuthActionController
                 $tempModel->setData(['status' => 0]);
                 $tempModel->save();
             }
-            $model->setData(['status' => 1]);
+            $model->load($data['id'])->setData(['status' => 1]);
             $model->save();
             $result = ['status' => TRUE];
         }
-
-        echo json_encode($result);
+        return $this->response(['error' => 0, 'message' => []], 'retailer/store/decorationList/');
     }
 
     public function funcAction()

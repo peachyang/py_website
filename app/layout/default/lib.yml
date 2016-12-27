@@ -135,7 +135,7 @@ frontend:
                                             - 
                                                 link: customer/account/
                                                 label: Personal Center
-                                                priority: 15
+                                                priority: 10
                                     -
                                         method: addLink
                                         params:

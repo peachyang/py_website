@@ -18,7 +18,7 @@ $parent = $this->getVariable('parent');
             <div class="inline-box">
                 <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" title="<?php echo $this->translate('Select Resource') ?>">
                     <?php if (strpos($value['file_type'], 'image') === 0): ?>
-                        <img src="<?php echo $this->getResourceUrl('images/resized/100x100/' . $value['real_name']) ?>" alt="" />
+                        <img src="<?php echo $this->getResourceUrl('image/resized/100x100/' . $value['real_name']) ?>" alt="" />
                     <?php else: ?>
                         <span><?php echo $value['real_name'] ?></span>
                     <?php endif ?>

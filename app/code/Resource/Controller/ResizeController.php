@@ -13,8 +13,8 @@ class ResizeController extends ActionController
     {
         $retina = 1;
         $filename = rawurldecode($this->getOption('file'));
-        if (preg_match('/@(?P<retina>\d+\.)x\./', $filename, $matches)) {
-            $retina = (int) $matches['retina'];
+        if (preg_match('/@(?P<retina>[\d\.]+)x\./', $filename, $matches)) {
+            $retina = (float) $matches['retina'];
             $filename = str_replace('@' . $retina . 'x', '', $filename);
         }
         $file = BP . 'pub/resource/image/' . $filename;

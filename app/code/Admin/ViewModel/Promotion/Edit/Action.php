@@ -50,13 +50,15 @@ class Action extends Edit
             ],
             'price' => [
                 'type' => 'price',
-                'label' => 'Price',
+                'label' => 'Discount for Each Product',
                 'required' => 'required'
             ],
             'qty' => [
                 'type' => 'number',
                 'label' => 'Maximum Qty Discount is Applied To',
-                'comment' => 'Available when filter is defined.'
+                'attrs' => [
+                    'min' => 0
+                ]
             ],
             'free_shipping' => [
                 'type' => 'select',

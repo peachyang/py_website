@@ -11,7 +11,13 @@ class ResizeController extends ActionController
 
     public function indexAction()
     {
-        $file = BP . 'pub/resource/image/' . rawurldecode($this->getOption('file'));
+        $retina = 1;
+        $filename = rawurldecode($this->getOption('file'));
+        if (preg_match('/@(?P<retina>\d+)x\./', $filename, $matches)) {
+            $retina = (int) $matches['retina'];
+            $filename = str_replace('@' . $retina . 'x', '', $filename);
+        }
+        $file = BP . 'pub/resource/image/' . $filename;
         if (!file_exists($file)) {
             return $this->notFoundAction();
         }
@@ -20,12 +26,7 @@ class ResizeController extends ActionController
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
-        if (preg_match('/@(?P<retina>\d+)x/', $this->getOption('file'), $matches)) {
-            $retina = (int) $matches['retina'];
-            $image = $this->resize($file, $this->getOption('width') * $retina, $this->getOption('height') * $retina);
-        } else {
-            $image = $this->resize($file, $this->getOption('width'), $this->getOption('height'));
-        }
+        $image = $this->resize($file, $this->getOption('width') * $retina, $this->getOption('height') * $retina);
         $image->save($resized);
         $image->show(substr($resized, strrpos($resized, '.') + 1));
         exit;

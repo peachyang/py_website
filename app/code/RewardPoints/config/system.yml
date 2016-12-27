@@ -24,7 +24,6 @@ rewardpoints:
                 expiration:
                     type: tel
                     label: Effective of Days
-                    required: required
                     priority: 20
                     default: 0
         gathering:

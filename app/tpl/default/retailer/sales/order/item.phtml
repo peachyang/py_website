@@ -22,10 +22,10 @@ foreach ($items as $item):
     ?>
     <tr>
         <td>
-            <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="65" />
+            <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="100" /></a>
         </td>
         <td class="col-md-3 col-xs-3 col-sm-3">
-            <h4 class="product-name"><?php echo $product['name'] ?></h4>
+            <a href="<?php echo $product->getUrl(); ?>"><h4 class="product-name"><?php echo $product['name'] ?></h4></a>
             <?php
             $options = json_decode($item['options'], true);
             if ($item['product_id'] && count($options)):
@@ -96,14 +96,14 @@ foreach ($items as $item):
                 endif;
                 if ($order->canShip()) :
                     ?>
-                <a class="ship" href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order->getId()) ?>">
+                    <a class="ship" href="<?php echo $this->getBaseUrl('retailer/sales_order/ship/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Ship', [], 'sales') ?>
                     </a>
                     <?php
                 endif;
                 if ($order->canRefund()) :
                     ?>
-                <a class="refund" href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order->getId()) ?>">
+                    <a class="refund" href="<?php echo $this->getBaseUrl('retailer/sales_order/refund/?id=' . $order->getId()) ?>">
                         <?php echo $this->translate('Refund', [], 'sales') ?>
                     </a>
                 <?php endif; ?>

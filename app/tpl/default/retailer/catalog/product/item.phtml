@@ -7,10 +7,10 @@ $thumbnail = $product->getThumbnail();
         <input type="checkbox" name="id[]" value="<?php echo $product->getId() ?>" />
     </td>
     <td>
-        <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/50x/' . $thumbnail) : $thumbnail ?>" width="50" alt="<?php echo $product['name'] ?>" />
+        <a href="<?php echo $product->getUrl(); ?>"><img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" width="100" alt="<?php echo $product['name'] ?>" /></a>
     </td>
     <td>
-        <?php echo $product['name'] ?>
+        <a href="<?php echo $product->getUrl(); ?>"><?php echo $product['name'] ?></a>
     </td>
     <td class="text-center"><?php echo $this->getCurrency()->convert($product->getFinalPrice(), true) ?></td>
     <td class="text-center"><?php echo $product->getInventory() ?></td>

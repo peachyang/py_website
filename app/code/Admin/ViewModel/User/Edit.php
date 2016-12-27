@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\User;
 
 use Seahinet\Admin\Source\Role;
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Lib\Session\Segment;
 
 class Edit extends PEdit
 {

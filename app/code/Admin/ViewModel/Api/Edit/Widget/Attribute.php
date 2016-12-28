@@ -14,10 +14,19 @@ class Attribute extends Template
     {
         $collection = new AttributeCollection;
         $collection->withLabel(Bootstrap::getLanguage()->getId())
-                ->columns(['id'])
+                ->columns(['code'])
                 ->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', ['entity_type' => 'code'], 'left')
                 ->order('eav_entity_type.code ASC, eav_attribute.id ASC');
-        return $collection;
+        $collection->load(true, true);
+        $config = $this->getConfig()['api'];
+        $result = empty($config['attributes']) ? [] : $config['attributes'];
+        foreach ($collection as $item) {
+            if (!isset($result[$item['entity_type']])) {
+                $result[$item['entity_type']] = [];
+            }
+            $result[$item['entity_type']][$item['code']] = $item['label'];
+        }
+        return $result;
     }
 
     public function getPrivileges()
@@ -26,7 +35,7 @@ class Attribute extends Template
         $collection->where(['api_rest_attribute.role_id' => $this->getQuery('id')]);
         $result = [];
         foreach ($collection as $item) {
-            $result[$item['attribute_id']] = $item;
+            $result[$item['operation'] . $item['resource']] = explode(',', $item['attributes']);
         }
         return $result;
     }

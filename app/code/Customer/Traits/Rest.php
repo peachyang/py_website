@@ -4,8 +4,14 @@ namespace Seahinet\Customer\Traits;
 
 use Exception;
 use Seahinet\Oauth\Model\Token;
-use Seahinet\Customer\Model\Collection\Customer as CustomerCollection;
-use Seahinet\Customer\Model\Customer;
+use Seahinet\Customer\Model\Collection\{
+    Address as AddressCollection,
+    Customer as CustomerCollection
+};
+use Seahinet\Customer\Model\{
+    Address,
+    Customer
+};
 
 trait Rest
 {
@@ -15,25 +21,10 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $attributes = $this->getAttributes(Customer::ENTITY_TYPE);
         if ($this->authOptions['role_id'] == -1) {
-            if (isset($data['id'])) {
-                $customer = new Customer;
-                $customer->load($data['id']);
-                $result = [];
-                foreach ($attributes as $attribute) {
-                    $result[$attribute['code']] = $customer[$attribute['code']];
-                }
-                return $result;
-            } else {
-                $collection = new CustomerCollection;
-                $result = [];
-                foreach ($collection as $item) {
-                    $result[$item['id']] = [];
-                    foreach ($attributes as $attribute) {
-                        $result[$item['id']][$attribute['code']] = $item[$attribute['code']];
-                    }
-                }
-                return $result;
-            }
+            $collection = new CustomerCollection;
+            $collection->columns($attributes);
+            $this->filter($collection, $data);
+            return $collection->load(true, true)->toArray();
         } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
             $token = new Token;
             $token->load($data['openId'], 'open_id');
@@ -41,8 +32,8 @@ trait Rest
             $customer->load($token['customer_id']);
             $result = [];
             foreach ($attributes as $attribute) {
-                if (isset($customer[$attribute['code']])) {
-                    $result[$attribute['code']] = $customer[$attribute['code']];
+                if (isset($customer[$attribute])) {
+                    $result[$attribute] = $customer[$attribute];
                 }
             }
             return $result;
@@ -71,29 +62,125 @@ trait Rest
 
     protected function putCustomer()
     {
-        if ($this->authOptions['role_id'] === -1) {
-            $id = $this->getRequest()->getQuery('id');
-            $customer = new Customer;
-            if ($id) {
+        $attributes = $this->getAttributes(Customer::ENTITY_TYPE, false);
+        $data = $this->getRequest()->getPost();
+        $set = [];
+        foreach ($attributes as $attribute) {
+            if (isset($data[$attribute])) {
+                $set[$attribute] = $data[$attribute];
+            }
+        }
+        try {
+            if ($set) {
+                if ($this->authOptions['role_id'] === -1) {
+                    $id = $data['id'];
+                } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+                    $token = new Token;
+                    $token->load($data['openId'], 'open_id');
+                    $id = $token['customer_id'];
+                }
+                $customer = new Customer;
                 $customer->load($id);
-            }
-            $data = $this->getRequest()->getPost();
-            $attributes = $this->getAttributes(Customer::ENTITY_TYPE, false);
-            $set = [];
-            foreach ($attributes as $attribute) {
-                if (isset($data[$attribute['code']])) {
-                    $set[$attribute['code']] = $data[$attribute['code']];
-                }
-            }
-            try {
-                if ($set) {
-                    $customer->setData($set);
-                    $customer->save();
-                }
+                $customer->setData($set);
+                $customer->save();
                 return $this->getResponse()->withStatus(202);
-            } catch (Exception $e) {
+            }
+        } catch (Exception $e) {
+            return $this->getResponse()->withStatus(400);
+        }
+        return $this->getResponse()->withStatus(403);
+    }
+
+    protected function getAddress()
+    {
+        $data = $this->getRequest()->getQuery();
+        $attributes = $this->getAttributes(Address::ENTITY_TYPE);
+        if ($this->authOptions['role_id'] == -1) {
+            $collection = new AddressCollection;
+            $collection->columns($attributes);
+            $this->filter($collection, $data);
+            return $collection->load(true, true)->toArray();
+        } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+            $token = new Token;
+            $token->load($data['openId'], 'open_id');
+            $collection = new AddressCollection;
+            $collection->columns($attributes)
+                    ->where(['customer_id' => $token['customer_id']]);
+            return $collection->load(true, true)->toArray();
+        }
+        return $this->getResponse()->withStatus(400);
+    }
+
+    protected function deleteAddress()
+    {
+        if (count($this->getAttributes(Address::ENTITY_TYPE, false))) {
+            $data = $this->getRequest()->getQuery();
+            if ($this->authOptions['role_id'] === -1) {
+                if ($data['id']) {
+                    $address = new Address;
+                    try {
+                        $address->setId($id)->remove();
+                        return $this->getResponse()->withStatus(202);
+                    } catch (Exception $e) {
+                        return $this->getResponse()->withStatus(400);
+                    }
+                }
+                return $this->getResponse()->withStatus(400);
+            } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+                if ($data['id']) {
+                    $address = new Address;
+                    $address->load($data['id']);
+                    $token = new Token;
+                    $token->load($data['openId'], 'open_id');
+                    if ($address['customer_id'] == $token['customer_id']) {
+                        try {
+                            $address->remove();
+                            return $this->getResponse()->withStatus(202);
+                        } catch (Exception $e) {
+                            return $this->getResponse()->withStatus(400);
+                        }
+                    }
+                }
                 return $this->getResponse()->withStatus(400);
             }
+        }
+        return $this->getResponse()->withStatus(403);
+    }
+
+    public function putAddress()
+    {
+        $attributes = $this->getAttributes(Address::ENTITY_TYPE, false);
+        $data = $this->getRequest()->getPost();
+        $set = [];
+        foreach ($attributes as $attribute) {
+            if (isset($data[$attribute])) {
+                $set[$attribute] = $data[$attribute];
+            }
+        }
+        try {
+            if ($set) {
+                $id = $data['id'];
+                $address = new Address;
+                $address->load($id);
+                if ($this->authOptions['role_id'] > 0) {
+                    $flag = false;
+                    if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+                        $token = new Token;
+                        $token->load($data['openId'], 'open_id');
+                        if ($address['customer_id'] == $token['customer_id']) {
+                            $flag = true;
+                        }
+                    }
+                    if ($flag) {
+                        throw new Exception('Not Allowed');
+                    }
+                }
+                $address->setData($set);
+                $address->save();
+                return $this->getResponse()->withStatus(202);
+            }
+        } catch (Exception $e) {
+            return $this->getResponse()->withStatus(400);
         }
         return $this->getResponse()->withStatus(403);
     }

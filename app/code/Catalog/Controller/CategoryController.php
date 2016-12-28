@@ -3,6 +3,7 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
+use Seahinet\Api\Model\Collection\Rest\Attribute;
 use Seahinet\Lib\Controller\ActionController;
 use Zend\Db\Sql\Expression;
 
@@ -21,12 +22,23 @@ class CategoryController extends ActionController
             $products = $this->prepareCollection($category->getProducts(), $category);
             if ($this->getOption('is_json')) {
                 $result = [];
-                $products->walk(function($item) use (&$result, $category) {
-                    $result[] = [
-                        'absolute_url' => $item->getUrl($category),
-                        'thumbnail_url' => $item->getThumbnail()
-                            ] + $item->toArray();
-                });
+                $columns = new Attribute;
+                $columns->columns(['attributes'])
+                        ->where([
+                            'role_id' => 0,
+                            'operation' => 1,
+                            'resource' => $products::ENTITY_TYPE
+                ]);
+                $columns->load(true, true);
+                if (count($columns)) {
+                    $products->columns(explode(',', $columns[0]['attributes']));
+                    $products->walk(function($item) use (&$result, $category) {
+                        $result[] = [
+                            'absolute_url' => $item->getUrl($category),
+                            'thumbnail_url' => $item->getThumbnail()
+                                ] + $item->toArray();
+                    });
+                }
                 return $result;
             } else {
                 $root = $this->getLayout('catalog_category');

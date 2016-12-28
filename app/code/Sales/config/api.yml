@@ -1,0 +1,152 @@
+---
+attributes:
+    order:
+        id: ID
+        status_id: Status ID
+        increment_id: Human-Friendly ID
+        customer_id: Customer ID
+        billing_address: Billing Address
+        shipping_address: Shipping Address
+        warehouse_id: Warehouse ID
+        store_id: Store ID
+        language_id: Language ID
+        is_virtual: Is Virtual
+        free_shipping: Free Shipping
+        coupon: Coupon
+        base_currency: Base Currency
+        currency: Currency
+        shipping_method: Shipping Method
+        payment_method: Payment Method
+        base_subtotal: Base Subtotal
+        subtotal: Subtotal
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+        base_total_paid: Base Total Paid
+        total_paid: Total Paid
+        base_total_refunded: Base Total Refunded
+        total_refunded: Total Refunded
+        customer_note: Customer Note
+        created_at: Placed at
+    order_items:
+        product_id: Product ID
+        product_name: Product Name
+        options: Options
+        qty: Qty
+        weight: Weight
+        sku: SKU
+        is_virtual: Is Virtual
+        free_shipping: Free Shipping
+        base_price: Base Price
+        price: Price
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+    invoice:
+        id: ID
+        increment_id: Human-Friendly ID
+        store_id: Store ID
+        coupon: Coupon
+        base_currency: Base Currency
+        currency: Currency
+        base_subtotal: Base Subtotal
+        subtotal: Subtotal
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+        comment: Comment
+        created_at: Created at
+    invoice_items:
+        product_id: Product ID
+        product_name: Product Name
+        options: Options
+        qty: Qty
+        sku: SKU
+        base_price: Base Price
+        price: Price
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+    creditmemo:
+        id: ID
+        increment_id: Human-Friendly ID
+        warehouse_id: Warehouse ID
+        store_id: Store ID
+        base_currency: Base Currency
+        currency: Currency
+        base_subtotal: Base Subtotal
+        subtotal: Subtotal
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+        comment: Comment
+        status: Status
+        created_at: Created at
+    creditmemo_items:
+        product_id: Product ID
+        product_name: Product Name
+        options: Options
+        qty: Qty
+        sku: SKU
+        base_price: Base Price
+        price: Price
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+    shipment:
+        id: ID
+        increment_id: Human-Friendly ID
+        customer_id: Customer ID
+        warehouse_id: Warehouse ID
+        shipping_method: Shipping Method
+        store_id: Store ID
+        billing_address: Billing Address
+        shipping_address: Shipping Address
+        comment: Comment
+        status: Status
+        created_at: Placed at
+    shipment_items:
+        product_id: Product ID
+        product_name: Product Name
+        options: Options
+        qty: Qty
+        sku: SKU
+        weight: Weight
+    shipment_track:
+        shipment_id: Shipment ID
+        order_id: Order ID
+        carrier: Carrier
+        carrier_code: Carrier Code
+        track_number: Track Number
+        description: Description
+        created_at: Time

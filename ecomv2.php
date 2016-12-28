@@ -845,13 +845,11 @@ INSERT INTO `api_rest_role` VALUES (-1,'Admin',NULL,NULL),(0,'Anonymous',NULL,NU
 
 CREATE TABLE IF NOT EXISTS `api_rest_attribute` (
     `role_id` INTEGER NOT NULL,
-    `attribute_id` INTEGER UNSIGNED NOT NULL,
-    `writeable` BOOLEAN DEFAULT 0,
-    `readable` BOOLEAN DEFAULT 0,
-    PRIMARY KEY (`role_id`,`attribute_id`),
-    INDEX IDX_API_REST_ATTR_ATTR_ID (`attribute_id`),
-    CONSTRAINT FK_API_REST_ATTR_API_REST_ROLE FOREIGN KEY (`role_id`) REFERENCES `api_rest_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_API_REST_ATTR_EAV_ATTR_ID FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    `resource` VARCHAR(50) NOT NULL,
+    `operation` BOOLEAN DEFAULT 0,
+    `attributes` TEXT,
+    PRIMARY KEY (`role_id`,`resource`,`operation`),
+    CONSTRAINT FK_API_REST_ATTR_API_REST_ROLE FOREIGN KEY (`role_id`) REFERENCES `api_rest_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `oauth_consumer` (

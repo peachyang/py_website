@@ -1,0 +1,27 @@
+---
+#admin_customer_edit:
+#    root:
+#        children:
+#            content:
+#                children:
+#                    edit:
+#                        children:
+#                            tabs:
+#                                action:
+#                                    -
+#                                        method: addTab
+#                                        params:
+#                                            - balance
+#                                            - Account Balance
+#                                            - 110
+#                                children:
+#                                    balances:
+#                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
+#                                        template: admin/rewardpoints/edit
+#                                        children:
+#                                            statement:
+#                                                type: Seahinet\RewardPoints\ViewModel\Statement
+#                                                template: rewardpoints/statement
+#                                                children:
+#                                                    pager:
+#                                                        type: Seahinet\Lib\ViewModel\Pager

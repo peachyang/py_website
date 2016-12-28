@@ -373,7 +373,7 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .refund-detail .flow .step:before,.retailer-account .refund-detail .flow .step:before{content:" ";display:block;width:30px;height:30px;border:4px solid;margin:0 auto;border-radius:15px}
 .customer-account .refund-detail .flow .step:not(:last-child):after,.retailer-account .refund-detail .flow .step:not(:last-child):after{content:" ";display:block;width:0;height:0;border-width:4px 36px;border-width:4px calc(50% - 14px);border-style:solid;position:absolute;top:11px;left:64px;left:calc(50% + 14px)}
 .customer-account .refund-detail .flow .step.active,.retailer-account .refund-detail .flow .step.active{display:inline-block;color:#007dc6}
-.customer-account .images .preview,.retailer-account .images .preview,.customer-account .images .add-image,.retailer-account .images .add-image{position:relative;width:50px;margin-right:6px;height:50px;display:inline-block;border:1px solid #ccc;color:#ccc;padding:0;line-height:2;font-size:24px;text-align:center;vertical-align:middle;cursor:pointer}
+.customer-account .images .preview,.retailer-account .images .preview,.customer-account .images .add-image,.retailer-account .images .add-image{position:relative;width:30px;margin-right:6px;height:30px;display:inline-block;border:1px solid #ccc;color:#ccc;padding:0;line-height:2;font-size:14px;text-align:center;vertical-align:middle;cursor:pointer}
 .customer-account .images .preview:hover:after,.retailer-account .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
 .customer-account .images .preview img,.retailer-account .images .preview img{max-width:48px;max-height:48px;vertical-align:top}
 .customer-account .images .preview~.preview~.preview~.preview~.preview~.add-image,.retailer-account .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
@@ -1147,10 +1147,10 @@ dl.options dd{float:left;margin-left:4px}
 .sales-order-inquire .main_article_content .order-list .table thead{background:#eee}
 .sales-order-inquire .main_article_content .order-list .table thead th{padding-top:0px;padding:5px 0}
 .sales-order-review .page-content .review-form{font-size: 12px;margin: 30px 0}
-.sales-order-review .page-content .review-form h4{text-align: left}
+.sales-order-review .page-content .review-form h4{text-align: left;font-size: 12px}
 .sales-order-review .page-content .review-form .images,.sales-order-review .page-content .review-form tfoot label{font-size:10px;color: #999}
-.sales-order-review .page-content .review-form th{padding-right: 35px}
-
+.sales-order-review .page-content .review-form tbody .fieldset .control-label,.sales-order-review .page-content .review-form tbody .fieldset,.sales-order-review .page-content .review-form tbody .fieldset .cell{padding-bottom: 15px}
+.sales-order-review .page-content .review-form td{padding-left: 100px}
 /* Quick properties */
 
 .font-12{font-size:12px}

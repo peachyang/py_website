@@ -154,10 +154,10 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .form-control[type=checkbox],.form-control[type=radio]{width:auto;height:auto;padding:0;background:none;border:none;vertical-align:top;display:inline-block;margin-top:5px}
 .btn{display:inline-block;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:none;border:none}
 .btn:focus{outline:none}
-.btn-submit,.btn-reset,.btn-delete,.btn-theme,.btn-add{color:#fff;background:#02A0E9;border:1px solid #797979;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
-.btn-submit{background:#02A0E9}
+.btn-reset,.btn-delete,.btn-theme,.btn-add{color:#fff;background:#02A0E9;border-radius:5px;padding:5px 13px;font-size:13px;line-height:1}
+.btn-submit{background:#02A0E9;padding: 5px 13px;font-size: 13px;line-height: 1;border-radius: 5px;color:#fff}
 .btn-submit:hover{background: #028ccc}
-.btn-theme,.btn-reset,.btn-delete{border: 1px solid #00A0E9;color:#ffffff}
+.btn-theme,.btn-reset,.btn-delete{border: 1px solid #0283bf;color:#ffffff}
 .btn-theme:hover,.btn-reset:hover,.btn-delete:hover{background:#028ccc}
 .btn-submit:hover,.btn-reset:hover,.btn-submit:focus,.btn-reset:focus,.btn-delete:hover,.btn-delete:focus,.btn-theme:hover,.btn-theme:focus{background:#028ccc;text-decoration:none}
 .admin-login{background:#9c9d9d}

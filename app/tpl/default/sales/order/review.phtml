@@ -9,9 +9,9 @@ $retailer = $this->getRetailer();
     <table class="table-no-border table review-form">
         <thead>
             <tr>
-                <th<?php if (count($ratings) === 0): ?> colspan="2"<?php endif ?> class="store text-center">
+                <th<?php if (count($ratings) === 0): ?> colspan="2"<?php endif ?> class="store text-left">
                     <div class="profile">
-                        <img src="<?php echo (!empty($retailer['profile']) ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png')) ?>" alt="" />
+                        <img class="img-circle" src="<?php echo (!empty($retailer['profile']) ? 'data:image/png;base64, ' . base64_encode($retailer['profile']) : $this->getPubUrl('frontend/images/placeholder.png')) ?>" width="100" height="100" />
                     </div>
                     <div class="info">
                         <h3 class="name"><?php echo $order->getStore()->offsetGet('name') ?></h3>
@@ -46,9 +46,9 @@ $retailer = $this->getRetailer();
                 $thumbnail = $product->getThumbnail();
                 ?>
                 <tr>
-                    <th class="text-center">
+                    <th class="text-left">
                         <img src="<?php echo strpos($thumbnail, '//') === false ? $this->getResourceUrl('image/resized/100x/' . $thumbnail) : $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
-                        <h4 class="product-name"><?php echo $product['name'] ?></h4>
+                        <h4><?php echo $product['name'] ?></h4>
                         <?php
                         $options = json_decode($item['options'], true);
                         if ($item['product_id'] && count($options)):
@@ -104,7 +104,7 @@ $retailer = $this->getRetailer();
         <tfoot>
             <tr>
                 <th></th>
-                <td>
+                <td class="text-right">
                     <input type="checkbox" name="anonymous" id="anonymous" value="1" />
                     <label for="anonymous" class="control-label"><?php echo $this->translate('Review Anonymously') ?></label>
                     <button type="submit" class="btn btn-theme"><?php echo $this->translate('Submit') ?></button>

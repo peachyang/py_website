@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Api\Model\Rest\Role as Model;
 
 class Attribute extends PEdit
 {
@@ -19,6 +20,8 @@ class Attribute extends PEdit
 
     protected function prepareElements($columns = [])
     {
+        $model = new Model;
+        $model->load($this->getQuery('id'));
         $columns = [
             'csrf' => [
                 'type' => 'csrf'
@@ -26,6 +29,11 @@ class Attribute extends PEdit
             'role_id' => [
                 'type' => 'hidden',
                 'value' => $this->getQuery('id')
+            ],
+            'role' => [
+                'type' => 'label',
+                'label' => 'Role',
+                'value' => $model['name']
             ],
             'attribute_id[]' => [
                 'type' => 'widget',

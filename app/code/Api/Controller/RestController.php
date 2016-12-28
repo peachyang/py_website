@@ -12,7 +12,7 @@ class RestController extends ApiActionController
 
     public function __call($name, $arguments)
     {
-        $method = $this->getRequest()->getMethod() . substr($name, 0, -6);
+        $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));
         if (method_exists($this, $method)) {
             $response = $this->$method();
             return $response;
@@ -29,7 +29,7 @@ class RestController extends ApiActionController
                     'resource' => $type,
                     'role_id' => $this->authOptions['role_id']
         ]);
-        return count($attributes) ? $attributes[0]['attributes'] : [];
+        return count($attributes) ? explode(',', $attributes[0]['attributes']) : [];
     }
 
 }

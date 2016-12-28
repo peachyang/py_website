@@ -15,13 +15,10 @@ use Seahinet\Catalog\Model\{
 trait Rest
 {
 
-    public function getProduct()
+    protected function getProduct()
     {
         $data = $this->getRequest()->getQuery();
-        $columns = [];
-        $this->getAttributes(Product::ENTITY_TYPE)->walk(function($item) use (&$columns) {
-            $columns[] = $item['code'];
-        });
+        $columns = $this->getAttributes(Product::ENTITY_TYPE);
         if (count($columns)) {
             $products = new ProductCollection;
             $products->columns($columns);
@@ -75,8 +72,8 @@ trait Rest
             $data = $this->getRequest()->getPost();
             $set = [];
             foreach ($attributes as $attribute) {
-                if (isset($data[$attribute['code']])) {
-                    $set[$attribute['code']] = $data[$attribute['code']];
+                if (isset($data[$attribute])) {
+                    $set[$attribute] = $data[$attribute];
                 }
             }
             try {
@@ -95,10 +92,7 @@ trait Rest
     public function getCategory()
     {
         $data = $this->getRequest()->getQuery();
-        $columns = [];
-        $this->getAttributes(Category::ENTITY_TYPE)->walk(function($item) use (&$columns) {
-            $columns[] = $item['code'];
-        });
+        $columns = $this->getAttributes(Category::ENTITY_TYPE);
         if (count($columns)) {
             $categories = new CategoryCollection;
             $categories->columns($columns);
@@ -140,8 +134,8 @@ trait Rest
             $data = $this->getRequest()->getPost();
             $set = [];
             foreach ($attributes as $attribute) {
-                if (isset($data[$attribute['code']])) {
-                    $set[$attribute['code']] = $data[$attribute['code']];
+                if (isset($data[$attribute])) {
+                    $set[$attribute] = $data[$attribute];
                 }
             }
             try {

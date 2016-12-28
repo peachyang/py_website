@@ -35,13 +35,17 @@ class AttributeController extends AuthActionController
                 try {
                     $this->beginTransaction();
                     $this->delete(['role_id' => $data['role_id']]);
-                    foreach ((array) $data['attribute_id'] as $id => $privileges) {
-                        $this->insert([
-                            'role_id' => $data['role_id'],
-                            'attribute_id' => $id,
-                            'readable' => isset($privileges['readable']),
-                            'writeable' => isset($privileges['writeable'])
-                        ]);
+                    foreach ((array) $data['attribute'] as $resource => $privileges) {
+                        if (!empty($privileges['readable'])) {
+                            $this->upsert(['attributes' => implode(',', $privileges['readable'])], [
+                                'role_id' => $data['role_id'], 'operation' => 1, 'resource' => $resource
+                            ]);
+                        }
+                        if (!empty($privileges['writeable'])) {
+                            $this->upsert(['attributes' => implode(',', $privileges['writeable'])], [
+                                'role_id' => $data['role_id'], 'operation' => 0, 'resource' => $resource
+                            ]);
+                        }
                     }
                     $this->commit();
                     $this->flushList('api_rest_attribute');

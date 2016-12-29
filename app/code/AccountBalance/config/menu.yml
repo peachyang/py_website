@@ -1,0 +1,8 @@
+---
+system:
+    children:
+        -
+            link: 'config/balance/'
+            operation: 'Admin\Config::balance'
+            title: 'Account Balance'
+            priority: 90

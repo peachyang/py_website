@@ -2,14 +2,14 @@
 
 namespace Seahinet\AccountBalance\Controller;
 
-use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Lib\Controller\AuthActionController;
 
-class IndexController extends ActionController
+class IndexController extends AuthActionController
 {
 
     public function IndexAction()
     {
-        return $this->getLayout('');
+        return $this->getLayout('accountbalance_detail');
     }
 
 }

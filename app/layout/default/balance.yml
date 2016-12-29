@@ -16,12 +16,12 @@
 #                                            - 110
 #                                children:
 #                                    balances:
-#                                        type: Seahinet\Admin\ViewModel\RewardPoints\Edit
-#                                        template: admin/rewardpoints/edit
+#                                        type: Seahinet\Admin\ViewModel\AccountBalance\Edit
+#                                        template: admin/balance/edit
 #                                        children:
-#                                            statement:
-#                                                type: Seahinet\RewardPoints\ViewModel\Statement
-#                                                template: rewardpoints/statement
+#                                            balance_detail:
+#                                                type: Seahinet\AccountBalance\ViewModel\BalanceDetail
+#                                                template: balance/balancedetail
 #                                                children:
 #                                                    pager:
 #                                                        type: Seahinet\Lib\ViewModel\Pager

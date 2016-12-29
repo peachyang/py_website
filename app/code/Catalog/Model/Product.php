@@ -258,15 +258,19 @@ class Product extends Entity
             if (!is_array($result[0]['images'])) {
                 $result[0]['images'] = json_decode($result[0]['images'], true);
             }
-            foreach ($result[0]['images'] as &$item) {
-                $item['src'] = (new Resource)->load($item['id'])['real_name'];
+            $images = $result[0]['images'];
+            $result[0]['images'] = [];
+            foreach ($images as $item) {
+                $result[0]['images'][$item['id']] = $item + ['src' => (new Resource)->load($item['id'])['real_name']];
             }
         } else if (!empty($result['images'])) {
             if (!is_array($result['images'])) {
                 $result['images'] = json_decode($result['images'], true);
             }
-            foreach ($result['images'] as &$item) {
-                $item['src'] = (new Resource)->load($item['id'])['real_name'];
+            $images = $result['images'];
+            $result['images'] = [];
+            foreach ($images as $item) {
+                $result['images'][$item['id']] = $item + ['src' => (new Resource)->load($item['id'])['real_name']];
             }
         }
         parent::afterLoad($result);

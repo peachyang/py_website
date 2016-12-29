@@ -2,6 +2,7 @@
 
 namespace Seahinet\Api\Controller;
 
+use Exception;
 use Seahinet\Lib\Controller\ApiActionController;
 use Seahinet\Api\Model\Collection\Rest\Attribute;
 
@@ -14,8 +15,12 @@ class RestController extends ApiActionController
     {
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));
         if (method_exists($this, $method)) {
-            $response = $this->$method();
-            return $response;
+            try {
+                $response = $this->$method();
+                return $response;
+            } catch (Exception $e) {
+                return $this->getResponse()->withStatus(400);
+            }
         }
         return $this->getResponse()->withStatus(400);
     }

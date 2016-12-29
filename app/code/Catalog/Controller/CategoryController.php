@@ -31,7 +31,7 @@ class CategoryController extends ActionController
                 ]);
                 $columns->load(true, true);
                 if (count($columns)) {
-                    $products->columns(explode(',', $columns[0]['attributes']));
+                    $products->columns(['id'] + explode(',', $columns[0]['attributes']));
                     $products->walk(function($item) use (&$result, $category) {
                         $result[] = [
                             'absolute_url' => $item->getUrl($category),

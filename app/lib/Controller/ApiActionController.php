@@ -3,6 +3,7 @@
 namespace Seahinet\Lib\Controller;
 
 use Seahinet\Oauth\Model\Consumer;
+use Seahinet\Customer\Model\Customer;
 
 /**
  * Controller for api request
@@ -17,15 +18,16 @@ abstract class ApiActionController extends AbstractController
      */
     public function dispatch($request = null, $routeMatch = null)
     {
+        $response = $this->getResponse();
         if (!isset($_SERVER['HTTPS'])) {
-            return $this->getResponse()->withStatus(403, 'SSL required');
+            return $response->withStatus(403, 'SSL required');
         }
         if (empty($authorization = $request->getHeader('HTTP_AUTHORIZATION'))) {
-            return $this->getResponse()->withStatus(401);
+            return $response->withStatus(401);
         } else {
             $parts = explode(' ', $authorization);
             if (!is_callable([$this, $method = 'authorize' . $parts[0]]) || !$this->$method($parts[1])) {
-                return $this->getResponse()->withStatus(401);
+                return $response->withStatus(401);
             }
         }
         return parent::dispatch($request, $routeMatch);
@@ -68,6 +70,12 @@ abstract class ApiActionController extends AbstractController
      */
     public function authorizeBasic($code)
     {
+        list($username, $password) = explode(':', base64_decode($code));
+        $customer = new Customer;
+        if ($customer->valid($username, $password)) {
+            $this->authOptions = ['type' => 'BASIC'];
+            return true;
+        }
         return false;
     }
 

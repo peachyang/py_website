@@ -13,6 +13,9 @@ class RestController extends ApiActionController
 
     public function __call($name, $arguments)
     {
+        if ($this->authOptions['type'] === 'BASIC') {
+            return $this->getCsrfKey();
+        }
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));
         if (method_exists($this, $method)) {
             try {
@@ -35,6 +38,11 @@ class RestController extends ApiActionController
                     'role_id' => $this->authOptions['role_id']
         ]);
         return count($attributes) ? explode(',', $attributes[0]['attributes']) : [];
+    }
+
+    protected function getCsrfKey()
+    {
+        return (new Csrf)->getValue();
     }
 
 }

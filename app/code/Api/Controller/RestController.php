@@ -3,8 +3,9 @@
 namespace Seahinet\Api\Controller;
 
 use Exception;
-use Seahinet\Lib\Controller\ApiActionController;
 use Seahinet\Api\Model\Collection\Rest\Attribute;
+use Seahinet\Lib\Controller\ApiActionController;
+use Seahinet\Lib\Session\Csrf;
 
 class RestController extends ApiActionController
 {

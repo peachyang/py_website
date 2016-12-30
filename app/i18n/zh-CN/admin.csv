@@ -40,6 +40,7 @@
 "Default Description","默认描述"
 "Default Keywords","默认关键词"
 "Default Title","默认标题"
+"Do not combine files when request via sdpy or http2","当通过spdy或http2请求时请勿合并文件"
 "Download PNG image","下载PNG格式图像"
 "Download JPEG image","下载JPEG格式图像"
 "Download PDF document","下载PDF文档"

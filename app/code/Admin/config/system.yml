@@ -103,6 +103,7 @@ theme:
                     scope: merchant
                     default: 0
                     options: ['Disabled','Enabled']
+                    comment: 'Do not combine files when request via sdpy or http2'
                 combine_js:
                     type: select
                     label: Combine JS File
@@ -111,6 +112,7 @@ theme:
                     scope: merchant
                     default: 0
                     options: ['Disabled','Enabled']
+                    comment: 'Do not combine files when request via sdpy or http2'
         frontend:
             label: Frontend
             scope: [merchant,store]

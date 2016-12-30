@@ -1,12 +1,13 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\AccountBalance;
+namespace Seahinet\Admin\ViewModel\Balance;
 
 use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\ViewModel\Template;
 
 class Edit extends Template
 {
+
     protected $customer = null;
 
     public function getCustomer()
@@ -21,10 +22,9 @@ class Edit extends Template
     public function getCurrentBalances()
     {
         if ($this->getCustomer()) {
-            echo 1;
-            exit();
             return (int) $this->getCustomer()->offsetGet('balance');
         }
         return 0;
     }
+
 }

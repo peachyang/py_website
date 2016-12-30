@@ -1,27 +1,50 @@
 ---
-#admin_customer_edit:
-#    root:
-#        children:
-#            content:
-#                children:
-#                    edit:
-#                        children:
-#                            tabs:
-#                                action:
-#                                    -
-#                                        method: addTab
-#                                        params:
-#                                            - balance
-#                                            - Account Balance
-#                                            - 110
-#                                children:
-#                                    balances:
-#                                        type: Seahinet\Admin\ViewModel\AccountBalance\Edit
-#                                        template: admin/balance/edit
-#                                        children:
-#                                            balance_detail:
-#                                                type: Seahinet\AccountBalance\ViewModel\BalanceDetail
-#                                                template: balance/balancedetail
-#                                                children:
-#                                                    pager:
-#                                                        type: Seahinet\Lib\ViewModel\Pager
+admin_customer_edit:
+    root:
+        children:
+            content:
+                children:
+                    edit:
+                        children:
+                            tabs:
+                                action:
+                                    -
+                                        method: addTab
+                                        params:
+                                            - balance
+                                            - Account Balance
+                                            - 90
+                                children:
+                                    balance:
+                                        type: Seahinet\Admin\ViewModel\Balance\Edit
+                                        template: admin/balance/edit
+                                        children: 
+                                            balancedetail:   
+                                                type: Seahinet\Balance\ViewModel\BalanceDetail
+                                                template: balance/balancedetail
+                                                children:
+                                                    pager:
+                                                        type: Seahinet\Lib\ViewModel\Pager
+balance_statement:
+    update: customer_account
+    root:  
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Balance Statement
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Balance Statement
+                children:
+                    main:
+                        type: Seahinet\Balance\ViewModel\BalanceDetail
+                        template: balance/balancedetail
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager                                                      

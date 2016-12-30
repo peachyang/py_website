@@ -1,0 +1,5 @@
+---
+balance:
+    method: [GET]
+    route: /balance/{controller}/[{action}[/]]
+    namespace: Seahinet\Balance\Controller

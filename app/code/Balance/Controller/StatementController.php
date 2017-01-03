@@ -12,4 +12,9 @@ class StatementController extends AuthActionController
         return $this->getLayout('balance_statement');
     }
 
+    public function RechargeAction()
+    {
+        return $this->getLayout('balance_statement_recharge');
+    }
+
 }

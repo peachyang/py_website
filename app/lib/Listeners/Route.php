@@ -64,6 +64,10 @@ class Route implements ListenerInterface
         if (!class_exists($className)) {
             $routeMatch = $routers['default'];
             $className = $routeMatch['controller'];
+            if (!class_exists($className)) {
+                header('HTTP/1.1 404 Not Found');
+                exit;
+            }
         }
         $controller = new $className;
         $this->getContainer()->get('response')->setData($controller->dispatch($request, $routeMatch));

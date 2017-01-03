@@ -1,4 +1,3 @@
-"The %d - %d lines have been imported.","第 %d - %d 项已成功导入。"
 "Compression","压缩格式"
 "Download Template","下载模版"
 "Export","导出"
@@ -14,6 +13,7 @@
 "Including the table head and imported rows","包括表头以及已上传行数"
 "Skip Row","跳过行"
 "Start","开始"
+"The %d - %d lines have been imported.","第 %d - %d 项已成功导入。"
 "The file has been received. Click start button to import.","文件已接收。点击开始按钮开始导入。"
 "The website will be unavailable temporarily while importing.","导入过程中网站将暂时不可用。"
 "Truncate Data","清空数据"

@@ -1,0 +1,17 @@
+---
+balance:
+    label: Account Balance
+    children:
+        general:
+            label: General
+            scope: merchant
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0

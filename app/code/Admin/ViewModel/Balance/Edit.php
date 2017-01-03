@@ -4,11 +4,21 @@ namespace Seahinet\Admin\ViewModel\Balance;
 
 use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\I18n\Model\Currency;
 
 class Edit extends Template
 {
 
     protected $customer = null;
+    protected static $currency = null;
+
+    public function getCurrency()
+    {
+        if (is_null(self::$currency)) {
+            self::$currency = $this->getContainer()->get('currency');
+        }
+        return self::$currency;
+    }
 
     public function getCustomer()
     {

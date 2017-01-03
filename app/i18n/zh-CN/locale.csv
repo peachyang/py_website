@@ -1,4 +1,3 @@
-"Locale","区域"
 "Add New Translation","添加翻译语句"
 "City","市"
 "Country","国家"
@@ -8,6 +7,7 @@
 "Edit Translation","编辑翻译语句"
 "Enabled Countries","启用国家"
 "Leave blank if all countries are allowed","若所有国家可用请留空"
+"Locale","区域"
 "Original","原文"
 "Postcode","邮政编码"
 "Region","省"

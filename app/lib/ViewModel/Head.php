@@ -228,6 +228,21 @@ final class Head extends Template implements Singleton
                     $link = $this->getPubUrl($link);
                 }
                 $result .= '<link href="' . $link . '" rel="' . $type . '" />';
+            } else if ($type === 'stylesheet' && substr($link, -4) !== '.css' && strpos($link, '//') === false) {
+                $filename = $prefix . substr($link, 0, strrpos($link, '.')) . '.css';
+                if (!file_exists(BP . $filename) && file_exists(BP . $prefix . $link)) {
+                    try {
+                        $temp = $this->getContainer()->get('csspp')->compile(file_get_contents(BP . $prefix . $link));
+                    } catch (Error $e) {
+                        $this->getContainer()->get('log')->logError($e);
+                        $temp = '';
+                    } catch (Exception $e) {
+                        $this->getContainer()->get('log')->logException($e);
+                        $temp = '';
+                    }
+                    file_put_contents(BP . $filename, CssMin::minify($temp));
+                }
+                $result .= '<link href="' . $this->getBaseUrl($filename) . '" rel="stylesheet" />';
             }
         }
         if ($combine) {

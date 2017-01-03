@@ -2,7 +2,6 @@
 
 namespace Seahinet\Catalog\Traits;
 
-use Exception;
 use Seahinet\Catalog\Model\Collection\{
     Category as CategoryCollection,
     Product as ProductCollection
@@ -38,7 +37,7 @@ trait Rest
             }
             return $result;
         }
-        return $this->getResponse()->withStatus(400);
+        return $this->getResponse()->withStatus(403);
     }
 
     protected function deleteProduct()
@@ -48,12 +47,8 @@ trait Rest
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
                 $product = new Product;
-                try {
-                    $product->setId($id)->remove();
-                    return $this->getResponse()->withStatus(202);
-                } catch (Exception $e) {
-                    return $this->getResponse()->withStatus(400);
-                }
+                $product->setId($id)->remove();
+                return $this->getResponse()->withStatus(202);
             }
             return $this->getResponse()->withStatus(400);
         }
@@ -76,15 +71,11 @@ trait Rest
                     $set[$attribute] = $data[$attribute];
                 }
             }
-            try {
-                if ($set) {
-                    $product->setData($set);
-                    $product->save();
-                }
-                return $this->getResponse()->withStatus(202);
-            } catch (Exception $e) {
-                return $this->getResponse()->withStatus(400);
+            if ($set) {
+                $product->setData($set);
+                $product->save();
             }
+            return $this->getResponse()->withStatus(202);
         }
         return $this->getResponse()->withStatus(403);
     }
@@ -100,7 +91,7 @@ trait Rest
             $categories->load(true, true);
             return $categories->toArray();
         }
-        return $this->getResponse()->withStatus(400);
+        return $this->getResponse()->withStatus(403);
     }
 
     protected function deleteCategory()
@@ -110,12 +101,8 @@ trait Rest
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
                 $category = new Category;
-                try {
-                    $category->setId($id)->remove();
-                    return $this->getResponse()->withStatus(202);
-                } catch (Exception $e) {
-                    return $this->getResponse()->withStatus(400);
-                }
+                $category->setId($id)->remove();
+                return $this->getResponse()->withStatus(202);
             }
             return $this->getResponse()->withStatus(400);
         }
@@ -138,15 +125,11 @@ trait Rest
                     $set[$attribute] = $data[$attribute];
                 }
             }
-            try {
-                if ($set) {
-                    $category->setData($set);
-                    $category->save();
-                }
-                return $this->getResponse()->withStatus(202);
-            } catch (Exception $e) {
-                return $this->getResponse()->withStatus(400);
+            if ($set) {
+                $category->setData($set);
+                $category->save();
             }
+            return $this->getResponse()->withStatus(202);
         }
         return $this->getResponse()->withStatus(403);
     }

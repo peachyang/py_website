@@ -3,9 +3,8 @@
 namespace Seahinet\Sales\Model\Shipment;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Sales\Model\Collection\Shipment\Track;
 
-class Tracks extends AbstractModel
+class Track extends AbstractModel
 {
 
     protected function construct()

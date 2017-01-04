@@ -24,7 +24,7 @@ $collection = $this->getStatement();
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="text-right">
+                    <td colspan="4" class="text-center">
                         <?php echo $this->getChild('pager')->setCollection($collection); ?>
                     </td>
                 </tr>
@@ -32,7 +32,7 @@ $collection = $this->getStatement();
         <?php else: ?>
             <tfoot>
                 <tr>
-                    <td colspan="4"><?php echo $this->translate('No data to display') ?></td>
+                    <td colspan="4" class="text-center"><?php echo $this->translate('No data to display') ?></td>
                 </tr>
             </tfoot>
         <?php endif; ?>

@@ -28,7 +28,6 @@ class Ranking extends AbstractViewModel
             }
             $products = new Product;
             $products->where(['id' => array_keys($ids)]);
-            $products->load(true, true);
             $products = $products->toArray();
             foreach ($ids as $id => $qty) {
                 foreach ($products as $key => $product) {

@@ -67,6 +67,7 @@ abstract class Collection extends AbstractCollection
                 throw $e;
             }
         }
+        return $this;
     }
 
     protected function loadFromCache($cacheKey)

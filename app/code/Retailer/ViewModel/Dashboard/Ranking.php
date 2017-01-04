@@ -21,14 +21,15 @@ class Ranking extends AbstractViewModel
                 ->limit($limit);
         $ids = [];
         $result = [];
-        $items = $items->load(true, true);
+        $items->load(true, true);
         if (count($items)) {
             foreach ($items->toArray() as $item) {
                 $ids[$item['product_id']] = $item['sum'];
             }
             $products = new Product;
             $products->where(['id' => array_keys($ids)]);
-            $products = $products->load(true, true)->toArray();
+            $products->load(true, true);
+            $products = $products->toArray();
             foreach ($ids as $id => $qty) {
                 foreach ($products as $key => $product) {
                     if ($product->offsetGet('id') == $id) {

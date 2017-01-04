@@ -57,7 +57,8 @@ class Rule extends Edit
             ]),
             'from_date' => [
                 'type' => 'date',
-                'label' => 'From Date'
+                'label' => 'From Date',
+                'comment' => 'You said that the current start time.'
             ],
             'to_date' => [
                 'type' => 'date',

@@ -21,8 +21,9 @@ class Ranking extends AbstractViewModel
                 ->limit($limit);
         $ids = [];
         $result = [];
-        if (count($ids)) {
-            foreach ($items->load(true, true)->toArray() as $item) {
+        $items = $items->load(true, true);
+        if (count($items)) {
+            foreach ($items->toArray() as $item) {
                 $ids[$item['product_id']] = $item['sum'];
             }
             $products = new Product;

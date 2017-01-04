@@ -6,6 +6,12 @@ $customer = $this->getCustomer();
     <div class="cell"><?php echo $this->getCurrency()->convert($customer->getBalance(), TRUE); ?></div>
 </div>
 <div class="input-box">
+    <label for="adjust-rewardpoints" class="control-label" aria-required="true"><?php echo $this->translate('Adjustment') ?></label>
+    <div class="cell">
+        <input type="number" name="adjust_rewardpoints" id="adjust-rewardpoints" class="form-control number" value="0" />
+    </div>
+</div>
+<div class="input-box">
     <div class="cell"></div>
     <div class="cell">
         <?php echo $this->getChild('balancedetail')->setVariable('customer', $this->getCustomer()) ?>

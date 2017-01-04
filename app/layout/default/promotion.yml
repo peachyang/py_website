@@ -17,7 +17,10 @@ admin_promotion_list:
                                 params: [{link:':ADMIN/promotion/',label:'Promotion'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/promotion/edit/',label:'Add New Promotion Rule'}]
+                                params: [{link:':ADMIN/promotion/edit/',label:'Add New Promotion Activities'}]
+                            -
+                                method: addAdditional
+                                params: [{link:':ADMIN/promotion/edit/',label:'Add New Coupons'}]
                     grid:
                         type: Seahinet\Admin\ViewModel\Promotion\Grid\Rule
 admin_promotion_edit:

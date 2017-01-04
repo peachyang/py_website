@@ -14,7 +14,7 @@ class Rule extends Grid
     protected $enableUrl = '';
     protected $disableUrl = '';
     protected $translateDomain = 'promotion';
-    protected $action = ['getEditAction', 'getDeleteAction', 'getEnableAction', 'getDisableAction'];
+    protected $action = ['getEditAction', 'getEnableAction', 'getDisableAction', 'getDeleteAction'];
 
     public function getEditAction($item)
     {

@@ -2,6 +2,7 @@
 $conditions = $this->getCollection();
 ?>
 <div class="condition tree" data-json='<?php echo json_encode($conditions) ?>'>
+    <span class="comment"><span class="fa fa-caret-up"></span><?php echo $this->translate('If no conditions are set, the coupon does not take effect on any commodity.'); ?></span>
     <span class="title">
         <input type="hidden" name="condition[identifier][0]" value="combination" />
         <?php

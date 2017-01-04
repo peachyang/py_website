@@ -379,6 +379,8 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .images .preview~.preview~.preview~.preview~.preview~.add-image,.retailer-account .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
 .customer-account .col-left .nav dl a:active{color: #007dc6}
 .customer-account .statement{margin-top: 30px}
+.customer-account .statement tbody a{color:#007dc6}
+.customer-account .statement tbody span{color: rgb(0, 128, 0)}
 .retailer-apply .page-content>.alert-warning,.retailer-processing .page-content>.alert-warning{border-radius:0;border-color:#fdd685;margin-top:10px;padding:6px 30px;font-size:12px;line-height:24px;color:#7c7c7c}
 .retailer-apply .page-content>.flow,.retailer-processing .page-content>.flow{padding:28px 0 28px 210px}
 .retailer-apply .page-content>.flow li,.retailer-processing .page-content>.flow li{counter-increment:item;display:block;border-top:1px dashed #dee1e8;float:left;width:33.33333333%;color:#7a7a7a}

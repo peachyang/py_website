@@ -25,7 +25,7 @@ class Rule extends Edit
 
     public function getTitle()
     {
-        return $this->getQuery('id') ? 'Edit Promotion Rule' : 'Add New Promotion Rule';
+        return $this->getQuery('id') ? 'Edit Promotion Activities' : 'Add New Promotion Activities';
     }
 
     protected function prepareElements($columns = [])
@@ -56,11 +56,11 @@ class Rule extends Edit
         'label' => 'Store'
             ]),
             'from_date' => [
-                'type' => 'datetime',
+                'type' => 'date',
                 'label' => 'From Date'
             ],
             'to_date' => [
-                'type' => 'datetime',
+                'type' => 'date',
                 'label' => 'To Date'
             ],
             'use_coupon' => [

@@ -9,7 +9,6 @@ $collection = $this->getStatement();
                 <th class="text-center"><?php echo $this->translate('Comment') ?></th>
                 <th class="text-center"><?php echo $this->translate('Status') ?></th>
                 <th class="text-center"><?php echo $this->translate('Date') ?></th>
-                <th class="text-center"><?php echo $this->translate('Operating'); ?></th>
             </tr>
         </thead>
         <?php if (count($collection)): ?>
@@ -20,24 +19,12 @@ $collection = $this->getStatement();
                         <td><?php echo $this->translate($balance['comment']) ?></td>
                         <td><?php echo $this->translate($balance['status'] ? 'Payment Success' : 'Pending Payment') ?></td>
                         <td><?php echo $balance['created_at'] ?></td>
-                        <td>
-                            <?php
-                            if ($balance['status'] != 0):
-                                ?>
-                            <span><?php echo $this->translate('Payment Success'); ?></span>
-                                <?php
-                            else:
-                                ?>
-                            <a href="<?php echo $this->getBaseUrl(''); ?>"><?php echo $this->translate('To Pay'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                <a href="<?php echo $this->getBaseUrl(''); ?>"><?php echo $this->translate('Cancel Recharge'); ?></a>
-                            <?php endif; ?>
-                        </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5" class="text-center">
+                    <td colspan="4" class="text-center">
                         <?php echo $this->getChild('pager')->setCollection($collection); ?>
                     </td>
                 </tr>
@@ -45,10 +32,9 @@ $collection = $this->getStatement();
         <?php else: ?>
             <tfoot>
                 <tr>
-                    <td colspan="5" class="text-center"><?php echo $this->translate('No data to display') ?></td>
+                    <td colspan="4" class="text-center"><?php echo $this->translate('No data to display') ?></td>
                 </tr>
             </tfoot>
         <?php endif; ?>
     </table>
 </div>
-<p class="text-right"><a href="<?php echo $this->getBaseUrl('balance/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a></p>

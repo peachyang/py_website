@@ -1,8 +1,8 @@
----
-system:
-    children:
-        -
-            link: 'config/rewardpoints/'
-            operation: 'Admin\Config::rewardpoints'
-            title: 'Reward Points'
-            priority: 80
+#---
+#system:
+#    children:
+#        -
+#            link: 'config/rewardpoints/'
+#            operation: 'Admin\Config::rewardpoints'
+#            title: 'Reward Points'
+#            priority: 80

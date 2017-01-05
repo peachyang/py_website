@@ -1,7 +1,16 @@
 ---
 promotion:
     icon: gift
-    link: promotion/
-    operation: 'Admin\Promotion::index'
     title: Promotion
     priority: 40
+    children: 
+        -
+            link: promotion/
+            operation: 'Admin\Promotion::index'
+            title: Preferential Promotion
+            priority: 0
+        -
+            link: config/rewardpoints/
+            operation: 'Admin\Config::rewardpoints'
+            title: Reward Points
+            priority: 10

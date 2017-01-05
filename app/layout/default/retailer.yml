@@ -127,7 +127,7 @@ retailer_account_dashboard:
                             stat:
                                 type: Seahinet\Retailer\ViewModel\Dashboard\Stat
                                 template: retailer/dashboard/stat
-                            rank:
+                            rank: 
                                 type: Seahinet\Retailer\ViewModel\Dashboard\Ranking
                                 template: retailer/dashboard/ranking
 retailer_apply:

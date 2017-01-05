@@ -26,9 +26,9 @@ class PromotionController extends AuthActionController
             $model = new Model;
             $model->load($id);
             $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Promotion Rule / Promotion');
+            $root->getChild('head')->setTitle('Edit Promotion Activities / Promotion');
         } else {
-            $root->getChild('head')->setTitle('Add New Promotion Rule / Promotion');
+            $root->getChild('head')->setTitle('Add New Promotion Activities / Promotion');
         }
         return $root;
     }

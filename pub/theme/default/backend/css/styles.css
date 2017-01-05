@@ -395,3 +395,4 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .template-tip:hover::after{z-index:9999}
 .admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}
 .admin.admin-email-template-list .modal-content{width:50%;margin: 140px  auto}
+.admin.admin-promotion-edit .edit .condition .comment{display:block;font-size: 12px;color: #555;line-height: 30px}

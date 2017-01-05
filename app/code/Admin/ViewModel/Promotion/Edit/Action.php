@@ -44,9 +44,9 @@ class Action extends Edit
             ],
             'is_fixed' => [
                 'type' => 'select',
-                'label' => 'Price Type',
+                'label' => 'Discount Calculation Method',
                 'required' => 'required',
-                'options' => [1 => 'Fixed', 0 => 'Percent']
+                'options' => [1 => 'Reduce the amount of fixed', 0 => 'Price is calculated in percentage']
             ],
             'price' => [
                 'type' => 'price',
@@ -68,7 +68,7 @@ class Action extends Edit
             ],
             'stop_processing' => [
                 'type' => 'select',
-                'label' => 'Stop Processing More Rules',
+                'label' => 'Stop low Priority',
                 'required' => 'required',
                 'options' => ['No', 'Yes']
             ]

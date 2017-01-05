@@ -70,12 +70,6 @@ abstract class ApiActionController extends AbstractController
      */
     public function authorizeBasic($code)
     {
-        list($username, $password) = explode(':', base64_decode($code));
-        $customer = new Customer;
-        if ($customer->valid($username, $password)) {
-            $this->authOptions = ['type' => 'BASIC'];
-            return true;
-        }
         return false;
     }
 
@@ -87,6 +81,15 @@ abstract class ApiActionController extends AbstractController
      */
     public function authorizeDigest($code)
     {
+        return false;
+    }
+
+    public function authorizeCsrf($code)
+    {
+        if (base64_decode($code) === $this->getContainer()->get('session')->getId()) {
+            $this->authOptions['type'] = 'CSRF';
+            return true;
+        }
         return false;
     }
 

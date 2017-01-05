@@ -14,7 +14,7 @@ class RestController extends ApiActionController
 
     public function __call($name, $arguments)
     {
-        if ($this->authOptions['type'] === 'BASIC') {
+        if ($this->authOptions['type'] === 'CSRF') {
             return $this->getCsrfKey();
         }
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));

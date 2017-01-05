@@ -62,13 +62,18 @@ class Segment implements IteratorAggregate, ArrayAccess
         return $this;
     }
 
-    public function getIterator()
+    public function toArray()
     {
         $iterator = [];
         foreach ($this->iterator as $key => $value) {
             $iterator[$key] = unserialize($value);
         }
-        return new ArrayIterator($iterator);
+        return $iterator;
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->toArray());
     }
 
     public function __get($name)

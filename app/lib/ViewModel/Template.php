@@ -14,6 +14,8 @@ use Seahinet\Lib\Session\Segment;
 class Template extends AbstractViewModel
 {
 
+    protected static $segmentInstances = [];
+
     public function isMobile()
     {
         return Bootstrap::isMobile();
@@ -89,9 +91,18 @@ class Template extends AbstractViewModel
         }
     }
 
+    /**
+     * Get session segment
+     * 
+     * @param string $name
+     * @return Segment
+     */
     public function getSegment($name)
     {
-        return new Segment($name);
+        if (!isset(self::$segmentInstances[$name])) {
+            self::$segmentInstances[$name] = new Segment($name);
+        }
+        return self::$segmentInstances[$name];
     }
 
 }

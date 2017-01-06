@@ -174,7 +174,6 @@ dl.options:after{content:" ";display:block;width:0;height:0;clear:both}
 dl.options dt{clear:left;float:left}
 dl.options dt:after{content:":"}
 dl.options dd{float:left;margin-left:4px}
-.pager{text-align:left}
 .pager li>.current{border:none;color:#a5a5a6}
 .pager li>span,.pager li>a{border-radius:1px;color:#a5a5a6}
 .pager .next>a,.pager .next>span{float:none}
@@ -246,13 +245,13 @@ dl.options dd{float:left;margin-left:4px}
 .customer-account .page-content .table .sort-by th,.retailer-account .page-content .table .sort-by th{padding:5px 20px}
 .customer-account .page-content .address-list,.retailer-account .page-content .address-list{border:1px solid #eee}
 .customer-account .page-content .table thead,.retailer-account .page-content .table thead{background:#f9f9f9;box-shadow: 0 0 0.22px 0 #ccc;border: 1px solid #e1e3ea}
-.customer-account .page-content .table .thead_body,.retailer-account .page-content .table .thead_body{border:1px solid #eee}
+.customer-account .page-content .table .thead_body,.retailer-account .page-content .table .thead_body{border:1px solid #ddd}
 .customer-account .page-content .table .thead_title,.retailer-account .page-content .table .thead_title{font-size:12px}
 .customer-account .page-content .color-blue,.retailer-account .page-content .color-blue{color:#007dc6;font-size:16px;font-weight:bold}
 .customer-account .page-content .table .thead_body .color-blue p,.retailer-account .page-content .table .thead_body .color-blue p{color:#333;font-size:12px;font-weight:normal}
 .customer-account .page-content .table thead th,.retailer-account .page-content .table thead th{padding:5px 10px}
 .customer-account .page-content .table .product-name,.retailer-account .page-content .table .product-name{font-size:13px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.customer-account .page-content .table td+[rowspan],.retailer-account .page-content .table td+[rowspan]{border-left:1px solid #eee}
+.customer-account .page-content .table td+[rowspan],.retailer-account .page-content .table td+[rowspan]{border-left:1px solid #ddd}
 .head_img{position:relative}
 .head_img img{position:absolute;left:0;top:0;z-index:2;}
 .head_img .bg1{width:100px;height:30px;position:absolute;left:0;bottom:0;background:#000;opacity:0.8;z-index:3;}

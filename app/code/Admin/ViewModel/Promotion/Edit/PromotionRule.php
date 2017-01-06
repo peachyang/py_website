@@ -6,7 +6,7 @@ use Seahinet\Admin\ViewModel\Edit;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
 
-class Rule extends Edit
+class PromotionRule extends Edit
 {
 
     public function getSaveUrl()
@@ -47,7 +47,7 @@ class Rule extends Edit
             'description' => [
                 'type' => 'textarea',
                 'label' => 'Condition',
-                'reqiored' => 'required',
+                'required' => 'required',
                 'comment' => 'Used to describe current conditions and the scope of the use of coupons, such as: full 100 minus 30, clothing products available.'
             ],
             'store_id' => ($user->getStore() ? [
@@ -70,17 +70,7 @@ class Rule extends Edit
             'use_coupon' => [
                 'type' => 'hidden',
                 'required' => 'required',
-                'value' => 1
-            ],
-            'uses_per_coupon' => [
-                'type' => 'tel',
-                'label' => 'Uses per Coupon',
-                'comment' => 'eg. In 3, the whole site only the top 3 users can use this coupon, or fill in the blank 0 unlimited use.'
-            ],
-            'uses_per_customer' => [
-                'type' => 'tel',
-                'label' => 'Uses per Customer',
-                'comment' => 'eg. In 3, each user can use coupon 3 times, or 0 blank fill said does not limit the use number of times.'
+                'value' => 0
             ],
             'sort_order' => [
                 'type' => 'tel',

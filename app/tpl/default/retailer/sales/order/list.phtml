@@ -20,9 +20,17 @@ $filters = $this->getFilters();
 <table class="table orders-list">
     <tbody>
         <?php
-        foreach ($collection as $order) {
-            echo $this->renderItem($order);
-        }
+        if (count($collection) != 0):
+            foreach ($collection as $order) {
+                echo $this->renderItem($order);
+            }
+        else:
+            ?>
+            <tr>
+                <td colspan="9" class="text-center"><?php echo $this->translate('There are no orders in your store with the condition.') ?></td>
+            </tr>
+        <?php
+        endif;
         ?>
     </tbody>
     <thead>
@@ -39,11 +47,8 @@ $filters = $this->getFilters();
         </tr>
     </thead>
     <tfoot>
-        <tr class="visible-empty">
-            <td colspan="8"><?php echo $this->translate('There are no orders in your store with the condition.') ?></td>
-        </tr>
         <tr class="hidden-empty">
-            <td colspan="8">
+            <td colspan="9" class="text-center">
                 <?php echo count($collection) ? $this->getChild('pager')->setCollection($collection) : '' ?>
             </td>
         </tr>

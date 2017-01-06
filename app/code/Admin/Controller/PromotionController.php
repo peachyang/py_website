@@ -21,14 +21,27 @@ class PromotionController extends AuthActionController
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_promotion_edit');
         if ($id = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($id);
-            $root->getChild('edit', true)->setVariable('model', $model);
-            $root->getChild('head')->setTitle('Edit Promotion Activities / Promotion');
+            if ((int) $model['use_coupon'] === 0) {
+                $root = $this->getLayout('admin_promotion_edit_1');
+                $root->getChild('edit', true)->setVariable('model', $model);
+                $root->getChild('head')->setTitle('Edit Promotion Activities / Promotion');
+            } else {
+                $root = $this->getLayout('admin_promotion_edit_2');
+                $root->getChild('edit', true)->setVariable('model', $model);
+                $root->getChild('head')->setTitle('Edit Coupons / Promotion');
+            }
         } else {
-            $root->getChild('head')->setTitle('Add New Promotion Activities / Promotion');
+            if($this->getRequest()->getQuery('using')){
+                $root = $this->getLayout('admin_promotion_edit_2');
+                $root->getChild('head')->setTitle('Add New Coupons / Promotion');
+            }
+            else{
+                $root = $this->getLayout('admin_promotion_edit_1');
+                $root->getChild('head')->setTitle('Add New Promotion Activities / Promotion');
+            }
         }
         return $root;
     }
@@ -51,7 +64,7 @@ class PromotionController extends AuthActionController
                         $model->setData('store_id', null);
                     }
                     if (!isset($data['from_date']) || strtotime($data['from_date']) === false) {
-                        $model->setData('from_date', null);
+                        $model->setData('from_date', date('Y-m-d H:i:s'));
                     }
                     if (!isset($data['to_date']) || strtotime($data['to_date']) === false) {
                         $model->setData('to_date', null);

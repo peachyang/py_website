@@ -11,20 +11,44 @@ $parent = $this->getVariable('parent');
         </label>
     <?php endif ?>
     <div class="cell">
-        <?php foreach ($item['options'] as $value => $label): ?>
-            <input type="radio" name="<?php echo $key ?>" id="<?php echo $id, '-', $value ?>"<?php
-            if (!isset($item['attrs']['class'])):
-                ?> class="<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
-                       if (isset($item['class'])) {
-                           echo $item['class'];
+        <?php
+        foreach ($item['options'] as $value => $label):
+            if (is_array($label)):
+                ?>
+                <div class="group">
+                    <h6><?php echo $this->translate($value) ?></h6>
+                    <?php foreach ($label as $v => $l): ?>
+                        <input type="radio" name="<?php echo $key ?>" id="<?php echo $id, '-', $v ?>"<?php
+                        if (!isset($item['attrs']['class'])):
+                            ?> class="<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                                   if (isset($item['class'])) {
+                                       echo $item['class'];
+                                   }
+                                   ?>"<?php endif ?> value="<?php echo $v ?>"<?php if (isset($item['value']) && (string) $v === $item['value']): ?> checked="checked"<?php endif ?> <?php
+                               if (isset($item['attrs'])) {
+                                   echo $parent->getAttrs($item['attrs']);
+                               }
+                               ?>/>
+                        <label for="<?php echo $id, '-', $v ?>"><?php echo $l ?></label>
+                    <?php endforeach ?>
+                </div>
+            <?php else: ?>
+                <input type="radio" name="<?php echo $key ?>" id="<?php echo $id, '-', $value ?>"<?php
+                if (!isset($item['attrs']['class'])):
+                    ?> class="<?php if (isset($item['required'])): ?> required<?php endif ?> <?php
+                           if (isset($item['class'])) {
+                               echo $item['class'];
+                           }
+                           ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && (string) $value === $item['value']): ?> checked="checked"<?php endif ?> <?php
+                       if (isset($item['attrs'])) {
+                           echo $parent->getAttrs($item['attrs']);
                        }
-                       ?>"<?php endif ?> value="<?php echo $value ?>"<?php if (isset($item['value']) && (string) $value === $item['value']): ?> checked="checked"<?php endif ?> <?php
-                   if (isset($item['attrs'])) {
-                       echo $parent->getAttrs($item['attrs']);
-                   }
-                   ?>/>
-            <label for="<?php echo $id, '-', $value ?>"><?php echo $label ?></label>
-        <?php endforeach ?>
+                       ?>/>
+                <label for="<?php echo $id, '-', $value ?>"><?php echo $label ?></label>
+            <?php
+            endif;
+        endforeach;
+        ?>
         <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

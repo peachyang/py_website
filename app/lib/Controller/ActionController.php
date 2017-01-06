@@ -200,7 +200,7 @@ abstract class ActionController extends AbstractController
     {
         $result = ['error' => 0, 'message' => []];
         if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
-            $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.').$this->csrf->getValue(), 'level' => 'danger'];
+            $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
             $result['error'] = 1;
         }
         foreach ($required as $item) {

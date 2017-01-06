@@ -149,7 +149,12 @@ class Attribute extends AbstractModel
                         }
                     }
                 }
-                $tableGateway->delete((new Where)->equalTo('attribute_id', $this->getId())->notIn('id', array_keys($existed)));
+                $where = new Where;
+                $where->equalTo('attribute_id', $this->getId());
+                if ($existed) {
+                    $where->notIn('id', array_keys($existed));
+                }
+                $tableGateway->delete($where);
                 $labelGateway = $this->getTableGateway('eav_attribute_option_label');
                 foreach ($existed as $id => $option) {
                     foreach ($option as $languageId => $label) {

@@ -40,7 +40,7 @@ class Action extends Edit
                 'type' => 'select',
                 'label' => 'Apply to',
                 'required' => 'required',
-                'options' => ['Whole Cart', 'Item(s) Only']
+                'options' => ['Include Freight and Taxes', 'Only Amount of Subtotals']
             ],
             'is_fixed' => [
                 'type' => 'select',
@@ -50,27 +50,22 @@ class Action extends Edit
             ],
             'price' => [
                 'type' => 'price',
-                'label' => 'Discount for Each Product',
+                'label' => 'Discount Intensity',
                 'required' => 'required'
-            ],
-            'qty' => [
-                'type' => 'number',
-                'label' => 'Maximum Qty Discount is Applied To',
-                'attrs' => [
-                    'min' => 0
-                ]
             ],
             'free_shipping' => [
                 'type' => 'select',
                 'label' => 'Free Shipping',
                 'required' => 'required',
-                'options' => ['No', 'Yes']
+                'options' => ['No', 'Yes'],
+                'comment' => 'Set coupon on the basis of whether price concessions to avoid shipping discount, amount set to 0 after the opening of item can generate an independent free shipping coupons.'
             ],
             'stop_processing' => [
                 'type' => 'select',
                 'label' => 'Stop low Priority',
                 'required' => 'required',
-                'options' => ['No', 'Yes']
+                'options' => ['No', 'Yes'],
+                'comment' => 'This option is, then the priority is less than this privilege can not be used again, the same priority is to give up a random preference, open this feature, please set the priority of the coupon.'
             ]
         ];
         return parent::prepareElements($columns);

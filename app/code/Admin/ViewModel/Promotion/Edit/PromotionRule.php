@@ -42,21 +42,21 @@ class PromotionRule extends Edit
                 'type' => 'text',
                 'label' => 'Label',
                 'required' => 'required',
-                'comment' => 'Set coupon identification label.'
+                'comment' => 'Set promotional identification label.'
             ],
             'description' => [
                 'type' => 'textarea',
                 'label' => 'Condition',
                 'required' => 'required',
-                'comment' => 'Used to describe current conditions and the scope of the use of coupons, such as: full 100 minus 30, clothing products available.'
+                'comment' => 'Used to describe current conditions and the scope of the use of promotion, such as: full 100 minus 30, clothing products available.'
             ],
             'store_id' => ($user->getStore() ? [
         'type' => 'hidden'
             ] : [
-        'type' => 'multiselect',
+        'type' => 'checkbox',
         'options' => (new Store)->getSourceArray(),
         'label' => 'AvailableIn',
-        'comment' => 'Please select the range to use coupon.'
+        'comment' => 'Please select the range to use promotion.'
             ]),
             'from_date' => [
                 'type' => 'date',

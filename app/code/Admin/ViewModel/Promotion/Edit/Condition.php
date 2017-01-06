@@ -2,10 +2,10 @@
 
 namespace Seahinet\Admin\ViewModel\Promotion\Edit;
 
-use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Admin\ViewModel\Edit;
 use Seahinet\Promotion\Model\Collection\Condition as Collection;
 
-class Condition extends Template
+class Condition extends Edit
 {
 
     public function getOptions($source)
@@ -32,6 +32,21 @@ class Condition extends Template
             return $result;
         }
         return [];
+    }
+
+    protected function prepareElements($columns = [])
+    {
+        $columns = [
+            'qty' => [
+                'type' => 'number',
+                'label' => 'Maximum Qty Discount is Applied To',
+                'attrs' => [
+                    'min' => 0
+                ],
+                'comment' => 'Effective only when effective,Fill in the blank, fill 0 or 1 means that all meet the conditions of the goods only a discount, recommended to fill 1; Add new promotion Activity default is 1'
+            ]
+        ];
+        return parent::prepareElements($columns);
     }
 
 }

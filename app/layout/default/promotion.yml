@@ -55,7 +55,7 @@ admin_promotion_edit_1:
                                         method: addTab
                                         params:
                                             - condition
-                                            - Condition
+                                            - Entry into Force Conditions
                                             - 10
                                     -
                                         method: addTab
@@ -63,18 +63,6 @@ admin_promotion_edit_1:
                                             - action
                                             - Action
                                             - 20
-#                                    -
-#                                        method: addTab
-#                                        params:
-#                                            - coupon
-#                                            - Coupon
-#                                            - 30
-#                                    -
-#                                        method: addTab
-#                                        params:
-#                                            - coupon_statement
-#                                            - Coupon Statement
-#                                            - 31
                                 children:
                                     condition:
                                         type: Seahinet\Admin\ViewModel\Promotion\Edit\Condition
@@ -135,12 +123,6 @@ admin_promotion_edit_1:
                                             product_type:
                                                 type: Seahinet\Admin\ViewModel\Promotion\Edit\Action
                                                 template: admin/promotion/condition/product_type
-#                                    coupon:
-#                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Coupon
-#                                        template: admin/promotion/coupon
-#                                    coupon_statement:
-#                                        type: Seahinet\Admin\ViewModel\Promotion\Edit\Statement
-#                                        template: admin/promotion/statement
                                         children:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
@@ -176,7 +158,7 @@ admin_promotion_edit_2:
                                         method: addTab
                                         params:
                                             - condition
-                                            - Condition
+                                            - Entry into Force Conditions
                                             - 10
                                     -
                                         method: addTab

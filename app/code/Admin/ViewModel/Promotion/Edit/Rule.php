@@ -53,7 +53,7 @@ class Rule extends Edit
             'store_id' => ($user->getStore() ? [
         'type' => 'hidden'
             ] : [
-        'type' => 'multiselect',
+        'type' => 'checkbox',
         'options' => (new Store)->getSourceArray(),
         'label' => 'AvailableIn',
         'comment' => 'Please select the range to use coupon.'
@@ -75,11 +75,13 @@ class Rule extends Edit
             'uses_per_coupon' => [
                 'type' => 'tel',
                 'label' => 'Uses per Coupon',
+                'value' => 1,
                 'comment' => 'eg. In 3, the whole site only the top 3 users can use this coupon, or fill in the blank 0 unlimited use.'
             ],
             'uses_per_customer' => [
                 'type' => 'tel',
                 'label' => 'Uses per Customer',
+                'value' => 1,
                 'comment' => 'eg. In 3, each user can use coupon 3 times, or 0 blank fill said does not limit the use number of times.'
             ],
             'sort_order' => [

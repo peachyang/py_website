@@ -12,7 +12,9 @@
         $('#attribute-options').on('click', 'a.add', function () {
             var o = $('<div class="template"></div>');
             $(o).html($('#attribute-options .template').first().html());
-            $(o).find('input').val('');
+            $(o).find('input').attr('name', function () {
+                return $(this).attr('name').replace(/\[\-\d+\]$/, '[]');
+            }).val('');
             $(this).before(o);
             return false;
         }).on('click.seahinet', 'a.delete', function () {
@@ -44,7 +46,7 @@
             };
             $('#unapplied-attribute').sortable(sortParams);
             $('#attribute-groups .group .content').sortable(sortParams).on('click.seahinet', 'a.remove', function () {
-                $(this).siblings('input').attr({'disabled':'disabled','name':'attributes[]'});
+                $(this).siblings('input').attr({'disabled': 'disabled', 'name': 'attributes[]'});
                 $(this).parent('.item').appendTo('#unapplied-attribute');
             });
             $('#attribute-groups').on('click.seahinet', '.group>.remove', function () {

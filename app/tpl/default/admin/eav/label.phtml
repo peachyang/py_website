@@ -42,7 +42,7 @@ $options = $model->getOptions();
                             <?php echo $name ?>
                         </label>
                         <div class="cell">
-                            <input type="text" name="option[<?php echo $id ?>][]" class="form-control" value="<?php echo $option[$id] ?? '' ?>"/>
+                            <input type="text" name="option[<?php echo $id ?>][<?php echo '-', $key ?>]" class="form-control" value="<?php echo $option[$id] ?? '' ?>"/>
                         </div>
                         <?php if ($j++ === 0): ?>
                             <a href="javascript:void(0);" class="delete">

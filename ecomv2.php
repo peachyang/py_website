@@ -1216,7 +1216,7 @@ INSERT INTO `eav_attribute` VALUES
 (35,4,'special_price','decimal','price','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (36,4,'special_price_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (37,4,'special_price_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(38,4,'taxable','varchar','select','',0,'',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
+(38,4,'taxable','varchar','bool','',0,'',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
 (39,4,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (40,4,'meta_description','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (41,4,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),

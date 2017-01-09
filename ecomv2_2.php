@@ -804,4 +804,20 @@ CREATE TABLE IF NOT EXISTS `log_rma` (
     CONSTRAINT FK_LOG_RMA_RMA_ID_SALES_RMA_ID FOREIGN KEY (`rma_id`) REFERENCES `sales_rma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `livechat_session` (
+    `id` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `info` TEXT,
+    `status` BOOLEAN,
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `livechat_record` (
+    `from` VARCHAR(255) NOT NULL,
+    `to` VARCHAR(255) NOT NULL,
+    `type` VARCHAR(50) NOT NULL,
+    `message` BLOB,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 SET FOREIGN_KEY_CHECKS=1;

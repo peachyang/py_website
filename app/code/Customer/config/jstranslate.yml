@@ -38,3 +38,7 @@ admin_address_attribute_list:
 customer_account_address:
     - Are you sure to delete this record?
     - Are you sure to delete these records?
+customer_wishlist: 
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+

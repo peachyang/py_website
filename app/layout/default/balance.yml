@@ -47,8 +47,7 @@ balance_statement:
                         template: balance/balancedetail
                         children:
                             pager:
-                                type: Seahinet\Lib\ViewModel\Pager    
-
+                                type: Seahinet\Lib\ViewModel\Pager 
 balance_statement_recharge:  
     update: customer_account
     root:
@@ -59,8 +58,35 @@ balance_statement_recharge:
                         method: setTitle
                         params: Recharge
             content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Instant Recharge
                 children: 
                     main:  
                         type: Seahinet\Balance\ViewModel\Recharge
                         template: balance/recharge
+balance_statement_recharge: 
+    update: customer_account
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Recharge Payment
+            content:
+                action:
+                    -
+                        method: setVariable
+                        params:
+                            - title
+                            - Instant Recharge
+                children: 
+                    main:  
+                        type: Seahinet\Balance\ViewModel\Recharge
+                        template: balance/payment
+             
                        

@@ -26,7 +26,7 @@ class Router extends Route
         } else {
             return false;
         }
-        if ($isJson && $path === 'catalog/category/nav') {
+        if ($isJson && $path === 'catalog/nav') {
             return new RouteMatch([
                     'controller' => 'Seahinet\\Catalog\\Controller\\CategoryController',
                     'action' => 'nav',

@@ -19,8 +19,9 @@ class StatementController extends AuthActionController
         return $this->getLayout('balance_statement_recharge');
     }
 
-    public function rechargePaymentActon(){
-    return $this->getLayout('balance_recharge_payment');
+    public function rechargePaymentActon()
+    {
+        return $this->getLayout('balance_recharge_payment');
     }
 
     public function CancelAction()
@@ -45,6 +46,7 @@ class StatementController extends AuthActionController
 
     public function SaveAction()
     {
+        return $this->rechargePaymentActon();
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -53,12 +55,11 @@ class StatementController extends AuthActionController
             $result = $this->validateForm($data, ['integral']);
             if (!empty($data['integral'])) {
                 return $this->rechargePaymentActon();
-            }
-            else{
+            } else {
                 return 0;
             }
         }
-        return 1;
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'balance/statement/', 'customer');
     }
 
 }

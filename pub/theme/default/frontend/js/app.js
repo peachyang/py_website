@@ -21,37 +21,41 @@
         };
         window.responseHandler = function (json) {
             var o = this;
-            if (typeof json === 'string') {
-                json = eval('(' + json + ')');
-            }
-            if (json.cookie && $.cookie) {
-                $.cookie(json.cookie.key, json.cookie.value, json.cookie);
-            }
-            if (json.redirect) {
-                location.href = json.redirect;
-                return;
-            } else if (json.reload) {
-                location.reload();
-                return;
-            } else if (json.message.length) {
-                addMessages(json.message);
-            }
-            if (json.removeLine) {
-                if (typeof json.removeLine == 'object') {
-                    var t = $(o).parents('table,ul,ol,dl').first();
-                    $(json.removeLine).each(function () {
-                        $(t).find('[data-id=' + this + ']').remove();
-                    });
-                } else {
-                    if ($(o).is('menu a')) {
-                        var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
+            try {
+                if (typeof json === 'string') {
+                    json = eval('(' + json + ')');
+                }
+                if (json.cookie && $.cookie) {
+                    $.cookie(json.cookie.key, json.cookie.value, json.cookie);
+                }
+                if (json.redirect) {
+                    location.href = json.redirect;
+                    return;
+                } else if (json.reload) {
+                    location.reload();
+                    return;
+                } else if (json.message.length) {
+                    addMessages(json.message);
+                }
+                if (json.removeLine) {
+                    if (typeof json.removeLine == 'object') {
+                        var t = $(o).parents('table,ul,ol,dl').first();
+                        $(json.removeLine).each(function () {
+                            $(t).find('[data-id=' + this + ']').remove();
+                        });
                     } else {
-                        var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
-                    }
-                    if ($(t).is('tr,li,dt,dd')) {
-                        $(t).remove();
+                        if ($(o).is('menu a')) {
+                            var t = $('.grid [href="' + $(o).attr('href') + '"][data-params="' + $(o).data('params') + '"]').parentsUntil('tbody,ul,ol,dl').last();
+                        } else {
+                            var t = $(o).parentsUntil('tbody,ul,ol,dl').last();
+                        }
+                        if ($(t).is('tr,li,dt,dd')) {
+                            $(t).remove();
+                        }
                     }
                 }
+            } catch (e) {
+
             }
             $(o).trigger('afterajax.seahinet', json);
         };

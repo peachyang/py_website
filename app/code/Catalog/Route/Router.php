@@ -26,6 +26,13 @@ class Router extends Route
         } else {
             return false;
         }
+        if ($isJson && $path === 'catalog/category/nav') {
+            return new RouteMatch([
+                    'controller' => 'Seahinet\\Catalog\\Controller\\CategoryController',
+                    'action' => 'nav',
+                    'is_json' => $isJson
+                        ], $request);
+        }
         if ($result = $this->getContainer()->get('indexer')->select('catalog_url', Bootstrap::getLanguage()->getId(), ['path' => rawurldecode($path)])) {
             if ($result[0]['product_id']) {
                 return new RouteMatch([

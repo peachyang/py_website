@@ -39,7 +39,8 @@ $flag = true;
                 <div class="col-xs-12 date"><?php if ($coupon['to_date']): ?>
                         <span class="label"><?php echo $this->translate('Available Date') ?>:</span>
                         <span><?php echo date('Y.m.d', strtotime($coupon['to_date'])) ?></span>
-                    <?php endif ?></div>
+                    <?php endif ?>
+                </div>
             </div>
         </div>
         <?php

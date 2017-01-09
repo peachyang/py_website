@@ -19,7 +19,7 @@
 "Discount Intensity","折扣力度"
 "Edit Promotion Activities","编辑促销活动"
 "Edit Coupons","编辑优惠券"
-"Effective only when effective,Fill in the blank, fill 0 or 1 means that all meet the conditions of the goods only a discount, recommended to fill 1; Add new promotion Activity default is 1","仅有生效条件时有效,留空、填0或填1表示所有满足条件的商品只优惠一件，推荐填1；新建促销活动时默认是1"
+"Effective only when effective,Fill in the blank, fill 0 or 1 means that all meet the conditions of the goods only a discount, recommended to fill 1","仅有生效条件时有效,留空、填0或填1表示所有满足条件的商品只优惠1件，推荐填1"
 "eg. In 3, the whole site only the top 3 users can use this coupon, or fill in the blank 0 unlimited use.","例如：填写3，则全站仅前三名用户可使用此优惠券，留空或填0表示不限使用次数"
 "eg. In 3, each user can use coupon 3 times, or 0 blank fill said does not limit the use number of times.","例如：填写3，则每个用户都可使用此优惠券3次，留空或填0表示不限使用次数"
 "Eligible","满足"

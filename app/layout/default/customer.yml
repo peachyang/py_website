@@ -32,13 +32,13 @@ customer_account:
                             -
                                 method: addLink
                                 params: [{link:'customer/account/address/',label:'Address Book',group:'Account Infomation'}]
-#                            -                                   
-#                                method: addGroup
-#                                params: [{label:'Asset',priority:10,icon:'money'}]
-#                            -
-#                                method: addLink
-#                                params: [{link:'customer/account/',label:'Balance',group:'Asset'}]
-#                            -
+                            -                                   
+                                method: addGroup
+                                params: [{label:'Asset Center',priority:10,icon:'money'}]
+                            -
+                                method: addLink
+                                params: [{link:'balance/statement/',label:'Balance',group:'Asset Center'}]
+                            -
 #                                method: addLink
 #                                params: [{link:'customer/account/',label:'Privilege',group:'Asset'}]
 #                            -

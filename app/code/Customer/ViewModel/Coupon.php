@@ -16,10 +16,7 @@ class Coupon extends Account
         $result = [];
         foreach ($collection as $rule) {
             if ($this->match($rule->getCondition())) {
-                $rule['store_id'] = [$rule['store_id']];
                 $result[$rule->getId()] = $rule;
-            } else {
-                $result[$rule->getId()]['store_id'][] = $rule['store_id'];
             }
         }
         return $result;

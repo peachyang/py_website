@@ -172,7 +172,7 @@ class Rule extends AbstractModel
     public function getStores()
     {
         $result = [];
-        foreach ($this->storage['store_id'] as $store) {
+        foreach ((array) $this->storage['store_id'] as $store) {
             $result[] = (new Store)->load($store);
         }
         return $result;

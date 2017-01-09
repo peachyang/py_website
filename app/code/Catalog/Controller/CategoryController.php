@@ -3,6 +3,7 @@
 namespace Seahinet\Catalog\Controller;
 
 use Seahinet\Catalog\Model\Category;
+use Seahinet\Catalog\Model\Collection\Category as Collection;
 use Seahinet\Api\Model\Collection\Rest\Attribute;
 use Seahinet\Lib\Controller\ActionController;
 use Zend\Db\Sql\Expression;
@@ -113,6 +114,52 @@ class CategoryController extends ActionController
             $condition['status'] = 1;
         });
         return $collection;
+    }
+
+    public function navAction()
+    {
+        if ($this->getOption('is_json')) {
+            $result = [];
+            $columns = new Attribute;
+            $columns->columns(['attributes'])
+                    ->where([
+                        'role_id' => 0,
+                        'operation' => 1,
+                        'resource' => Collection::ENTITY_TYPE
+            ]);
+            $columns->load(true, true);
+            if (count($columns)) {
+                $columns = explode(',', $columns[0]['attributes']);
+                $collection = new Collection;
+                $collection->columns(array_merge(['id', 'parent_id', 'sort_order'], $columns))
+                        ->where(['include_in_menu' => 1])
+                        ->order('sort_order ASC');
+                $tree = [];
+                $collection->walk(function($item) use (&$tree) {
+                    if (!isset($tree[(int) $item['parent_id']])) {
+                        $tree[(int) $item['parent_id']] = [];
+                    }
+                    $tree[(int) $item['parent_id']][] = $item;
+                });
+                if (isset($tree[0])) {
+                    $result = $this->generateTree(0, $tree);
+                }
+            }
+            return $result;
+        }
+        return $this->notFoundAction();
+    }
+
+    protected function generateTree($pid, $tree)
+    {
+        $children = [];
+        foreach ($tree[$pid] as $child) {
+            if (isset($tree[$child['id']])) {
+                $child['children_categories'] = $this->generateTree($child['id'], $tree);
+            }
+            $children[] = $child->toArray();
+        }
+        return $children;
     }
 
 }

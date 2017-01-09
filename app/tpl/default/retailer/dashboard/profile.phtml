@@ -39,6 +39,9 @@ $ratings = $retailer->getRatings();
                 <li>
                     <a href="<?php echo $this->getBaseUrl('retailer/store/view/') ?>"><?php echo $this->translate('View Store') ?></a>
                 </li>
+                <li>
+                    <a href="<?php echo $this->getBaseUrl('balance/statement/') ?>"><?php echo $this->translate('Account Balance'); ?></a>
+                </li>
             </ul>
             <div class="transaction">
                 <span class="label"><?php echo $this->translate('Transaction') ?>:</span>

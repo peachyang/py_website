@@ -43,7 +43,7 @@ class Condition extends Edit
                 'attrs' => [
                     'min' => 0
                 ],
-                'comment' => 'Effective only when effective,Fill in the blank, fill 0 or 1 means that all meet the conditions of the goods only a discount, recommended to fill 1; Add new promotion Activity default is 1'
+                'comment' => 'Effective only when effective,Fill in the blank, fill 0 or 1 means that all meet the conditions of the goods only a discount, recommended to fill 1'
             ]
         ];
         return parent::prepareElements($columns);

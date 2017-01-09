@@ -24,7 +24,8 @@ class Coupon extends Template
         $result = [];
         $storeId = $this->getVariable('store');
         foreach ($rules as $rule) {
-            if ((empty($rule->offsetGet('store_id')) || in_array($storeId, (array) $rule->offsetGet('store_id'))) &&
+            if ((#empty($rule->offsetGet('store_id')) ||
+                    in_array($storeId, (array) $rule->offsetGet('store_id'))) &&
                     (empty($rule->offsetGet('from_date')) || $time >= strtotime($rule->offsetGet('from_date'))) &&
                     (empty($rule->offsetGet('to_date')) || $time <= strtotime($rule->offsetGet('to_date'))) &&
                     (empty($condition = $rule->getCondition()) ||

@@ -19,7 +19,8 @@ class Coupon extends Template
     {
         $time = time();
         $rules = new Rule;
-        $rules->where(['use_coupon' => 1, 'status' => 1])
+        $rules->withStore(true)
+                ->where(['use_coupon' => 1, 'status' => 1])
                 ->order('sort_order');
         $result = [];
         $storeId = $this->getVariable('store');

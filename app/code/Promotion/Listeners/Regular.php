@@ -33,7 +33,8 @@ class Regular implements ListenerInterface
         $result = 0;
         $time = time();
         $rules = new Rule;
-        $rules->where(['status' => 1])
+        $rules->withStore(true)
+                ->where(['status' => 1])
                 ->order('sort_order');
         $this->discount = -$this->model->offsetGet('base_discount');
         foreach ($this->items as $storeId => $i) {

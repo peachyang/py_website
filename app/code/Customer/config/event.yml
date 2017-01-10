@@ -23,3 +23,23 @@ customer.balance.calc:
     -
         listener: [\Seahinet\Customer\Listeners\Balance, calc]
         priority: 10
+customer.balance.save: 
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance, save]
+        priority: 10
+customer.balance.save.after:
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance, afterSaveRecharge]
+        priority: 10
+frontend.customer.balance.save.before:
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance,beforeSaveRecharge]
+        priority: 10
+frontend.customer.balance.save.after:
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance,afterSaveRecharge]
+        priority: 10
+backend.customer.save.after:
+    -
+        listener: [\Seahinet\Customer\Listeners\Balance, afterSaveBackendCustomer]
+        priority: 10

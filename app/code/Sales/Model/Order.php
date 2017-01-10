@@ -361,7 +361,7 @@ class Order extends AbstractModel
 
     public function canShip()
     {
-        if (in_array($this->getPhase()->offsetGet('code'), ['complete', 'canceled', 'closed', 'holded'])) {
+        if ($this->storage['is_virtual'] || in_array($this->getPhase()->offsetGet('code'), ['complete', 'canceled', 'closed', 'holded'])) {
             return false;
         }
         $shipments = $this->getShipment();

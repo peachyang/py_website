@@ -8,7 +8,7 @@ $default = (int) $product->offsetGet('default_image');
         <div class="carousel-inner" role="listbox">
             <?php
             $default = (int) $product->offsetGet('default_image');
-            foreach ($images as $key => $image):
+            foreach ($images as $image):
                 ?>
                 <div class="item<?php if (!$default || (int) $image['id'] === $default): ?> active<?php
                     $default = true;
@@ -18,23 +18,24 @@ $default = (int) $product->offsetGet('default_image');
                     echo $this->getResourceUrl('image/resized/345x/'),
                     $image['src']
                     ?>" data-bttrlazyloading-md-src="<?php
-                    echo $this->getResourceUrl('image/resized/278x/'),
-                    $image['src']
-                    ?>" data-bttrlazyloading-sm-src="<?php
-                    echo $this->getResourceUrl('image/resized/205x/'),
-                    $image['src']
-                    ?>" data-bttrlazyloading-xs-src="<?php
-                    echo $this->getResourceUrl('image/resized/704x/'),
-                    $image['src']
-                    ?>" alt="<?php echo $product->offsetGet('name') ?>">
+                         echo $this->getResourceUrl('image/resized/278x/'),
+                         $image['src']
+                         ?>" data-bttrlazyloading-sm-src="<?php
+                         echo $this->getResourceUrl('image/resized/205x/'),
+                         $image['src']
+                         ?>" data-bttrlazyloading-xs-src="<?php
+                         echo $this->getResourceUrl('image/resized/704x/'),
+                         $image['src']
+                         ?>" alt="<?php echo $product->offsetGet('name') ?>">
                 </div>
             <?php endforeach ?>
         </div>
         <ol class="carousel-indicators hidden-xs">
             <?php
-            foreach ($images as $key => $image):
+            $i = 0;
+            foreach ($images as $image):
                 ?>
-                <li data-target="#product-media" data-slide-to="<?php echo $key ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php
+                <li data-target="#product-media" data-slide-to="<?php echo $i++ ?>"<?php if (!$default || (int) $image['id'] === $default): ?> class="active"<?php
                     $default = true;
                 endif;
                 ?>>

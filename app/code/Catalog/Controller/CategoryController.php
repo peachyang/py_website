@@ -132,7 +132,7 @@ class CategoryController extends ActionController
                 $columns = explode(',', $columns[0]['attributes']);
                 $collection = new Collection;
                 $collection->columns(array_merge(['id', 'parent_id', 'sort_order'], $columns))
-                        ->where(['include_in_menu' => 1])
+                        ->where(['include_in_menu' => 1, 'parent_id' => null], 'OR')
                         ->order('sort_order ASC');
                 $tree = [];
                 $collection->walk(function($item) use (&$tree) {

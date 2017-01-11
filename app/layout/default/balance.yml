@@ -68,7 +68,7 @@ balance_statement_recharge:
                     main:  
                         type: Seahinet\Balance\ViewModel\Recharge
                         template: balance/recharge
-balance_statement_recharge: 
+balance_recharge_payment: 
     update: customer_account
     root:
         children:

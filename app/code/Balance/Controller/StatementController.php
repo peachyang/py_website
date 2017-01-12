@@ -6,6 +6,7 @@ use Exception;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Controller\AuthActionController;
 use Seahinet\Customer\Model\Balance as Model;
+use Seahinet\Sales\Model\Cart;
 use Seahinet\Lib\Session\Segment;
 
 class StatementController extends AuthActionController
@@ -57,23 +58,19 @@ class StatementController extends AuthActionController
                 if ($result['error'] === 1) {
                     return $this->response($result, $product->getUrl(), 'checkout');
                 }
-                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], $data['sku'] ?? '');
+                //$cart = new Cart;
+                //Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], $data['sku'] ?? '');
+                //return $this->response($result, 'checkout/order/', 'checkout');
                 $result['reload'] = 1;
-                $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
-            } catch (ClickFarming $e) {
-                $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('Click farming check failed.'), 'level' => 'danger'];
-            } catch (OutOfStock $e) {
-                $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('"%s" has been added.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
             } catch (Exception $e) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('Prohibit the purchase of goods sold.'), 'level' => 'danger'];
                 $this->getContainer()->get('log')->logException($e);
             }
         }
-        return $this->response($result, 'checkout/cart/', 'checkout');
-        return $this->response($result ?? ['error' => 0, 'message' => []], 'balance/statement/', 'balance');
+        //return $this->response($result, 'checkout/order/', 'checkout');
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'checkout/order/', 'checkout');
     }
 
 }

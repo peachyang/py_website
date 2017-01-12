@@ -60,6 +60,16 @@ class Category extends Entity
         return [];
     }
 
+    public function getImage()
+    {
+        if (!empty($this->storage['image'])) {
+            $resource = new Resource;
+            $resource->load($this->storage['image']);
+            return $resource['real_name'];
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
+    }
+
     public function getThumbnail()
     {
         if (!empty($this->storage['thumbnail'])) {

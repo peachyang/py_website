@@ -20,7 +20,7 @@ trait Rest
     {
         $data = $this->getRequest()->getQuery();
         $attributes = $this->getAttributes(Customer::ENTITY_TYPE);
-        if ($this->authOptions['role_id'] == -1) {
+        if ($this->authOptions['validation'] == -1) {
             $collection = new CustomerCollection;
             $collection->columns($attributes);
             $this->filter($collection, $data);
@@ -43,7 +43,7 @@ trait Rest
 
     protected function deleteCustomer()
     {
-        if ($this->authOptions['role_id'] === -1 &&
+        if ($this->authOptions['validation'] === -1 &&
                 count($this->getAttributes(Customer::ENTITY_TYPE, false))) {
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
@@ -67,7 +67,7 @@ trait Rest
             }
         }
         if ($set) {
-            if ($this->authOptions['role_id'] === -1) {
+            if ($this->authOptions['validation'] === -1) {
                 $id = $data['id'];
             } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                 $token = new Token;
@@ -87,7 +87,7 @@ trait Rest
     {
         $data = $this->getRequest()->getQuery();
         $attributes = $this->getAttributes(Address::ENTITY_TYPE);
-        if ($this->authOptions['role_id'] == -1) {
+        if ($this->authOptions['validation'] == -1) {
             $collection = new AddressCollection;
             $collection->columns($attributes);
             $this->filter($collection, $data);
@@ -107,7 +107,7 @@ trait Rest
     {
         if (count($this->getAttributes(Address::ENTITY_TYPE, false))) {
             $data = $this->getRequest()->getQuery();
-            if ($this->authOptions['role_id'] === -1) {
+            if ($this->authOptions['validation'] === -1) {
                 if ($data['id']) {
                     $address = new Address;
                     $address->setId($id)->remove();
@@ -145,7 +145,7 @@ trait Rest
             $id = $data['id'];
             $address = new Address;
             $address->load($id);
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 $flag = false;
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;

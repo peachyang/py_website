@@ -29,7 +29,7 @@ $parent = $this->getVariable('parent');
                                    echo $parent->getAttrs($item['attrs']);
                                }
                                ?>/>
-                        <label for="<?php echo $id, '-', $v ?>"><?php echo $l ?></label>
+                        <label for="<?php echo $id, '-', $v ?>"><?php echo $this->translate($l) ?></label>
                     <?php endforeach ?>
                 </div>
             <?php else: ?>
@@ -44,7 +44,7 @@ $parent = $this->getVariable('parent');
                            echo $parent->getAttrs($item['attrs']);
                        }
                        ?>/>
-                <label for="<?php echo $id, '-', $value ?>"><?php echo $label ?></label>
+                <label for="<?php echo $id, '-', $value ?>"><?php echo $this->translate($label) ?></label>
             <?php
             endif;
         endforeach;

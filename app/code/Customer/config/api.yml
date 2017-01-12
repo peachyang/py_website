@@ -1,0 +1,17 @@
+---
+wsdl:
+    message:
+        customerValid:
+            sessionId: string
+            username: string
+            password: string
+        customerValidResponse:
+            loginResult: boolean
+    port:
+        -
+            name: customerValid
+            input: typens:customerValid
+            output: typens:customerValidResponse     
+            documentation: Valid customer username and password
+soap:
+    customerValid: \Seahinet\Customer\Model\Api\Customer

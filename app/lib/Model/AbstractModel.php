@@ -231,7 +231,9 @@ abstract class AbstractModel extends ArrayObject
                 if ($columns) {
                     $this->insert($this->prepareColumns());
                 }
-                $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
+                if (!$this->getId()) {
+                    $this->setId($this->getTableGateway($this->tableName)->getLastInsertValue());
+                }
                 $this->isNew = true;
                 $this->afterSave();
                 $this->flushList($this->getCacheKey());

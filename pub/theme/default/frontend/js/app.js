@@ -296,7 +296,7 @@
                 }
             };
             for (var i in target) {
-                toggle($(i).is('[type=radio],[type=checkbox]') ? i.checked : $(i).val(), target[i]);
+                toggle($(i).is('[type=radio]:not(:checked),[type=checkbox]:not(:checked)') ? null : $(i).val(), target[i]);
                 if ($(i).is('[type=radio],[type=checkbox]')) {
                     $(i).click(function () {
                         toggle(this.checked ? this.value : null, target[i]);

@@ -151,3 +151,20 @@ admin_soap_role_edit:
                                 params: [{link:':ADMIN/api_soap_role/edit/',label:'Edit'}]
                     edit:
                         type: Seahinet\Admin\ViewModel\Api\Edit\SoapRole
+                        children:
+                            tabs:
+                                type: Seahinet\Admin\ViewModel\Tabs
+                                action:
+                                    -
+                                        method: setMainTabLabel
+                                        params: General
+                                    -
+                                        method: addTab
+                                        params:
+                                            - operation
+                                            - Operation
+                                            - 100
+                                children:
+                                    operation:
+                                        type: Seahinet\Admin\ViewModel\Api\Edit\Widget\Operation
+                                        template: admin/api/operation

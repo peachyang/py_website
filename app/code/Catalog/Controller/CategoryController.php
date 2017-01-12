@@ -157,7 +157,14 @@ class CategoryController extends ActionController
             if (isset($tree[$child['id']])) {
                 $child['children_categories'] = $this->generateTree($child['id'], $tree);
             }
-            $children[] = $child->toArray();
+            $array = $child->toArray();
+            if (!empty($array['image'])) {
+                $array['image'] = $child->getImage();
+            }
+            if (!empty($array['thumbnail'])) {
+                $array['thumbnail'] = $child->getThumbnail();
+            }
+            $children[] = $array;
         }
         return $children;
     }

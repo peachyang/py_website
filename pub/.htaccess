@@ -4,8 +4,15 @@
         Header set Cache-Control "public"
         Header set X-Frame-Options "SAMEORIGIN"
     </FilesMatch>
-    <FilesMatch \.(zip|gz|gzip|bz2|csv|xml)$>
+    <FilesMatch \.(zip|gz|gzip|bz2|csv)$>
         Header set Cache-Control "no-store"
         Header set X-Frame-Options "SAMEORIGIN"
     </FilesMatch>
 </IfModule>
+<FilesMatch \.php$>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+#<FilesMatch \.php$>
+#    Require all denied
+#</FilesMatch>

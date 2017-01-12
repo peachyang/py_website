@@ -10,6 +10,7 @@ class Message extends Template implements Singleton
 
     protected static $instance = null;
     protected $segments = [];
+    protected $messages = [];
 
     private function __construct()
     {
@@ -47,13 +48,26 @@ class Message extends Template implements Singleton
      */
     public function getMessages()
     {
-        $messages = [];
+        $messages = $this->messages;
         foreach ($this->segments as $name) {
             $segment = new Segment($name);
             $messages += $segment->get('message', []);
             $segment->set('message', []);
         }
         return $messages;
+    }
+
+    /**
+     * Add message
+     * 
+     * @param mixed $message
+     * @param string $level
+     * @return $this
+     */
+    public function addMessage($message, $level = 'danger')
+    {
+        $this->messages[] = is_array($message) ? $message : ['message' => $message, 'level' => $level];
+        return $this;
     }
 
 }

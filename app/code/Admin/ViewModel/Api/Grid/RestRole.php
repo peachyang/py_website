@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Api\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Api\Model\Collection\Rest\Role as Collection;
+use Seahinet\Api\Source\RestValidation;
 
 class RestRole extends PGrid
 {
@@ -49,6 +50,11 @@ class RestRole extends PGrid
         return [
             'name' => [
                 'label' => 'Name'
+            ],
+            'validation' => [
+                'label' => 'Validation',
+                'type' => 'select',
+                'options' => (new RestValidation)->getSourceArray()
             ]
         ];
     }

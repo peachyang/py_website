@@ -3,8 +3,8 @@
 namespace Seahinet\Api\Model\Soap;
 
 use Seahinet\Lib\Model\AbstractModel;
-use Seahinet\Lib\Session\Segment;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Crypt\PublicKey\RsaOptions;
 
 class User extends AbstractModel
 {
@@ -14,8 +14,7 @@ class User extends AbstractModel
 
     public function construct()
     {
-
-        $this->init('api_soap_user', 'id', ['id', 'role_id', 'name', 'email', 'key']);
+        $this->init('api_soap_user', 'id', ['id', 'role_id', 'username', 'email', 'password', 'public_key', 'private_key', 'phrase']);
     }
 
     public function _clone()
@@ -24,24 +23,10 @@ class User extends AbstractModel
             'id' => $this->storage['id'],
             'role_id' => $this->storage['role_id'],
             'name' => $this->storage['name'],
-            'email' => $this->storage['email'],
-            'key' => $this->storage['key']
+            'email' => $this->storage['email']
         ];
-
         $this->storage = $storage;
-
-        $this->isLoaded = FALSE;
-    }
-
-    public function login($username, $password)
-    {
-        if ($this->valid($username, $password)) {
-            $segment = new Segment('admin');
-            $segment->set('hasLoggedIn', TRUE)
-                    ->set('user', clone $this);
-            return true;
-        }
-        return FALSE;
+        $this->isLoaded = false;
     }
 
     public function valid($username, $password)
@@ -52,7 +37,7 @@ class User extends AbstractModel
             $this->isLoaded = false;
             $this->load($username, 'username');
         }
-        return $this->offsetGet('status') && (new Bcrypt)->verify($password, $this->offsetGet('password'));
+        return (new Bcrypt)->verify($password, $this->storage['password']);
     }
 
     public function getRole()
@@ -71,6 +56,13 @@ class User extends AbstractModel
     {
         if (isset($this->storage['password']) && strpos($this->storage['password'], '$2y$') !== 0) {
             $this->storage['password'] = (new Bcrypt)->create($this->storage['password']);
+        }
+        if (!empty($this->storage['encrypt']) && empty($this->storage['public_key'])) {
+            $rsa = new RsaOptions;
+            $rsa->setPassPhrase($this->storage['phrase'] ?? null)
+                    ->generateKeys();
+            $this->setData('public_key', $rsa->getPublicKey())
+                    ->setData('private_key', $rsa->getPrivateKey());
         }
         parent::beforeSave();
     }

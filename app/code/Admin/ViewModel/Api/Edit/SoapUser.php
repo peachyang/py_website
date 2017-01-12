@@ -3,19 +3,18 @@
 namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Api\Source\SoapRole;
 
 class SoapUser extends PEdit
 {
 
     public function getSaveUrl()
     {
-
         return $this->getAdminUrl('api_soap_user/save/');
     }
 
     public function getDeleteUrl()
     {
-
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
             return $this->getAdminUrl('api_soap_user/delete/');
@@ -30,6 +29,7 @@ class SoapUser extends PEdit
 
     public function prepareElements($columns = [])
     {
+        $model = $this->getVariable('model');
         $columns = [
             'id' => [
                 'type' => 'hidden'
@@ -37,26 +37,20 @@ class SoapUser extends PEdit
             'csrf' => [
                 'type' => 'csrf'
             ],
-            'name' => [
+            'username' => [
                 'type' => 'text',
-                'label' => 'Name',
+                'label' => 'Username',
                 'required' => 'required'
             ],
             'role_id' => [
                 'type' => 'select',
                 'label' => 'Role',
-                'options' => '1'
-            //'required' => 'required'
-            ],
-            'key' => [
-                'type' => 'text',
-                'label' => 'Keywords',
+                'options' => (new SoapRole)->getSourceArray(),
                 'required' => 'required'
             ],
             'email' => [
                 'type' => 'email',
                 'label' => 'Email',
-                'required' => 'required',
                 'class' => 'email'
             ],
             'crpassword' => [
@@ -90,6 +84,44 @@ class SoapUser extends PEdit
                     'autocomplete' => 'off'
                 ]
             ],
+            'encrypt' => [
+                'type' => 'checkbox',
+                'label' => 'Encrypt Result',
+                'value' => $model && $model['public_key'] ? 1 : 0,
+                'options' => [
+                    '1' => $model ? 'Modify Encryption Key' : ''
+                ],
+                'comment' => 'We use RSA cryptography to encrypt/decrypt data.'
+            ],
+            'public_key' => [
+                'type' => 'textarea',
+                'label' => 'Public Key',
+                'attrs' => [
+                    'data-base' => '#encrypt-1',
+                    'autocomplete' => 'off',
+                    'spellcheck' => 'false'
+                ],
+                'comment' => 'Leave blank to generate keys automatically.'
+            ],
+            'private_key' => [
+                'type' => 'textarea',
+                'label' => 'Private Key',
+                'attrs' => [
+                    'data-base' => '#encrypt-1',
+                    'autocomplete' => 'off',
+                    'spellcheck' => 'false'
+                ]
+            ],
+            'phrase' => [
+                'type' => 'text',
+                'label' => 'Private Key Phrase',
+                'attrs' => [
+                    'data-base' => '#encrypt-1',
+                    'autocomplete' => 'off',
+                    'spellcheck' => 'false',
+                    'maxlength' => '127'
+                ]
+            ]
         ];
         return parent::prepareElements($columns);
     }

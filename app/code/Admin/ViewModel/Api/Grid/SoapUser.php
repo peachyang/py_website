@@ -46,14 +46,11 @@ class SoapUser extends PGrid
     protected function prepareColumns()
     {
         return [
-            'name' => [
-                'label' => 'Name'
+            'username' => [
+                'label' => 'Username'
             ],
             'email' => [
                 'label' => 'Email'
-            ],
-            'key' => [
-                'label' => 'Keywords'
             ]
         ];
     }

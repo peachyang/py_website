@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Api\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
+use Seahinet\Api\Source\RestValidation;
 
 class RestRole extends PEdit
 {
@@ -39,6 +40,12 @@ class RestRole extends PEdit
                 'type' => 'text',
                 'label' => 'Name',
                 'required' => 'required'
+            ],
+            'validation' => [
+                'type' => 'select',
+                'label' => 'Validation',
+                'required' => 'required',
+                'options' => (new RestValidation)->getSourceArray()
             ]
         ];
         return parent::prepareElements($columns);

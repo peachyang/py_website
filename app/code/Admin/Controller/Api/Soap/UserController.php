@@ -23,6 +23,7 @@ class UserController extends AuthActionController
             $root->getChild('edit', TRUE)->setVariable('model', $model);
             $root->getChild('head')->setTitle('Edit SOAP User / SOAP');
         } else {
+            $root->getChild('messages', true)->addMessage($this->translate('Please make sure you have known the usage and risks of APIs.'), 'warning');
             $root->getChild('head')->setTitle('Add New SOAP User / SOAP');
         }
         return $root;
@@ -30,7 +31,7 @@ class UserController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\User', ':ADMIN/api_soap_user/list/');
+        return $this->doDelete('\\Seahinet\\Api\\Model\\Soap\\User', ':ADMIN/api_soap_user/');
     }
 
     public function saveAction()
@@ -40,26 +41,20 @@ class UserController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $segment = new Segment('admin');
             $user = $segment->get('user');
-            $result = $this->validateForm($data, ['name', 'email']);
-            if (empty($data['name']) || empty($data['email']) || empty($data['key'])) {
+            $result = $this->validateForm($data, ['role_id', 'username', 'password', 'cpassword', 'crpassword']);
+            if (empty($data['cpassword']) || empty($data['cpassword']) || $data['password'] != $data['cpassword']) {
                 $result['message'][] = ['message' => $this->translate('The confirm password is not equal to the password.'), 'level' => 'danger'];
                 $result['error'] = 1;
             } else if (!$user->valid($user['username'], $data['crpassword'])) {
                 $result['message'][] = ['message' => $this->translate('The current password is incurrect.'), 'level' => 'danger'];
                 $result['error'] = 1;
             } else if ($result['error'] === 0) {
-                $model = new Model($data);
-                if (empty($data['id'])) {
-                    $model->setId(null);
-                }
                 try {
-                    $data['role_id'] = 1;
                     $model = new Model($data);
-                    $modelS = $model->save();
-                    if (isset($data['id']) && $data['id'] == $user->getId()) {
-                        $user->setData($data);
-                        $segment->set('user', clone $user);
+                    if (empty($data['id'])) {
+                        $model->setId(null);
                     }
+                    $model->save();
                     $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
@@ -68,8 +63,7 @@ class UserController extends AuthActionController
                 }
             }
         }
-        $referer = $this->getRequest()->getHeader('HTTP_REFERER');
-        return $this->response($result, strpos($referer, 'edit') ? ':ADMIN/api_soap_user/list/' : ':ADMIN/api_soap_user/');
+        return $this->response($result, ':ADMIN/api_soap_user/');
     }
 
 }

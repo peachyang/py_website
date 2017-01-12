@@ -22,6 +22,7 @@ class ConsumerController extends AuthActionController
             $root->getChild('head')->setTitle('Edit Consumer / REST - OAuth');
         } else {
             $root->getChild('head')->setTitle('Add New Consumer / REST - OAuth');
+            $root->getChild('messages', true)->addMessage($this->translate('Please make sure you have known the usage and risks of APIs.'), 'warning');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
         return $root;

@@ -109,6 +109,12 @@ class CategoryController extends AuthActionController
                 } else if (empty($data['uri_key'])) {
                     $model->setData('uri_key', trim(strtolower(preg_replace('/\W+/', '-', rawurlencode($data['name'])))), '-');
                 }
+                if (empty($data['thumbnail'])) {
+                    $model->setData('thumbnail', null);
+                }
+                if (empty($data['image'])) {
+                    $model->setData('image', null);
+                }
                 try {
                     $model->save();
                     $languages = new Language;

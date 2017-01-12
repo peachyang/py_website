@@ -19,7 +19,7 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $columns = $this->getAttributes('order');
         if (count($columns)) {
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -52,7 +52,7 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $columns = $this->getAttributes('invoice');
         if (count($columns)) {
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -90,7 +90,7 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $columns = $this->getAttributes('creditmemo');
         if (count($columns)) {
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -128,7 +128,7 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $columns = $this->getAttributes('shipment');
         if (count($columns)) {
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -166,7 +166,7 @@ trait Rest
         $data = $this->getRequest()->getQuery();
         $columns = $this->getAttributes('shipment_track');
         if (count($columns)) {
-            if ($this->authOptions['role_id'] > 0) {
+            if ($this->authOptions['validation'] > 0) {
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -193,7 +193,7 @@ trait Rest
     protected function putShipmentTrack()
     {
 
-        if ($this->authOptions['role_id'] === -1) {
+        if ($this->authOptions['validation'] === -1) {
             $attributes = $this->getAttributes(Customer::ENTITY_TYPE, false);
             $data = $this->getRequest()->getPost();
             $set = [];

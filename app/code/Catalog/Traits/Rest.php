@@ -43,7 +43,7 @@ trait Rest
     protected function deleteProduct()
     {
         $attributes = $this->getAttributes(Product::ENTITY_TYPE, false);
-        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+        if ($this->authOptions['validation'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
                 $product = new Product;
@@ -58,7 +58,7 @@ trait Rest
     protected function putProduct()
     {
         $attributes = $this->getAttributes(Product::ENTITY_TYPE, false);
-        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+        if ($this->authOptions['validation'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
             $product = new Product;
             if ($id) {
@@ -97,7 +97,7 @@ trait Rest
     protected function deleteCategory()
     {
         $attributes = $this->getAttributes(Category::ENTITY_TYPE, false);
-        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+        if ($this->authOptions['validation'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
             if ($id) {
                 $category = new Category;
@@ -112,7 +112,7 @@ trait Rest
     protected function putCategory()
     {
         $attributes = $this->getAttributes(Category::ENTITY_TYPE, false);
-        if ($this->authOptions['role_id'] === -1 && count($attributes)) {
+        if ($this->authOptions['validation'] === -1 && count($attributes)) {
             $id = $this->getRequest()->getQuery('id');
             $category = new Category;
             if ($id) {

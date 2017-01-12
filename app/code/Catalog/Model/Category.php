@@ -5,6 +5,7 @@ namespace Seahinet\Catalog\Model;
 use Seahinet\Catalog\Model\Collection\Product as ProductCollection;
 use Seahinet\Catalog\Model\Collection\Category as Collection;
 use Seahinet\Lib\Model\Eav\Entity;
+use Seahinet\Resource\Model\Resource;
 use Zend\Db\Sql\Predicate\In;
 
 class Category extends Entity
@@ -58,6 +59,16 @@ class Category extends Entity
             return $category;
         }
         return [];
+    }
+
+    public function getImage()
+    {
+        if (!empty($this->storage['image'])) {
+            $resource = new Resource;
+            $resource->load($this->storage['image']);
+            return $resource['real_name'];
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
     public function getThumbnail()

@@ -16,7 +16,7 @@ key;
         openssl_public_encrypt('testtest', $password, $key, OPENSSL_PKCS1_OAEP_PADDING);
         $password = base64_encode($password);
         $session = $client->login('test', $password);
-        var_dump($client->customerValid($session, 'test', $password));
+        var_dump($client->customerInfo($session, $client->customerValid($session, 'test', $password)));
         $client->endSession($session);
     } catch (\Exception $e) {
         var_dump($client->__getLastResponse());

@@ -66,4 +66,15 @@ class AbstractHandler implements HandlerInterface
         return $data;
     }
 
+    protected function response($data, $className = null)
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            if (property_exists($className ?: $this, $key)) {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+
 }

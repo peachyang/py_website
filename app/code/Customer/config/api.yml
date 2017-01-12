@@ -6,12 +6,23 @@ wsdl:
             username: string
             password: string
         customerValidResponse:
-            loginResult: boolean
+            loginResult: int
+        customerInfo:
+            sessionId: string
+            customerId: int
+        customerInfoResponse:
+            customer: \Seahinet\Customer\Model\Api\Customer
     port:
         -
             name: customerValid
             input: typens:customerValid
-            output: typens:customerValidResponse     
+            output: typens:customerValidResponse
             documentation: Valid customer username and password
+        -
+            name: customerInfo
+            input: typens:customerInfo
+            output: typens:customerInfoResponse
+            documentation: Get customer info by id
 soap:
     customerValid: \Seahinet\Customer\Model\Api\Customer
+    customerInfo: \Seahinet\Customer\Model\Api\Customer

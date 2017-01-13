@@ -35,7 +35,7 @@ class Rule extends AbstractModel
 
     public function matchCoupon($coupon, $model)
     {
-        if ($coupon && $coupons = $this->getCoupon()) {
+        if ($coupon && is_string($coupon) && $coupons = $this->getCoupon()) {
             $coupons->join('promotion_coupon_log', 'promotion_coupon_log.coupon_id=promotion_coupon.id', ['customer_id', 'uses' => new Expression('count(promotion_coupon_log.id)')], 'left')
                     ->where([
                         'code' => $coupon,

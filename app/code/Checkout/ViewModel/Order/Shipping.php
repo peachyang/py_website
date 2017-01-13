@@ -11,6 +11,9 @@ class Shipping extends Template
 
     public function getShippingMethods($storeId)
     {
+        if (Cart::instance()->isVirtual($storeId)) {
+            return [];
+        }
         return (new ShippingMethod)->getSourceArray($storeId);
     }
 

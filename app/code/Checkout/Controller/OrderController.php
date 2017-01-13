@@ -154,6 +154,9 @@ class OrderController extends ActionController
 
     protected function validShippingAddress($data)
     {
+        if (Cart::instance()->isVirtual()) {
+            return true;
+        }
         if (!isset($data['shipping_address_id'])) {
             throw new Exception('Please select shipping address');
         }

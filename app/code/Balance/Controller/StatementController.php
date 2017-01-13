@@ -59,7 +59,7 @@ class StatementController extends AuthActionController
                     return $this->response($result, $product->getUrl(), 'checkout');
                 }
                 //$cart = new Cart;
-                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], $data['sku'] ?? '');
+                Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id']);
                 //return $this->response($result, 'checkout/order/', 'checkout');
                 $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('"%s" has been added.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];

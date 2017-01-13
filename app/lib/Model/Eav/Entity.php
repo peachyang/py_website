@@ -305,25 +305,24 @@ abstract class Entity extends AbstractModel
                     ->where(['eav_entity_type.code' => static::ENTITY_TYPE, 'attribute_set_id' => $this->storage['attribute_set_id']]);
         }
         $attrs = [];
-        $datetime = [];
         $this->attributes->walk(function($attr) use (&$attrs, &$datetime) {
-            $attrs[] = $attr['code'];
-            if ($attr['type'] === 'datetime') {
-                $datetime[] = $attr['code'];
-            }
+            $attrs[$attr['code']] = $attr['type'];
         });
         $pairs = [];
         foreach ($this->storage as $key => $value) {
-            if (in_array($key, $attrs)) {
-                if (in_array($key, $datetime)) {
+            if (isset($attrs[$key])) {
+                if ($attrs[$key] === 'datetime') {
                     $timestamp = strtotime($value);
                     if ($timestamp) {
                         $pairs[$key] = date('Y-m-d H:i:s', $timestamp);
                     } else {
                         $pairs[$key] = null;
                     }
+                } else if ($attrs[$key] === 'varchar' || $attrs[$key] === 'text') {
+                    $pairs[$key] = is_array($value) ? json_encode($value) : $value;
                 } else {
-                    $pairs[$key] = $value === '' ? null : is_array($value) ? json_encode($value) : $value;
+                    $pairs[$key] = $value === '' ? null :
+                            ($attrs[$key] === 'decimal' ? (float) $value : (int) $value);
                 }
             }
         }

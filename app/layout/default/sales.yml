@@ -127,6 +127,24 @@ admin_sales_order_print:
                     main:
                         type: Seahinet\Admin\ViewModel\Sales\View\Order
                         template: admin/sales/print/order
+admin_sales_recharge_order_list: 
+    update: grid
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Recharge Orders / Sales
+            content:
+                children:
+                    breadcrumb:
+                        action:
+                            -
+                                method: addCrumb
+                                params: [{link:':ADMIN/sales_recharge_order/',label:'Recharge Orders'}]
+                    grid:
+                        type: Seahinet\Admin\ViewModel\Sales\Grid\RechargeOrder
 admin_sales_invoice_list:
     update: grid
     root:

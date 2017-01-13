@@ -15,3 +15,7 @@ balance:
                         - Disabled
                         - Enabled
                     default: 0
+                product_for_recharge:
+                    type: tel
+                    label: Product for Recharge 
+                    priority: 1

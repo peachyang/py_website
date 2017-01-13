@@ -52,10 +52,6 @@ catalog:
                     required: required
                     default: 5
                     priority: 0
-                product_for_recharge:
-                    type: tel
-                    label: Product for Recharge 
-                    priority: 1
         review:
             label: Review
             scope: merchant

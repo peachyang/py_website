@@ -160,7 +160,7 @@ abstract class AbstractModel extends ArrayObject
                 }
                 if (!$result) {
                     $select = $this->getTableGateway($this->tableName)->getSql()->select();
-                    $select->where([$this->tableName . '.' . $key => $id]);
+                    $select->where([(in_array($key, $this->getColumns()) ? $this->tableName . '.' . $key : $key) => $id]);
                     $this->beforeLoad($select);
                     $result = $this->getTableGateway($this->tableName)->selectWith($select)->toArray();
                     if (count($result)) {

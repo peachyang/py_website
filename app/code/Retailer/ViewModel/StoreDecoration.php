@@ -4,14 +4,12 @@ namespace Seahinet\Retailer\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Retailer\ViewModel\SalesProducts;
-use Seahinet\Catalog\Model\Product;
 use Seahinet\Retailer\Model\StoreTemplate;
 use Seahinet\Retailer\Model\Retailer;
-use Seahinet\Retailer\Model\Collection\RetailerCollection;
+use Seahinet\Retailer\Model\Collection\Retailer;
 use Seahinet\Retailer\Model\Collection\StoreTemplateCollection;
 use Seahinet\Retailer\Model\Collection\StorePicInfoCollection;
 use Seahinet\Lib\Session\Segment;
-use Zend\Db\Sql\Expression;
 
 class StoreDecoration extends Template
 {
@@ -218,7 +216,7 @@ class StoreDecoration extends Template
         } else {
             $customer_id = $current_retailer['customer_id'];
         }
-        $retailer = new RetailerCollection;
+        $retailer = new Retailer;
         $retailer->where(['retailer.customer_id' => $customer_id, 'retailer.store_id' => $store_id])
                 ->join('resource', 'retailer.banner = resource.id', ['real_name'], 'left')->order(['resource.created_at' => 'DESC']);
         //return $segment->get('customer');

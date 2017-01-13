@@ -30,7 +30,7 @@ class ResourceController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $files = $this->getRequest()->getUploadedFile()['files'];
-            $retailer = (new Segment('customer'))->get('customer')->getRetailer();
+            $retailer = $this->getRetailer();
             $result = $this->validateForm($data);
             if ($result['error'] === 0) {
                 try {
@@ -66,7 +66,7 @@ class ResourceController extends AuthActionController
                 $data['f'] = [];
             }
             if ($result['error'] === 0) {
-                $storeId = (new Segment('customer'))->get('customer')->getRetailer()->offsetGet('store_id');
+                $storeId = $this->getRetailer()->offsetGet('store_id');
                 try {
                     $path = BP . Model::$options['path'];
                     foreach ((array) $data['r'] as $id) {
@@ -148,7 +148,7 @@ class ResourceController extends AuthActionController
                         if ($data['id']) {
                             $model->load($data['id']);
                         } else {
-                            $retailer = (new Segment('customer'))->get('customer')->getRetailer();
+                            $retailer = $this->getRetailer();
                             $model->setData([
                                 'store_id' => $retailer ? $retailer->offsetGet('store_id') : (empty($data['store_id']) ? null : $data['store_id']),
                                 'parent_id' => ((int) $data['pid']) ?: null

@@ -2,7 +2,6 @@
 
 namespace Seahinet\Retailer\Controller;
 
-use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Rma;
 
 class RefundController extends AuthActionController
@@ -89,8 +88,7 @@ class RefundController extends AuthActionController
                 try {
                     $refund = new Rma;
                     $refund->load($data['rma_id']);
-                    $segment = new Segment('customer');
-                    $retailer = $segment->get('customer')->getRetailer();
+                    $retailer = $this->getRetailer();
                     if (!$retailer || !$retailer->getId() ||
                             $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                             $refund['service'] != 2 || $refund['status'] != 3) {
@@ -121,8 +119,7 @@ class RefundController extends AuthActionController
             try {
                 $refund = new Rma;
                 $refund->load($id);
-                $segment = new Segment('customer');
-                $retailer = $segment->get('customer')->getRetailer();
+                $retailer = $this->getRetailer();
                 if (!$retailer || !$retailer->getId() ||
                         $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                         $refund['status'] != 0 && $refund['status'] != 2 && ($refund['status'] != 3 || $refund['service'] != 1)) {
@@ -155,8 +152,7 @@ class RefundController extends AuthActionController
                 $url = 'retailer/refund/view/?id=' . $id;
                 $refund = new Rma;
                 $refund->load($id);
-                $segment = new Segment('customer');
-                $retailer = $segment->get('customer')->getRetailer();
+                $retailer = $this->getRetailer();
                 if (!$retailer || !$retailer->getId() ||
                         $refund->getOrder()['store_id'] != $retailer['store_id'] ||
                         $refund['status'] != 0 && $refund['status'] != 2 && ($refund['status'] != 3 || $refund['service'] != 1)) {

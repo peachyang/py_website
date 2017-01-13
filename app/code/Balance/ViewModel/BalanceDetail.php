@@ -30,7 +30,7 @@ class BalanceDetail extends Template
         if ($this->getCustomerId()) {
             $balance = new Balance;
             $balance->where(['customer_id' => $this->getCustomerId()])
-                    ->order('created_at DESC')
+                    ->order('status DESC , created_at DESC')
                     ->limit(20)
                     ->offset(((int) $this->getQuery('page', 1) - 1) * 20);
             if (count($balance)) {

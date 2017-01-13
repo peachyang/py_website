@@ -40,7 +40,7 @@ class CartController extends ActionController
                     return $this->response($result, $product->getUrl(), 'checkout');
                 }
                 Cart::instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id'], isset($data['options']) ?
-                                (is_string($data['options']) ? json_decode($data['options'], true) : (array) $data['options']) : [], $data['sku'] ?? '' );
+                                (is_string($data['options']) ? json_decode($data['options'], true) : (array) $data['options']) : [], $data['sku'] ?? '');
                 $result['reload'] = 1;
                 $result['message'][] = ['message' => $this->translate('"%s" has been added to your shopping cart.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'success'];
             } catch (ClickFarming $e) {

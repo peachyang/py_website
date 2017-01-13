@@ -2,6 +2,7 @@
 
 namespace Seahinet\Customer\Listeners;
 
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Customer\Model\Collection\Balance as Collection;
 use Seahinet\Customer\Model\Balance as BalanceModel;
 use Seahinet\Lib\Listeners\ListenerInterface;
@@ -11,6 +12,7 @@ class Balance implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\DB;
 
     public function calc($event)
     {
@@ -25,20 +27,20 @@ class Balance implements ListenerInterface
 
     public function beforeSaveRecharge($event)
     {
-        unset($event['model']['balance']);
+        unset($event['data']['balance']);
     }
 
     public function afterSaveRecharge($event)
     {
-        $customer = $event['model'];
-        $balances = new BalanceModel;
-        $balances->setData([
-            'customer_id' => $customer->offsetGet('customer_id'),
-            'amount' => $customer->offsetGet('balance'),
-            'comment' => $customer->offsetGet('comment'),
+        $data = $event['data'];
+        $recharge = new BalanceModel;
+        $recharge->load($data['qty']);
+        $recharge->setData([
+            'customer_id' => $data['customer_id'],
+            'product_id' => $data['product_id'],
+            'amount' => $data['qty'],
             'status' => 0
-        ]);
-        $balances->save();
+        ])->save();
     }
 
     public function afterSaveBackendCustomer($event)

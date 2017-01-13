@@ -1,22 +1,21 @@
 <?php
 $customer = $this->getCustomer();
+$product = new \Seahinet\Catalog\ViewModel\Product\View;
+$warehouse = new Seahinet\Catalog\Model\Warehouse;
+$warehouse->load(1);
+$id = $this->getConfig()['catalog/product/product_for_recharge'];
 ?>
 <div class="recharge">
-    <form action="<?php echo $this->getBaseUrl('') ?>" method="post" class="form-inline" enctype="multipart/form-data">
+    <form action="<?php echo $this->getBaseUrl('balance/statement/add/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
-        <input type="hidden" name="id" />
+        <input type="hidden" name="product_id" value="<?php echo $id ?>" />
         <input type="hidden" name="customer_id" value="<?php echo $customer->getId(); ?>" />
+        <input type="hidden" name="warehouse_id" value="<?php echo 1 ?>" />
         <div class="fieldset">
             <div class="input-box">
                 <label class="control-label" for="balance"><?php echo $this->translate('Amount Charge'); ?>:</label>
                 <div class="cell">
-                    <input type="text" class="form-control required invalid" name="balance" id="balance" /><span><?php echo $this->translate(''); ?></span>
-                </div>
-            </div>
-            <div class="input-box">
-                <label class="control-label" for=""><?php echo $this->translate('Comment'); ?>:</label>
-                <div class="cell">
-                    <textarea cols="40" name="comment" id="comment" class="form-control"></textarea>
+                    <input class="form-control required" name="qty" type="number" /><span><?php //echo $this->translate('Recharge Products Price');    ?><?php //echo $this->getPriceBox();    ?></span>                
                 </div>
             </div>
             <div class="buttons-set">

@@ -100,11 +100,9 @@ class CreditMemo extends AbstractModel
             $baseSubtotal += $item->offsetGet('base_price') * $item->offsetGet('qty');
         }
         $this->setData([
-            'base_subtotal' => $baseSubtotal,
-            'base_shipping' => $this->getShippingMethod()->getShippingRate($items)
+            'base_subtotal' => $baseSubtotal
         ])->setData([
-            'subtotal' => $currency->convert($this->storage['base_subtotal']),
-            'shipping' => $currency->convert($this->storage['base_shipping'])
+            'subtotal' => $currency->convert($this->storage['base_subtotal'])
         ]);
         $this->setData([
             'base_total' => $this->storage['base_subtotal'] +

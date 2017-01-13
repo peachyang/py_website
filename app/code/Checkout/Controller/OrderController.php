@@ -357,15 +357,12 @@ class OrderController extends ActionController
 
     public function validShipping($data)
     {
-        if (!isset($data['shipping_method'])) {
-            throw new Exception('Please select shipping method');
-        }
         $cart = Cart::instance();
         $result = [];
         foreach ($cart->getItems() as $item) {
-            if ($item['status'] && !isset($result[$item['store_id']])) {
+            if (!$item['is_virtual'] && $item['status'] && !isset($result[$item['store_id']])) {
                 if (!isset($data['shipping_method'][$item['store_id']])) {
-                    throw new Exception('Invalid shipping method');
+                    throw new Exception('Please select shipping method');
                 }
                 $className = $this->getContainer()->get('config')['shipping/' . $data['shipping_method'][$item['store_id']] . '/model'];
                 $result[$item['store_id']] = new $className;

@@ -19,6 +19,16 @@ class Customer extends AbstractHandler
     public $username;
 
     /**
+     * @var string
+     */
+    public $email;
+
+    /**
+     * @var boolean
+     */
+    public $gender;
+
+    /**
      * @param string $sessionId
      * @param string $username
      * @param string $password

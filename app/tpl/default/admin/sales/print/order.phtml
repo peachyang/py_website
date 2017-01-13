@@ -65,7 +65,7 @@ $barcode = $this->getVariable('pdf')->serializeTCPDFtagParameters([$order['incre
         <td class="head" colspan="2" align="center"><b><?php echo $this->translate('Payment Method', [], 'sales') ?></b></td>
     </tr>
     <tr>
-        <td class="colspan" colspan="2" align="center"><?php echo $this->translate($order->getShippingMethod()->getLabel()) ?></td>
+        <td class="colspan" colspan="2" align="center"><?php echo $order['is_virtual'] ? '' : $this->translate($order->getShippingMethod()->getLabel()) ?></td>
         <td class="colspan" colspan="2" align="center"><?php echo $this->translate($order->getPaymentMethod()->getLabel()) ?></td>
     </tr>
     <tr class="background">

@@ -66,8 +66,8 @@ $params = $this->getVariable('pdf')->serializeTCPDFtagParameters(array($invoice[
     $num = 0;
     foreach ($this->getCollection() as $key => $item) {
         $options = json_decode($item['options'], true);
+        $option_str = '';
         if ($item['product_id'] && count($options)) {
-            $option_str = '';
             foreach ($item['product']->getOptions() as $option) {
                 if (isset($options[$option->getId()])) {
                     $option_str .= $option_str !== '' ? '<br/>' : '';

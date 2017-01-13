@@ -6,7 +6,7 @@ $currency = $order->getCurrency();
     <div class="buttons-set text-right">
         <?php if ($order->canCancel()): ?>
             <a href="<?php echo $this->getAdminUrl('sales_order/cancel/?id=' . $order->getId()) ?>" onclick="if (!confirm('<?php echo $this->translate('Are you sure to cancel this order?') ?>'))
-                        return false;" class="btn btn-cancel">
+                            return false;" class="btn btn-cancel">
                <?php echo $this->translate('Cancel', [], 'sales') ?>
             </a>
         <?php endif ?>
@@ -88,14 +88,16 @@ $currency = $order->getCurrency();
             <?php echo nl2br($order->offsetGet('shipping_address')) ?>
         </div>
     </div>
-    <div class="panel">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+    <?php if (!$order['is_virtual']): ?>
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
+            </div>
         </div>
-        <div class="panel-body">
-            <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
-        </div>
-    </div>
+    <?php endif ?>
     <div class="panel">
         <div class="panel-heading">
             <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>

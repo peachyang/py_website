@@ -16,7 +16,7 @@ class Retailer extends AbstractModel
 
     protected function construct()
     {
-        $this->init('retailer', 'id', ['id', 'customer_id', 'store_id', 'description', 'contact', 'keywords', 'address', 'tel', 'uri_key', 'profile', 'watermark', 'banner']);
+        $this->init('retailer', 'id', ['id', 'store_id', 'description', 'contact', 'keywords', 'address', 'tel', 'uri_key', 'profile', 'watermark', 'banner']);
     }
 
     public function getStore()
@@ -54,6 +54,21 @@ class Retailer extends AbstractModel
             return $collection;
         }
         return [];
+    }
+
+    protected function beforeLoad($select)
+    {
+        $select->join('retailer_manager', 'retailer_manager.retailer_id=retailer.id', ['customer_id'], 'left');
+        parent::beforeLoad($select);
+    }
+
+    protected function afterSave()
+    {
+        if (!empty($this->storage['customer_id'])) {
+            $tableGateway = $this->getTableGateway('retailer_manager');
+            $this->upsert(['retailer_id' => $this->getId()], ['customer_id' => $this->storage['customer_id']], $tableGateway);
+        }
+        parent::afterSave();
     }
 
 }

@@ -34,7 +34,7 @@ class Product extends Entity
 
     public function isVirtual()
     {
-        return isset($this->storage['product_type_id']) && $this->storage['product_type_id'] === 2;
+        return isset($this->storage['product_type_id']) && $this->storage['product_type_id'] == 2;
     }
 
     public function getOptions($constraint = [])

@@ -2,11 +2,14 @@
 
 namespace Seahinet\Api\Model\Api;
 
-use SoapFault;
+use ReflectionClass;
+use ReflectionObject;
+use ReflectionProperty;
 use Seahinet\Api\Model\Soap\{
     Session,
     User
 };
+use SoapFault;
 use Zend\Crypt\PublicKey\{
     Rsa,
     Rsa\PrivateKey
@@ -42,6 +45,11 @@ class AbstractHandler implements HandlerInterface
         throw new SoapFault('Client', 'Unknown session id: ' . $sessionId);
     }
 
+    /**
+     * @param string $data
+     * @param User $user
+     * @return string
+     */
     protected function encryptData($data, $user = null)
     {
         if (is_null($user)) {
@@ -54,6 +62,11 @@ class AbstractHandler implements HandlerInterface
         return $data;
     }
 
+    /**
+     * @param string $data
+     * @param User $user
+     * @return string
+     */
     protected function decryptData($data, $user = null)
     {
         if (is_null($user)) {
@@ -61,20 +74,26 @@ class AbstractHandler implements HandlerInterface
         }
         if (!empty($user['private_key'])) {
             $rsa = new Rsa;
-            return $rsa->decrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')));
+            return $rsa->decrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')), Rsa::MODE_BASE64);
         }
         return $data;
     }
 
+    /**
+     * @param array $data
+     * @param string|object $className
+     * @return object
+     */
     protected function response($data, $className = null)
     {
+        $reflection = is_string($className) ? (new ReflectionClass($className)) :
+                (is_null($className) ? (new ReflectionObject($this)) : (new ReflectionObject($className)));
+        $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
         $result = [];
-        foreach ($data as $key => $value) {
-            if (property_exists($className ?: $this, $key)) {
-                $result[$key] = $value;
-            }
+        foreach ($properties as $property) {
+            $result[$property->getName()] = $data[$property->getName()] ?? null;
         }
-        return $result;
+        return (object) $result;
     }
 
 }

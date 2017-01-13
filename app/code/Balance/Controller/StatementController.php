@@ -57,10 +57,12 @@ class StatementController extends AuthActionController
                 if ($result['error'] === 1) {
                     return $this->response($result, $product->getUrl(), 'checkout');
                 }
-                $items = Cart::instance()->getItems();
-                Cart::instance()->removeItems($items);
-                $cart = new Cart;
-                $carts = $cart->instance()->addItem($data['product_id'], $data['qty'], $data['warehouse_id']);
+                $cart = Cart::instance();
+                $items = $cart->getItems(true);
+                foreach ($items as $item) {
+                    $item->setData('status', 0)->save();
+                }
+                $cart->addItem($data['product_id'], $data['qty'], $data['warehouse_id']);
                 $cart->collateTotals();
                 $result['reload'] = 1;
             } catch (Exception $e) {

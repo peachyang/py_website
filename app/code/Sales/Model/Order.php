@@ -63,13 +63,15 @@ class Order extends AbstractModel
         $cartArray = $cart->toArray();
         $note = json_decode($cartArray['customer_note'], true);
         $coupon = $cartArray['coupon'] ? json_decode($cartArray['coupon'], true) : [];
+        $isVirtual = $cart->isVirtual($storeId) ? 1 : 0;
         $this->setData($cartArray)
                 ->setData([
                     'coupon' => $coupon[$storeId] ?? '',
-                    'shipping_method' => json_decode($cartArray['shipping_method'], true)[$storeId],
+                    'shipping_method' => $isVirtual ? '' : json_decode($cartArray['shipping_method'], true)[$storeId],
                     'customer_note' => $note[$storeId] ?? '',
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
+                    'is_virtual' => $isVirtual,
                     'language_id' => Bootstrap::getLanguage()->getId(),
                     'status_id' => $statusId
                 ])->setId(null)->save();

@@ -16,6 +16,22 @@ customer:
                     options:
                         1: Yes
                         0: No
+                sso:
+                    label: Allowed SSO
+                    type: select
+                    priority: 10
+                    required: required
+                    default: 0
+                    options:
+                        1: Yes
+                        0: No
+                sso_url:
+                    label: Allowed SSO Url
+                    type: text
+                    priority: 20
+                    attrs:
+                        data-base: '#login-sso'
+                    comment: Separated by semicolon(;)
         registion:
             label: Registion Options
             scope: merchant

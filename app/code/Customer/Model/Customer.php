@@ -3,7 +3,6 @@
 namespace Seahinet\Customer\Model;
 
 use Seahinet\Customer\Model\Collection\Group;
-use Seahinet\Retailer\Model\Retailer;
 use Seahinet\Lib\Model\Eav\Entity;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Session\Segment;
@@ -110,18 +109,6 @@ class Customer extends Entity
             }
         }
         return $this->store;
-    }
-
-    public function getRetailer()
-    {
-        if (is_null($this->retailer) && $this->getId()) {
-            $retailer = new Retailer;
-            $retailer->load($this->getId(), 'customer_id');
-            if ($retailer->getId()) {
-                $this->retailer = $retailer;
-            }
-        }
-        return $this->retailer;
     }
 
 }

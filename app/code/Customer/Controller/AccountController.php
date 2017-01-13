@@ -122,6 +122,7 @@ class AccountController extends AuthActionController
                         $customer->login($data['username'], $data['password']);
                         $url = 'customer/account/';
                         $result['message'][] = ['message' => $this->translate('Thanks for your registion.'), 'level' => 'success'];
+                        $this->useSso($result);
                     }
                     if (!empty($data['subscribe'])) {
                         $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
@@ -160,8 +161,8 @@ class AccountController extends AuthActionController
             if ($result['error'] == 0) {
                 $customer = new Model;
                 if ($customer->login($data['username'], $data['password'])) {
-                    $result['success_url'] = $data['success_url'] ?? '/';
                     $url = 'customer/account/';
+                    $result['success_url'] = $data['success_url'] ?? '';
                     if (!empty($data['persistent'])) {
                         $persistent = new Persistent;
                         $key = md5(random_bytes(32) . $data['username']);
@@ -184,10 +185,19 @@ class AccountController extends AuthActionController
             if ($result['error']) {
                 $segment->set('fail2login', (int) $segment->get('fail2login') + 1);
             } else {
+                $this->useSso($result);
                 $segment->set('fail2login', 0);
             }
         }
         return $this->response($result ?? ['error' => 0, 'message' => []], $url ?? 'customer/account/login/', 'customer');
+    }
+
+    protected function useSso(&$result)
+    {
+        if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/sso_url']))) {
+            $result['message'] = [];
+            $result['success_url'] .= '?token=';
+        }
     }
 
     public function forgotPwdPostAction()

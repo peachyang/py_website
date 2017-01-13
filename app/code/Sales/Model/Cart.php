@@ -174,10 +174,10 @@ final class Cart extends AbstractModel implements Singleton
         return $this->items;
     }
 
-    public function isVirtual()
+    public function isVirtual($storeId = null)
     {
         foreach ($this->getItems() as $item) {
-            if (!$item['is_virtual']) {
+            if ($item['status'] && (is_null($storeId) || $item['store_id'] == $storeId) && !$item['is_virtual']) {
                 return false;
             }
         }

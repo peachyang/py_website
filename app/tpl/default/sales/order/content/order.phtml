@@ -30,14 +30,16 @@ $currency = $order->getCurrency();
             <?php echo nl2br($order->offsetGet('shipping_address')) ?>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+    <?php if ($method = $order->getShippingMethod()): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate($method->getLabel()) ?>
+            </div>
         </div>
-        <div class="panel-body">
-            <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
-        </div>
-    </div>
+    <?php endif ?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
@@ -55,8 +57,8 @@ $currency = $order->getCurrency();
                 <thead class="text-nowrap">
                     <tr>
                         <th colspan="2"><?php echo $this->translate('Product') ?></th>
-                  		<th class="text-center"></th> 
-                        <!-- <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th> -->
+                        <th class="text-center"></th> 
+                <!-- <th class="text-center"><?php echo $this->translate('SKU', [], 'sales') ?></th> -->
                         <th class="text-center"><?php echo $this->translate('Price', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Qty', [], 'sales') ?></th>
                         <th class="text-center"><?php echo $this->translate('Total', [], 'sales') ?></th>

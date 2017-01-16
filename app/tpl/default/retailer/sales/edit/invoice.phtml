@@ -36,15 +36,6 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
                 ?>
             </div>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5 class=""><?php echo $this->translate('Shipping Address', [], 'sales') ?></h5>
-            </div>
-            <div class="panel-body">
-                <?php echo nl2br($order->offsetGet('shipping_address')) ?>
-            </div>
-        </div>
         <div class="panel panel-default " style="margin-left:2%">
             <div class="panel-heading">
                 <h5 class=""><?php echo $this->translate('Billing Address', [], 'sales') ?></h5>

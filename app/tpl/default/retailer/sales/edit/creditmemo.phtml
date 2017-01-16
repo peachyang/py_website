@@ -47,22 +47,6 @@ $back_url = $this->getRequest()->getHeader('HTTP_REFERER');
         </div>
         <div class="panel">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Address', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo nl2br($order->offsetGet('shipping_address')) ?>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Shipping Method', [], 'sales') ?></h4>
-            </div>
-            <div class="panel-body">
-                <?php echo $this->translate($order->getShippingMethod()->getLabel()) ?>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-heading">
                 <h4 class="panel-title"><?php echo $this->translate('Payment Method', [], 'sales') ?></h4>
             </div>
             <div class="panel-body">

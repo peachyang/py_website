@@ -11,7 +11,7 @@ wsdl:
             sessionId: string
             customerId: int
         customerInfoResponse:
-            customer: \Seahinet\Customer\Model\Api\Customer
+            customer: customer
     port:
         -
             name: customerValid

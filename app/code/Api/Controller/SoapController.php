@@ -4,7 +4,8 @@ namespace Seahinet\Api\Controller;
 
 use Seahinet\Api\Model\Soap\{
     Server,
-    Wsdl
+    Wsdl,
+    Wsdl\ComplexTypeStrategy\ComplexTypeWithEav
 };
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AbstractController;
@@ -24,11 +25,7 @@ class SoapController extends AbstractController
             $config = $this->getContainer()->get('config')['api']['wsdl'] ?? [];
             $ns = Bootstrap::getMerchant()['name'];
             $wsdl = new Wsdl($ns, 'urn:' . $ns);
-            if (!empty($config['type'])) {
-                foreach ($config['type'] as $name => $type) {
-                    $wsdl->addType($name, $type);
-                }
-            }
+            $wsdl->setComplexTypeStrategy(new ComplexTypeWithEav);
             if (!empty($config['message'])) {
                 foreach ($config['message'] as $name => $params) {
                     if (is_array($params)) {
@@ -43,7 +40,7 @@ class SoapController extends AbstractController
             }
             if (!empty($config['port'])) {
                 $port = $wsdl->addPortType('PortType');
-                $binding = $wsdl->addBinding('Binding', 'typens:PortType');
+                $binding = $wsdl->addBinding('Binding', 'tns:PortType');
                 $wsdl->addSoapBinding($binding, 'rpc');
                 $bindingOperation = [
                     'namespace' => 'urn:' . $ns,
@@ -57,7 +54,7 @@ class SoapController extends AbstractController
                     $wsdl->addBindingOperation($binding, $operation['name'], isset($operation['input']) ? $bindingOperation : false, isset($operation['output']) ? $bindingOperation : false, isset($operation['fault']) ? $bindingOperation : false);
                 }
             }
-            $wsdl->addService($ns, 'port', 'typens:Binding', $this->getBaseUrl('api/soap/'));
+            $wsdl->addService($ns, 'port', 'tns:Binding', $this->getBaseUrl('api/soap/'));
             $result = $wsdl->toXML();
             $cache->save('wsdl', $result, 'API_');
         }

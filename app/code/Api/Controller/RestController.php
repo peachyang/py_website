@@ -3,10 +3,16 @@
 namespace Seahinet\Api\Controller;
 
 use Exception;
+use Seahinet\Admin\Model\User;
 use Seahinet\Api\Model\Collection\Rest\Attribute;
+use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Controller\AbstractController;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Oauth\Model\Consumer;
+use Zend\Crypt\{
+    BlockCipher,
+    Symmetric\Openssl
+};
 
 class RestController extends AbstractController
 {
@@ -86,6 +92,28 @@ class RestController extends AbstractController
      */
     public function authorizeDigest($code)
     {
+        $data = [];
+        foreach (preg_split('/\s*\,\s*/', $code) as $item) {
+            $pos = strpos($item, '=');
+            $data[substr($item, 0, strpos($item, '='))] = trim(substr($item, $pos + 1), ' \'"');
+        }
+        if (!isset($data['username'])) {
+            return false;
+        }
+        $consumer = new Consumer;
+        $consumer->load($data['username'], 'key');
+        if ($consumer->getId()) {
+            $cipher = new BlockCipher(new Openssl);
+            $cipher->setKey($consumer['secret']);
+            $response = explode(':', $cipher->decrypt(base64_decode($data['response'])));
+            unset($data['response']);
+            ksort($data);
+            $valid = implode(':', $data);
+            if (count($response) === 2 && $response[2] === md5($response[0] . ':' . $response[1] . ':' . $valid . ':' . $consumer['key'])) {
+                $user = $consumer->getRole()['validation'] === -1 ? (new User) : (new Customer);
+                return $user->valid($data[0], $data[1]);
+            }
+        }
         return false;
     }
 

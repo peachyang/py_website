@@ -1,0 +1,9 @@
+<form action="<?php echo $this->getBaseUrl('livechat/email/') ?>" method="post" class="email-form">
+    <div class="input-box">
+        <input type="text" name="msg" class="form-control required" />
+        <button type="submit" class="btn btn-send">
+            <span class="fa fa-send" aria-hidden="true"></span>
+            <span class="sr-only"><?php echo $this->translate('Send') ?></span>
+        </button>
+    </div>
+</form>

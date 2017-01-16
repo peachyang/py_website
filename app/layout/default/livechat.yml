@@ -1,0 +1,21 @@
+---
+livechat:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: [{src:'frontend/js/livechat.js',defer:'defer',async:'async'}]
+            extra:
+                children:
+                    livechat:
+                        type: \Seahinet\Lib\ViewModel\Template
+                        template: livechat/wrapper
+                        children:
+                            email:
+                                type: \Seahinet\Lib\ViewModel\Template
+                                template: livechat/email
+                            chat:
+                                type: \Seahinet\LiveChat\ViewModel\Chat

@@ -1,0 +1,14 @@
+<div id="livechat">
+    <ul class="nav nav-pills" role="tablist"></ul>
+    <div class="tab-content"></div>
+    <template id="tmpl-livechat-chatform">
+        <div role="tabpanel" class="tab-pane" id="{{$to}}">
+            <?php echo $this->getChild('chat') ?>
+        </div>
+    </template>
+    <template id="tmpl-livechat-mailform">
+        <div role="tabpanel" class="tab-pane" id="{{$to}}">
+            <?php echo $this->getChild('email') ?>
+        </div>
+    </template>
+</div>

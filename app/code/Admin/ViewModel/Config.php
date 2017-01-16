@@ -111,7 +111,7 @@ class Config extends Edit
             $item['options'] = (new $item['source'])->getSourceArray($item);
         }
         $config = $this->getConfig()[$prefix . '/' . $key];
-        $item['value'] = is_scalar($config) && (string) $config !== '' ? $config :
+        $item['value'] = is_scalar($config) ? $config :
                 (is_array($config) && (in_array($item['type'], ['multiselect', 'checkbox']) || $item['type'] === 'select' && isset($item['attrs']['multiple'])) ?
                 $config : (string) ($item['default'] ?? ''));
         return $item;

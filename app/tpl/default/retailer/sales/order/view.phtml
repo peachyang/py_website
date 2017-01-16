@@ -151,8 +151,10 @@ $customer = $order->getCustomer();
                     </a>
                 </dd>
             <?php endif ?>
-            <dt><?php echo $this->translate('Shipping Method') ?></dt>
-            <dd><?php echo $this->translate($order->getShippingMethod()->getLabel(), [], 'shipping') ?></dd>
+            <?php if ($method = $order->getShippingMethod()): ?>
+                <dt><?php echo $this->translate('Shipping Method') ?></dt>
+                <dd><?php echo $this->translate($order->getShippingMethod()->getLabel(), [], 'shipping') ?></dd>
+            <?php endif ?>
             <dt><?php echo $this->translate('Payment Method') ?></dt>
             <dd><?php echo $this->translate($order->getPaymentMethod()->getLabel(), [], 'payment') ?>(<?php echo $this->translate('The order was placed using %s', [$order['currency']]) ?>)</dd>
         </dl>

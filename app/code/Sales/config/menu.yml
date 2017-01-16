@@ -18,29 +18,29 @@ sales:
 #            link: 'sales_recharge_order/'
 #            operation: 'Admin\Sales\Order::recharge'
 #            title: Recharge Orders
-#            priority: 25
+#            priority: 30
 #        -
             link: 'sales_invoice/'
             operation: 'Admin\Sales\Invoice::index'
             title: Invoices
-            priority: 30
+            priority: 40
         -
             link: 'sales_shipment/'
             operation: 'Admin\Sales\Shipment::index'
             title: Shipments
-            priority: 40
+            priority: 50
         -
             link: 'sales_creditmemo/'
             operation: 'Admin\Sales\Creditmemo::index'
             title: Credit Memos
-            priority: 50
+            priority: 60
         -
             link: 'sales_refund/'
             operation: 'Admin\Sales\Refund::index'
             title: Return &amp; Refund
-            priority: 60
+            priority: 70
         -
             link: 'sales_status/'
             operation: 'Admin\Sales\Status::index'
             title: Order Statuses
-            priority: 70
+            priority: 80

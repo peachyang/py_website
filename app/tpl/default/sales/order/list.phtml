@@ -63,7 +63,7 @@ $orders = $this->getOrders();
                         <td><?php echo (float) $item->offsetGet('qty') ?></td>
                         <?php if ($flag): ?>
                             <td rowspan="<?php echo count($items) ?>" class="text-nowrap action">
-                                <?php if ($order->canRefund(false)): ?>
+                                <?php if ($order->canRefund(false) && $product->offsetGet('product_type_id') != 2): ?>
                                     <a href="<?php echo $this->getBaseUrl('sales/refund/apply/?id=' . $order['id']) ?>"><?php echo $this->translate('Refund Application') ?></a>
                                 <?php endif ?>
                             </td>

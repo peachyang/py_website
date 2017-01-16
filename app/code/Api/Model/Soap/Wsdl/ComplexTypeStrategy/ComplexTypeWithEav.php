@@ -37,10 +37,6 @@ class ComplexTypeWithEav extends DefaultComplexType
                         'type_id' => $entityType->getId()
                     ])->where->notEqualTo('input', 'password');
             $attributes->load(true, true);
-            $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
-            $element->setAttribute('name', 'sessionId');
-            $element->setAttribute('type', $this->transformType('string'));
-            $all->appendChild($element);
             foreach ($attributes as $attribute) {
                 $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
                 $element->setAttribute('name', $attribute['code']);

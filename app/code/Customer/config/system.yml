@@ -32,6 +32,14 @@ customer:
                     attrs:
                         data-base: '#login-sso'
                     comment: Separated by semicolon(;)
+                sso_key:
+                    label: SSO Key
+                    type: text
+                    priority: 30
+                    required: required
+                    attrs:
+                        data-base: '#login-sso'
+                    comment: We use the key to encrypt/decrypt sso result.
         registion:
             label: Registion Options
             scope: merchant

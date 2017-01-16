@@ -17,6 +17,18 @@ class SoapController extends AbstractController
 
     protected $wsdl = null;
 
+    /**
+     * {@inhertdoc}
+     */
+    public function dispatch($request = null, $routeMatch = null)
+    {
+        $response = $this->getResponse();
+        if (!isset($_SERVER['HTTPS'])) {
+            return $response->withStatus(403, 'SSL required');
+        }
+        return parent::dispatch($request, $routeMatch);
+    }
+
     protected function getWsdl()
     {
         $cache = $this->getContainer()->get('cache');

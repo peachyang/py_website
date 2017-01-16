@@ -28,8 +28,8 @@ $collection = $this->getStatement();
                                 <?php
                             else:
                                 ?>
-                                <a href="<?php echo $this->getBaseUrl('balance/statement/?id=' . $balance['id']); ?>"><?php echo $this->translate('To Pay'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                <a href="<?php echo $this->getBaseUrl('balance/statement/cancel/?id=' . $balance['id']); ?>" data-method="delete" data-params="id=<?php echo $balance->getId() ?>"><?php echo $this->translate('Cancel Recharge'); ?></a>
+                                <a href="<?php echo $this->getBaseUrl('balance/statement/add/?id='.$balance['id']); ?>"><?php echo $this->translate('To Pay'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                <a href="<?php echo $this->getBaseUrl('balance/statement/cancel/'); ?>" data-method="delete" data-params="id=<?php echo $balance->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Cancel Recharge'); ?></a>
                             <?php endif; ?>
                         </td>
                     </tr>

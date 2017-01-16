@@ -1,9 +1,12 @@
 <?php
 $customer = $this->getCustomer();
-$product = new \Seahinet\Catalog\ViewModel\Product\View;
+$product = new Seahinet\Catalog\ViewModel\Product\View;
 $warehouse = new Seahinet\Catalog\Model\Warehouse;
+$cart = new Seahinet\Sales\Model\Cart;
+//$item = new Seahinet\Sales\Model\Cart\Item;
+//$inventory = $item->getInventory();
 $warehouse->load(1);
-$id = $this->getConfig()['catalog/product/product_for_recharge'];
+$id = $this->getConfig()['balance/general/product_for_recharge'];
 ?>
 <div class="recharge">
     <form action="<?php echo $this->getBaseUrl('balance/statement/add/') ?>" method="post" class="form-inline" enctype="multipart/form-data">
@@ -13,9 +16,9 @@ $id = $this->getConfig()['catalog/product/product_for_recharge'];
         <input type="hidden" name="warehouse_id" value="<?php echo 1 ?>" />
         <div class="fieldset">
             <div class="input-box">
-                <label class="control-label" for="balance"><?php echo $this->translate('Amount Charge'); ?>:</label>
+                <label class="control-label" for="balance"><?php echo $this->translate('Recharge Amount'); ?>:</label>
                 <div class="cell">
-                    <input class="form-control required" name="qty" type="number" /><span><?php //echo $this->translate('Recharge Products Price');    ?><?php //echo $this->getPriceBox();    ?></span>                
+                    <input class="form-control required" name="qty" type="number" min="<?php echo 1 //(float) $inventory['min_qty'];?>" /><span><?php //echo $this->translate('Recharge Products Price');          ?><?php //echo $this->getPriceBox();          ?></span>                
                 </div>
             </div>
             <div class="buttons-set">

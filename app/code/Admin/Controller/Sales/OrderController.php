@@ -71,6 +71,12 @@ class OrderController extends AuthActionController
         return $root;
     }
 
+    public function rechargeAction()
+    {
+        $root = $this->getLayout('admin_sales_recharge_order_list');
+        return $root;
+    }
+
     public function viewAction()
     {
         if ($id = $this->getRequest()->getQuery('id')) {

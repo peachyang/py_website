@@ -29,6 +29,21 @@ class Customer extends AbstractHandler
     public $gender;
 
     /**
+     * @var string
+     */
+    public $avatar;
+
+    /**
+     * @var int
+     */
+    public $rewardpoints;
+
+    /**
+     * @var int
+     */
+    public $balance;
+
+    /**
      * @param string $sessionId
      * @param string $username
      * @param string $password

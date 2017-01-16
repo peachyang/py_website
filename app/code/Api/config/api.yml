@@ -13,13 +13,13 @@ wsdl:
     port:
         -
             name: endSession
-            input: typens:endSession
-            output: typens:endSessionResponse
+            input: tns:endSession
+            output: tns:endSessionResponse
             documentation: End web service session
         -
             name: login
-            input: typens:login
-            output: typens:loginResponse     
+            input: tns:login
+            output: tns:loginResponse     
             documentation: Login user and retrive session id      
 soap:
     login: \Seahinet\Api\Model\Api\General

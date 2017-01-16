@@ -5,16 +5,20 @@ namespace Seahinet\Customer\Controller;
 use Exception;
 use Gregwar\Captcha\PhraseBuilder;
 use Gregwar\Captcha\CaptchaBuilder;
+use Seahinet\Customer\Model\Address;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
+use Seahinet\Customer\Model\Persistent;
 use Seahinet\Email\Model\Template as TemplateModel;
 use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Customer\Model\Address;
-use Seahinet\Customer\Model\Persistent;
 use Swift_TransportException;
+use Zend\Crypt\{
+    BlockCipher,
+    Symmetric\Openssl
+};
 use Zend\Math\Rand;
 
 class AccountController extends AuthActionController
@@ -194,9 +198,11 @@ class AccountController extends AuthActionController
 
     protected function useSso(&$result)
     {
+        $config = $this->getContainer()->get('config');
         if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/sso_url']))) {
             $result['message'] = [];
-            $result['success_url'] .= '?token=';
+            $cipher = new BlockCipher(new Openssl);
+            $result['success_url'] .= '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt(json_encode($result['data']))));
         }
     }
 

@@ -36,7 +36,7 @@ class AuthController extends ActionController
         $consumer->load($query['client_id'], 'key');
         if (!$consumer->getId() && strpos(base64_decode($query['redirect_url']), $consumer['callback_url']) !== 0) {
             return $this->getResponse()->withStatus('400');
-        } else if ($consumer['role_id'] === '0') {
+        } else if ($consumer->getRole()['validation'] === '0') {
             return $this->grant($consumer, $query['redirect_url']);
         } else {
             $root = $this->getLayout('oauth_login');
@@ -84,7 +84,7 @@ class AuthController extends ActionController
             $consumer = new Consumer;
             $consumer->load($data['client_id'], 'key');
             if ($consumer->getId()) {
-                $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
+                $user = $consumer->getRole()['validation'] === -1 ? (new User) : (new Customer);
                 if ($user->valid($data['username'], $data['password'])) {
                     return $this->grant($consumer, $data['redirect_url'], $user);
                 }
@@ -116,10 +116,10 @@ class AuthController extends ActionController
                         return $this->getResponse()->withStatus(400);
                     }
                     if ($consumer->getId() && base64_decode($data['redirect_url']) === $info['redirect_url']) {
-                        if ($consumer['role_id'] == 0) {
+                        if ($consumer->getRole()['validation'] == 0) {
                             $user = true;
                         } else {
-                            $user = $consumer['role_id'] === -1 ? (new User) : (new Customer);
+                            $user = $consumer->getRole()['validation'] === -1 ? (new User) : (new Customer);
                             $user->load($info['user_id']);
                         }
                         if ($user === true || $user->getId()) {
@@ -127,7 +127,7 @@ class AuthController extends ActionController
                                 'consumer_id' => $consumer->getId()
                             ];
                             if ($user !== true) {
-                                $constraint[($consumer['role_id'] === -1 ? 'admin_id' : 'customer_id')] = $user->getId();
+                                $constraint[($consumer->getRole()['validation'] === -1 ? 'admin_id' : 'customer_id')] = $user->getId();
                             }
                             $collection = new TokenCollection;
                             $collection->columns(['open_id'])->where($constraint);

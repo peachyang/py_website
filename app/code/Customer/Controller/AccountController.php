@@ -198,6 +198,7 @@ class AccountController extends AuthActionController
 
     protected function useSso(&$result)
     {
+        $config = $this->getContainer()->get('config');
         if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/sso_url']))) {
             $result['message'] = [];
             $cipher = new BlockCipher(new Openssl);

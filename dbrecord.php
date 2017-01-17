@@ -109,3 +109,7 @@ CREATE TABLE IF NOT EXISTS `livechat_record` (
     `message` BLOB,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE `oauth_consumer` ADD `public_key` TEXT;
+ALTER TABLE `oauth_consumer` ADD `private_key` TEXT;
+ALTER TABLE `oauth_consumer` ADD `phrase` VARCHAR(255) DEFAULT NULL;

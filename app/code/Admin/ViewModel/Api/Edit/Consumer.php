@@ -6,6 +6,7 @@ use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Api\Source\RestRole;
 use Seahinet\Oauth\Model\Collection\Consumer as Collection;
 use Zend\Math\Rand;
+use Zend\Crypt\PublicKey\RsaOptions;
 
 class Consumer extends PEdit
 {
@@ -35,6 +36,9 @@ class Consumer extends PEdit
         if ($model && $model->getId()) {
             $key = $model['key'];
             $secret = $model['secret'];
+            $public = $model['public_key'];
+            $private = $model['private_key'];
+            $phrase = $model['phrase'];
         } else {
             $collection = new Collection;
             do {
@@ -45,6 +49,12 @@ class Consumer extends PEdit
                 $secret = Rand::getString(32, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
                 $collection->reset('where')->where(['secret' => $secret]);
             } while (count($collection));
+            $phrase = Rand::getString(Rand::getInteger(32, 40));
+            $rsa = new RsaOptions;
+            $rsa->setPassPhrase($phrase)
+                    ->generateKeys();
+            $public = $rsa->getPublicKey();
+            $private = $rsa->getPrivateKey();
         }
         $columns = [
             'id' => [
@@ -81,6 +91,21 @@ class Consumer extends PEdit
                     'readonly' => 'readonly'
                 ],
                 'value' => $secret
+            ],
+            'public_key' => [
+                'type' => 'textarea',
+                'label' => 'Public Key',
+                'value' => $public
+            ],
+            'private_key' => [
+                'type' => 'textarea',
+                'label' => 'Private Key',
+                'value' => $private
+            ],
+            'phrase' => [
+                'type' => 'text',
+                'label' => 'Private Key Phrase',
+                'value' => $phrase
             ],
             'callback_url' => [
                 'type' => 'url',

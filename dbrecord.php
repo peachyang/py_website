@@ -59,3 +59,20 @@ CREATE TABLE IF NOT EXISTS `retailer_manager`(
 );
 INSERT INTO `retailer_manager`(`customer_id`,`retailer_id`) SELECT `customer_id`,`id` FROM `retailer`;
 ALTER TABLE `retailer` DROP COLUMN `customer_id`;
+
+2017年1月17日9:02:30
+DROP TABLE `customer_balance`;
+CREATE TABLE IF NOT EXISTS `customer_balance`(
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `customer_id` INTEGER UNSIGNED NOT NULL,
+    `order_id` INTEGER UNSIGNED DEFAULT NULL,
+    `amount` DECIMAL(12,4) NOT NULL,
+    `comment` TEXT,
+    `status` BOOLEAN DEFAULT 1 NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX IDX_CUSTOMER_BALANCE_CUSTOMER_ID (`customer_id`),
+    INDEX IDX_CUSTOMER_BALANCE_ORDER_ID (`order_id`),
+    CONSTRAINT FK_CUSTOMER_BALANCE_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_CUSTOMER_BALANCE_ORDER_ID_SALES_ORDER_ID FOREIGN KEY (`order_id`) REFERENCES `sales_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);

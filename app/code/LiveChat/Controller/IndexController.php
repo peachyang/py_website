@@ -2,28 +2,64 @@
 
 namespace Seahinet\LiveChat\Controller;
 
-use Seahinet\Lib\Controller\ActionController;
+use Exception;
+use Seahinet\Customer\Controller\AuthActionController;
+use Seahinet\Lib\Session\Segment;
+use Seahinet\LiveChat\Model\Collection\Session as Collection;
+use Seahinet\LiveChat\Model\Session as Model;
+use Zend\Db\Sql\Where;
+use Zend\Math\Rand;
 
-class IndexController extends ActionController
+class IndexController extends AuthActionController
 {
-
-    public function prepareAction()
-    {
-        $segment = new Segment('livechat');
-        if (!($id = $segment->get('id'))) {
-            $data = $this->getRequest()->getPost();
-            foreach ($data as $key => $value) {
-                $segment->set($key, $value);
-            }
-            $id = md5(http_build_query($data) . $this->getContainer()->get('session')->getId());
-            $segment->set('id', $id);
-        }
-        return $id;
-    }
 
     public function indexAction()
     {
-        return $this->getLayout('livechat');
+        if ($to = $this->getRequest()->getQuery('chat')) {
+            $segment = new Segment('customer');
+            $from = $segment->get('customer')->getId();
+            $collection = new Collection;
+            $where1 = new Where;
+            $where1->equalTo('customer_id_1', $from)
+                    ->equalTo('customer_id_2', $to);
+            $where2 = new Where;
+            $where2->equalTo('customer_id_2', $from)
+                    ->equalTo('customer_id_1', $to);
+            $collection->columns(['id'])
+                    ->where([$where1, $where2], 'OR');
+            $collection->load(true, true);
+            $error = '';
+            if (count($collection)) {
+                $id = $collection[0]['id'];
+            } else {
+                while (1) {
+                    $id = Rand::getString(32);
+                    $model = new Model;
+                    $model->load($id);
+                    if (!$model->getId()) {
+                        try {
+                            $model->setData([
+                                'id' => $id,
+                                'customer_id_1' => $from,
+                                'customer_id_2' => $to
+                            ])->save([], true);
+                        } catch (Exception $e) {
+                            $error = $this->translate('Invalid chat id');
+                        }
+                        break;
+                    }
+                }
+            }
+        } else {
+            $error = $this->translate('Invalid chat id');
+        }
+        $root = $this->getLayout('livechat');
+        if ($error) {
+            $root->getChild('messages', true)->addMessage($error, 'danger');
+        } else {
+            $root->getChild('livechat', true)->setVariable('current', $id);
+        }
+        return $root;
     }
 
 }

@@ -1,14 +1,29 @@
+<?php
+$sessions = $this->getSessions();
+$current = $this->getVariable('current');
+?>
 <div id="livechat">
-    <ul class="nav nav-pills" role="tablist"></ul>
-    <div class="tab-content"></div>
-    <template id="tmpl-livechat-chatform">
-        <div role="tabpanel" class="tab-pane" id="{{$to}}">
-            <?php echo $this->getChild('chat') ?>
-        </div>
-    </template>
-    <template id="tmpl-livechat-mailform">
-        <div role="tabpanel" class="tab-pane" id="{{$to}}">
-            <?php echo $this->getChild('email') ?>
-        </div>
-    </template>
+    <ul class="nav nav-pills" role="tablist">
+        <?php
+        foreach ($sessions as $session):
+            if (!$current) {
+                $current = $session['id'];
+            }
+            ?>
+            <li role="presentation"<?php if ($current == $session['id']): ?> class="active"<?php endif ?>>
+                <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
+                    <?php echo $this->getName($session['customer_id_1'] == $this->getCustomerId() ? $session['customer_id_2'] : $session['customer_id_1']) ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+    <div class="tab-content">
+        <?php foreach ($sessions as $session): ?>
+            <div role="tabpanel" class="tab-pane fade<?php if ($current == $session['id']): ?> active in<?php endif ?>" id="<?php echo $session['id'] ?>">
+                <?php
+                echo $this->getChild('chat')->setVariable('id', $session['id']), $this->getChild('email')->setVariable('id', $session['id'])
+                ?>
+            </div>
+        <?php endforeach ?>
+    </div>
 </div>

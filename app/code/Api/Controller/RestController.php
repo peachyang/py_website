@@ -9,9 +9,9 @@ use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Controller\AbstractController;
 use Seahinet\Lib\Session\Csrf;
 use Seahinet\Oauth\Model\Consumer;
-use Zend\Crypt\{
-    BlockCipher,
-    Symmetric\Openssl
+use Zend\Crypt\PublicKey\{
+    Rsa,
+    Rsa\PrivateKey
 };
 
 class RestController extends AbstractController
@@ -103,9 +103,8 @@ class RestController extends AbstractController
         $consumer = new Consumer;
         $consumer->load($data['username'], 'key');
         if ($consumer->getId()) {
-            $cipher = new BlockCipher(new Openssl);
-            $cipher->setKey($consumer['secret']);
-            $response = explode(':', $cipher->decrypt(base64_decode($data['response'])));
+            $crypt = new Rsa;
+            $response = explode(':', $crypt->decrypt($data['response'], new PrivateKey($consumer->offsetGet('private_key'), $consumer->offsetGet('phrase')), Rsa::MODE_BASE64));
             unset($data['response']);
             ksort($data);
             $valid = implode(':', $data);

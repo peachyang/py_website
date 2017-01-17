@@ -2,16 +2,20 @@
 livechat:
     update: frontend
     root:
+        template: page/empty
         children:
             head:
                 action:
+                    -
+                        method: setTitle
+                        params: Live Chat
                     -
                         method: addScript
                         params: [{src:'frontend/js/livechat.js',defer:'defer',async:'async'}]
             extra:
                 children:
                     livechat:
-                        type: \Seahinet\Lib\ViewModel\Template
+                        type: \Seahinet\LiveChat\ViewModel\Wrapper
                         template: livechat/wrapper
                         children:
                             email:

@@ -3,6 +3,7 @@
 namespace Seahinet\LiveChat\ViewModel;
 
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\LiveChat\Model\Collection\Session;
 
 class Chat extends Template
 {
@@ -20,7 +21,7 @@ class Chat extends Template
                         ->withFragment('')
                         ->withQuery('')
                         ->withPort($config['livechat/port'] ?: $uri->getPort())
-                        ->withPath('/');
+                        ->withPath($config['livechat/path']);
     }
 
 }

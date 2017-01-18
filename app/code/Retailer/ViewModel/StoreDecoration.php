@@ -398,7 +398,7 @@ class StoreDecoration extends Template
         $content = '<ul>';
 
         foreach ($productsData as $key => $value) {
-            $product = new product;
+            $product = new \Seahinet\Catalog\Model\Product;
             $product->load($value['id']);
             $urls = $product->getUrl();
             $thumbnail = $products->getProduct($value['id'])->getThumbnail();

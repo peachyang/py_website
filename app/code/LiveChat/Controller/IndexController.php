@@ -33,7 +33,7 @@ class IndexController extends AuthActionController
                 $id = $collection[0]['id'];
             } else {
                 while (1) {
-                    $id = Rand::getString(32);
+                    $id = Rand::getString(Rand::getInteger(32, 40), 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
                     $model = new Model;
                     $model->load($id);
                     if (!$model->getId()) {

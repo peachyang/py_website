@@ -120,7 +120,7 @@ frontend:
                                     -
                                         method: addLink
                                         params: 
-                                            - {link:'',label:'Home',priority:0}
+                                            - {link:'/',label:'Home',priority:0}
                                     -
                                         method: addLink
                                         params:
@@ -128,7 +128,6 @@ frontend:
                                                 link: #
                                                 label: Customer Service
                                                 priority: 10
-                                                children: [{link:'',label:'Live Chat'}]
                                     -
                                         method: addLink
                                         params:

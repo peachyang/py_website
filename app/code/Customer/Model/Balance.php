@@ -9,7 +9,7 @@ class Balance extends AbstractModel
 
     protected function construct()
     {
-        $this->init('customer_balance', 'id', ['id', 'customer_id', 'amount', 'comment', 'status']);
+        $this->init('customer_balance', 'id', ['id','customer_id','order_id', 'amount', 'comment', 'status']);
     }
 
 }

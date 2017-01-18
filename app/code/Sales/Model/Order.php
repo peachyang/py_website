@@ -29,7 +29,7 @@ use Seahinet\Sales\Model\Order\{
     Status\History
 };
 
-class Order extends AbstractModel
+class  Order extends AbstractModel
 {
 
     protected $items = null;

@@ -35,6 +35,20 @@
         endforeach;
     endif;
     ?>
+    <?php
+    if ((float) $this->getCart()['is_virtual'] != 1):
+        $customer = new Seahinet\Customer\Model\Customer;
+        ?>
+        <tr>
+            <th><?php echo $this->translate('Account Balance'); ?></th>
+            <td>
+                <input type="checkbox" name="include_balance" value="1" checked="checkbox">
+                <span class="price balance" data-price="<?php echo $this->getCurrency()->convert($customer->getBalance()) ?>"><?php echo $this->getCurrency()->convert($customer->getBalance()) ?>
+            </td>
+        </tr>
+        <?php
+    endif;
+    ?>
     <tr class="grand-total">
         <th><?php echo $this->translate('Grand Total', [], 'checkout') ?></th>
         <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>

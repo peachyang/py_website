@@ -11,6 +11,7 @@ use Seahinet\Lib\Session\Csrf;
 use Seahinet\Oauth\Model\Consumer;
 use Zend\Crypt\PublicKey\{
     Rsa,
+    RsaOptions,
     Rsa\PrivateKey
 };
 
@@ -103,7 +104,7 @@ class RestController extends AbstractController
         $consumer = new Consumer;
         $consumer->load($data['username'], 'key');
         if ($consumer->getId()) {
-            $crypt = new Rsa;
+            $crypt = new Rsa((new RsaOptions())->setOpensslPadding(OPENSSL_PKCS1_PADDING));
             $response = explode(':', $crypt->decrypt($data['response'], new PrivateKey($consumer->offsetGet('private_key'), $consumer->offsetGet('phrase')), Rsa::MODE_BASE64));
             unset($data['response']);
             ksort($data);

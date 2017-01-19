@@ -54,7 +54,7 @@
             } else if (t === 'audio') {
                 m = '<audio controls="controls" src="' + m + '" />'
             }
-            $('#livechat .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
+            $('#livechat #' + this.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
             if (localStorage[this.session]) {
                 var r = JSON.parse(localStorage[this.session]);
                 r.push({class: c, msg: m});
@@ -62,18 +62,20 @@
             } else {
                 localStorage[this.session] = JSON.stringify([{class: c, msg: m}]);
             }
-            $('#livechat .chat-history').scrollTop($('#livechat .chat-list').height());
+            $('#livechat #' + this.session + ' .chat-history').scrollTop($('#livechat #' + this.session + ' .chat-list').height());
             $('#livechat').trigger('notify', t === 'text' ? m : '');
             return false;
         };
         var instance = [];
         var notify = function (e, t) {
-            var n = new Notification(translate('You have received a new message.'), {
-                body: t
-            });
-            setTimeout(function () {
-                n.close();
-            }, 3000);
+            if (Notification.permission === 'granted') {
+                var n = new Notification(translate('You have received a new message.'), {
+                    body: t
+                });
+                setTimeout(function () {
+                    n.close();
+                }, 3000);
+            }
         };
         var init = function (session) {
             instance[session] = new ws($('#livechat .chat-form').attr('action'), session);

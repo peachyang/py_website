@@ -12,6 +12,7 @@ use Seahinet\Api\Model\Soap\{
 use SoapFault;
 use Zend\Crypt\PublicKey\{
     Rsa,
+    RsaOptions,
     Rsa\PrivateKey
 };
 
@@ -56,7 +57,7 @@ class AbstractHandler implements HandlerInterface
             $user = $this->user;
         }
         if (!empty($user['private_key'])) {
-            $rsa = new Rsa;
+            $rsa = new Rsa((new RsaOptions)->setOpensslPadding(OPENSSL_PKCS1_PADDING));
             return $rsa->encrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')));
         }
         return $data;
@@ -73,7 +74,7 @@ class AbstractHandler implements HandlerInterface
             $user = $this->user;
         }
         if (!empty($user['private_key'])) {
-            $rsa = new Rsa;
+            $rsa = new Rsa((new RsaOptions)->setOpensslPadding(OPENSSL_PKCS1_PADDING));
             return $rsa->decrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')), Rsa::MODE_BASE64);
         }
         return $data;

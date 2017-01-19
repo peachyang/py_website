@@ -88,7 +88,6 @@ class  Order extends AbstractModel
         });
         $this->collateTotals();
         $this->getEventDispatcher()->trigger('order.place.after', ['model' => $this]);
-        $this->getEventDispatcher()->trigger('order.recharge.after',['model'=> $this]);
         return $this;
     }
 

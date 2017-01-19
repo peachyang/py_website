@@ -21,11 +21,6 @@ class StatementController extends AuthActionController
         return $this->getLayout('balance_statement_recharge');
     }
 
-    public function rechargePaymentAction()
-    {
-        return $this->getLayout('balance_recharge_payment');
-    }
-
     public function cancelAction()
     {
         if ($this->getRequest()->isDelete()) {

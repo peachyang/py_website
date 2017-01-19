@@ -19,7 +19,7 @@ class Balance implements ListenerInterface
         $balance = new Collection;
         $balance->columns(['balance' => new Expression('sum(amount)')])
                 ->group('customer_id')
-                ->where(['customer_id' => $event['customer']->getId()]);
+                ->where(['customer_id' => $event['customer']->getId(), 'status' => 1]);
         if ($balance->count()) {
             $event['customer']->setData('balance', $balance[0]['balance']);
         }

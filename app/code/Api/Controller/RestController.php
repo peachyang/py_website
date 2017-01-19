@@ -35,7 +35,7 @@ class RestController extends AbstractController
             return $response->withStatus(401);
         } else {
             $parts = explode(' ', $authorization);
-            $this->authOptions['type'] = array_shift($parts);
+            $this->authOptions['type'] = ucfirst(strtolower(array_shift($parts)));
             if (!is_callable([$this, $method = 'authorize' . $this->authOptions['type']]) || !$this->$method(implode(' ', $parts))) {
                 return $response->withStatus(401);
             }
@@ -135,7 +135,7 @@ class RestController extends AbstractController
 
     public function __call($name, $arguments)
     {
-        if (isset($this->authOptions['type']) && $this->authOptions['type'] === 'CSRF') {
+        if ($this->authOptions['type'] === 'Csrf') {
             return $this->getCsrfKey();
         }
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));

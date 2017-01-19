@@ -3,10 +3,14 @@
 namespace Seahinet\LiveChat\Controller;
 
 use Exception;
+use Seahinet\LiveChat\Exception\InvalidIdException;
 use Seahinet\Customer\Controller\AuthActionController;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\LiveChat\Model\Collection\Session as Collection;
-use Seahinet\LiveChat\Model\Session as Model;
+use Seahinet\LiveChat\Model\{
+    Group,
+    Session as Model
+};
 use Zend\Math\Rand;
 
 class IndexController extends AuthActionController
@@ -18,11 +22,16 @@ class IndexController extends AuthActionController
     {
         $segment = new Segment('customer');
         $from = $segment->get('customer')->getId();
+        $error = '';
         if (($to = $this->getRequest()->getQuery('chat')) && ($from != $to)) {
-            if (substr($to, 0, 1) === 'g') {
-                $error = $this->inGroup($from, $to);
-            } else {
-                $error = $this->withSingle($from, $to);
+            try {
+                if (substr($to, 0, 1) === 'g') {
+                    $id = $this->inGroup($from, $to);
+                } else {
+                    $id = $this->withSingle($from, $to);
+                }
+            } catch (InvalidIdException $e) {
+                $error = $this->translate($e->getMessage());
             }
         } else {
             $error = $this->translate('Invalid chat id');
@@ -46,7 +55,6 @@ class IndexController extends AuthActionController
                 ->where(['customer_id' => $from])
         ->where->in('id', $select);
         $collection->load(true, true);
-        $error = '';
         if (count($collection)) {
             $id = $collection[0]['id'];
         } else if ($this->canChat($from, $to)) {
@@ -69,20 +77,39 @@ class IndexController extends AuthActionController
                         $this->commit();
                     } catch (Exception $e) {
                         $this->rollback();
-                        $error = $this->translate('Invalid chat id');
+                        throw new InvalidIdException('Invalid chat id');
                     }
                     break;
                 }
             }
         } else {
-            $error = $this->translate('Invalid chat id');
+            throw new InvalidIdException('Invalid chat id');
         }
-        return $error;
+        return $id;
     }
 
     protected function inGroup($from, $to)
     {
-        
+        $group = new Group;
+        $group->load(substr($to, 1));
+        if (in_array($from, $group->getMembers())) {
+            if ($group['session_id']) {
+                return $group['session_id'];
+            } else {
+                while (1) {
+                    $id = Rand::getString(Rand::getInteger(10, 30), 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+                    $tmpGroup = new Group;
+                    $tmpGroup->load($id, 'session_id');
+                    if (!$tmpGroup->getId()) {
+                        $group->setData('session_id', $id)->save();
+                        break;
+                    }
+                }
+                return $id;
+            }
+        } else {
+            throw new InvalidIdException('Invalid chat id');
+        }
     }
 
     protected function canChat($from, $to)

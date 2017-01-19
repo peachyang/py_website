@@ -37,6 +37,15 @@ trait Rest
                 }
             }
             return $result;
+        } else if (!empty($this->authOptions['user'])) {
+            $customer = $this->authOptions['user'];
+            $result = [];
+            foreach ($attributes as $attribute) {
+                if (isset($customer[$attribute])) {
+                    $result[$attribute] = $customer[$attribute];
+                }
+            }
+            return $result;
         }
         return $this->getResponse()->withStatus(403);
     }
@@ -73,6 +82,8 @@ trait Rest
                 $token = new Token;
                 $token->load($data['openId'], 'open_id');
                 $id = $token['customer_id'];
+            } else if (!empty($this->authOptions['user'])) {
+                $id = $this->authOptions['user']->getId();
             }
             $customer = new Customer;
             $customer->load($id);
@@ -99,6 +110,11 @@ trait Rest
             $collection->columns($attributes)
                     ->where(['customer_id' => $token['customer_id']]);
             return $collection->load(true, true)->toArray();
+        } else if (!empty($this->authOptions['user'])) {
+            $collection = new AddressCollection;
+            $collection->columns($attributes)
+                    ->where(['customer_id' => $this->authOptions['user']->getId()]);
+            return $collection->load(true, true)->toArray();
         }
         return $this->getResponse()->withStatus(403);
     }
@@ -121,6 +137,16 @@ trait Rest
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
                     if ($address['customer_id'] == $token['customer_id']) {
+                        $address->remove();
+                        return $this->getResponse()->withStatus(202);
+                    }
+                }
+                return $this->getResponse()->withStatus(400);
+            } else if (!empty($this->authOptions['user'])) {
+                if ($data['id']) {
+                    $address = new Address;
+                    $address->load($data['id']);
+                    if ($address['customer_id'] == $this->authOptions['user']['id']) {
                         $address->remove();
                         return $this->getResponse()->withStatus(202);
                     }
@@ -150,7 +176,11 @@ trait Rest
                 if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
-                    if ($address['customer_id'] == $token['customer_id']) {
+                    if ($address['customer_id'] != $token['customer_id']) {
+                        $flag = true;
+                    }
+                } else if (!empty($this->authOptions['user'])) {
+                    if ($address['customer_id'] != $this->authOptions['user']['id']) {
                         $flag = true;
                     }
                 }

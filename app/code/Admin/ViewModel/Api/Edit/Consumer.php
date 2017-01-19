@@ -79,7 +79,8 @@ class Consumer extends PEdit
                 'label' => 'Client Key',
                 'required' => 'required',
                 'attrs' => [
-                    'readonly' => 'readonly'
+                    'readonly' => 'readonly',
+                    'spellcheck' => 'false'
                 ],
                 'value' => $key
             ],
@@ -88,23 +89,36 @@ class Consumer extends PEdit
                 'label' => 'Client Secret',
                 'required' => 'required',
                 'attrs' => [
-                    'readonly' => 'readonly'
+                    'readonly' => 'readonly',
+                    'spellcheck' => 'false'
                 ],
                 'value' => $secret
             ],
             'public_key' => [
                 'type' => 'textarea',
                 'label' => 'Public Key',
+                'attrs' => [
+                    'readonly' => 'readonly',
+                    'spellcheck' => 'false'
+                ],
                 'value' => $public
             ],
             'private_key' => [
                 'type' => 'textarea',
                 'label' => 'Private Key',
+                'attrs' => [
+                    'readonly' => 'readonly',
+                    'spellcheck' => 'false'
+                ],
                 'value' => $private
             ],
             'phrase' => [
                 'type' => 'text',
                 'label' => 'Private Key Phrase',
+                'attrs' => [
+                    'readonly' => 'readonly',
+                    'spellcheck' => 'false'
+                ],
                 'value' => $phrase
             ],
             'callback_url' => [

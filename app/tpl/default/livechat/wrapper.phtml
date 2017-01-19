@@ -12,7 +12,7 @@ $current = $this->getVariable('current');
             ?>
             <li role="presentation"<?php if ($current == $session['id']): ?> class="active"<?php endif ?>>
                 <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
-                    <?php echo $this->getName($session['customer_id_1'] == $this->getCustomerId() ? $session['customer_id_2'] : $session['customer_id_1']) ?>
+                    <?php echo $this->getTarget($session['id']) ?>
                 </a>
             </li>
         <?php endforeach ?>

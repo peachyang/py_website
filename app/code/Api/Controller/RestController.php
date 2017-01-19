@@ -35,7 +35,8 @@ class RestController extends AbstractController
             return $response->withStatus(401);
         } else {
             $parts = explode(' ', $authorization);
-            if (!is_callable([$this, $method = 'authorize' . $parts[0]]) || !$this->$method($parts[1])) {
+            $this->authOptions['type'] = array_shift($parts);
+            if (!is_callable([$this, $method = 'authorize' . $this->authOptions['type']]) || !$this->$method(implode(' ', $parts))) {
                 return $response->withStatus(401);
             }
         }
@@ -109,9 +110,16 @@ class RestController extends AbstractController
             unset($data['response']);
             ksort($data);
             $valid = implode(':', $data);
-            if (count($response) === 2 && $response[2] === md5($response[0] . ':' . $response[1] . ':' . $valid . ':' . $consumer['secret'])) {
+            if (count($response) === 3 && $response[2] === md5($response[0] . ':' . $response[1] . ':' . $valid . ':' . $consumer['secret'])) {
                 $user = $consumer->getRole()['validation'] === -1 ? (new User) : (new Customer);
-                return $user->valid($response[0], $response[1]);
+                if ($user->valid($response[0], $response[1])) {
+                    $this->authOptions['role'] = $consumer->getRole();
+                    $this->authOptions['role_id'] = $consumer['role_id'];
+                    $this->authOptions['validation'] = $this->authOptions['role']['validation'];
+                    $this->authOptions['open_id'] = false;
+                    $this->authOptions['user'] = $user;
+                    return true;
+                }
             }
         }
         return false;
@@ -120,7 +128,6 @@ class RestController extends AbstractController
     public function authorizeCsrf($code)
     {
         if (base64_decode($code) === $this->getContainer()->get('session')->getId()) {
-            $this->authOptions['type'] = 'CSRF';
             return true;
         }
         return false;
@@ -128,7 +135,7 @@ class RestController extends AbstractController
 
     public function __call($name, $arguments)
     {
-        if ($this->authOptions['type'] === 'CSRF') {
+        if (isset($this->authOptions['type']) && $this->authOptions['type'] === 'CSRF') {
             return $this->getCsrfKey();
         }
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));

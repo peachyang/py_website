@@ -44,7 +44,7 @@ class Wrapper extends Template
         $retailer = new Retailer;
         $retailer->load($id, 'customer_id');
         if ($retailer->getId()) {
-            return $retailer;
+            return $retailer->getStore()['name'];
         } else {
             $customer = new Customer;
             $customer->load($id);

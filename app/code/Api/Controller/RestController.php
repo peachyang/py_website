@@ -111,7 +111,7 @@ class RestController extends AbstractController
             $valid = implode(':', $data);
             if (count($response) === 2 && $response[2] === md5($response[0] . ':' . $response[1] . ':' . $valid . ':' . $consumer['key'])) {
                 $user = $consumer->getRole()['validation'] === -1 ? (new User) : (new Customer);
-                return $user->valid($data[0], $data[1]);
+                return $user->valid($response[0], $response[1]);
             }
         }
         return false;

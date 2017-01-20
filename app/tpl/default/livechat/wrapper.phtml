@@ -17,13 +17,16 @@ $current = $this->getVariable('current');
             </li>
         <?php endforeach ?>
     </ul>
-    <div class="tab-content">
-        <?php foreach ($sessions as $session): ?>
-            <div role="tabpanel" class="tab-pane fade<?php if ($current == $session['id']): ?> active in<?php endif ?>" id="<?php echo $session['id'] ?>">
-                <?php
-                echo $this->getChild('chat')->setVariable('id', $session['id']), $this->getChild('email')->setVariable('id', $session['id'])
-                ?>
-            </div>
-        <?php endforeach ?>
-    </div>
+    <form action="<?php echo $this->getWsUrl() ?>" id="chat-form">
+        <input type="hidden" name="sender" value="<?php echo $this->getSegment('customer')->get('customer')->getId() ?>" />
+        <div class="tab-content">
+            <?php foreach ($sessions as $session): ?>
+                <div role="tabpanel" class="tab-pane fade<?php if ($current == $session['id']): ?> active in<?php endif ?>" id="<?php echo $session['id'] ?>">
+                    <?php
+                    echo $this->getChild('chat')->setVariable('id', $session['id'])
+                    ?>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </form>
 </div>

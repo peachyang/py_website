@@ -18,6 +18,17 @@ class Wrapper extends Template
         return $this->customerId;
     }
 
+    public function getWsUrl()
+    {
+        $uri = $this->getRequest()->getUri();
+        $config = $this->getConfig();
+        return ($uri->getScheme() === 'https' ? 'wss:' : 'ws:') . $uri->withScheme('')
+                        ->withFragment('')
+                        ->withQuery('')
+                        ->withPort($config['livechat/port'] ?: $uri->getPort())
+                        ->withPath($config['livechat/path']);
+    }
+
     public function getSessions()
     {
         $id = $this->getCustomerId();

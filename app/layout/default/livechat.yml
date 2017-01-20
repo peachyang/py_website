@@ -22,4 +22,5 @@ livechat:
                                 type: \Seahinet\Lib\ViewModel\Template
                                 template: livechat/email
                             chat:
-                                type: \Seahinet\LiveChat\ViewModel\Chat
+                                type: \Seahinet\Lib\ViewModel\Template
+                                template: livechat/chat

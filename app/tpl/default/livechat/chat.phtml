@@ -1,25 +1,20 @@
-<form action="<?php echo $this->getWsUrl() ?>" class="chat-form">
-    <input type="hidden" name="session" value="<?php echo $this->getVariable('id') ?>" />
-    <input type="hidden" name="sender" value="<?php echo $this->getSegment('customer')->get('customer')->getId() ?>" />
-    <input type="hidden" name="type" value="text" />
-    <div class="chat-history">
-        <ul class="chat-list"></ul>
-    </div>
-    <div class="input-box">
-        <input type="file" accept="image/*" hidden="hidden" class="send-image" id="send-image-<?php echo $this->getVariable('id') ?>" />
-        <label for="send-image-<?php echo $this->getVariable('id') ?>">
-            <span class="fa fa-image"></span>
-        </label>
-        <input type="file" accept="audio/*" hidden="hidden" class="send-audio" id="send-audio-<?php echo $this->getVariable('id') ?>" />
-        <label for="send-audio-<?php echo $this->getVariable('id') ?>">
-            <span class="fa fa-volume-up"></span>
-        </label>
-    </div>
-    <div class="input-box">
-        <input type="text" name="msg" class="form-control required" x-webkit-speech />
-        <button type="submit" class="btn btn-send">
-            <span class="fa fa-send" aria-hidden="true"></span>
-            <span class="sr-only"><?php echo $this->translate('Send') ?></span>
-        </button>
-    </div>
-</form>
+<div class="chat-history">
+    <ul class="chat-list"></ul>
+</div>
+<div class="input-box">
+    <input type="file" accept="image/*" hidden="hidden" class="send-image" id="send-image-<?php echo $this->getVariable('id') ?>" />
+    <label for="send-image-<?php echo $this->getVariable('id') ?>">
+        <span class="fa fa-image"></span>
+    </label>
+    <input type="file" accept="audio/*" hidden="hidden" class="send-audio" id="send-audio-<?php echo $this->getVariable('id') ?>" />
+    <label for="send-audio-<?php echo $this->getVariable('id') ?>">
+        <span class="fa fa-volume-up"></span>
+    </label>
+</div>
+<div class="input-box">
+    <input type="text" name="msg" class="form-control required" x-webkit-speech />
+    <button type="submit" name="session" value="<?php echo $this->getVariable('id') ?>" class="btn btn-send">
+        <span class="fa fa-send" aria-hidden="true"></span>
+        <span class="sr-only"><?php echo $this->translate('Send') ?></span>
+    </button>
+</div>

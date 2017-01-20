@@ -3,6 +3,7 @@
 namespace Seahinet\Balance\Controller;
 
 use Exception;
+use Seahinet\Catalog\Exception\OutOfStock;
 use Seahinet\Catalog\Model\Product;
 use Seahinet\Customer\Controller\AuthActionController;
 use Seahinet\Customer\Model\Balance;
@@ -55,11 +56,16 @@ class StatementController extends AuthActionController
                 $cart = Cart::instance();
                 $items = $cart->getItems(true);
                 foreach ($items as $item) {
-                    $item->setData('status', 0)->save();
+                    if ($item['is_virtual'] != 1) {
+                        $item->setData('status', 0)->save();
+                    }
                 }
                 $cart->addItem($data['product_id'], $data['qty'], $data['warehouse_id']);
                 $cart->collateTotals();
                 $result['reload'] = 1;
+            } catch (OutOfStock $e) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('The requested quantity for "%s" is not available.', [(new Product)->load($data['product_id'])['name']]), 'level' => 'danger'];
             } catch (Exception $e) {
                 $result['error'] = 1;
                 $result['message'][] = ['message' => $this->translate('Prohibit the purchase of goods sold.'), 'level' => 'danger'];

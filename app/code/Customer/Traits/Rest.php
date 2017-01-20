@@ -20,32 +20,35 @@ trait Rest
     {
         $data = $this->getRequest()->getQuery();
         $attributes = $this->getAttributes(Customer::ENTITY_TYPE);
-        if ($this->authOptions['validation'] == -1) {
-            $collection = new CustomerCollection;
-            $collection->columns($attributes);
-            $this->filter($collection, $data);
-            return $collection->load(true, true)->toArray();
-        } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
-            $token = new Token;
-            $token->load($data['openId'], 'open_id');
-            $customer = new Customer;
-            $customer->load($token['customer_id']);
-            $result = [];
-            foreach ($attributes as $attribute) {
-                if (isset($customer[$attribute])) {
-                    $result[$attribute] = $customer[$attribute];
+        if ($attributes) {
+            $attributes[] = 'id';
+            if ($this->authOptions['validation'] == -1) {
+                $collection = new CustomerCollection;
+                $collection->columns($attributes);
+                $this->filter($collection, $data);
+                return $collection->load(true, true)->toArray();
+            } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+                $token = new Token;
+                $token->load($data['openId'], 'open_id');
+                $customer = new Customer;
+                $customer->load($token['customer_id']);
+                $result = [];
+                foreach ($attributes as $attribute) {
+                    if (isset($customer[$attribute])) {
+                        $result[$attribute] = $customer[$attribute];
+                    }
                 }
-            }
-            return $result;
-        } else if (!empty($this->authOptions['user'])) {
-            $customer = $this->authOptions['user'];
-            $result = [];
-            foreach ($attributes as $attribute) {
-                if (isset($customer[$attribute])) {
-                    $result[$attribute] = $customer[$attribute];
+                return $result;
+            } else if (!empty($this->authOptions['user'])) {
+                $customer = $this->authOptions['user'];
+                $result = [];
+                foreach ($attributes as $attribute) {
+                    if (isset($customer[$attribute])) {
+                        $result[$attribute] = $customer[$attribute];
+                    }
                 }
+                return $result;
             }
-            return $result;
         }
         return $this->getResponse()->withStatus(403);
     }

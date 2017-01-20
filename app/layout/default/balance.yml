@@ -68,25 +68,23 @@ balance_statement_recharge:
                     main:  
                         type: Seahinet\Balance\ViewModel\Recharge
                         template: balance/recharge
-balance_recharge_payment: 
-    update: customer_account
+checkout_order:
     root:
         children:
-            head:
-                action:
-                    -
-                        method: setTitle
-                        params: Recharge Payment
             content:
-                action:
-                    -
-                        method: setVariable
-                        params:
-                            - title
-                            - Instant Recharge
-                children: 
-                    main:  
-                        type: Seahinet\Balance\ViewModel\Recharge
-                        template: balance/payment
-             
-                       
+                children:
+                    balance:
+                        type: Seahinet\Balance\ViewModel\Checkout
+                        template: balance/balance
+checkout_order_balance:
+    update: frontend
+    root:
+        unset: [head]
+        template: page/ajax
+        children:
+            content:
+                unset: [breadcrumb,messages]
+                children:
+                    balance:
+                        type: Seahinet\Balance\ViewModel\Checkout
+                        template: Balance/balance

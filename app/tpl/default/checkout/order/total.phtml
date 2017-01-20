@@ -35,22 +35,7 @@
         endforeach;
     endif;
     ?>
-    <?php
-    $segment = new Seahinet\Lib\Session\Segment('customer');
-    //foreach ($this->getItems() as $item):
-    if ($segment->get('hasLoggedIn')) :
-        ?>
-        <tr>
-            <th><?php echo $this->translate('Account Balance'); ?></th>
-            <td>
-                <input type="checkbox" name="include_balance" value="1" checked="checkbox">
-                <span class="price balance" data-price="<?php echo $this->getCurrency()->convert($segment->get('customer')->getBalance(), TRUE) ?>"><?php echo $this->getCurrency()->convert($segment->get('customer')->getBalance(), TRUE) ?>
-            </td>
-        </tr>
-        <?php
-    endif;
-    // endforeach;
-    ?>
+    
     <tr class="grand-total">
         <th><?php echo $this->translate('Grand Total', [], 'checkout') ?></th>
         <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>

@@ -1,0 +1,16 @@
+<?php
+$segment = new Seahinet\Lib\Session\Segment('customer');
+if ($segment->get('hasLoggedIn')):
+    $cart = new Seahinet\Checkout\ViewModel\Cart;
+    ?>
+    <section class="section rewardpoints" data-change-after="coupon">
+        <h4 class="title"><?php echo $this->translate('Balance'); ?></h4>
+        <p>
+            <input type="checkbox" name="include_balance" value="<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE); ?>"/>
+            <label for="include_balance"><?php echo $this->translate('Use Balance'); ?></label>
+            <span class="price balance" data-price="<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?>">：<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?></span>
+        </p>
+    </section>
+    <?php
+endif;
+?>

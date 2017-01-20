@@ -88,9 +88,6 @@ checkout_order:
                     payment:
                         type: Seahinet\Checkout\ViewModel\Order\Payment
                         template: checkout/order/payment
-                    balance:
-                        type: Seahinet\Checkout\ViewModel\Order\Balance
-                        template: checkout/order/balance
                     review:
                         type: Seahinet\Checkout\ViewModel\Order\Review
                         template: checkout/order/review

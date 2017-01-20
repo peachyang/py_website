@@ -98,23 +98,26 @@ trait Rest
     {
         $data = $this->getRequest()->getQuery();
         $attributes = $this->getAttributes(Address::ENTITY_TYPE);
-        if ($this->authOptions['validation'] == -1) {
-            $collection = new AddressCollection;
-            $collection->columns($attributes);
-            $this->filter($collection, $data);
-            return $collection->load(true, true)->toArray();
-        } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
-            $token = new Token;
-            $token->load($data['openId'], 'open_id');
-            $collection = new AddressCollection;
-            $collection->columns($attributes)
-                    ->where(['customer_id' => $token['customer_id']]);
-            return $collection->load(true, true)->toArray();
-        } else if (!empty($this->authOptions['user'])) {
-            $collection = new AddressCollection;
-            $collection->columns($attributes)
-                    ->where(['customer_id' => $this->authOptions['user']->getId()]);
-            return $collection->load(true, true)->toArray();
+        if ($attributes) {
+            $attributes[] = 'id';
+            if ($this->authOptions['validation'] == -1) {
+                $collection = new AddressCollection;
+                $collection->columns($attributes);
+                $this->filter($collection, $data);
+                return $collection->load(true, true)->toArray();
+            } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
+                $token = new Token;
+                $token->load($data['openId'], 'open_id');
+                $collection = new AddressCollection;
+                $collection->columns($attributes)
+                        ->where(['customer_id' => $token['customer_id']]);
+                return $collection->load(true, true)->toArray();
+            } else if (!empty($this->authOptions['user'])) {
+                $collection = new AddressCollection;
+                $collection->columns($attributes)
+                        ->where(['customer_id' => $this->authOptions['user']->getId()]);
+                return $collection->load(true, true)->toArray();
+            }
         }
         return $this->getResponse()->withStatus(403);
     }

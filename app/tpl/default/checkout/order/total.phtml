@@ -34,8 +34,7 @@
             <?php
         endforeach;
     endif;
-    ?>
-    
+    ?>   
     <tr class="grand-total">
         <th><?php echo $this->translate('Grand Total', [], 'checkout') ?></th>
         <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>

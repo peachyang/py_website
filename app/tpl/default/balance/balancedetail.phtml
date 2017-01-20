@@ -16,7 +16,7 @@ $collection = $this->getStatement();
             <tbody>
                 <?php foreach ($collection as $balance): ?>
                     <tr class="text-center">
-                        <td><?php echo (int) $balance['amount'] ?></td>
+                        <td><?php echo (new \Seahinet\Sales\Model\Order)->getCurrency()->convert($balance['amount'], TRUE) ?></td>
                         <td><?php echo $this->translate($balance['comment']) ?></td>
                         <td><?php echo $this->translate($balance['status'] ? 'Payment Success' : 'Pending Payment') ?></td>
                         <td><?php echo $balance['created_at'] ?></td>
@@ -28,7 +28,7 @@ $collection = $this->getStatement();
                                 <?php
                             else:
                                 ?>
-                                <a href="<?php echo $this->getBaseUrl('balance/statement/add/?id='.$balance['id']); ?>"><?php echo $this->translate('To Pay'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                <span><?php echo $this->translate('Pending Payment'); ?></span>&nbsp;&nbsp;|&nbsp;&nbsp;
                                 <a href="<?php echo $this->getBaseUrl('balance/statement/cancel/'); ?>" data-method="delete" data-params="id=<?php echo $balance->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Cancel Recharge'); ?></a>
                             <?php endif; ?>
                         </td>

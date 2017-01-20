@@ -1,0 +1,12 @@
+---
+order.place.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderPlace]
+        priority: 30
+    -
+        listener: [\Seahinet\Balance\Listeners\Using, afterOrderPlace]
+        priority: 30
+Seahinet\Sales\Model\Order.model.save.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderComplete]
+        priority: 30

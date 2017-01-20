@@ -8,7 +8,6 @@
     <?php echo $this->getChild('messages') ?>
     <div class="checkout-steps">
         <?php
-        $balance = new Seahinet\Balance\ViewModel\BalanceDetail;
         $steps = $this->getConfig()['checkout'];
         ksort($steps);
         foreach ($steps as $step) {

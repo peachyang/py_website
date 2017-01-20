@@ -61,17 +61,17 @@ class InvoiceController extends AuthActionController
                     'order_id' => $data['order_id'],
                     'comment' => $data['comment'] ?? ''
                 ]);
-                $item = new Item;
-                if ($item->offsetGet('product')['product_type_id'] === 2) {
-                    $balance = new Balance;
-                    $balance->setData($order->toArray())->setData([
-                        'customer_id' => $order->offsetGet('customer_id'),
-                        'order_id' => $data['order_id'],
-                        'amount' => $order->offsetGet('total'),
-                        'comment' => $data['comment'] ?? '',
-                        'status' => $order->offsetGet('status_id')
-                    ])->save();
-                }
+//                $item = new Item;
+//                if ($item->offsetGet('product')['product_type_id'] === 2) {
+//                    $balance = new Balance;
+//                    $balance->setData($order->toArray())->setData([
+//                        'customer_id' => $order->offsetGet('customer_id'),
+//                        'order_id' => $data['order_id'],
+//                        'amount' => $order->offsetGet('total'),
+//                        'comment' => $data['comment'] ?? '',
+//                        'status' => $order->offsetGet('status_id')
+//                    ])->save();
+//                }
                 if (empty($data['include_shipping'])) {
                     $invoice->setData([
                         'base_shipping' => 0,
@@ -86,7 +86,6 @@ class InvoiceController extends AuthActionController
                 }
                 $this->beginTransaction();
                 $invoice->setId(null)->save();
-                //$balance->setId(null)->save();
                 foreach ($order->getItems(true) as $item) {
                     foreach ($data['item_id'] as $key => $id) {
                         if ($id == $item->getId()) {

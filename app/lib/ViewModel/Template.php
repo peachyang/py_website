@@ -57,7 +57,7 @@ class Template extends AbstractViewModel
             return $rendered;
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException(new Exception($e->getMessage() . ' in ' . $template, $e->getCode(), $e->getPrevious()));
-            if (Bootstrap::isDeveloperMode()) {
+            if (Bootstrap::isDeveloperMode() && $this->getSegment('debug')->get('tip', false)) {
                 echo '<div class="template-tip" data-template="', $template ?? $this->getTemplate(), '" data-viewmodel="', get_class($this), '">' . $e->__toString() . '</div>';
             }
             return '';
@@ -74,18 +74,18 @@ class Template extends AbstractViewModel
     {
         try {
             ob_start();
-            if (Bootstrap::isDeveloperMode()) {
+            if (Bootstrap::isDeveloperMode() && $this->getSegment('debug')->get('tip', false)) {
                 echo '<div class="template-tip" data-template="', $template, '" data-viewmodel="', get_class($this), '">';
             }
             include $template;
-            if (Bootstrap::isDeveloperMode()) {
+            if (Bootstrap::isDeveloperMode() && $this->getSegment('debug')->get('tip', false)) {
                 echo '</div>';
             }
             return ob_get_clean();
         } catch (Error $e) {
             $this->getContainer()->get('log')->logError($e);
             ob_end_clean();
-            return Bootstrap::isDeveloperMode() ?
+            return Bootstrap::isDeveloperMode() && $this->getSegment('debug')->get('tip', false) ?
                     ('<div class="template-tip" data-template="' . $template .
                     '" data-viewmodel="' . get_class($this) . '">' . $e->__toString() . '</div>') : '';
         }

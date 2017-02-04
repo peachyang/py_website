@@ -176,7 +176,7 @@ class AccountController extends AuthActionController
                         ])->save();
                         $result['cookie'] = ['key' => 'persistent', 'value' => $key, 'path' => '/', 'expires' => time() + 604800];
                     }
-                    $result['data'] = ['username' => $data['username']];
+                    $result['data'] = ['username' => $data['username'], 'email' => $customer['email']];
                     $result['message'][] = ['message' => $this->translate('Welcome %s.', [$customer['username']], 'customer'), 'level' => 'success'];
                 } else if ($customer['status']) {
                     $result['error'] = 1;
@@ -272,6 +272,9 @@ class AccountController extends AuthActionController
             'cookie' => ['key' => 'persistent', 'value' => null]
         ]]];
         $this->getContainer()->get('eventDispatcher')->trigger('customer.logout.after');
+        if($url = $this->getRequest()->getQuery('success_url')){
+            $result['success_url'] = base64_decode($url);
+        }
         return $this->response($result, 'customer/account/login/', 'customer');
     }
 

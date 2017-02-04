@@ -43,7 +43,7 @@ final class Cache implements ArrayAccess, Singleton
     /**
      * @var string
      */
-    private $salt = '';
+    public $salt = '';
 
     /**
      * @var callable

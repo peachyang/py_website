@@ -131,7 +131,7 @@ class Indexer implements Stdlib\Singleton
      */
     public function select($entityType, $languageId, $constraint = [], $options = [])
     {
-        $key = md5($entityType . $languageId . serialize($constraint), serialize($options));
+        $key = md5($entityType . $languageId . serialize($constraint) . serialize($options));
         $result = empty($options['noCache']) ?
                 $this->getCacheInstance()->fetch($key, 'INDEX_') : 0;
         unset($options['noCache']);

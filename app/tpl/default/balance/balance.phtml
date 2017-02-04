@@ -1,16 +1,26 @@
-<?php
-$segment = new Seahinet\Lib\Session\Segment('customer');
-if ($segment->get('hasLoggedIn')):
-    $cart = new Seahinet\Checkout\ViewModel\Cart;
-    ?>
-    <section class="section rewardpoints" data-change-after="coupon">
-        <h4 class="title"><?php echo $this->translate('Balance'); ?></h4>
-        <p>
-            <input type="checkbox" name="include_balance" value="<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE); ?>"/>
-            <label for="include_balance"><?php echo $this->translate('Use Balance'); ?></label>
-            <span class="price balance" data-price="<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?>">：<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?></span>
-        </p>
-    </section>
-    <?php
-endif;
-?>
+<section class="section balance" data-change-after="rewardpoints" data-url="<?php echo $this->getBaseUrl('balance/index/load/'); ?>">
+    <h4 class="title"><?php echo $this->translate('Balance'); ?></h4>
+    <div>
+        <?php
+        if ($this->hasLoggedIn() && $this->getConfig()['balance/general/enable'] && $this->getConfig()['balance/general/product_for_recharge']):
+            $cart = new Seahinet\Checkout\ViewModel\Cart;
+            $balances = $this->getAvailableBalances();
+            ?>
+            <?php
+            if ($balances):
+                ?>
+                <p>
+                    <input type="checkbox" name="include_balance" id="include_balance" value="<?php echo $cart->getCurrency()->convert($balances, TRUE); ?>"/>
+                    <label for="include_balance"><?php echo $this->translate('Available Balance'); ?></label>
+                    <span class="price balance" data-price="<?php echo $cart->getCurrency()->convert($balances, TRUE) ?>">：<?php echo $cart->getCurrency()->convert($balances, TRUE) ?></span>
+                </p>
+                <?php
+            else:
+                ?>
+                <p><?php echo $this->translate('Current available balance.'); ?></p>
+            <?php
+            endif;
+        endif;
+        ?>
+    </div>
+</section>

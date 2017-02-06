@@ -1,10 +1,10 @@
-<section class="section balance" data-change-after="balances" data-url="<?php echo $this->getBaseUrl('balance/index/load/'); ?>">
+<section class="section balance" data-change-after="coupon" data-url="<?php echo $this->getBaseUrl('balance/index/load/'); ?>">
     <h4 class="title"><?php echo $this->translate('Balance'); ?></h4>
     <div class="available">
         <?php
         if ($this->hasLoggedIn() && $this->getConfig()['balance/general/enable'] && $this->getConfig()['balance/general/product_for_recharge']):
             $cart = new Seahinet\Checkout\ViewModel\Cart;
-            $balances = $this->getAvailableBalances();
+            $balances = $this->getCurrentBalances();
             ?>
             <?php
             if ($balances):

@@ -12,17 +12,60 @@ wsdl:
             customerId: int
         customerInfoResponse:
             customer: customer
+        addressList:
+            sessionId: string
+            customerId: int
+        addressListResponse:
+            address: address[]
+        addressInfo:
+            sessionId: string
+            customerId: int
+            addressId: int
+        addressInfoResponse:
+            address: address
+        addressSave:
+            sessionId: string
+            customerId: int
+            data: address
+        addressSaveResponse:
+            result: bool
+        addressDelete:
+            sessionId: string
+            customerId: int
+            addressId: int
+        addressDeleteResponse:
+            result: bool
     port:
         -
             name: customerValid
-            input: typens:customerValid
-            output: typens:customerValidResponse
+            input: tns:customerValid
+            output: tns:customerValidResponse
             documentation: Valid customer username and password
         -
             name: customerInfo
-            input: typens:customerInfo
-            output: typens:customerInfoResponse
+            input: tns:customerInfo
+            output: tns:customerInfoResponse
             documentation: Get customer info by id
+        -
+            name: addressList
+            input: tns:addressList
+            output: tns:addressListResponse
+            documentation: Get customer address list
+        -
+            name: addressInfo
+            input: tns:addressInfo
+            output: tns:addressInfoResponse
+            documentation: Get customer address infomation
+        -
+            name: addressSave
+            input: tns:addressSave
+            output: tns:addressSaveResponse
+            documentation: Update or create a customer address
+        -
+            name: addressDelete
+            input: tns:addressDelete
+            output: tns:addressDeleteResponse
+            documentation: Delete a customer address
 soap:
     customerValid: \Seahinet\Customer\Model\Api\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Customer

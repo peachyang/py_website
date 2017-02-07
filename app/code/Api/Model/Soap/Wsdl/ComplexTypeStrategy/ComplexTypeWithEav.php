@@ -15,46 +15,87 @@ class ComplexTypeWithEav extends DefaultComplexType
      */
     public function addComplexType($type)
     {
+        $isArray = false;
+        if (substr($type, -2) === '[]') {
+            $type = substr($type, 0, -2);
+            $isArray = true;
+        }
         if (class_exists($type)) {
-            return parent::addComplexType($type);
+            $result = parent::addComplexType($type);
+        } else if (($soapType = $this->scanRegisteredTypes($type)) !== null) {
+            $result = $soapType;
+        } else {
+            $result = $this->addEavType($type);
         }
-        if (($soapType = $this->scanRegisteredTypes($type)) !== null) {
-            return $soapType;
+        if ($isArray) {
+            $result = $this->addArrayType($result);
         }
+        return $result;
+    }
+
+    protected function addArrayType($type)
+    {
+        $tns = Wsdl::TYPES_NS . ':';
+        $dom = $this->getContext()->toDomDocument();
+        $elementType = str_replace($tns, '', $type);
+        $soapTypeName = 'ArrayOf' . ucfirst($elementType);
+        $soapType = $tns . $soapTypeName;
+        $this->getContext()->addType($type, $soapType);
+        $complexType = $dom->createElementNS(Wsdl::XSD_NS_URI, 'complexType');
+        $complexType->setAttribute('name', $soapTypeName);
+        $sequence = $dom->createElementNS(Wsdl::XSD_NS_URI, 'sequence');
+        $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
+        $element->setAttribute('name', $elementType);
+        $element->setAttribute('type', $tns . $elementType);
+        $element->setAttribute('nillable', 'true');
+        $element->setAttribute('minOccurs', 0);
+        $element->setAttribute('maxOccurs', 'unbounded');
+        $sequence->appendChild($element);
+        $complexType->appendChild($sequence);
+        $this->getContext()->getSchema()->appendChild($complexType);
+        return $soapType;
+    }
+
+    protected function addEavType($type)
+    {
         $entityType = new Type;
         $entityType->load($type, 'code');
-        if ($entityType->getId()) {
-            $dom = $this->getContext()->toDomDocument();
-            $soapTypeName = $this->getContext()->translateType($type);
-            $soapType = Wsdl::TYPES_NS . ':' . $soapTypeName;
-            $this->getContext()->addType($type, $soapType);
-            $complexType = $dom->createElementNS(Wsdl::XSD_NS_URI, 'complexType');
-            $complexType->setAttribute('name', $soapTypeName);
-            $all = $dom->createElementNS(Wsdl::XSD_NS_URI, 'all');
-            $attributes = new Attribute;
-            $attributes->columns(['code', 'type', 'is_required'])
-                    ->where([
-                        'type_id' => $entityType->getId()
-                    ])->where->notEqualTo('input', 'password');
-            $attributes->load(true, true);
-            foreach ($attributes as $attribute) {
-                $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
-                $element->setAttribute('name', $attribute['code']);
-                $element->setAttribute('type', $this->transformType($attribute['type']));
-                if (!$attribute['is_required']) {
-                    $element->setAttribute('nillable', 'true');
-                }
-                $all->appendChild($element);
-            }
-            $complexType->appendChild($all);
-            $this->getContext()->getSchema()->appendChild($complexType);
-            return $soapType;
-        } else {
+        if (!$entityType->getId()) {
             throw new Exception\InvalidArgumentException(sprintf(
                     'Cannot add a complex type %s that is not an object or where '
                     . 'class could not be found in "ComplexTypeWithEav" strategy.', $type
             ));
         }
+        $dom = $this->getContext()->toDomDocument();
+        $soapTypeName = $this->getContext()->translateType($type);
+        $soapType = Wsdl::TYPES_NS . ':' . $soapTypeName;
+        $this->getContext()->addType($type, $soapType);
+        $complexType = $dom->createElementNS(Wsdl::XSD_NS_URI, 'complexType');
+        $complexType->setAttribute('name', $soapTypeName);
+        $all = $dom->createElementNS(Wsdl::XSD_NS_URI, 'all');
+        $attributes = new Attribute;
+        $attributes->columns(['code', 'type', 'is_required'])
+                ->where([
+                    'type_id' => $entityType->getId()
+                ])->where->notEqualTo('input', 'password');
+        $attributes->load(true, true);
+        $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
+        $element->setAttribute('name', 'id');
+        $element->setAttribute('type', 'int');
+        $element->setAttribute('nillable', 'true');
+        $all->appendChild($element);
+        foreach ($attributes as $attribute) {
+            $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
+            $element->setAttribute('name', $attribute['code']);
+            $element->setAttribute('type', $this->transformType($attribute['type']));
+            if (!$attribute['is_required']) {
+                $element->setAttribute('nillable', 'true');
+            }
+            $all->appendChild($element);
+        }
+        $complexType->appendChild($all);
+        $this->getContext()->getSchema()->appendChild($complexType);
+        return $soapType;
     }
 
     protected function transformType($type)

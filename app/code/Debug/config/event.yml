@@ -1,0 +1,13 @@
+---
+db.query.after:
+    -
+        listener: [\Seahinet\Debug\Listeners\Log, logSql]
+        priority: 99
+cache.fetch.after:
+    -
+        listener: [\Seahinet\Debug\Listeners\Log, logCache]
+        priority: 99
+cache.fetchMultiple.after:
+    -
+        listener: [\Seahinet\Debug\Listeners\Log, logCaches]
+        priority: 99

@@ -1,0 +1,17 @@
+---
+default:
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addLink
+                        params: backend/css/debug.css
+                    -
+                        method: addScript
+                        params: [{src:'backend/js/debug.js',defer:'defer',async:'async'}]
+            extra:
+                children:
+                    debug-toolbar:
+                        type: Seahinet\Debug\ViewModel\Toolbar
+                        template: debug/toolbar

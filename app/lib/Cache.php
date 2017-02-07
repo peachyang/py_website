@@ -178,9 +178,14 @@ final class Cache implements ArrayAccess, Singleton
     public function fetch($id, $prefix = '')
     {
         if ($this->disabled || count($this->unhitPrefix) && in_array($prefix, $this->unhitPrefix)) {
-            return null;
+            $result = null;
+        } else {
+            $result = call_user_func($this->decoder, $this->pool->fetch($this->salt . $prefix . $id));
         }
-        return call_user_func($this->decoder, $this->pool->fetch($this->salt . $prefix . $id));
+        if (Bootstrap::isDeveloperMode()) {
+            $this->getContainer()->get('eventDispatcher')->trigger('cache.fetch.after', ['key' => $id, 'prefix' => $prefix, 'result' => $result]);
+        }
+        return $result;
     }
 
     /**
@@ -240,25 +245,28 @@ final class Cache implements ArrayAccess, Singleton
      */
     public function fetchMultiple(array $keys, $prefix = '')
     {
-        if ($this->disabled) {
-            return [];
-        }
         $result = [];
-        $fetchKey = $keys;
-        if (count($this->unhitPrefix)) {
-            $fetchKey = [];
-            $regex = '/^(' . implode('|', $this->unhitPrefix) . ')/';
-            foreach ($keys as $key) {
-                if (!preg_match($regex, $key)) {
-                    $fetchKey[] = $this->salt . $key;
+        if (!$this->disabled) {
+            $fetchKey = $keys;
+            if (count($this->unhitPrefix)) {
+                $fetchKey = [];
+                $regex = '/^(' . implode('|', $this->unhitPrefix) . ')/';
+                foreach ($keys as $key) {
+                    if (!preg_match($regex, $key)) {
+                        $fetchKey[] = $this->salt . $key;
+                    }
                 }
             }
+            $values = $this->pool->fetchMultiple($fetchKey);
+            foreach ($values as $value) {
+                $result[] = call_user_func($this->decoder, $value);
+            }
+            $result = array_combine($fetchKey, $result);
         }
-        $values = $this->pool->fetchMultiple($fetchKey);
-        foreach ($values as $value) {
-            $result[] = call_user_func($this->decoder, $value);
+        if (Bootstrap::isDeveloperMode()) {
+            $this->getContainer()->get('eventDispatcher')->trigger('cache.fetchMultiple.after', ['keys' => $keys, 'prefix' => $prefix, 'result' => $result]);
         }
-        return array_combine($fetchKey, $result);
+        return $result;
     }
 
     /**

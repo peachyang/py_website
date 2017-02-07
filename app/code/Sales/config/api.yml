@@ -23,6 +23,7 @@ attributes:
         shipping: Shipping Fee
         base_discount: Base Discount
         discount: Discount
+        discount_detail: Discount Detail
         base_tax: Base Tax
         tax: Tax
         base_total: Base Total
@@ -150,3 +151,106 @@ attributes:
         track_number: Track Number
         description: Description
         created_at: Time
+    cart:
+        id: ID
+        customer_id: Customer ID
+        billing_address: Billing Address
+        shipping_address: Shipping Address
+        is_virtual: Is Virtual
+        free_shipping: Free Shipping
+        coupon: Coupon
+        base_currency: Base Currency
+        currency: Currency
+        shipping_method: Shipping Method
+        payment_method: Payment Method
+        base_subtotal: Base Subtotal
+        subtotal: Subtotal
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        discount_detail: Discount Detail
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+        customer_note: Customer Note
+    cart_item:
+        product_id: Product ID
+        product_name: Product Name
+        warehouse_id: Warehouse ID
+        store_id: Store ID
+        options: Options
+        qty: Qty
+        weight: Weight
+        sku: SKU
+        is_virtual: Is Virtual
+        free_shipping: Free Shipping
+        base_price: Base Price
+        price: Price
+        base_shipping: Base Shipping Fee
+        shipping: Shipping Fee
+        base_discount: Base Discount
+        discount: Discount
+        base_tax: Base Tax
+        tax: Tax
+        base_total: Base Total
+        total: Grand Total
+        status: Status
+wsdl:
+    message:
+        cartInfo:
+            sessionId: string
+            customerId: int
+            withItems: bool
+        cartInfoResponse:
+            cart: \Seahinet\Sales\Model\Api\Cart
+        cartAddItem:
+            sessionId: string
+            customerId: int
+            productId: int
+            qty: float
+            warehouseId: int
+            options: string
+            sku: string
+        cartAddItemResponse:
+            result: bool
+        cartChangeItemQty:
+            sessionId: string
+            customerId: int
+            itemId: int
+            qty: float
+        cartChangeItemQtyResponse:
+            result: bool
+        cartRemoveItem:
+            sessionId: string
+            customerId: int
+            itemId: int
+        cartRemoveItemResponse:
+            result: bool
+    port:
+        -
+            name: cartInfo
+            input: tns:cartInfo
+            output: tns:cartInfoResponse
+            documentation: Get cart infomation
+        -
+            name: cartAddItem
+            input: tns:cartAddItem
+            output: tns:cartAddItemResponse
+            documentation: Add item to shopping cart
+        -
+            name: cartChangeItemQty
+            input: tns:cartChangeItemQty
+            output: tns:cartChangeItemQtyResponse
+            documentation: Change shopping item quentity
+        -
+            name: cartRemoveItem
+            input: tns:cartRemoveItem
+            output: tns:cartRemoveItemResponse
+            documentation: Remove item from shopping cart
+soap:
+    cartInfo: \Seahinet\Sales\Model\Api\Cart
+    cartAddItem: \Seahinet\Sales\Model\Api\Cart
+    cartChangeItemQty: \Seahinet\Sales\Model\Api\Cart
+    cartRemoveItem: \Seahinet\Sales\Model\Api\Cart

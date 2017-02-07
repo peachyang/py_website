@@ -90,9 +90,13 @@ class AbstractHandler implements HandlerInterface
         $reflection = is_string($className) ? (new ReflectionClass($className)) :
                 (is_null($className) ? (new ReflectionObject($this)) : (new ReflectionObject($className)));
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
-        $result = [];
-        foreach ($properties as $property) {
-            $result[$property->getName()] = $data[$property->getName()] ?? null;
+        if (empty($properties)) {
+            $result = $data;
+        } else {
+            $result = [];
+            foreach ($properties as $property) {
+                $result[$property->getName()] = $data[$property->getName()] ?? null;
+            }
         }
         return (object) $result;
     }

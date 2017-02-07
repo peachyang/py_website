@@ -2,6 +2,7 @@
 
 namespace Seahinet\Api\Model\Api;
 
+use SoapFault;
 use Seahinet\Api\Model\Soap\User;
 use Seahinet\Api\Model\Soap\Session;
 
@@ -23,7 +24,7 @@ final class General extends AbstractHandler
                     ->save();
             return $session->getId();
         }
-        return '';
+        return new SoapFault('Client', 'Invalid username or password.');
     }
 
     /**

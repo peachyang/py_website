@@ -13,12 +13,12 @@ Seahinet\Sales\Model\Order.model.save.after:
 promotion.calc:
     -
         listener: [\Seahinet\Balance\Listeners\Using, calc]
-        priority: 1000
+        priority: 1010
 balances.apply:
     -
          listener: [\Seahinet\Balance\Listeners\Using, apply]
-         priority: 1000
+         priority: 10
 balances.cancel:
     -
          listener: [\Seahinet\Balance\Listeners\Using, cancel]
-         priority: 1000
+         priority: 10

@@ -1,0 +1,107 @@
+<div id="debug-toolbar">
+    <!--[if (gte IE 9)|(!IE)]><!-->
+    <img src="<?php echo $this->getPubUrl('backend/images/logo-o.svg') ?>" class="logo" alt="" />
+    <!--<![endif]-->
+    <!--[if lt IE 9]><img src="<?php echo $this->getPubUrl('backend/images/logo-o.png') ?>" class="logo" alt="" /><![endif]-->
+    <ul class="nav nav-pills">
+        <li class="hidden-xs"><span class="fa fa-microchip" title="<?php echo $this->translate('Peak Memory') ?>"></span><span><?php echo $this->getMemory() ?></span></li>
+        <li><a href="#debug-db" data-toggle="tab"><?php echo $this->translate('Database') ?></a></li>
+        <li><a href="#debug-cache" data-toggle="tab"><?php echo $this->translate('Cache') ?></a></li>
+        <li><a href="#debug-settings" data-toggle="tab"><?php echo $this->translate('Settings') ?></a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" id="debug-db">
+            <div class="table-responsive">
+                <table class="table">
+                    <colgroup>
+                        <col />
+                        <col width="1" />
+                        <col width="1" />
+                        <col width="1" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate('SQL') ?></th>
+                            <th><?php echo $this->translate('Parameters') ?></th>
+                            <th><?php echo $this->translate('Count of Result') ?></th>
+                            <th><?php echo $this->translate('Action') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->getSqls() as $sql): ?>
+                            <tr>
+                                <td><?php echo $sql['sql'] ?></td>
+                                <td><?php echo is_array($sql['params']) ? json_encode($sql['params']) : '' ?></td>
+                                <td><?php echo $sql['count'] ?></td>
+                                <td>
+                                    <a title="<?php echo $this->translate('Explain') ?>" href="<?php echo $this->getBaseUrl('debug/sql/explain/') ?>" data-params="sql=<?php echo str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($sql['sql'])) ?>">
+                                        <span class="fa fa-pie-chart" aria-hidden="true"></span>
+                                        <span class="sr-only"><?php echo $this->translate('Explain') ?></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane" id="debug-cache">
+            <div class="table-responsive">
+                <table class="table">
+                    <colgroup>
+                        <col width="1" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate('Key') ?></th>
+                            <th><?php echo $this->translate('Value') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($this->getCacheList() as $prefix => $list):
+                            if ($prefix):
+                                ?>
+                                <tr>
+                                    <th><?php echo $this->translate($prefix, [], 'cache') ?></th>
+                                    <td><?php echo $this->translate('%d record(s)', [count($list)]) ?></td>
+                                </tr>
+                                <?php
+                            endif;
+                            foreach ($list as $key => $value):
+                                ?>
+                                <tr>
+                                    <th><?php echo $key ?></th>
+                                    <td>
+                                        <?php if (is_null($value) || $value === ''): ?>
+                                            UNHIT
+                                        <?php else: ?>
+                                            <a href="javascript:void(0);" class="loaded"><?php echo $this->translate('View') ?></a>
+                                        <?php endif ?>
+                                    </td>
+                                </tr>
+                                <?php if (!is_null($value) && $value !== ''): ?>
+                                    <tr style="display:none">
+                                        <td colspan="2"><?php echo htmlspecialchars(is_array($value) ? json_encode($value) : (is_object($value) ? serialize($value) : $value)) ?></td>
+                                    </tr>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane" id="debug-settings">
+            <ul class="list-unstyled">
+                <li>
+                    <input type="checkbox" data-url="<?php echo $this->getBaseUrl('debug/tip/switch/') ?>" <?php if ($this->showTip()): ?> checked="checked"<?php endif ?> id="template-tip" />
+                    <label for="template-tip"><?php echo $this->translate('Template Tip') ?></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <a href="javascript:void(0);" class="toggle-button">
+        <span class="fa fa-power-off" aria-hidden="true"></span>
+    </a>
+</div>

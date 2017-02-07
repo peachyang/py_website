@@ -265,6 +265,9 @@ final class Head extends Template implements Singleton
         $combine = $config['theme/global/combine_js'];
         $files = [];
         $prefix = 'pub/theme/' . $config[$this->isAdminPage() ? 'theme/backend/static' : 'theme/frontend/static'] . '/';
+        usort($scripts, function($a, $b) {
+            return (is_string($b) ? 1 : (isset($b['defer']) ? -1 : 0)) <=> (is_string($a) ? 1 : (isset($a['defer']) ? -1 : 0));
+        });
         foreach ($scripts as $script) {
             if (is_string($script)) {
                 $script = ['src' => $script];

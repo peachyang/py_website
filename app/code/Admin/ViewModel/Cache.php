@@ -27,7 +27,8 @@ class Cache extends Grid
 
     protected function prepareCollection($collection = null)
     {
-        $list = $this->getContainer()->get('cache')->fetch('CACHE_LIST');
+        $cache = $this->getContainer()->get('cache');
+        $list = $cache->fetch($cache->salt . 'CACHE_LIST');
         $result = $list ? array_merge(['ROUTE_CACHE'], array_keys($list)) : ['ROUTE_CACHE'];
         sort($result);
         return $result;

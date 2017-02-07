@@ -1,0 +1,15 @@
+#debug-toolbar{position:fixed;bottom:0;right:0;z-index:99;width:100%;background:#007dc6;color:#fff;height:50px;padding:0 60px 0 20px;left:auto;transition:right linear .3s;border:none}
+#debug-toolbar.collapsed{right:100%}
+#debug-toolbar .logo{float:left;width:auto;height:30px;margin:10px 20px 0 0}
+#debug-toolbar .nav{float:left;margin:0}
+#debug-toolbar .nav li{line-height:30px;display:block;float:left;position:relative}
+#debug-toolbar .nav li>span{font-size:14px;line-height:50px;margin-right:4px}
+#debug-toolbar .nav li>a{position:relative;display:block;padding:10px 15px}
+#debug-toolbar .nav li a:hover,#debug-toolbar .nav li a:focus,#debug-toolbar .nav li.active a{color:#333;background:#fff;border-radius:0;border:none}
+#debug-toolbar .tab-content{position:absolute;bottom:100%;left:0;width:100%;max-height:300px;overflow:auto;background:#fff;box-shadow:0 0 3px #aaa;border-top:#aaa;color:#333}
+#debug-toolbar .tab-content th{white-space:nowrap;text-align:left}
+#debug-toolbar .tab-content td{word-break:break-all;white-space:normal;text-align:left}
+#debug-toolbar .tab-content .tab-pane{display:none}
+#debug-toolbar .tab-content .tab-pane.active{display:block}
+#debug-toolbar .toggle-button{display:block;width:20px;border-radius:0 15px 15px 0;background:#007dc6;position:absolute;top:0;right:20px;line-height:50px;font-size:14px;text-align:center;transition:right linear .3s}
+#debug-toolbar.collapsed .toggle-button{right:-20px}

@@ -14,3 +14,7 @@ promotion.calc:
     -
         listener: [\Seahinet\Balance\Listeners\Using, calc]
         priority: 1000
+balances.apply:
+    -
+         listener: [\Seahinet\Balance\Listeners\Using, apply]
+         priority: 1000

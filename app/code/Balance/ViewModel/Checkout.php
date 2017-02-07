@@ -10,6 +10,8 @@ use Seahinet\Sales\Model\Cart;
 class Checkout extends Template
 {
 
+    use \Seahinet\Balance\Traits\Calc; 
+
     public function hasLoggedIn()
     {
         $segment = new Segment('customer');
@@ -26,6 +28,14 @@ class Checkout extends Template
         }
         return 0;
     }
+
+    public function getAvailableBalances()
+    {
+        if ($this->hasLoggedIn()) {
+            return $this->getBalances(Cart::instance());
+        }
+        return 0;
+    } 
 
     public function hasApplied()
     {

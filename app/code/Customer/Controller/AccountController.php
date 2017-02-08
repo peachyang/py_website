@@ -196,17 +196,6 @@ class AccountController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], $url ?? 'customer/account/login/', 'customer');
     }
 
-    protected function useSso(&$result)
-    {
-        $config = $this->getContainer()->get('config');
-        if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/sso_url']))) {
-            $result['message'] = [];
-            $cipher = new BlockCipher(new Openssl);
-            $cipher->setKey($config['customer/login/sso_key']);
-            $result['success_url'] .= '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt(json_encode($result['data']))));
-        }
-    }
-
     public function forgotPwdPostAction()
     {
         if ($this->getRequest()->isPost()) {

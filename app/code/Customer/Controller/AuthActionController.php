@@ -4,6 +4,10 @@ namespace Seahinet\Customer\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
+use Zend\Crypt\{
+    BlockCipher,
+    Symmetric\Openssl
+};
 
 abstract class AuthActionController extends ActionController
 {

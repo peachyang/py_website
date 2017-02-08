@@ -60,14 +60,14 @@ abstract class AbstractController
     protected function doDispatch($method = 'notFoundAction')
     {
         if ($method !== 'notFoundAction') {
-            $param = ['controller' => $this, 'method' => $method];
+            $param = ['controller' => $this, 'method' => $method, 'options' => $this->options];
             $dispatcher = $this->getContainer()->get('eventDispatcher');
             $dispatcher->trigger(get_class($this) . '.dispatch.before', $param);
             $dispatcher->trigger('dispatch.before', $param);
         }
         $result = $this->$method();
         if ($method !== 'notFoundAction') {
-            $param = ['controller' => $this, 'method' => $method, 'result' => &$result];
+            $param = ['controller' => $this, 'method' => $method, 'result' => &$result, 'options' => $this->options];
             $dispatcher = $this->getContainer()->get('eventDispatcher');
             $dispatcher->trigger(get_class($this) . '.dispatch.after', $param);
             $dispatcher->trigger('dispatch.after', $param);

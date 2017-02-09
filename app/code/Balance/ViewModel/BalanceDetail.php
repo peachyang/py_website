@@ -3,10 +3,11 @@
 namespace Seahinet\Balance\ViewModel;
 
 use Seahinet\Lib\Session\Segment;
-use Seahinet\Lib\ViewModel\Template;
+//use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Customer\ViewModel\Account;
 use Seahinet\Customer\Model\Collection\Balance;
 
-class BalanceDetail extends Template
+class BalanceDetail extends Account
 {
 
     protected $customerId = null;
@@ -38,6 +39,13 @@ class BalanceDetail extends Template
             }
         }
         return [];
+    }
+
+    public function getAmount()
+    {
+        if ($this->getCustomerId()) {
+            
+        }
     }
 
 }

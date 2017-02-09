@@ -1,11 +1,16 @@
 <?php
 $collection = $this->getStatement();
+$customer = $this->getCustomer();
 ?>
 <div class="statement">
     <table class="table">
         <thead>
             <tr>
-                <td class="col-lg-8 col-md-8"><?php echo $this->translate('Available Balance'); ?>:<?php //echo $collection[][''] ?></td>
+                <td class="col-lg-8 col-md-8"><?php echo $this->translate('Available Balance'); ?>:
+                    <span class="count">
+                        <?php echo $this->getCurrency()->convert($customer->getBalance(), TRUE); ?>
+                    </span>
+                </td>
                 <td class="col-lg-4 col-md-4 text-right">
                     <p class="text-right"><a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a></p>
                 </td>
@@ -35,7 +40,7 @@ $collection = $this->getStatement();
                             <?php
                             if ($balance['status'] != 0):
                                 ?>
-                                <span><?php echo $this->translate('Payment Success'); ?></span>
+                                <span><?php echo $this->translate('Successful Trade'); ?></span>
                                 <?php
                             else:
                                 ?>

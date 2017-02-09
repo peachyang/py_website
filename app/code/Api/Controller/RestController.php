@@ -4,7 +4,6 @@ namespace Seahinet\Api\Controller;
 
 use Exception;
 use Seahinet\Admin\Model\User;
-use Seahinet\Api\Model\Collection\Rest\Attribute;
 use Seahinet\Customer\Model\Customer;
 use Seahinet\Lib\Controller\AbstractController;
 use Seahinet\Lib\Session\Csrf;
@@ -17,8 +16,6 @@ use Zend\Crypt\PublicKey\{
 
 class RestController extends AbstractController
 {
-
-    use \Seahinet\Api\Traits\Rest;
 
     protected $authOptions = [];
 
@@ -67,6 +64,7 @@ class RestController extends AbstractController
             $consumer = new Consumer;
             $consumer->load($this->authOptions['consumer_id']);
             if ($consumer->getId() && ($role = $consumer->getRole())) {
+                $this->authOptions['type'] = 'Bearer';
                 $this->authOptions['role_id'] = $consumer['role_id'];
                 $this->authOptions['validation'] = $role['validation'];
                 return true;
@@ -138,28 +136,17 @@ class RestController extends AbstractController
         if ($this->authOptions['type'] === 'Csrf') {
             return $this->getCsrfKey();
         }
+        $class = $this->getContainer()->get('config')['api']['rest'][$name] ?? false;
         $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));
-        if (method_exists($this, $method)) {
+        if ($class && is_subclass_of($class, '\\Seahinet\\Api\\Model\\Api\\Rest\\AbstractHandler') && is_callable([$class, $method])) {
             try {
-                $response = $this->$method();
+                $response = (new $class)->setAuthOptions($this->authOptions)->$method();
                 return $response;
             } catch (Exception $e) {
                 return $this->getResponse()->withStatus(400);
             }
         }
         return $this->getResponse()->withStatus(400);
-    }
-
-    protected function getAttributes($type, $isRead = true)
-    {
-        $attributes = new Attribute;
-        $attributes->columns(['attributes'])
-                ->where([
-                    'operation' => $isRead ? 1 : 0,
-                    'resource' => $type,
-                    'role_id' => $this->authOptions['role_id']
-        ]);
-        return count($attributes) ? explode(',', $attributes[0]['attributes']) : [];
     }
 
     protected function getCsrfKey()

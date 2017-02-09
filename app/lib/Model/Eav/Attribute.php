@@ -167,7 +167,7 @@ class Attribute extends AbstractModel
                     }
                 }
                 foreach ($new as $id => $option) {
-                    $tableGateway->insert(['attribute_id' => $this->getId(), 'sort_order' => (isset($this->storage['option-order'][$key]) ? (int) $this->storage['option-order'][$key] : 0)]);
+                    $tableGateway->insert(['attribute_id' => $this->getId(), 'sort_order' => (isset($this->storage['option-order'][$id]) ? (int) $this->storage['option-order'][$id] : 0)]);
                     $optionId = $tableGateway->getLastInsertValue();
                     foreach ($option as $languageId => $label) {
                         $this->insert([

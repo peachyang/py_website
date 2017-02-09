@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Sales\Model\Api;
+namespace Seahinet\Sales\Model\Api\Soap;
 
 class CartItem
 {

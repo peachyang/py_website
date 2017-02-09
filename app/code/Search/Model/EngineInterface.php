@@ -1,0 +1,27 @@
+<?php
+
+namespace Seahinet\Search\Model;
+
+interface EngineInterface
+{
+
+    /**
+     * @param string $prefix
+     * @param array $data
+     * @param int $languageId
+     * @return array
+     */
+    public function select($prefix, $data, $languageId);
+    
+    /**
+     * @param string $prefix
+     * @param array $data
+     */
+    public function update($prefix, $data);
+
+    /**
+     * @param string $prefix
+     * @return void
+     */
+    public function createIndex($prefix);
+}

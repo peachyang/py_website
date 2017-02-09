@@ -1,0 +1,4 @@
+---
+rest:
+    product: Seahinet\Catalog\Model\Api\Rest\Product
+    category: Seahinet\Catalog\Model\Api\Rest\Category

@@ -1,122 +1,36 @@
 <?php
 
-namespace Seahinet\Customer\Traits;
+namespace Seahinet\Customer\Model\Api\Rest;
 
 use Exception;
+use Seahinet\Api\Model\Api\Rest\AbstractHandler;
 use Seahinet\Oauth\Model\Token;
-use Seahinet\Customer\Model\Collection\{
-    Address as AddressCollection,
-    Customer as CustomerCollection
-};
-use Seahinet\Customer\Model\{
-    Address,
-    Customer
-};
+use Seahinet\Customer\Model\Collection\Address as Collection;
+use Seahinet\Customer\Model\Address as Model;
 
-trait Rest
+class Address extends AbstractHandler
 {
 
-    protected function getCustomer()
+    public function getAddress()
     {
         $data = $this->getRequest()->getQuery();
-        $attributes = $this->getAttributes(Customer::ENTITY_TYPE);
+        $attributes = $this->getAttributes(Model::ENTITY_TYPE);
         if ($attributes) {
             $attributes[] = 'id';
             if ($this->authOptions['validation'] == -1) {
-                $collection = new CustomerCollection;
+                $collection = new Collection;
                 $collection->columns($attributes);
                 $this->filter($collection, $data);
                 return $collection->load(true, true)->toArray();
             } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                 $token = new Token;
                 $token->load($data['openId'], 'open_id');
-                $customer = new Customer;
-                $customer->load($token['customer_id']);
-                $result = [];
-                foreach ($attributes as $attribute) {
-                    if (isset($customer[$attribute])) {
-                        $result[$attribute] = $customer[$attribute];
-                    }
-                }
-                return $result;
-            } else if (!empty($this->authOptions['user'])) {
-                $customer = $this->authOptions['user'];
-                $result = [];
-                foreach ($attributes as $attribute) {
-                    if (isset($customer[$attribute])) {
-                        $result[$attribute] = $customer[$attribute];
-                    }
-                }
-                return $result;
-            }
-        }
-        return $this->getResponse()->withStatus(403);
-    }
-
-    protected function deleteCustomer()
-    {
-        if ($this->authOptions['validation'] === -1 &&
-                count($this->getAttributes(Customer::ENTITY_TYPE, false))) {
-            $id = $this->getRequest()->getQuery('id');
-            if ($id) {
-                $customer = new Customer;
-                $customer->setId($id)->remove();
-                return $this->getResponse()->withStatus(202);
-            }
-            return $this->getResponse()->withStatus(400);
-        }
-        return $this->getResponse()->withStatus(403);
-    }
-
-    protected function putCustomer()
-    {
-        $attributes = $this->getAttributes(Customer::ENTITY_TYPE, false);
-        $data = $this->getRequest()->getPost();
-        $set = [];
-        foreach ($attributes as $attribute) {
-            if (isset($data[$attribute])) {
-                $set[$attribute] = $data[$attribute];
-            }
-        }
-        if ($set) {
-            if ($this->authOptions['validation'] === -1) {
-                $id = $data['id'];
-            } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
-                $token = new Token;
-                $token->load($data['openId'], 'open_id');
-                $id = $token['customer_id'];
-            } else if (!empty($this->authOptions['user'])) {
-                $id = $this->authOptions['user']->getId();
-            }
-            $customer = new Customer;
-            $customer->load($id);
-            $customer->setData($set);
-            $customer->save();
-            return $this->getResponse()->withStatus(202);
-        }
-        return $this->getResponse()->withStatus(403);
-    }
-
-    protected function getAddress()
-    {
-        $data = $this->getRequest()->getQuery();
-        $attributes = $this->getAttributes(Address::ENTITY_TYPE);
-        if ($attributes) {
-            $attributes[] = 'id';
-            if ($this->authOptions['validation'] == -1) {
-                $collection = new AddressCollection;
-                $collection->columns($attributes);
-                $this->filter($collection, $data);
-                return $collection->load(true, true)->toArray();
-            } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
-                $token = new Token;
-                $token->load($data['openId'], 'open_id');
-                $collection = new AddressCollection;
+                $collection = new Collection;
                 $collection->columns($attributes)
                         ->where(['customer_id' => $token['customer_id']]);
                 return $collection->load(true, true)->toArray();
             } else if (!empty($this->authOptions['user'])) {
-                $collection = new AddressCollection;
+                $collection = new Collection;
                 $collection->columns($attributes)
                         ->where(['customer_id' => $this->authOptions['user']->getId()]);
                 return $collection->load(true, true)->toArray();
@@ -125,20 +39,20 @@ trait Rest
         return $this->getResponse()->withStatus(403);
     }
 
-    protected function deleteAddress()
+    public function deleteAddress()
     {
         if (count($this->getAttributes(Address::ENTITY_TYPE, false))) {
             $data = $this->getRequest()->getQuery();
             if ($this->authOptions['validation'] === -1) {
                 if ($data['id']) {
-                    $address = new Address;
+                    $address = new Model;
                     $address->setId($id)->remove();
                     return $this->getResponse()->withStatus(202);
                 }
                 return $this->getResponse()->withStatus(400);
             } else if (isset($data['openId']) && $data['openId'] === $this->authOptions['open_id']) {
                 if ($data['id']) {
-                    $address = new Address;
+                    $address = new Model;
                     $address->load($data['id']);
                     $token = new Token;
                     $token->load($data['openId'], 'open_id');
@@ -150,7 +64,7 @@ trait Rest
                 return $this->getResponse()->withStatus(400);
             } else if (!empty($this->authOptions['user'])) {
                 if ($data['id']) {
-                    $address = new Address;
+                    $address = new Model;
                     $address->load($data['id']);
                     if ($address['customer_id'] == $this->authOptions['user']['id']) {
                         $address->remove();
@@ -175,7 +89,7 @@ trait Rest
         }
         if ($set) {
             $id = $data['id'];
-            $address = new Address;
+            $address = new Model;
             $address->load($id);
             if ($this->authOptions['validation'] > 0) {
                 $flag = false;

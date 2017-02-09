@@ -250,7 +250,15 @@ wsdl:
             output: tns:cartRemoveItemResponse
             documentation: Remove item from shopping cart
 soap:
-    cartInfo: \Seahinet\Sales\Model\Api\Cart
-    cartAddItem: \Seahinet\Sales\Model\Api\Cart
-    cartChangeItemQty: \Seahinet\Sales\Model\Api\Cart
-    cartRemoveItem: \Seahinet\Sales\Model\Api\Cart
+    cartInfo: \Seahinet\Sales\Model\Api\Soap\Cart
+    cartAddItem: \Seahinet\Sales\Model\Api\Soap\Cart
+    cartChangeItemQty: \Seahinet\Sales\Model\Api\Soap\Cart
+    cartRemoveItem: \Seahinet\Sales\Model\Api\Soap\Cart
+rest:
+    order: \Seahinet\Sales\Model\Api\Rest\Order
+    invoice: \Seahinet\Sales\Model\Api\Rest\Invoice
+    cart: \Seahinet\Sales\Model\Api\Rest\Cart
+    cart_item: \Seahinet\Sales\Model\Api\Rest\Cart
+    creditmemo: \Seahinet\Sales\Model\Api\Rest\CreditMemo
+    shipment: \Seahinet\Sales\Model\Api\Rest\Shipment
+    shipment_track: \Seahinet\Sales\Model\Api\Rest\Shipment

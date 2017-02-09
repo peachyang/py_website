@@ -67,5 +67,8 @@ wsdl:
             output: tns:addressDeleteResponse
             documentation: Delete a customer address
 soap:
-    customerValid: \Seahinet\Customer\Model\Api\Customer
-    customerInfo: \Seahinet\Customer\Model\Api\Customer
+    customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
+    customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
+rest:
+    customer: \Seahinet\Customer\Model\Api\Rest\Customer
+    address: \Seahinet\Customer\Model\Api\Rest\Address

@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Sales\Model\Api;
+namespace Seahinet\Sales\Model\Api\Soap;
 
 use Exception;
 use Seahinet\Api\Model\Api\AbstractHandler;

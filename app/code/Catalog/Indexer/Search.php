@@ -3,54 +3,29 @@
 namespace Seahinet\Catalog\Indexer;
 
 use Seahinet\Catalog\Model\Collection\Product as Collection;
-use Seahinet\Lib\Db\Sql\Ddl\Column\UnsignedInteger;
 use Seahinet\Lib\Indexer\Handler\AbstractHandler;
 use Seahinet\Lib\Indexer\Handler\Database;
 use Seahinet\Lib\Indexer\Provider;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Language;
-use Zend\Db\Sql\Ddl;
 
 class Search implements Provider
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Search\Traits\Engine;
+
+    protected $engine;
 
     public function provideStructure(AbstractHandler $handler)
     {
         if ($handler instanceof Database) {
-            $adapter = $this->getContainer()->get('dbAdapter');
-            $platform = $adapter->getPlatform();
-            $languages = new Language;
-            $languages->columns(['id']);
-            foreach ($languages as $language) {
-                $table = 'catalog_search_' . $language['id'] . '_index';
-                $adapter->query(
-                        'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
-                );
-                if ($platform->getName() === 'MySQL') {
-                    $adapter->query(
-                            'CREATE TABLE `' . $table . '`(`id` INTEGER UNSIGNED NOT NULL,`store_id` INTEGER UNSIGNED NOT NULL,`data` LONGTEXT,PRIMARY KEY (`id`),INDEX IDX_CATALOG_SEARCH_1_INDEX_STORE_ID (`store_id`),CONSTRAINT FK_' .
-                            strtoupper($table) . '_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,CONSTRAINT FK_' .
-                            strtoupper($table) . '_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,FULLTEXT INDEX `FTI_' .
-                            strtoupper($table) . '_FULLTEXT_DATA` (`data`));', $adapter::QUERY_MODE_EXECUTE
-                    );
-                } else {
-                    $ddl = new Ddl\CreateTable($table);
-                    $ddl->addColumn(new UnsignedInteger('id', false, 0))
-                            ->addColumn(new UnsignedInteger('store_id', false, 1))
-                            ->addColumn(new Ddl\Column\Text('data', 2147483648, true))
-                            ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
-                            ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'))
-                            ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_PRODUCT_ENTITY_ID', 'id', 'product_entity', 'id', 'CASCADE', 'CASCADE'))
-                            ->addConstraint(new Ddl\Index\Index('data', 'IDX_' . strtoupper($table) . '_DATA', [2147483648]));
-                    $adapter->query(
-                            $ddl->getSqlString($platform), $adapter::QUERY_MODE_EXECUTE
-                    );
-                }
-            }
+            $this->engine = $this->getSearchEngineHandler();
+            $this->engine->createIndex('catalog_search');
         } else {
-            $handler->buildStructure([['attr' => 'data', 'fulltext' => 1]]);
+            $handler->buildStructure([]);
+            $this->engine = $this->getSearchEngineHandler('MongoDB');
+            $this->engine->createIndex('catalog_search');
         }
         return true;
     }
@@ -84,7 +59,7 @@ class Search implements Provider
                     ];
                 }
             }
-            $handler->buildData($data);
+            $this->engine->update('catalog_search', $data);
         }
         return true;
     }

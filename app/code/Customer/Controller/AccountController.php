@@ -15,10 +15,6 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
-use Zend\Crypt\{
-    BlockCipher,
-    Symmetric\Openssl
-};
 use Zend\Math\Rand;
 
 class AccountController extends AuthActionController

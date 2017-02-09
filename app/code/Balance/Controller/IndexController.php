@@ -11,7 +11,10 @@ class IndexController extends ActionController
 
     public function loadAction()
     {
-        return $this->getLayout('checkout_order_balance');
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            return $this->getLayout('checkout_order_balance');
+        }
+        return $this->notFoundAction();
     }
 
     public function applyAction()

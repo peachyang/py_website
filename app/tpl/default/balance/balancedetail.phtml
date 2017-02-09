@@ -2,6 +2,17 @@
 $collection = $this->getStatement();
 ?>
 <div class="statement">
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="col-lg-8 col-md-8"><?php echo $this->translate('Available Balance'); ?>:<?php //echo $collection[][''] ?></td>
+                <td class="col-lg-4 col-md-4 text-right">
+                    <p class="text-right"><a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a></p>
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <p>&nbsp;</p>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -18,7 +29,7 @@ $collection = $this->getStatement();
                     <tr class="text-center">
                         <td><?php echo (new \Seahinet\Sales\Model\Order)->getCurrency()->convert($balance['amount'], TRUE) ?></td>
                         <td><?php echo $this->translate($balance['comment']) ?></td>
-                        <td><?php echo $this->translate($balance['status'] ? 'Payment Success' : 'Pending Payment') ?></td>
+                        <td><?php echo $this->translate($balance['status'] ? 'Successful Trade' : 'Pending Payment') ?></td>
                         <td><?php echo $balance['created_at'] ?></td>
                         <td>
                             <?php
@@ -51,4 +62,3 @@ $collection = $this->getStatement();
         <?php endif; ?>
     </table>
 </div>
-<p class="text-right"><a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a></p>

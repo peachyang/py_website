@@ -9,7 +9,7 @@ use Zend\Db\Sql\Expression;
 trait Calc
 {
 
-    protected function getBalances($model)
+    protected function getBalances($model, $withUsed = false)
     {
         $collection = new Collection;
         $collection->columns(['amount' => new Expression('sum(amount)')])
@@ -18,7 +18,8 @@ trait Calc
                     'status' => 1
         ]);
         $balance = (count($collection) ? $collection[0]['amount'] : 0);
-        return min($balance, $model['base_total']);
+        $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
+        return min($balance, $model['base_total'] + ($additional['balance'] ?? 0));
     }
 
 }

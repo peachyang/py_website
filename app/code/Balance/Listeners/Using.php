@@ -11,7 +11,8 @@ class Using implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Balance\Traits\Calc;
+        \Seahinet\Balance\Traits\Calc,
+        \Seahinet\Lib\Traits\Translate;
 
     public function apply($event)
     {
@@ -50,7 +51,7 @@ class Using implements ListenerInterface
                 $model->setData([
                     'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
+                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))) 
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }

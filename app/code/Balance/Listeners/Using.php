@@ -11,7 +11,8 @@ class Using implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Balance\Traits\Calc;
+        \Seahinet\Balance\Traits\Calc,
+        \Seahinet\Lib\Traits\Translate;
 
     public function apply($event)
     {
@@ -49,8 +50,8 @@ class Using implements ListenerInterface
                 $discount = $additional['balance'];
                 $model->setData([
                     'additional' => json_encode($additional),
-                    'base_discount' => (float) $model->offsetGet('base_discount') - $points,
-                    'discount_detail' => json_encode(['Balance' => - $points] + (json_decode($model['discount_detail'], true) ?: []))
+                    'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
+                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))) 
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }
@@ -62,7 +63,7 @@ class Using implements ListenerInterface
         $model = $event['model'];
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $points = $model->getAdditional('balance');
-            if ($points && $model['base_discount'] < (json_decode($model['discount_detail'], true)['Promotion'] ?? 0)) {
+            if ($points) {
                 $record = new Balance([
                     'customer_id' => $model->offsetGet('customer_id'),
                     'order_id' => $model->getId(),

@@ -7,7 +7,7 @@
             $balances = $this->getAvailableBalances();
             ?>
             <?php
-            if ($balances != 0):
+            if ($balances && $balances != 0):
                 ?>
                 <p>
                     <label for="include_balance" class="label" title="<?php echo $this->translate('Available Balance'); ?>"><?php echo $this->translate('Available Balance'); ?></label>

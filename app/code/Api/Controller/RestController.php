@@ -136,8 +136,9 @@ class RestController extends AbstractController
         if ($this->authOptions['type'] === 'Csrf') {
             return $this->getCsrfKey();
         }
-        $class = $this->getContainer()->get('config')['api']['rest'][$name] ?? false;
-        $method = $this->getRequest()->getMethod() . str_replace('_', '', substr($name, 0, -6));
+        $name = str_replace('_', '', substr($name, 0, -6));
+        $class = $this->getContainer()->get('config')['api']['rest'][strtolower($name)] ?? false;
+        $method = $this->getRequest()->getMethod() . $name;
         if ($class && is_subclass_of($class, '\\Seahinet\\Api\\Model\\Api\\Rest\\AbstractHandler') && is_callable([$class, $method])) {
             try {
                 $response = (new $class)->setAuthOptions($this->authOptions)->$method();

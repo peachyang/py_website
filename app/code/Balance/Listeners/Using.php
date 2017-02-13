@@ -27,6 +27,20 @@ class Using implements ListenerInterface
         }
     }
 
+    public function cleanBalance($event)
+    {
+        $model = $event['model'];
+        $detail = json_decode($model->offsetGet('discount_detail'), true);
+        if ($detail && $detail['Balance']) {
+            $balance = $detail['Balance'];
+            unset($detail['Balance']);
+            $model->setData([
+                'discount_detail' => $balance,
+                'base_discount' => $model->offsetGet('base_discount') - $detail['Balance']
+            ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
+        }
+    }
+
     public function cancel($event)
     {
         $config = $this->getContainer()->get('config');
@@ -51,7 +65,7 @@ class Using implements ListenerInterface
                 $model->setData([
                     'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))) 
+                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: [])))
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }

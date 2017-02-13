@@ -19,9 +19,8 @@ trait ArrayMerge
     {
         foreach ($b as $key => $value) {
             if (is_numeric($key)) {
-                return array_merge_recursive($a, $b);
-            }
-            if (isset($a[$key])) {
+                $a[] = $value;
+            } else if (isset($a[$key])) {
                 $a[$key] = is_array($value) ? $this->arrayMerge($a[$key], $value) : $value;
             } else {
                 $a[$key] = $value;

@@ -108,7 +108,7 @@
             msg.type = 'text';
             msg.msg = $(o).val();
             $(o).val('');
-            if (instance.check()) {
+            if (instance && instance.check()) {
                 instance.send(JSON.stringify(msg));
             } else {
                 init();
@@ -125,7 +125,7 @@
                 msg.session = session;
                 msg.type = type;
                 msg.msg = this.result;
-                if (instance.check()) {
+                if (instance && instance.check()) {
                     instance.send(JSON.stringify(msg));
                 } else {
                     init();

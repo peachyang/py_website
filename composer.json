@@ -3,7 +3,6 @@
         "php": "7.0.0 - 7.0.4 || ^7.0.6 || ^7.1.0",
         "container-interop/container-interop": "@stable",
         "doctrine/cache": "~1.6",
-        "elasticsearch/elasticsearch": "~5.1",
         "ezyang/htmlpurifier": "~4.7",
         "gregwar/captcha": "~1.1",
         "imagine/imagine": "~0.6",

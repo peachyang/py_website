@@ -11,6 +11,25 @@ class MySQL implements EngineInterface
 
     use \Seahinet\Lib\Traits\Container;
 
+    public function createIndex($prefix)
+    {
+        $adapter = $this->getContainer()->get('dbAdapter');
+        $languages = new Language;
+        $languages->columns(['id']);
+        foreach ($languages as $language) {
+            $table = $prefix . '_' . $language['id'] . '_index';
+            $adapter->query(
+                    'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
+            );
+            $adapter->query(
+                    'CREATE TABLE `' . $table . '`(`id` INTEGER UNSIGNED NOT NULL,`store_id` INTEGER UNSIGNED NOT NULL,`data` LONGTEXT,PRIMARY KEY (`id`),INDEX IDX_CATALOG_SEARCH_1_INDEX_STORE_ID (`store_id`),CONSTRAINT FK_' .
+                    strtoupper($table) . '_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,CONSTRAINT FK_' .
+                    strtoupper($table) . '_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,FULLTEXT INDEX `FTI_' .
+                    strtoupper($table) . '_FULLTEXT_DATA` (`data`));', $adapter::QUERY_MODE_EXECUTE
+            );
+        }
+    }
+
     public function select($prefix, $data, $languageId)
     {
         $config = $this->getContainer()->get('config');
@@ -36,25 +55,6 @@ class MySQL implements EngineInterface
             foreach ($collection as $item) {
                 $indexer->insert($prefix, $languageId, $item);
             }
-        }
-    }
-
-    public function createIndex($prefix)
-    {
-        $adapter = $this->getContainer()->get('dbAdapter');
-        $languages = new Language;
-        $languages->columns(['id']);
-        foreach ($languages as $language) {
-            $table = $prefix . '_' . $language['id'] . '_index';
-            $adapter->query(
-                    'DROP TABLE IF EXISTS ' . $table, $adapter::QUERY_MODE_EXECUTE
-            );
-            $adapter->query(
-                    'CREATE TABLE `' . $table . '`(`id` INTEGER UNSIGNED NOT NULL,`store_id` INTEGER UNSIGNED NOT NULL,`data` LONGTEXT,PRIMARY KEY (`id`),INDEX IDX_CATALOG_SEARCH_1_INDEX_STORE_ID (`store_id`),CONSTRAINT FK_' .
-                    strtoupper($table) . '_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,CONSTRAINT FK_' .
-                    strtoupper($table) . '_ID_PRODUCT_ENTITY_ID FOREIGN KEY (`id`) REFERENCES `product_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,FULLTEXT INDEX `FTI_' .
-                    strtoupper($table) . '_FULLTEXT_DATA` (`data`));', $adapter::QUERY_MODE_EXECUTE
-            );
         }
     }
 

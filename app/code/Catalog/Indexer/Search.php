@@ -8,23 +8,23 @@ use Seahinet\Lib\Indexer\Handler\Database;
 use Seahinet\Lib\Indexer\Provider;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Language;
+use Seahinet\Search\Model\Factory;
 
 class Search implements Provider
 {
 
-    use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Search\Traits\Engine;
+    use \Seahinet\Lib\Traits\Container;
 
     protected $engine;
 
     public function provideStructure(AbstractHandler $handler)
     {
         if ($handler instanceof Database) {
-            $this->engine = $this->getSearchEngineHandler();
+            $this->engine = (new Factory)->getSearchEngineHandler();
             $this->engine->createIndex('catalog_search');
         } else {
             $handler->buildStructure([]);
-            $this->engine = $this->getSearchEngineHandler('MongoDB');
+            $this->engine = (new Factory)->getSearchEngineHandler('MongoDB');
             $this->engine->createIndex('catalog_search');
         }
         return true;

@@ -2,10 +2,20 @@
 
 namespace Seahinet\Search\Model;
 
+use Exception;
+
 class MongoDB implements EngineInterface
 {
 
     use \Seahinet\Lib\Traits\Container;
+
+    public function __construct()
+    {
+        $adapter = $this->getContainer()->get('config')['adapter']['indexer']['adapter'] ?? '';
+        if (strcasecmp($adapter, 'mongodb')) {
+            throw new Exception('Not allowed');
+        }
+    }
 
     public function createIndex($prefix)
     {

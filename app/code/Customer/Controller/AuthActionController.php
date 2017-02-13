@@ -32,7 +32,7 @@ abstract class AuthActionController extends ActionController
             if ($url = $this->getRequest()->getQuery('success_url')) {
                 $data['success_url'] = base64_decode($url);
                 $customer = $session->get('customer');
-                $data['data'] = ['username' => $customer['username'], 'email' => $customer['email']];
+                $data['data'] = ['id' => $customer['id'], 'username' => $customer['username'], 'email' => $customer['email']];
                 if ($this->useSso($data)) {
                     return $this->redirect($data['success_url']);
                 }

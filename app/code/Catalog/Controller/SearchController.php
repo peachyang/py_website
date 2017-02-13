@@ -21,7 +21,7 @@ class SearchController extends CategoryController
             $result = $engine->select('catalog_search', $data, $languageId);
             $ids = [];
             foreach ($result as $item) {
-                $ids[$item['id']] = $item['weight'];
+                $ids[$item['id']] = $item['weight'] ?? 0;
             }
             $crumb = $this->translate('Search Result: %s', [$this->getRequest()->getQuery('q')]);
             $root->getChild('head')->setTitle($crumb)

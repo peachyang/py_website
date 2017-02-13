@@ -3,13 +3,13 @@
 namespace Seahinet\Search\Model;
 
 use Seahinet\Lib\Model\Collection\Language;
-use Zend\Db\Sql\Where;
-use Zend\Db\Sql\Predicate\Expression;
+use Zend\Db\Sql\Expression;
 
 class MySQL implements EngineInterface
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Lib\Traits\Container,
+        \Seahinet\Lib\Traits\DB;
 
     public function createIndex($prefix)
     {
@@ -33,29 +33,39 @@ class MySQL implements EngineInterface
     public function select($prefix, $data, $languageId)
     {
         $config = $this->getContainer()->get('config');
-        $where = new Where;
-        if (!empty($data['store_id'])) {
-            $where->equalTo('store_id', $data['store_id']);
-        }
-        $where->predicate(new Expression('match(data) against(\'' . $data['q'] . '\')>0.001'));
-        $options = [];
-        $options['limit'] = (int) ($data['limit'] ?? empty($data['mode']) ?
+        $limit = (int) ($data['limit'] ?? empty($data['mode']) ?
                 $config['catalog/frontend/default_per_page_grid'] :
                 $config['catalog/frontend/default_per_page_' . $data['mode']]);
-        if (isset($data['page'])) {
-            $options['offset'] = (int) ($data['page'] - 1) * $options['limit'];
+        $key = md5($prefix . $languageId . $data['q'] . $limit . ($data['page'] ?? 1));
+        $cache = $this->getContainer()->get('cache');
+        $result = $cache->fetch($key, 'INDEX_');
+        if (empty($result) && !is_array($result)) {
+            $tableGateway = $this->getTableGateway($prefix . '_' . $languageId . '_index');
+            $select = $tableGateway->getSql()->select();
+            $select->columns(['id', 'weight' => new Expression('MATCH(data) AGAINST(\'' . $data['q'] . '\')')])
+                    ->where('MATCH(data) AGAINST(\'' . $data['q'] . '\')');
+            if (!empty($data['store_id'])) {
+                $select->where(['store_id' => $data['store_id']]);
+            }
+            $select->limit($limit);
+            if (isset($data['page'])) {
+                $select->offset((int) ($data['page'] - 1) * $limit);
+            }
+            $result = $tableGateway->selectWith($select)->toArray();
+            $cache->save($key, $result, 'INDEX_');
         }
-        return $this->getContainer()->get('indexer')->select($prefix, $languageId, $where, $options);
+        return $result;
     }
 
     public function update($prefix, $data)
     {
-        $indexer = $this->getContainer()->get('indexer');
         foreach ($data as $languageId => $collection) {
+            $tableGateway = $this->getTableGateway($prefix . '_' . $languageId . '_index');
             foreach ($collection as $item) {
-                $indexer->insert($prefix, $languageId, $item);
+                $tableGateway->insert($prefix, $languageId, $item);
             }
         }
+        $this->getContainer()->get('cache')->delete('', 'INDEX_');
     }
 
 }

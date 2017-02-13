@@ -48,18 +48,24 @@ class Elasticsearch implements EngineInterface
 
     public function select($prefix, $data, $languageId)
     {
-        $constraint = ['match' => ['data' => $data['q']]];
+        $constraint = ['data' => $data['q']];
         if (!empty($data['store_id'])) {
-            $constraint['filter'] = ['store_id' => $data['store_id']];
+            $constraint['store_id'] = $data['store_id'];
         }
+        $config = $this->getContainer()->get('config');
+        $limit = (int) ($data['limit'] ?? empty($data['mode']) ?
+                $config['catalog/frontend/default_per_page_grid'] :
+                $config['catalog/frontend/default_per_page_' . $data['mode']]);
         $resultSet = $this->client->search([
             'index' => $this->index['prefix'] . '_' . $prefix,
             'type' => $languageId,
             '_source' => false,
-            'body' => ['query' => $constraint]
+            'size' => $limit,
+            'from' => isset($data['page']) ? (int) ($data['page'] - 1) * $limit : 0,
+            'body' => ['query' => ['match' => $constraint]]
         ]);
         $result = [];
-        foreach ($resultSet['hits']['hits'] as $item) {
+        foreach ($resultSet['hits']['hits'] ?? [] as $item) {
             $result[] = ['id' => $item['_id'], 'weight' => $item['_score']];
         }
         return $result;

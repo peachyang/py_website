@@ -71,10 +71,6 @@ balance_statement_recharge:
 checkout_order:
     root:
         children:
-            head:
-                -
-                    method: addScript
-                    params: [{src:'frontend/js/balance.js',defer:'defer',async:'async'}]
             content:
                 children:
                     balance:

@@ -62,7 +62,7 @@ class MySQL implements EngineInterface
         foreach ($data as $languageId => $collection) {
             $tableGateway = $this->getTableGateway($prefix . '_' . $languageId . '_index');
             foreach ($collection as $item) {
-                $tableGateway->insert($prefix, $languageId, $item);
+                $tableGateway->insert($item);
             }
         }
         $this->getContainer()->get('cache')->delete('', 'INDEX_');

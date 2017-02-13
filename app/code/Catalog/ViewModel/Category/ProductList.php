@@ -23,7 +23,7 @@ class ProductList extends Template
 
     public function getCategory()
     {
-        return $this->getVariable('category');
+        return $this->getVariable('category', null);
     }
 
     public function setCategory(Category $category)

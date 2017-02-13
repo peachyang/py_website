@@ -81,7 +81,7 @@ class Url implements Provider
             for ($i = 0;; $i++) {
                 $data = [$language['id'] => []];
                 $products->reset('offset')->offset(50 * $i);
-                $products->load(false);
+                $products->load(false, true);
                 if (!$products->count()) {
                     break;
                 }

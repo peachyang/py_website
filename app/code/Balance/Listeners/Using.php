@@ -30,13 +30,14 @@ class Using implements ListenerInterface
     public function cleanBalance($event)
     {
         $model = $event['model'];
-        $detail = json_decode($model->offsetGet('discount_detail'), true);
-        if ($detail && $detail['Balance']) {
-            $balance = $detail['Balance'];
-            unset($detail['Balance']);
+        $detail = $model->offsetGet('discount_detail') ? json_decode($model->offsetGet('discount_detail'), true) : [];
+        $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
+        if ($detail) {
+            $balance = $additional['balance'];
+            unset($additional['balance']);
             $model->setData([
-                'discount_detail' => $balance,
-                'base_discount' => $model->offsetGet('base_discount') - $detail['Balance']
+                'base_discount' => (float) $model->offsetGet('base_discount') - $balance,
+                'discount_detail' => $this->translate(json_encode(['Balance' => - $balance] + (json_decode($model['discount_detail'], true) ?: [])))
             ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
         }
     }
@@ -86,6 +87,27 @@ class Using implements ListenerInterface
                     'comment' => 'Consumption'
                 ]);
                 $record->save();
+            }
+        }
+    }
+
+    public function afterRefund($event)
+    {
+        $config = $this->getContainer()->get('config');
+        $model = $event['model'];
+        $order = $model->getOrder();
+        if ($config['balance/general/enable'] && $config['balance/general/refunded'] && $order && $order['additional']) {
+            $additional = json_decode($order['additional'], true);
+            if (!empty($additional['balance'])) {
+                $collection = new Collection;
+                $collection->columns(['id'])
+                        ->where(['order_id' => $order->getId()])
+                ->where->lessThan('count', 0);
+                if (count($collection)) {
+                    $record = new Balance;
+                    $record->setData(['id' => $collection[0]['id'], 'status' => 0])
+                            ->save();
+                }
             }
         }
     }

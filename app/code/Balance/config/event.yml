@@ -14,10 +14,10 @@ promotion.calc:
     -
         listener: [\Seahinet\Balance\Listeners\Using, calc]
         priority: 1010
-rewardpoints.apply:
+rewardpoints.apply: 
     -
         listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
-        priority: 5
+        priority: 10
 balances.apply:
     -
         listener: [\Seahinet\Balance\Listeners\Using, apply]

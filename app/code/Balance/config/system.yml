@@ -19,3 +19,12 @@ balance:
                     type: tel
                     label: Product for Recharge 
                     priority: 1
+                refunded:
+                    type: select
+                    label: Restore Spent Balances After Order Refunding
+                    required: required
+                    priority: 10
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No

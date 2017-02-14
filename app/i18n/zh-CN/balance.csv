@@ -9,6 +9,7 @@
 "Recharge Amount","充值金额"
 "Recharge Orders","充值订单"
 "Recharge Product","充值产品"
+"Restore Spent Balances After Order Refunding","订单退款后返还已使用余额"
 "Successful Trade","交易成功"
 "You have %d balances left. You can use %d for current transaction.","您当前有余额%d。您可以使用%d余额进行当前操作。"
 ""

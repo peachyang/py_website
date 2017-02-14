@@ -62,5 +62,26 @@ class Recalc implements ListenerInterface
             }
         }
     }
+    
+    public function afterRefund($event)
+    {
+        $config = $this->getContainer()->get('config');
+        $model = $event['model'];
+        $order = $model->getOrder();
+        if ($config['balance/general/enable'] && $config['balance/general/refunded'] && $order) {
+            $additional = json_decode($order['additional'], true);
+            if (!empty($additional['balance'])) {
+                $collection = new Collection;
+                $collection->columns(['id'])
+                        ->where(['order_id' => $order->getId()])
+                ->where->greaterThan('count', 0);
+                if (count($collection)) {
+                    $record = new Balance;
+                    $record->setData(['id' => $collection[0]['id'], 'status' => 0])
+                            ->save();
+                }
+            }
+        }
+    }
 
 }

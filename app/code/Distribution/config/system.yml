@@ -1,0 +1,77 @@
+---
+distribution:
+    label: Distribution
+    children:
+        general:
+            label: General
+            children:
+                enabled:
+                    label: Enabled
+                    type: select
+                    priority: 0
+                    required: required
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No
+                refer:
+                    label: Unit to Refer
+                    type: select
+                    priority: 10
+                    required: required
+                    default: 0
+                    options:
+                        1: Store
+                        0: Product
+                percentage:
+                    label: Percentage
+                    type: percentage
+                    priority: 20
+                    required: required
+                    default: 0
+                    comment: Percentage of grand total to distribute
+        balance:
+            label: Balance
+            children:
+                level:
+                    label: Level
+                    type: tel
+                    priority: 0
+                    required: required
+                    default: 0
+                    attrs:
+                        min: 1
+                    comment: The first level is the retailer/customer's direct referer
+                percentage:
+                    label: Percentage
+                    type: number
+                    priority: 10
+                    required: required
+                    view_model: \Seahinet\Admin\ViewModel\Distribution\Percentage
+        rewardpoints:
+            label: Reward Points
+            children:
+                total:
+                    label: Total Points to Distribute
+                    type: tel
+                    priority: 0
+                    required: required
+                    default: 0
+                    attrs:
+                        min: 0
+                level:
+                    label: Level
+                    type: tel
+                    priority: 10
+                    required: required
+                    default: 0
+                    attrs:
+                        min: 1
+                    comment: The first level is the retailer/customer's direct referer
+                percentage:
+                    label: Percentage
+                    type: number
+                    priority: 20
+                    required: required
+                    view_model: \Seahinet\Admin\ViewModel\Distribution\Percentage
+                

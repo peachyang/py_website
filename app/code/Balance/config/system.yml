@@ -19,3 +19,8 @@ balance:
                     type: tel
                     label: Product for Recharge 
                     priority: 1
+                activating:
+                    type: tel
+                    label: Days Before Activation
+                    priority: 20
+                    default: 0

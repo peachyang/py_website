@@ -4,7 +4,10 @@ namespace Seahinet\Retailer\Model;
 
 use Seahinet\Catalog\Model\Collection\Product;
 use Seahinet\Lib\Bootstrap;
-use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Lib\Model\{
+    AbstractModel,
+    Store
+};
 use Seahinet\Retailer\Model\Collection\Category as Collection;
 
 class Category extends AbstractModel
@@ -81,6 +84,16 @@ class Category extends AbstractModel
             return $category;
         }
         return [];
+    }
+
+    public function getStore()
+    {
+        if (!empty($this->storage['store_id'])) {
+            $store = new Store;
+            $store->load($this->storage['store_id']);
+            return $store;
+        }
+        return null;
     }
 
 }

@@ -9,8 +9,3 @@ promotion:
             operation: 'Admin\Promotion::index'
             title: Preferential Promotion
             priority: 0
-        -
-            link: config/rewardpoints/
-            operation: 'Admin\Config::rewardpoints'
-            title: Reward Points
-            priority: 10

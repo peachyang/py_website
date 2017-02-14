@@ -5,3 +5,6 @@
 -
     time: '0 0 * * *'
     code: 'Seahinet\RewardPoints\Listeners\Cron::expiration'
+-
+    time: '0 0 * * *'
+    code: 'Seahinet\RewardPoints\Listeners\Cron::activation'

@@ -1,0 +1,17 @@
+---
+Seahinet\Catalog\Controller\ProductController.dispatch.after:
+    -
+        listener: [\Seahinet\Distribution\Listeners\Refer, afterDispatchProduct]
+        priority: 10
+Seahinet\Retailer\Controller\ViewController.dispatch.after:
+    -
+        listener: [\Seahinet\Distribution\Listeners\Refer, afterDispatchStore]
+        priority: 10
+cart.add.after:
+    -
+        listener: [\Seahinet\Distribution\Listeners\Refer, afterAdd2Cart]
+        priority: 10
+Seahinet\Sales\Model\Order.model.save.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Calc, afterOrderComplete]
+        priority: 30

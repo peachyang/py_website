@@ -21,10 +21,14 @@ rewardpoints:
                     required: required
                     poriority: 10
                     default: Reward Points
-                    comment: Define System Points Name.For Example JD:jindou
+                activating:
+                    type: tel
+                    label: Days Before Activation
+                    priority: 20
+                    default: 0
                 expiration:
                     type: tel
-                    label: Effective of Days
+                    label: Days Before Expiration
                     priority: 20
                     default: 0
         gathering:

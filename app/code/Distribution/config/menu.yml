@@ -1,0 +1,8 @@
+---
+system:
+    children:
+        -
+            link: config/distribution/
+            operation: 'Admin\Config::distribution'
+            title: Distribution
+            priority: 95

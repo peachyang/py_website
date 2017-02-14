@@ -92,24 +92,26 @@ class Gather implements ListenerInterface
 
     public function afterOrderComplete($event)
     {
-        $model = $event['model'];
-        if ($model->getPhase()['code'] === 'complete') {
-            $history = new History;
-            $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', [], 'left')
-                    ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [], 'left')
-                    ->where([
-                        'order_id' => $model->getId(),
-                        'sales_order_phase.code' => 'complete'
-            ]);
-            if (count($history->load(false, true)) === 0) {
-                $collection = new Collection;
-                $collection->columns(['id'])
-                        ->where(['order_id' => $model->getId()])
-                ->where->greaterThan('count', 0);
-                if (count($collection)) {
-                    $record = new Record;
-                    $record->load($collection[0]['id']);
-                    $record->setData('status', 1)->save();
+        if ($this->getContainer()->get('config')['rewardpoints/general/activating'] == 0) {
+            $model = $event['model'];
+            if ($model->getPhase()['code'] === 'complete') {
+                $history = new History;
+                $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', [], 'left')
+                        ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [], 'left')
+                        ->where([
+                            'order_id' => $model->getId(),
+                            'sales_order_phase.code' => 'complete'
+                ]);
+                if (count($history->load(false, true)) === 0) {
+                    $collection = new Collection;
+                    $collection->columns(['id'])
+                            ->where(['order_id' => $model->getId()])
+                    ->where->greaterThan('count', 0);
+                    if (count($collection)) {
+                        $record = new Record;
+                        $record->load($collection[0]['id']);
+                        $record->setData('status', 1)->save();
+                    }
                 }
             }
         }

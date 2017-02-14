@@ -247,16 +247,17 @@ final class Cart extends AbstractModel implements Singleton
             ])->collateTotals()->save();
         }
         $this->items[$item->getId()] = $item->toArray();
-        if ($collate) {
-            $this->collateTotals();
-        }
         $this->getEventDispatcher()->trigger('cart.add.after', [
             'product_id' => $productId,
             'qty' => $qty,
             'warehouse_id' => $warehouseId,
             'sku' => $sku,
-            'options' => $options
+            'options' => $options,
+            'item' => $item
         ]);
+        if ($collate) {
+            $this->collateTotals();
+        }
         return $this;
     }
 

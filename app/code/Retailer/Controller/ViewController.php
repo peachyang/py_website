@@ -36,6 +36,8 @@ class ViewController extends ActionController
             $content->getChild('toolbar')->setCollection($products);
             $content->getChild('list')->setProducts($products);
             $content->getChild('toolbar_bottom')->setCollection($products);
+            $segment = new Segment('core');
+            $segment->set('store', $category->getStore()->offsetGet('code'));
             return $root;
         }
         return $this->notFoundAction();

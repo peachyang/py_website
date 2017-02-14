@@ -34,7 +34,7 @@ class Using implements ListenerInterface
         $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
         if ($detail) {
             $balance = $additional['balance'];
-            unset($additional['balance']);
+            unset($additional['balance']);   
             $model->setData([
                 'base_discount' => (float) $model->offsetGet('base_discount') - $balance,
                 'discount_detail' => $this->translate(json_encode(['Balance' => - $balance] + (json_decode($model['discount_detail'], true) ?: [])))

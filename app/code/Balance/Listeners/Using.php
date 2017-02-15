@@ -18,11 +18,10 @@ class Using implements ListenerInterface
     {
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
-        $count = $event['count'] ?: false;
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             $points = $this->getBalances($model);
-            $additional['balance'] = $count === false ? $points : min($count, $points);
+            $additional['balance'] = $points ? 1 : 0;
             $model->setData(['additional' => json_encode($additional)]);
         }
     }
@@ -30,15 +29,14 @@ class Using implements ListenerInterface
     public function cleanBalance($event)
     {
         $model = $event['model'];
-        $detail = $model->offsetGet('discount_detail') ? json_decode($model->offsetGet('discount_detail'), true) : [];
-        $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-        if ($detail) {
-            $balance = $additional['balance'];
-            unset($additional['balance']);   
+        $detail = json_decode($model->offsetGet('discount_detail'), true);
+        if ($detail && !empty($detail['Balance'])) {
+            $balance = $detail['Balance'];
+            unset($detail['Balance']);
             $model->setData([
-                'base_discount' => (float) $model->offsetGet('base_discount') - $balance,
-                'discount_detail' => $this->translate(json_encode(['Balance' => - $balance] + (json_decode($model['discount_detail'], true) ?: [])))
-            ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
+                'discount_detail' => json_encode($detail),
+                'base_discount' => $model->offsetGet('base_discount') - $balance
+            ]);
         }
     }
 
@@ -60,13 +58,10 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['balance'])) {
-                $points = $this->getBalances($model, true);
-                $additional['balance'] = min($additional['balance'], $points);
-                $discount = $additional['balance'];
+                $discount = (float) $this->getBalances($model, true);
                 $model->setData([
-                    'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: [])))
+                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }

@@ -154,9 +154,26 @@ abstract class AbstractCollection extends ArrayObject
     public function walk(callable $callback, ...$params)
     {
         if (!$this->isLoaded) {
-            $this->load();
+            if ($this->select->getRawState('limit')) {
+                $this->load();
+            } else {
+                $this->select->limit(20);
+                $offset = 0;
+                while (1) {
+                    $this->storage = [];
+                    $this->select->offset($offset);
+                    $this->isLoaded = false;
+                    $this->load();
+                    if (count($this->storage)) {
+                        array_walk($this->storage, $callback, $params);
+                    } else {
+                        break;
+                    }
+                };
+            }
+        } else {
+            array_walk($this->storage, $callback, $params);
         }
-        array_walk($this->storage, $callback, $params);
     }
 
     /**

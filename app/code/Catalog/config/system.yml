@@ -52,6 +52,13 @@ catalog:
                     required: required
                     default: 5
                     priority: 0
+                search_interval:
+                    type: tel
+                    label: Search Interval
+                    required: required
+                    default: 0
+                    priority: 10
+                    comment: In seconds.
         review:
             label: Review
             scope: merchant

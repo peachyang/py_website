@@ -18,11 +18,10 @@ class Using implements ListenerInterface
     {
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
-        $count = $event['count'] ?: false;
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             $points = $this->getBalances($model);
-            $additional['balance'] = $count === false ? $points : min($count, $points);
+            $additional['balance'] = $points ? 1 : 0;
             $model->setData(['additional' => json_encode($additional)]);
         }
     }
@@ -31,13 +30,13 @@ class Using implements ListenerInterface
     {
         $model = $event['model'];
         $detail = json_decode($model->offsetGet('discount_detail'), true);
-        if ($detail && $detail['Balance']) {
+        if ($detail && !empty($detail['Balance'])) {
             $balance = $detail['Balance'];
             unset($detail['Balance']);
             $model->setData([
-                'discount_detail' => $balance,
-                'base_discount' => $model->offsetGet('base_discount') - $detail['Balance']
-            ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
+                'discount_detail' => json_encode($detail),
+                'base_discount' => $model->offsetGet('base_discount') - $balance
+            ]);
         }
     }
 
@@ -59,13 +58,10 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['balance'])) {
-                $points = $this->getBalances($model, true);
-                $additional['balance'] = min($additional['balance'], $points);
-                $discount = $additional['balance'];
+                $discount = (float) $this->getBalances($model, true);
                 $model->setData([
-                    'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => $this->translate(json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: [])))
+                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }
@@ -86,6 +82,27 @@ class Using implements ListenerInterface
                     'comment' => 'Consumption'
                 ]);
                 $record->save();
+            }
+        }
+    }
+
+    public function afterRefund($event)
+    {
+        $config = $this->getContainer()->get('config');
+        $model = $event['model'];
+        $order = $model->getOrder();
+        if ($config['balance/general/enable'] && $config['balance/general/refunded'] && $order && $order['additional']) {
+            $additional = json_decode($order['additional'], true);
+            if (!empty($additional['balance'])) {
+                $collection = new Collection;
+                $collection->columns(['id'])
+                        ->where(['order_id' => $order->getId()])
+                ->where->lessThan('count', 0);
+                if (count($collection)) {
+                    $record = new Balance;
+                    $record->setData(['id' => $collection[0]['id'], 'status' => 0])
+                            ->save();
+                }
             }
         }
     }

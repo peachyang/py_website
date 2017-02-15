@@ -29,11 +29,11 @@ Seahinet\Log\Model\SocialMedia.model.save.after:
 rewardpoints.apply:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, apply]
-        priority: 0
+        priority: 10
 rewardpoints.cancel:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, cancel]
-        priority: 0
+        priority: 10
 promotion.calc:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, calc]

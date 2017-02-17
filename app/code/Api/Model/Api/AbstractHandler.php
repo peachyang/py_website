@@ -2,6 +2,7 @@
 
 namespace Seahinet\Api\Model\Api;
 
+use Exception;
 use ReflectionClass;
 use ReflectionObject;
 use ReflectionProperty;
@@ -75,7 +76,11 @@ class AbstractHandler implements HandlerInterface
         }
         if (!empty($user['private_key'])) {
             $rsa = new Rsa((new RsaOptions)->setOpensslPadding(OPENSSL_PKCS1_PADDING));
-            return $rsa->decrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')), Rsa::MODE_BASE64);
+            try {
+                return $rsa->decrypt($data, new PrivateKey($user->offsetGet('private_key'), $user->offsetGet('phrase')), Rsa::MODE_BASE64);
+            } catch (Exception $e) {
+                
+            }
         }
         return $data;
     }

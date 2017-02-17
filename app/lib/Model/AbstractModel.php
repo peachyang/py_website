@@ -143,7 +143,7 @@ abstract class AbstractModel extends ArrayObject
     /**
      * Load data
      * 
-     * @param int|string $id    Primary key value by default
+     * @param int|string|array $id    Primary key value by default
      * @param string $key
      * @return AbstractModel
      * @throws InvalidQueryException
@@ -152,7 +152,9 @@ abstract class AbstractModel extends ArrayObject
     {
         if (!$this->isLoaded) {
             try {
-                if (is_null($key) || $key === $this->primaryKey) {
+                if (is_array($id)) {
+                    $result = $this->fetchRow(json_encode($id), null, $this->getCacheKey());
+                } else if (is_null($key) || $key === $this->primaryKey) {
                     $key = $this->primaryKey;
                     $result = $this->fetchRow($id, null, $this->getCacheKey());
                 } else {
@@ -160,14 +162,18 @@ abstract class AbstractModel extends ArrayObject
                 }
                 if (!$result) {
                     $select = $this->getTableGateway($this->tableName)->getSql()->select();
-                    $select->where([(in_array($key, $this->getColumns()) ? $this->tableName . '.' . $key : $key) => $id]);
+                    $select->where(is_array($id) ? $id : [(in_array($key, $this->getColumns()) ? $this->tableName . '.' . $key : $key) => $id]);
                     $this->beforeLoad($select);
                     $result = $this->getTableGateway($this->tableName)->selectWith($select)->toArray();
                     if (count($result)) {
                         $this->afterLoad($result);
-                        $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
-                        if ($key !== $this->primaryKey) {
-                            $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
+                        if (is_array($id)) {
+                            $this->flushRow(json_encode($id), $this->storage, $this->getCacheKey());
+                        } else {
+                            $this->flushRow($this->storage[$this->primaryKey], $this->storage, $this->getCacheKey());
+                            if ($key !== $this->primaryKey) {
+                                $this->addCacheAlias($key . '=' . $id, $this->storage[$this->primaryKey], $this->getCacheKey());
+                            }
                         }
                     }
                 } else {

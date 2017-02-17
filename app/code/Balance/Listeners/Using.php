@@ -57,9 +57,7 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['balance'])) {
-                $points = (float) $this->getBalances($model, true);
-                $additional['balance'] = min($additional['balance'], $points);
-                $discount = $additional['balance'];
+                $discount = (float) $this->getBalances($model, true);
                 $model->setData([
                     'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,

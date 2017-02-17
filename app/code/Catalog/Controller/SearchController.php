@@ -5,7 +5,7 @@ namespace Seahinet\Catalog\Controller;
 use Exception;
 use Seahinet\Catalog\Model\{
     Collection\Product,
-    Term
+    SearchTerm
 };
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Session\Segment;
@@ -53,7 +53,7 @@ class SearchController extends CategoryController
     protected function saveTerm($data, $ids)
     {
         try {
-            $term = new Term;
+            $term = new SearchTerm;
             $term->load($data['q']);
             if ($term->getId()) {
                 $term->setData('popularity', (int) $term->offsetGet('popularity') + 1);

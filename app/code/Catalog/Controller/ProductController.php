@@ -55,9 +55,10 @@ class ProductController extends ActionController
                     $model->setData($data + ['customer_id' => $segment->get('customer')->getId()])->save();
                 } catch (Exception $e) {
                     if (strpos($e->getMessage(), 'Duplicate') === false) {
-                        $this->getContainer()->get('dbAdapter')->logException($e);
+                        $this->getContainer()->get('log')->logException($e);
                     }
                 }
+                $url .= '?referer=' . $segment->get('customer')->offsetGet('increment_id');
             }
             return $this->redirect($media->getUrl(['{url}' => rawurlencode($url)], $data['product_id'] ?? 0));
         }

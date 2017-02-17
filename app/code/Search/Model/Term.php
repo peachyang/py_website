@@ -8,7 +8,10 @@ use Seahinet\Lib\Model\AbstractModel;
 abstract class Term extends AbstractModel
 {
 
-    abstract protected function getCollection(): Collection;
+    /**
+     * @return Collection
+     */
+    abstract protected function getCollection();
 
     public function getSynonym()
     {

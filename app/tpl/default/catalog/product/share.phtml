@@ -23,6 +23,12 @@ $medias = $this->getMedia();
                         </a>
                     </li>
                 <?php endforeach ?>
+                <li>
+                    <a href="javascript:void(0);" class="copy" rel="nofollow" onclick="prompt('<?php echo $this->translate('Press COMMAND+C to copy link.') ?>','<?php echo $this->getSharingUrl() ?>');return false;">
+                        <span class="fa fa-fw fa-copy"></span>
+                        <span><?php echo $this->translate('Copy Link') ?></span>
+                    </a>
+                </li>
             </ul>
         </li>
     <?php endif ?>

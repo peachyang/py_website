@@ -26,7 +26,7 @@ trait Recalc
         foreach ($languages as $language) {
             $customer = new Customer($language['id']);
             $customer->load($customerId);
-            $customer->setData('rewardpoints', $points)
+            $customer->setData('rewardpoints', (int) $points)
                     ->save();
         }
     }

@@ -17,6 +17,8 @@ class Search implements Provider
 
     protected $engine;
 
+    CONST DELIMITER = ' ';
+
     public function provideStructure(AbstractHandler $handler)
     {
         if ($handler instanceof Database) {
@@ -48,14 +50,14 @@ class Search implements Provider
                     break;
                 }
                 foreach ($collection as $product) {
-                    $text = '|';
+                    $text = static::DELIMITER;
                     foreach ($attributes as $attribute) {
                         $text .= $this->getOption($product, $attribute['code'], in_array($attribute['input'], ['select', 'radio', 'checkbox', 'multiselect']) ? $attribute : false);
                     }
                     $data[$language['id']][] = [
                         'id' => $product['id'],
                         'store_id' => $product['store_id'],
-                        'data' => preg_replace('/\|{2,}/', '|', $text)
+                        'data' => preg_replace('/' . (static::DELIMITER === ' ' ? ' ' : '\\' . static::DELIMITER) . '{2,}/', static::DELIMITER, $text)
                     ];
                 }
             }
@@ -69,10 +71,10 @@ class Search implements Provider
         $text = '';
         if (is_array($product[$code])) {
             foreach ($product[$code] as $value) {
-                $text .= ($attribute ? $attribute->getOption($value) : $value ) . '|';
+                $text .= ($attribute ? $attribute->getOption($value) : $value ) . static::DELIMITER;
             }
         } else {
-            $text .= ($attribute ? $attribute->getOption($product[$code]) : $product[$code]) . '|';
+            $text .= ($attribute ? $attribute->getOption($product[$code]) : $product[$code]) . static::DELIMITER;
         }
         return $text;
     }

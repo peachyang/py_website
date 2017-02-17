@@ -12,7 +12,7 @@ class SearchTerm extends Term
         $this->init('product_search_term', 'term', ['term', 'synonym', 'count', 'popularity', 'store_id', 'category_id', 'status']);
     }
 
-    protected function getCollection(): Collection\SearchTerm
+    protected function getCollection()
     {
         return new Collection\SearchTerm;
     }

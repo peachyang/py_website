@@ -212,6 +212,9 @@ class Database extends AbstractHandler
     public function update($languageId, $set, $where = [], array $options = [])
     {
         try {
+            if (empty($set)) {
+                return false;
+            }
             return $this->getTableGateway($languageId)->update($set, $where);
         } catch (Exception $e) {
             throw new BadIndexerException($e->getMessage());

@@ -26,3 +26,10 @@ balances.cancel:
     -
         listener: [\Seahinet\Balance\Listeners\Using, cancel]
         priority: 10
+Seahinet\Sales\Model\CreditMemo.model.save.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterRefund]
+        priority: 10
+    -
+        listener: [\Seahinet\Balance\Listeners\Using, afterRefund]
+        priority: 10

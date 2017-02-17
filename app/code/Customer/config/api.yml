@@ -6,7 +6,7 @@ wsdl:
             username: string
             password: string
         customerValidResponse:
-            loginResult: int
+            customerId: int
         customerInfo:
             sessionId: string
             customerId: int

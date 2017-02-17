@@ -162,6 +162,7 @@ abstract class AbstractCollection extends ArrayObject
                 while (1) {
                     $this->storage = [];
                     $this->select->offset($offset);
+                    $offset += 20;
                     $this->isLoaded = false;
                     $this->load();
                     if (count($this->storage)) {

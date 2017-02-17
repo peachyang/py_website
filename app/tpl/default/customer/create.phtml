@@ -18,6 +18,7 @@
         <div class="col-xs-12 col-sm-6">
             <form action="<?php echo $this->getBaseUrl('customer/account/createpost/') ?>" method="post">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                <input type="hidden" name="referer" value="<?php echo $this->getQuery('referer', '') ?>" />
                 <div class="fieldset"> 
                     <div class="login visible-xs-block">
                         <p>

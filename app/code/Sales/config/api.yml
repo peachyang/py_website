@@ -204,7 +204,7 @@ wsdl:
             customerId: int
             withItems: bool
         cartInfoResponse:
-            cart: \Seahinet\Sales\Model\Api\Cart
+            cart: \Seahinet\Sales\Model\Api\Soap\Cart
         cartAddItem:
             sessionId: string
             customerId: int

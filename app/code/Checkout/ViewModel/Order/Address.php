@@ -57,6 +57,11 @@ class Address extends Template
         return Cart::instance()['shipping_address_id'];
     }
 
+    public function isVirtual()
+    {
+        return Cart::instance()->isVirtual();
+    }
+
     public function getInputBox($key, $item)
     {
         if (empty($item['type'])) {

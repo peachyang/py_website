@@ -59,8 +59,10 @@ class User extends AbstractModel
         }
         if (!empty($this->storage['encrypt']) && empty($this->storage['public_key'])) {
             $rsa = new RsaOptions;
-            $rsa->setPassPhrase($this->storage['phrase'] ?? null)
-                    ->generateKeys();
+            if (!empty($this->storage['phrase'])) {
+                $rsa->setPassPhrase($this->storage['phrase']);
+            }
+            $rsa->generateKeys();
             $this->setData('public_key', $rsa->getPublicKey())
                     ->setData('private_key', $rsa->getPrivateKey());
         }

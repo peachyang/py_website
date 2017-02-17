@@ -137,7 +137,7 @@ class Cart extends AbstractHandler
     public $status;
 
     /**
-     * @var \Seahinet\Sales\Model\Api\CartItem[]
+     * @var \Seahinet\Sales\Model\Api\Soap\CartItem[]
      */
     public $items;
 

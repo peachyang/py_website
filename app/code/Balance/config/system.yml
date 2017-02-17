@@ -24,3 +24,12 @@ balance:
                     label: Days Before Activation
                     priority: 20
                     default: 0
+                refunded:
+                    type: select
+                    label: Restore Spent Balances After Order Refunding
+                    required: required
+                    priority: 30
+                    default: 1
+                    options:
+                        1: Yes
+                        0: No

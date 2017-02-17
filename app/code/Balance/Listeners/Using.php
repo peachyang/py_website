@@ -11,8 +11,7 @@ class Using implements ListenerInterface
 {
 
     use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Balance\Traits\Calc,
-        \Seahinet\Lib\Traits\Translate;
+        \Seahinet\Balance\Traits\Calc;
 
     public function apply($event)
     {
@@ -21,7 +20,7 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             $points = $this->getBalances($model);
-            $additional['balance'] = $points ? 1 : 0;
+            $additional['balance'] = $points ? $points : 0;
             $model->setData(['additional' => json_encode($additional)]);
         }
     }
@@ -34,8 +33,8 @@ class Using implements ListenerInterface
             $balance = $detail['Balance'];
             unset($detail['Balance']);
             $model->setData([
-                'discount_detail' => json_encode($detail),
-                'base_discount' => $model->offsetGet('base_discount') - $balance
+                'base_discount' => (float) $model->offsetGet('base_discount') - $balance,
+                'discount_detail' => json_encode($detail)
             ]);
         }
     }
@@ -58,10 +57,13 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['balance'])) {
-                $discount = (float) $this->getBalances($model, true);
+                $points = (float) $this->getBalances($model, true);
+                $additional['balance'] = min($additional['balance'], $points);
+                $discount = $additional['balance'];
                 $model->setData([
+                    'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
+                    'discount_detail' => json_encode(['Balance' => -$discount] + (json_decode($model['discount_detail'], true) ?: []))
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }
@@ -97,10 +99,10 @@ class Using implements ListenerInterface
                 $collection = new Collection;
                 $collection->columns(['id'])
                         ->where(['order_id' => $order->getId()])
-                ->where->lessThan('count', 0);
+                ->where->lessThan('amount', 0);
                 if (count($collection)) {
                     $record = new Balance;
-                    $record->setData(['id' => $collection[0]['id'], 'status' => 0])
+                    $record->setData(['id' => $collection[0]['id'], 'comment' => 'Balance Refund', 'status' => 0])
                             ->save();
                 }
             }

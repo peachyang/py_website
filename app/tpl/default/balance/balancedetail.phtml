@@ -6,11 +6,13 @@ $customer = $this->getCustomer();
     <table class="table">
         <thead>
             <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->translate('Available Balance'); ?>:
+                <td class="col-lg-8 col-md-8"><?php echo $this->translate('Available Balance'); ?>:
                     <span class="count">
                         <?php echo $this->getCurrency()->convert($customer->getBalance(), TRUE); ?>
                     </span>
-                    <a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a>
+                </td>
+                <td class="col-lg-4 col-md-4 text-right">
+                    <p class="text-right"><a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a></p>
                 </td>
             </tr>
         </thead>
@@ -29,45 +31,25 @@ $customer = $this->getCustomer();
         <?php if (count($collection)): ?>
             <tbody>
                 <?php foreach ($collection as $balance): ?>
-                    <tr class="text-center"<?php if ($balance['order_id']): ?> onclick="javascript:window.open('<?php echo $this->getBaseUrl('sales/order/view/?id=' . $balance['order_id']); ?>')" <?php endif; ?>>
+                    <tr class="text-center">
                         <td><?php echo (new \Seahinet\Sales\Model\Order)->getCurrency()->convert($balance['amount'], TRUE) ?></td>
                         <td><?php echo $this->translate($balance['comment']) ?></td>
-                        <td>
-                            <?php
-                            if (!$balance['status']):
-                                if ((float) $balance['amount'] < 0):
-                                    echo $this->translate('Refunded');
-                                else:
-                                    echo $this->translate('Pending Payment');
-                                endif;
-                            else:
-                                echo $this->translate('Successful Trade');
-                            endif;
-                            ?>
-                        </td>
+                        <td><?php echo $this->translate($balance['status'] ? 'Successful Trade' : 'Pending Payment') ?></td>
                         <td><?php echo $balance['created_at'] ?></td>
                         <td>
                             <?php
-                            if (!$balance['status']):
-                                if ((float) $balance['amount'] > 0):
-                                    ?>
-                                    <span><?php echo $this->translate('Pending Payment'); ?></span>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                    <a href="<?php echo $this->getBaseUrl('balance/statement/cancel/'); ?>" data-method="delete" data-params="id=<?php echo $balance->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>">
-                                        <?php echo $this->translate('Cancel Recharge'); ?>
-                                    </a>
-                                    <?php
-                                else:
-                                    ?>
-                                    <span><?php echo $this->translate('Successful Trade'); ?></span>
-                                <?php
-                                endif;
-                            else:
+                            if ($balance['status'] != 0):
                                 ?>
                                 <span><?php echo $this->translate('Successful Trade'); ?></span>
+                                <?php
+                            else:
+                                ?>
+                                <span><?php echo $this->translate('Pending Payment'); ?></span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                <a href="<?php echo $this->getBaseUrl('balance/statement/cancel/'); ?>" data-method="delete" data-params="id=<?php echo $balance->getId() ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Cancel Recharge'); ?></a>
                             <?php endif; ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </tbody>
             <tfoot>
                 <tr>

@@ -4,6 +4,7 @@ namespace Seahinet\Customer\Model\Api\Soap;
 
 use Seahinet\Api\Model\Api\AbstractHandler;
 use Seahinet\Customer\Model\Customer as Model;
+use Seahinet\Lib\Model\Collection\Eav\Attribute;
 
 class Customer extends AbstractHandler
 {
@@ -31,7 +32,16 @@ class Customer extends AbstractHandler
         $this->validateSessionId($sessionId);
         $customer = new Model;
         $customer->load($customerId);
-        return $this->response($customer->toArray());
+        $result = ['id' => $customer->getId()];
+        $attributes = new Attribute;
+        $attributes->join('eav_entity_type', 'eav_entity_type.id=eav_attribute.type_id', [], 'left')
+                ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
+        ->where->notEqualTo('input', 'password');
+        $attributes->load(true, true);
+        $attributes->walk(function($attribute) use (&$result, $customer) {
+            $result[$attribute['code']] = $customer->offsetGet($attribute['code']);
+        });
+        return $this->response($result);
     }
 
 }

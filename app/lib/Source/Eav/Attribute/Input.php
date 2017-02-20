@@ -19,6 +19,7 @@ class Input implements SourceInterface
                 'color' => 'Color',
                 'password' => 'Password',
                 'textarea' => 'Textarea',
+                'hidden' => 'Hidden'
             ],
             'File' => [
                 'file' => 'File',

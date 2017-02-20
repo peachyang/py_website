@@ -157,6 +157,7 @@ abstract class AbstractCollection extends ArrayObject
             if ($this->select->getRawState('limit')) {
                 $this->load();
             } else {
+                $select = clone $this->select;
                 $this->select->limit(20);
                 $offset = 0;
                 while (1) {
@@ -171,6 +172,7 @@ abstract class AbstractCollection extends ArrayObject
                         break;
                     }
                 };
+                $this->select = $select;
             }
         } else {
             array_walk($this->storage, $callback, $params);

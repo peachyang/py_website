@@ -88,7 +88,7 @@ class InvoiceController extends AuthActionController
                         }
                     }
                 }
-                $invoice->collateTotals();print_r($invoice->toArray());$this->rollback();die();
+                $invoice->collateTotals();
                 $code = (int) !$order->canShip() + (int) !$order->canInvoice();
                 if ($code) {
                     $code = $code === 2 ? 'complete' : 'processing';

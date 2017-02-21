@@ -1,6 +1,5 @@
 <?php
 $collection = $this->getStatement();
-$customer = $this->getCustomer();
 ?>
 <div class="statement">
     <table class="table">
@@ -8,7 +7,7 @@ $customer = $this->getCustomer();
             <tr>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->translate('Available Balance'); ?>:
                     <span class="count">
-                        <?php echo $this->getCurrency()->convert($customer->getBalance(), TRUE); ?>
+                        <?php echo $this->getCurrency()->convert($this->getAmount(), TRUE); ?>
                     </span>
                     <a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a>
                 </td>

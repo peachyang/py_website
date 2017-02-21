@@ -197,7 +197,7 @@ abstract class Entity extends AbstractModel
                 $languages->columns(['id']);
                 $index = [];
                 foreach ($this->attributes as $attr) {
-                    $attribute = @$attributes[$attr['code']];
+                    $attribute = $attributes[$attr['code']] ?? null;
                     if (!isset($tableGateways[$attr['type']])) {
                         $tableGateways[$attr['type']] = $this->getTableGateway($this->valueTablePrefix . '_' . $attr['type']);
                     }
@@ -303,6 +303,7 @@ abstract class Entity extends AbstractModel
             $this->attributes->withSet()->columns(['code', 'id', 'type'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'left')
                     ->where(['eav_entity_type.code' => static::ENTITY_TYPE, 'attribute_set_id' => $this->storage['attribute_set_id']]);
+            $this->attributes->load(true, true);
         }
         $attrs = [];
         $this->attributes->walk(function($attr) use (&$attrs, &$datetime) {

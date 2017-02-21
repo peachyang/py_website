@@ -382,10 +382,7 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin .images .preview:hover:after{content:"\d7";color:#fff;display:block;width:48px;height:48px;position:absolute;top:0;left:0;background:#000;background:rgba(0,0,0,.5);z-index:2}
 .admin .images .preview img{max-width:48px;max-height:48px;vertical-align:top}
 .admin .images .preview~.preview~.preview~.preview~.preview~.add-image{display:none}
-.admin .edit .tab-pane.active .btn{background:#02A0E9;margin-bottom: 10px;border-radius: 4px;color: #fff}
-.admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set{font-size: 14px}
-.admin .edit .tab-pane.active .btn,.admin .edit .tab-pane.active .buttons-set,.admin .edit .tab-pane.active .content {line-height: 26px}
-.admin .edit .tab-pane.active .content{font-size:12px;margin-bottom: 10px}
+.admin .edit .tab-pane.active .content{font-size:12px;margin-bottom:10px}
 .admin.admin-customer-edit .statement{max-width:100%;width:600px;height:400px;overflow:auto}
 .template-tip{border:1px dashed red;position:relative}
 .template-tip::before{content:attr(data-template);color:#fff;background:red;position:absolute;left:0;top:0}

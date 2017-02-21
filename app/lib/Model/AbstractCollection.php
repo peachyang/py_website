@@ -171,7 +171,8 @@ abstract class AbstractCollection extends ArrayObject
                     } else {
                         break;
                     }
-                };
+                }
+                $this->isLoaded = false;
                 $this->select = $select;
             }
         } else {

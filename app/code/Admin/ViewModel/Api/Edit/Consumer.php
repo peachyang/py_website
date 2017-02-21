@@ -95,7 +95,8 @@ class Consumer extends PEdit
                 'value' => $secret
             ],
             'public_key' => [
-                'type' => 'textarea',
+                'type' => 'sslkey',
+                'method' => 'openssl_pkey_get_public',
                 'label' => 'Public Key',
                 'attrs' => [
                     'readonly' => 'readonly',
@@ -104,7 +105,9 @@ class Consumer extends PEdit
                 'value' => $public
             ],
             'private_key' => [
-                'type' => 'textarea',
+                'type' => 'sslkey',
+                'method' => 'openssl_pkey_get_private',
+                'phrase' => $phrase,
                 'label' => 'Private Key',
                 'attrs' => [
                     'readonly' => 'readonly',

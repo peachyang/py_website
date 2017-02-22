@@ -40,7 +40,7 @@ customer_account:
                                 params: [{link:'balance/statement/',label:'Balance',group:'Asset Center'}]
                             -
                                 method: addLink
-                                params: [{link:'rewardpoints/statement/',label:'Reward Points',group:'Asset Center'}]
+                                params: [{link:'rewardpoints/statement/reward/',label:'Reward Points',group:'Asset Center'}]
                             -
 #                                method: addLink
 #                                params: [{link:'customer/account/',label:'Privilege',group:'Asset'}]

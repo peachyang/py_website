@@ -28,7 +28,7 @@ class Calc implements ListenerInterface
                 $customer->load($model->offsetGet('customer_id'));
                 $this->totalBalance -= $this->handlerRewardPoints($model, $customer) * $config['rewardpoints/using/rate'];
             }
-            if ($this->totalBalance) {
+            if ($this->totalBalance > 0) {
                 $retailer = new Retailer;
                 $retailer->load($model->offsetGet('store_id'), 'store_id');
                 $this->handlerBalance($model, $retailer);

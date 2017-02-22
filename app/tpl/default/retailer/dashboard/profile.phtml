@@ -2,6 +2,7 @@
 $retailer = $this->getRetailer();
 $store = $this->getStore();
 $ratings = $retailer->getRatings();
+$amount = new Seahinet\Balance\ViewModel\BalanceDetail;
 ?>
 <div class="profile clearfix">
     <div class="pull-right col-xs-12 col-md-6">
@@ -40,7 +41,9 @@ $ratings = $retailer->getRatings();
                     <a href="<?php echo $this->getBaseUrl('retailer/store/view/') ?>"><?php echo $this->translate('View Store') ?></a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->getBaseUrl('balance/statement/') ?>"><?php echo $this->translate('Account Balance'); ?></a>
+                    <a href="<?php echo $this->getBaseUrl('retailer/account/reward/') ?>"><?php echo $this->translate('Account Balance'); ?>
+                        (<span class="count"><?php echo $amount->getCurrency()->convert($amount->getAmount(),true); ?></span>)
+                    </a>
                 </li>
             </ul>
             <div class="transaction">

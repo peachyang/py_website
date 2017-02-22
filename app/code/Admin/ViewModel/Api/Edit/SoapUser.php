@@ -94,7 +94,8 @@ class SoapUser extends PEdit
                 'comment' => 'We use RSA cryptography to encrypt/decrypt data.'
             ],
             'public_key' => [
-                'type' => 'textarea',
+                'type' => 'sslkey',
+                'method' => 'openssl_pkey_get_public',
                 'label' => 'Public Key',
                 'attrs' => [
                     'data-base' => '#encrypt-1',
@@ -104,7 +105,9 @@ class SoapUser extends PEdit
                 'comment' => 'Leave blank to generate keys automatically.'
             ],
             'private_key' => [
-                'type' => 'textarea',
+                'type' => 'sslkey',
+                'method' => 'openssl_pkey_get_private',
+                'phrase_key' => 'phrase',
                 'label' => 'Private Key',
                 'attrs' => [
                     'data-base' => '#encrypt-1',

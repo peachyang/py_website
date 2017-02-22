@@ -68,4 +68,9 @@ class AccountController extends AuthActionController
         return $this->getLayout('retailer_processing');
     }
 
+    public function rewardAction()
+    {
+        return $this->getLayout('retailer_balance_statement');
+    }
+
 }

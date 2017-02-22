@@ -12,4 +12,9 @@ class StatementController extends AuthActionController
         return $this->getLayout('rewardpoints_statement');
     }
 
+    public function rewardAction()
+    {
+        return $this->getLayout('frontend_rewardpoints_statement');
+    }
+
 }

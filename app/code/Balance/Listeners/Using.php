@@ -29,7 +29,7 @@ class Using implements ListenerInterface
     {
         $model = $event['model'];
         $detail = json_decode($model->offsetGet('discount_detail'), true);
-        if ($detail && !empty($detail['Balance'])) {
+        if (($detail && !empty($detail['Balance']))) {
             $balance = $detail['Balance'];
             unset($detail['Balance']);
             $model->setData([
@@ -57,11 +57,12 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             if (!empty($additional['balance'])) {
-                $discount = (float) $this->getBalances($model, true);
+                $points = $this->getBalances($model, true);
+                $additional['balance'] = min($additional['balance'], $points);
+                $discount = $additional['balance'];
                 $model->setData([
-                    'additional' => json_encode($additional),
                     'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => json_encode(['Balance' => -$discount] + (json_decode($model['discount_detail'], true) ?: []))
+                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
         }

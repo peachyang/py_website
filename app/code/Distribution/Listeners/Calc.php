@@ -9,7 +9,6 @@ use Seahinet\Customer\Model\{
 use Seahinet\Lib\Listeners\ListenerInterface;
 use Seahinet\Retailer\Model\Retailer;
 use Seahinet\RewardPoints\Model\Record;
-use Seahinet\Sales\Model\Collection\Order\Status\History;
 
 class Calc implements ListenerInterface
 {
@@ -22,26 +21,17 @@ class Calc implements ListenerInterface
     {
         $model = $event['model'];
         if ($model->getPhase()['code'] === 'complete') {
-            $history = new History;
-            $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', [], 'left')
-                    ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [], 'left')
-                    ->where([
-                        'order_id' => $model->getId(),
-                        'sales_order_phase.code' => 'complete'
-            ]);
-            if (count($history->load(false, true)) === 0) {
-                $config = $this->getContainer()->get('config');
-                $this->totalBalance = $model->offsetGet('base_grand_total') / 100 * $config['distribution/general/percentage'];
-                if ($model->offsetGet('customer_id')) {
-                    $customer = new Customer;
-                    $customer->load($model->offsetGet('customer_id'));
-                    $this->totalBalance -= $this->handlerRewardPoints($model, $customer) * $config['rewardpoints/using/rate'];
-                }
-                if ($this->totalBalance) {
-                    $retailer = new Retailer;
-                    $retailer->load($model->offsetGet('store_id'), 'store_id');
-                    $this->handlerBalance($model, $retailer);
-                }
+            $config = $this->getContainer()->get('config');
+            $this->totalBalance = $model->offsetGet('base_grand_total') / 100 * $config['distribution/general/percentage'];
+            if ($model->offsetGet('customer_id')) {
+                $customer = new Customer;
+                $customer->load($model->offsetGet('customer_id'));
+                $this->totalBalance -= $this->handlerRewardPoints($model, $customer) * $config['rewardpoints/using/rate'];
+            }
+            if ($this->totalBalance > 0) {
+                $retailer = new Retailer;
+                $retailer->load($model->offsetGet('store_id'), 'store_id');
+                $this->handlerBalance($model, $retailer);
             }
         }
     }

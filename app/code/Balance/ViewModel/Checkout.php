@@ -10,7 +10,7 @@ use Seahinet\Sales\Model\Cart;
 class Checkout extends Template
 {
 
-    use \Seahinet\Balance\Traits\Calc; 
+    use \Seahinet\Balance\Traits\Calc;
 
     public function hasLoggedIn()
     {
@@ -35,7 +35,12 @@ class Checkout extends Template
             return $this->getBalances(Cart::instance());
         }
         return 0;
-    } 
+    }
+
+    public function isVirtual()
+    {
+        return Cart::instance()->isVirtual();
+    }
 
     public function hasApplied()
     {

@@ -34,11 +34,12 @@ class IndexController extends ActionController
         $segment = new Segment('admin');
         if ($segment->get('hasLoggedIn')) {
             $config = $this->getContainer()->get('config');
+            $user = $segment->get('user');
             if ($url && $config['global/backend/sso'] && $config['global/backend/sso_url'] && in_array(parse_url($url, PHP_URL_HOST), explode(';', $config['global/backend/sso_url']))) {
                 $cipher = new BlockCipher(new Openssl);
                 $cipher->setKey($config['global/backend/sso_key']);
-                return $this->redirect($url . '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt('{"username":"' . $segment->get('user')->offsetGet('username') . '"}'))));
-            } else if ($segment->get('user')->getRole()->hasPermission('Admin\\Dashboard::index')) {
+                return $this->redirect($url . '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt('{"id":' . $user->getId() . ',"username":"' . $user->offsetGet('username') . '"}'))));
+            } else if ($user->getRole()->hasPermission('Admin\\Dashboard::index')) {
                 return $this->redirect(':ADMIN/dashboard/');
             } else {
                 return $this->redirect(':ADMIN/user/');

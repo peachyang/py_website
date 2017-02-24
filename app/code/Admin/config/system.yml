@@ -28,6 +28,35 @@ global:
                     priority: 10
                     scope: [merchant,store]
                     default: admin
+        backend:
+            label: Backend
+            priority: 50
+            scope: [merchant]
+            children:
+                sso:
+                    label: Allowed SSO
+                    type: select
+                    priority: 10
+                    required: required
+                    default: 0
+                    options:
+                        1: Yes
+                        0: No
+                sso_url:
+                    label: Allowed SSO Url
+                    type: text
+                    priority: 20
+                    attrs:
+                        data-base: '#backend-sso'
+                    comment: Separated by semicolon(;)
+                sso_key:
+                    label: SSO Key
+                    type: text
+                    priority: 30
+                    required: required
+                    attrs:
+                        data-base: '#backend-sso'
+                    comment: We use the key to encrypt/decrypt sso result.
 theme:
     label: Theme Configuration
     children:

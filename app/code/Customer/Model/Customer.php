@@ -13,8 +13,6 @@ class Customer extends Entity
 
     const ENTITY_TYPE = 'customer';
 
-    protected $retailer = null;
-
     protected function construct()
     {
         $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'confirm_token', 'confirm_token_created_at', 'status']);

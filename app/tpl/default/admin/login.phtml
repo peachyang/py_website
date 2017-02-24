@@ -6,6 +6,9 @@
         <div class="panel-body">
             <form action="<?php echo $this->getAdminUrl('index/login/') ?>" method="post" class="form-inline">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
+                <?php if ($url = $this->getQuery('success_url')): ?>
+                    <input type="hidden" name="success_url" value="<?php echo base64_decode($url) ?>" />
+                <?php endif ?>
                 <div class="input-box">
                     <label for="login:username" class="control-label"><?php echo $this->translate('Username') ?>: </label>
                     <input type="text" name="username" class="form-control required" id="login:username" spellcheck="false" />

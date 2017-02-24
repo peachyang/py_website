@@ -1,6 +1,4 @@
 ---
-default:
-    controller: Seahinet\Cms\Controller\PageController
 language:
     method: GET
     route: /language/{action}/{code}[/]

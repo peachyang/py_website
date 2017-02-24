@@ -29,24 +29,13 @@ class Using implements ListenerInterface
     {
         $model = $event['model'];
         $detail = json_decode($model->offsetGet('discount_detail'), true);
-        if (($detail && !empty($detail['Balance']))) {
+        if ($detail && !empty($detail['Balance'])) {
             $balance = $detail['Balance'];
             unset($detail['Balance']);
             $model->setData([
                 'base_discount' => (float) $model->offsetGet('base_discount') - $balance,
                 'discount_detail' => json_encode($detail)
             ]);
-        }
-    }
-
-    public function cancel($event)
-    {
-        $config = $this->getContainer()->get('config');
-        $model = $event['model'];
-        if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
-            $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-            unset($additional['balance']);
-            $model->setData(['additional' => json_encode($additional)]);
         }
     }
 
@@ -59,12 +48,22 @@ class Using implements ListenerInterface
             if (!empty($additional['balance'])) {
                 $points = $this->getBalances($model, true);
                 $additional['balance'] = min($additional['balance'], $points);
-                $discount = $additional['balance'];
                 $model->setData([
-                    'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                    'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
+                    'base_discount' => (float) $model->offsetGet('base_discount') - (max($additional['balance'] ?? 0, $additional['rewardpoints'] ?? 0) - min($additional['balance'] ?? 0, $additional['rewardpoints'] ?? 0)),
+                    'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - (max($additional['balance'] ?? 0, $additional['rewardpoints'] ?? 0) - min($additional['balance'] ?? 0, $additional['rewardpoints'] ?? 0))])
                 ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
             }
+        }
+    }
+
+    public function cancel($event)
+    {
+        $config = $this->getContainer()->get('config');
+        $model = $event['model'];
+        if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
+            $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
+            unset($additional['balance']);
+            $model->setData(['additional' => json_encode($additional)]);
         }
     }
 

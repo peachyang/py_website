@@ -51,6 +51,9 @@ retailer_account:
                                 params: [{link:'retailer/refund/',label:'Return &amp; Refund',priority:3,group:'Transaction Management'}]
                             -
                                 method: addLink
+                                params: [{link:'retailer/account/reward/',label:'My Billing',priority:4,group:'Transaction Management'}]
+                            - 
+                                method: addLink
                                 params: [{link:'retailer/product/release/',label:'Release Product',priority:4,group:'Product Management'}]
                             -
                                 method: addLink

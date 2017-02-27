@@ -10,6 +10,7 @@ $collection = $this->getStatement();
                         <?php echo $this->getCurrency()->convert($this->getAmount(), TRUE); ?>
                     </span>
                     <a href="<?php echo $this->getBaseUrl('balance/statement/recharge/'); ?>" type="submit" class="btn btn-theme"><?php echo $this->translate('Recharge'); ?></a>
+                    <a href="<?php echo $this->getBaseUrl('balance/statement/'); ?>" disabled="true" type="submit" class="btn btn-theme"><?php echo $this->translate('Withdraw Deposit'); ?></a>
                 </td>
             </tr>
         </thead>

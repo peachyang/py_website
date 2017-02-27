@@ -17,8 +17,8 @@ trait Calc
                     'status' => 1
         ]);
         $balance = (count($collection) ? $collection[0]['amount'] : 0);
-        $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-        return min($balance, $model['base_total'] + @$additional['balance'] ?? 0);
+        $detail = $model['discount_detail'] ? json_decode($model['discount_detail'], true) : [];
+        return min($balance, $model['base_total'] + ($detail['Balance'] ?? 0));
     }
 
 }

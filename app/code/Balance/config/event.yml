@@ -18,6 +18,10 @@ rewardpoints.apply:
     -
         listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
         priority: 5
+promotion.calc:
+    -
+        listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
+        priority: 5
 balances.apply:
     -
         listener: [\Seahinet\Balance\Listeners\Using, apply]

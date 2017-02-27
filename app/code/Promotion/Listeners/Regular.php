@@ -57,6 +57,7 @@ class Regular implements ListenerInterface
         }
         if ($result) {
             $this->model->setData([
+                'additional' => json_encode(['promotion' => $result] + (json_decode($this->model['additional'], true) ?: [])),
                 'base_discount' => (float) $this->model->offsetGet('base_discount') - $result,
                 'discount_detail' => json_encode(['Promotion' => - $result] + (json_decode($this->model['discount_detail'], true) ?: []))
             ])->setData('discount', $this->model->getCurrency()->convert($this->model->offsetGet('base_discount')));

@@ -6,6 +6,7 @@
 "Cancel recharge successfully.","取消充值成功。"
 "Current available balance.","当前无可使用余额。"
 "Instant Recharge","立即充值"
+"My Billing","我的账单"
 "Product for Recharge","用于充值产品"
 "Recharge","充值"
 "Refunded","已退款"
@@ -15,3 +16,4 @@
 "Restore Spent Balances After Order Refunding","订单退款后返还已使用余额"
 "Successful Trade","交易成功"
 "You have %d balances left. You can use %d for current transaction.","您当前有余额%d。您可以使用%d余额进行当前操作。"
+"Withdraw Deposit","提现"

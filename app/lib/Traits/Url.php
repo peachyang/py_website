@@ -36,7 +36,8 @@ trait Url
     {
         if (!isset(static::$cachedUrl['b'][$path])) {
             if ($this->baseUrl === '') {
-                $this->baseUrl = $this->getContainer()->get('config')['global/url/base_url'];
+                $config = $this->getContainer()->get('config');
+                $this->baseUrl = $config['adapter']['base_url'] ?? $config['global/url/base_url'];
             }
             static::$cachedUrl['b'][$path] = $this->baseUrl . ltrim($path, '/');
         }

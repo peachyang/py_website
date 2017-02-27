@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `cms_block_language`(
     `language_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (`block_id`,`language_id`),
     INDEX IDX_CMS_BLOCK_LANGUAGE_LANGUAGE_ID (`language_id`),
-    CONSTRAINT FK_CMS_BLOCK_LANGUAGE_PAGE_ID_CMS_PAGE_ID FOREIGN KEY (`block_id`) REFERENCES `cms_block`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_CMS_BLOCK_LANGUAGE_BLOCK_ID_CMS_BLOCK_ID FOREIGN KEY (`block_id`) REFERENCES `cms_block`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CMS_BLOCK_LANGUAGE_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -842,8 +842,6 @@ CREATE TABLE IF NOT EXISTS `api_rest_role` (
     PRIMARY KEY (`id`)
 );
 
-INSERT INTO `api_rest_role` VALUES (-1,'Admin',NULL,NULL),(0,'Anonymous',NULL,NULL),(1,'Customer',NULL,NULL);
-
 CREATE TABLE IF NOT EXISTS `api_rest_attribute` (
     `role_id` INTEGER NOT NULL,
     `resource` VARCHAR(50) NOT NULL,
@@ -903,7 +901,8 @@ CREATE TABLE IF NOT EXISTS `api_soap_permission` (
     `role_id` INTEGER UNSIGNED NOT NULL,
     `resource` VARCHAR(255) NOT NULL,
     `permission` BOOLEAN DEFAULT 1,
-    PRIMARY KEY (`role_id`,`resource`)
+    PRIMARY KEY (`role_id`,`resource`),
+    CONSTRAINT FK_API_SOAP_PERMISSION_ROLE_ID_API_SOAP_ROLE_ID FOREIGN KEY (`role_id`) REFERENCES `api_soap_role`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `api_soap_user` (

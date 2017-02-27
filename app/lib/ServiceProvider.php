@@ -50,7 +50,7 @@ class ServiceProvider implements ServiceProviderInterface
         }
         if (!$container->has('response')) {
             $response = new Response;
-            if(isset($request)){
+            if (isset($request)) {
                 $response->withProtocolVersion($request->getProtocolVersion());
             }
             $response->withStatus(200)

@@ -835,7 +835,7 @@ CREATE TABLE IF NOT EXISTS `livechat_group` (
 );
 
 CREATE TABLE IF NOT EXISTS `livechat_group_member`(
-    `group_id` VARCHAR(255) UNSIGNED NOT NULL,
+    `group_id` INTEGER UNSIGNED NOT NULL,
     `customer_id` INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY(`group_id`,`customer_id`),
     INDEX IDX_LIVECHAT_GROUP_MEMBER_CUSTOMER_ID (`customer_id`),

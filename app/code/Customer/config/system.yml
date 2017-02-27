@@ -25,7 +25,7 @@ customer:
                     options:
                         1: Yes
                         0: No
-                sso_url:
+                allowed_sso_url:
                     label: Allowed SSO Url
                     type: text
                     priority: 20

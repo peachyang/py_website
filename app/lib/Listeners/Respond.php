@@ -14,6 +14,7 @@ class Respond implements ListenerInterface
 
     public function respond($event)
     {
+        $isHead = $this->getContainer()->get('request')->isHead();
         $response = $this->getContainer()->get('response');
         $body = $response->getBody();
         $chunkSize = 4096;
@@ -21,10 +22,10 @@ class Respond implements ListenerInterface
         if (!$contentLength) {
             $contentLength = $body->getSize();
         }
-        if ($body->isSeekable()) {
+        if (!$isHead && $body->isSeekable()) {
             if ($response->getStatusCode() === 206 && $range = $this->getContainer()->get('request')->getHeader('RANGE')) {
                 try {
-                    header('Accept-Ranges: bytes');
+                    $response->withHeader('Accept-Ranges', 'bytes');
                     preg_match('/^bytes\=(?P<start>\d*)\-(?P<end>\d*)$/', $range, $matches);
                     $start = (int) $matches['start'];
                     $end = (int) $matches['end'];
@@ -36,7 +37,7 @@ class Respond implements ListenerInterface
                     if ($end < $start) {
                         $end = (int) $contentLength;
                     }
-                    header('Content-Range: bytes ' . $start . '-' . $end . '/' . $contentLength);
+                    $response->withHeader('Content-Range', 'bytes ' . $start . '-' . $end . '/' . $contentLength);
                     $contentLength = $end - $start;
                 } catch (\RuntimeException $e) {
                     $response->withStatus(416);
@@ -60,25 +61,26 @@ class Respond implements ListenerInterface
                 header(sprintf('Set-Cookie: %s', $value), false);
             }
         }
-
-        if (isset($contentLength)) {
-            $totalChunks = ceil($contentLength / $chunkSize);
-            $lastChunkSize = $contentLength % $chunkSize;
-            $currentChunk = 0;
-            while (!$body->eof() && $currentChunk < $totalChunks) {
-                if (++$currentChunk == $totalChunks && $lastChunkSize > 0) {
-                    $chunkSize = $lastChunkSize;
+        if (!$isHead) {
+            if (isset($contentLength)) {
+                $totalChunks = ceil($contentLength / $chunkSize);
+                $lastChunkSize = $contentLength % $chunkSize;
+                $currentChunk = 0;
+                while (!$body->eof() && $currentChunk < $totalChunks) {
+                    if (++$currentChunk == $totalChunks && $lastChunkSize > 0) {
+                        $chunkSize = $lastChunkSize;
+                    }
+                    echo $body->read($chunkSize);
+                    if (connection_status() != CONNECTION_NORMAL) {
+                        break;
+                    }
                 }
-                echo $body->read($chunkSize);
-                if (connection_status() != CONNECTION_NORMAL) {
-                    break;
-                }
-            }
-        } else {
-            while (!$body->eof()) {
-                echo $body->read($chunkSize);
-                if (connection_status() != CONNECTION_NORMAL) {
-                    break;
+            } else {
+                while (!$body->eof()) {
+                    echo $body->read($chunkSize);
+                    if (connection_status() != CONNECTION_NORMAL) {
+                        break;
+                    }
                 }
             }
         }

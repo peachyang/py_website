@@ -10,7 +10,11 @@ use Seahinet\Email\Model\Collection\Template as TemplateCollection;
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
-use Zend\Crypt\Password\Bcrypt;
+use Zend\Crypt\{
+    BlockCipher,
+    Password\Bcrypt,
+    Symmetric\Openssl
+};
 use Zend\Math\Rand;
 
 class IndexController extends ActionController
@@ -18,18 +22,24 @@ class IndexController extends ActionController
 
     public function dispatch($request = null, $routeMatch = null)
     {
-        $result = $this->redirectLoggedin();
+        $result = $this->redirectLoggedin($request->getQuery('success_url', ''));
         if ($result !== false) {
             return $result;
         }
         return parent::dispatch($request, $routeMatch);
     }
 
-    protected function redirectLoggedin()
+    protected function redirectLoggedin($url = '')
     {
         $segment = new Segment('admin');
         if ($segment->get('hasLoggedIn')) {
-            if ($segment->get('user')->getRole()->hasPermission('Admin\\Dashboard::index')) {
+            $config = $this->getContainer()->get('config');
+            $user = $segment->get('user');
+            if ($url && $config['global/backend/sso'] && $config['global/backend/allowed_sso_url'] && in_array(parse_url($url, PHP_URL_HOST), explode(';', $config['global/backend/allowed_sso_url']))) {
+                $cipher = new BlockCipher(new Openssl);
+                $cipher->setKey($config['global/backend/sso_key']);
+                return $this->redirect($url . '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt('{"id":' . $user->getId() . ',"username":"' . $user->offsetGet('username') . '"}'))));
+            } else if ($user->getRole()->hasPermission('Admin\\Dashboard::index')) {
                 return $this->redirect(':ADMIN/dashboard/');
             } else {
                 return $this->redirect(':ADMIN/user/');
@@ -58,8 +68,9 @@ class IndexController extends ActionController
                         'lognum' => $user->offsetGet('lognum') + 1
                     ])->save();
                     $this->getContainer()->get('log')->log($data['username'] . ' has logged in', 200);
-                    return $this->redirectLoggedin();
+                    return $this->redirectLoggedin($data['success_url'] ?? '');
                 } else {
+                    $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('Login failed. Invalid username or password.'), 'level' => 'danger'];
                 }
             }

@@ -45,7 +45,7 @@ abstract class AuthActionController extends ActionController
     protected function useSso(&$result)
     {
         $config = $this->getContainer()->get('config');
-        if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/sso_url']))) {
+        if ($config['customer/login/sso'] && $result['success_url'] && $config['customer/login/allowed_sso_url'] && in_array(parse_url($result['success_url'], PHP_URL_HOST), explode(';', $config['customer/login/allowed_sso_url']))) {
             $result['message'] = [];
             $cipher = new BlockCipher(new Openssl);
             $cipher->setKey($config['customer/login/sso_key']);

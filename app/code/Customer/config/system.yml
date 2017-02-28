@@ -68,7 +68,7 @@ customer:
                     required: required
                     default: 1
                     source: \Seahinet\Customer\Source\Group
-                comfirm:
+                confirm:
                     label: Require Emails Confirmation
                     type: select
                     priority: 10

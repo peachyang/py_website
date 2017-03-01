@@ -20,7 +20,7 @@ class Using implements ListenerInterface
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
             $points = $this->getBalances($model);
-            $additional['balance'] = $points ? $points : 0;
+            $additional['balance'] = $points ? 1 : 0;
             $model->setData(['additional' => json_encode($additional)]);
         }
     }
@@ -48,21 +48,19 @@ class Using implements ListenerInterface
             $detail = $model['discount_detail'] ? json_decode($model['discount_detail'], true) : [];
             if (!empty($additional['balance'])) {
                 $discount = $this->getBalances($model, true);
-                if (!empty($detail['Reward Points']) || !empty($detail['Promotion'])) {
-                    $points = $this->getBalances($model, true);
+                if (!empty($additional['rewardpoints']) || !empty($additional['promotion'])) {
+                    $points = $this->getBalances($model, TRUE);
                     $rewardpoints = (float) @$additional['rewardpoints'] ?? 0;
                     $promotion = (float) @$additional['promotion'] ?? 0;
-                    $detail['Balance'] = ($model->offsetGet('base_subtotal') - $promotion - $rewardpoints) + $model->offsetGet('base_shipping') ?? 0 + $model->offsetGet('base_tax') ?? 0;
-                    if ($detail['Balance'] <= $points) {
-                        $discount = $detail['Balance'];
-                    } else {
-                        $discount = $points;
-                    }
-                     $model->setData([
+                    $additional['balance'] = ($model->offsetGet('base_subtotal') - $promotion - $rewardpoints) + $model->offsetGet('base_shipping') ?? 0 + $model->offsetGet('base_tax') ?? 0;
+                    $discount = min($additional['balance'], $points);
+                    $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
                         'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - $discount])
                     ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
                 } else {
+                    $additional['balance'] = $model->offsetGet('base_subtotal') + $model->offsetGet('base_shipping') ?? 0 + $model->offsetGet('base_tax') ?? 0;
+                    $discount = min($additional['balance'], $discount);
                     $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
                         'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - $discount])
@@ -88,12 +86,12 @@ class Using implements ListenerInterface
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
-            $points = $model->getAdditional('balance');
+            $points = (float) $model->getDiscount('Balance');
             if ($points) {
                 $record = new Balance([
                     'customer_id' => $model->offsetGet('customer_id'),
                     'order_id' => $model->getId(),
-                    'amount' => -$points,
+                    'amount' => $points,
                     'status' => 1,
                     'comment' => 'Consumption'
                 ]);

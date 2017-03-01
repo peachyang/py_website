@@ -15,8 +15,8 @@ if (!$this->isVirtual()):
                     <p>
                         <label for="include_balance" class="label" title="<?php echo $this->translate('Available Balance'); ?>"><?php echo $this->translate('Available Balance'); ?></label>
                         <span class="price balance" data-price="<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?>">：<?php echo $cart->getCurrency()->convert($this->getCurrentBalances(), TRUE) ?></span>
-                        <a href="<?php echo $this->getBaseUrl('balance/index/apply/'); ?>" class="btn<?php if ($this->hasApplied()): ?> clicked<?php endif ?>" data-method="get" data-load='review'><?php echo $this->translate('Apply'); ?></a>
-                        <a href="<?php echo $this->getBaseUrl('balance/index/cancel/'); ?>" class="btn" data-method="get" data-load='review'><?php echo $this->translate('Cancel') ?></a>
+                        <a href="<?php echo $this->getBaseUrl('balance/index/apply/'); ?>" class="btn<?php if ($this->hasApplied()): ?> clicked<?php endif ?>" data-method="get" data-load='shipping'><?php echo $this->translate('Apply'); ?></a>
+                        <a href="<?php echo $this->getBaseUrl('balance/index/cancel/'); ?>" class="btn" data-method="get" data-load='shipping'><?php echo $this->translate('Cancel') ?></a>
                     </p>
                     <?php
                 else:

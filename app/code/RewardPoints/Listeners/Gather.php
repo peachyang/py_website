@@ -191,14 +191,16 @@ class Gather implements ListenerInterface
     public function afterSaveBackendCustomer($event)
     {
         $customer = $event['model'];
-        $record = new Record;
-        $record->setData([
-            'customer_id' => $customer->getId(),
-            'count' => $customer->offsetGet('adjust_rewardpoints'),
-            'comment' => 'System Adjustment',
-            'status' => 1
-        ]);
-        $record->save();
+        if ($count = (int) $customer->offsetGet('adjust_rewardpoints')) {
+            $record = new Record;
+            $record->setData([
+                'customer_id' => $customer->getId(),
+                'count' => $count,
+                'comment' => 'System Adjustment',
+                'status' => 1
+            ]);
+            $record->save();
+        }
     }
 
 }

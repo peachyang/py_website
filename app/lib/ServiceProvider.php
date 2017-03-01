@@ -104,7 +104,7 @@ class ServiceProvider implements ServiceProviderInterface
                 }
             };
         }
-        if (!$container->has('geoip') && is_dir(BP . 'var/geoip/')) {
+        if (!$container->has('geoip')) {
             $container['geoip'] = function($container) {
                 $config = $container->get('config');
                 if (isset($config['adapter']['geoip'])) {
@@ -113,10 +113,12 @@ class ServiceProvider implements ServiceProviderInterface
                         return new \MaxMind\Db\Reader($db);
                     }
                 }
-                $finder = new \Symfony\Component\Finder\Finder;
-                $finder->files()->in(BP . 'var/geoip/')->name('*.mmdb');
-                foreach ($finder as $file) {
-                    return new \MaxMind\Db\Reader($file->getRealPath());
+                if (is_dir(BP . 'var/geoip/')) {
+                    $finder = new \Symfony\Component\Finder\Finder;
+                    $finder->files()->in(BP . 'var/geoip/')->name('*.mmdb');
+                    foreach ($finder as $file) {
+                        return new \MaxMind\Db\Reader($file->getRealPath());
+                    }
                 }
                 return null;
             };

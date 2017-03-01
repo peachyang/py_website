@@ -54,10 +54,10 @@ class Locate
             }
             if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
                 $adapter = new Adapter([
-                    'driver'=>'pdo',
-                    'dsn'=> 'sqlite:' . BP . 'var\i18n.db'
+                    'driver' => 'pdo',
+                    'dsn' => 'sqlite:' . BP . 'var\i18n.db'
                 ]);
-                $resultSet = $adapter->query($select->getSqlString($adapter->getPlatform()));
+                $resultSet = $adapter->query($select->getSqlString($adapter->getPlatform()), 'execute');
             } else {
                 $resultSet = $this->getTableGateway('i18n_' . $part)->selectWith($select)->toArray();
             }

@@ -75,7 +75,7 @@ class AccountController extends AuthActionController
             $result = $this->validateForm($data, $required, in_array('register', $config['customer/captcha/form']) ? 'customer' : false);
             if (!isset($data['cpassword']) || $data['password'] !== $data['cpassword']) {
                 $result['error'] = 1;
-                $result['message'][] = ['message' => $this->translate('The comfirmed password is not equal to the password.'), 'level' => 'danger'];
+                $result['message'][] = ['message' => $this->translate('The confirmed password is not equal to the password.'), 'level' => 'danger'];
             }
             $collection = new Collection;
             $collection->columns($unique);
@@ -97,7 +97,7 @@ class AccountController extends AuthActionController
             }
             if ($result['error'] === 0) {
                 $customer = new Model;
-                $status = $config['customer/registion/comfirm'];
+                $status = $config['customer/registion/confirm'];
                 $languageId = Bootstrap::getLanguage()->getId();
                 $customer->setData([
                     'attribute_set_id' => $config['customer/registion/set'],

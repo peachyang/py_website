@@ -46,14 +46,16 @@ class Balance implements ListenerInterface
     public function afterSaveBackendCustomer($event)
     {
         $customer = $event['model'];
-        $balance = new BalanceModel;
-        $balance->setData([
-            'customer_id' => $customer->getId(),
-            'amount' => $customer->offsetGet('adjust_balance'),
-            'comment' => 'System Adjustment',
-            'status' => 1
-        ]);
-        $balance->save();
+        if ($amount = (int) $customer->offsetGet('adjust_balance')) {
+            $balance = new BalanceModel;
+            $balance->setData([
+                'customer_id' => $customer->getId(),
+                'amount' => $amount,
+                'comment' => 'System Adjustment',
+                'status' => 1
+            ]);
+            $balance->save();
+        }
     }
 
 }

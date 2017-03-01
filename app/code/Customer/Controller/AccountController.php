@@ -100,6 +100,7 @@ class AccountController extends AuthActionController
                 $status = $config['customer/registion/confirm'];
                 $languageId = Bootstrap::getLanguage()->getId();
                 $customer->setData([
+                    'id' => null,
                     'attribute_set_id' => $config['customer/registion/set'],
                     'group_id' => $config['customer/registion/group'],
                     'type_id' => $attributes[0]['type_id'],

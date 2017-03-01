@@ -95,4 +95,20 @@ class Using implements ListenerInterface
         }
     }
 
+    public function afterOrderComplete($event)
+    {
+        $model = $event['model'];
+        if ($model->getPhase()['code'] === 'cancel') {
+            $collection = new Collection;
+            $collection->columns(['id'])
+                    ->where(['order_id' => $model->getId()])
+            ->where->lessThan('count', 0);
+            if (count($collection)) {
+                $record = new Record;
+                $record->load($collection[0]['id']);
+                $record->setData('status', 0)->save();
+            }
+        }
+    }
+
 }

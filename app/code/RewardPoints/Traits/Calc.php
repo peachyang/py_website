@@ -23,7 +23,7 @@ trait Calc
         $unavailable = [];
         if ($model instanceof Cart) {
             foreach ($model->getItems() as $item) {
-                if ($item['status']) {
+                if (!empty($item['status'])) {
                     if ($item['product']['can_use_reward_points']) {
                         if (!isset($total[$item['store_id']])) {
                             $total[$item['store_id']] = 0;

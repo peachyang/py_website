@@ -53,7 +53,9 @@ class Navigation extends Template
 
     public function getUrl($path = '')
     {
-        return $this->isAdminPage() ? $this->getAdminUrl($path) : $this->getBaseUrl($path);
+        return strpos($path, '//') === false ? ($this->isAdminPage() ?
+                $this->getAdminUrl($path) :
+                $this->getBaseUrl($path)) : $path;
     }
 
 }

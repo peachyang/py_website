@@ -45,21 +45,18 @@ class Using implements ListenerInterface
         $model = $event['model'];
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $additional = $model['additional'] ? json_decode($model['additional'], true) : [];
-            $detail = $model['discount_detail'] ? json_decode($model['discount_detail'], true) : [];
             if (!empty($additional['balance'])) {
                 $discount = $this->getBalances($model, true);
                 if (!empty($additional['rewardpoints']) || !empty($additional['promotion'])) {
                     $points = $this->getBalances($model, TRUE);
-                    $rewardpoints = (float) @$additional['rewardpoints'] ?? 0;
-                    $promotion = (float) @$additional['promotion'] ?? 0;
-                    $additional['balance'] = ($model->offsetGet('base_subtotal') - $promotion - $rewardpoints) + $model->offsetGet('base_shipping') ?? 0 + $model->offsetGet('base_tax') ?? 0;
+                    $additional['balance'] = ($model->offsetGet('base_subtotal') + $model->offsetGet('base_discount') ) + $model->offsetGet('base_shipping') + $model->offsetGet('base_tax');
                     $discount = min($additional['balance'], $points);
                     $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
                         'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - $discount])
                     ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
                 } else {
-                    $additional['balance'] = $model->offsetGet('base_subtotal') + $model->offsetGet('base_shipping') ?? 0 + $model->offsetGet('base_tax') ?? 0;
+                    $additional['balance'] = $model->offsetGet('base_subtotal') + $model->offsetGet('base_shipping') + $model->offsetGet('base_tax');
                     $discount = min($additional['balance'], $discount);
                     $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,

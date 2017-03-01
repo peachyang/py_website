@@ -414,6 +414,7 @@ class OrderController extends ActionController
             } else {
                 try {
                     $cart = Cart::instance();
+                    $this->getContainer()->get('eventDispatcher')->trigger('promotion.apply', ['model' => $cart]);
                     $cart->setData([
                         'coupon' => json_encode($data['coupon'])
                     ])->collateTotals();

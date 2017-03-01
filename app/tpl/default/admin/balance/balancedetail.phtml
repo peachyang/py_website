@@ -15,7 +15,7 @@ $collection = $this->getStatement();
             <tbody>
                 <?php foreach ($collection as $balance): ?>
                     <tr class="text-center">
-                        <td><?php echo $balance['amount'] ?></td>
+                        <td><?php echo (float) $balance['amount'] ?></td>
                         <td><?php echo $this->translate($balance['comment']) ?></td>
                         <td><?php echo $this->translate($balance['status'] ? 'Payment Success' : 'Pending Payment') ?></td>
                         <td><?php echo $balance['created_at'] ?></td>

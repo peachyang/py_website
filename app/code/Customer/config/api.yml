@@ -69,6 +69,8 @@ wsdl:
 soap:
     customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
+    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer
 rest:
     customer: \Seahinet\Customer\Model\Api\Rest\Customer
     address: \Seahinet\Customer\Model\Api\Rest\Address
+    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer

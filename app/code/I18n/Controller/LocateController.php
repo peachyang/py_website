@@ -47,7 +47,7 @@ class LocateController extends ActionController
         if (extension_loaded('intl')) {
             $collator = new Collator($locale);
             $value_compare_func = function($str1, $str2) use ($collator) {
-                return $collator->compare($str1['code'], $str2['code']);
+                return $collator->compare($str1['label'], $str2['label']);
             };
         } else {
             $value_compare_func = function($str1, $str2) {

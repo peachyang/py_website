@@ -69,6 +69,15 @@ wsdl:
 soap:
     customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
+<<<<<<< HEAD
+    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer
+=======
+    addressList: \Seahinet\Customer\Model\Api\Soap\Address
+    addressInfo: \Seahinet\Customer\Model\Api\Soap\Address
+    addressSave: \Seahinet\Customer\Model\Api\Soap\Address
+    addressDelete: \Seahinet\Customer\Model\Api\Soap\Address
+>>>>>>> b3961bc6a6484ba9eccc40cc1f04ab50ccd52cd7
 rest:
     customer: \Seahinet\Customer\Model\Api\Rest\Customer
     address: \Seahinet\Customer\Model\Api\Rest\Address
+    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer

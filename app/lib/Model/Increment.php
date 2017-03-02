@@ -10,12 +10,13 @@ class Increment extends AbstractModel
         $this->init('core_increment', 'type', ['type', 'store_id', 'prefix', 'last_id']);
     }
 
-    public function getIncrementId($length)
+    public function getIncrementId($length = '')
     {
         if (!$this->isLoaded) {
             return '';
         }
-        return $this->storage['prefix'] . sprintf('%' . $length . 'd', $this->storage['last_id']);
+        $this->setData('last_id', $this->storage['last_id'] + 1)->save();
+        return $this->storage['prefix'] . sprintf('%0' . $length . 'd', $this->storage['last_id']);
     }
 
 }

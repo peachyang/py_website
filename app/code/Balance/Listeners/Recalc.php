@@ -10,7 +10,8 @@ use Seahinet\Sales\Model\Collection\Order\Status\History;
 class Recalc implements ListenerInterface
 {
 
-    use \Seahinet\Lib\Traits\Container;
+    use \Seahinet\Balance\Traits\Recalc,
+        \Seahinet\Lib\Traits\Container;
 
     public function afterCustomerLogin($event)
     {
@@ -83,4 +84,5 @@ class Recalc implements ListenerInterface
             }
         }
     }
+
 }

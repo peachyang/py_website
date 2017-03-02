@@ -53,14 +53,14 @@ class Using implements ListenerInterface
                     $discount = min($additional['balance'], $points);
                     $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                        'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - $discount])
+                        'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
                     ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
                 } else {
                     $additional['balance'] = $model->offsetGet('base_subtotal') + $model->offsetGet('base_shipping') + $model->offsetGet('base_tax');
                     $discount = min($additional['balance'], $discount);
                     $model->setData([
                         'base_discount' => (float) $model->offsetGet('base_discount') - $discount,
-                        'discount_detail' => json_encode((json_decode($model['discount_detail'], true) ?: []) + ['Balance' => - $discount])
+                        'discount_detail' => json_encode(['Balance' => - $discount] + (json_decode($model['discount_detail'], true) ?: []))
                     ])->setData('discount', $model->getCurrency()->convert($model->offsetGet('base_discount')));
                 }
             }
@@ -84,7 +84,7 @@ class Using implements ListenerInterface
         $model = $event['model'];
         if ($config['balance/general/enable'] && $config['balance/general/product_for_recharge'] && $model->offsetGet('customer_id')) {
             $points = (float) $model->getDiscount('Balance');
-            if ($points) {
+            if ($points && $model['base_discount'] < (json_decode($model['discount_detail'], true)['Promotion'] ?? 0)) {
                 $record = new Balance([
                     'customer_id' => $model->offsetGet('customer_id'),
                     'order_id' => $model->getId(),

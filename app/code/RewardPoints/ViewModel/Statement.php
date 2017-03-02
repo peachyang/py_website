@@ -45,10 +45,14 @@ class Statement extends Template
     public function getAvailablePoints()
     {
         if ($this->getCustomerId()) {
-            $segment = new Segment('customer');
-            $customer = new Customer;
-            $customer->load($segment->get('customer')->getId());
-            return (int) $customer->offsetGet('rewardpoints');
+            $record = new Record;
+            $record->columns(['count' => new Expression('sum(count)')])
+                    ->where([
+                        'customer_id' => $this->getCustomerId(),
+                        'status' => 1
+            ]);
+            $points = (count($record) ? $record[0]['count'] : 0);
+            return (int) $points;
         }
         return 0;
     }
@@ -63,7 +67,7 @@ class Statement extends Template
                         'status' => 0
             ]);
             $points = (count($record) ? $record[0]['count'] : 0);
-            return (float) $points;
+            return (int) $points;
         }
         return 0;
     }

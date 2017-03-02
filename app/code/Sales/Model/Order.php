@@ -29,11 +29,12 @@ use Seahinet\Sales\Model\Order\{
     Status\History
 };
 
-class  Order extends AbstractModel
+class Order extends AbstractModel
 {
 
     protected $items = null;
     protected $additional = null;
+    protected $discount_detail = null;
 
     protected function construct()
     {
@@ -185,6 +186,14 @@ class  Order extends AbstractModel
             $this->additional = empty($this->storage['additional']) ? [] : json_decode($this->storage['additional'], true);
         }
         return $key ? ($this->additional[$key] ?? '') : $this->additional;
+    }
+
+    public function getDiscount($key = null)
+    {
+        if (is_null($this->discount_detail)) {
+            $this->discount_detail = empty($this->storage['discount_detail']) ? [] : json_decode($this->storage['discount_detail'], true);
+        }
+        return $key ? ($this->discount_detail[$key] ?? '') : $this->discount_detail;
     }
 
     public function getCoupon()

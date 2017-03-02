@@ -58,7 +58,7 @@ class AccountController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
             $attributes->withSet()->where(['attribute_set_id' => 1])
-                    ->where('is_required=1 OR is_unique=1')
+                    ->where('(is_required=1 OR is_unique=1)')
                     ->columns(['code', 'is_required', 'is_unique', 'type_id'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
@@ -100,6 +100,7 @@ class AccountController extends AuthActionController
                 $status = $config['customer/registion/confirm'];
                 $languageId = Bootstrap::getLanguage()->getId();
                 $customer->setData([
+                    'id' => null,
                     'attribute_set_id' => $config['customer/registion/set'],
                     'group_id' => $config['customer/registion/group'],
                     'type_id' => $attributes[0]['type_id'],

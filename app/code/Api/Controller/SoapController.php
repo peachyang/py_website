@@ -75,7 +75,6 @@ class SoapController extends AbstractController
 
     public function indexAction()
     {
-        exit('dsfsdfsdfdsfdsf');
         if ($this->getRequest()->getQuery('wsdl', false) !== false) {
             $this->getResponse()->withHeader('Content-Type', 'text/xml; charset=UTF-8');
             return $this->getWsdl();
@@ -85,7 +84,6 @@ class SoapController extends AbstractController
                 'uri' => $this->getBaseUrl('api/soap/'),
                 'encoding' => 'UTF-8'
             ]);
-            echo '-------------------';
             $server->setClass('\\Seahinet\\Api\\Model\\Api\\ClassMap');
             $server->handle($this->getRequest()->getBody()->getContents());
             exit;

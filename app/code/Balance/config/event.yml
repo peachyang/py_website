@@ -22,10 +22,6 @@ promotion.apply:
     -
         listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
         priority: 5   
-#promotion.calc:
-#    -
-#        listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
-#        priority: 5
 balances.apply:
     -
         listener: [\Seahinet\Balance\Listeners\Using, apply]
@@ -33,4 +29,8 @@ balances.apply:
 balances.cancel:
     -
         listener: [\Seahinet\Balance\Listeners\Using, cancel]
+        priority: 10
+customer.login.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterCustomerLogin]
         priority: 10

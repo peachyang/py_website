@@ -50,6 +50,7 @@ class BalanceDetail extends Account
                         'customer_id' => $this->getCustomerId(),
                         'status' => 1
             ]);
+            $balance->load(FALSE, true);
             $points = (count($balance) ? $balance[0]['amount'] : 0);
             return (float) $points;
         }

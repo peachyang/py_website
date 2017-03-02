@@ -7,7 +7,7 @@ use Seahinet\Customer\Model\Collection\Balance as Collection;
 use Seahinet\Lib\Model\Collection\Language;
 use Zend\Db\Sql\Expression;
 
-class Recalc
+trait Recalc
 {
 
     public function recalc($customerId)
@@ -26,7 +26,7 @@ class Recalc
         foreach ($languages as $language) {
             $customer = new Customer($language['id']);
             $customer->load($customerId);
-            $customer->setData('balance', $balances)
+            $customer->setData('balance', (float) $balances)
                     ->save();
         }
     }

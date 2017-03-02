@@ -19,21 +19,26 @@ class ComplexTypeWithEav extends DefaultComplexType
         if (substr($type, -2) === '[]') {
             $type = substr($type, 0, -2);
             $isArray = true;
+            $complex = true;
         }
-        if (class_exists($type)) {
-            $result = parent::addComplexType($type);
-        } else if (($soapType = $this->scanRegisteredTypes($type)) !== null) {
+        if (($soapType = $this->scanRegisteredTypes($type)) !== null) {
             $result = $soapType;
+            $isArray = false;
+        } else if (class_exists($type)) {
+            $result = parent::addComplexType($type);
+        } else if (in_array($type, ['string', 'str', 'long', 'int', 'integer', 'float', 'double', 'boolean', 'bool'])) {
+            $result = $type;
+            $complex = false;
         } else {
             $result = $this->addEavType($type);
         }
         if ($isArray) {
-            $result = $this->addArrayType($result);
+            $result = $this->addArrayType($result, $complex);
         }
         return $result;
     }
 
-    protected function addArrayType($type)
+    protected function addArrayType($type, $complex = true)
     {
         $tns = Wsdl::TYPES_NS . ':';
         $dom = $this->getContext()->toDomDocument();
@@ -46,7 +51,7 @@ class ComplexTypeWithEav extends DefaultComplexType
         $sequence = $dom->createElementNS(Wsdl::XSD_NS_URI, 'sequence');
         $element = $dom->createElementNS(Wsdl::XSD_NS_URI, 'element');
         $element->setAttribute('name', $elementType);
-        $element->setAttribute('type', $tns . $elementType);
+        $element->setAttribute('type', ($complex ? $tns : '') . $elementType);
         $element->setAttribute('nillable', 'true');
         $element->setAttribute('minOccurs', 0);
         $element->setAttribute('maxOccurs', 'unbounded');

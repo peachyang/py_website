@@ -24,7 +24,7 @@ class Checkout extends Template
             $segment = new Segment('customer');
             $customer = new Customer;
             $customer->load($segment->get('customer')->getId());
-            return (int) $customer->getBalance();
+            return (float) $customer->getBalance();
         }
         return 0;
     }

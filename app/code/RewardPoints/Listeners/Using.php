@@ -95,4 +95,25 @@ class Using implements ListenerInterface
         }
     }
 
+    public function afterOrderCancel($event)
+    {
+        $model = $event['model'];
+        if ($model->getPhase()['code'] === 'cancel') {
+            $collection = new Collection;
+            $collection->columns(['id'])
+                    ->where(['order_id' => $model->getId()])
+            ->where->lessThan('count', 0);
+            if (count($collection)) {
+                $record = new Record([
+                    'customer_id' => $model->offsetGet('customer_id'),
+                    'order_id' => $model->getId(),
+                    'count' => -$collection[0]['count'],
+                    'status' => 1,
+                    'comment' => 'Order Cancelled'
+                ]);
+                $record->save();
+            }
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 <?php
 $coupons = $this->getCoupons();
 $current = $this->getCurrent();
-if (count($coupons)):
+if (count($coupons) && $this->hasLoggedIn()):
     ?>
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <span class="label" title="<?php echo $this->translate('Coupon') ?>"><?php echo $this->translate('Coupon') ?></span>

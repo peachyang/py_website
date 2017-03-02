@@ -44,7 +44,8 @@ abstract class Collection extends AbstractCollection
         if (!$this->isLoaded) {
             try {
                 $cacheKey = md5($this->select->getSqlString($this->getTableGateway($this->tableName)->getAdapter()->getPlatform()));
-                if ($useCache && ($result = $this->loadFromCache($cacheKey))) {
+                $result = $this->loadFromCache($cacheKey);
+                if ($useCache && is_array($result) && !empty($result)) {
                     $this->afterLoad($result);
                 } else if ($result = $this->loadFromIndexer()) {
                     if ($useCache) {

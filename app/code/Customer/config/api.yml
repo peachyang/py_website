@@ -12,6 +12,11 @@ wsdl:
             customerId: int
         customerInfoResponse:
             customer: customer
+        customerCreate:
+            sessionId: string
+            data: customer
+        customerCreateResponse:
+            customerId: int
         addressList:
             sessionId: string
             customerId: int
@@ -47,6 +52,11 @@ wsdl:
             output: tns:customerInfoResponse
             documentation: Get customer info by id
         -
+            name: customerCreate
+            input: tns:customerCreate
+            output: tns:customerCreateResponse
+            documentation: Create a new customer
+        -
             name: addressList
             input: tns:addressList
             output: tns:addressListResponse
@@ -69,14 +79,11 @@ wsdl:
 soap:
     customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
-<<<<<<< HEAD
-    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer
-=======
+    customerCreate: \Seahinet\Customer\Model\Api\Soap\Customer
     addressList: \Seahinet\Customer\Model\Api\Soap\Address
     addressInfo: \Seahinet\Customer\Model\Api\Soap\Address
     addressSave: \Seahinet\Customer\Model\Api\Soap\Address
     addressDelete: \Seahinet\Customer\Model\Api\Soap\Address
->>>>>>> b3961bc6a6484ba9eccc40cc1f04ab50ccd52cd7
 rest:
     customer: \Seahinet\Customer\Model\Api\Rest\Customer
     address: \Seahinet\Customer\Model\Api\Rest\Address

@@ -57,7 +57,7 @@ class AccountController extends AuthActionController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
-            $attributes->withSet()->where(['attribute_set_id' => 1])
+            $attributes->withSet()->where(['attribute_set_id' => $config['customer/registion/set']])
                     ->where('(is_required=1 OR is_unique=1)')
                     ->columns(['code', 'is_required', 'is_unique', 'type_id'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')

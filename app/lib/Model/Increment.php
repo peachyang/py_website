@@ -15,8 +15,7 @@ class Increment extends AbstractModel
         if (!$this->isLoaded) {
             return '';
         }
-        $this->storage['last_id'] ++;
-        $this->save();
+        $this->setData('last_id', $this->storage['last_id'] + 1)->save();
         return $this->storage['prefix'] . sprintf('%0' . $length . 'd', $this->storage['last_id']);
     }
 

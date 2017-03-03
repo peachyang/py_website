@@ -10,6 +10,9 @@ Seahinet\Sales\Model\Order.model.save.after:
     -
         listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderComplete]
         priority: 30
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderCancel]
+        priority: 30
 promotion.calc:
     -
         listener: [\Seahinet\Balance\Listeners\Using, calc]

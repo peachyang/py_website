@@ -64,6 +64,31 @@ class Recalc implements ListenerInterface
         }
     }
 
+    public function afterOrderCancel($event)
+    {
+        $model = $event['model'];
+        if ($model->getPhase()['code'] === 'canceled') {
+            $history = new History;
+            $history->join('sales_order_status', 'sales_order_status.id=sales_order_status_history.status_id', [], 'left')
+                    ->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id', [], 'left')
+                    ->where([
+                        'order_id' => $model->getId(),
+                        'sales_order_phase.code' => 'canceled'
+            ]);
+            if (count($history->load(false, true)) === 0) {
+                $collection = new Collection;
+                $collection->columns(['id'])
+                        ->where(['order_id' => $model->getId()])
+                ->where->greaterThan('amount', 0);
+                if (count($collection)) {
+                    $record = new Balance;
+                    $record->load($collection[0]['id']);
+                    $record->setData(['comment' => 'Order Cancelled', 'status' => 0])->save();
+                }
+            }
+        }
+    }
+
     public function afterRefund($event)
     {
         $config = $this->getContainer()->get('config');

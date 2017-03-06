@@ -10,13 +10,20 @@ Seahinet\Sales\Model\Order.model.save.after:
     -
         listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderComplete]
         priority: 30
-    -
-        listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderCancel]
-        priority: 30
+#    -
+#        listener: [\Seahinet\Balance\Listeners\Recalc, afterOrderCancel]
+#        priority: 30
 promotion.calc:
     -
         listener: [\Seahinet\Balance\Listeners\Using, calc]
         priority: 1010
+Seahinet\Sales\Model\CreditMemo.model.save.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Recalc, afterRefund]
+        priority: 20
+    -
+        listener: [\Seahinet\Balance\Listeners\Using, afterRefund]
+        priority: 20
 rewardpoints.apply: 
     -
         listener: [\Seahinet\Balance\Listeners\Using, cleanBalance]
@@ -37,3 +44,7 @@ customer.login.after:
     -
         listener: [\Seahinet\Balance\Listeners\Recalc, afterCustomerLogin]
         priority: 10
+order.cancel.after:
+    -
+        listener: [\Seahinet\Balance\Listeners\Using, afterOrderCancel]
+        priority: 0

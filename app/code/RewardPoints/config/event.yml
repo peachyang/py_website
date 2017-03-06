@@ -18,9 +18,9 @@ Seahinet\Sales\Model\Order.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderComplete]
         priority: 20
-    -
-        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderCancel]
-        priority: 20
+#    -
+#        listener: [\Seahinet\RewardPoints\Listeners\Gather, afterOrderCancel]
+#        priority: 20
 Seahinet\Email\Model\Subscriber.model.save.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Gather, afterSubscribe]
@@ -68,3 +68,8 @@ cart.item.remove.after:
     -
         listener: [\Seahinet\RewardPoints\Listeners\Using, cancel]
         priority: 10
+order.cancel.after:
+    -
+        listener: [\Seahinet\RewardPoints\Listeners\Using, afterOrderCancel]
+        priority: 0
+        

@@ -5,9 +5,16 @@ namespace Seahinet\Checkout\ViewModel\Order;
 use Seahinet\Lib\ViewModel\Template;
 use Seahinet\Promotion\Model\Collection\Rule;
 use Seahinet\Sales\Model\Cart;
+use Seahinet\Lib\Session\Segment;
 
 class Coupon extends Template
 {
+
+    public function hasLoggedIn()
+    {
+        $segment = new Segment('customer');
+        return $segment->get('hasLoggedIn');
+    }
 
     public function getCurrent()
     {

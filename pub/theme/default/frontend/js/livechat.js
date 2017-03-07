@@ -11,22 +11,55 @@
         "use strict";
         var msg = null;
         var ws = function (url) {
-            this.connect(url);
+            this.url = url;
+            this.retry = 0;
+            this.connect();
         };
-        ws.prototype.socket = null;
-        ws.prototype.check = function () {
-            return this.socket != null && this.socket.readyState == 1;
-        };
-        ws.prototype.connect = function (url) {
-            if (this.check()) {
-                return;
-            }
-            var o = this;
-            this.socket = new WebSocket(url);
-            this.socket.onopen = function () {
-                $(o).trigger('opened.livechat');
-            };
-            this.socket.onmessage = function (e) {
+        ws.prototype = {
+            check: function () {
+                return this.socket.readyState == 1;
+            },
+            ping: function () {
+                var buffer = new ArrayBuffer(2);
+                var i8V = new Int8Array(buffer);
+                i8V[0] = 0x9;
+                i8V[1] = 0;
+                if (this.check()) {
+                    this.socket.send(buffer);
+                }
+                setTimeout(this.ping, 60000);
+            },
+            connect: function () {
+                try {
+                    this.lock = false;
+                    if (this.check()) {
+                        return;
+                    }
+                    this.socket = new WebSocket(this.url);
+                    this.queue = [];
+                    this.socket.onopen = this.onopen;
+                    this.socket.onmessage = this.onmessage;
+                    this.socket.onclose = this.onclose;
+                    this.socket.onerror = function (e) {
+                        console.log(e);
+                    };
+                } catch (e) {
+                    this.reconnect();
+                }
+            },
+            reconnect: function () {
+                if (!this.lock || this.retry > 5) {
+                    this.lock = true;
+                    setTimeout(this.connect, 2000 * Math.pow(2, this.retry));
+                    this.connect(this.url);
+                }
+            },
+            onopen: function () {
+                this.retry = 0;
+                $(this).trigger('opened.livechat');
+                setTimeout(this.ping, 60000);
+            },
+            onmessage: function (e) {
                 var data = e.data;
                 if (typeof data === 'string') {
                     data = eval('(' + data + ')');
@@ -36,38 +69,34 @@
                 } else {
                     o.log(data);
                 }
-            };
-            this.socket.onerror = function (e) {
-                console.log(e);
-            };
-            this.socket.onclose = function (e) {
-                console.log('connection closed.');
-                instance = null;
-            };
-        };
-        ws.prototype.send = function (m) {
-            this.socket.send(m);
-        };
-        ws.prototype.log = function (data) {
-            var c = data.sender == msg.sender ? 'self' : 'others';
-            var t = data.type;
-            var m = data.msg;
-            if (t === 'image') {
-                m = '<img src="' + m + '" />';
-            } else if (t === 'audio') {
-                m = '<audio controls="controls" src="' + m + '" />'
+            },
+            onclose: function () {
+                this.reconnect();
+            },
+            send: function (m) {
+                this.socket.send(m);
+            },
+            log: function (data) {
+                var c = data.sender == msg.sender ? 'self' : 'others';
+                var t = data.type;
+                var m = data.msg;
+                if (t === 'image') {
+                    m = '<img src="' + m + '" />';
+                } else if (t === 'audio') {
+                    m = '<audio controls="controls" src="' + m + '" />'
+                }
+                $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
+                if (localStorage[data.session]) {
+                    var r = JSON.parse(localStorage[data.session]);
+                    r.push({class: c, msg: m});
+                    localStorage[data.session] = JSON.stringify(r);
+                } else {
+                    localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
+                }
+                $('#livechat #' + data.session + ' .chat-history').scrollTop($('#livechat #' + data.session + ' .chat-list').height());
+                $('#livechat').trigger('notify', t === 'text' ? m : '');
+                return false;
             }
-            $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
-            if (localStorage[data.session]) {
-                var r = JSON.parse(localStorage[data.session]);
-                r.push({class: c, msg: m});
-                localStorage[data.session] = JSON.stringify(r);
-            } else {
-                localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
-            }
-            $('#livechat #' + data.session + ' .chat-history').scrollTop($('#livechat #' + data.session + ' .chat-list').height());
-            $('#livechat').trigger('notify', t === 'text' ? m : '');
-            return false;
         };
         var instance = null;
         var notify = function (e, t) {

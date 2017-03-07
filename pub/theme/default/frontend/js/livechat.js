@@ -25,27 +25,27 @@
                 var i8V = new Int8Array(buffer);
                 i8V[0] = 0x9;
                 i8V[1] = 0;
-                if (this.check()) {
-                    this.socket.send(buffer);
+                if (instance.check()) {
+                    instance.socket.send(buffer);
                 }
-                this.pingTimeout = setTimeout(instance.ping, 60000);
+                instance.pingTimeout = setTimeout(instance.ping, 60000);
             },
             connect: function () {
                 try {
-                    this.lock = false;
-                    if (this.check()) {
+                    instance.lock = false;
+                    if (instance.check()) {
                         return;
                     }
-                    this.socket = new WebSocket(this.url);
-                    this.queue = [];
-                    this.socket.onopen = this.onopen;
-                    this.socket.onmessage = this.onmessage;
-                    this.socket.onclose = this.onclose;
-                    this.socket.onerror = function (e) {
+                    instance.socket = new WebSocket(this.url);
+                    instance.queue = [];
+                    instance.socket.onopen = this.onopen;
+                    instance.socket.onmessage = this.onmessage;
+                    instance.socket.onclose = this.onclose;
+                    instance.socket.onerror = function (e) {
                         console.log(e);
                     };
                 } catch (e) {
-                    this.reconnect();
+                    instance.reconnect.call(instance);
                 }
             },
             reconnect: function () {
@@ -72,7 +72,7 @@
                 }
             },
             onclose: function () {
-                this.reconnect();
+                this.reconnect.call(this);
             },
             send: function (m) {
                 this.socket.send(m);

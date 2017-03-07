@@ -17,7 +17,7 @@
         };
         ws.prototype = {
             check: function () {
-                return this.socket.readyState == 1;
+                return this.socket && this.socket.readyState == 1;
             },
             ping: function () {
                 var buffer = new ArrayBuffer(2);

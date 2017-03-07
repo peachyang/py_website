@@ -29,7 +29,8 @@
                 if (_this.check()) {
                     _this.socket.send(buffer);
                 }
-                instance.pingTimeout = setTimeout(_this.ping, 60000, _this);
+                clearTimeout(_this.pingTimeout);
+                _this.pingTimeout = setTimeout(_this.ping, 60000, _this);
             },
             connect: function (_this) {
                 _this = _this ? _this : this;
@@ -62,7 +63,7 @@
                 $(instance).trigger('opened.livechat');
                 instance.pingTimeout = setTimeout(instance.ping, 60000, instance);
             },
-            onmessage: function (e) {
+            onmessage: function (e) {console.log(e);
                 var data = e.data;
                 if (typeof data === 'string') {
                     data = eval('(' + data + ')');

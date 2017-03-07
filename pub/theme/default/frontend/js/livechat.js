@@ -10,6 +10,7 @@
     $(function () {
         "use strict";
         var msg = null;
+        var instance = null;
         var ws = function (url) {
             this.url = url;
             this.retry = 0;
@@ -27,7 +28,7 @@
                 if (this.check()) {
                     this.socket.send(buffer);
                 }
-                this.pingTimeout = setTimeout(this.ping, 60000);
+                this.pingTimeout = setTimeout(instance.ping, 60000);
             },
             connect: function () {
                 try {
@@ -44,21 +45,20 @@
                         console.log(e);
                     };
                 } catch (e) {
-                    console.log(e);
                     this.reconnect();
                 }
             },
             reconnect: function () {
                 if (!this.lock || this.retry++ <= 5) {
                     this.lock = true;
-                    setTimeout(this.connect, 2000 * Math.pow(2, this.retry));
+                    setTimeout(instance.connect, 2000 * Math.pow(2, this.retry));
                     this.connect(this.url);
                 }
             },
             onopen: function () {
                 this.retry = 0;
                 $(this).trigger('opened.livechat');
-                this.pingTimeout = setTimeout(this.ping, 60000);
+                this.pingTimeout = setTimeout(instance.ping, 60000);
             },
             onmessage: function (e) {
                 var data = e.data;
@@ -77,7 +77,7 @@
             send: function (m) {
                 this.socket.send(m);
                 clearTimeout(this.pingTimeout);
-                this.pingTimeout = setTimeout(this.ping, 60000);
+                this.pingTimeout = setTimeout(instance.ping, 60000);
             },
             log: function (data) {
                 var c = data.sender == msg.sender ? 'self' : 'others';
@@ -101,7 +101,6 @@
                 return false;
             }
         };
-        var instance = null;
         var notify = function (e, t) {
             if (Notification.permission === 'granted') {
                 var n = new Notification(translate('You have received a new message.'), {

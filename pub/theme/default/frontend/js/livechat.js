@@ -22,10 +22,9 @@
             },
             ping: function (_this) {
                 _this = _this ? _this : this;
-                var buffer = new ArrayBuffer(2);
+                var buffer = new ArrayBuffer(1);
                 var i8V = new Int8Array(buffer);
                 i8V[0] = 0x9;
-                i8V[1] = 0;
                 if (_this.check()) {
                     _this.socket.send(buffer);
                 }

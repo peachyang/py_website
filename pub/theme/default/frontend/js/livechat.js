@@ -20,45 +20,47 @@
             check: function () {
                 return this.socket && this.socket.readyState == 1;
             },
-            ping: function () {
+            ping: function (_this) {
+                _this = _this ? _this : this;
                 var buffer = new ArrayBuffer(2);
                 var i8V = new Int8Array(buffer);
                 i8V[0] = 0x9;
                 i8V[1] = 0;
-                if (instance.check()) {
-                    instance.socket.send(buffer);
+                if (_this.check()) {
+                    _this.socket.send(buffer);
                 }
-                instance.pingTimeout = setTimeout(instance.ping, 60000);
+                instance.pingTimeout = setTimeout(_this.ping, 60000, _this);
             },
-            connect: function () {
+            connect: function (_this) {
+                _this = _this ? _this : this;
                 try {
-                    instance.lock = false;
-                    if (instance.check()) {
+                    _this.lock = false;
+                    if (_this.check()) {
                         return;
                     }
-                    instance.socket = new WebSocket(this.url);
-                    instance.queue = [];
-                    instance.socket.onopen = this.onopen;
-                    instance.socket.onmessage = this.onmessage;
-                    instance.socket.onclose = this.onclose;
-                    instance.socket.onerror = function (e) {
+                    _this.socket = new WebSocket(_this.url);
+                    _this.queue = [];
+                    _this.socket.onopen = _this.onopen;
+                    _this.socket.onmessage = _this.onmessage;
+                    _this.socket.onclose = _this.onclose;
+                    _this.socket.onerror = function (e) {
                         console.log(e);
                     };
                 } catch (e) {
-                    instance.reconnect.call(instance);
+                    _this.reconnect.call(_this);
                 }
             },
-            reconnect: function () {
-                if (!this.lock || this.retry++ <= 5) {
-                    this.lock = true;
-                    setTimeout(instance.connect, 2000 * Math.pow(2, this.retry));
-                    this.connect(this.url);
+            reconnect: function (_this) {
+                _this = _this ? _this : this;
+                if (!_this.lock || _this.retry++ <= 5) {
+                    _this.lock = true;
+                    setTimeout(_this.connect, 2000 * Math.pow(2, _this.retry), _this);
                 }
             },
             onopen: function () {
-                this.retry = 0;
-                $(this).trigger('opened.livechat');
-                this.pingTimeout = setTimeout(instance.ping, 60000);
+                instance.retry = 0;
+                $(instance).trigger('opened.livechat');
+                instance.pingTimeout = setTimeout(instance.ping, 60000, instance);
             },
             onmessage: function (e) {
                 var data = e.data;
@@ -72,12 +74,12 @@
                 }
             },
             onclose: function () {
-                this.reconnect.call(this);
+                instance.reconnect.call(instance);
             },
             send: function (m) {
                 this.socket.send(m);
                 clearTimeout(this.pingTimeout);
-                this.pingTimeout = setTimeout(instance.ping, 60000);
+                this.pingTimeout = setTimeout(instance.ping, 60000, instance);
             },
             log: function (data) {
                 var c = data.sender == msg.sender ? 'self' : 'others';

@@ -71,7 +71,7 @@
                 if (data.new) {
                     $('#livechat').trigger('new.livechat', data.new);
                 } else {
-                    o.log(data);
+                    instance.log(data);
                 }
             },
             onclose: function () {

@@ -14,12 +14,12 @@ sales:
             operation: 'Admin\Sales\Order::index'
             title: Orders
             priority: 20
-        -
+#        -
 #            link: 'sales_recharge_order/'
-#            operation: 'Admin\Sales\Order::recharge'
+#            operation: 'Admin\Sales\RechargeOrder::index'
 #            title: Recharge Orders
 #            priority: 30
-#        -
+        -
             link: 'sales_invoice/'
             operation: 'Admin\Sales\Invoice::index'
             title: Invoices

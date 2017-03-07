@@ -2,7 +2,7 @@
 $virtual = new Seahinet\Checkout\ViewModel\Order\Address;
 if (!$virtual->isVirtual() && $this->hasLoggedIn()):
     ?>
-    <section class="section rewardpoints" data-change-after="coupon" data-url="<?php echo $this->getBaseUrl('rewardpoints/index/load/') ?>">
+    <section class="section rewardpoints" data-change-after="review" data-url="<?php echo $this->getBaseUrl('rewardpoints/index/load/') ?>">
         <h4 class="title"><?php echo $this->translate('Points'); ?></h4>
         <div>
             <?php if ($this->hasLoggedIn() && $this->getConfig()['rewardpoints/general/enable'] && $this->getConfig()['rewardpoints/using/rate']): ?>

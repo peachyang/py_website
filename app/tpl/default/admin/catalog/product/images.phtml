@@ -1,5 +1,5 @@
 <?php
-$product = $this->getProduct();
+$product = $this->getProduct()->toArray();
 $images = $product['images'];
 $thumbnail = $product['thumbnail'];
 $default = $product['default_image'];
@@ -17,20 +17,20 @@ $default = $product['default_image'];
     </thead>
     <tbody>
         <?php
-        $i = 0;
+        $image = array_shift($images);
         do {
             ?>
             <tr class="inline-box">
                 <td>
                     <button type="button" class="btn" data-toggle="modal" data-target="#modal-insert" data-param="file_type=image%25" title="<?php echo $this->translate('Select Resource') ?>">
-                        <img src="<?php echo isset($images[$i]) ? $this->getResourceUrl('image/resized/100x100/' . $images[$i]['src']) : $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
+                        <img src="<?php echo $image ? $this->getResourceUrl('image/resized/100x100/' . $image['src']) : $this->getPubUrl('backend/images/placeholder.png') ?>" alt="" />
                     </button>
-                    <input type="hidden" name="images[]" value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" />
+                    <input type="hidden" name="images[]" value="<?php echo $image ? $image['id'] : '' ?>" />
                 </td>
-                <td><input type="text" name="images-label[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['label'] : '' ?>" /></td>
-                <td><input type="text" name="images-group[]" class="form-control" value="<?php echo isset($images[$i]) ? $images[$i]['group'] : '' ?>" /></td>
-                <td class="text-center"><input type="radio" name="default_image"<?php if (isset($images[$i]) && $images[$i]['id'] == $default): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
-                <td class="text-center"><input type="radio" name="thumbnail"<?php if (isset($images[$i]) && $images[$i]['id'] == $thumbnail): ?> checked="checked"<?php endif ?> value="<?php echo isset($images[$i]) ? $images[$i]['id'] : '' ?>" /></td>
+                <td><input type="text" name="images-label[]" class="form-control" value="<?php echo $image ? $image['label'] : '' ?>" /></td>
+                <td><input type="text" name="images-group[]" class="form-control" value="<?php echo $image ? $image['group'] : '' ?>" /></td>
+                <td class="text-center"><input type="radio" name="default_image"<?php if ($image && $image['id'] == $default): ?> checked="checked"<?php endif ?> value="<?php echo $image ? $image['id'] : '' ?>" /></td>
+                <td class="text-center"><input type="radio" name="thumbnail"<?php if ($image && $image['id'] == $thumbnail): ?> checked="checked"<?php endif ?> value="<?php echo $image ? $image['id'] : '' ?>" /></td>
                 <td>
                     <a href="javascript:void(0);" class="delete">
                         <span class="fa fa-trash-o" aria-hidden="true"></span>
@@ -38,7 +38,7 @@ $default = $product['default_image'];
                     </a>
                 </td>
             </tr>
-        <?php } while (isset($images[++$i])) ?>
+        <?php } while ($image = array_shift($images)) ?>
     </tbody>
     <tfoot>
         <tr>

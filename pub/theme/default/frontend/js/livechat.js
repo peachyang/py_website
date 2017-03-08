@@ -14,6 +14,7 @@
         var ws = function (url) {
             this.url = url;
             this.retry = 0;
+            this.query = [];
             this.connect();
         };
         ws.prototype = {
@@ -62,6 +63,12 @@
                 instance.retry = 0;
                 $(instance).trigger('opened.livechat');
                 instance.pingTimeout = setTimeout(instance.ping, 60000, instance);
+                if (instance.query.length) {
+                    for (var i in instance.query) {
+                        instance.send(instance.query[i]);
+                    }
+                    instance.query = [];
+                }
             },
             onmessage: function (e) {
                 var data = e.data;
@@ -78,9 +85,13 @@
                 instance.reconnect.call(instance);
             },
             send: function (m) {
-                this.socket.send(m);
-                clearTimeout(this.pingTimeout);
-                this.pingTimeout = setTimeout(instance.ping, 60000, instance);
+                if (this.check()) {
+                    this.socket.send(m);
+                    clearTimeout(this.pingTimeout);
+                    this.pingTimeout = setTimeout(instance.ping, 60000, instance);
+                } else {
+                    this.query.push(m);
+                }
             },
             log: function (data) {
                 var c = data.sender == msg.sender ? 'self' : 'others';

@@ -22,9 +22,10 @@
             },
             ping: function (_this) {
                 _this = _this ? _this : this;
-                var buffer = new ArrayBuffer(1);
+                var buffer = new ArrayBuffer(2);
                 var i8V = new Int8Array(buffer);
-                i8V[0] = 0x9;
+                i8V[0] = 0x09;
+                i8V[1] = 0;
                 if (_this.check()) {
                     _this.socket.send(buffer);
                 }
@@ -62,7 +63,7 @@
                 $(instance).trigger('opened.livechat');
                 instance.pingTimeout = setTimeout(instance.ping, 60000, instance);
             },
-            onmessage: function (e) {console.log(e);
+            onmessage: function (e) {
                 var data = e.data;
                 if (typeof data === 'string') {
                     data = eval('(' + data + ')');

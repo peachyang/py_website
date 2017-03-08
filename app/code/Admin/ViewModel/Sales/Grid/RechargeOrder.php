@@ -99,7 +99,7 @@ class RechargeOrder extends Grid
         $currency = $this->getContainer()->get('currency');
         return [
             'increment_id' => [
-                'label' => 'Order ID'
+                'label' => 'Recharge Order ID'
             ],
             'customer_id' => [
                 'label' => 'Customer ID'

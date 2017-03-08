@@ -1,8 +1,8 @@
 <?php
 $product = $this->getProduct();
-$images = (array) $product['images'];
-$thumbnail = $product['thumbnail'];
-$default = $product['default_image'];
+$images = (array) $product['images'] ?? [];
+$thumbnail = $product['thumbnail'] ?? NULL;
+$default = $product['default_image'] ?? NULL;
 ?>
 <table class="table widget-upload">
     <thead>

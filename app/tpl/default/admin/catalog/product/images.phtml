@@ -1,6 +1,6 @@
 <?php
 $product = $this->getProduct()->toArray();
-$images = $product['images'];
+$images = (array) $product['images'];
 $thumbnail = $product['thumbnail'];
 $default = $product['default_image'];
 ?>

@@ -303,7 +303,6 @@ class ProductController extends AuthActionController
                         $product = new Model;
                         $product->load($id);
                         $product->setData('recommended', 1)->save();
-                        $result['removeLine'][] = $id;
                         $count ++;
                     }
                 } catch (Exception $e) {
@@ -331,7 +330,6 @@ class ProductController extends AuthActionController
                         $product = new Model;
                         $product->load($id);
                         $product->setData('recommended', 0)->save();
-                        $result['removeLine'][] = $id;
                         $count ++;
                     }
                 } catch (Exception $e) {

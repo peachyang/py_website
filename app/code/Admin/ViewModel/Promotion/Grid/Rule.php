@@ -111,7 +111,6 @@ class Rule extends Grid
             ],
             'status' => [
                 'label' => 'Status',
-                'sortby' => 'cms_block:status',
                 'type' => 'select',
                 'options' => [
                     'Disabled',

@@ -51,6 +51,7 @@ class Statement extends Template
                         'customer_id' => $this->getCustomerId(),
                         'status' => 1
             ]);
+            $record->load(FALSE, TRUE);
             $points = (count($record) ? $record[0]['count'] : 0);
             return (int) $points;
         }
@@ -64,8 +65,10 @@ class Statement extends Template
             $record->columns(['count' => new Expression('sum(count)')])
                     ->where([
                         'customer_id' => $this->getCustomerId(),
+                        'comment' => 'Consumption',
                         'status' => 0
             ]);
+            $record->load(FALSE, TRUE);
             $points = (count($record) ? $record[0]['count'] : 0);
             return (int) $points;
         }

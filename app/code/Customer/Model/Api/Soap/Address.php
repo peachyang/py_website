@@ -50,7 +50,7 @@ class Address extends AbstractHandler
     /**
      * @param string $sessionId
      * @param int $customerId
-     * @param array|object $data
+     * @param object $data
      * @return bool
      */
     public function addressSave($sessionId, $customerId, $data)
@@ -58,6 +58,7 @@ class Address extends AbstractHandler
         $this->validateSessionId($sessionId);
         $model = new Model;
         try {
+            $data = (array) $data;
             if (!empty($data['id'])) {
                 $model->load($data['id']);
                 if ($model->offsetGet('customer_id') != $customerId) {
@@ -76,7 +77,7 @@ class Address extends AbstractHandler
                 $set->load($type->getId(), 'type_id');
                 $data['attribute_set_id'] = $set->getId();
             }
-            $model->setData((array) $data)->save();
+            $model->setData($data)->save();
             return true;
         } catch (Exception $e) {
             return false;

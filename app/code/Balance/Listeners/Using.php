@@ -102,7 +102,7 @@ class Using implements ListenerInterface
         $config = $this->getContainer()->get('config');
         $model = $event['model'];
         $order = $model->getOrder();
-        if ($config['balance/general/enable'] && $config['balance/general/refunded'] && $order && $order['additional']) {
+        if ($config['balance/general/enable'] && $order && $order['additional']) {
             $additional = json_decode($order['additional'], true);
             if (!empty($additional['balance'])) {
                 $collection = new Collection;
@@ -114,6 +114,22 @@ class Using implements ListenerInterface
                     $record->setData(['id' => $collection[0]['id'], 'comment' => 'Balance Refund', 'status' => 0])
                             ->save();
                 }
+            }
+        }
+    }
+
+    public function afterOrderCancel($event)
+    {
+        $model = $event['model'];
+        if ($model->getPhase()['code'] === 'canceled') {
+            $collection = new Collection;
+            $collection->columns(['id'])
+                    ->where(['order_id' => $model->getId()])
+            ->where->lessThan('amount', 0);
+            if (count($collection)) {
+                $record = new Balance;
+                    $record->load($collection[0]['id']);
+                    $record->setData(['comment' => 'Order Cancelled', 'status' => 0])->save();
             }
         }
     }

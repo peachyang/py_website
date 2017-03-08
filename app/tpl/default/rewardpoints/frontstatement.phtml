@@ -10,7 +10,7 @@ $collection = $this->getStatement();
                         <?php echo $this->getAvailablePoints(); ?>
                     </span>
                 </td>
-                <td><?php echo $this->translate('Unavailable Integral'); ?>:
+                <td><?php echo $this->translate('To Use Integral'); ?>:
                     <span class="count">
                         <?php echo $this->getUnavailablePoints(); ?>
                     </span>
@@ -49,7 +49,7 @@ $collection = $this->getStatement();
         <?php else: ?>
             <tfoot>
                 <tr>
-                    <td colspan="4"><?php echo $this->translate('No data to display') ?></td>
+                    <td colspan="4" class="text-center"><?php echo $this->translate('No data to display') ?></td>
                 </tr>
             </tfoot>
         <?php endif; ?>

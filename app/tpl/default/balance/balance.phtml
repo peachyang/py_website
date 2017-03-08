@@ -1,5 +1,5 @@
 <?php
-if (!$this->isVirtual()):
+if (!$this->isVirtual() && $this->hasLoggedIn()):
     ?>
     <section class="section balance" data-change-after="shipping" data-url="<?php echo $this->getBaseUrl('balance/index/load/'); ?>">
         <h4 class="title"><?php echo $this->translate('Balance'); ?></h4>

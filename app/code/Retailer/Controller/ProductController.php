@@ -18,6 +18,8 @@ class ProductController extends AuthActionController
 
     use \Seahinet\Lib\Traits\DataCache;
 
+    protected $searchable = null;
+
     public function sellingAction()
     {
         return $this->getLayout('retailer_selling_products');

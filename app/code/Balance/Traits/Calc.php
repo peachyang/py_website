@@ -8,7 +8,7 @@ use Zend\Db\Sql\Expression;
 trait Calc
 {
 
-    protected function getBalances($model, $withUsed = false)
+    protected function getBalances($model)
     {
         $collection = new Collection;
         $collection->columns(['amount' => new Expression('sum(amount)')])
@@ -16,6 +16,7 @@ trait Calc
                     'customer_id' => $model->offsetGet('customer_id'),
                     'status' => 1
         ]);
+        $collection->load(FALSE, true);
         $balance = (count($collection) ? $collection[0]['amount'] : 0);
         return $balance;
     }

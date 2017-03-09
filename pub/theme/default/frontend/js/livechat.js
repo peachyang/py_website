@@ -187,7 +187,7 @@
         });
         init();
         $(instance).on('opened.livechat', function () {
-            this.send('{"sender":' + msg.sender + ',"init":' + ids === '[' ? ids + ']' : ids.replace(/\,$/, ']') + '}');
+            this.send('{"sender":' + msg.sender + ',"init":' + (ids === '[' ? ids + ']' : ids.replace(/\,$/, ']')) + '}');
         });
         $('#livechat #chat-form').on('click', '[type=submit]', function () {
             var session = $(this).val();

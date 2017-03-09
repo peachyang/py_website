@@ -35,7 +35,7 @@ class IndexController extends ActionController
         if ($segment->get('hasLoggedIn')) {
             $config = $this->getContainer()->get('config');
             $user = $segment->get('user');
-            if ($url && $config['global/backend/sso'] && $config['global/backend/allowed_sso_url'] && in_array(parse_url(base64_decode($url), PHP_URL_HOST), explode(';', $config['global/backend/allowed_sso_url']))) {
+            if (($url = base64_decode($url)) && $config['global/backend/sso'] && $config['global/backend/allowed_sso_url'] && in_array(parse_url($url, PHP_URL_HOST), explode(';', $config['global/backend/allowed_sso_url']))) {
                 $cipher = new BlockCipher(new Openssl);
                 $cipher->setKey($config['global/backend/sso_key']);
                 return $this->redirect($url . '?token=' . str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($cipher->encrypt('{"id":' . $user->getId() . ',"username":"' . $user->offsetGet('username') . '"}'))));

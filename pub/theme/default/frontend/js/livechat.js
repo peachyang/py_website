@@ -41,7 +41,6 @@
                         return;
                     }
                     _this.socket = new WebSocket(_this.url);
-                    _this.queue = [];
                     _this.socket.onopen = _this.onopen;
                     _this.socket.onmessage = _this.onmessage;
                     _this.socket.onclose = _this.onclose;

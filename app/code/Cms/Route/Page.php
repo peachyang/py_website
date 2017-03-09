@@ -22,7 +22,7 @@ class Page extends Route
         } else if (substr($path, -4) === '.htm') {
             $path = substr($path, 0, -4);
         } else if ($path === '') {
-            $path = 'home';
+            $path = $this->getContainer()->get('route')['default']['page'] ?? 'home';
         } else {
             return false;
         }

@@ -94,7 +94,7 @@ class RpcController extends AbstractController
                 $result = [
                     'jsonrpc' => '2.0',
                     'id' => $data['id'],
-                    'result' => $result
+                    'result' => is_bool($result) ? ($result ? 'true' : 'false') : $result
                 ];
             }
         } catch (Exception $e) {

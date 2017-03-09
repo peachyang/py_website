@@ -23,7 +23,7 @@ $parent = $this->getVariable('parent');
                   }
                   ?>><?php echo $item['value'] ?? '' ?></textarea>
                   <?php
-                  if ($item['value']):
+                  if (!empty($item['value'])):
                       $method = $item['method'] ?? (strpos($key, 'pub') === false ? 'openssl_pkey_get_private' : 'openssl_pkey_get_public');
                       $params = [$item['value']];
                       if (isset($item['phrase'])) {

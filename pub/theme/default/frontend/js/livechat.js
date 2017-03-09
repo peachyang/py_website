@@ -41,7 +41,6 @@
                         return;
                     }
                     _this.socket = new WebSocket(_this.url);
-                    _this.queue = [];
                     _this.socket.onopen = _this.onopen;
                     _this.socket.onmessage = _this.onmessage;
                     _this.socket.onclose = _this.onclose;
@@ -54,9 +53,10 @@
             },
             reconnect: function (_this) {
                 _this = _this ? _this : this;
-                if (!_this.lock || _this.retry++ <= 5) {
+                if (!_this.lock || _this.retry <= 5) {
                     _this.lock = true;
                     setTimeout(_this.connect, 2000 * Math.pow(2, _this.retry), _this);
+                    _this.retry = _this.retry + 1;
                 }
             },
             onopen: function () {
@@ -187,7 +187,7 @@
         });
         init();
         $(instance).on('opened.livechat', function () {
-            this.send('{"sender":' + msg.sender + ',"init":' + ids.replace(/\,$/, ']') + '}');
+            this.send('{"sender":' + msg.sender + ',"init":' + (ids === '[' ? ids + ']' : ids.replace(/\,$/, ']')) + '}');
         });
         $('#livechat #chat-form').on('click', '[type=submit]', function () {
             var session = $(this).val();

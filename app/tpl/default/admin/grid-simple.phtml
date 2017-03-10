@@ -81,14 +81,14 @@ $query = $this->getQuery();
                 </tr>
             <?php endforeach ?>
         </tbody>
-        <?php if ($this->getMessAction()): ?>
-            <tfoot>
-                <tr>
+        <tfoot>
+            <tr>
+                <?php if ($this->getMessAction()): ?>
                     <td class="checkbox">
                         <input type="checkbox" class="selectall" />
                         <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                     </td>
-                    <td colspan="<?php printf('%d', $count - 1) ?>" class="text-left mess-action">
+                    <td colspan="<?php printf('%d', $count /= 2) ?>" class="text-left mess-action">
                         <?php
                         foreach ($this->getMessAction() as $action) {
                             if (is_callable([$this, $action])) {
@@ -97,8 +97,15 @@ $query = $this->getQuery();
                         }
                         ?>
                     </td>
-                </tr>
-            </tfoot>
-        <?php endif ?>
+                <?php endif ?>
+                <td colspan="<?php echo $count + 1 ?>" class="text-right">
+                    <?php
+                    if (is_object($this->getVariable('collection'))) {
+                        echo $this->getChild('pager')->setCollection($this->getVariable('collection'));
+                    }
+                    ?>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>

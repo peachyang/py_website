@@ -9,40 +9,25 @@ use Seahinet\Lib\Model\Collection\Eav\Attribute as Collection;
 class Attribute extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Customer\\Attribute::edit',
+        'getDeleteAction' => 'Admin\\Customer\\Attribute::delete'
+    ];
     protected $translateDomain = 'eav';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/customer_attribute/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/customer_attribute/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_attribute/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_attribute/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns()

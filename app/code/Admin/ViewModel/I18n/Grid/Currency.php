@@ -8,38 +8,23 @@ use Seahinet\I18n\Model\Collection\Currency as Collection;
 class Currency extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getSyncAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\I18n\\Currency::edit',
+        'getSyncAction' => 'Admin\\I18n\\Currency::sync'
+    ];
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/i18n_currency/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getSyncAction($item)
     {
-        return '<a href="' . $this->getSyncUrl() . '?code=' . $item['code'] . '" title="' . $this->translate('Synchronize') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/i18n_currency/sync/?code=') . $item['code'] . '" title="' . $this->translate('Synchronize') .
                 '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Synchronize') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/i18n_currency/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getSyncUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/i18n_currency/sync/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns()

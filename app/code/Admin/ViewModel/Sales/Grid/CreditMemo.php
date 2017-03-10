@@ -9,42 +9,24 @@ use Seahinet\Sales\Model\Collection\CreditMemo as Collection;
 class CreditMemo extends Grid
 {
 
-    protected $viewUrl = null;
-    protected $holdUrl = null;
-    protected $unholdUrl = null;
-    protected $cancelUrl = null;
-    protected $printUrl = null;
-    protected $action = ['getViewAction', 'getPrintAction'];
+    protected $action = [
+        'getViewAction' => 'Admin\\Sales\\Creditmemo::view',
+        'getPrintAction' => 'Admin\\Sales\\Creditmemo::print'
+    ];
     protected $translateDomain = 'sales';
 
     public function getViewAction($item)
     {
-        return '<a href="' . $this->getViewUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('View') .
+        return '<a href="' . $this->getAdminUrl('sales_creditmemo/view/?id=') . $item['id'] . '" title="' . $this->translate('View') .
                 '"><span class="fa fa-fw fa-search" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('View') . '</span></a>';
     }
 
-    public function getViewUrl()
-    {
-        if (is_null($this->viewUrl)) {
-            $this->viewUrl = $this->getAdminUrl('sales_creditmemo/view/');
-        }
-        return $this->viewUrl;
-    }
-
     public function getPrintAction($item)
     {
-        return '<a href="' . $this->getPrintUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Print') .
+        return '<a href="' . $this->getAdminUrl('sales_creditmemo/print/?id=') . $item['id'] . '" title="' . $this->translate('Print') .
                 '"><span class="fa fa-fw fa-print" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Print') . '</span></a>';
-    }
-
-    public function getPrintUrl()
-    {
-        if (is_null($this->printUrl)) {
-            $this->printUrl = $this->getAdminUrl('sales_creditmemo/print/');
-        }
-        return $this->printUrl;
     }
 
     protected function prepareColumns()

@@ -38,7 +38,9 @@ class Grid extends Template
      */
     public function getAction()
     {
-        return $this->action;
+        return array_keys(array_filter($this->action, function($item) {
+                    return $item === true || $this->hasPermission($item);
+                }));
     }
 
     /**
@@ -48,7 +50,9 @@ class Grid extends Template
      */
     public function getMessAction()
     {
-        return $this->messAction;
+        return array_keys(array_filter($this->messAction, function($item) {
+                    return $item === true || $this->hasPermission($item);
+                }));
     }
 
     /**

@@ -5,13 +5,12 @@ namespace Seahinet\Admin\ViewModel;
 class Cache extends Grid
 {
 
-    protected $deleteUrl = '';
-    protected $action = ['getFlushAction'];
+    protected $action = ['getFlushAction' => 'Admin\\Cache::flush'];
     protected $translateDomain = 'cache';
 
     public function getFlushAction($item)
     {
-        return '<a href="' . $this->getFlushUrl() . '?code=' . $item .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/cache/flush/') . '?code=' . $item .
                 '" title="' . $this->translate('Flush') .
                 '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Flush') . '</span></a>';
@@ -19,10 +18,7 @@ class Cache extends Grid
 
     public function getFlushUrl()
     {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/cache/flush/');
-        }
-        return $this->deleteUrl;
+        return $this->hasPermission('Admin\\Cache::flush') ? $this->getAdminUrl(':ADMIN/cache/flush/') : '';
     }
 
     protected function prepareCollection($collection = null)

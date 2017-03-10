@@ -9,23 +9,24 @@ use Seahinet\Promotion\Model\Collection\Rule as Collection;
 class Rule extends Grid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $enableUrl = '';
-    protected $disableUrl = '';
     protected $translateDomain = 'promotion';
-    protected $action = ['getEditAction', 'getEnableAction', 'getDisableAction', 'getDeleteAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Promotion::edit',
+        'getEnableAction' => 'Admin\\Promotion::enable',
+        'getDisableAction' => 'Admin\\Promotion::disable',
+        'getDeleteAction' => 'Admin\\Promotion::delete'
+    ];
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/promotion/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/promotion/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
@@ -33,7 +34,7 @@ class Rule extends Grid
 
     public function getEnableAction($item)
     {
-        return $item['status'] ? false : ('<a href="' . $this->getEnableUrl() . '?id=' . $item['id'] .
+        return $item['status'] ? false : ('<a href="' . $this->getAdminUrl(':ADMIN/promotion/enable/') . '?id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Enable') .
                 '"><span class="fa fa-fw fa-play" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Enable') . '</span></a>');
@@ -41,42 +42,10 @@ class Rule extends Grid
 
     public function getDisableAction($item)
     {
-        return $item['status'] ? ('<a href="' . $this->getDisableUrl() . '?id=' . $item['id'] .
+        return $item['status'] ? ('<a href="' . $this->getAdminUrl(':ADMIN/promotion/disable/') . '?id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Disable') .
                 '"><span class="fa fa-fw fa-pause" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Disable') . '</span></a>') : false;
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/promotion/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/promotion/delete/');
-        }
-        return $this->deleteUrl;
-    }
-
-    public function getEnableUrl()
-    {
-        if ($this->enableUrl === '') {
-            $this->enableUrl = $this->getAdminUrl(':ADMIN/promotion/enable/');
-        }
-        return $this->enableUrl;
-    }
-
-    public function getDisableUrl()
-    {
-        if ($this->disableUrl === '') {
-            $this->disableUrl = $this->getAdminUrl(':ADMIN/promotion/disable/');
-        }
-        return $this->disableUrl;
     }
 
     protected function prepareColumns()

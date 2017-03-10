@@ -7,29 +7,20 @@ use Seahinet\Lib\Model\Collection\Eav\Type as Collection;
 class Indexer extends Grid
 {
 
-    protected $rebuildUrl = '';
-    protected $action = ['getReindexAction'];
-    protected $messAction = ['getMessReindexAction'];
+    protected $action = ['getReindexAction' => 'Admin\\Indexer\\Rebuild'];
+    protected $messAction = ['getMessReindexAction' => 'Admin\\Indexer\\Rebuild'];
 
     public function getReindexAction($item)
     {
-        return '<a href="' . $this->getRebuildUrl() . '" data-method="post" data-params="id=' . $item['id'] . '" title="' . $this->translate('Rebuild') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/indexer/rebuild/') . '" data-method="post" data-params="id=' . $item['id'] . '" title="' . $this->translate('Rebuild') .
                 '"><span class="fa fa-fw fa-refresh" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Rebuild') . '</span></a>';
     }
 
     public function getMessReindexAction()
     {
-        return '<a href="' . $this->getRebuildUrl() . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Rebuild') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/indexer/rebuild/') . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Rebuild') .
                 '"><span>' . $this->translate('Rebuild') . '</span></a>';
-    }
-
-    public function getRebuildUrl()
-    {
-        if ($this->rebuildUrl === '') {
-            $this->rebuildUrl = $this->getAdminUrl(':ADMIN/indexer/rebuild/');
-        }
-        return $this->rebuildUrl;
     }
 
     protected function prepareColumns()

@@ -8,22 +8,23 @@ use Seahinet\Customer\Model\Collection\Customer as Collection;
 class Manage extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
-    protected $messAction = ['getExportAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Customer\\Manage::edit',
+        'getDeleteAction' => 'Admin\\Customer\\Manage::delete'
+    ];
+    protected $messAction = ['getExportAction' => 'Admin\\Dataflow\\Customer::export'];
     protected $translateDomain = 'customer';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/customer_manage/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/customer_manage/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
@@ -34,22 +35,6 @@ class Manage extends PGrid
         return '<a href="javascript:void(0);" onclick="var id=\'\';$(\'.grid .table [type=checkbox][value]:checked\').each(function(){id+=$(this).val()+\',\';});location.href=\'' .
                 $this->getAdminUrl('dataflow_customer/export/?id=') . '\'+id.replace(/\,$/,\'\');" title="' . $this->translate('Export') .
                 '"><span>' . $this->translate('Export') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/customer_manage/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/customer_manage/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareCollection($collection = null)

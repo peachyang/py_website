@@ -131,6 +131,9 @@ class OrderController extends ActionController
                             $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
                         }
                     });
+                    if (empty($orders)) {
+                        return $this->redirect('checkout/cart/');
+                    }
                     $result['redirect'] = $paymentMethod->preparePayment($orders);
                     $cart->abandon();
                     $this->commit();

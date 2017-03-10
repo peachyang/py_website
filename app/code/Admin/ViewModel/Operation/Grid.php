@@ -8,45 +8,24 @@ use Seahinet\Admin\Model\Collection\Operation as Collection;
 class Grid extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Operation::edit',
+        'getDeleteAction' => 'Admin\\Operation::delete'
+    ];
 
     public function getEditAction($item)
     {
-        if ($item['is_system']) {
-            return '';
-        }
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return $item['is_system'] ? '' : ('<a href="' . $this->getAdminUrl(':ADMIN/operation/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
-                $this->translate('Edit') . '</span></a>';
+                $this->translate('Edit') . '</span></a>');
     }
 
     public function getDeleteAction($item)
     {
-        if ($item['is_system']) {
-            return '';
-        }
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return $item['is_system'] ? '' : ('<a href="' . $this->getAdminUrl(':ADMIN/operation/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
-                $this->translate('Delete') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/operation/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/operation/delete/');
-        }
-        return $this->deleteUrl;
+                $this->translate('Delete') . '</span></a>');
     }
 
     protected function prepareColumns()

@@ -8,22 +8,26 @@ use Seahinet\Oauth\Model\Collection\Token as Collection;
 class Token extends PGrid
 {
 
-    protected $grantUrl = '';
-    protected $revokeUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getRevokeAction', 'getDeleteAction'];
-    protected $messAction = ['getMessGrantAction', 'getMessRevokeAction', 'getMessDeleteAction'];
+    protected $action = [
+        'getRevokeAction' => 'Admin\\Api\\Oauth\\Token::revoke',
+        'getDeleteAction' => 'Admin\\Api\\Oauth\\Token::delete'
+    ];
+    protected $messAction = [
+        'getMessGrantAction' => 'Admin\\Api\\Oauth\\Token::grant',
+        'getMessRevokeAction' => 'Admin\\Api\\Oauth\\Token::revoke',
+        'getMessDeleteAction' => 'Admin\\Api\\Oauth\\Token::delete'
+    ];
     protected $translateDomain = 'api';
 
     public function getRevokeAction($item)
     {
         if ($item['status']) {
-            return '<a href="' . $this->getRevokeUrl() . '" data-method="post" data-params="id=' . $item['id'] .
+            return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/revoke/') . '" data-method="post" data-params="id=' . $item['id'] .
                     '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Revoke') .
                     '"><span class="fa fa-fw fa-user-times" aria-hidden="true"></span><span class="sr-only">' .
                     $this->translate('Revoke') . '</span></a>';
         } else {
-            return '<a href="' . $this->getGrantUrl() . '" data-method="post" data-params="id=' . $item['id'] .
+            return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/grant/') . '" data-method="post" data-params="id=' . $item['id'] .
                     '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Grant') .
                     '"><span class="fa fa-fw fa-user-plus" aria-hidden="true"></span><span class="sr-only">' .
                     $this->translate('Grant') . '</span></a>';
@@ -32,7 +36,7 @@ class Token extends PGrid
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
@@ -40,44 +44,20 @@ class Token extends PGrid
 
     public function getMessDeleteAction()
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-serialize=".grid .table" title="' . $this->translate('Delete') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/delete/') . '" data-method="delete" data-serialize=".grid .table" title="' . $this->translate('Delete') .
                 '"><span>' . $this->translate('Delete') . '</span></a>';
     }
 
     public function getMessRevokeAction()
     {
-        return '<a href="' . $this->getRevokeUrl() . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Revoke') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/revoke/') . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Revoke') .
                 '"><span>' . $this->translate('Revoke') . '</span></a>';
     }
 
     public function getMessGrantAction()
     {
-        return '<a href="' . $this->getGrantUrl() . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Grant') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_oauth_token/grant/') . '" data-method="post" data-serialize=".grid .table" title="' . $this->translate('Grant') .
                 '"><span>' . $this->translate('Grant') . '</span></a>';
-    }
-
-    public function getGrantUrl()
-    {
-        if ($this->grantUrl === '') {
-            $this->grantUrl = $this->getAdminUrl(':ADMIN/api_oauth_token/grant/');
-        }
-        return $this->grantUrl;
-    }
-
-    public function getRevokeUrl()
-    {
-        if ($this->revokeUrl === '') {
-            $this->revokeUrl = $this->getAdminUrl(':ADMIN/api_oauth_token/revoke/');
-        }
-        return $this->revokeUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/api_oauth_token/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns()

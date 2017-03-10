@@ -7,7 +7,7 @@
             <form action="<?php echo $this->getAdminUrl('index/login/') ?>" method="post" class="form-inline">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                 <?php if ($url = $this->getQuery('success_url')): ?>
-                    <input type="hidden" name="success_url" value="<?php echo base64_decode($url) ?>" />
+                    <input type="hidden" name="success_url" value="<?php echo $url ?>" />
                 <?php endif ?>
                 <div class="input-box">
                     <label for="login:username" class="control-label"><?php echo $this->translate('Username') ?>: </label>

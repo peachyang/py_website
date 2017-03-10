@@ -8,39 +8,25 @@ use Seahinet\Api\Model\Collection\Soap\Role as Collection;
 class SoapRole extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Api\\Soap\\Role::edit',
+        'getDeleteAction' => 'Admin\\Api\\Soap\\Role::delete'
+    ];
+    protected $translateDomain = 'api';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_soap_role/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/api_soap_role/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            $this->editUrl = $this->getAdminUrl(':ADMIN/api_soap_role/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            $this->deleteUrl = $this->getAdminUrl(':ADMIN/api_soap_role/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns()

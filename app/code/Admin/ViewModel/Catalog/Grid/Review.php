@@ -12,40 +12,25 @@ use Seahinet\Lib\Source\Language;
 class Review extends PGrid
 {
 
-    protected $editUrl = '';
-    protected $deleteUrl = '';
-    protected $action = ['getEditAction', 'getDeleteAction'];
+    protected $action = [
+        'getEditAction' => 'Admin\\Catalog\\Product\\Review::edit',
+        'getDeleteAction' => 'Admin\\Catalog\\Product\\Review::delete'
+    ];
     protected $translateDomain = 'review';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getEditUrl() . '?id=' . $item['id'] . '"title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_product_review/edit/?id=') . $item['id'] . '"title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">'
                 . $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getDeleteUrl() . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_product_review/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
-    }
-
-    public function getEditUrl()
-    {
-        if ($this->editUrl === '') {
-            return $this->editUrl = $this->getAdminUrl(':ADMIN/catalog_product_review/edit/');
-        }
-        return $this->editUrl;
-    }
-
-    public function getDeleteUrl()
-    {
-        if ($this->deleteUrl === '') {
-            return $this->deleteUrl = $this->getAdminUrl(':ADMIN/catalog_product_review/delete/');
-        }
-        return $this->deleteUrl;
     }
 
     protected function prepareColumns($columns = [])

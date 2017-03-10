@@ -10,23 +10,14 @@ use Seahinet\Sales\Source\Refund\Service;
 class Refund extends Grid
 {
 
-    protected $viewUrl = '';
     protected $translateDomain = 'sales';
-    protected $action = ['getViewAction'];
+    protected $action = ['getViewAction' => 'Admin\\Sales\\Refund::view'];
 
     public function getViewAction($item)
     {
-        return '<a href="' . $this->getViewUrl() . '?id=' . $item['id'] . '" title="' . $this->translate('View') .
+        return '<a href="' . $this->getAdminUrl('sales_refund/view/?id=') . $item['id'] . '" title="' . $this->translate('View') .
                 '"><span class="fa fa-fw fa-search" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('View') . '</span></a>';
-    }
-
-    public function getViewUrl()
-    {
-        if ($this->viewUrl === '') {
-            $this->viewUrl = $this->getAdminUrl('sales_refund/view/');
-        }
-        return $this->viewUrl;
     }
 
     protected function prepareColumns()

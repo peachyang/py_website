@@ -339,7 +339,7 @@ abstract class AbstractViewModel implements Serializable
     public function hasPermission($key)
     {
         if ($this->isAdminPage()) {
-            $segment = new \Seahinet\Lib\Session\Segment('admin');
+            $segment = $this->getSegment('admin');
             return $segment->get('user')->getRole()->hasPermission($key);
         }
         return false;

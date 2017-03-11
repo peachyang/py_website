@@ -65,7 +65,8 @@ class Manage extends PEdit
         'type' => 'select',
         'options' => (new Store)->getSourceArray(),
         'label' => 'Store',
-        'required' => 'required'
+        'required' => 'required',
+        'comment' => 'User Registration Source'
             ]),
             'language_id' => [
                 'type' => 'select',

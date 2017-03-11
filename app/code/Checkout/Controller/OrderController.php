@@ -92,6 +92,8 @@ class OrderController extends ActionController
                 $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             } else {
                 try {
+                    $cartInfo = $cart->toArray();
+                    $isVirtual = $cart->isVirtual();
                     $items = $cart->abandon();
                     if (empty($items)) {
                         return $this->redirect('checkout/cart/');
@@ -99,33 +101,34 @@ class OrderController extends ActionController
                     $this->beginTransaction();
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
-                    if ($cart->isVirtual()) {
-                        $cart->setData([
+                    if ($isVirtual) {
+                        $cartInfo = [
                             'payment_method' => $data['payment_method'],
                             'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
-                        ]);
+                                ] + $cartInfo;
                         if ($billingAddress) {
-                            $cart->setData([
+                            $cartInfo = [
                                 'billing_address_id' => $data['billing_address_id'],
                                 'billing_address' => $billingAddress->display(false)
-                            ]);
+                                    ] + $cartInfo;
                         }
                     } else {
                         $shippingAddress = $this->validShippingAddress($data);
                         $this->validShipping($data);
-                        $cart->setData([
+                        $cartInfo = [
                             'shipping_address_id' => $data['shipping_address_id'],
                             'shipping_address' => isset($shippingAddress) ? $shippingAddress->display(false) : '',
                             'payment_method' => $data['payment_method'],
                             'shipping_method' => json_encode($data['shipping_method']),
                             'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
-                        ])->setData($billingAddress ? [
-                                    'billing_address_id' => $data['billing_address_id'],
-                                    'billing_address' => $billingAddress->display(false)
-                                        ] : [
-                                    'billing_address_id' => $data['shipping_address_id'],
-                                    'billing_address' => $shippingAddress->display(false)
-                        ]);
+                                ] + $cartInfo;
+                        $cartInfo = ($billingAddress ? [
+                            'billing_address_id' => $data['billing_address_id'],
+                            'billing_address' => $billingAddress->display(false)
+                                ] : [
+                            'billing_address_id' => $data['shipping_address_id'],
+                            'billing_address' => $shippingAddress->display(false)
+                                ]) + $cartInfo;
                     }
                     $orders = [];
                     if (isset($data['payment_data'])) {
@@ -142,7 +145,6 @@ class OrderController extends ActionController
                         $itemsGroup[$key][] = $item;
                         $isVirtual[$key] &= (int) $item['is_virtual'];
                     }
-                    $cartInfo = $cart->toArray();
                     foreach ($itemsGroup as $key => $items) {
                         $orders[$key] = (new Order)->place($key . '-' . $isVirtual[$key], $items, $cartInfo, $paymentMethod->getNewOrderStatus());
                     }

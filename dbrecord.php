@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `livechat_record` (
     `sender` VARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,
     `message` BLOB,
+    `partial` INTEGER DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -145,4 +146,14 @@ CREATE TABLE IF NOT EXISTS `core_increment` (
     PRIMARY KEY(`type`,`store_id`),
     INDEX IDX_CORE_INCREMENT_STORE_ID (`store_id`),
     CONSTRAINT FK_CORE_INCREMENT_STORE_ID_CORE_STORE_ID FOREIGN KEY (`store_id`) REFERENCES `core_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+2017年03月11日10:42:27
+DROP TABLE `livechat_record`;
+CREATE TABLE IF NOT EXISTS `livechat_record` (
+    `session_id` VARCHAR(255) NOT NULL,
+    `sender` VARCHAR(255) NOT NULL,
+    `type` VARCHAR(50) NOT NULL,
+    `message` BLOB,
+    `partial` INTEGER DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

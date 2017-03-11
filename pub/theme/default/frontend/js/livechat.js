@@ -77,7 +77,10 @@
                     data = eval('(' + data + ')');
                 }
                 if (data.partial !== undefined) {
-                    instance.partial[data.partial] = data.msg;
+                    if(instance.partial[data.session + '-' + data.sender] === undefined){
+                        instance.partial[data.session + '-' + data.sender] = {};
+                    }
+                    instance.partial[data.session + '-' + data.sender][data.partial] = data.msg;
                     if (!data.end) {
                         return;
                     }
@@ -86,25 +89,26 @@
                     data.msg = '';
                     var f = true;
                     var m = 1;
+                    var p = instance.partial[data.session + '-' + data.sender];
                     while (f) {
                         var j = true;
                         var f = false;
-                        for (var i in instance.partial) {
+                        for (var i in p) {
                             if (j || parseInt(i) < m) {
                                 m = parseInt(i);
                                 j = false;
                                 f = true;
                             }
                         }
-                        if (instance.partial[m]) {
-                            data.msg += instance.partial[m];
-                            delete instance.partial[m];
+                        if (p[m]) {
+                            data.msg += p[m];
+                            delete p[m];
                         } else {
                             break;
                         }
                     }
                     instance.log(data);
-                    instance.partial = {};
+                    delete instance.partial[data.session + '-' + data.sender];
                     delete msg.end;
                     delete msg.partial;
                 } else if (data.new) {

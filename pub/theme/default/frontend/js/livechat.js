@@ -14,6 +14,7 @@
         var ws = function (url) {
             this.url = url;
             this.retry = 0;
+            this.partial = [];
             this.query = [];
             this.connect();
         };
@@ -75,7 +76,17 @@
                 if (typeof data === 'string') {
                     data = eval('(' + data + ')');
                 }
-                if (data.new) {
+                if (data.partial !== undefined) {
+                    instance.partial[data.partial] = data.msg;
+                    if (!data.end) {
+                        return;
+                    }
+                }
+                if (data.end) {
+                    data.msg = instance.partial.join('');
+                    instance.log(data);
+                    instance.partial = [];
+                } else if (data.new) {
                     $('#livechat').trigger('new.livechat', data.new);
                 } else {
                     instance.log(data);
@@ -164,19 +175,27 @@
         };
         var sendBin = function (session, type) {
             var o = $('#livechat #' + session + ' [type=file].send-' + type)[0];
+            msg.partial = 0;
             var reader = new FileReader();
             reader.readAsDataURL(o.files[0]);
             reader.onload = function () {
                 msg.session = session;
                 msg.type = type;
-                msg.msg = this.result;
-                if (instance && instance.check()) {
-                    instance.send(JSON.stringify(msg));
-                } else {
-                    init();
-                    $(instance).one('opened', function () {
-                        this.send(JSON.stringify(msg));
-                    });
+                var end = this.result.length;
+                for (var i = 0; i < end; i += 1000) {
+                    msg.partial = i;
+                    msg.msg = this.result.slice(i, i + 1000);
+                    if (i + 1000 >= end) {
+                        msg.end = 1;
+                    }
+                    if (instance && instance.check()) {
+                        instance.send(JSON.stringify(msg));
+                    } else {
+                        init();
+                        $(instance).one('opened', function () {
+                            this.send(JSON.stringify(msg));
+                        });
+                    }
                 }
             };
         };

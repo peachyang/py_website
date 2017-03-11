@@ -29,13 +29,10 @@ class ShippingMethod implements SourceInterface
         $result = [];
         foreach ($config['system']['shipping']['children'] as $code => $info) {
             $className = $config['shipping/' . $code . '/model'];
-            $max = $config['shipping/' . $code . '/max_total'];
             $country = $config['shipping/' . $code . '/country'];
             $model = new $className;
-            if ($model instanceof AbstractMethod && $model->available() &&
-                    (!$address || !$country || in_array($address->offsetGet('country'), $country)) &&
-                    $total >= $config['shipping/' . $code . '/min_total'] &&
-                    (!$max || $total <= $max)) {
+            if ($model instanceof AbstractMethod && $model->available(['total' => $total]) &&
+                    (!$address || !$country || in_array($address->offsetGet('country'), $country))) {
                 $result[$code] = $config['shipping/' . $code . '/label'];
             }
         }

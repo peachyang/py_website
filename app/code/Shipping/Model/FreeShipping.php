@@ -12,9 +12,4 @@ class FreeShipping extends AbstractMethod
         return 0;
     }
 
-    public function available()
-    {
-        return $this->getContainer()->get('config')['shipping/' . self::METHOD_CODE . '/enable'];
-    }
-
 }

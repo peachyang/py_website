@@ -33,9 +33,4 @@ class FlatRate extends AbstractMethod
         }
     }
 
-    public function available()
-    {
-        return $this->getContainer()->get('config')['shipping/' . self::METHOD_CODE . '/enable'];
-    }
-
 }

@@ -23,7 +23,6 @@ class PaymentMethod implements SourceInterface
                     continue;
                 }
                 $className = $config['payment/' . $code . '/model'];
-                $max = $config['payment/' . $code . '/max_total'];
                 $country = $config['payment/' . $code . '/country'];
                 $model = new $className;
                 if ($model instanceof AbstractMethod && $model->available(['total' => $total]) === true &&

@@ -76,8 +76,10 @@ final class Cart extends AbstractModel implements Singleton
     public function abandon()
     {
         $items = $this->getItems(true);
+        $result = [];
         foreach ($items as $item) {
             if ($item['status']) {
+                $result[] = $item->toArray();
                 $this->removeItem($item);
             }
         }
@@ -92,6 +94,7 @@ final class Cart extends AbstractModel implements Singleton
             $segment->offsetUnset('cart');
             static::$instance = null;
         }
+        return $result;
     }
 
     public function combine($cart)

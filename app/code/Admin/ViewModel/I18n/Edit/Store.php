@@ -43,6 +43,11 @@ class Store extends PEdit
             ],
             'code' => [
                 'type' => 'text',
+                'label' => 'Identifier',
+                'required' => 'required'
+            ],
+            'name' => [
+                'type' => 'text',
                 'label' => 'Name',
                 'required' => 'required'
             ],

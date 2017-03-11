@@ -83,59 +83,73 @@ class OrderController extends ActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
+            $cart = Cart::instance();
             if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
                 $result['error'] = 1;
+            } else if ($data['total'] != $cart['base_total']) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             } else {
                 try {
                     $this->beginTransaction();
+                    $cartInfo = $cart->toArray();
+                    $isVirtual = $cart->isVirtual();
+                    $items = $cart->abandon();
+                    if (empty($items)) {
+                        $this->rollback();
+                        return $this->redirect('checkout/cart/');
+                    }
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
-                    $cart = Cart::instance();
-                    if ($cart->isVirtual()) {
-                        $cart->setData([
+                    if ($isVirtual) {
+                        $cartInfo = [
                             'payment_method' => $data['payment_method'],
                             'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
-                        ]);
+                                ] + $cartInfo;
                         if ($billingAddress) {
-                            $cart->setData([
+                            $cartInfo = [
                                 'billing_address_id' => $data['billing_address_id'],
                                 'billing_address' => $billingAddress->display(false)
-                            ]);
+                                    ] + $cartInfo;
                         }
                     } else {
                         $shippingAddress = $this->validShippingAddress($data);
                         $this->validShipping($data);
-                        $cart->setData([
+                        $cartInfo = [
                             'shipping_address_id' => $data['shipping_address_id'],
                             'shipping_address' => isset($shippingAddress) ? $shippingAddress->display(false) : '',
                             'payment_method' => $data['payment_method'],
                             'shipping_method' => json_encode($data['shipping_method']),
                             'customer_note' => isset($data['comment']) ? json_encode($data['comment']) : '{}'
-                        ])->setData($billingAddress ? [
-                                    'billing_address_id' => $data['billing_address_id'],
-                                    'billing_address' => $billingAddress->display(false)
-                                        ] : [
-                                    'billing_address_id' => $data['shipping_address_id'],
-                                    'billing_address' => $shippingAddress->display(false)
-                        ]);
+                                ] + $cartInfo;
+                        $cartInfo = ($billingAddress ? [
+                            'billing_address_id' => $data['billing_address_id'],
+                            'billing_address' => $billingAddress->display(false)
+                                ] : [
+                            'billing_address_id' => $data['shipping_address_id'],
+                            'billing_address' => $shippingAddress->display(false)
+                                ]) + $cartInfo;
                     }
-                    $items = $cart->getItems(true);
-                    $items->columns(['warehouse_id', 'store_id', 'status'])->group(['status', 'warehouse_id', 'store_id']);
                     $orders = [];
                     if (isset($data['payment_data'])) {
                         $paymentMethod->saveData($cart, $data['payment_data']);
                     }
-                    $items->walk(function($item) use (&$orders, $paymentMethod) {
-                        if ($item['status']) {
-                            $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
+                    $itemsGroup = [];
+                    $isVirtual = [];
+                    foreach ($items as $item) {
+                        $key = $item['warehouse_id'] . '-' . $item['store_id'];
+                        if (!isset($itemsGroup[$key])) {
+                            $itemsGroup[$key] = [];
+                            $isVirtual[$key] = 1;
                         }
-                    });
-                    if (empty($orders)) {
-                        return $this->redirect('checkout/cart/');
+                        $itemsGroup[$key][] = $item;
+                        $isVirtual[$key] &= (int) $item['is_virtual'];
+                    }
+                    foreach ($itemsGroup as $key => $items) {
+                        $orders[$key] = (new Order)->place($key . '-' . $isVirtual[$key], $items, $cartInfo, $paymentMethod->getNewOrderStatus());
                     }
                     $result['redirect'] = $paymentMethod->preparePayment($orders);
-                    $cart->abandon();
                     $this->commit();
                     $segment = new Segment('checkout');
                     $segment->set('hasNewOrder', 1);
@@ -157,9 +171,6 @@ class OrderController extends ActionController
 
     protected function validShippingAddress($data)
     {
-        if (Cart::instance()->isVirtual()) {
-            return true;
-        }
         if (!isset($data['shipping_address_id'])) {
             throw new Exception('Please select shipping address');
         }

@@ -37,6 +37,9 @@
     ?>   
     <tr class="grand-total">
         <th><?php echo $this->translate('Grand Total', [], 'checkout') ?></th>
-        <td><?php echo $this->getCurrency()->format($this->getCart()['total']) ?></td>
+        <td>
+            <?php echo $this->getCurrency()->format($this->getCart()['total']) ?>
+            <input type="hidden" name="total" value="<?php echo $this->getCart()['base_total'] ?>" />
+        </td>
     </tr>
 </table>

@@ -36,13 +36,14 @@
                         </a>
                     </td>
                     <?php
-                    while (!empty($stores[$id]) || !empty($languages[$id])):
-                        reset($stores);
+//                    while (!empty($stores[$id]) || !empty($languages[$id])):
+                    while (1):
+//                        reset($stores);
                         $storeId = key($stores[$id]);
-                        $store = array_shift($stores[$id]);
-                        reset($languages);
+                        $store = current($stores[$id]);
+//                        reset($languages);
                         $languageId = key($languages[$id]);
-                        $language = array_shift($languages[$id]);
+                        $language = current($languages[$id]);
                         if ($store):
                             ?>
                             <td>
@@ -66,6 +67,12 @@
                         <?php endif ?>
                     </tr>
                     <tr>
+                        <?php
+                        $flag = next($stores[$id]) === false;
+                        $flag = next($languages[$id]) === false && $flag;
+                        if ($flag)
+                            break;
+                        ?>
                     <?php endwhile ?>
                     <td colspan="3"></td>
                 </tr>

@@ -58,17 +58,49 @@ class Order extends AbstractModel
         return $result;
     }
 
-    public function place($warehouseId, $storeId, $statusId)
+//    public function place($warehouseId, $storeId, $statusId)
+//    {
+//        $cart = Cart::instance();
+//        $cartArray = $cart->toArray();
+//        $note = json_decode($cartArray['customer_note'], true);
+//        $coupon = $cartArray['coupon'] ? json_decode($cartArray['coupon'], true) : [];
+//        $isVirtual = $cart->isVirtual($storeId) ? 1 : 0;
+//        $this->setData($cartArray)
+//                ->setData([
+//                    'coupon' => $coupon[$storeId] ?? '',
+//                    'shipping_method' => $isVirtual ? '' : json_decode($cartArray['shipping_method'], true)[$storeId],
+//                    'customer_note' => $note[$storeId] ?? '',
+//                    'warehouse_id' => $warehouseId,
+//                    'store_id' => $storeId,
+//                    'is_virtual' => $isVirtual,
+//                    'language_id' => Bootstrap::getLanguage()->getId(),
+//                    'status_id' => $statusId
+//                ])->setId(null)->save();
+//        $orderId = $this->getId();
+//        $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId, $orderId) {
+//            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId && $item['status']) {
+//                if (is_array($item)) {
+//                    $item = new Item($item);
+//                } else {
+//                    $item = new Item($item->toArray());
+//                }
+//                $item->setData('order_id', $orderId)->setId(null)->save();
+//            }
+//        });
+//        $this->collateTotals();
+//        $this->getEventDispatcher()->trigger('order.place.after', ['model' => $this]);
+//        return $this;
+//    }
+
+    public function place($ids, $items, $cart, $statusId)
     {
-        $cart = Cart::instance();
-        $cartArray = $cart->toArray();
-        $note = json_decode($cartArray['customer_note'], true);
-        $coupon = $cartArray['coupon'] ? json_decode($cartArray['coupon'], true) : [];
-        $isVirtual = $cart->isVirtual($storeId) ? 1 : 0;
-        $this->setData($cartArray)
+        list($warehouseId, $storeId, $isVirtual) = explode('-', $ids);
+        $note = json_decode($cart['customer_note'], true);
+        $coupon = $cart['coupon'] ? json_decode($cart['coupon'], true) : [];
+        $this->setData($cart)
                 ->setData([
                     'coupon' => $coupon[$storeId] ?? '',
-                    'shipping_method' => $isVirtual ? '' : json_decode($cartArray['shipping_method'], true)[$storeId],
+                    'shipping_method' => $isVirtual ? '' : json_decode($cart['shipping_method'], true)[$storeId],
                     'customer_note' => $note[$storeId] ?? '',
                     'warehouse_id' => $warehouseId,
                     'store_id' => $storeId,
@@ -77,16 +109,14 @@ class Order extends AbstractModel
                     'status_id' => $statusId
                 ])->setId(null)->save();
         $orderId = $this->getId();
-        $cart->getItems(true)->walk(function($item) use ($warehouseId, $storeId, $orderId) {
-            if ($item['warehouse_id'] == $warehouseId && $item['store_id'] == $storeId && $item['status']) {
-                if (is_array($item)) {
-                    $item = new Item($item);
-                } else {
-                    $item = new Item($item->toArray());
-                }
-                $item->setData('order_id', $orderId)->setId(null)->save();
+        foreach ($items as $item) {
+            if (is_array($item)) {
+                $item = new Item($item);
+            } else {
+                $item = new Item($item->toArray());
             }
-        });
+            $item->setData('order_id', $orderId)->setId(null)->save();
+        }
         $this->collateTotals();
         $this->getEventDispatcher()->trigger('order.place.after', ['model' => $this]);
         return $this;

@@ -83,15 +83,22 @@ class OrderController extends ActionController
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
+            $cart = Cart::instance();
             if (!isset($data['csrf']) || !$this->validateCsrfKey($data['csrf'])) {
                 $result['message'][] = ['message' => $this->translate('The form submitted did not originate from the expected site.'), 'level' => 'danger'];
                 $result['error'] = 1;
+            } else if ($data['total'] != $cart['base_total']) {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             } else {
                 try {
+                    $items = $cart->abandon();
+                    if (empty($items)) {
+                        return $this->redirect('checkout/cart/');
+                    }
                     $this->beginTransaction();
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
-                    $cart = Cart::instance();
                     if ($cart->isVirtual()) {
                         $cart->setData([
                             'payment_method' => $data['payment_method'],
@@ -120,22 +127,26 @@ class OrderController extends ActionController
                                     'billing_address' => $shippingAddress->display(false)
                         ]);
                     }
-                    $items = $cart->getItems(true);
-                    $items->columns(['warehouse_id', 'store_id', 'status'])->group(['status', 'warehouse_id', 'store_id']);
                     $orders = [];
                     if (isset($data['payment_data'])) {
                         $paymentMethod->saveData($cart, $data['payment_data']);
                     }
-                    $items->walk(function($item) use (&$orders, $paymentMethod) {
-                        if ($item['status']) {
-                            $orders[$item['store_id']] = (new Order)->place($item['warehouse_id'], $item['store_id'], $paymentMethod->getNewOrderStatus());
+                    $itemsGroup = [];
+                    $isVirtual = [];
+                    foreach ($items as $item) {
+                        $key = $item['warehouse_id'] . '-' . $item['store_id'];
+                        if (!isset($itemsGroup[$key])) {
+                            $itemsGroup[$key] = [];
+                            $isVirtual[$key] = 1;
                         }
-                    });
-                    if (empty($orders)) {
-                        return $this->redirect('checkout/cart/');
+                        $itemsGroup[$key][] = $item;
+                        $isVirtual[$key] &= (int) $item['is_virtual'];
+                    }
+                    $cartInfo = $cart->toArray();
+                    foreach ($itemsGroup as $key => $items) {
+                        $orders[$key] = (new Order)->place($key . '-' . $isVirtual[$key], $items, $cartInfo, $paymentMethod->getNewOrderStatus());
                     }
                     $result['redirect'] = $paymentMethod->preparePayment($orders);
-                    $cart->abandon();
                     $this->commit();
                     $segment = new Segment('checkout');
                     $segment->set('hasNewOrder', 1);

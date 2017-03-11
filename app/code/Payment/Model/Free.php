@@ -9,7 +9,7 @@ class Free extends AbstractMethod
 
     public function available($data = [])
     {
-        return true;
+        return $data['total'] == 0;
     }
 
 }

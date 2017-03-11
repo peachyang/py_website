@@ -16,9 +16,9 @@ abstract class AbstractMethod
     {
         $config = $this->getContainer()->get('config');
         return $config['payment/' . static::METHOD_CODE . '/enable'] &&
-                ($config['payment/' . static::METHOD_CODE . 'max_total'] ||
-                $config['payment/' . static::METHOD_CODE . 'max_total'] >= $data['total']) &&
-                $config['payment/' . static::METHOD_CODE . 'min_total'] <= $data['total'];
+                ($config['payment/' . static::METHOD_CODE . '/max_total'] === '' ||
+                $config['payment/' . static::METHOD_CODE . '/max_total'] >= $data['total']) &&
+                $config['payment/' . static::METHOD_CODE . '/min_total'] <= $data['total'];
     }
 
     /**

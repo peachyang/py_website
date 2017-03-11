@@ -86,6 +86,8 @@
                     data.msg = instance.partial.join('');
                     instance.log(data);
                     instance.partial = [];
+                    delete data.end;
+                    delete data.partial;
                 } else if (data.new) {
                     $('#livechat').trigger('new.livechat', data.new);
                 } else {

@@ -16,7 +16,7 @@ class Language extends PGrid
                 ->join('core_language', 'core_language.merchant_id = core_merchant.id', ['language' => 'name', 'language_id' => 'id'], 'left')
                 ->columns(['merchant' => 'code', 'merchant_id' => 'id'])
                 ->order('core_merchant.id, core_store.id, core_language.id');
-        return $collection->load();
+        return $collection->load(true, true);
     }
 
     public function getUser()

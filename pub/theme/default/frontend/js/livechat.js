@@ -14,7 +14,7 @@
         var ws = function (url) {
             this.url = url;
             this.retry = 0;
-            this.partial = [];
+            this.partial = {};
             this.query = [];
             this.connect();
         };
@@ -86,8 +86,8 @@
                     data.msg = instance.partial.join('');
                     instance.log(data);
                     instance.partial = [];
-                    delete data.end;
-                    delete data.partial;
+                    delete msg.end;
+                    delete msg.partial;
                 } else if (data.new) {
                     $('#livechat').trigger('new.livechat', data.new);
                 } else {

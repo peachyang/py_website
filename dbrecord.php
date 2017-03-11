@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `livechat_record` (
     `sender` VARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,
     `message` BLOB,
+    `partial` INTEGER DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

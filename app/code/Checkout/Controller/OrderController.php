@@ -92,13 +92,14 @@ class OrderController extends ActionController
                 $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
             } else {
                 try {
+                    $this->beginTransaction();
                     $cartInfo = $cart->toArray();
                     $isVirtual = $cart->isVirtual();
                     $items = $cart->abandon();
                     if (empty($items)) {
+                        $this->rollback();
                         return $this->redirect('checkout/cart/');
                     }
-                    $this->beginTransaction();
                     $billingAddress = $this->validBillingAddress($data);
                     $paymentMethod = $this->validPayment($data);
                     if ($isVirtual) {
@@ -170,9 +171,6 @@ class OrderController extends ActionController
 
     protected function validShippingAddress($data)
     {
-        if (Cart::instance()->isVirtual()) {
-            return true;
-        }
         if (!isset($data['shipping_address_id'])) {
             throw new Exception('Please select shipping address');
         }

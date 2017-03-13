@@ -25,6 +25,7 @@ class AbstractHandler implements HandlerInterface
 
     /**
      * @param string $sessionId
+     * @param string $res
      * @return boolean
      * @throws SoapFault
      */

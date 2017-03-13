@@ -33,7 +33,7 @@ final class General extends AbstractHandler
      */
     public function endSession($sessionId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $this->session->remove();
         return true;
     }

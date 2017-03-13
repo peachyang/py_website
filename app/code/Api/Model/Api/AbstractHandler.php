@@ -28,7 +28,7 @@ class AbstractHandler implements HandlerInterface
      * @return boolean
      * @throws SoapFault
      */
-    protected function validateSessionId($sessionId)
+    protected function validateSessionId($sessionId, $res)
     {
         if ($sessionId) {
             $session = new Session;
@@ -40,6 +40,9 @@ class AbstractHandler implements HandlerInterface
                     $this->session = $session;
                     $this->user = new User;
                     $this->user->load($session->offsetGet('user_id'));
+                    if (!$this->user->getRole()->hasPermission($res)) {
+                        throw new SoapFault('Client', 'Cannot access resource: ' . $res);
+                    }
                     return true;
                 }
             }

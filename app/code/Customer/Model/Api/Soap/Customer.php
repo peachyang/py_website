@@ -21,7 +21,7 @@ class Customer extends AbstractHandler
      */
     public function customerValid($sessionId, $username, $password)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $customer = new Model;
         return $customer->valid($username, $this->decryptData($password)) ? $customer->getId() : 0;
     }
@@ -33,7 +33,7 @@ class Customer extends AbstractHandler
      */
     public function customerInfo($sessionId, $customerId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $customer = new Model;
         $customer->load($customerId);
         $result = ['id' => $customer->getId()];
@@ -55,7 +55,7 @@ class Customer extends AbstractHandler
      */
     public function customerCreate($sessionId, $data)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $data = (array) $data;
         $config = $this->getContainer()->get('config');
         $attributes = new Attribute;

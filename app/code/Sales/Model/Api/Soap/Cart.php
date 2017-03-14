@@ -161,7 +161,7 @@ class Cart extends AbstractHandler
      */
     public function cartInfo($sessionId, $customerId, $withItems = false)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $cart = $this->getCart($customerId);
         $result = $cart->toArray();
         if ($withItems) {
@@ -187,7 +187,7 @@ class Cart extends AbstractHandler
      */
     public function cartAddItem($sessionId, $customerId, $productId, $qty, $warehouseId, $options = '[]', $sku = '')
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $cart = $this->getCart($customerId);
         try {
             $options = json_decode($options, true);
@@ -207,7 +207,7 @@ class Cart extends AbstractHandler
      */
     public function cartChangeItemQty($sessionId, $customerId, $itemId, $qty)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $cart = $this->getCart($customerId);
         try {
             $cart->changeQty($itemId, $qty);
@@ -225,7 +225,7 @@ class Cart extends AbstractHandler
      */
     public function cartRemoveItem($sessionId, $customerId, $itemId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $cart = $this->getCart($customerId);
         try {
             $cart->removeItem($itemId);

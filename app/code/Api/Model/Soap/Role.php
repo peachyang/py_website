@@ -18,13 +18,22 @@ class Role extends AbstractModel
     {
         $result = [];
         if ($this->getId()) {
-            $tableGateway = $this->getTableGateway('api_soap_permission');
-            $resultSet = $tableGateway->select(['role_id' => $this->getId(), 'permission' => 1])->toArray();
-            array_walk($resultSet, function($item) use (&$result) {
-                $result[] = $item['resource'];
-            });
+            $result = $this->fetchRow($this->getId(), null, 'api_soap_permission');
+            if (!is_array($result) && empty($result)) {
+                $tableGateway = $this->getTableGateway('api_soap_permission');
+                $resultSet = $tableGateway->select(['role_id' => $this->getId(), 'permission' => 1])->toArray();
+                array_walk($resultSet, function($item) use (&$result) {
+                    $result[] = $item['resource'];
+                });
+                $this->flushRow($this->getId(), $result, 'api_soap_permission');
+            }
         }
         return $result;
+    }
+
+    public function hasPermission($name)
+    {
+        return in_array($name, $this->getPermission());
     }
 
     protected function beforeSave()
@@ -32,7 +41,7 @@ class Role extends AbstractModel
         $this->beginTransaction();
         parent::beforeSave();
     }
-    
+
     protected function afterSave()
     {
         if (!empty($this->storage['resource'])) {
@@ -42,6 +51,7 @@ class Role extends AbstractModel
                 $tableGateway->insert(['role_id' => $this->getId(), 'resource' => $resource]);
             }
         }
+        $this->flushRow($this->getId(), null, 'api_soap_permission');
         parent::afterSave();
         $this->commit();
     }

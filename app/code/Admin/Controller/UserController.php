@@ -22,7 +22,8 @@ class UserController extends AuthActionController
         $segment = new Segment('admin');
         $segment->set('hasLoggedIn', false);
         $segment->offsetUnset('user');
-        return $this->redirect(':ADMIN');
+        $url = $this->getRequest()->getQuery('success_url', false);
+        return $url === false ? $this->redirect(':ADMIN') : $this->redirect(base64_decode($url));
     }
 
     public function listAction()

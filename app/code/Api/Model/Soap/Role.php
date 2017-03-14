@@ -19,7 +19,7 @@ class Role extends AbstractModel
         $result = [];
         if ($this->getId()) {
             $result = $this->fetchRow($this->getId(), null, 'api_soap_permission');
-            if (!is_array($result) && empty($data)) {
+            if (!is_array($result) && empty($result)) {
                 $tableGateway = $this->getTableGateway('api_soap_permission');
                 $resultSet = $tableGateway->select(['role_id' => $this->getId(), 'permission' => 1])->toArray();
                 array_walk($resultSet, function($item) use (&$result) {
@@ -51,6 +51,7 @@ class Role extends AbstractModel
                 $tableGateway->insert(['role_id' => $this->getId(), 'resource' => $resource]);
             }
         }
+        $this->flushRow($this->getId(), null, 'api_soap_permission');
         parent::afterSave();
         $this->commit();
     }

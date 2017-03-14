@@ -23,7 +23,7 @@ class UserController extends AuthActionController
         $segment->set('hasLoggedIn', false);
         $segment->offsetUnset('user');
         $url = $this->getRequest()->getQuery('success_url', false);
-        return $url === false ? $this->redirect(':ADMIN') : base64_decode($url);
+        return $url === false ? $this->redirect(':ADMIN') : $this->redirect(base64_decode($url));
     }
 
     public function listAction()

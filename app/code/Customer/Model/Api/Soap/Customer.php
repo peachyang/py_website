@@ -7,7 +7,6 @@ use Seahinet\Api\Model\Api\AbstractHandler;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
-use Zend\Db\Sql\Select;
 
 class Customer extends AbstractHandler
 {

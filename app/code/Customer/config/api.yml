@@ -93,7 +93,7 @@ soap:
     customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
     customerCreate: \Seahinet\Customer\Model\Api\Soap\Customer
-    customerList: \Seahinet\Customer\Model\Api\Soap\Customer
+    customerSearch: \Seahinet\Customer\Model\Api\Soap\Customer
     addressList: \Seahinet\Customer\Model\Api\Soap\Address
     addressInfo: \Seahinet\Customer\Model\Api\Soap\Address
     addressSave: \Seahinet\Customer\Model\Api\Soap\Address

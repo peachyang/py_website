@@ -144,7 +144,8 @@
                     m = '<img src="' + m + '" />';
                 } else if (t === 'audio') {
                     m = '<audio controls="controls" src="' + m + '" />'
-                } else if (t === 'text') {
+                }
+                if (t === 'text' || t === 'image' || t === 'audio') {
                     $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
                     if (localStorage[data.session]) {
                         var r = JSON.parse(localStorage[data.session]);

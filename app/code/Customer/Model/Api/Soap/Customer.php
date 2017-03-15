@@ -133,7 +133,7 @@ class Customer extends AbstractHandler
         $constraint = '(';
         foreach ($attributes as $attribute) {
             if ($attribute['type'] === 'varchar' || $attribute['type'] === 'text') {
-                $constraint .= $attribute['code'] . 'like \'%' . $keywords . '%\' OR ';
+                $constraint .= $attribute['code'] . ' like \'%' . $keywords . '%\' OR ';
             } else if ($attribute['type'] === 'datetime') {
                 $constraint .= $attribute['code'] . '=\'' . $keywords . '\' OR ';
             } else {

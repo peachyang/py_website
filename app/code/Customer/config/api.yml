@@ -17,6 +17,14 @@ wsdl:
             data: customer
         customerCreateResponse:
             customerId: int
+        customerSearch:
+            sessionId: string
+            customerId: int
+            keywords: string
+            limit: int
+            offset: int
+        customerSearchResponse:
+            customers: customer[]
         addressList:
             sessionId: string
             customerId: int
@@ -57,6 +65,11 @@ wsdl:
             output: tns:customerCreateResponse
             documentation: Create a new customer
         -
+            name: customerSearch
+            input: tns:customerSearch
+            output: tns:customerSearchResponse
+            documentation: Get customer list
+        -
             name: addressList
             input: tns:addressList
             output: tns:addressListResponse
@@ -80,6 +93,7 @@ soap:
     customerValid: \Seahinet\Customer\Model\Api\Soap\Customer
     customerInfo: \Seahinet\Customer\Model\Api\Soap\Customer
     customerCreate: \Seahinet\Customer\Model\Api\Soap\Customer
+    customerList: \Seahinet\Customer\Model\Api\Soap\Customer
     addressList: \Seahinet\Customer\Model\Api\Soap\Address
     addressInfo: \Seahinet\Customer\Model\Api\Soap\Address
     addressSave: \Seahinet\Customer\Model\Api\Soap\Address
@@ -87,4 +101,3 @@ soap:
 rest:
     customer: \Seahinet\Customer\Model\Api\Rest\Customer
     address: \Seahinet\Customer\Model\Api\Rest\Address
-    customerRegister: \Seahinet\Customer\Model\Api\Soap\Customer

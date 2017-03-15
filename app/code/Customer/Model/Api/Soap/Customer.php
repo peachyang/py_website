@@ -122,21 +122,25 @@ class Customer extends AbstractHandler
                 ->columns(['code', 'type'])
                 ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
                 ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
-                ->where->notEqualTo('input', 'password');
+        ->where->notEqualTo('input', 'password');
         $attributes->load(true, true);
         $collection = new Collection;
         $select = $collection->getSelect();
         $select->limit($limit)
                 ->offset($offset);
         $where = $select->where;
+        $where->notEqualTo('id', $customerId);
+        $constraint = '(';
         foreach ($attributes as $attribute) {
             if ($attribute['type'] === 'varchar' || $attribute['type'] === 'text') {
-                $where->like($attribute['code'], '%' . $keywords . '%');
+                $constraint .= $attribute['code'] . 'like \'%' . $keywords . '%\' OR ';
+            } else if ($attribute['type'] === 'datetime') {
+                $constraint .= $attribute['code'] . '=\'' . $keywords . '\' OR ';
             } else {
-                $where->equalTo($attribute['code'], $keywords);
+                $constraint .= $attribute['code'] . '=' . $keywords . ' OR ';
             }
-            $where->or;
         }
+        $select->where(preg_replace('/ OR $/', ')', $constraint));
         $collection->load(true, true);
         $result = [];
         foreach ($collection as $item) {

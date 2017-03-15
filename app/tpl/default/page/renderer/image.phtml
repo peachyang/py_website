@@ -29,7 +29,21 @@ $parent = $this->getVariable('parent');
                 </div>
             <?php endif ?>
         <?php else: ?>
-            <img src="data:image/png;base64, <?php echo base64_encode($item['value']) ?>" width="320" alt="" />
-        <?php endif ?>
+            <label for="<?php echo $id ?>">
+                <img src="<?php
+                if (strpos($item['value'], '.')):
+                    echo $item['value'];
+                else:
+                    ?>data:image/png;base64, <?php
+                         echo base64_encode($item['value']);
+                     endif;
+                     ?>" width="320" alt="" />
+            </label>
+            <input type="file" name="<?php echo $key ?>" accept="image/*" id="<?php echo $id ?>" hidden="hidden" onchange="var r = new FileReader();
+                        r.readAsDataURL(this.files[0]);
+                        r.onload = function () {
+                            $('[for=<?php echo $id ?>]>img').attr('src', this.result);
+                        };" />
+               <?php endif ?>
     </div>
 </div>

@@ -144,6 +144,7 @@ class Customer extends AbstractHandler
         $collection->load(true, true);
         $result = [];
         foreach ($collection as $item) {
+            unset($item['password']);
             $result[] = (object) $item;
         }
         return $result;

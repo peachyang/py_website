@@ -2,12 +2,15 @@
 $sessions = $this->getSessions();
 $current = $this->getVariable('current');
 $retailer = new Seahinet\Retailer\Model\Retailer;
+$account = new Seahinet\Customer\ViewModel\Account;
+$customer = $account->getCustomer();
+$avatar = $customer['avatar'];
 ?>
 <div class="container">
     <div class="sidebar-left col-lg-3 col-md-3">
         <div class="custom-info">
             <div class="custom-head">
-                <img src="<?php echo $this->getPubUrl('frontend/images/placeholder.png'); ?>" width="90" height="90" />
+                <img src="<?php echo $avatar ? 'data:image/png;base64, ' . $avatar : $this->getPubUrl('frontend/images/placeholder.png') ?>" width="90" height="90" />
                 <p><?php echo $this->getSegment('customer')->get('customer')['username'] ?? ''; ?></p>
             </div>
         </div>
@@ -64,7 +67,7 @@ $retailer = new Seahinet\Retailer\Model\Retailer;
             </li>
             <li class="col-lg-5 col-md-5 text-right padding-15">
                 <a type="submit" class="btn btn-them"><?php echo $this->translate('Contact Admin Service'); ?></a>&nbsp;&nbsp;
-                <a href=" " class="btn btn-close"><?php echo $this->translate('Close Chat'); ?></a>
+                <a href="" class="btn btn-close"><?php echo $this->translate('Close Chat'); ?></a>
             </li>
         </ul>
         <div class="chat-content">

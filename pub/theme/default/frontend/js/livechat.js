@@ -127,10 +127,6 @@
             onclose: function () {
                 instance.reconnect.call(instance);
             },
-            close: function () {
-                this.socket.onclose = function(){return false;};
-                this.socket.close();
-            },
             send: function (m) {
                 if (this.check()) {
                     this.socket.send(m);
@@ -190,9 +186,6 @@
             },
             blur: function () {
                 $('#livechat').on('notify', notify);
-            },
-            beforeunload: function () {
-                instance.close();
             }
         });
         var send = function (session) {

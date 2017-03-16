@@ -58,7 +58,7 @@ abstract class AbstractHandler
                 $ids = [];
                 foreach ($items as $item) {
                     $ids[] = $item['id'];
-                }$a = array_sum(explode(' ', microtime()));
+                }
                 $select->reset('where')
                         ->where($where)
                 ->where->in($result[0]['entity_table'] . '.id', $ids);

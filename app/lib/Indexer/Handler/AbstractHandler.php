@@ -25,7 +25,7 @@ abstract class AbstractHandler
         if (!isset($provider) || !$provider->provideStructure($this)) {
             $tableGateway = new TableGateway('eav_entity_type', $adapter);
             $select = $tableGateway->getSql()->select();
-            $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique'], 'left')
+            $select->join('eav_attribute', 'eav_attribute.type_id=eav_entity_type.id', ['attr' => 'code', 'type', 'is_required', 'default_value', 'is_unique', 'searchable'], 'left')
                     ->where($where)
                     ->columns(['entity_table', 'value_table_prefix', 'entity_type' => 'code']);
             $result = $tableGateway->selectWith($select)->toArray();
@@ -58,7 +58,7 @@ abstract class AbstractHandler
                 $ids = [];
                 foreach ($items as $item) {
                     $ids[] = $item['id'];
-                }$a = array_sum(explode(' ', microtime()));
+                }
                 $select->reset('where')
                         ->where($where)
                 ->where->in($result[0]['entity_table'] . '.id', $ids);

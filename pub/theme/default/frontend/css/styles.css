@@ -1187,3 +1187,28 @@ img.zoombox,img[data-zoombox]{cursor:pointer}
 .template-tip::after{content:attr(data-viewmodel);color:#fff;background:red;position:absolute;right:0;bottom:0}
 .template-tip:hover::before{z-index:9999}
 .template-tip:hover::after{z-index:9999}
+/* Live Chat start */
+.livechat .container{border:1px solid #ccc}
+.livechat .container .sidebar-left{border-right: 1px solid #ccc;background:#eee}
+.livechat .container .sidebar-left .custom-head{padding: 10px}
+.livechat .container .sidebar-left .custom-head p{display: inline-block}
+.livechat .container .sidebar-left .custom-list{border-top: 1px solid #ccc;padding: 15px}
+.livechat .container .sidebar-left .custom-list p span{position: relative;left: -10%}
+.livechat .container .sidebar-left .custom-list p .form-control{display: inline-block;border-radius: 10px;width: 198px; height:28px;line-height:28px}
+.livechat .container .sidebar-left .custom-list .service-list{border: 1px solid #ccc;background: #fff}
+.livechat .container .sidebar-left .custom-list .service-list ul{margin-left: 30px;padding: 15px 0 15px 15px}
+.livechat .container .sidebar-left .custom-list .service-list li{padding:0 10px;width: 100%}
+.livechat .container .main-container .store-head{height: 100px;background: #007ec6}
+.livechat .container .main-container .store-head .padding-15{padding: 15px;}
+.livechat .container .main-container .store-head .btn{border-radius: 8px;background: #fff;height: 30px}
+.livechat .container .main-container .store-head .btn-close{background:#ff7043;border: 1px solid #f4511e;color: #fff}
+.livechat .container .main-container .store-head h4,.livechat .container .main-container .store-head li ul{float: left;line-height: 30px;margin:0 15px}
+.livechat .container .main-container .store-head h4{margin: 35px auto;padding-right: 15px;border-right: 1px solid #e1e1e1}
+.livechat .container .main-container .store-head li.border{border-right: 1px solid #e1e1e1;padding: 0 32px}
+.livechat .container .main-container .store-head .nav{margin: 30px 0px;width: 100%}
+.livechat .container .main-container .store-head .nav>li>a{padding: 5px 10px}
+.livechat .container .main-container .chat-content #livechat,.livechat .container .main-container .chat-content .product-info{float: left}
+.livechat .container .main-container .chat-content #livechat{border-right: 1px solid #ccc}
+.livechat .container .main-container .chat-content #livechat .chat-history .chat-list .self{line-height: 30px}
+.livechat .container .main-container .chat-content #livechat .chat-history,.livechat .container .main-container .chat-content #livechat .chat-send{margin: 15px;padding: 15px;border: 1px solid #ccc}
+.livechat .container .main-container .chat-content #livechat .chat-send .btn-send{position: absolute;bottom: 10%;right: 5%;border-radius: 8px;background: #ff7043;color: #fff}

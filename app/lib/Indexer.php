@@ -3,7 +3,6 @@
 namespace Seahinet\Lib;
 
 use Seahinet\Lib\Indexer\Factory;
-use Seahinet\Lib\Model\Collection\Language;
 
 /**
  * Indexer manager

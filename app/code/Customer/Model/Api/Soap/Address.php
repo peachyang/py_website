@@ -19,7 +19,7 @@ class Address extends AbstractHandler
      */
     public function addressList($sessionId, $customerId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $collection = new Collection;
         $collection->where(['customer_id' => $customerId]);
         $collection->load(true, true);
@@ -38,7 +38,7 @@ class Address extends AbstractHandler
      */
     public function addressInfo($sessionId, $customerId, $addressId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $model = new Model;
         $model->load($addressId);
         if ($model->offsetGet('customer_id') != $customerId) {
@@ -55,7 +55,7 @@ class Address extends AbstractHandler
      */
     public function addressSave($sessionId, $customerId, $data)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $model = new Model;
         try {
             $data = (array) $data;
@@ -92,7 +92,7 @@ class Address extends AbstractHandler
      */
     public function addressDelete($sessionId, $customerId, $addressId)
     {
-        $this->validateSessionId($sessionId);
+        $this->validateSessionId($sessionId, __FUNCTION__);
         $model = new Model;
         try {
             $model->load($addressId);

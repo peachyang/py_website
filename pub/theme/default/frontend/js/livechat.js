@@ -9,6 +9,8 @@
 }(function ($) {
     $(function () {
         "use strict";
+        var sender = $('#livechat #chat-form [name=sender]').val();
+        $('#livechat #chat-form [name=sender]').remove();
         var msg = null;
         var instance = null;
         var ws = function (url) {
@@ -41,13 +43,19 @@
                     if (_this.check()) {
                         return;
                     }
-                    _this.socket = new WebSocket(_this.url);
-                    _this.socket.onopen = _this.onopen;
-                    _this.socket.onmessage = _this.onmessage;
-                    _this.socket.onclose = _this.onclose;
-                    _this.socket.onerror = function (e) {
-                        console.log(e);
-                    };
+                    $.ajax(GLOBAL.BASE_URL + 'livechat/index/prepare/', {
+                        type: 'head',
+                        context: _this,
+                        success: function () {
+                            this.socket = new WebSocket(this.url);
+                            this.socket.onopen = this.onopen;
+                            this.socket.onmessage = this.onmessage;
+                            this.socket.onclose = this.onclose;
+                        },
+                        error: function () {
+                            _this.reconnect.call(_this);
+                        }
+                    });
                 } catch (e) {
                     _this.reconnect.call(_this);
                 }
@@ -62,8 +70,7 @@
             },
             onopen: function () {
                 instance.retry = 0;
-                $(instance).trigger('opened.livechat');
-                instance.pingTimeout = setTimeout(instance.ping, 60000, instance);
+                instance.send('{"sender":' + msg.sender + '}');
                 if (instance.query.length) {
                     for (var i in instance.query) {
                         instance.send(instance.query[i]);
@@ -77,7 +84,10 @@
                     data = eval('(' + data + ')');
                 }
                 if (data.partial !== undefined) {
-                    instance.partial[data.partial] = data.msg;
+                    if (instance.partial[data.session + '-' + data.sender] === undefined) {
+                        instance.partial[data.session + '-' + data.sender] = {};
+                    }
+                    instance.partial[data.session + '-' + data.sender][data.partial] = data.msg;
                     if (!data.end) {
                         return;
                     }
@@ -86,25 +96,26 @@
                     data.msg = '';
                     var f = true;
                     var m = 1;
+                    var p = instance.partial[data.session + '-' + data.sender];
                     while (f) {
                         var j = true;
                         var f = false;
-                        for (var i in instance.partial) {
+                        for (var i in p) {
                             if (j || parseInt(i) < m) {
                                 m = parseInt(i);
                                 j = false;
                                 f = true;
                             }
                         }
-                        if (instance.partial[m]) {
-                            data.msg += instance.partial[m];
-                            delete instance.partial[m];
+                        if (p[m]) {
+                            data.msg += p[m];
+                            delete p[m];
                         } else {
                             break;
                         }
                     }
                     instance.log(data);
-                    instance.partial = {};
+                    delete instance.partial[data.session + '-' + data.sender];
                     delete msg.end;
                     delete msg.partial;
                 } else if (data.new) {
@@ -134,13 +145,15 @@
                 } else if (t === 'audio') {
                     m = '<audio controls="controls" src="' + m + '" />'
                 }
-                $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
-                if (localStorage[data.session]) {
-                    var r = JSON.parse(localStorage[data.session]);
-                    r.push({class: c, msg: m});
-                    localStorage[data.session] = JSON.stringify(r);
-                } else {
-                    localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
+                if (t === 'text' || t === 'image' || t === 'audio') {
+                    $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
+                    if (localStorage[data.session]) {
+                        var r = JSON.parse(localStorage[data.session]);
+                        r.push({class: c, msg: m});
+                        localStorage[data.session] = JSON.stringify(r);
+                    } else {
+                        localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
+                    }
                 }
                 $('#livechat #' + data.session + ' .chat-history').scrollTop($('#livechat #' + data.session + ' .chat-list').height());
                 $('#livechat').trigger('notify', t === 'text' ? m : '');
@@ -158,14 +171,12 @@
             }
         };
         var init = function () {
-            var s = $('#livechat #chat-form [name=sender]');
             msg = {
                 session: '',
-                sender: $(s).val(),
+                sender: sender,
                 type: 'text',
                 msg: ''
             }
-            $(s).remove();
             instance = new ws($('#livechat #chat-form').attr('action'));
             if (Notification.permission !== 'granted') {
                 Notification.requestPermission();
@@ -226,9 +237,6 @@
             ids += '"' + this.value + '",';
         });
         init();
-        $(instance).on('opened.livechat', function () {
-            this.send('{"sender":' + msg.sender + ',"init":' + (ids === '[' ? ids + ']' : ids.replace(/\,$/, ']')) + '}');
-        });
         $('#livechat #chat-form').on('click', '[type=submit]', function () {
             var session = $(this).val();
             send(session);

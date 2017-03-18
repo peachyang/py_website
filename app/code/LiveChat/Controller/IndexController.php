@@ -18,6 +18,25 @@ class IndexController extends AuthActionController
 
     use \Seahinet\Lib\Traits\DB;
 
+    public function prepareAction()
+    {
+        if ($this->getRequest()->isXmlHttpRequest() && $this->getRequest()->isHead()) {
+            $segment = new Segment('customer');
+            $from = $segment->get('customer')->getId();
+            $collection = new Collection;
+            $collection->where(['customer_id' => $from]);
+            $collection->load(true, true);
+            $content = [];
+            foreach ($collection as $item) {
+                $content[] = $item['id'];
+            }
+            $fp = fopen('/tmp/livechat-' . $from, 'w');
+            fwrite($fp, json_encode($content));
+            fclose($fp);
+        }
+        exit();
+    }
+
     public function indexAction()
     {
         $segment = new Segment('customer');

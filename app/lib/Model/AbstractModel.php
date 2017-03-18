@@ -329,7 +329,7 @@ abstract class AbstractModel extends ArrayObject
     /**
      * Get event dispatcher
      * 
-     * @return type
+     * @return \Seahinet\Lib\EventDispatcher
      */
     protected function getEventDispatcher()
     {

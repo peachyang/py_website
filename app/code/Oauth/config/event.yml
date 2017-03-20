@@ -1,0 +1,9 @@
+---
+customer.login.after:
+    -
+        listener: [\Seahinet\Oauth\Listeners\Client, bind]
+        priority: 10
+Seahinet\Customer\Model\Customer.model.save.after:
+    -
+        listener: [\Seahinet\Oauth\Listeners\Client, bind]
+        priority: 10

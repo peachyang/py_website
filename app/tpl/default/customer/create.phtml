@@ -1,3 +1,6 @@
+<?php
+$data = $this->getSegment('customer')->get('form_data', []);
+?>
 <header class="header">
     <div class="container">
         <h1 class="logo">
@@ -48,7 +51,7 @@
                         <div class="input-box">
                             <label for="reg:email" class="control-label required"><?php echo $this->translate('Email') ?></label>
                             <div class="cell">
-                                <input type="email" name="email" id="reg:email" class="form-control required email" />
+                                <input type="email" name="email" id="reg:email" class="form-control required email" value="<?php echo $data['email'] ?? '' ?>" />
                             </div>
                         </div>
                         <?php if (in_array('register', $this->getConfig()['customer/captcha/form'])): ?>

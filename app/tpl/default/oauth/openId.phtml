@@ -1,0 +1,5 @@
+<?php
+if ($id = $this->getSegment('oauth')->get('open_id')):
+    ?>
+    <input type="hidden" name="use_oauth" value="1" />
+<?php endif; ?>

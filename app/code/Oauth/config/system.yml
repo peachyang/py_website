@@ -1,0 +1,64 @@
+---
+oauth:
+    label: OAuth Login
+    children:
+        wechat:
+            label: Wechat
+            priority: 0
+            scope: merchant
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 1
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Oauth\Model\Client\Wechat
+                appid:
+                    label: App ID
+                    priority: 10
+                    type: text
+                    attrs:
+                        data-base: '#wechat-enable'
+                secret:
+                    label: App Secret
+                    priority: 25
+                    type: text
+                    attrs:
+                        data-base: '#wechat-enable'
+        facebook:
+            label: Facebook
+            priority: 50
+            scope: merchant
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 1
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Oauth\Model\Client\Facebook
+                appid:
+                    label: App ID
+                    priority: 10
+                    type: text
+                    attrs:
+                        data-base: '#facebook-enable'
+                secret:
+                    label: App Secret
+                    priority: 25
+                    type: text
+                    attrs:
+                        data-base: '#facebook-enable'

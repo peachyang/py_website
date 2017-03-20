@@ -1,0 +1,27 @@
+---
+wsdl:
+    message:
+        oauthLogin:
+            sessionId: int
+            serverName: string
+            openId: string
+        oauthLoginResponse:
+            customerId: int
+        oauthBind:
+            sessionId: int
+            customerId: int
+            serverName: string
+            openId: string
+    port:
+        -
+            name: oauthLogin
+            input: tns:oauthLogin
+            output: tns:oauthLoginResponse
+            description: Valid open id provided by oauth server
+        -
+            name: oauthBind
+            input: tns:oauthBind
+            description: Bind open id to customer
+soap:
+    oauthLogin: \Seahinet\Oauth\Model\Api\Soap\Oauth
+    oauthBind: \Seahinet\Oauth\Model\Api\Soap\Oauth

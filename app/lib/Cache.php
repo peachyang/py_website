@@ -84,9 +84,7 @@ final class Cache implements ArrayAccess, Singleton
             $this->salt = $config['salt'];
         }
         if (isset($config['wsdl'])) {
-            foreach ((array) $config['wsdl'] as $wsdl){
-                $this->soapClient[] = new SoapClient($wsdl);
-            }
+            $this->soapClient = (array) $config['wsdl'];
         }
         $this->disabled = (bool) ($config['disabled'] ?? false);
         if (!isset($config['compress']) || $config['compress']) {
@@ -178,7 +176,10 @@ final class Cache implements ArrayAccess, Singleton
             }
         }
         $result = $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
-        foreach ($this->soapClient as $client){
+        foreach ($this->soapClient as &$client){
+            if(is_string($client)){
+                $client = new SoapClient($client);
+            }
             $client->__soapCall('flushCache', [$id, $prefix]);
         }
         return $result;

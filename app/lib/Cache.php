@@ -182,7 +182,7 @@ final class Cache implements ArrayAccess, Singleton
                 'jsonrpc' => '2.0',
                 'id' => 1,
                 'method' => 'flushCache',
-                'params' => [$key, $prefix]
+                'params' => [$id, $prefix]
             ]);
             foreach ($this->remote as $client) {
                 $client = curl_init($client);

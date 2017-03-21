@@ -4,6 +4,7 @@ namespace Seahinet\Lib;
 
 use ArrayAccess;
 use BadMethodCallException;
+use Exception;
 use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Cache\Factory;
 use Seahinet\Lib\Stdlib\Singleton;
@@ -60,7 +61,7 @@ final class Cache implements ArrayAccess, Singleton
      * @var bool
      */
     private $disabled;
-    
+
     /**
      * @var array
      */
@@ -176,11 +177,15 @@ final class Cache implements ArrayAccess, Singleton
             }
         }
         $result = $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
-        foreach ($this->soapClient as &$client){
-            if(is_string($client)){
-                $client = new SoapClient($client);
+        try {
+            foreach ($this->soapClient as &$client) {
+                if (is_string($client)) {
+                    $client = new SoapClient($client);
+                }
+                $client->__soapCall('flushCache', [$id, $prefix]);
             }
-            $client->__soapCall('flushCache', [$id, $prefix]);
+        } catch (Exception $e) {
+            
         }
         return $result;
     }

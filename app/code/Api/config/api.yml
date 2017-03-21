@@ -10,6 +10,9 @@ wsdl:
             password: string
         loginResponse:
             loginResult: string
+        flushCache:
+            key: string
+            prefix: string
     port:
         -
             name: endSession
@@ -20,7 +23,12 @@ wsdl:
             name: login
             input: tns:login
             output: tns:loginResponse     
-            documentation: Login user and retrive session id      
+            documentation: Login user and retrive session id
+        -
+            name: flushCache
+            input: tns:flushCache
+            documentation: Flush cache remotely
 soap:
     login: \Seahinet\Api\Model\Api\General
     endSession: \Seahinet\Api\Model\Api\General
+    flushCache: \Seahinet\Api\Model\Api\General

@@ -7,6 +7,7 @@ use BadMethodCallException;
 use Doctrine\Common\Cache\CacheProvider;
 use Seahinet\Lib\Cache\Factory;
 use Seahinet\Lib\Stdlib\Singleton;
+use SoapClient;
 
 /**
  * Handle cache operation by using Doctrine\Cache pool
@@ -59,6 +60,11 @@ final class Cache implements ArrayAccess, Singleton
      * @var bool
      */
     private $disabled;
+    
+    /**
+     * @var array
+     */
+    private $soapClient = [];
 
     /**
      * @param array|Container $config
@@ -76,6 +82,11 @@ final class Cache implements ArrayAccess, Singleton
         }
         if (isset($config['salt'])) {
             $this->salt = $config['salt'];
+        }
+        if (isset($config['wsdl'])) {
+            foreach ((array) $config['wsdl'] as $wsdl){
+                $this->soapClient[] = new SoapClient($wsdl);
+            }
         }
         $this->disabled = (bool) ($config['disabled'] ?? false);
         if (!isset($config['compress']) || $config['compress']) {
@@ -166,7 +177,11 @@ final class Cache implements ArrayAccess, Singleton
                 }
             }
         }
-        return $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
+        $result = $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
+        foreach ($this->soapClient as $client){
+            $client->__soapCall('flushCache', [$id, $prefix]);
+        }
+        return $result;
     }
 
     /**

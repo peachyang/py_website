@@ -37,5 +37,14 @@ final class General extends AbstractHandler
         $this->session->remove();
         return true;
     }
+    
+    /**
+     * @param string $key
+     * @param string $prefix
+     */
+    public function flushCache($key, $prefix)
+    {
+        $this->getContainer()->get('cache')->delete($key, $prefix);
+    }
 
 }

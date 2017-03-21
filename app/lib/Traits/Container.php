@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib\Traits;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Seahinet\Lib\Bootstrap;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Seahinet\Lib\Model\Merchant;
 use Seahinet\Lib\Model\Store;
 use Seahinet\Lib\Model\Language;

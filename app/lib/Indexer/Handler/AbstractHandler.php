@@ -85,7 +85,7 @@ abstract class AbstractHandler
                         foreach (array_diff($keys, [
                             'updated_at', 'type_id', 'attr', 'type',
                             'is_required', 'default_value', 'is_unique', 'code', 'entity_table',
-                            'value_table_prefix', 'is_form', 'entity_type'
+                            'value_table_prefix', 'is_form', 'entity_type', 'searchable'
                         ]) as $key) {
                             $items[$languageId][$record['id']][$key] = $record[$key];
                         }

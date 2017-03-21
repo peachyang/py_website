@@ -19,7 +19,7 @@ class Wechat extends AbstractClient
                 ->set('state', $state);
         return 'https://open.weixin.qq.com/connect/qrconnect?appid=' . $config['oauth/wechat/appid'] .
                 '&redirect_uri=' . rawurlencode($this->getBaseUrl('oauth/response/')) .
-                '&response_type=code&scope=snsapi_login&state=' . $state .
+                '&response_type=code&scope=snsapi_userinfo&state=' . $state .
                 '#wechat_redirect';
     }
 

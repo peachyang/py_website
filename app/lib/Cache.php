@@ -65,7 +65,7 @@ final class Cache implements ArrayAccess, Singleton
     /**
      * @var array
      */
-    private $soapClient = [];
+    private $remote = [];
 
     /**
      * @param array|Container $config
@@ -84,8 +84,8 @@ final class Cache implements ArrayAccess, Singleton
         if (isset($config['salt'])) {
             $this->salt = $config['salt'];
         }
-        if (isset($config['wsdl'])) {
-            $this->soapClient = (array) $config['wsdl'];
+        if (isset($config['remote'])) {
+            $this->remote = (array) $config['remote'];
         }
         $this->disabled = (bool) ($config['disabled'] ?? false);
         if (!isset($config['compress']) || $config['compress']) {
@@ -178,11 +178,24 @@ final class Cache implements ArrayAccess, Singleton
         }
         $result = $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
         try {
-            foreach ($this->soapClient as &$client) {
-                if (is_string($client)) {
-                    $client = new SoapClient($client);
-                }
-                $client->__soapCall('flushCache', [$id, $prefix]);
+            $data = json_encode([
+                'jsonrpc' => '2.0',
+                'id' => 1,
+                'method' => 'flushCache',
+                'params' => [$key, $prefix]
+            ]);
+            foreach ($this->remote as $client) {
+                $client = curl_init($client);
+                curl_setopt($client, CURLOPT_POST, 1);
+                curl_setopt($client, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                    'Content-Length: ' . strlen($data)
+                ]);
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($client, CURLOPT_POSTFIELDS, $data);
+                curl_exec($client);
+                curl_close($client);
             }
         } catch (Exception $e) {
             

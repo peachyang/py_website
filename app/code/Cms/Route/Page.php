@@ -22,12 +22,15 @@ class Page extends Route
         } else if (substr($path, -4) === '.htm') {
             $path = substr($path, 0, -4);
         } else if ($path === '') {
-            $path = $this->getContainer()->get('config')['route']['default']['page'] ?? 'home';
+            $path = 'home';
         } else {
             return false;
         }
         if ($path && Bootstrap::isMobile()) {
             $path .= '-mobile';
+        }
+        if ($path && ($prefix = $this->getContainer()->get('config')['route']['default']['prefix'])) {
+            $path = $prefix . $path;
         }
         if ($result = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {
             if ($result[0]['page_id']) {

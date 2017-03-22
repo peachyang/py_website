@@ -29,7 +29,7 @@ class Page extends Route
         if ($path && Bootstrap::isMobile()) {
             $path .= '-mobile';
         }
-        if ($path && ($prefix = $this->getContainer()->get('config')['route']['default']['prefix'])) {
+        if ($path && ($prefix = $this->getContainer()->get('config')['route']['default']['prefix'] ?? '')) {
             $path = $prefix . $path;
         }
         if ($result = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => $path])) {

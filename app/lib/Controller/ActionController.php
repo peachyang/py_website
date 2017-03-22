@@ -30,7 +30,7 @@ abstract class ActionController extends AbstractController
     public function notFoundAction()
     {
         $this->getResponse()->withStatus(404);
-        $index = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => 'not-found']);
+        $index = $this->getContainer()->get('indexer')->select('cms_url', Bootstrap::getLanguage()->getId(), ['path' => ($this->getContainer()->get('config')['route']['default']['prefix'] ?? '') . 'not-found']);
         if (count($index)) {
             $page = new Page;
             $page->load($index[0]['page_id']);

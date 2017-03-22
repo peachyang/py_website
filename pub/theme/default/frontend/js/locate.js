@@ -24,7 +24,17 @@
             localStorage['locate-' + GLOBAL.LOCALE + param] = JSON.stringify(response);
         }
         var options = typeof response === 'string' ? eval('(' + response + ')') : response;
-        if (options.length) {
+        var flag = options.length;
+        for (var i in this.objects) {
+            if (i === target) {
+                break;
+            }
+            if ($(this.objects[i]).is(':disabled')) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
             $(this.objects[target + '-text']).attr({hidden: 'hidden', disabled: 'disabled'});
             target = this.objects[target];
             $(target).removeAttr('hidden').removeAttr('disabled');

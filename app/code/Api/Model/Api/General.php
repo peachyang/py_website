@@ -8,6 +8,8 @@ use Seahinet\Api\Model\Soap\Session;
 
 final class General extends AbstractHandler
 {
+    
+    use \Seahinet\Lib\Traits\Container;
 
     /**
      * @param string $username

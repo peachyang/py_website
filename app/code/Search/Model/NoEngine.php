@@ -28,8 +28,6 @@ class NoEngine implements EngineInterface
                     ->addColumn(new UnsignedInteger('store_id', false, 1))
                     ->addColumn(new Ddl\Column\Text('data', 2147483648, true))
                     ->addConstraint(new Ddl\Constraint\PrimaryKey('id'))
-                    ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_STORE_ID_CORE_STORE_ID', 'store_id', 'core_store', 'id', 'CASCADE', 'CASCADE'))
-                    ->addConstraint(new Ddl\Constraint\ForeignKey('FK_' . strtoupper($table) . '_ID_PRODUCT_ENTITY_ID', 'id', 'product_entity', 'id', 'CASCADE', 'CASCADE'))
                     ->addConstraint(new Ddl\Index\Index('data', 'IDX_' . strtoupper($table) . '_DATA', [2147483648]));
             $adapter->query(
                     $ddl->getSqlString($platform), $adapter::QUERY_MODE_EXECUTE

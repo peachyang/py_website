@@ -46,7 +46,7 @@ final class General extends AbstractHandler
      */
     public function flushCache($key, $prefix)
     {
-        $this->getContainer()->get('cache')->delete($key, $prefix);
+        $this->getContainer()->get('cache')->delete($key, $prefix, false);
     }
 
 }

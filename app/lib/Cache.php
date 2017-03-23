@@ -145,9 +145,10 @@ final class Cache implements ArrayAccess, Singleton
      * @uses CacheProvider::delete
      * @param string $id
      * @param string $prefix
+     * @param bool $remote
      * @return bool
      */
-    public function delete($id = '', $prefix = '')
+    public function delete($id = '', $prefix = '', $remote = true)
     {
         if ($prefix) {
             if (in_array($prefix, $this->persistentPrefix)) {
@@ -177,28 +178,30 @@ final class Cache implements ArrayAccess, Singleton
             }
         }
         $result = $id ? $this->pool->delete($this->salt . $prefix . $id) : true;
-        try {
-            $data = json_encode([
-                'jsonrpc' => '2.0',
-                'id' => 1,
-                'method' => 'flushCache',
-                'params' => [$id, $prefix]
-            ]);
-            foreach ($this->remote as $client) {
-                $client = curl_init($client);
-                curl_setopt($client, CURLOPT_POST, 1);
-                curl_setopt($client, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/json',
-                    'Accept: application/json',
-                    'Content-Length: ' . strlen($data)
+        if ($remote) {
+            try {
+                $data = json_encode([
+                    'jsonrpc' => '2.0',
+                    'id' => 1,
+                    'method' => 'flushCache',
+                    'params' => [$id, $prefix]
                 ]);
-                curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($client, CURLOPT_POSTFIELDS, $data);
-                curl_exec($client);
-                curl_close($client);
+                foreach ($this->remote as $client) {
+                    $client = curl_init($client);
+                    curl_setopt($client, CURLOPT_POST, 1);
+                    curl_setopt($client, CURLOPT_HTTPHEADER, [
+                        'Content-Type: application/json',
+                        'Accept: application/json',
+                        'Content-Length: ' . strlen($data)
+                    ]);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($client, CURLOPT_POSTFIELDS, $data);
+                    curl_exec($client);
+                    curl_close($client);
+                }
+            } catch (Exception $e) {
+                
             }
-        } catch (Exception $e) {
-            
         }
         return $result;
     }

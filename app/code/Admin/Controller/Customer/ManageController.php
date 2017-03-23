@@ -69,6 +69,12 @@ class ManageController extends AuthActionController
                 } else {
                     $data['modified_password'] = 1;
                 }
+                $files = $this->getRequest()->getUploadedFile();
+                foreach ($files as $key => $file) {
+                    if ($file->getError() == 0) {
+                        $data[$key] = base64_encode($file->getStream()->getContents());
+                    }
+                }
                 $model = new Model($data['language_id']);
                 if (empty($data['id'])) {
                     $model->setId(null);

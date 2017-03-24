@@ -45,6 +45,12 @@ class NoEngine implements EngineInterface
         }
     }
 
+    public function delete($prefix, $id, $languageId)
+    {
+        $indexer = $this->getContainer()->get('indexer');
+        $indexer->delete($prefix, $languageId, ['id' => $id]);
+    }
+
     public function select($prefix, $data, $languageId)
     {
         $config = $this->getContainer()->get('config');

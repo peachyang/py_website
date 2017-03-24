@@ -55,6 +55,12 @@ class MySQL implements EngineInterface
         return $result;
     }
 
+    public function delete($prefix, $id, $languageId)
+    {
+        $tableGateway = $this->getTableGateway($prefix . '_' . $languageId . '_index');
+        $tableGateway->delete(['id' => $id]);
+    }
+
     public function update($prefix, $data)
     {
         foreach ($data as $languageId => $collection) {

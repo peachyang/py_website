@@ -57,6 +57,12 @@ class Solr implements EngineInterface
         return $result;
     }
 
+    public function delete($prefix, $id, $languageId)
+    {
+        $this->client->deleteByQuery('prefix:' . $prefix . '_' . $languageId . ' AND id:' . $id);
+        $this->client->commit();
+    }
+
     public function update($prefix, $data)
     {
         foreach ($data as $languageId => $values) {

@@ -12,7 +12,14 @@ interface EngineInterface
      * @return array
      */
     public function select($prefix, $data, $languageId);
-    
+
+    /**
+     * @param string $prefix
+     * @param string $id
+     * @param int $languageId
+     */
+    public function delete($prefix, $id, $languageId);
+
     /**
      * @param string $prefix
      * @param array $data

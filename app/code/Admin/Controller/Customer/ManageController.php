@@ -4,6 +4,7 @@ namespace Seahinet\Admin\Controller\Customer;
 
 use Exception;
 use Seahinet\Admin\ViewModel\Customer\Edit\Address;
+use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
@@ -49,16 +50,40 @@ class ManageController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $attributes = new Attribute;
             $attributes->withSet()->where([
-                        'is_required' => 1,
+                        '(is_required=1 OR is_unique=1)',
                         'attribute_set_id' => $data['attribute_set_id']
                     ])->columns(['code'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
             ->where->notEqualTo('input', 'password');
             $required = ['store_id', 'language_id', 'attribute_set_id'];
-            $attributes->walk(function ($attribute) use (&$required) {
-                $required[] = $attribute['code'];
+            $unique = [];
+            $attributes->walk(function ($attribute) use (&$required,&$unique) {
+                if ($attribute['is_required']) {
+                    $required[] = $attribute['code'];
+                }
+                if ($attribute['is_unique']) {
+                    $unique[] = $attribute['code'];
+                }
             });
+            $collection = new Collection;
+            $collection->columns($unique);
+            foreach ($unique as $code) {
+                if (isset($data[$code])) {
+                    $collection->where([$code => $data[$code]], 'OR');
+                }
+            }
+            if (count($collection)) {
+                foreach ($collection as $item) {
+                    foreach ($unique as $code) {
+                        if (isset($item[$code]) && $item[$code]) {
+                            $result['error'] = 1;
+                            $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
+                        }
+                    }
+                    break;
+                }
+            }
             $result = $this->validateForm($data, $required);
             if ($result['error'] === 0) {
                 if (!empty($data['generate_password'])) {

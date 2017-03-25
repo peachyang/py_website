@@ -140,7 +140,7 @@ class Database extends AbstractHandler
         foreach ($languages as $language) {
             $table = $this->entityType . '_' . $language['id'] . '_index';
             foreach ($columns as $attr) {
-                if ($attr['attr'] && $attr['is_unique'] && $attr['type'] !== 'text') {
+                if ($attr['attr'] && ($attr['is_unique'] || $attr['searchable']) && $attr['type'] !== 'text') {
                     $adapter->query('CREATE INDEX IDX_' . strtoupper($table) . '_' . strtoupper($attr['attr']) . ' ON ' . $table . '(' . $attr['attr'] . ');', $adapter::QUERY_MODE_EXECUTE);
                 }
             }

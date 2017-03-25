@@ -87,6 +87,7 @@ class Customer extends AbstractHandler
                 break;
             }
         }
+        $data['password'] = $this->decryptData($data['password']);
         $customer = new Model;
         $customer->setData([
             'id' => null,
@@ -102,6 +103,52 @@ class Customer extends AbstractHandler
             $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
         }
         return $customer->getId();
+    }
+
+    /**
+     * @param string $sessionId
+     * @param int $customerId
+     * @param string $keywords
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function customerSearch($sessionId, $customerId, $keywords, $limit, $offset)
+    {
+        $this->validateSessionId($sessionId, __FUNCTION__);
+        $config = $this->getContainer()->get('config');
+        $attributes = new Attribute;
+        $attributes->withSet()->where(['attribute_set_id' => $config['customer/registion/set']])
+                ->where(['searchable' => 1])
+                ->columns(['code', 'type'])
+                ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
+        ->where->notEqualTo('input', 'password');
+        $attributes->load(true, true);
+        $collection = new Collection;
+        $select = $collection->getSelect();
+        $select->limit($limit)
+                ->offset($offset);
+        $where = $select->where;
+        $where->notEqualTo('id', $customerId);
+        $constraint = '(';
+        foreach ($attributes as $attribute) {
+            if ($attribute['type'] === 'varchar' || $attribute['type'] === 'text') {
+                $constraint .= $attribute['code'] . ' like \'%' . $keywords . '%\' OR ';
+            } else if ($attribute['type'] === 'datetime') {
+                $constraint .= $attribute['code'] . '=\'' . $keywords . '\' OR ';
+            } else {
+                $constraint .= $attribute['code'] . '=' . $keywords . ' OR ';
+            }
+        }
+        $select->where(preg_replace('/ OR $/', ')', $constraint));
+        $collection->load(true, true);
+        $result = [];
+        foreach ($collection as $item) {
+            unset($item['password']);
+            $result[] = (object) $item;
+        }
+        return $result;
     }
 
 }

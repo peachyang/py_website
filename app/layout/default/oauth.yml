@@ -7,6 +7,22 @@ oauth_login:
                 children:
                     form:
                         type: Seahinet\Oauth\ViewModel\Login
+customer_account_login:
+    root:
+        children:
+            content:
+                children:
+                    oauth:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: oauth/openId
+customer_account_create:
+    root:
+        children:
+            content:
+                children:
+                    oauth:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: oauth/openId
 admin_oauth_consumer_list:
     update: grid
     root:

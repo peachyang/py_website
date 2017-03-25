@@ -3,7 +3,6 @@
 namespace Seahinet\Lib;
 
 use Seahinet\Lib\Indexer\Factory;
-use Seahinet\Lib\Model\Collection\Language;
 
 /**
  * Indexer manager
@@ -131,7 +130,11 @@ class Indexer implements Stdlib\Singleton
      */
     public function select($entityType, $languageId, $constraint = [], $options = [])
     {
-        $key = md5($entityType . $languageId . serialize($constraint) . serialize($options));
+        $key = md5($entityType . $languageId .
+                ($constraint instanceof \Zend\Db\Sql\Select ?
+                $constraint->getSqlString($this->getContainer()->get('dbAdapter')->getPlatform()) :
+                serialize($constraint)) .
+                serialize($options));
         $result = empty($options['noCache']) ?
                 $this->getCacheInstance()->fetch($key, 'INDEX_') : 0;
         unset($options['noCache']);

@@ -8,6 +8,8 @@ use Seahinet\Api\Model\Soap\Session;
 
 final class General extends AbstractHandler
 {
+    
+    use \Seahinet\Lib\Traits\Container;
 
     /**
      * @param string $username
@@ -36,6 +38,15 @@ final class General extends AbstractHandler
         $this->validateSessionId($sessionId, __FUNCTION__);
         $this->session->remove();
         return true;
+    }
+    
+    /**
+     * @param string $key
+     * @param string $prefix
+     */
+    public function flushCache($key, $prefix)
+    {
+        $this->getContainer()->get('cache')->delete($key, $prefix, false);
     }
 
 }

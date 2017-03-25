@@ -145,13 +145,15 @@
                 } else if (t === 'audio') {
                     m = '<audio controls="controls" src="' + m + '" />'
                 }
-                $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
-                if (localStorage[data.session]) {
-                    var r = JSON.parse(localStorage[data.session]);
-                    r.push({class: c, msg: m});
-                    localStorage[data.session] = JSON.stringify(r);
-                } else {
-                    localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
+                if (t === 'text' || t === 'image' || t === 'audio') {
+                    $('#livechat #' + data.session + ' .chat-list').append($('<li class="' + c + '">' + m + '</li>'));
+                    if (localStorage[data.session]) {
+                        var r = JSON.parse(localStorage[data.session]);
+                        r.push({class: c, msg: m});
+                        localStorage[data.session] = JSON.stringify(r);
+                    } else {
+                        localStorage[data.session] = JSON.stringify([{class: c, msg: m}]);
+                    }
                 }
                 $('#livechat #' + data.session + ' .chat-history').scrollTop($('#livechat #' + data.session + ' .chat-list').height());
                 $('#livechat').trigger('notify', t === 'text' ? m : '');

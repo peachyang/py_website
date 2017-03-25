@@ -349,6 +349,36 @@ class AccountController extends AuthActionController
             $data = $this->getRequest()->getPost();
             $segment = new Segment('customer');
             $customer = $segment->get('customer');
+            $attributes = new Attribute;
+            $attributes->withSet()->where([
+                        'is_unique' => 1,
+                        'attribute_set_id' => $data['attribute_set_id']
+                    ])->columns(['code'])
+                    ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                    ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
+            ->where->notEqualTo('input', 'password');
+            $unique = [];
+            $attributes->walk(function ($attribute) use (&$unique) {
+                $unique[] = $attribute['code'];
+            });
+            $collection = new Collection;
+            $collection->columns($unique);
+            foreach ($unique as $code) {
+                if (isset($data[$code])) {
+                    $collection->where([$code => $data[$code]], 'OR');
+                }
+            }
+            if (count($collection)) {
+                foreach ($collection as $item) {
+                    foreach ($unique as $code) {
+                        if (isset($item[$code]) && $item[$code]) {
+                            $result['error'] = 1;
+                            $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
+                        }
+                    }
+                    break;
+                }
+            }
             $result = $this->validateForm($data, ['crpassword']);
             if (!empty($data['edit_password'])) {
                 if (empty($data['cpassword']) || empty($data['password']) || $data['cpassword'] !== $data['password']) {

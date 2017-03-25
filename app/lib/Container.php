@@ -2,7 +2,7 @@
 
 namespace Seahinet\Lib;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Pimple\Container as PimpleContainer;
 
 /**

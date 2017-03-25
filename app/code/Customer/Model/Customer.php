@@ -13,6 +13,10 @@ class Customer extends Entity
 
     const ENTITY_TYPE = 'customer';
 
+    public static $attrForLogin = [
+        'username'
+    ];
+
     protected function construct()
     {
         $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'language_id', 'increment_id', 'confirm_token', 'confirm_token_created_at', 'status']);
@@ -59,11 +63,16 @@ class Customer extends Entity
 
     public function valid($username, $password)
     {
-        if (!$this->isLoaded) {
-            $this->load($username, 'username');
-        } else if ($this->storage['username'] !== $username) {
-            $this->isLoaded = false;
-            $this->load($username, 'username');
+        foreach (static::$attrForLogin as $attr) {
+            if (!$this->isLoaded) {
+                $this->load($username, $attr);
+            } else if ($this->storage[$attr] !== $username) {
+                $this->isLoaded = false;
+                $this->load($username, $attr);
+            }
+            if ($this->getId()) {
+                break;
+            }
         }
         return $this->offsetGet('status') && (new Bcrypt)->verify($password, $this->offsetGet('password'));
     }

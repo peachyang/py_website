@@ -71,6 +71,15 @@ class Elasticsearch implements EngineInterface
         return $result;
     }
 
+    public function delete($prefix, $id, $languageId)
+    {
+        $this->client->delete([
+            'index' => $this->index['prefix'] . '_' . $prefix,
+            'type' => $languageId,
+            'id' => $id
+        ]);
+    }
+
     public function update($prefix, $data)
     {
         foreach ($data as $languageId => $values) {

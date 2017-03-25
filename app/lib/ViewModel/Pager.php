@@ -78,6 +78,12 @@ class Pager extends Template
         if (is_null($this->total)) {
             $collection = clone $this->getCollection();
             $collection->columns(['count' => new Expression('count(1)')]);
+            if ($joins = $collection->getRawState('joins')) {
+                $collection->reset('joins');
+                foreach ($joins->getJoins() as $join) {
+                    $collection->join($join['name'], $join['on'], [], $join['type']);
+                }
+            }
             $collection->load(true, true);
             $this->total = count($collection) ? $collection->toArray()[0]['count'] : 0;
         }

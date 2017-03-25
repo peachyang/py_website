@@ -94,7 +94,15 @@ class Customer extends Entity
         if (empty($this->storage['balance'])) {
             $this->getEventDispatcher()->trigger('customer.balance.calc', ['customer' => $this]);
         }
-        return empty($this->storage['balance']) ? 0 : $this->storage['balance'];
+        return (float) (empty($this->storage['balance']) ? 0 : $this->storage['balance']);
+    }
+
+    public function getPoints()
+    {
+        if (empty($this->storage['rewardpoints'])) {
+            $this->getEventDispatcher()->trigger('customer.rewardpoints.calc', ['customer' => $this]);
+        }
+        return (float) (empty($this->storage['rewardpoints']) ? 0 : $this->storage['rewardpoints']);
     }
 
     public function getStore()

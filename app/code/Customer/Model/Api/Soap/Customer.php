@@ -87,6 +87,7 @@ class Customer extends AbstractHandler
                 break;
             }
         }
+        $data['password'] = $this->decryptData($data['password']);
         $customer = new Model;
         $customer->setData([
             'id' => null,

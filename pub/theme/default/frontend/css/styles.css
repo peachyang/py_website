@@ -1188,27 +1188,50 @@ img.zoombox,img[data-zoombox]{cursor:pointer}
 .template-tip:hover::before{z-index:9999}
 .template-tip:hover::after{z-index:9999}
 /* Live Chat start */
-.livechat .container{border:1px solid #ccc}
-.livechat .container .sidebar-left{border-right: 1px solid #ccc;background:#eee}
-.livechat .container .sidebar-left .custom-head{padding: 10px}
-.livechat .container .sidebar-left .custom-head p{display: inline-block}
-.livechat .container .sidebar-left .custom-list{border-top: 1px solid #ccc;padding: 15px}
-.livechat .container .sidebar-left .custom-list p span{position: relative;left: -10%}
-.livechat .container .sidebar-left .custom-list p .form-control{display: inline-block;border-radius: 10px;width: 198px; height:28px;line-height:28px}
-.livechat .container .sidebar-left .custom-list .service-list{border: 1px solid #ccc;background: #fff}
-.livechat .container .sidebar-left .custom-list .service-list ul{margin-left: 30px;padding: 15px 0 15px 15px}
-.livechat .container .sidebar-left .custom-list .service-list li{padding:0 10px;width: 100%}
-.livechat .container .main-container .store-head{height: 100px;background: #007ec6}
-.livechat .container .main-container .store-head .padding-15{padding: 15px;}
-.livechat .container .main-container .store-head .btn{border-radius: 8px;background: #fff;height: 30px}
-.livechat .container .main-container .store-head .btn-close{background:#ff7043;border: 1px solid #f4511e;color: #fff}
-.livechat .container .main-container .store-head h4,.livechat .container .main-container .store-head li ul{float: left;line-height: 30px;margin:0 15px}
-.livechat .container .main-container .store-head h4{margin: 35px auto;padding-right: 15px;border-right: 1px solid #e1e1e1}
-.livechat .container .main-container .store-head li.border{border-right: 1px solid #e1e1e1;padding: 0 32px}
-.livechat .container .main-container .store-head .nav{margin: 30px 0px;width: 100%}
-.livechat .container .main-container .store-head .nav>li>a{padding: 5px 10px}
-.livechat .container .main-container .chat-content #livechat,.livechat .container .main-container .chat-content .product-info{float: left}
-.livechat .container .main-container .chat-content #livechat{border-right: 1px solid #ccc}
-.livechat .container .main-container .chat-content #livechat .chat-history .chat-list .self{line-height: 30px}
-.livechat .container .main-container .chat-content #livechat .chat-history,.livechat .container .main-container .chat-content #livechat .chat-send{margin: 15px;padding: 15px;border: 1px solid #ccc}
-.livechat .container .main-container .chat-content #livechat .chat-send .btn-send{position: absolute;bottom: 10%;right: 5%;border-radius: 8px;background: #ff7043;color: #fff}
+::-webkit-scrollbar{width: 5px;height: 12px;-webkit-border-radius:40%}
+::-webkit-scrollbar-thumb{background: #c3c3c3;-webkit-border-radius:12px}
+.warpper{min-width: 996px}
+.livechat{background: #d8d8d8}
+.livechat .chat-content{width: auto;max-width: 1190px;position: absolute;top: 20%;left: 17%;height: 570px;}
+.livechat .chat-content .main-content{border:1px solid #ccc;background: #fafafa;position: relative;height: 570px}
+.livechat .chat-content .main-content .sidebar-left{position: absolute;top: 0;left: 0;bottom: 1px;background: #363e47;z-index: 1;float: left;border-right: 1px solid #ccc;width: 220px;height: 570px}
+.livechat .chat-content .main-content .sidebar-left .custom-head{padding: 10px;color: #fff;background: #ff7043}
+.livechat .chat-content .main-content .sidebar-left .custom-head p{display: inline-block}
+.livechat .chat-content .main-content .sidebar-left .custom-list{position: relative}
+.livechat .chat-content .main-content .sidebar-left .custom-list p{padding: 15px;}
+.livechat .chat-content .main-content .sidebar-left .custom-list p span{position:absolute;right:15px;top: 21px;}
+.livechat .chat-content .main-content .sidebar-left .custom-list .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{background: none}
+.livechat .chat-content .main-content .sidebar-left .custom-list p .form-control{display: inline-block;border-radius: 10px;width: 198px; height:28px;line-height:28px}
+.livechat .chat-content .main-content .sidebar-left .custom-list .service-list{color: #fff;height: 320px;overflow-y: auto;overflow-x: hidden}
+.livechat .chat-content .main-content .sidebar-left .custom-list .service-list li{padding:0 10px;width: 100%;min-width: calc(100% -20px);height: 60px}
+.livechat .chat-content .main-content .sidebar-left .custom-list .service-list li.active{background:#2f363e}
+.livechat .chat-content .main-content .sidebar-left .custom-list .service-list li:hover{color: #fff;background-color: #b3b3b3; filter:alpha(opacity=10);-moz-opacity:0.1;opacity:0.1;zoom:1}
+.livechat .chat-content .main-content .sidebar-left .custom-list .service-list li a:hover{background: none;color: #fff}
+.livechat .chat-content .main-content .sidebar-middle{position: relative;z-index: 2;margin: 0 0 0 220px}
+.livechat .chat-content .main-content .sidebar-middle .store-head{height: 100px;border-bottom: 1px solid #e2e2e2;width: 100%}
+.livechat .chat-content .main-content .sidebar-middle .store-head .review{margin: 4px;}
+.livechat .chat-content .main-content .sidebar-middle .store-head .review li{line-height: 30px}
+.livechat .chat-content .main-content .sidebar-middle .store-head .padding-15{padding: 15px;}
+.livechat .chat-content .main-content .sidebar-middle .store-head .btn{border-radius: 8px;background: #fff;height: 30px}
+.livechat .chat-content .main-content .sidebar-middle .store-head .btn-close{background:#ff7043;border: 1px solid #f4511e;color: #fff}
+.livechat .chat-content .main-content .sidebar-middle .store-head h4,.livechat .container .main-container .store-head li ul{float: left;line-height: 30px;margin:0 15px}
+.livechat .chat-content .main-content .sidebar-middle .store-head h4{margin: 35px auto;padding-right: 15px;border-right: 1px solid #e1e1e1}
+.livechat .chat-content .main-content .sidebar-middle .store-head li.border{border-right: 1px solid #e1e1e1;padding: 0 32px}
+.livechat .chat-content .main-content .sidebar-middle .store-head .nav{margin: 35px 0px;width: 100%}
+.livechat .chat-content .main-content .sidebar-middle .store-head .nav>li>a{padding: 5px 10px}
+.livechat .chat-content .main-content .sidebar-middle .chat-window{position: relative;z-index: 2;margin: 0 300px 0 0;height: auto}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-history{position: relative;zoom: 1;padding: 0 10px;height: 300px;overflow: auto}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send{position: relative;z-index: 9;width: 100%;height: 116px;}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send .chat-toolbar{position: relative;border-top: 1px solid #e2e2e2;width: 100%;height: 30px;line-height: 30px}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send .chat-toolbar .fa{font-size: 20px;color: #ccc;margin-left:10px}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send .chat-edit textarea{border:none;box-shadow: none;background-color: transparent}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send .chat-edit textarea:focus{border: none}
+.livechat .chat-content .main-content .sidebar-middle .chat-window .chat-send .chat-edit button{position: absolute;top: 90px;right: 15px;background: #ff7043;color: #fff;border-radius: 0;width: 74px}
+.livechat .chat-content .main-content .sidebar-right{position: absolute;top: 100px;height: 468px;right: 0;z-index: 1;float: right;width: 299px;border-left: 1px solid #e2e2e2;overflow: hidden;}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat,.livechat .container .main-container .chat-content .product-info{float: left}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat{border-right: 1px solid #ccc}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat .chat-history .chat-list .self{line-height: 30px;text-align: right;background: #d8e8f9;padding: 5px 10px;border-radius: 10px;margin: 10px 0}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat .chat-history .chat-list .others{line-height: 30px;text-align: left;background: #e8e8e8;padding: 5px 10px;border-radius: 10px;margin: 10px 0}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat .chat-history,.livechat .container .main-container .chat-content #livechat .chat-send{margin: 15px;padding: 15px;border: 1px solid #ccc}
+.livechat .chat-content .main-content .sidebar-middle .chat-content #livechat .chat-send .btn-send{position: absolute;bottom: 10%;right: 5%;border-radius: 8px;background: #ff7043;color: #fff}
+

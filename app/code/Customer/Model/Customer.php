@@ -13,7 +13,7 @@ class Customer extends Entity
 
     const ENTITY_TYPE = 'customer';
 
-    public static $attr4Login = [
+    public static $attrForLogin = [
         'username'
     ];
 
@@ -63,7 +63,7 @@ class Customer extends Entity
 
     public function valid($username, $password)
     {
-        foreach (static::$attr4Login as $attr) {
+        foreach (static::$attrForLogin as $attr) {
             if (!$this->isLoaded) {
                 $this->load($username, $attr);
             } else if ($this->storage[$attr] !== $username) {

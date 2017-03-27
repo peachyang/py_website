@@ -2,25 +2,29 @@
     <ul class="chat-list"></ul>
 </div>
 <div class="chat-send">
-    <div class="input-box">
-        <input type="email" accept="image/*" hidden="hidden" class="send-emoji" data-emojiable="true" id="send-emoji-<?php echo $this->getVariable('id') ?>" />
-        <label for="send-emoji-<?php echo $this->getVariable('id') ?>">
-            <span class="fa fa-smile-o"></span>
-        </label>
-        <input type="file" accept="image/*" hidden="hidden" class="send-image" id="send-image-<?php echo $this->getVariable('id') ?>" />
-        <label for="send-image-<?php echo $this->getVariable('id') ?>">
-            <span class="fa fa-image"></span>
-        </label>
-        <input type="file" accept="audio/*" hidden="hidden" class="send-audio" id="send-audio-<?php echo $this->getVariable('id') ?>" />
-        <label for="send-audio-<?php echo $this->getVariable('id') ?>">
-            <span class="fa fa-volume-up"></span>
-        </label>
+    <div class="chat-toolbar">
+        <div class="input-box">
+            <input type="email" accept="image/*" hidden="hidden" class="send-emoji" data-emojiable="true" id="send-emoji-<?php echo $this->getVariable('id') ?>" />
+            <label for="send-emoji-<?php echo $this->getVariable('id') ?>">
+                <span class="fa fa-smile-o"></span>
+            </label>
+            <input type="file" accept="image/*" hidden="hidden" class="send-image" id="send-image-<?php echo $this->getVariable('id') ?>" />
+            <label for="send-image-<?php echo $this->getVariable('id') ?>">
+                <span class="fa fa-image"></span>
+            </label>
+            <input type="file" accept="audio/*" hidden="hidden" class="send-audio" id="send-audio-<?php echo $this->getVariable('id') ?>" />
+            <label for="send-audio-<?php echo $this->getVariable('id') ?>">
+                <span class="fa fa-volume-up"></span>
+            </label>
+        </div>
     </div>
-    <div class="input-box">
-        <textarea name="msg" rows="5" cols="100%"  placeholder="<?php echo $this->translate('Input Centent'); ?>" class="form-control required" x-webkit-speech></textarea>
-        <button type="submit" name="session" value="<?php echo $this->getVariable('id') ?>" class="btn btn-send">
-            <span><?php echo $this->translate('Send'); ?></span>
-            <span class="sr-only"><?php echo $this->translate('Send') ?></span>
-        </button>
+    <div class="chat-edit">
+        <div class="input-box">
+            <textarea name="msg" rows="5" cols="100%"  placeholder="<?php echo $this->translate('Input Centent'); ?>" class="form-control required" x-webkit-speech></textarea>
+            <button type="submit" name="session" value="<?php echo $this->getVariable('id') ?>" class="btn btn-send">
+                <span><?php echo $this->translate('Send'); ?></span>
+                <span class="sr-only"><?php echo $this->translate('Send') ?></span>
+            </button>
+        </div>
     </div>
 </div>

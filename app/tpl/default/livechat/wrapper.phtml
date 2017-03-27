@@ -6,87 +6,91 @@ $account = new Seahinet\Customer\ViewModel\Account;
 $customer = $account->getCustomer();
 $avatar = $customer['avatar'];
 ?>
-<div class="container">
-    <div class="sidebar-left col-lg-3 col-md-3">
-        <div class="custom-info">
-            <div class="custom-head">
-                <img src="<?php echo $avatar ? 'data:image/png;base64, ' . $avatar : $this->getPubUrl('frontend/images/placeholder.png') ?>" width="90" height="90" />
-                <p><?php echo $this->getSegment('customer')->get('customer')['username'] ?? ''; ?></p>
-            </div>
-        </div>
-        <div class="custom-list text-center">
-            <p class="text-center">
-                <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">
-                <span class="fa fa-search" aria-hidden="true"></span>
-            </p>
-            <div class="service-list text-center">
-                <ul class="nav nav-pills text-right" role="tablist">
-                    <?php
-                    foreach ($sessions as $session):
-                        if (!$current) {
-                            $current = $session['id'];
-                        }
-                        ?>
-                        <li role="presentation"<?php if ($current == $session['id']): ?> class="active"<?php endif ?>>
-                            <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
-                                <?php echo $this->getTarget($session['id']) ?>
-                            </a>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="main-container col-lg-9 col-md-9">
-        <ul class="store-head">
-            <li class="col-lg-3 col-md-3 border text-center">
-                <ul class="nav nav-pills text-center" role="tablist">
-                    <?php
-                    //foreach ($sessions as $session):
-                    if (!$current):
-                        $current = $session['id'];
-                    endif;
-                    ?>
-                    <li role="presentation">
-                        <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
-                            <?php echo $this->getTarget($session['id']) ?>
-                        </a>
-                    </li>
-                    <?php
-                    //endforeach;
-                    ?>
-                </ul>
-            </li>
-            <li class="col-lg-4 col-md-4 text-center border">
-                <h4><?php echo $this->translate('Store Score'); ?>:5.0</h4>
-                <ul>
-                    <li><?php echo $this->translate('Description Match'); ?>:5.0</li>
-                    <li><?php echo $this->translate('Service Attitude'); ?>:5.0</li>
-                    <li><?php echo $this->translate('Logistics Service'); ?>:5.0</li>
-                </ul>
-            </li>
-            <li class="col-lg-5 col-md-5 text-right padding-15">
-                <a type="submit" class="btn btn-them"><?php echo $this->translate('Contact Admin Service'); ?></a>&nbsp;&nbsp;
-                <a href="" class="btn btn-close"><?php echo $this->translate('Close Chat'); ?></a>
-            </li>
-        </ul>
-        <div class="chat-content">
-            <div id="livechat" class="col-lg-9 col-md-9">
-                <form action="<?php echo $this->getWsUrl() ?>" id="chat-form">
-                    <input type="hidden" name="sender" value="<?php echo $this->getSegment('customer')->get('customer')->getId() ?>" />
-                    <div class="tab-content">
-                        <?php foreach ($sessions as $session): ?>
-                            <div role="tabpanel" class="tab-pane fade<?php if ($current == $session['id']): ?> active in<?php endif ?>" id="<?php echo $session['id'] ?>">
-                                <?php
-                                echo $this->getChild('chat')->setVariable('id', $session['id'])
-                                ?>
-                            </div>
-                        <?php endforeach ?>
+<div class="container warpper">
+    <div class="chat-content">
+        <div class="main-content">
+            <div class="sidebar-left">
+                <div class="custom-info">
+                    <div class="custom-head">
+                        <img src="<?php echo $avatar ? 'data:image/png;base64, ' . $avatar : $this->getPubUrl('frontend/images/placeholder.png') ?>" class="img-circle" width="80" height="80" />
+                        <p><?php echo $this->getSegment('customer')->get('customer')['username'] ?? ''; ?></p>
                     </div>
-                </form>
+                </div>
+                <div class="custom-list">
+                    <p class="text-center">
+                        <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">
+                        <a type="button"><span class="fa fa-search" aria-hidden="true"></span></a>
+                    </p>
+                    <div class="service-list">
+                        <ul class="nav nav-pills" role="tablist">
+                            <?php
+                            foreach ($sessions as $session):
+                                if (!$current) {
+                                    $current = $session['id'];
+                                }
+                                ?>
+                                <li role="presentation"<?php if ($current == $session['id']): ?> class="active"<?php endif ?>>
+                                    <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
+                                        <?php echo $this->getTarget($session['id']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="prodcut-info col-lg-3 col-md-3">
-                <img src="<?php echo $this->getPubUrl('frontend/images/placeholder.png'); ?>" width="190" height="190" />
+            <div class="sidebar-middle">
+                <ul class="store-head">
+                    <li class="col-xs-3 border text-center">
+                        <ul class="nav nav-pills text-center" role="tablist">
+                            <?php
+                            //foreach ($sessions as $session):
+                            if (!$current):
+                                $current = $session['id'];
+                            endif;
+                            ?>
+                            <li role="presentation">
+                                <a href="#<?php echo $session['id'] ?>" role="tab" data-toggle="tab">
+                                    <?php echo $this->getTarget($session['id']) ?>
+                                </a>
+                            </li>
+                            <?php
+                            //endforeach;
+                            ?>
+                        </ul>
+                    </li>
+                    <li class="col-xs-4 text-center border">
+                        <h4><?php echo $this->translate('Store Score'); ?>:5.0</h4>
+                        <ul class="review">
+                            <li><?php echo $this->translate('Description Match'); ?>:5.0</li>
+                            <li><?php echo $this->translate('Service Attitude'); ?>:5.0</li>
+                            <li><?php echo $this->translate('Logistics Service'); ?>:5.0</li>
+                        </ul>
+                    </li>
+                    <li class="col-xs-5 text-right padding-15">
+                        <a type="submit" class="btn btn-them"><?php echo $this->translate('Contact Admin Service'); ?></a>&nbsp;&nbsp;
+                        <a href="" class="btn btn-close"><?php echo $this->translate('Close Chat'); ?></a>
+                    </li>
+                </ul>
+                <div class="chat-window">
+                    <div id="livechat">
+                        <form action="<?php echo $this->getWsUrl() ?>" id="chat-form">
+                            <input type="hidden" name="sender" value="<?php echo $this->getSegment('customer')->get('customer')->getId() ?>" />
+                            <div class="tab-content">
+                                <?php foreach ($sessions as $session): ?>
+                                    <div role="tabpanel" class="tab-pane fade<?php if ($current == $session['id']): ?> active in<?php endif ?>" id="<?php echo $session['id'] ?>">
+                                        <?php
+                                        echo $this->getChild('chat')->setVariable('id', $session['id'])
+                                        ?>
+                                    </div>
+                                <?php endforeach ?>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="sidebar-right text-center">
+                    <img src="<?php echo $this->getPubUrl('frontend/images/placeholder.png'); ?>" width="190" height="190" />
+                </div>
             </div>
         </div>
     </div>

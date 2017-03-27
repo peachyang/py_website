@@ -48,9 +48,9 @@ class Elasticsearch implements EngineInterface
 
     public function select($prefix, $data, $languageId)
     {
-        $constraint = ['data' => $data['q']];
+        $constraint = [['match' => ['data' => $data['q']]]];
         if (!empty($data['store_id'])) {
-            $constraint['store_id'] = $data['store_id'];
+            $constraint[] = ['match' => ['store_id' => $data['store_id']]];
         }
         $config = $this->getContainer()->get('config');
         $limit = (int) ($data['limit'] ?? empty($data['mode']) ?
@@ -62,7 +62,7 @@ class Elasticsearch implements EngineInterface
             '_source' => false,
             'size' => $limit,
             'from' => isset($data['page']) ? (int) ($data['page'] - 1) * $limit : 0,
-            'body' => ['query' => ['match' => $constraint]]
+            'body' => ['query' => ['bool' => ['must' => $constraint]]]
         ]);
         $result = [];
         foreach ($resultSet['hits']['hits'] ?? [] as $item) {

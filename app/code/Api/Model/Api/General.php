@@ -9,8 +9,7 @@ use Seahinet\Api\Model\Soap\Session;
 final class General extends AbstractHandler
 {
 
-    use \Seahinet\Lib\Traits\Container,
-        \Seahinet\Lib\Traits\DataCache;
+    use \Seahinet\Lib\Traits\Container;
 
     /**
      * @param string $username
@@ -48,25 +47,6 @@ final class General extends AbstractHandler
     public function flushCache($key, $prefix)
     {
         $this->getContainer()->get('cache')->delete($key, $prefix, false);
-    }
-
-    /**
-     * @param string $id
-     * @param mixed $data
-     * @param string $cacheKey
-     * @param string $key
-     */
-    public function flushDataCacheRow($id, $data, $cacheKey, $key = null)
-    {
-        $this->flushRow($id, $data, $cacheKey, $key);
-    }
-
-    /**
-     * @param string $cacheKey
-     */
-    public function flushDataCacheList($cacheKey)
-    {
-        $this->flushList($cacheKey);
     }
 
 }

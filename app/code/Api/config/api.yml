@@ -13,6 +13,13 @@ wsdl:
         flushCache:
             key: string
             prefix: string
+        flushDataCacheRow:
+            id: string
+            data: string
+            cacheKey: string
+            key: string
+        flushDataCacheList:
+            cacheKey: string
     port:
         -
             name: endSession
@@ -28,7 +35,17 @@ wsdl:
             name: flushCache
             input: tns:flushCache
             documentation: Flush cache remotely
+        -
+            name: flushDataCacheRow
+            input: tns:flushDataCacheRow
+            documentation: Flush data cache row remotely
+        -
+            name: flushDataCacheList
+            input: tns:flushDataCacheList
+            documentation: Flush data cache list remotely
 soap:
     login: \Seahinet\Api\Model\Api\General
     endSession: \Seahinet\Api\Model\Api\General
     flushCache: \Seahinet\Api\Model\Api\General
+    flushDataCacheRow: \Seahinet\Api\Model\Api\General
+    flushDataCacheList: \Seahinet\Api\Model\Api\General

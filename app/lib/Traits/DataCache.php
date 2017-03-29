@@ -144,6 +144,31 @@ trait DataCache
      */
     protected function flushRow($id, $data, $cacheKey, $key = null)
     {
+        if ($remote = (array) $this->getContainer()->get('config')['remote']) {
+            try {
+                $params = json_encode([
+                    'jsonrpc' => '2.0',
+                    'id' => 1,
+                    'method' => 'flushDataCacheRow',
+                    'params' => [$id, $data, $cacheKey, $key]
+                ]);
+                foreach ($remote as $client) {
+                    $client = curl_init($client);
+                    curl_setopt($client, CURLOPT_POST, 1);
+                    curl_setopt($client, CURLOPT_HTTPHEADER, [
+                        'Content-Type: application/json',
+                        'Accept: application/json',
+                        'Content-Length: ' . strlen($params)
+                    ]);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($client, CURLOPT_POSTFIELDS, $params);
+                    curl_exec($client);
+                    curl_close($client);
+                }
+            } catch (Exception $e) {
+                
+            }
+        }
         if (!is_null($cacheKey)) {
             $this->setDataCacheKey($cacheKey);
         }
@@ -163,6 +188,31 @@ trait DataCache
      */
     protected function flushList($cacheKey)
     {
+        if ($remote = (array) $this->getContainer()->get('config')['remote']) {
+            try {
+                $params = json_encode([
+                    'jsonrpc' => '2.0',
+                    'id' => 1,
+                    'method' => 'flushDataCacheList',
+                    'params' => [$cacheKey]
+                ]);
+                foreach ($remote as $client) {
+                    $client = curl_init($client);
+                    curl_setopt($client, CURLOPT_POST, 1);
+                    curl_setopt($client, CURLOPT_HTTPHEADER, [
+                        'Content-Type: application/json',
+                        'Accept: application/json',
+                        'Content-Length: ' . strlen($params)
+                    ]);
+                    curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($client, CURLOPT_POSTFIELDS, $params);
+                    curl_exec($client);
+                    curl_close($client);
+                }
+            } catch (Exception $e) {
+                
+            }
+        }
         if (!is_null($cacheKey)) {
             $this->setDataCacheKey($cacheKey);
         }

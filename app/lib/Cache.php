@@ -112,7 +112,7 @@ final class Cache implements ArrayAccess, Singleton
 
     private function getPool($prefix = '')
     {
-        return $this->pool[$prefix ?: 'default'];
+        return $this->pool[$prefix ?: 'default'] ?? $this->pool['default'];
     }
 
     /**

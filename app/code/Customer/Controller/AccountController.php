@@ -361,22 +361,24 @@ class AccountController extends AuthActionController
             $attributes->walk(function ($attribute) use (&$unique) {
                 $unique[] = $attribute['code'];
             });
-            $collection = new Collection;
-            $collection->columns($unique);
-            foreach ($unique as $code) {
-                if (isset($data[$code])) {
-                    $collection->where([$code => $data[$code]], 'OR');
-                }
-            }
-            if (count($collection)) {
-                foreach ($collection as $item) {
-                    foreach ($unique as $code) {
-                        if (isset($item[$code]) && $item[$code]) {
-                            $result['error'] = 1;
-                            $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
-                        }
+            if ($unique) {
+                $collection = new Collection;
+                $collection->columns($unique);
+                foreach ($unique as $code) {
+                    if (isset($data[$code])) {
+                        $collection->where([$code => $data[$code]], 'OR');
                     }
-                    break;
+                }
+                if (count($collection)) {
+                    foreach ($collection as $item) {
+                        foreach ($unique as $code) {
+                            if (isset($item[$code]) && $item[$code]) {
+                                $result['error'] = 1;
+                                $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
+                            }
+                        }
+                        break;
+                    }
                 }
             }
             $result = $this->validateForm($data, ['crpassword']);

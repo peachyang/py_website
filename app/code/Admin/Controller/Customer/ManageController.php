@@ -58,7 +58,7 @@ class ManageController extends AuthActionController
             ->where->notEqualTo('input', 'password');
             $required = ['store_id', 'language_id', 'attribute_set_id'];
             $unique = [];
-            $attributes->walk(function ($attribute) use (&$required,&$unique) {
+            $attributes->walk(function ($attribute) use (&$required, &$unique) {
                 if ($attribute['is_required']) {
                     $required[] = $attribute['code'];
                 }
@@ -66,22 +66,24 @@ class ManageController extends AuthActionController
                     $unique[] = $attribute['code'];
                 }
             });
-            $collection = new Collection;
-            $collection->columns($unique);
-            foreach ($unique as $code) {
-                if (isset($data[$code])) {
-                    $collection->where([$code => $data[$code]], 'OR');
-                }
-            }
-            if (count($collection)) {
-                foreach ($collection as $item) {
-                    foreach ($unique as $code) {
-                        if (isset($item[$code]) && $item[$code]) {
-                            $result['error'] = 1;
-                            $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
-                        }
+            if ($unique) {
+                $collection = new Collection;
+                $collection->columns($unique);
+                foreach ($unique as $code) {
+                    if (isset($data[$code])) {
+                        $collection->where([$code => $data[$code]], 'OR');
                     }
-                    break;
+                }
+                if (count($collection)) {
+                    foreach ($collection as $item) {
+                        foreach ($unique as $code) {
+                            if (isset($item[$code]) && $item[$code]) {
+                                $result['error'] = 1;
+                                $result['message'][] = ['message' => $this->translate('The field %s has been used.', [$code]), 'level' => 'danger'];
+                            }
+                        }
+                        break;
+                    }
                 }
             }
             $result = $this->validateForm($data, $required);

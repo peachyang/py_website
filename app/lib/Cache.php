@@ -76,7 +76,7 @@ final class Cache implements ArrayAccess, Singleton
             $this->setContainer($config);
             $config = [];
         }
-        if ($config['multipool']) {
+        if (!empty($config['multipool'])) {
             foreach ((array) $config['multipool'] as $prefix => $pool) {
                 $this->pool[$prefix] = Factory::getCachePool($pool);
             }

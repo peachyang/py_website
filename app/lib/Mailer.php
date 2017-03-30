@@ -51,6 +51,13 @@ class Mailer extends Swift_Mailer
     protected $MailParams = [
         'extra' => '-f%s'
     ];
+    
+    /**
+     * Mailer configuration
+     * 
+     * @var array|Config
+     */
+    protected $config;
 
     /**
      * @param array|Container $container
@@ -59,18 +66,20 @@ class Mailer extends Swift_Mailer
     {
         if ($container instanceof Container) {
             $this->setContainer($container);
+            $this->config = $this->getContainer()->get('config');
+        } else {
+            $this->config = $container;
         }
-        $config = $this->getContainer()->get('config');
-        $transport = call_user_func_array($config['email/transport/service'] . '::newInstance', $this->{static::$ALLOWED_TRANSPORTATION[$config['email/transport/service']] . 'Params'});
-        if (static::$ALLOWED_TRANSPORTATION[$config['email/transport/service']] === 'SMTP') {
-            $transport->setHost($config['email/transport/host']);
-            $transport->setPort($config['email/transport/port']);
-            if ($encyption = $config['email/transport/security']) {
+        $transport = call_user_func_array($this->config['email/transport/service'] . '::newInstance', $this->{static::$ALLOWED_TRANSPORTATION[$this->config['email/transport/service']] . 'Params'});
+        if (static::$ALLOWED_TRANSPORTATION[$this->config['email/transport/service']] === 'SMTP') {
+            $transport->setHost($this->config['email/transport/host']);
+            $transport->setPort($this->config['email/transport/port']);
+            if ($encyption = $this->config['email/transport/security']) {
                 $transport->setEncryption($encyption);
             }
-            $transport->setAuthMode($config['email/transport/auth']);
-            $transport->setUsername($config['email/transport/username']);
-            $transport->setPassword($config['email/transport/password']);
+            $transport->setAuthMode($this->config['email/transport/auth']);
+            $transport->setUsername($this->config['email/transport/username']);
+            $transport->setPassword($this->config['email/transport/password']);
         }
         parent::__construct($transport);
     }
@@ -80,7 +89,7 @@ class Mailer extends Swift_Mailer
      */
     public function send(\Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        return $this->getContainer()->get('config')['email/transport/enable'] ?
+        return $this->config['email/transport/enable'] ?
                 parent::send($message, $failedRecipients) : true;
     }
 

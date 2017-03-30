@@ -3,9 +3,12 @@
 namespace Seahinet\Admin\Controller\Email;
 
 use Exception;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AuthActionController;
+use Seahinet\Lib\Mailer;
 use Seahinet\Email\Model\Queue as Model;
 use Seahinet\Email\Model\Collection\Subscriber;
+use Swift_Message;
 
 class QueueController extends AuthActionController
 {
@@ -55,6 +58,31 @@ class QueueController extends AuthActionController
     public function deleteAction()
     {
         return $this->doDelete('\\Seahinet\\Email\\Model\\Queue', ':ADMIN/email_queue/');
+    }
+
+    public function testAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $config = [];
+            foreach ($data as $key => $value) {
+                $config['email/' . $key] = $value;
+            }
+            $config['email/transport/enable'] = 1;
+            try {
+                $mailer = new Mailer($config);
+                $message = new Swift_Message('This is a testing message.', 'This is a testing message from ' . Bootstrap::getMerchant()['name'] . '.');
+                $message->addFrom($config['email/transport/username'])
+                        ->addTo($config['email/transport/username']);
+                $mailer->send($message);
+                $result['message'][] = ['message' => $this->translate('The transportation works well.'), 'level' => 'success'];
+                $result['error'] = 0;
+            } catch (Exception $e) {
+                $result['message'][] = ['message' => $e->getMessage(), 'level' => 'danger'];
+                $result['error'] = 1;
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], $this->getRequest()->getHeader('HTTP_REFERER'));
     }
 
 }

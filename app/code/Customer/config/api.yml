@@ -17,12 +17,18 @@ wsdl:
             data: customer
         customerCreateResponse:
             customerId: int
+        customerSave:
+            sessionId: string
+            customerId: int
+            data: customer
+        customerSaveResponse:
+            result: bool
         customerSearch:
             sessionId: string
             customerId: int
             keywords: string
+            lastId: int
             limit: int
-            offset: int
         customerSearchResponse:
             customers: customer[]
         addressList:
@@ -64,6 +70,11 @@ wsdl:
             input: tns:customerCreate
             output: tns:customerCreateResponse
             documentation: Create a new customer
+        -
+            name: customerSave
+            input: tns:customerSave
+            output: tns:customerSaveResponse
+            documentation: Modify customer's infomation
         -
             name: customerSearch
             input: tns:customerSearch

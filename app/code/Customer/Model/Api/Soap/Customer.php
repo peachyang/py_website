@@ -105,6 +105,55 @@ class Customer extends AbstractHandler
         return $customer->getId();
     }
 
+    public function customerSave($sessionId, $customerId, $data)
+    {
+        $this->validateSessionId($sessionId, __FUNCTION__);
+        $data = (array) $data;
+        $config = $this->getContainer()->get('config');
+        $attributes = new Attribute;
+        $attributes->withSet()->where(['attribute_set_id' => $config['customer/registion/set']])
+                ->where(['is_unique' => 1])
+                ->columns(['code', 'is_unique', 'type_id'])
+                ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
+                ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
+        $unique = [];
+        foreach ($attributes as $attribute) {
+            if ($attribute['is_unique']) {
+                $unique[] = $attribute['code'];
+            }
+        }
+        $collection = new Collection;
+        $collection->columns($unique);
+        foreach ($unique as $code) {
+            if (isset($data[$code])) {
+                $collection->where([$code => $data[$code]], 'OR');
+            }
+        }
+        if (count($collection)) {
+            foreach ($collection as $item) {
+                foreach ($unique as $code) {
+                    if (isset($item[$code]) && $item[$code]) {
+                        throw new Exception('The field ' . $code . ' has been used.');
+                    }
+                }
+                break;
+            }
+        }
+        $data['password'] = $this->decryptData($data['password']);
+        $customer = new Model;
+        $customer->load($customerId);
+        if ($customer->getId()) {
+            unset($data['id']);
+            $customer->setData($data);
+            $customer->save();
+            if (!empty($data['subscribe'])) {
+                $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
+            }
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @param string $sessionId
      * @param int $customerId
@@ -133,7 +182,9 @@ class Customer extends AbstractHandler
         $where->notEqualTo('id', $customerId);
         $constraint = '(';
         foreach ($attributes as $attribute) {
-            if ($attribute['type'] === 'varchar' || $attribute['type'] === 'text') {
+            if (is_numeric($keywords)) {
+                $constraint .= $attribute['code'] . '=' . $keywords . ' OR ';
+            } else if ($attribute['type'] === 'varchar' || $attribute['type'] === 'text') {
                 $constraint .= $attribute['code'] . ' like \'%' . $keywords . '%\' OR ';
             } else if ($attribute['type'] === 'datetime') {
                 $constraint .= $attribute['code'] . '=\'' . $keywords . '\' OR ';

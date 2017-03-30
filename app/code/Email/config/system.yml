@@ -44,7 +44,7 @@ email:
                     default: 25
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
-                encryption:
+                security:
                     type: select
                     label: Encryption
                     scope: merchant
@@ -67,6 +67,8 @@ email:
                         PLAIN: PLAIN
                         LOGIN: LOGIN
                         CRAM-MD5: CRAM-MD5
+                        XOAUTH2: XOAUTH2
+                        NTLM: NTLM
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
                 username:
@@ -75,8 +77,6 @@ email:
                     scope: merchant
                     required: required
                     priority: 50
-                    attrs:
-                        data-base: "'#transport-service':'Swift_SmtpTransport'"
                 password:
                     type: text
                     label: Password
@@ -85,6 +85,16 @@ email:
                     priority: 60
                     attrs:
                         data-base: "'#transport-service':'Swift_SmtpTransport'"
+                test:
+                    type: link
+                    label: Transportation Testing
+                    scope: merchant
+                    priority: 900
+                    link: email_queue/test/
+                    content: Test
+                    attrs:
+                        data-method: post
+                        data-serialize: '#tab-transport'
         default:
             label: Default
             scope: merchant

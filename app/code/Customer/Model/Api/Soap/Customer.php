@@ -105,6 +105,13 @@ class Customer extends AbstractHandler
         return $customer->getId();
     }
 
+    /**
+     * @param string $sessionId
+     * @param int $customerId
+     * @param object $data
+     * @return int
+     * @throws Exception
+     */
     public function customerSave($sessionId, $customerId, $data)
     {
         $this->validateSessionId($sessionId, __FUNCTION__);
@@ -149,9 +156,9 @@ class Customer extends AbstractHandler
             if (!empty($data['subscribe'])) {
                 $this->getContainer()->get('eventDispatcher')->trigger('subscribe', ['data' => $data]);
             }
-            return true;
+            return $customer->getId();
         }
-        return false;
+        return 0;
     }
 
     /**

@@ -22,7 +22,7 @@ wsdl:
             customerId: int
             data: customer
         customerSaveResponse:
-            result: bool
+            result: int
         customerSearch:
             sessionId: string
             customerId: int

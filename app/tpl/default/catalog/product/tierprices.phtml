@@ -18,7 +18,7 @@ if ($product['tier_price']):
                         '<span class="price" data-price="' . $price . '">' . sprintf($format, $symbol, $price) . '</span>'
                     ]);
                     if ($saved):
-                        ?><span class="saved"><?php echo $this->translate('(Saved %d%%)', [100 * (1 - $price / $final)]) ?></span>
+                        ?><span class="saved"><?php echo $this->translate('(Saved %d%%)', [100 - 100 * $price / $final]) ?></span>
                     <?php endif ?>
                 </li>
             <?php endforeach ?>

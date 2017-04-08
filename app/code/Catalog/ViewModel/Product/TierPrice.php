@@ -5,9 +5,14 @@ namespace Seahinet\Catalog\ViewModel\Product;
 class TierPrice extends View
 {
 
+    public function getCurrency()
+    {
+        return $this->getContainer()->get('currency');
+    }
+
     public function getPrices()
     {
-        $final = $product->getFinalPrice(1, false);
+        $final = $this->getProduct()->getFinalPrice(1, false);
         $tier = json_decode($this->getProduct()['tier_price'], true);
         $groups = [-1];
         if ($this->getSegment('customer')->get('hasLoggedIn')) {

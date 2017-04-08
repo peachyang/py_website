@@ -9,12 +9,12 @@ class View extends Template
 
     protected static $product = null;
 
-    function getProduct()
+    public function getProduct()
     {
         return self::$product;
     }
 
-    function setProduct($product)
+    public function setProduct($product)
     {
         self::$product = $product;
         return $this;

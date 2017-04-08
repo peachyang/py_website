@@ -85,6 +85,9 @@ catalog_product:
                         type: Seahinet\Catalog\ViewModel\Product\View
                         template: catalog/product/view
                         children:
+                            tier:
+                                type: Seahinet\Catalog\ViewModel\Product\TierPrice
+                                template: catalog/product/tierprices
                             share:
                                 type: Seahinet\Catalog\ViewModel\Product\Share
                                 template: catalog/product/share

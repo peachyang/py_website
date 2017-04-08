@@ -196,5 +196,40 @@
         $('#tab-category [type=checkbox]').on('click', function () {
             checkTree.call(this);
         });
+        var recalcGroupPrice = function () {
+            var v = {};
+            $('.table.group-price tbody tr').each(function () {
+                if ($(this).find('.price').val() !== '') {
+                    v[$(this).find('.group').val()] = $(this).find('.price').val();
+                }
+            });console.log(v);
+            $('.table.group-price~input[name]').val(JSON.stringify(v));
+        };
+        $('.table.group-price').on('change', 'select,input', recalcGroupPrice)
+                .on('click', '.add', function () {
+                    $(this).parentsUntil('table').last().siblings('tbody').append($(this).parentsUntil('table').last().parent().next('template').html());
+                }).on('click', '.delete', function () {
+            $(this).parentsUntil('tbody').last().remove();
+            recalcGroupPrice();
+        });
+        var recalcTierPrice = function () {
+            var v = {};
+            $('.table.tier-price tbody tr').each(function () {
+                if ($(this).find('.qty').val() !== '' && $(this).find('.price').val() !== '') {
+                    if (typeof v[$(this).find('.group').val()] === 'undefined') {
+                        v[$(this).find('.group').val()] = {}
+                    }
+                    v[$(this).find('.group').val()][$(this).find('.qty').val()] = $(this).find('.price').val();
+                }
+            });
+            $('.table.tier-price~input[name]').val(JSON.stringify(v));
+        };
+        $('.table.tier-price').on('change', 'select,input', recalcTierPrice)
+                .on('click', '.add', function () {
+                    $(this).parentsUntil('table').last().siblings('tbody').append($(this).parentsUntil('table').last().parent().next('template').html());
+                }).on('click', '.delete', function () {
+            $(this).parentsUntil('tbody').last().remove();
+            recalcTierPrice();
+        });
     });
 }));

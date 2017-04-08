@@ -6,6 +6,12 @@ product.price.calc:
     -
         listener: [\Seahinet\Catalog\Listeners\Price\Special, calc]
         priority: 10
+    -
+        listener: [\Seahinet\Catalog\Listeners\Price\Tier, calc]
+        priority: 20
+    -
+        listener: [\Seahinet\Catalog\Listeners\Price\Group, calc]
+        priority: 30
 cart.add.before:
     -
         listener: [\Seahinet\Catalog\Listeners\Inventory, check]

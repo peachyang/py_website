@@ -13,8 +13,6 @@ use Seahinet\Lib\Stdlib\Singleton;
  * Handle cache operation by using Doctrine\Cache pool
  * 
  * @method array|null getStats()
- * @method bool flushAll()
- * @method bool deleteAll()
  */
 final class Cache implements ArrayAccess, Singleton
 {
@@ -233,6 +231,28 @@ final class Cache implements ArrayAccess, Singleton
             $this->getContainer()->get('eventDispatcher')->trigger('cache.fetch.after', ['key' => $id, 'prefix' => $prefix, 'result' => $result]);
         }
         return $result;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function flushAll()
+    {
+        array_walk($this->pool, function($item) {
+            $item->flushAll();
+        });
+        return true;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function deleteAll()
+    {
+        array_walk($this->pool, function($item) {
+            $item->deleteAll();
+        });
+        return true;
     }
 
     /**

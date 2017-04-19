@@ -48,13 +48,16 @@ class Message extends Template implements Singleton
      */
     public function getMessages()
     {
-        $messages = $this->messages;
+        foreach ($this->messages as $message) {
+            yield $message;
+        }
         foreach ($this->segments as $name) {
-            $segment = new Segment($name);
-            $messages += $segment->get('message', []);
+            $segment = $this->getSegment($name);
+            foreach ($segment->get('message', []) as $message) {
+                yield $message;
+            }
             $segment->set('message', []);
         }
-        return $messages;
     }
 
     /**

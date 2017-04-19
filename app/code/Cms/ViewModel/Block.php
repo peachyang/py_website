@@ -58,11 +58,6 @@ class Block extends AbstractViewModel
             $key = $lang . '_CMS_BLOCK_' . $this->getBlockModel()['code'];
             $rendered = $cache->fetch($key, 'VIEWMODEL_RENDERED_');
             if (!$rendered) {
-//            $content = $this->replace($this->getBlockModel()['content'], [
-//                'base_url' => $this->getBaseUrl(),
-//                'pub_url' => $this->getPubUrl(),
-//                'res_url' => $this->getResourceUrl()
-//            ]);
                 $rendered = $this->getBlockModel()['store_id'] ?
                         $this->getContainer()->get('htmlpurifier')
                                 ->purify($this->getBlockModel()['content']) : $this->getBlockModel()['content'];

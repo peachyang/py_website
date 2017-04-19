@@ -23,7 +23,7 @@ class Cache extends Grid
 
     protected function prepareCollection($collection = null)
     {
-        $config = $this->getContainer()->get('config')['cache']['multipool'] ?? [];
+        $config = $this->getContainer()->get('config')['adapter']['cache']['multipool'] ?? [];
         $default = array_keys($config);
         $default[] = 'ROUTE_CACHE';
         $cache = $this->getContainer()->get('cache');

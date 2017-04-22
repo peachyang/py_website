@@ -53,11 +53,7 @@ class ProductController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Product', ':ADMIN/catalog_product/', function($model, $id) {
-                    $model->load($id);
-                    return !$model->offsetGet('status');
-                }
-        );
+        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Product', ':ADMIN/catalog_product/');
     }
 
     public function saveAction()

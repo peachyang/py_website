@@ -3,8 +3,10 @@
 namespace Seahinet\Admin\ViewModel\Customer\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
-use Seahinet\Customer\Source\Set;
-use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Seahinet\Customer\Source\{
+    Group,
+    Set
+};
 use Seahinet\Lib\Source\Language;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
@@ -68,6 +70,12 @@ class Manage extends PEdit
         'required' => 'required',
         'comment' => 'User Registration Source'
             ]),
+            'group_id' => [
+                'type' => 'multiselect',
+                'label' => 'Customer Group',
+                'required' => 'required',
+                'options' => (new Group)->getSourceArray()
+            ],
             'language_id' => [
                 'type' => 'select',
                 'label' => 'Language',

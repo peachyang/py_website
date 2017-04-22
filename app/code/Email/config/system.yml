@@ -27,6 +27,7 @@ email:
                         Swift_SmtpTransport: SMTP
                         Swift_SendmailTransport: Sendmail
                         Swift_MailTransport: Mail
+                    default: Swift_MailTransport
                 host:
                     type: text
                     label: Host

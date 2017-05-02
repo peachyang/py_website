@@ -14,7 +14,7 @@ class ContactController extends ActionController
     {
         $result = ['error' => 0, 'message' => []];
         if ($this->getRequest()->isPost()) {
-            $data = $this->getPost();
+            $data = $this->getRequest()->getPost();
             $content = '';
             foreach ($data as $key => $value) {
                 $content .= $key . ': ' . htmlspecialchars(rawurldecode($value)) . '<br />';

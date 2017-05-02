@@ -17,7 +17,7 @@ class ContactController extends ActionController
             $data = $this->getPost();
             $content = '';
             foreach ($data as $key => $value) {
-                $content .= $key . ': ' . $value . '<br />';
+                $content .= $key . ': ' . htmlspecialchars(rawurldecode($value)) . '<br />';
             }
             try {
                 $config = $this->getContainer()->get('config');

@@ -22,16 +22,16 @@ wsdl:
             name: oauthLogin
             input: tns:oauthLogin
             output: tns:oauthLoginResponse
-            description: Valid open id provided by oauth server
+            documentation: Valid open id provided by oauth server
         -
             name: oauthBind
             input: tns:oauthBind
-            description: Bind open id to customer
+            documentation: Bind open id to customer
         -
             name: oauthBindedServer
             input: tns:oauthBindedServer
             output: tns:oauthBindedServerResponse
-            description: Get binded servers
+            documentation: Get binded servers
 soap:
     oauthLogin: \Seahinet\Oauth\Model\Api\Soap\Oauth
     oauthBind: \Seahinet\Oauth\Model\Api\Soap\Oauth

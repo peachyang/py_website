@@ -52,7 +52,7 @@ class Oauth extends AbstractHandler
     {
         $this->validateSessionId($sessionId, __FUNCTION__);
         $collection = new Collection;
-        $collection->columns(['server'])
+        $collection->columns(['oauth_server'])
                 ->where(['customer_id' => $customerId]);
         $result = [];
         $collection->walk(function ($item) use (&$result) {

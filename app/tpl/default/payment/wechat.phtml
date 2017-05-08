@@ -1,0 +1,13 @@
+<?php
+list($type, $result) = $this->getSegment('payment')->get('wechatpay');
+?>
+<?php if ($type === 'NATIVE'): ?>
+    <?php if (substr($result, 0, 5) === 'data:'): ?>
+        <img src="<?php echo $result ?>" />
+    <?php else: ?>
+        <p><?php echo $this->translate('An error detected while connecting with WeChat server.') ?></p>
+    <?php endif ?>
+<?php endif; ?>
+<p>
+    <a href="<?php echo $this->getBaseUrl('payment/wechat/check/') ?>"><?php echo $this->translate('I have completed the payment.') ?></a>
+</p>

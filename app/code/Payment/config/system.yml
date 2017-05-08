@@ -333,3 +333,88 @@ payment:
                     label: Maximum Order Total
                     default: ''
                     priority: 51
+        wechat_pay:
+            label: WeChat Pay
+            scope: [merchant,store]
+            children:
+                enable:
+                    type: select
+                    label: Enable
+                    required: required
+                    priority: 0
+                    options:
+                        - Disabled
+                        - Enabled
+                    default: 0
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 1
+                    default: Alipay Direct Pay
+                model:
+                    type: hidden
+                    scope: merchant
+                    default: Seahinet\Payment\Model\WeChatPay
+                new_status:
+                    type: select
+                    scope: merchant
+                    label: New Order Status
+                    required: required
+                    source: Seahinet\Sales\Source\Order\Status
+                    default: 2
+                    priority: 5
+                description:
+                    type: textarea
+                    label: Description
+                    priority: 10
+                country:
+                    type: multiselect
+                    label: Available Countries
+                    source: Seahinet\I18n\Source\Country
+                    comment: Select none if all countries are available
+                    priority: 20
+                gateway:
+                    type: url
+                    scope: merchant
+                    label: Gateway
+                    required: required
+                    default: https://api.mch.weixin.qq.com/
+                    priority: 30
+                partner:
+                    type: number
+                    scope: [merchant,scope]
+                    label: Partner ID
+                    required: required
+                    priority: 31
+                    attrs:
+                        minlength: 16
+                        maxlength: 16
+                app_id:
+                    type: text
+                    scope: [merchant,scope]
+                    label: App ID
+                    required: required
+                    priority: 32
+                app_secret:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Secret Code
+                    required: required
+                    priority: 33
+                mch_id:
+                    type: text
+                    scope: [merchant,scope]
+                    label: Merchant ID
+                    required: required
+                    priority: 34
+                min_total:
+                    type: price
+                    label: Minimum Order Total
+                    default: 1
+                    priority: 50
+                max_total:
+                    type: price
+                    label: Maximum Order Total
+                    default: ''
+                    priority: 51

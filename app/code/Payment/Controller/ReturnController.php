@@ -3,6 +3,7 @@
 namespace Seahinet\Payment\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Log\Model\Payment;
 
 class ReturnController extends ActionController
 {

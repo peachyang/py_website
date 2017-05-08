@@ -1,0 +1,10 @@
+---
+payment_wechat:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: payment/wechat

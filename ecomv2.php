@@ -1239,7 +1239,7 @@ INSERT INTO `eav_attribute` VALUES
 (43,4,'default_image','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (45,4,'additional','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(46,4,'tier_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\TierPrice',0,0,0,0,NULL,NULL)
+(46,4,'tier_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\TierPrice',0,0,0,0,NULL,NULL),
 (47,4,'group_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\GroupPrice',0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (4, 5, 26, 0),

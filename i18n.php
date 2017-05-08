@@ -41,4 +41,509 @@ INSERT INTO `i18n_region` VALUES ('1', '48', '34', '安徽'),('2', '48', '11', '
 
 INSERT INTO `i18n_region_name` VALUES ('1', 'en-US', 'Anhui'),('2', 'en-US', 'Beijing'),('3', 'en-US', 'Chongqing'),('4', 'en-US', 'Fujian'),('5', 'en-US', 'Gansu'),('6', 'en-US', 'Guangdong'),('7', 'en-US', 'Guangxi'),('8', 'en-US', 'Guizhou'),('9', 'en-US', 'Hainan'),('10', 'en-US', 'Hebei'),('11', 'en-US', 'Henan'),('12', 'en-US', 'Heilongjiang'),('13', 'en-US', 'Hubei'),('14', 'en-US', 'Hunan'),('15', 'en-US', 'Jilin'),('16', 'en-US', 'Jiangsu'),('17', 'en-US', 'Jiangxi'),('18', 'en-US', 'Liaoning'),('19', 'en-US', 'Inner Mongoria'),('20', 'en-US', 'Ningxia'),('21', 'en-US', 'Qinghai'),('22', 'en-US', 'Shandong'),('23', 'en-US', 'Shanxi'),('24', 'en-US', 'Shaanxi'),('25', 'en-US', 'Shanghai'),('26', 'en-US', 'Sichuan'),('27', 'en-US', 'Tianjin'),('28', 'en-US', 'Tibet'),('29', 'en-US', 'Xinjiang'),('30', 'en-US', 'Yunnan'),('31', 'en-US', 'Zhejiang');
 
+INSERT INTO i18n_region VALUES 
+(32,38,'BC','British Columbia');
+INSERT INTO i18n_region VALUES 
+(33,38,'AB','Alberta');
+INSERT INTO i18n_region VALUES 
+(34,38,'SK','Saskatchewan');
+INSERT INTO i18n_region VALUES 
+(35,38,'MB','Manitoba');
+INSERT INTO i18n_region VALUES 
+(36,38,'ON','Ontario');
+INSERT INTO i18n_region VALUES 
+(37,38,'QC','Quebec');
+INSERT INTO i18n_region VALUES 
+(38,38,'NB','New Brunswick');
+INSERT INTO i18n_region VALUES 
+(39,38,'PE','Prince Edward Island');
+INSERT INTO i18n_region VALUES 
+(40,38,'NS','Nova Scotia');
+INSERT INTO i18n_region VALUES 
+(41,38,'NL','Newfoundland and Labrador');
+INSERT INTO i18n_region VALUES 
+(42,38,'YT','Yukon');
+INSERT INTO i18n_region VALUES 
+(43,38,'NT','Northwest Territories');
+INSERT INTO i18n_region VALUES 
+(44,38,'NU','Nunavut');
+
+INSERT INTO i18n_region_name VALUES 
+(32,'zh-CN','不列颠哥伦比亚');
+INSERT INTO i18n_region_name VALUES 
+(33,'zh-CN','阿尔伯塔');
+INSERT INTO i18n_region_name VALUES 
+(34,'zh-CN','萨斯喀彻温');
+INSERT INTO i18n_region_name VALUES 
+(35,'zh-CN','曼尼托巴');
+INSERT INTO i18n_region_name VALUES 
+(36,'zh-CN','安大略');
+INSERT INTO i18n_region_name VALUES 
+(37,'zh-CN','魁北克');
+INSERT INTO i18n_region_name VALUES 
+(38,'zh-CN','新不伦瑞克');
+INSERT INTO i18n_region_name VALUES 
+(39,'zh-CN','爱德华王子岛');
+INSERT INTO i18n_region_name VALUES 
+(40,'zh-CN','新斯科舍');
+INSERT INTO i18n_region_name VALUES 
+(41,'zh-CN','纽芬兰-拉布拉多');
+INSERT INTO i18n_region_name VALUES 
+(42,'zh-CN','育空');
+INSERT INTO i18n_region_name VALUES 
+(43,'zh-CN','西北地区');
+INSERT INTO i18n_region_name VALUES 
+(44,'zh-CN','努纳武特');
+
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,1,'Abbotsford');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,2,'Armstrong');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,3,'Burnaby');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,4,'Campbell River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,5,'Castlegar');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,6,'Chilliwack');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,7,'Colwood');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,8,'Coquitlam');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,9,'Courtenay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,10,'Cranbrook');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,11,'Dawson Creek');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,12,'Duncan');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,13,'Enderby');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,14,'Fernie');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,15,'Fort St. John');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,16,'Grand Forks');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,17,'Greenwood');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,18,'Kamloops');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,19,'Kelowna');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,20,'Kimberley');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,21,'Kitimat');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,22,'Langford');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,23,'Langley');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,24,'Merritt');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,25,'Nanaimo');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,26,'Nelson');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,27,'New Westminster');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,28,'North Vancouver');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,29,'Parksville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,30,'Penticton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,31,'Pitt Meadows');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,32,'Port Alberni');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,33,'Port Coquitlam');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,34,'Port Moody');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,35,'Powell River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,36,'Prince George');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,37,'Prince Rupert');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,38,'Quesnel');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,39,'Revelstoke');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,40,'Richmond');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,41,'Rossland');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,42,'Salmon Arm');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,43,'Surrey');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,44,'Terrace');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,45,'Trail');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,46,'Vancouver');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,47,'Vernon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,48,'Victoria');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,49,'White Rock');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(32,50,'Williams Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,1,'Airdrie');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,2,'Brooks');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,3,'Calgary');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,4,'Camrose');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,5,'Cold Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,6,'Edmonton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,7,'Fort Saskatchewan');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,8,'Grande Prairie');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,9,'Leduc');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,10,'Lethbridge');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,11,'Lloydminster');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,12,'Medicine Hat');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,13,'Red Deer');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,14,'Spruce Grove');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,15,'St. Albert');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(33,16,'Wetaskiwin');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,1,'Estevan');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,2,'Humboldt');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,3,'Lloydminster');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,4,'Maple Creek');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,5,'Melfort');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,6,'Melville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,7,'Moose Jaw');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,8,'North Battleford');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,9,'Prince Albert');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,10,'Regina');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,11,'Saskatoon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,12,'Swift Current');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,13,'Weyburn');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(34,14,'Yorkton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,1,'Brandon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,2,'Brochet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,3,'Churchill');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,4,'Dauphin');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,5,'Flin Flon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,6,'Gillam');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,7,'Lynn Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,8,'Selkirk');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,9,'Sherridon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,10,'Thompson');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,11,'Wabowden');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,12,'Winnipeg');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(35,13,'Pikangikum');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,1,'Ajax');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,2,'Aurora');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,3,'Big Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,4,'Brampton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,5,'Barrie');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,6,'Burlington');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,7,'Chapleau');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,8,'Guelph');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,9,'Hamilton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,10,'King City');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,11,'Kingston');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,12,'Kirkland Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,13,'Kitchener');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,14,'Niagara Falls');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,15,'Nipigon');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,16,'North Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,17,'Oakville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,18,'London');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,19,'Mississauga');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,20,'Nakina');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,21,'Markham');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,22,'Moosonee');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,23,'Newmarket');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,24,'Oshawa');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,25,'Ottawa');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,26,'Peterborough');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,27,'Pickering');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,28,'Pickle Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,29,'Sandy Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,30,'Sarnia');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,31,'Waterloo');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,32,'Whitby');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,33,'Windsor');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,34,'Sudbury');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,35,'Thunder Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,36,'Timmins');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,37,'Toronto');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,38,'Vaughan');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,39,'Winisk');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,40,'Sioux Lookout');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,41,'St. Catharines');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,42,'Cobourg');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,43,'Ignace');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,44,'Stratford');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,45,'Richmond Hill');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(36,46,'Sault Sainte Marie');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,1,'Alma');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,2,'Ch?teauguay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,3,'Chibougamau');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,4,'Chicoutimi');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,5,'Gaspé');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,6,'Gatineau');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,7,'Inukjuak');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,8,'Ivujivik');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,9,'Kangiqsujuaq');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,10,'Sept-Îles');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,11,'Sherbrooke');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,12,'Saguenay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,13,'Schefferville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,14,'Kuujjuaq');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,15,'Kuujjuarapik');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,16,'Eastmain');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,17,'Montréal');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,18,'Natashquan');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,19,'Rivière-du-Loup');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,20,'Trois-Rivières');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(37,21,'Ville de Québec');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(38,1,'Fredericton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(38,2,'Moncton');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(38,3,'Sackville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(38,4,'Saint John');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(39,1,'Charlottetown');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(39,2,'Summerside');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,1,'Antigonish');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,2,'Glace Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,3,'Halifax');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,4,'Dartmouth');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,5,'Prince George');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,6,'Wolfville');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,7,'Yarmouth');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(40,8,'Sydney');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,1,'Cartwright');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,2,'Corner Brook');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,3,'Davis Inlet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,4,'Goose Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,5,'Hopedale');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,6,'Indian Harbour');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,7,'St. Anthony');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,8,'St. John\'s');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,9,'Gander');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,10,'Nain');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(41,11,'Port-aux-Basques');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,1,'Beaver Creek');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,2,'Carmacks');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,3,'Dawson City');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,4,'Mayo');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,5,'Old Crow');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,6,'Ross River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(42,7,'Whitehorse');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,1,'Arctic Red River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,2,'Fort Franklin');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,3,'Fort Good Hope');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,4,'Hay River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,5,'Holman');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,6,'Inuvik');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,7,'Fort Resolution');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,8,'Nahanni Butte');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,9,'Reindeer Station');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,10,'Sachs Harbour');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,11,'Wrigley');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,12,'Yellowknife');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(43,13,'Sawmill Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,1,'Alert');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,2,'Arctic Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,3,'Baker Lake');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,4,'Bathurst Inlet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,5,'Broughton Island');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,6,'Cambridge Bay');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,7,'Cape Dyer');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,8,'Chesterfield Inlet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,9,'Clyde River');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,10,'Coral Harbour');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,11,'Eureka');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,12,'Umingmaktuuq');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,13,'Grise Fiord');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,14,'Hall Beach');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,15,'Igloolik');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,16,'Gjoa Harbour');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,17,'Iqaluit');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,18,'Pond Inlet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,19,'Rankin Inlet');
+INSERT INTO i18n_city(parent_id,code,default_name) VALUES 
+(44,20,'Resolute');
+
 SET FOREIGN_KEY_CHECKS=1;

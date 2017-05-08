@@ -4,6 +4,7 @@ namespace Seahinet\Oauth\Model\Api\Soap;
 
 use Seahinet\Api\Model\Api\AbstractHandler;
 use Seahinet\Oauth\Model\Client;
+use Seahinet\Oauth\Model\Collection\Client as Collection;
 
 class Oauth extends AbstractHandler
 {
@@ -40,6 +41,24 @@ class Oauth extends AbstractHandler
             'oauth_server' => $serverName,
             'open_id' => $openId
         ])->save();
+    }
+
+    /**
+     * @param string $sessionId
+     * @param int $customerId
+     * @return array
+     */
+    public function oauthBindedServer($sessionId, $customerId)
+    {
+        $this->validateSessionId($sessionId, __FUNCTION__);
+        $collection = new Collection;
+        $collection->columns(['oauth_server'])
+                ->where(['customer_id' => $customerId]);
+        $result = [];
+        $collection->walk(function ($item) use (&$result) {
+            $result[] = $item['server'];
+        });
+        return $result;
     }
 
 }

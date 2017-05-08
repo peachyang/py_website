@@ -2,26 +2,37 @@
 wsdl:
     message:
         oauthLogin:
-            sessionId: int
+            sessionId: string
             serverName: string
             openId: string
         oauthLoginResponse:
             customerId: int
         oauthBind:
-            sessionId: int
+            sessionId: string
             customerId: int
             serverName: string
             openId: string
+        oauthBindedServer:
+            sessionId: string
+            customerId: int
+        oauthBindedServerResponse:
+            servers: string[]
     port:
         -
             name: oauthLogin
             input: tns:oauthLogin
             output: tns:oauthLoginResponse
-            description: Valid open id provided by oauth server
+            documentation: Valid open id provided by oauth server
         -
             name: oauthBind
             input: tns:oauthBind
-            description: Bind open id to customer
+            documentation: Bind open id to customer
+        -
+            name: oauthBindedServer
+            input: tns:oauthBindedServer
+            output: tns:oauthBindedServerResponse
+            documentation: Get binded servers
 soap:
     oauthLogin: \Seahinet\Oauth\Model\Api\Soap\Oauth
     oauthBind: \Seahinet\Oauth\Model\Api\Soap\Oauth
+    oauthBindedServer: \Seahinet\Oauth\Model\Api\Soap\Oauth

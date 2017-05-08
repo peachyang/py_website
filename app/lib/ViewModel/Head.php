@@ -22,6 +22,7 @@ final class Head extends Template implements Singleton
     protected $script = ['condition' => [], 'normal' => []];
     protected $link = ['condition' => [], 'normal' => []];
     protected $meta = [];
+    protected $base = null;
 
     private function __construct()
     {
@@ -34,6 +35,17 @@ final class Head extends Template implements Singleton
             static::$instance = new static;
         }
         return static::$instance;
+    }
+
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    public function setBase($base)
+    {
+        $this->base = $base;
+        return $this;
     }
 
     /**

@@ -36,23 +36,21 @@ class Page extends AbstractViewModel
                 $cache = $this->getContainer()->get('cache');
                 $key = $lang . '_CMS_PAGE_' . $this->pageModel['uri_key'];
                 $rendered = $cache->fetch($key, 'VIEWMODEL_RENDERED_');
-                if ($rendered) {
-                    return $rendered;
+                if (!$rendered) {
+                    $rendered = $this->pageModel['store_id'] ?
+                            $this->getContainer()->get('htmlpurifier')
+                                    ->purify($this->pageModel['content']) : $this->pageModel['content'];
+                    $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
                 }
-                $content = $this->replace($this->pageModel['content'], [
-                    'base_url' => $this->getBaseUrl(),
-                    'pub_url' => $this->getPubUrl(),
-                    'res_url' => $this->getResourceUrl()
-                ]);
-                $rendered = $this->pageModel['store_id'] ?
-                        $this->getContainer()->get('htmlpurifier')
-                                ->purify($content) : $content;
-                $cache->save($key, $rendered, 'VIEWMODEL_RENDERED_');
             } catch (Exception $e) {
                 $this->getContainer()->get('log')->logException($e);
                 $rendered = '';
             }
-            return $rendered;
+            return $rendered ? $this->replace($rendered, [
+                        'base_url' => $this->getBaseUrl(),
+                        'pub_url' => $this->getPubUrl(),
+                        'res_url' => $this->getResourceUrl()
+                    ]) : '';
         }
         return '';
     }

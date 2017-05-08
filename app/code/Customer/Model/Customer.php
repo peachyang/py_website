@@ -49,6 +49,19 @@ class Customer extends Entity
         }
     }
 
+    protected function afterLoad(&$result)
+    {
+        if (!empty($result[$this->primaryKey])) {
+            $tableGateway = $this->getTableGateway('customer_in_group');
+            $groups = [];
+            foreach ($tableGateway->select(['customer_id' => $result[$this->primaryKey]])->toArray() as $item) {
+                $groups[] = $item['group_id'];
+            }
+            $result['group_id'] = $groups;
+        }
+        parent::afterLoad($result);
+    }
+
     public function login($username, $password)
     {
         if ($this->valid($username, $password)) {

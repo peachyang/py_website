@@ -26,8 +26,9 @@ class Page extends Route
         } else {
             return false;
         }
-        if ($path && Bootstrap::isMobile()) {
-            $path .= '-mobile';
+        $config = $this->getContainer()->get('config');
+        if ($path && Bootstrap::isMobile() && $config['theme/global/layout'] !== $config['theme/global/mobile_layout']) {
+            $path .= '-' . $config['theme/global/mobile_layout'];
         }
         if ($path && ($prefix = $this->getContainer()->get('config')['route']['default']['prefix'] ?? '')) {
             $path = $prefix . $path;

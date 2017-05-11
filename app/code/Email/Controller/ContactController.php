@@ -5,6 +5,7 @@ namespace Seahinet\Email\Controller;
 use Exception;
 use Seahinet\Lib\Controller\ActionController;
 use Swift_Message;
+use Swift_Attachment;
 use Swift_TransportException;
 
 class ContactController extends ActionController
@@ -24,6 +25,12 @@ class ContactController extends ActionController
                 $mailer = $this->getContainer()->get('mailer');
                 $message = new Swift_Message();
                 $message->setBody($content, 'text/html', 'UTF-8');
+                $files = $this->getRequest()->getUploadedFile();
+                if ($files) {
+                    foreach ($files as $file) {
+                        $message->attach(Swift_Attachment::fromPath($file->getTmpFilename()));
+                    }
+                }
                 $mailer->send($message->setSubject($this->translate('Contact Us'))
                                 ->addFrom($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name'])
                                 ->addTo($config['email/customer/sender_email'] ?: $config['email/default/sender_email'], $config['email/customer/sender_name'] ?: $config['email/default/sender_name']));

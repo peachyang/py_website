@@ -14,7 +14,9 @@ class PageController extends ActionController
             return $this->notFoundAction();
         }
         $category = $this->getOption('category');
-        $root = $this->getLayout($category && $category->offsetGet('show_navigation') ? 'cms_page_with_nav' : 'cms_page');
+        $layout = $this->getContainer()->get('layout');
+        $root = $layout->getLayout('page-' . $page['uri_key'], true) ?:
+                $layout->getLayout($category && $category->offsetGet('show_navigation') ? 'cms_page_with_nav' : 'cms_page', true);
         $root->addBodyClass('page-' . $page['uri_key']);
         $head = $root->getChild('head');
         $head->setTitle($page['title'])

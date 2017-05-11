@@ -158,7 +158,7 @@ class UploadedFile implements UploadedFileInterface
         if (!is_writable(dirname($targetPath))) {
             throw new InvalidArgumentException('Upload target path is not writable');
         }
-        
+
         if (strpos($targetPath, '//')) {
             if (!copy($this->file, $targetPath)) {
                 throw new RuntimeException(sprintf('Error moving uploaded file %1s to %2s', $this->name, $targetPath));
@@ -190,6 +190,11 @@ class UploadedFile implements UploadedFileInterface
     public function getError()
     {
         return $this->error;
+    }
+
+    public function getTmpFilename()
+    {
+        return $this->moved ? $this->name : $this->file;
     }
 
     /**

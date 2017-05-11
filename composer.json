@@ -11,7 +11,6 @@
         "natxet/CssMin": "@stable",
         "nikic/fast-route": "~0.6",
         "oyejorge/less.php": "@stable",
-        "paragonie/random_compat": "~2.0",
         "pelago/emogrifier": "~1.0",
         "phpoffice/phpexcel": "~1.8",
         "pimple/pimple": "~3.0",
@@ -24,11 +23,11 @@
         "symfony/finder": "~3.2.0",
         "symfony/yaml": "~3.2.0",
         "tijsverkoyen/akismet": "~1.1",
-        "zendframework/zend-crypt": "~3.1.0",
+        "zendframework/zend-crypt": "~3.2.0",
         "zendframework/zend-db": "~2.8||~3.0.0",
         "zendframework/zend-math": "~3.0.0",
         "zendframework/zend-permissions-rbac": "~2.5||~3.0.0",
-        "zendframework/zend-stdlib": "~3.0.0"
+        "zendframework/zend-stdlib": "~3.1.0"
     },
     "repositories": {
         "packagist": {
@@ -41,6 +40,10 @@
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0",
         "sstalle/php7cc": "1.1.0"
+    },
+    "suggest": {
+        "ext-bcmath": "Used for calculation of converting currency",
+        "ext-intl": "Used for comparing unicode strings"
     },
     "license": "MIT",
     "autoload": {

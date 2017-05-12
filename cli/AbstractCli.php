@@ -14,7 +14,7 @@ abstract class AbstractCli
 
     public function __construct()
     {
-        if (isset($_SERVER['REQUEST_METHOD'])) {
+        if (PHP_SAPI !== 'cli') {
             die(1);
         }
         Bootstrap::init($_SERVER);

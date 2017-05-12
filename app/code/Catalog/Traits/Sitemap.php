@@ -13,7 +13,7 @@ trait Sitemap
 
     use \Seahinet\Lib\Traits\DB;
 
-    public function generate($response = true)
+    public function generate()
     {
         $collection = new Language;
         $collection->where(['status' => 1]);
@@ -25,42 +25,46 @@ trait Sitemap
         $count = $collection->count();
         try {
             foreach ($collection as $language) {
-                $result = $indexer->select('catalog_url', $language->getId());
                 $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-                foreach ($result as $url) {
-                    if ($url['product_id']) {
-                        $model = $this->getTableGateway('product_entity')->select(['id' => $url['product_id']])->toArray()[0];
-                    } else {
-                        $model = $this->getTableGateway('category_entity')->select(['id' => $url['category_id']])->toArray()[0];
+                $offset = 0;
+                do {
+                    $result = $indexer->select('catalog_url', $language->getId(), [], ['limit' => 50, 'offset' => $offset]);
+                    foreach ($result as $url) {
+                        if ($url['product_id']) {
+                            $model = $this->getTableGateway('product_entity')->select(['id' => $url['product_id']])->toArray()[0];
+                        } else {
+                            $model = $this->getTableGateway('category_entity')->select(['id' => $url['category_id']])->toArray()[0];
+                        }
+                        $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>' . ($url['product_id'] ? '1.0' : '0.5') . '</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
                     }
-                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>' . ($url['product_id'] ? '1.0' : '0.5') . '</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
-                }
-                $result = $indexer->select('cms_url', $language->getId());
-                foreach ($result as $url) {
-                    if ($url['page_id']) {
-                        $model = new Page;
-                        $model->load($url['page_id']);
+                    $offset += 50;
+                } while ($result);
+                $offset = 0;
+                do {
+                    $result = $indexer->select('cms_url', $language->getId(), ['limit' => 50, 'offset' => $offset]);
+                    foreach ($result as $url) {
+                        if ($url['page_id']) {
+                            $model = new Page;
+                            $model->load($url['page_id']);
+                        }
+                        $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>0.2</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
                     }
-                    $xml .= '<url><loc>' . $baseurl . $url['path'] . '.html</loc><changefreq>daily</changefreq><priority>0.2</priority><lastmod>' . (new DateTime($model['updated_at'] ?: $model['created_at'], $timezone))->format(DateTime::W3C) . '</lastmod></url>';
-                }
+                    $offset += 50;
+                } while ($result);
                 $fp = fopen($filename . ($count === 1 ? '' : ('-' . $language->getId())) . '.xml', 'w');
                 fwrite($fp, $xml . '</urlset>');
                 fclose($fp);
             }
-            if ($response) {
-                return ['error' => 0, 'message' => [[
-                    'message' => $this->translate('The sitemap has been generated.'),
-                    'level' => 'success'
-                ]]];
-            } else {
-                return 'The sitemap has been generated.';
-            }
+            return PHP_SAPI === 'cli' ? 'The sitemap has been generated.' : ['error' => 0, 'message' => [[
+                'message' => $this->translate('The sitemap has been generated.'),
+                'level' => 'success'
+            ]]];
         } catch (Exception $e) {
             $this->getContainer()->get('log')->logException($e);
-            return $response ? ['error' => 1, 'message' => [[
+            return PHP_SAPI === 'cli' ? $e->getMessage() : ['error' => 1, 'message' => [[
                 'message' => $this->translate('An error detected. Please try again later.'),
                 'level' => 'danger'
-                    ]]] : $e->getMessage();
+            ]]];
         }
     }
 

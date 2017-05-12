@@ -18,7 +18,7 @@ class Sitemap extends AbstractCli
     public function run()
     {
         if (isset($this->args['g'])) {
-            $result = $this->generate(false);
+            $result = $this->generate();
             echo $result, PHP_EOL;
         } else {
             echo $this->usageHelp();

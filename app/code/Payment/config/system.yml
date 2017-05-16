@@ -279,6 +279,8 @@ payment:
                     required: required
                     default: https://mapi.alipay.com/gateway.do
                     priority: 30
+                    attrs:
+                        data-base: '#alipay_direct_pay-enable'
                 partner:
                     type: number
                     scope: [merchant,scope]
@@ -288,12 +290,15 @@ payment:
                     attrs:
                         minlength: 16
                         maxlength: 16
+                        data-base: '#alipay_direct_pay-enable'
                 security_key:
                     type: text
                     scope: [merchant,scope]
                     label: Security Key
                     required: required
                     priority: 32
+                    attrs:
+                        data-base: '#alipay_direct_pay-enable'
                 seller_type:
                     type: select
                     scope: [merchant,scope]
@@ -305,6 +310,8 @@ payment:
                         seller_email: Seller Email
                         seller_account_name: Seller Account Name
                     default: seller_id
+                    attrs:
+                        data-base: '#alipay_direct_pay-enable'
                 seller_id:
                     type: text
                     scope: [merchant,scope]
@@ -323,6 +330,8 @@ payment:
                     options:
                         - Disabled
                         - Enabled
+                    attrs:
+                        data-base: '#alipay_direct_pay-enable'
                 min_total:
                     type: price
                     label: Minimum Order Total
@@ -381,33 +390,32 @@ payment:
                     required: required
                     default: https://api.mch.weixin.qq.com/
                     priority: 30
-                partner:
-                    type: number
-                    scope: [merchant,scope]
-                    label: Partner ID
-                    required: required
-                    priority: 31
                     attrs:
-                        minlength: 16
-                        maxlength: 16
+                        data-base: '#wechat_pay-enable'
                 app_id:
                     type: text
                     scope: [merchant,scope]
                     label: App ID
                     required: required
                     priority: 32
+                    attrs:
+                        data-base: '#wechat_pay-enable'
                 app_secret:
                     type: text
                     scope: [merchant,scope]
                     label: Secret Code
                     required: required
                     priority: 33
+                    attrs:
+                        data-base: '#wechat_pay-enable'
                 mch_id:
                     type: text
                     scope: [merchant,scope]
                     label: Merchant ID
                     required: required
                     priority: 34
+                    attrs:
+                        data-base: '#wechat_pay-enable'
                 min_total:
                     type: price
                     label: Minimum Order Total

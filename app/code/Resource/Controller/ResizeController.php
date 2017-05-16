@@ -21,7 +21,7 @@ class ResizeController extends ActionController
         if (!file_exists($file)) {
             return $this->notFoundAction();
         }
-        $resized = BP . 'pub/resource/image/resized/' . $this->getOption('width') . 'x' . $this->getOption('height') . '/' . $this->getOption('file');
+        $resized = BP . 'pub/resource/image/resized/' . $this->getOption('width') . 'x' . $this->getOption('height') . '/' . rawurldecode($this->getOption('file'));
         $path = dirname($resized);
         if (!is_dir($path)) {
             mkdir($path, 0777, true);

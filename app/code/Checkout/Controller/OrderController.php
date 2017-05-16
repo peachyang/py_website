@@ -334,14 +334,15 @@ class OrderController extends ActionController
         return $this->response($result, 'checkout/order/', 'checkout');
     }
 
-    public function validPayment($data)
+    protected function validPayment($data)
     {
         if (!isset($data['payment_method'])) {
             throw new Exception('Please select payment method');
         }
+        $cart = Cart::instance();
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        $result = $method->available($data);
+        $result = $method->available($cart['base_total']);
         if ($result !== true) {
             throw new Exception(is_string($result) ? $result : 'Invalid payment method');
         }
@@ -372,10 +373,11 @@ class OrderController extends ActionController
         return $this->response($result, 'checkout/order/', 'checkout');
     }
 
-    public function validShipping($data)
+    protected function validShipping($data)
     {
         $cart = Cart::instance();
         $result = [];
+        $totals = [];
         foreach ($cart->getItems() as $item) {
             if (!$item['is_virtual'] && $item['status'] && !isset($result[$item['store_id']])) {
                 if (!isset($data['shipping_method'][$item['store_id']])) {
@@ -383,9 +385,15 @@ class OrderController extends ActionController
                 }
                 $className = $this->getContainer()->get('config')['shipping/' . $data['shipping_method'][$item['store_id']] . '/model'];
                 $result[$item['store_id']] = new $className;
-                if (!$result[$item['store_id']]->available($data)) {
-                    throw new Exception('Invalid shipping method');
-                }
+            }
+            if (!isset($totals[$item['store_id']])) {
+                $totals[$item['store_id']] = 0;
+            }
+            $totals[$item['store_id']] += $item['base_price'] * $item['qty'];
+        }
+        foreach ($result as $id => $model) {
+            if (!$model->available(['total' => $totals[$id]])) {
+                throw new Exception('Invalid shipping method');
             }
         }
         return $result;

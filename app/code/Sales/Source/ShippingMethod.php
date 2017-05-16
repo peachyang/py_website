@@ -32,7 +32,7 @@ class ShippingMethod implements SourceInterface
             $country = $config['shipping/' . $code . '/country'];
             $model = new $className;
             if ($model instanceof AbstractMethod && $model->available(['total' => $total]) &&
-                    (!$address || !$country || in_array($address->offsetGet('country'), $country))) {
+                    (!$address || !$country || in_array($address->offsetGet('country'), explode(',', $country)))) {
                 $result[$code] = $config['shipping/' . $code . '/label'];
             }
         }

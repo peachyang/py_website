@@ -26,7 +26,7 @@ class PaymentMethod implements SourceInterface
                 $country = $config['payment/' . $code . '/country'];
                 $model = new $className;
                 if ($model instanceof AbstractMethod && $model->available(['total' => $total]) === true &&
-                        (!$address || !$country || in_array($address->offsetGet('country'), $country))) {
+                        (!$address || !$country || in_array($address->offsetGet('country'), explode(',', $country)))) {
                     $result[$code] = $getObject ? $model : $config['payment/' . $code . '/label'];
                 }
             }

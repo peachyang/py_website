@@ -342,7 +342,7 @@ class OrderController extends ActionController
         $cart = Cart::instance();
         $className = $this->getContainer()->get('config')['payment/' . $data['payment_method'] . '/model'];
         $method = new $className;
-        $result = $method->available($cart['base_total']);
+        $result = $method->available(['total' => $cart['base_total']]);
         if ($result !== true) {
             throw new Exception(is_string($result) ? $result : 'Invalid payment method');
         }

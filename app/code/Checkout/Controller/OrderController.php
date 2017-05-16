@@ -367,7 +367,7 @@ class OrderController extends ActionController
                 $result['error'] = 1;
             } else {
                 try {
-                    $this->validPayment($data);
+                    $this->validPayment(['total' => Cart::instance()['base_total']] + $data);
                     $cart = Cart::instance();
                     $cart->setData([
                         'payment_method' => $data['payment_method']

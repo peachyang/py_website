@@ -3,6 +3,7 @@
 namespace Seahinet\Payment\Model;
 
 use DOMDocument;
+use Exception;
 use Seahinet\I18n\Model\Currency;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Log\Model\Collection\Payment as Collection;
@@ -67,10 +68,16 @@ class WeChatPay extends AbstractMethod
             ])->save();
         }
         $result = $this->request($config['payment/wechat_pay/gateway'] . 'pay/unifiedorder', $params);
+        if ($result === false) {
+            throw new Exception('An error detected.');
+        }
         $segment = new Segment('checkout');
         if (($codeUrl = $result->getElementsByTagName('code_url')) && $codeUrl->length) {
             $barcode = new TCPDF2DBarcode($codeUrl->item(0)->nodeValue, 'QRCODE,M');
-            $segment->set('wechatpay', [$tradeType, 'data:image/png;base64, ' . base64_encode($barcode->getBarcodePNG(100, 100)), $params['out_trade_no']]);
+            ob_start();
+            $barcode->getBarcodePNG(100, 100);
+            $png = ob_get_clean();
+            $segment->set('wechatpay', [$tradeType, 'data:image/png;base64, ' . base64_encode($png), $params['out_trade_no']]);
         } else if (($redirect = $result->getElementsByTagName('mweb_url')) && $redirect->length) {
             return $redirect->item(0)->nodeValue;
         } else {
@@ -93,6 +100,9 @@ class WeChatPay extends AbstractMethod
         ];
         $params['sign'] = $this->getSign($params);
         $result = $this->request($config['payment/wechat_pay/gateway'] . 'pay/orderquery', $params);
+        if ($result === false) {
+            return false;
+        }
         $state = $result->getElementsByTagName('trade_state');
         return $state->length && $state->item(0)->nodeValue === 'SUCCESS';
     }
@@ -191,17 +201,13 @@ class WeChatPay extends AbstractMethod
         }
         $xml->appendChild($root);
         $client = curl_init($url);
-        curl_setopt($client, CURLOPT_RETURNTRANSFER, 0);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($client, CURLOPT_POST, 1);
         curl_setopt($client, CURLOPT_HTTPHEADER, ['Content-Type: text/xml; charset=UTF-8']);
         curl_setopt($client, CURLOPT_POSTFIELDS, $xml->saveXML());
         $result = new DOMDocument;
         $result->loadXML(curl_exec($client));
         curl_close($client);
-        $str = $result->getElementsByTagName('nonce_str');
-        if ($str->item(0)->nodeValue !== $params['nonce_str']) {
-            return false;
-        }
         return $result;
     }
 

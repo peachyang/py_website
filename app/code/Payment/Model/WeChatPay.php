@@ -68,10 +68,10 @@ class WeChatPay extends AbstractMethod
         }
         $result = $this->request($config['payment/wechat_pay/gateway'] . 'pay/unifiedorder', $params);
         $segment = new Segment('checkout');
-        if (($codeUrl = $result->getElementByTagName('code_url')) && $codeUrl->length) {
+        if (($codeUrl = $result->getElementsByTagName('code_url')) && $codeUrl->length) {
             $barcode = new TCPDF2DBarcode($codeUrl->item(0)->nodeValue, 'QRCODE,M');
             $segment->set('wechatpay', [$tradeType, 'data:image/png;base64, ' . base64_encode($barcode->getBarcodePNG(100, 100)), $params['out_trade_no']]);
-        } else if (($redirect = $result->getElementByTagName('mweb_url')) && $redirect->length) {
+        } else if (($redirect = $result->getElementsByTagName('mweb_url')) && $redirect->length) {
             return $redirect->item(0)->nodeValue;
         } else {
             $segment->set('wechatpay', [$tradeType, $result === false ? false : true, $params['out_trade_no']]);
@@ -178,7 +178,7 @@ class WeChatPay extends AbstractMethod
                 $str .= $key . '=' . $param . '&';
             }
         }
-        return md5(trim($str, '&') . $this->getContainer()->get('config')['payment/wechat_pay/app_secret']);
+        return strtoupper(md5(trim($str, '&') . '&key=' . $this->getContainer()->get('config')['payment/wechat_pay/app_secret']));
     }
 
     public function request($url, $params)
@@ -196,7 +196,7 @@ class WeChatPay extends AbstractMethod
         curl_setopt($client, CURLOPT_HTTPHEADER, ['Content-Type: text/xml; charset=UTF-8']);
         curl_setopt($client, CURLOPT_POSTFIELDS, $xml->saveXML());
         $result = new DOMDocument;
-        $result->load(curl_exec($client));
+        $result->loadXML(curl_exec($client));
         curl_close($client);
         $str = $result->getElementsByTagName('nonce_str');
         if ($str->item(0)->nodeValue !== $params['nonce_str']) {

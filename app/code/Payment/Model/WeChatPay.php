@@ -11,7 +11,6 @@ use Seahinet\Log\Model\Payment as Model;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\Order;
 use Seahinet\Sales\Model\Collection\Order\Status;
-use TCPDF2DBarcode;
 use Zend\Math\Rand;
 
 class WeChatPay extends AbstractMethod
@@ -55,6 +54,7 @@ class WeChatPay extends AbstractMethod
             $logs[] = $log;
         }
         sort($ids);
+        $params['total_fee'] = (int) ($params['total_fee'] * 100);
         $params['product_id'] = md5(implode(',', $ids));
         $params['out_trade_no'] = md5(implode('', $ids));
         $params['sign'] = $this->getSign($params);
@@ -71,9 +71,9 @@ class WeChatPay extends AbstractMethod
         if ($result === false) {
             throw new Exception('An error detected.');
         }
-        $segment = new Segment('checkout');
+        $segment = new Segment('payment');
         if (($codeUrl = $result->getElementsByTagName('code_url')) && $codeUrl->length) {
-            $segment->set('wechatpay', [$tradeType, $result->getElementsByTagName('code_url'), $params['out_trade_no']]);
+            $segment->set('wechatpay', [$tradeType, $codeUrl->item(0)->nodeValue, $params['out_trade_no']]);
         } else if (($redirect = $result->getElementsByTagName('mweb_url')) && $redirect->length) {
             return $redirect->item(0)->nodeValue;
         } else {

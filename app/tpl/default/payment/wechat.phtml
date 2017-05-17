@@ -2,8 +2,8 @@
 list($type, $result) = $this->getSegment('payment')->get('wechatpay');
 ?>
 <?php if ($type === 'NATIVE'): ?>
-    <?php if (substr($result, 0, 5) === 'data:'): ?>
-        <img src="<?php echo $result ?>" />
+    <?php if (substr($result, 0, 3) === 'ws:'): ?>
+        <img src="<?php echo $this->getQRCode($result) ?>" />
     <?php else: ?>
         <p><?php echo $this->translate('An error detected while connecting with WeChat server.') ?></p>
     <?php endif ?>

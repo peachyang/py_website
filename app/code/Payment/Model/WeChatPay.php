@@ -73,11 +73,7 @@ class WeChatPay extends AbstractMethod
         }
         $segment = new Segment('checkout');
         if (($codeUrl = $result->getElementsByTagName('code_url')) && $codeUrl->length) {
-            $barcode = new TCPDF2DBarcode($codeUrl->item(0)->nodeValue, 'QRCODE,M');
-            ob_start();
-            $barcode->getBarcodePNG(100, 100);
-            $png = ob_get_clean();
-            $segment->set('wechatpay', [$tradeType, 'data:image/png;base64, ' . base64_encode($png), $params['out_trade_no']]);
+            $segment->set('wechatpay', [$tradeType, $result->getElementsByTagName('code_url'), $params['out_trade_no']]);
         } else if (($redirect = $result->getElementsByTagName('mweb_url')) && $redirect->length) {
             return $redirect->item(0)->nodeValue;
         } else {

@@ -6,5 +6,5 @@ payment_wechat:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
+                        type: Seahinet\Payment\ViewModel\WeChat
                         template: payment/wechat

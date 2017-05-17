@@ -37,6 +37,14 @@ class Product extends Entity
         return isset($this->storage['product_type_id']) && $this->storage['product_type_id'] == 2;
     }
 
+    public function isNew()
+    {
+        $time = time();
+        return !empty($this->storage['new_start']) &&
+                strtotime($this->storage['new_start']) <= $time &&
+                (empty($this->storage['new_end']) || strtotime($this->storage['new_end']) >= $time);
+    }
+
     public function getOptions($constraint = [])
     {
         if ($this->getId()) {

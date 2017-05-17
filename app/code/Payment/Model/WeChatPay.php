@@ -21,7 +21,7 @@ class WeChatPay extends AbstractMethod
     public function preparePayment($orders)
     {
         $config = $this->getContainer()->get('config');
-        $tradeType = Bootstrap::isMobile() ? (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessager') === false ? 'JSAPI' : 'MWEB') : 'NATIVE';
+        $tradeType = Bootstrap::isMobile() ? (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessager') === false ? 'MWEB' : 'JSAPI') : 'NATIVE';
         $params = [
             'appid' => $config['payment/wechat_pay/app_id'],
             'mch_id' => $config['payment/wechat_pay/mch_id'],
@@ -34,9 +34,6 @@ class WeChatPay extends AbstractMethod
             'trade_type' => $tradeType,
             'product_id' => ''
         ];
-        if ($tradeType === 'MWEB') {
-            $params['mweb_url'] = $this->getBaseUrl('payment/return/');
-        }
         $ids = [];
         $logs = [];
         $currency = new Currency;
@@ -75,7 +72,7 @@ class WeChatPay extends AbstractMethod
         if (($codeUrl = $result->getElementsByTagName('code_url')) && $codeUrl->length) {
             $segment->set('wechatpay', [$tradeType, $codeUrl->item(0)->nodeValue, $params['out_trade_no']]);
         } else if (($redirect = $result->getElementsByTagName('mweb_url')) && $redirect->length) {
-            return $redirect->item(0)->nodeValue;
+            return $redirect->item(0)->nodeValue . '&redirect_url=' . rawurlencode($this->getBaseUrl('payment/return/'));
         } else {
             $segment->set('wechatpay', [$tradeType, $result === false ? false : true, $params['out_trade_no']]);
         }

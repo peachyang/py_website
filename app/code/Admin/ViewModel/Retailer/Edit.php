@@ -19,6 +19,7 @@ class Edit extends PEdit
 
     protected function prepareElements($columns = [])
     {
+        $model = $this->getVariable('model');
         $columns = [
             'csrf' => [
                 'type' => 'csrf'
@@ -34,10 +35,12 @@ class Edit extends PEdit
             'lisence_1' => [
                 'type' => 'image',
                 'label' => 'ID Card 1',
+                'value' => $model->getId() ? 'data:image/png;base64, ' . base64_encode($model['lisence_1']) : null
             ],
             'lisence_2' => [
                 'type' => 'image',
                 'label' => 'ID Card 2',
+                'value' => $model->getId() ? 'data:image/png;base64, ' . base64_encode($model['lisence_2']) : null
             ],
             'phone' => [
                 'type' => 'tel',

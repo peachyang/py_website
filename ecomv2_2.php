@@ -678,17 +678,17 @@ CREATE TABLE IF NOT EXISTS `reward_points`(
 );
 
 INSERT INTO `eav_attribute` VALUES 
-(48,1,'rewardpoints','int','hidden','',0,'0',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(49,4,'can_use_reward_points','varchar','bool','',0,'1',0,NULL,NULL,0,0,0,0,NULL,NULL),
-(50,4,'reward_points','int','tel','',0,NULL,0,NULL,NULL,0,0,0,0,NULL,NULL);
+(49,1,'rewardpoints','int','hidden','',0,'0',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(50,4,'can_use_reward_points','varchar','bool','',0,'1',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(51,4,'reward_points','int','tel','',0,NULL,0,NULL,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
-(1, 1, 48, 0),
-(4, 6, 49, 0),
-(4, 6, 50, 0);
+(1, 1, 49, 0),
+(4, 6, 50, 0),
+(4, 6, 51, 0);
 INSERT INTO `eav_attribute_label` VALUES
-(48, 1, 'Reward Points'),
-(49, 1, 'Can Use Reward Points'),
-(50, 1, 'Reward Points');
+(49, 1, 'Reward Points'),
+(50, 1, 'Can Use Reward Points'),
+(51, 1, 'Reward Points');
 
 CREATE TABLE IF NOT EXISTS `customer_balance`(
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,

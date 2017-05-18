@@ -1240,7 +1240,8 @@ INSERT INTO `eav_attribute` VALUES
 (44,4,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (45,4,'additional','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
 (46,4,'tier_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\TierPrice',0,0,0,0,NULL,NULL),
-(47,4,'group_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\GroupPrice',0,0,0,0,NULL,NULL);
+(47,4,'group_price','text','text','',0,'',0,NULL,'\\Seahinet\\Admin\\ViewModel\\Catalog\\Edit\\Product\\GroupPrice',0,0,0,0,NULL,NULL),
+(48,4,'msrp','decimal','price','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `eav_entity_attribute` VALUES 
 (4, 5, 26, 0),
 (4, 5, 27, 0),
@@ -1263,7 +1264,8 @@ INSERT INTO `eav_entity_attribute` VALUES
 (4, 8, 44, 0),
 (4, 8, 45, 0),
 (4, 6, 46, 0),
-(4, 6, 47, 0);
+(4, 6, 47, 0),
+(4, 6, 48, 0);
 INSERT INTO `eav_attribute_label` VALUES
 (26, 1, 'Name'),
 (27, 1, 'Uri Key'),
@@ -1286,7 +1288,8 @@ INSERT INTO `eav_attribute_label` VALUES
 (44, 1, 'Thumbnail'),
 (45, 1, 'Additional'),
 (46, 1, 'Tier Price'),
-(47, 1, 'Group Price');
+(47, 1, 'Group Price'),
+(48, 1, 'MSRP');
 
 CREATE TABLE IF NOT EXISTS `product_type` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,

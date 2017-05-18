@@ -23,7 +23,7 @@ class MySQL implements EngineInterface
             );
             $adapter->query(
                     'CREATE TABLE `' . $table . '`(`id` INTEGER UNSIGNED NOT NULL,`store_id` INTEGER UNSIGNED NOT NULL,`data` LONGTEXT,PRIMARY KEY (`id`),INDEX IDX_CATALOG_SEARCH_1_INDEX_STORE_ID (`store_id`),FULLTEXT INDEX `FTI_' .
-                    strtoupper($table) . '_FULLTEXT_DATA` (`data`));', $adapter::QUERY_MODE_EXECUTE
+                    strtoupper($table) . '_FULLTEXT_DATA` (`data`) WITH PARSER ngram);', $adapter::QUERY_MODE_EXECUTE
             );
         }
     }

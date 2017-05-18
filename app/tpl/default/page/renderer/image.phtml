@@ -31,7 +31,7 @@ $parent = $this->getVariable('parent');
         <?php else: ?>
             <label for="<?php echo $id ?>">
                 <img src="<?php
-                if (strpos($item['value'], '.')):
+                if (substr($item['value'], 0, 4) === 'http'):
                     echo $item['value'];
                 else:
                     ?>data:image/png;base64, <?php

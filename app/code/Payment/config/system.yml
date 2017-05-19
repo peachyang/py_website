@@ -360,7 +360,7 @@ payment:
                     label: Label
                     required: required
                     priority: 1
-                    default: Wechat Pay
+                    default: WeChat Pay
                 model:
                     type: hidden
                     scope: merchant

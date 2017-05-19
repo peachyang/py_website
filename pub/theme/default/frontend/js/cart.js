@@ -65,7 +65,7 @@
             $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
                 this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
             });
-        }).on('blur', '[name^=qty]', updateCart).on('click', '[type=checkbox]', updateCart);
+        }).on('change.seahinet', '[name^=qty]', updateCart).on('click', '[type=checkbox]', updateCart);
         var cartSelectItem = function () {
             if (this) {
                 if ($(this).is('.selectall,.selectall [type=checkbox]')) {

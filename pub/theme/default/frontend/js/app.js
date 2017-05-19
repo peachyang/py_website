@@ -203,6 +203,9 @@
                 }, 600);
             }
         });
+        $('.qty [name^=qty]').keypress(function(){
+            $(this).trigger('change.seahinet');
+        });
         $('.qty .spin').click(function () {
             var t = $('#' + $(this).attr('for'));
             var v = parseFloat($(t).val());

@@ -244,7 +244,12 @@
                     if (!$(this).is('.selected')) {
                         $(this).addClass('selected');
                     }
-                    $('.toolbar menu.context').css({left: e.clientX - 10, top: e.clientY - 10}).show();
+                    var css = {left: e.clientX - 10, top: e.clientY - 10};
+                    if ($('.toolbar menu.context').is('#modal-insert menu.context')) {
+                        var offset = $('#modal-insert .modal-dialog').offset();
+                        css = {left: e.clientX - offset.left - 10, top: e.clientY - offset.top - 10};
+                    }
+                    $('.toolbar menu.context').css(css).show();
                     return false;
                 }).on('keypress', '.item.selected .filename[contenteditable]', function (e) {
                     if (e.keyCode == 13) {

@@ -528,7 +528,7 @@ dl.options dd{float:left;margin-left:4px}
 .retailer-account .product-edit .category.table .dropdown-toggle.active{border-right-width:0;border-color:transparent transparent transparent #333;vertical-align:2px}
 .retailer-account .product-edit .btn-next~.btn{display:none}
 .retailer-account .product-edit .btn-next.disabled{display:none}
-.retailer-account .product-edit .btn-next.disabled~.btn{display:inline-block}
+.retailer-account .product-edit .btn-next.disabled~.btn,.retailer-account .product-edit .btn-next.edit~.btn{display:inline-block}
 .product-essential{padding-top:10px}
 .product-essential #product-media{padding:0 20px 26px 25px}
 .product-essential #product-media .item{text-align:center}

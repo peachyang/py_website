@@ -26,7 +26,7 @@ class ResizeController extends ActionController
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
-        $image = $this->resize($file, (int) ($this->getOption('width') * $retina), (int) ($this->getOption('height') * $retina));
+        $image = $this->resize($file, (int) ($this->getOption('width') * $retina), (int) (($this->getOption('height') ?: 0) * $retina));
         $image->save($resized);
         $image->show(substr($resized, strrpos($resized, '.') + 1));
         exit;

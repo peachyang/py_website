@@ -9,7 +9,7 @@ use Seahinet\Sales\Model\Order;
 class InquireController extends ActionController
 {
 
-    public function inquireAction()
+    public function indexAction()
     {
         return $this->getLayout('sales_order_inquire');
     }

@@ -203,7 +203,13 @@
                 }, 600);
             }
         });
-        $('.qty [name^=qty]').keypress(function(){
+        $('.qty [name^=qty]').keypress(function () {
+            var v = parseFloat($(this).val().replace(/[^\d\.\-]/g,''));
+            if (isNaN(v)) {
+                $(this).val($(this).attr('min') || 1);
+            } else {
+                $(this).val(v);
+            }
             $(this).trigger('change.seahinet');
         });
         $('.qty .spin').click(function () {

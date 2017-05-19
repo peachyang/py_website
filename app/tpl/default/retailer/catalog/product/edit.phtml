@@ -16,7 +16,7 @@ if ($this->hasTitle()):
             </div>
             <div class="buttons-set">
                 <button type="reset" class="btn btn-reset"><span><?php echo $this->translate('Reset') ?></span></button>
-                <button type="button" class="btn btn-next"><span><?php echo $this->translate('Next') ?></span></button>
+                <button type="button" class="btn btn-next<?php if($this->getQuery('id')): ?> edit<?php endif ?>"><span><?php echo $this->translate('Next') ?></span></button>
                 <button type="submit" name="success_url" value="<?php echo $this->getQuery('id') ? $this->getUri() : $this->getBaseUrl('retailer/product/selling/') ?>" class="btn btn-submit"><span><?php echo $this->translate('Save and Return') ?></span></button>
                 <button type="submit" class="btn btn-submit"><span><?php echo $this->translate('Save') ?></span></button>
                 <?php if ($this->getDeleteUrl()): ?>

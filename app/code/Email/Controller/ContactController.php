@@ -28,7 +28,7 @@ class ContactController extends ActionController
                 $files = $this->getRequest()->getUploadedFile();
                 if ($files) {
                     foreach ($files as $file) {
-                        $message->attach(Swift_Attachment::fromPath($file->getTmpFilename()));
+                        $message->attach(Swift_Attachment::fromPath($file->getTmpFilename(), $file->getClientMediaType()));
                     }
                 }
                 $mailer->send($message->setSubject($this->translate('Contact Us'))

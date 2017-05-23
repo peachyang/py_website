@@ -217,7 +217,8 @@ class StoreDecoration extends Template
             $customer_id = $current_retailer['customer_id'];
         }
         $retailer = new RetailerCollection;
-        $retailer->where(['retailer.customer_id' => $customer_id, 'retailer.store_id' => $store_id])
+        $retailer->join('retailer_manager', 'retailer_manager.retailer_id=retailer.id', [], 'left')
+                ->where(['retailer_manager.customer_id' => $customer_id, 'retailer.store_id' => $store_id])
                 ->join('resource', 'retailer.banner = resource.id', ['real_name'], 'left')->order(['resource.created_at' => 'DESC']);
         //return $segment->get('customer');
         return empty($retailer) ? [] : $retailer[0];

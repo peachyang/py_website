@@ -2,7 +2,6 @@
 
 namespace Seahinet\Cms\ViewModel;
 
-use Seahinet\Cms\Model\Category;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
 
@@ -31,6 +30,15 @@ class Navigation extends Template
     public function getLanguageId()
     {
         return Bootstrap::getLanguage()->getId();
+    }
+
+    public function getTopCategory($category = null)
+    {
+        if (is_null($category)) {
+            $category = $this->getCategory();
+        }
+        $parent = $category->getParentCategory();
+        return $parent ? $this->getTopCategory($parent) : $category;
     }
 
 }

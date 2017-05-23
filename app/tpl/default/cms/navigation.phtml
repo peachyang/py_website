@@ -1,5 +1,5 @@
 <?php
-$parent = $this->getVariable('category')->getParentCategory();
+$parent = $this->getTopCategory();
 ?>    
 <nav class="col-sm-8" id="cms-layered-nav">
     <h2 class="title"><?php echo $parent['name'][$this->getLanguageId()]; ?></h2>

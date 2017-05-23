@@ -47,6 +47,7 @@ class Category extends AbstractModel
 
     protected function beforeSave()
     {
+        $this->storage['uri_key'] = rawurlencode($this->storage['uri_key']);
         $this->beginTransaction();
         parent::beforeSave();
     }

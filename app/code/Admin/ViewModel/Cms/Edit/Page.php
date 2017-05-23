@@ -75,7 +75,8 @@ class Page extends PEdit
             'uri_key' => [
                 'type' => 'text',
                 'label' => 'Uri Key',
-                'required' => 'required'
+                'required' => 'required',
+                'value' => $model['uri_key'] ? rawurldecode($model['uri_key']) : ''
             ],
             'status' => [
                 'type' => 'select',

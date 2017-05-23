@@ -18,6 +18,7 @@ class Page extends AbstractModel
 
     protected function beforeSave()
     {
+        $this->storage['uri_key'] = rawurlencode($this->storage['uri_key']);
         $this->storage['content'] = gzencode($this->storage['content']);
         $this->beginTransaction();
         parent::beforeSave();

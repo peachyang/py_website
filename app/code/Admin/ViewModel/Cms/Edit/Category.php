@@ -58,7 +58,7 @@ class Category extends PEdit
                 'type' => 'text',
                 'label' => 'Uri Key',
                 'required' => 'required',
-                'value' => $model['uri_key'] ? rawurldecode($model['uri_key']) : ''
+                'value' => empty($model['uri_key']) ? '' : rawurldecode($model['uri_key'])
             ],
             'show_navigation' => [
                 'label' => 'Show Navigation',

@@ -47,6 +47,9 @@ class Category extends PGrid
             'uri_key' => [
                 'label' => 'Uri Key',
                 'class' => 'text-left',
+                'handler' => function ($value) {
+                    return rawurldecode($value);
+                }
             ],
             'language' => [
                 'label' => 'Language',

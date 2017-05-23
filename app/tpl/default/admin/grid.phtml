@@ -82,16 +82,17 @@ $query = $this->getQuery();
                             <td<?php if (isset($name['class'])): ?> class="<?php echo $name['class'] ?>"<?php endif ?>>
                                 <?php
                                 if (isset($item[$attr])) {
+                                    $value = isset($name['handler']) && is_callable($name['handler']) ? $name['handler']($item[$attr]) : $item[$attr];
                                     if (isset($name['editable']) && $name['editable']) {
-                                        echo $this->getInputBox($attr, $name + ['value' => item[$attr]]);
+                                        echo $this->getInputBox($attr, $name + ['value' => $value]);
                                     } else if (isset($name['type']) && $name['type'] === 'image') {
-                                        echo '<img src="' . $this->getResourceUrl('' . $item[$attr]) . '" alt="" />';
+                                        echo '<img src="' . $this->getResourceUrl('' . $value) . '" alt="" />';
                                     } else if (isset($name['type']) && $name['type'] === 'icon') {
-                                        echo '<i class="fa fa-' . $item[$attr] . '" ></i>';
+                                        echo '<i class="fa fa-' . $value . '" ></i>';
                                     } else if (isset($name['type']) && $name['type'] === 'price' && isset($name['currency'])) {
-                                        echo $name['currency']->format($item[$attr]);
+                                        echo $name['currency']->format($value);
                                     } else {
-                                        echo is_array($item[$attr]) ? implode(',', $item[$attr]) : (isset($name['options'][$item[$attr]]) ? $this->translate($name['options'][$item[$attr]], [], $this->getTranslateDomain()) : $item[$attr]);
+                                        echo is_array($value) ? implode(',', $value) : (isset($name['options'][$value]) ? $this->translate($name['options'][$value], [], $this->getTranslateDomain()) : $value);
                                     }
                                 }
                                 ?>

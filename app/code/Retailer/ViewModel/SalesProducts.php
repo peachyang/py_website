@@ -10,6 +10,7 @@ use Seahinet\Catalog\Model\Collection\Product as Pcollection;
 use Seahinet\Catalog\Model\Collection\Category as Ccollection;
 use Seahinet\Retailer\Model\Collection\ProductInCategoryCollection as Picollection;
 use Seahinet\Catalog\Model\Warehouse;
+use Seahinet\Retailer\Model\Retailer;
 use Zend\Db\Sql\Expression;
 
 class SalesProducts extends Template
@@ -77,8 +78,10 @@ class SalesProducts extends Template
         $table_name = "product_" . Bootstrap::getLanguage()->getId() . '_index';
         if (empty($current_store_id)) {
             $user = (new Segment('customer'))->get('customer');
-            if ($user->getRetailer()) {
-                $storeid = $user->getRetailer()->offsetGet('store_id');
+            $retailer = new Retailer;
+            $retailer->load($user->getId(), 'customer_id');
+            if ($retailer->getId()) {
+                $storeid = $retailer->offsetGet('store_id');
             }
         } else {
             $storeid = $current_store_id;

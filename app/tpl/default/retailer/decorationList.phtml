@@ -191,7 +191,7 @@ $theme_templates = $this->getTemplateList(1);
             beforeSend: function () {
             },
             success: function (data) {
-                if (data.status)
+                if (data.error == 0)
                 {
                     obj.closest("li").remove();
                 }
@@ -215,7 +215,7 @@ $theme_templates = $this->getTemplateList(1);
             beforeSend: function () {
             },
             success: function (data) {
-                if (data.status)
+                if (data.error == 0)
                 {
                     $(".decoration-content div.top").removeClass('active');
                     obj.closest("div.top").addClass('active');

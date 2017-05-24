@@ -977,6 +977,9 @@ dl.options dd{float:left;margin-left:4px}
 .decorationlist .decoration-content li div.top{width:220px;border:1px solid #CCCCCC;height:220px;background:url(../dragResource/images/bg-template.jpg);position:relative;overflow:hidden}
 .decorationlist .decoration-content li div.top:hover{border:1px solid #FF0000}
 .decorationlist .decoration-content li div.active{border:2px dashed #FF0000}
+.decorationlist .decoration-content li .setTemplateBtn{display:none}
+.decorationlist .decoration-content li .top.active .setTemplateBtn.btn-default{display:inline-block}
+.decorationlist .decoration-content li .top:not(.active) .setTemplateBtn.btn-info{display:inline-block}
 .decorationlist .decoration-content li div.top .position1{position:absolute;margin:90px 88px}
 .decorationlist .decoration-content li div.top .position2{position:absolute;left:133px;top:185px;display:none}
 .decorationlist .decoration-content li div.top .position3{position:absolute;left:10px;top:185px;display:none}

@@ -34,11 +34,8 @@ $theme_templates = $this->getTemplateList(1);
                                         <div class="position3">
                                             <button class="btn btn-success btn-sm" onclick="window.location = '<?php echo $this->getBaseUrl('/retailer/store/decoration?id=' . $template['id']) ?>'"><?php echo $this->translate('Edit'); ?></button>
                                             <a class="btn btn-danger btn-sm delTemplateBtn" href="<?php echo $this->getBaseUrl('retailer/store/delTemplate/') ?>" data-method="delete" data-params="id=<?php echo $template['id'] ?>&csrf=<?php echo $this->getCsrfKey() ?>"><?php echo $this->translate('Delete'); ?></a>
-                                            <?php if ($template['status'] != 1): ?>
-                                                <a class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>'><?php echo $this->translate('Set as Template'); ?></a>
-                                            <?php else : ?>
-                                                <span class="btn btn-default btn-sm setTemplateBtn"><?php echo $this->translate('Current Template'); ?></span>
-                                            <?php endif; ?>
+                                            <a class="btn btn-info btn-sm setTemplateBtn" template_id='<?php echo $template['id'] ?>'><?php echo $this->translate('Set as Template'); ?></a>
+                                            <span class="btn btn-default btn-sm setTemplateBtn"><?php echo $this->translate('Current Template'); ?></span>
                                         </div>
                                     </div>
                                     <div class="bottom"><?php echo $template['template_name'] ?></div>
@@ -206,6 +203,9 @@ $theme_templates = $this->getTemplateList(1);
 
     $('.setTemplateBtn').click(function () {
         var template_id = $(this).attr("template_id");
+        if (!template_id) {
+            return false;
+        }
         var obj = $(this);
         $.ajax({
             url: '<?php echo $this->getBaseUrl('/retailer/store/setTemplate') ?>',

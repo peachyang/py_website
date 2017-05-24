@@ -8,11 +8,12 @@ $customer = $this->getCustomer();
             <label class="control-label required" for="avatar"><?php echo $this->translate('Avatar') ?></label>
             <div class="cell">
                 <label for="avatar" class="avatar">
-                    <img src="<?php if ($customer->offsetGet('avatar')): ?>data:image/png;base64, <?php
-                        echo $customer->offsetGet('avatar');
-                    else:
+                    <img src="<?php
+                    if ($customer->offsetGet('avatar')) {
+                        echo $this->getBaseUrl('pub/upload/customer/avatar/' . $customer->offsetGet('avatar'));
+                    } else {
                         echo $this->getPubUrl('frontend/images/placeholder.png');
-                    endif;
+                    }
                     ?>" alt="" />
                     <span class="update"><?php echo $this->translate('Update Image') ?></span>
                 </label>
@@ -58,7 +59,7 @@ $customer = $this->getCustomer();
         <div class="input-box">
             <div class="cell">&nbsp;</div>
             <div class="cell">
-                <input type="checkbox" name="subscribe" id="subscribe" value="1"<?php if($this->hasSubscribed()): ?> checked="checked"<?php endif ?> />
+                <input type="checkbox" name="subscribe" id="subscribe" value="1"<?php if ($this->hasSubscribed()): ?> checked="checked"<?php endif ?> />
                 <label for="subscribe"><?php echo $this->translate('Subscribe for Promotions') ?></label>
             </div>
         </div>

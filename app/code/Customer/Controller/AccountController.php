@@ -400,7 +400,15 @@ class AccountController extends AuthActionController
                     $files = $this->getRequest()->getUploadedFile();
                     foreach ($files as $key => $file) {
                         if ($file->getError() == 0) {
-                            $data[$key] = base64_encode($file->getStream()->getContents());
+                            if (is_dir(BP . 'pub/upload/customer/' . $key)) {
+                                mkdir(BP . 'pub/upload/customer/' . $key, 0777, true);
+                            }
+                            $name = $customer['id'] . '.' . substr($file->getClientFilename(), strpos($file->getClientFilename(), '.'));
+                            unlink(BP . 'pub/upload/customer/' . $key . '/' . $name);
+                            $file->moveTo(BP . 'pub/upload/customer/' . $key . '/' . $name);
+                            $data[$key] = $name;
+                        } else {
+                            unset($data[$key]);
                         }
                     }
                     $model = new Model;

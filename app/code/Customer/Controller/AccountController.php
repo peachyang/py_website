@@ -352,7 +352,7 @@ class AccountController extends AuthActionController
             $attributes = new Attribute;
             $attributes->withSet()->where([
                         'is_unique' => 1,
-                        'attribute_set_id' => $data['attribute_set_id']
+                        'attribute_set_id' => $data['attribute_set_id'] ?? $customer['attribute_set_id']
                     ])->columns(['code'])
                     ->join('eav_entity_type', 'eav_attribute.type_id=eav_entity_type.id', [], 'right')
                     ->where(['eav_entity_type.code' => Model::ENTITY_TYPE])
@@ -400,12 +400,15 @@ class AccountController extends AuthActionController
                     $files = $this->getRequest()->getUploadedFile();
                     foreach ($files as $key => $file) {
                         if ($file->getError() == 0) {
-                            if (is_dir(BP . 'pub/upload/customer/' . $key)) {
+                            if (!is_dir(BP . 'pub/upload/customer/' . $key)) {
                                 mkdir(BP . 'pub/upload/customer/' . $key, 0777, true);
                             }
-                            $name = $customer['id'] . '.' . substr($file->getClientFilename(), strpos($file->getClientFilename(), '.'));
-                            unlink(BP . 'pub/upload/customer/' . $key . '/' . $name);
-                            $file->moveTo(BP . 'pub/upload/customer/' . $key . '/' . $name);
+                            $name = $customer['id'] . substr($file->getClientFilename(), strpos($file->getClientFilename(), '.'));
+                            $path = BP . 'pub/upload/customer/' . $key . '/' . $name;
+                            if (file_exists($path)) {
+                                unlink($path);
+                            }
+                            $file->moveTo($path);
                             $data[$key] = $name;
                         } else {
                             unset($data[$key]);

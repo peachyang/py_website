@@ -95,7 +95,7 @@ $parent = $this->getVariable('parent');
                 </td>
             </tr>
         </template>
-        <input type="hidden" name="<?php echo $key ?>" value="<?php echo $item['value'] ?? '' ?>" />
+        <input type="hidden" name="<?php echo $key ?>" value='<?php echo $item['value'] ?? '' ?>' />
         <?php if (isset($item['comment'])): ?>
             <div class="comment">
                 <?php echo nl2br($this->translate($item['comment'])) ?>

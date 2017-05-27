@@ -844,13 +844,14 @@ CREATE TABLE IF NOT EXISTS `livechat_group_member`(
 );
 
 CREATE TABLE IF NOT EXISTS `livechat_record` (
-    `id` VARBINARY(128) PRIMARY KEY NOT NULL,
+    `id` VARBINARY(128) NOT NULL,
     `session_id` VARCHAR(255) NOT NULL,
     `sender` VARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,
     `message` BLOB,
     `partial` INTEGER DEFAULT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX IDX_LIVECHAT_RECORD_ID (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `product_search_term` (

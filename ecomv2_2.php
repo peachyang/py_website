@@ -844,7 +844,7 @@ CREATE TABLE IF NOT EXISTS `livechat_group_member`(
 );
 
 CREATE TABLE IF NOT EXISTS `livechat_record` (
-    `id` VARBINARY(64) PRIMARY KEY NOT NULL,
+    `id` VARBINARY(128) PRIMARY KEY NOT NULL,
     `session_id` VARCHAR(255) NOT NULL,
     `sender` VARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,

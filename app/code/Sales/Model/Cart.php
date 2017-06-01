@@ -165,14 +165,14 @@ final class Cart extends AbstractModel implements Singleton
         if ($force || is_null($this->items)) {
             $items = new ItemCollection();
             $items->where(['cart_id' => $this->getId()]);
-            if ($force) {
-                return $items;
-            }
             $result = [];
             $items->walk(function($item) use (&$result) {
                 $result[$item['id']] = $item;
             });
             $this->items = $result;
+            if ($force) {
+                return clone $items;
+            }
         }
         return $this->items;
     }

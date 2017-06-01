@@ -98,7 +98,9 @@ class OrderController extends ActionController
                     $items = $cart->abandon();
                     if (empty($items)) {
                         $this->rollback();
-                        return $this->redirect('checkout/cart/');
+                        return $this->getRequest()->isXmlHttpRequest() ?
+                                ['error' => 0, 'message' => [], 'redirect' => $this->getBaseUrl('checkout/cart/')] :
+                                $this->redirect('checkout/cart/');
                     }
                     $totals = [];
                     foreach ($items as $item) {

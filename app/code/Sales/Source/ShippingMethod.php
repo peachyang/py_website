@@ -27,12 +27,13 @@ class ShippingMethod implements SourceInterface
             $total = Cart::instance()->offsetGet('base_price');
         }
         $result = [];
+        $countryCode = $address ? '' : (new Locate)->getCode('country', $address->offsetGet('country'));
         foreach ($config['system']['shipping']['children'] as $code => $info) {
             $className = $config['shipping/' . $code . '/model'];
             $country = $config['shipping/' . $code . '/country'];
             $model = new $className;
             if ($model instanceof AbstractMethod && $model->available(['total' => $total]) &&
-                    (!$address || !$country || in_array($address->offsetGet('country'), explode(',', $country)))) {
+                    (!$countryCode || !$country || in_array($countryCode->offsetGet('country'), explode(',', $country)))) {
                 $result[$code] = $config['shipping/' . $code . '/label'];
             }
         }

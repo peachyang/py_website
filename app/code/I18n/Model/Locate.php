@@ -17,8 +17,7 @@ class Locate
         $cache = $this->getContainer()->get('cache');
         $result = $cache->fetch($part . $id, 'I18N_');
         if (!$result) {
-            $tableGateway = $this->getTableGateway('i18n_' . $part);
-            $select = $tableGateway->getSql()->select();
+            $select = new Select('i18n_' . $part);
             $select->join('i18n_' . $part . '_name', $part . '_id=id', ['name', 'locale'], 'left');
             if ($id) {
                 $select->where(['id' => $id]);
@@ -26,7 +25,15 @@ class Locate
             if ($pid) {
                 $select->where(['parent_id' => $pid]);
             }
-            $resultSet = $tableGateway->selectWith($select)->toArray();
+            if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
+                $adapter = new Adapter([
+                    'driver' => 'pdo',
+                    'dsn' => 'sqlite:' . BP . 'var\i18n.db'
+                ]);
+                $resultSet = $adapter->query($select->getSqlString($adapter->getPlatform()), 'execute');
+            } else {
+                $resultSet = $this->getTableGateway('i18n_' . $part)->selectWith($select)->toArray();
+            }
             $result = [];
             foreach ($resultSet as $item) {
                 if (isset($result[$item['id']])) {
@@ -40,6 +47,22 @@ class Locate
             $cache->save($part . $id, $result, 'I18N_');
         }
         return $result;
+    }
+
+    public function getCode($part, $id)
+    {
+        $select = new Select('i18n_' . $part);
+        $select->where(['id' => $id]);
+        if (extension_loaded('pdo_sqlite') && file_exists(BP . 'var/i18n.db')) {
+            $adapter = new Adapter([
+                'driver' => 'pdo',
+                'dsn' => 'sqlite:' . BP . 'var\i18n.db'
+            ]);
+            $resultSet = $adapter->query($select->getSqlString($adapter->getPlatform()), 'execute');
+        } else {
+            $resultSet = $this->getTableGateway('i18n_' . $part)->selectWith($select)->toArray();
+        }
+        return empty($resultSet) ? '' : ($resultSet[0]['iso2_code'] ?? ($resultSet[0]['code'] ?? ''));
     }
 
     public function load($part, $id = '')

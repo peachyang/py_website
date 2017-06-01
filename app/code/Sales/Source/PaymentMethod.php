@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Source;
 
+use Seahinet\I18n\Model\Locate;
 use Seahinet\Lib\Source\SourceInterface;
 use Seahinet\Payment\Model\AbstractMethod;
 use Seahinet\Payment\Model\Free;
@@ -18,6 +19,7 @@ class PaymentMethod implements SourceInterface
         $address = Cart::instance()->getShippingAddress();
         if ($total = (float) Cart::instance()->offsetGet('base_total')) {
             $result = [];
+            $countryCode = $address ? '' : (new Locate)->getCode('country', $address->offsetGet('country'));
             foreach ($config['system']['payment']['children'] as $code => $info) {
                 if ($code === 'payment_free') {
                     continue;
@@ -26,7 +28,7 @@ class PaymentMethod implements SourceInterface
                 $country = $config['payment/' . $code . '/country'];
                 $model = new $className;
                 if ($model instanceof AbstractMethod && $model->available(['total' => $total]) === true &&
-                        (!$address || !$country || in_array($address->offsetGet('country'), explode(',', $country)))) {
+                        (!$countryCode || !$country || in_array($countryCode->offsetGet('country'), explode(',', $country)))) {
                     $result[$code] = $getObject ? $model : $config['payment/' . $code . '/label'];
                 }
             }

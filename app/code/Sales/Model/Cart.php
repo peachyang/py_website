@@ -402,6 +402,7 @@ final class Cart extends AbstractModel implements Singleton
         $baseCurrency = $this->getContainer()->get('config')['i18n/currency/base'];
         $currency = (new Currency)->load($this->getContainer()->get('request')->getCookie('currency', $baseCurrency));
         $items = $this->getItems(true);
+        $items->load(false);
         $baseSubtotal = 0;
         $storeId = [];
         foreach ($items as $item) {

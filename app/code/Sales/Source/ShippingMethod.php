@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Source;
 
+use Seahinet\I18n\Model\Locate;
 use Seahinet\Lib\Source\SourceInterface;
 use Seahinet\Sales\Model\Cart;
 use Seahinet\Shipping\Model\AbstractMethod;
@@ -33,7 +34,7 @@ class ShippingMethod implements SourceInterface
             $country = $config['shipping/' . $code . '/country'];
             $model = new $className;
             if ($model instanceof AbstractMethod && $model->available(['total' => $total]) &&
-                    (!$countryCode || !$country || in_array($countryCode->offsetGet('country'), explode(',', $country)))) {
+                    (!$countryCode || !$country || in_array($countryCode, explode(',', $country)))) {
                 $result[$code] = $config['shipping/' . $code . '/label'];
             }
         }

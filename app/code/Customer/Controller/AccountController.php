@@ -361,9 +361,14 @@ class AccountController extends AuthActionController
             $attributes->walk(function ($attribute) use (&$unique) {
                 $unique[] = $attribute['code'];
             });
+            if (!$customer->valid($customer['username'], $data['crpassword'])) {
+                $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
+                $result['error'] = 1;
+            }
             if ($unique) {
                 $collection = new Collection;
                 $collection->columns($unique);
+                $collection->getSelect()->where->notEqualTo('id', $customer['id']);
                 foreach ($unique as $code) {
                     if (isset($data[$code])) {
                         $collection->where([$code => $data[$code]], 'OR');
@@ -390,10 +395,6 @@ class AccountController extends AuthActionController
                 $data['modified_password'] = 1;
             } else {
                 unset($data['cpassword'], $data['password']);
-            }
-            if (!$customer->valid($customer['username'], $data['crpassword'])) {
-                $result['message'][] = ['message' => $this->translate('The current password is incorrect.'), 'level' => 'danger'];
-                $result['error'] = 1;
             }
             if ($result['error'] === 0) {
                 try {

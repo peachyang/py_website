@@ -69,6 +69,9 @@ class ManageController extends AuthActionController
             if ($unique) {
                 $collection = new Collection;
                 $collection->columns($unique);
+                if (!empty($data['id'])) {
+                    $collection->getSelect()->where->notEqualTo('id', $data['id']);
+                }
                 foreach ($unique as $code) {
                     if (isset($data[$code])) {
                         $collection->where([$code => $data[$code]], 'OR');

@@ -131,6 +131,7 @@ class Customer extends AbstractHandler
         }
         $collection = new Collection;
         $collection->columns($unique);
+        $collection->getSelect()->where->notEqualTo('id', $customerId);
         foreach ($unique as $code) {
             if (isset($data[$code])) {
                 $collection->where([$code => $data[$code]], 'OR');

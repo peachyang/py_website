@@ -28,7 +28,7 @@ class ShippingMethod implements SourceInterface
             $total = Cart::instance()->offsetGet('base_price');
         }
         $result = [];
-        $countryCode = $address ? '' : (new Locate)->getCode('country', $address->offsetGet('country'));
+        $countryCode = $address ? (new Locate)->getCode('country', $address->offsetGet('country')) : '';
         foreach ($config['system']['shipping']['children'] as $code => $info) {
             $className = $config['shipping/' . $code . '/model'];
             $country = $config['shipping/' . $code . '/country'];

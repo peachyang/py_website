@@ -19,7 +19,7 @@ class PaymentMethod implements SourceInterface
         $address = Cart::instance()->getShippingAddress();
         if ($total = (float) Cart::instance()->offsetGet('base_total')) {
             $result = [];
-            $countryCode = $address ? '' : (new Locate)->getCode('country', $address->offsetGet('country'));
+            $countryCode = $address ? (new Locate)->getCode('country', $address->offsetGet('country')) : '';
             foreach ($config['system']['payment']['children'] as $code => $info) {
                 if ($code === 'payment_free') {
                     continue;

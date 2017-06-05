@@ -63,8 +63,12 @@
             $(this).prev('.option').find('.sortable').sortable({
                 item: 'tr'
             });
+            $('.option').prev('input[name=options]').remove();
         }).on('click', '.delete-option', function () {
             $(this).parents('.option').remove();
+            if ($('.option tbody tr').length === 0) {
+                $('.option').before('<input type="hidden" name="options" value="null" />');
+            }
         }).on('click', '.add-row', function () {
             $(this).parents('.table').first().find('tbody')
                     .append($('#custom-options #tmpl-option-value').html().replace(/\{\$id\}/g, $(this).data('id')));

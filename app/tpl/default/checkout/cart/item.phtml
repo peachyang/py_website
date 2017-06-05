@@ -3,6 +3,19 @@ $item = $this->getVariable('item');
 $product = $item['product'];
 $thumbnail = $product->getThumbnail();
 $inventory = $item->getInventory();
+$tier = $product['tier_price'] ? json_decode($product['tier_price'], true) : [];
+$tiers = $tier[-1] ?? [];
+if ($this->getSegment('customer')->get('hasLoggedIn')) {
+    $groups = $this->getSegment('customer')->get('customer')->getGroup();
+    foreach ($groups as $group) {
+        if (isset($tiers[$group->getId()])) {
+            $tiers = array_merge($tiers[$group->getId()]);
+        }
+    }
+} else if (isset($tiers[0])) {
+    $tiers = array_merge($tiers[0]);
+}
+krsort($tiers, SORT_NUMERIC);
 ?>
 <tr class="product-list">
     <td>
@@ -40,7 +53,7 @@ $inventory = $item->getInventory();
             </dl>
         <?php endif; ?>
     </td>
-    <td class="price" data-price="<?php echo $item['price'] ?>">
+    <td class="price" data-price="<?php echo $item['price'] ?>" data-tier='<?php echo json_encode($tiers) ?>'>
         <?php echo $this->getCurrency()->format($item['price']) ?>
     </td>
     <td class="qty">

@@ -15,6 +15,7 @@ use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Session\Segment;
 use Swift_TransportException;
+use Zend\Db\Sql\Where;
 use Zend\Math\Rand;
 
 class AccountController extends AuthActionController
@@ -368,12 +369,15 @@ class AccountController extends AuthActionController
             if ($unique) {
                 $collection = new Collection;
                 $collection->columns($unique);
-                $collection->getSelect()->where->notEqualTo('id', $customer['id']);
+                $where = new Where;
                 foreach ($unique as $code) {
                     if (isset($data[$code])) {
-                        $collection->where([$code => $data[$code]], 'OR');
+                        $predicate = new Where;
+                        $predicate->equalTo($code, $data[$code]);
+                        $where->orPredicate($predicate);
                     }
                 }
+                $collection->getSelect()->where->notEqualTo('id', $customer['id'])->andPredicate($where);
                 if (count($collection)) {
                     foreach ($collection as $item) {
                         foreach ($unique as $code) {

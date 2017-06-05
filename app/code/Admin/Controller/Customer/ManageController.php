@@ -10,6 +10,7 @@ use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Eav\Type;
 use Seahinet\Lib\Session\Segment;
+use Zend\Db\Sql\Where;
 use Zend\Math\Rand;
 
 class ManageController extends AuthActionController
@@ -69,14 +70,18 @@ class ManageController extends AuthActionController
             if ($unique) {
                 $collection = new Collection;
                 $collection->columns($unique);
+                $where = new Where;
+                foreach ($unique as $code) {
+                    if (isset($data[$code])) {
+                        $predicate = new Where;
+                        $predicate->equalTo($code, $data[$code]);
+                        $where->orPredicate($predicate);
+                    }
+                }
                 if (!empty($data['id'])) {
                     $collection->getSelect()->where->notEqualTo('id', $data['id']);
                 }
-                foreach ($unique as $code) {
-                    if (isset($data[$code])) {
-                        $collection->where([$code => $data[$code]], 'OR');
-                    }
-                }
+                $collection->getSelect()->where->andPredicate($where);
                 if (count($collection)) {
                     foreach ($collection as $item) {
                         foreach ($unique as $code) {

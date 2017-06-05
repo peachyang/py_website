@@ -9,14 +9,34 @@
 }(function ($) {
     $(function () {
         "use strict";
+        var getPrice = function (qty, q) {
+            var obj = $(qty).siblings('.price');
+            q = parseFloat(q ? q : $(qty).find('.form-control').val());
+            var tier = $(obj).data('tier');
+            if (tier) {
+                if (typeof tier === 'string') {
+                    tier = eval('(' + tier + ')');
+                }
+                var r = null;
+                for (var p in tier) {
+                    if (q >= parseFloat(p)) {
+                        r = parseFloat(tier[p]);
+                    }
+                }
+                if (r !== null) {
+                    return r;
+                }
+            }
+            return parseFloat($(obj).data('price'));
+        };
         var collateTotals = function () {
             var t = 0;
             var q = 0;
             $('#cart [type=checkbox][name]:checked').each(function () {
                 var p = $(this).parent();
                 var tq = parseFloat($(p).siblings('.qty').find('.form-control').val());
+                t += getPrice($(p).siblings('.qty'), tq) * tq;
                 q += tq;
-                t += $(p).siblings('.price').data('price') * tq;
             });
             $('#cart .selected').text(q);
             $('#cart .total').text(formatPrice(t));
@@ -86,7 +106,9 @@
         $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
             var p = $(this).parents('.qty');
             var price = $(p).siblings('.price');
-            $(p).siblings('.subtotal').text(formatPrice($(price).data('price') * $(this).val()));
+            var pr = getPrice(p);
+            $(price).text(formatPrice(pr, $(this).val()));
+            $(p).siblings('.subtotal').text(formatPrice(pr * $(this).val()));
             collateTotals();
         });
     });

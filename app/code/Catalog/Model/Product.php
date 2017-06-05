@@ -356,33 +356,37 @@ class Product extends Entity
         if (isset($this->storage['product_link'])) {
             $tableGateway = $this->getTableGateway('product_link');
             $tableGateway->delete(['product_id' => $this->getId()]);
-            foreach ($this->storage['product_link'] as $type => $link) {
-                foreach ($link as $order => $id) {
-                    $tableGateway->insert([
-                        'product_id' => $this->getId(),
-                        'linked_product_id' => $id,
-                        'type' => substr($type, 0, 1),
-                        'sort_order' => $order
-                    ]);
+            if (is_array($this->storage['product_link'])) {
+                foreach ($this->storage['product_link'] as $type => $link) {
+                    foreach ($link as $order => $id) {
+                        $tableGateway->insert([
+                            'product_id' => $this->getId(),
+                            'linked_product_id' => $id,
+                            'type' => substr($type, 0, 1),
+                            'sort_order' => $order
+                        ]);
+                    }
                 }
             }
         }
         if (isset($this->storage['options'])) {
             $this->getTableGateway('product_option')->delete(['product_id' => $this->getId()]);
-            foreach ($this->storage['options']['label'] as $id => $label) {
-                $option = new OptionModel;
-                $option->setData([
-                    'id' => null,
-                    'product_id' => $this->getId(),
-                    'label' => $label,
-                    'input' => $this->storage['options']['input'][$id],
-                    'is_required' => $this->storage['options']['is_required'][$id],
-                    'sort_order' => $this->storage['options']['sort_order'][$id],
-                    'price' => (float) $this->storage['options']['price'][$id],
-                    'is_fixed' => $this->storage['options']['is_fixed'][$id],
-                    'sku' => $this->storage['options']['sku'][$id],
-                    'value' => $this->storage['options']['value'][$id] ?? null
-                ])->save();
+            if (is_array($this->storage['options'])) {
+                foreach ($this->storage['options']['label'] as $id => $label) {
+                    $option = new OptionModel;
+                    $option->setData([
+                        'id' => null,
+                        'product_id' => $this->getId(),
+                        'label' => $label,
+                        'input' => $this->storage['options']['input'][$id],
+                        'is_required' => $this->storage['options']['is_required'][$id],
+                        'sort_order' => $this->storage['options']['sort_order'][$id],
+                        'price' => (float) $this->storage['options']['price'][$id],
+                        'is_fixed' => $this->storage['options']['is_fixed'][$id],
+                        'sku' => $this->storage['options']['sku'][$id],
+                        'value' => $this->storage['options']['value'][$id] ?? null
+                    ])->save();
+                }
             }
         }
         parent::afterSave();

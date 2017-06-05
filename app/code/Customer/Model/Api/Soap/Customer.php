@@ -7,6 +7,7 @@ use Seahinet\Api\Model\Api\AbstractHandler;
 use Seahinet\Customer\Model\Collection\Customer as Collection;
 use Seahinet\Customer\Model\Customer as Model;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
+use Zend\Db\Sql\Where;
 
 class Customer extends AbstractHandler
 {
@@ -131,12 +132,15 @@ class Customer extends AbstractHandler
         }
         $collection = new Collection;
         $collection->columns($unique);
-        $collection->getSelect()->where->notEqualTo('id', $customerId);
+        $where = new Where;
         foreach ($unique as $code) {
             if (isset($data[$code])) {
-                $collection->where([$code => $data[$code]], 'OR');
+                $predicate = new Where;
+                $predicate->equalTo($code, $data[$code]);
+                $where->orPredicate($predicate);
             }
         }
+        $collection->getSelect()->where->notEqualTo('id', $customerId)->andPredicate($where);
         if (count($collection)) {
             foreach ($collection as $item) {
                 foreach ($unique as $code) {

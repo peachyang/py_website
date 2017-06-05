@@ -4,6 +4,7 @@ namespace Seahinet\Admin\ViewModel\Cms\Grid;
 
 use Seahinet\Admin\ViewModel\Grid as PGrid;
 use Seahinet\Cms\Model\Collection\Page as Collection;
+use Seahinet\Cms\Source\Category;
 use Seahinet\Lib\Session\Segment;
 
 class Page extends PGrid
@@ -37,9 +38,10 @@ class Page extends PGrid
                 'label' => 'ID',
             ],
             'category' => [
+                'type' => 'select',
                 'label' => 'Category',
                 'use4sort' => false,
-                'use4filter' => false
+                'options' => (new Category)->getSourceArray()
             ],
             'title' => [
                 'label' => 'Title',

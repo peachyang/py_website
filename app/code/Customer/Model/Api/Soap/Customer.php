@@ -133,15 +133,17 @@ class Customer extends AbstractHandler
         $collection = new Collection;
         $collection->columns($unique);
         $where = new Where;
+        $flag = false;
         foreach ($unique as $code) {
             if (isset($data[$code])) {
                 $predicate = new Where;
                 $predicate->equalTo($code, $data[$code]);
                 $where->orPredicate($predicate);
+                $flag = true;
             }
         }
         $collection->getSelect()->where->notEqualTo('id', $customerId)->andPredicate($where);
-        if (count($collection)) {
+        if ($flag && count($collection)) {
             foreach ($collection as $item) {
                 foreach ($unique as $code) {
                     if (isset($item[$code]) && $item[$code]) {

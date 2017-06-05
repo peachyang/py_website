@@ -63,12 +63,12 @@
             $(this).prev('.option').find('.sortable').sortable({
                 item: 'tr'
             });
-            $('.option').prev('input[name=options]').remove();
+            $('input[type=hidden][name=options][value=null]').remove();
         }).on('click', '.delete-option', function () {
-            $(this).parents('.option').remove();
-            if ($('.option tbody tr').length === 0) {
-                $('.option').before('<input type="hidden" name="options" value="null" />');
+            if ($(this).parents('.option').first().siblings('.option').length === 0) {
+                $('table.option').first().before('<input type="hidden" name="options" value="null" />');
             }
+            $(this).parents('.option').remove();
         }).on('click', '.add-row', function () {
             $(this).parents('.table').first().find('tbody')
                     .append($('#custom-options #tmpl-option-value').html().replace(/\{\$id\}/g, $(this).data('id')));

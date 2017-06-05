@@ -388,6 +388,7 @@ class Product extends Entity
                     ])->save();
                 }
             }
+            $this->flushList('product_option');
         }
         parent::afterSave();
     }

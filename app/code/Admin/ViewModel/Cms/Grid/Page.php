@@ -37,7 +37,7 @@ class Page extends PGrid
             'id' => [
                 'label' => 'ID',
             ],
-            'category' => [
+            'category_id' => [
                 'type' => 'select',
                 'label' => 'Category',
                 'use4sort' => false,
@@ -77,6 +77,9 @@ class Page extends PGrid
         $collection = new Collection;
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
+        }
+        if ($this->getQuery('category_id')) {
+            $collection->join('cms_category_page', 'cms_category_page.page_id=cms_page.id', [], 'left');
         }
         if (!$this->getQuery('desc')) {
             $this->query['desc'] = 'created_at';

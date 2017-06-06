@@ -139,6 +139,17 @@ class OrderController extends AuthActionController
                     $order->load($i);
                     if ($order->canHold()) {
                         $history = new History;
+                        $history->load($i, 'order');
+                        if (!$history->getId()) {
+                            $history = new History;
+                            $history->setData([
+                                'admin_id' => $userId,
+                                'order_id' => $i,
+                                'status_id' => $order->offsetGet('status_id'),
+                                'status' => $order->getStatus()->offsetGet('name')
+                            ])->save();
+                        }
+                        $history = new History;
                         $history->setData([
                             'admin_id' => $userId,
                             'order_id' => $i,

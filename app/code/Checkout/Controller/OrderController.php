@@ -15,7 +15,8 @@ use Seahinet\Sales\Model\Order;
 class OrderController extends ActionController
 {
 
-    use \Seahinet\Lib\Traits\DB;
+    use \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\DataCache;
 
     public function dispatch($request = null, $routeMatch = null)
     {
@@ -169,11 +170,13 @@ class OrderController extends ActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                     $this->rollback();
+                    $this->flushList('sales_cart_item');
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                     $this->rollback();
+                    $this->flushList('sales_cart_item');
                 }
             }
         }

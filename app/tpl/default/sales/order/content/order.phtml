@@ -19,7 +19,8 @@ $currency = $order->getCurrency();
             if ($language = $order->getLanguage()) {
                 echo $this->translate('Language'), ': ', $language->offsetGet('name');
             }
-            ?>
+            ?><br />
+            <?php echo $this->translate('Placed at'),': ', $order['created_at'] ?>
         </div>
     </div>
     <div class="panel panel-default">

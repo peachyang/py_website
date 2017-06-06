@@ -39,9 +39,8 @@ class Checkout extends Template
 
     public function canUse()
     {
-        $flag = true;
-        $id = $this->getConfig()['balance/general/product_for_recharge'];
-        if ($id) {
+        $flag = $this->getConfig()['rewardpoints/general/enable'] && $this->getConfig()['rewardpoints/using/rate'];
+        if ($flag && ($id = $this->getConfig()['balance/general/product_for_recharge'])) {
             foreach (Cart::instance()->getItems() as $item) {
                 if ($id === $item['product_id']) {
                     $flag = false;

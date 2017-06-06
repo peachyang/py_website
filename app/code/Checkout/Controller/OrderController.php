@@ -99,6 +99,8 @@ class OrderController extends ActionController
                     $items = $cart->abandon();
                     if (empty($items)) {
                         $this->rollback();
+                        $this->flushRow($cart->getId(), null, 'sales_cart');
+                        $this->flushList('sales_cart_item');
                         return $this->getRequest()->isXmlHttpRequest() ?
                                 ['error' => 0, 'message' => [], 'redirect' => $this->getBaseUrl('checkout/cart/')] :
                                 $this->redirect('checkout/cart/');
@@ -170,12 +172,14 @@ class OrderController extends ActionController
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate('An error detected. Please contact us or try again later.'), 'level' => 'danger'];
                     $this->rollback();
+                    $this->flushRow($cart->getId(), null, 'sales_cart');
                     $this->flushList('sales_cart_item');
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;
                     $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                     $this->rollback();
+                    $this->flushRow($cart->getId(), null, 'sales_cart');
                     $this->flushList('sales_cart_item');
                 }
             }

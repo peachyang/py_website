@@ -790,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `customer_credit_card` (
 
 CREATE TABLE IF NOT EXISTS `log_payment` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    `order_id` INTEGER UNSIGNED NOT NULL,
+    `order_id` INTEGER UNSIGNED NULL DEFAULT NULL,
     `trade_id` VARCHAR(255) NOT NULL,
     `method` VARCHAR(255) NOT NULL,
     `params` TEXT,

@@ -1,6 +1,5 @@
 <?php
-$virtual = new Seahinet\Checkout\ViewModel\Order\Address;
-if (!$virtual->isVirtual() && $this->hasLoggedIn()):
+if ($this->canUse()):
     ?>
     <section class="section rewardpoints" data-change-after="review" data-url="<?php echo $this->getBaseUrl('rewardpoints/index/load/') ?>">
         <h4 class="title"><?php echo $this->translate('Points'); ?></h4>

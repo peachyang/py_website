@@ -111,4 +111,4 @@ checkout_order_balance:
                 children:
                     balance:
                         type: Seahinet\Balance\ViewModel\Checkout
-                        template: Balance/balance
+                        template: balance/balance

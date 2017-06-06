@@ -12,12 +12,6 @@ class Checkout extends Template
 
     use \Seahinet\RewardPoints\Traits\Calc;
 
-    public function hasLoggedIn()
-    {
-        $segment = new Segment('customer');
-        return $segment->get('hasLoggedIn');
-    }
-
     public function getCurrentPoints()
     {
         if ($this->hasLoggedIn()) {
@@ -41,6 +35,20 @@ class Checkout extends Template
     {
         $additional = Cart::instance()->offsetGet('additional');
         return $additional && !empty(@json_decode($additional, true)['rewardpoints']);
+    }
+
+    public function canUse()
+    {
+        $flag = true;
+        $id = $this->getConfig()['balance/general/product_for_recharge'];
+        if ($id) {
+            foreach (Cart::instance()->getItems() as $item) {
+                if ($id === $item['product_id']) {
+                    $flag = false;
+                }
+            }
+        }
+        return $flag && $this->getSegment('customer')->get('hasLoggedIn');
     }
 
 }

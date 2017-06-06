@@ -12,12 +12,6 @@ class Checkout extends Template
 
     use \Seahinet\Balance\Traits\Calc;
 
-    public function hasLoggedIn()
-    {
-        $segment = new Segment('customer');
-        return $segment->get('hasLoggedIn');
-    }
-
     public function getCurrentBalances()
     {
         if ($this->hasLoggedIn()) {
@@ -29,6 +23,11 @@ class Checkout extends Template
         return 0;
     }
 
+    public function getCurrency()
+    {
+        return Cart::instance()->getCurrency();
+    }
+
     public function getAvailableBalances()
     {
         if ($this->hasLoggedIn()) {
@@ -37,9 +36,20 @@ class Checkout extends Template
         return 0;
     }
 
-    public function isVirtual()
+    public function canUse()
     {
-        return Cart::instance()->isVirtual();
+        $flag = true;
+        $id = $this->getConfig()['balance/general/product_for_recharge'];
+        if ($id) {
+            foreach (Cart::instance()->getItems() as $item) {
+                if ($id === $item['product_id']) {
+                    $flag = false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return $flag && $this->getSegment('customer')->get('hasLoggedIn') && $this->getConfig()['balance/general/enable'];
     }
 
     public function hasApplied()

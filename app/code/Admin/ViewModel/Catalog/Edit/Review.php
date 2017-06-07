@@ -93,6 +93,10 @@ class Review extends PEdit
                 'type' => 'textarea',
                 'label' => 'Content'
             ],
+            'reply' => [
+                'type' => 'textarea',
+                'label' => 'Reply'
+            ],
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

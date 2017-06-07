@@ -128,7 +128,7 @@ $currency = $this->getCurrency();
                 <div class="cell images">
                     <input type="file" name="voucher[]" id="voucher" hidden="hidden" accept="image/*" />
                     <label for="voucher" class="add-image"><span class="fa fa-camera"></span></label>
-                    <span>(<?php echo $this->translate('%d images allowed at most.', [5]) ?>)</span>
+                    <span>(<?php echo $this->translate('%d images allowed at most. The maximum size of each image is %s.', [5, '2MB']) ?>)</span>
                 </div>
             </div>
             <div class="buttons-set">

@@ -3,6 +3,7 @@
 namespace Seahinet\Sales\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Lib\Exception\FileSizeExceedLimitException;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Sales\Model\{
     Order,
@@ -140,7 +141,7 @@ class RefundController extends ActionController
                         $files = $this->getRequest()->getUploadedFile();
                         if (!empty($files['voucher'])) {
                             foreach ($files['voucher'] as $file) {
-                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5 && $file->getSize() <= 2097152) {
                                     $newName = $file->getClientFilename();
                                     while (file_exists($path . $newName)) {
                                         $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
@@ -150,6 +151,8 @@ class RefundController extends ActionController
                                     }
                                     $file->moveTo($path . $newName);
                                     $images[] = $newName;
+                                } else {
+                                    throw new FileSizeExceedLimitException('The size of the uploaded file exceed the limitation.');
                                 }
                             }
                         }
@@ -165,6 +168,10 @@ class RefundController extends ActionController
                         }
                         $result['message'][] = ['message' => $this->translate('We have received your application. The customer service will contact you as soon as possible. Thanks for your support.'), 'level' => 'success'];
                         $this->commit();
+                    } catch (FileSizeExceedLimitException $e) {
+                        $this->rollback();
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                     } catch (Exception $e) {
                         $this->rollback();
                         $result['error'] = 1;

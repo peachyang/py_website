@@ -141,7 +141,10 @@ class RefundController extends ActionController
                         $files = $this->getRequest()->getUploadedFile();
                         if (!empty($files['voucher'])) {
                             foreach ($files['voucher'] as $file) {
-                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5 && $file->getSize() <= 2097152) {
+                                if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                    if ($file->getSize() > 2097152) {
+                                        throw new FileSizeExceedLimitException('The size of the uploaded file exceed the limitation.');
+                                    }
                                     $newName = $file->getClientFilename();
                                     while (file_exists($path . $newName)) {
                                         $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
@@ -151,8 +154,6 @@ class RefundController extends ActionController
                                     }
                                     $file->moveTo($path . $newName);
                                     $images[] = $newName;
-                                } else {
-                                    throw new FileSizeExceedLimitException('The size of the uploaded file exceed the limitation.');
                                 }
                             }
                         }

@@ -121,6 +121,7 @@
 "The application has been complete.","申请已处理完成。"
 "The carrier or track number is not empty.","物流或单号是不能为空"
 "The order was placed using %s","订单使用%s提交"
+"The size of the uploaded file exceed the limitation.","上传的文件大小超过了限制。"
 "There are no orders in your store with the condition.","你的店铺当前没有订单。"
 "To Pay","去付款"
 "Total Amount","总金额"

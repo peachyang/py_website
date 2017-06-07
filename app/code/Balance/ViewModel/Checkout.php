@@ -14,8 +14,8 @@ class Checkout extends Template
 
     public function getCurrentBalances()
     {
-        if ($this->hasLoggedIn()) {
-            $segment = new Segment('customer');
+        $segment = $this->getSegment('customer');
+        if ($segment->get('hasLoggedIn')) {
             $customer = new Customer;
             $customer->load($segment->get('customer')->getId());
             return (float) $customer->getBalance();
@@ -30,7 +30,7 @@ class Checkout extends Template
 
     public function getAvailableBalances()
     {
-        if ($this->hasLoggedIn()) {
+        if ($this->getSegment('customer')->get('hasLoggedIn')) {
             return $this->getBalances(Cart::instance());
         }
         return 0;

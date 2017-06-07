@@ -14,8 +14,8 @@ class Checkout extends Template
 
     public function getCurrentPoints()
     {
-        if ($this->hasLoggedIn()) {
-            $segment = new Segment('customer');
+        $segment = $this->getSegment('customer');
+        if ($segment->get('hasLoggedIn')) {
             $customer = new Customer;
             $customer->load($segment->get('customer')->getId());
             return (int) $customer->offsetGet('rewardpoints');
@@ -25,7 +25,7 @@ class Checkout extends Template
 
     public function getAvailablePoints()
     {
-        if ($this->hasLoggedIn()) {
+        if ($this->getSegment('customer')->get('hasLoggedIn')) {
             return $this->getPoints(Cart::instance());
         }
         return 0;

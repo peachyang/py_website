@@ -218,9 +218,6 @@ retailer_store_view:
                         params: Store Settings
                     -
                         method: addLink
-                        params: frontend/dragResource/css/store_view.css
-                    -
-                        method: addLink
                         params: frontend/dragResource/css/jquery.hiSlider.min.css
                     -
                         method: addLink
@@ -245,9 +242,6 @@ view_search:
                     -
                         method: setTitle
                         params: Retailer Store
-                    -
-                        method: addLink
-                        params: frontend/dragResource/css/store_view.css
                     -
                         method: addLink
                         params: frontend/dragResource/css/jquery.hiSlider.min.css

@@ -66,7 +66,8 @@ class Address extends Template
         $box->setVariables([
             'key' => $key,
             'item' => $item,
-            'parent' => $this
+            'parent' => $this,
+            'boxClass' => $key
         ]);
         $box->setTemplate('page/renderer/' . $item['type'], false);
         return $box;

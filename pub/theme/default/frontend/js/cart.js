@@ -47,7 +47,7 @@
             }
         };
         var recursiveSelect = function (flag) {
-            $(this).find('[type=checkbox]').prop('checked', flag)
+            $(this).find('[type=checkbox]:not(:disabled)').prop('checked', flag)
             var next = $(this).next();
             if ($(next).is('.product-list')) {
                 recursiveSelect.call(next, flag);
@@ -78,6 +78,9 @@
                 }
             });
         };
+        $(window).on('beforeunload', function () {
+            $('[name^=qty]:focus').trigger('change.seahinet');
+        });
         $('#cart').on('check.seahinet', function () {
             $(this).find('.store [type=checkbox]').each(function () {
                 this.checked = recursiveCheck.call($(this).parents('.store').first().next('.product-list'));
@@ -85,14 +88,28 @@
             $(this).find('[type=checkbox].selectall,.selectall [type=checkbox]').not('.store [type=checkbox]').each(function () {
                 this.checked = $('#cart .store [type=checkbox]:not(:checked)').length ? false : true;
             });
-        }).on('change.seahinet', '[name^=qty]', updateCart).on('click', '[type=checkbox]', updateCart);
+        }).on('change.seahinet', '[name^=qty]', function () {
+            var qty = parseFloat($(this).val().replace(/[^\d\.\-]/g, ''));
+            if (isNaN(qty)) {
+                $(this).val($(this).attr('min') || 1);
+            } else {
+                $(this).val(qty);
+            }
+            var p = $(this).parents('.qty');
+            var price = $(p).siblings('.price');
+            var pr = getPrice(p);
+            $(price).text(formatPrice(pr, $(this).val()));
+            $(p).siblings('.subtotal').text(formatPrice(pr * $(this).val()));
+            collateTotals();
+            updateCart.call(this);
+        }).on('click', '[type=checkbox]', updateCart);
         var cartSelectItem = function () {
             if (this) {
                 if ($(this).is('.selectall,.selectall [type=checkbox]')) {
                     if ($(this).is('.store [type=checkbox]')) {
                         recursiveSelect.call($(this).parents('.store').first().next('.product-list'), this.checked);
                     } else {
-                        $('#cart [type=checkbox]').prop('checked', this.checked);
+                        $('#cart [type=checkbox]:not(:disabled)').prop('checked', this.checked);
                     }
                 }
             }
@@ -102,14 +119,6 @@
         cartSelectItem();
         $('.table').on('click', '[type=checkbox]', function () {
             cartSelectItem.call(this);
-        });
-        $('.checkout-cart .qty .form-control').on('change.seahinet', function () {
-            var p = $(this).parents('.qty');
-            var price = $(p).siblings('.price');
-            var pr = getPrice(p);
-            $(price).text(formatPrice(pr, $(this).val()));
-            $(p).siblings('.subtotal').text(formatPrice(pr * $(this).val()));
-            collateTotals();
         });
     });
 }));

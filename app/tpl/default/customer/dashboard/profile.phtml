@@ -5,7 +5,7 @@ $avatar = $customer['avatar'];
 <div class="profile clearfix">
     <div class="head_pic">
         <a href="<?php echo $this->getBaseUrl('customer/account/edit/') ?>" class="photo col-xs-12 col-sm-2">
-            <img alt="<?php echo $customer->offsetGet('username') ?>" class="img-responsive" width="100" src="<?php echo $avatar ? 'data:image/png;base64, ' . $avatar : $this->getPubUrl('frontend/images/placeholder.png') ?>" />
+            <img alt="<?php echo $customer->offsetGet('username') ?>" class="img-responsive" width="100" src="<?php echo $avatar ? $this->getResource('image/resized/100x/' . $avatar) : $this->getPubUrl('frontend/images/placeholder.png') ?>" />
         </a>
     </div>
     <div class="info col-xs-12 col-sm-10">
@@ -16,7 +16,7 @@ $avatar = $customer['avatar'];
         <div class="balance">
             <span class="label"><?php echo $this->translate('My Account') ?>:</span>
             <span><?php echo $this->translate('Balance') ?><a href="<?php echo $this->getBaseUrl('balance/statement/'); ?>"><span class="count"><?php echo $this->getCurrency()->convert($customer->getBalance(), true) ?></span></a></span>
-            <span><?php echo $this->translate($this->getConfig()['rewardpoints/general/title']) ?><a href="<?php echo $this->getBaseUrl('rewardpoints/statement/reward/'); ?>"><span class="count"><?php echo (int) $customer->getPoints(); //$customer['rewardpoints']  ?></span></a></span>
+            <span><?php echo $this->translate($this->getConfig()['rewardpoints/general/title']) ?><a href="<?php echo $this->getBaseUrl('rewardpoints/statement/reward/'); ?>"><span class="count"><?php echo (int) $customer->getPoints(); //$customer['rewardpoints']   ?></span></a></span>
         </div>
         <div class="transaction">
             <span class="label"><?php echo $this->translate('My Orders') ?>:</span>

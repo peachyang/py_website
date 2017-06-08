@@ -5,7 +5,7 @@ $avatar = $customer['avatar'];
 <div class="profile clearfix">
     <div class="head_pic">
         <a href="<?php echo $this->getBaseUrl('customer/account/edit/') ?>" class="photo col-xs-12 col-sm-2">
-            <img alt="<?php echo $customer->offsetGet('username') ?>" class="img-responsive" width="100" src="<?php echo $avatar ? $this->getResourceUrl('image/resized/100x/' . $avatar) : $this->getPubUrl('frontend/images/placeholder.png') ?>" />
+            <img alt="<?php echo $customer->offsetGet('username') ?>" class="img-responsive" width="100" src="<?php echo $avatar ? $this->getBaseUrl('pub/upload/customer/avatar/' . $avatar) : $this->getPubUrl('frontend/images/placeholder.png') ?>" />
         </a>
     </div>
     <div class="info col-xs-12 col-sm-10">

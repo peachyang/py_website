@@ -36,6 +36,14 @@ class OrderController extends ActionController
         $items = Cart::instance()->getItems(true);
         $items->where(['status' => 1]);
         if (count($items)) {
+            foreach ($items as $item) {
+                $options = json_decode($item['options'], true);
+                foreach ($item['product']->getOptions() as $option) {
+                    if ($option['is_required'] && !isset($options[$option->getId()])) {
+                        return $this->redirectReferer('checkout/cart/');
+                    }
+                }
+            }
             return $this->getLayout('checkout_order');
         }
         return $this->redirectReferer('checkout/cart/');

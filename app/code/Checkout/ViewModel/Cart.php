@@ -38,6 +38,12 @@ class Cart extends Template
         $items = $this->getCart()->getItems();
         $result = [];
         foreach ($items as $item) {
+            $options = json_decode($item['options'], true);
+            foreach ($item['product']->getOptions() as $option) {
+                if ($option['is_required'] && !isset($options[$option->getId()])) {
+                    $item['disabled'] = true;
+                }
+            }
             $result[] = $item;
         }
         usort($result, function($a, $b) {

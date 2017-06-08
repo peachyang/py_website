@@ -47,6 +47,7 @@
 "The %%s field is required and cannot be empty.","%%s不可为空。"
 "The allowed minimal amount is %s, current is %s.","最小购买量为%s, 当前为%s。"
 "The requested quantity for ""%s"" is not available.","""%s""库存不足"
+"This option is required and cannot be empty.","该选项是必填项"
 "Total","合计"
 "View Cart","查看购物车"
 "View Order","查看订单详情"

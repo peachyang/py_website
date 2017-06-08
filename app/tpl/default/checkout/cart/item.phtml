@@ -19,7 +19,7 @@ krsort($tiers, SORT_NUMERIC);
 ?>
 <tr class="product-list">
     <td>
-        <input type="checkbox"<?php if ($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
+        <input type="checkbox"<?php if ($item['disabled']): ?> disabled="disabled"<?php elseif ($item['status']): ?> checked="checked"<?php endif ?> class="checkbox-<?php echo $item['store_id'] ?>" name="item[]" value="<?php echo $item['id'] ?>" />
     </td>
     <td>
         <a href="<?php echo $item['product']->getUrl() ?>">
@@ -32,7 +32,7 @@ krsort($tiers, SORT_NUMERIC);
         </a>
         <?php
         $options = json_decode($item['options'], true);
-        if ($item['product_id'] && count($options)):
+        if ($item['product_id']):
             ?>
             <dl class="options">
                 <?php
@@ -45,6 +45,11 @@ krsort($tiers, SORT_NUMERIC);
                             echo (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect']) ?
                                     $option->getValue($options[$option->getId()]) : $options[$option->getId()])
                             ?>
+                        </dd>
+                    <?php elseif ($option['is_required']): ?>
+                        <dt class="error"><?php echo $option['title'] ?></dt>
+                        <dd class="error">
+                            <?php echo $this->translate('This option is required and cannot be empty.') ?>
                         </dd>
                         <?php
                     endif;

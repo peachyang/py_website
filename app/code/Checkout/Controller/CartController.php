@@ -122,7 +122,7 @@ class CartController extends ActionController
                 $this->getContainer()->get('log')->logException($e);
             }
         } else {
-        	return false;
+            return false;
         }
         return $this->response($result, 'checkout/cart/', 'checkout');
     }

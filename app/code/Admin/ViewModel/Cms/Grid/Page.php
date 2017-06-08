@@ -78,9 +78,7 @@ class Page extends PGrid
         if ($user->getStore()) {
             $collection->where(['store_id' => $user->getStore()->getId()]);
         }
-        if ($this->getQuery('category_id')) {
-            $collection->join('cms_category_page', 'cms_category_page.page_id=cms_page.id', [], 'left');
-        }
+        $collection->join('cms_category_page', 'cms_category_page.page_id=cms_page.id', ['category_id'], 'left');
         if (!$this->getQuery('desc')) {
             $this->query['desc'] = 'created_at';
         }

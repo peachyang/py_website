@@ -1,5 +1,25 @@
-<?php
-if ($id = $this->getSegment('oauth')->get('open_id')):
-    ?>
+<?php if ($id = $this->getSegment('oauth')->get('open_id')): ?>
     <input type="hidden" name="use_oauth" value="1" />
-<?php endif; ?>
+    <?php
+else:
+    $config = $this->getConfig();
+    foreach ($config['system']['oauth']['children'] as $key => $value):
+        $className = $config['oauth/' . $key . '/model'];
+        $class = new $className;
+        if ($class->available()):
+            ?>
+            <a href="<?php echo $class->redirect() ?>" rel="nofollow">
+                <?php if ($icon = $config['oauth/' . $key . '/icon']): ?>
+                    <?php if (strpos($icon, 'fa-') !== false): ?>
+                        <span class="fa <?php echo $icon ?>"></span>
+                    <?php else: ?>
+                        <img src="<?php echo strpos($icon, '//') === false ? $this->getResourceUrl('image/' . $icon) : $icon ?>" />
+                    <?php endif ?>
+                <?php endif ?>
+                <?php echo $this->translate($config['oauth/' . $key . '/label']) ?>
+            </a>
+            <?php
+        endif;
+    endforeach;
+endif;
+?>

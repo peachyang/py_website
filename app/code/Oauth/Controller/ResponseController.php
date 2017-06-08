@@ -23,7 +23,7 @@ class ResponseController extends ActionController
                 $customer->load($customerId);
                 $segment->set('hasLoggedIn', true)
                         ->set('customer', clone $customer);
-                $segment->addMessage(['message' => $this->translate('Welcome %s.', [$customer['username']], 'customer'), 'level' => 'success']);
+                $segment->addMessage(['message' => $this->translate($config['theme/frontend/welcome_loggedin'], [$customer['username']], 'customer'), 'level' => 'success']);
             } else {
                 $segment->set('open_id', $openId);
                 $segment = new Segment('customer');

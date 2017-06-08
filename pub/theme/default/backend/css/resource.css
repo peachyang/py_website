@@ -58,6 +58,7 @@
 #modal-upload .modal-header{border-bottom:1px solid #e5e5e5;padding:14px 20px}
 #modal-upload .modal-title{font-size:16px;line-height:1;color:#666}
 #modal-upload .modal-body{display:table;padding:0;width:100%;min-height:400px}
+@-moz-document url-prefix(){#modal-upload .modal-body{height:400px}}
 #modal-upload .modal-body .content{padding:0}
 #modal-upload .modal-body thead th{background:#e5e5e5;vertical-align:top;padding:6px}
 #modal-upload .modal-footer{text-align:left;background:#e5e5e5}

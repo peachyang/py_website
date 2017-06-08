@@ -11,3 +11,10 @@ permissions:
             operation: 'Admin\Api\Oauth\Token::index'
             title: REST - OAuth Authorized Token
             priority: 76
+system:
+    children:
+        -
+            link: 'config/oauth/'
+            operation: 'Admin\Config::Oauth'
+            title: 'OAuth Login'
+            priority: 55

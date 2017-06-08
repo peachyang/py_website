@@ -9,7 +9,7 @@
             $class = new $className;
             if ($class->available()):
                 ?>
-                <a href="<?php echo $class->redirect() ?>" rel="nofollow">
+                <a href="<?php echo $class->redirect() ?>" rel="nofollow" class="<?php echo $key ?>">
                     <?php if ($icon = $config['oauth/' . $key . '/icon']): ?>
                         <?php if (strpos($icon, 'fa-') !== false): ?>
                             <span class="fa <?php echo $icon ?>"></span>

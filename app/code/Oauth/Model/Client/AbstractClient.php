@@ -38,4 +38,12 @@ abstract class AbstractClient implements ClientInterface
         return $client->getId() ?: 0;
     }
 
+    public function available()
+    {
+        $config = $this->getContainer()->get('config');
+        return $config['oauth/' . static::SERVER_NAME . '/enable'] &&
+                $config['oauth/' . static::SERVER_NAME . '/appid'] &&
+                $config['oauth/' . static::SERVER_NAME . '/secret'];
+    }
+
 }

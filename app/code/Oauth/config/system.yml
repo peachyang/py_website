@@ -20,6 +20,21 @@ oauth:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Oauth\Model\Client\Wechat
+                icon:
+                    type: text
+                    label: Icon
+                    priority: 4
+                    attrs:
+                        data-base: '#wechat-enable'
+                    default: 'fa-wechat'
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 5
+                    attrs:
+                        data-base: '#wechat-enable'
+                    default: 'WeChat Login'
                 appid:
                     label: App ID
                     priority: 10
@@ -50,6 +65,21 @@ oauth:
                     type: hidden
                     scope: merchant
                     default: Seahinet\Oauth\Model\Client\Facebook
+                icon:
+                    type: text
+                    label: Icon
+                    priority: 4
+                    attrs:
+                        data-base: '#facebook-enable'
+                    default: 'fa-facebook-square'
+                label:
+                    type: text
+                    label: Label
+                    required: required
+                    priority: 5
+                    attrs:
+                        data-base: '#facebook-enable'
+                    default: 'Facebook Login'
                 appid:
                     label: App ID
                     priority: 10

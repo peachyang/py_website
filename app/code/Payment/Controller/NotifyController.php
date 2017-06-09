@@ -16,12 +16,12 @@ class NotifyController extends ActionController
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
+            if (is_object($data)) {
+                $data = (array) $data;
+            }
             $tradeId = false;
             foreach ($this->tradeIndex as $index) {
-                if (is_object($data) && @$data->$index) {
-                    $tradeId = $data->$index;
-                    break;
-                } else if ($data[$index]) {
+                if ($data[$index]) {
                     $tradeId = $data[$index];
                     break;
                 }

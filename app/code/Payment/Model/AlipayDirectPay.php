@@ -107,7 +107,7 @@ class AlipayDirectPay extends AbstractMethod
             $status->join('sales_order_phase', 'sales_order_phase.id=sales_order_status.phase_id')
                     ->where([
                         'is_default' => 1,
-                        'salse_order_phase.code' => 'processing'
+                        'sales_order_phase.code' => 'processing'
                     ])->limit(1);
             $currency = new Currency;
             $currency->load('CNY', 'code');

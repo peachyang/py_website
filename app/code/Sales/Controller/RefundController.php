@@ -73,6 +73,9 @@ class RefundController extends ActionController
                         if (!empty($files['voucher'])) {
                             foreach ($files['voucher'] as $file) {
                                 if ($file->getError() === UPLOAD_ERR_OK && $count++ < 5) {
+                                    if ($file->getSize() > 2097152) {
+                                        throw new FileSizeExceedLimitException('The size of the uploaded file exceed the limitation.');
+                                    }
                                     $newName = $file->getClientFilename();
                                     while (file_exists($path . $newName)) {
                                         $newName = preg_replace('/(\.[^\.]+$)/', random_int(0, 9) . '$1', $newName);
@@ -91,6 +94,10 @@ class RefundController extends ActionController
                             'image' => json_encode($images)
                         ]);
                         $result['message'][] = ['message' => $this->translate('An item has been saved successfully.'), 'level' => 'success'];
+                    } catch (FileSizeExceedLimitException $e) {
+                        $this->rollback();
+                        $result['error'] = 1;
+                        $result['message'][] = ['message' => $this->translate($e->getMessage()), 'level' => 'danger'];
                     } catch (Exception $e) {
                         $this->rollback();
                         $result['error'] = 1;

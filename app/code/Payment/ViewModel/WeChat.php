@@ -8,12 +8,10 @@ use TCPDF2DBarcode;
 class WeChat extends Template
 {
 
-    public function getQRCode($string, $width = 100, $height = 100)
+    public function getQRCode($string, $width = 120, $height = 120)
     {
         $barcode = new TCPDF2DBarcode($string, 'QRCODE,M');
-        ob_start();
-        $barcode->getBarcodePNG($width, $height);
-        $png = ob_get_clean();
+        $png = $barcode->getBarcodePngData(intval($width / 30), intval($height / 30));
         return base64_encode($png);
     }
 

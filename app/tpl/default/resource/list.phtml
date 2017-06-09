@@ -24,9 +24,9 @@ $resources = $this->getResources();
             <?php else: ?>
                 <span class="fa fa-<?php echo $this->getResourceType($resource['file_type']) ?>-o" aria-hidden="true"></span>
             <?php endif ?>
-            <span class="filename"><?php echo $resource['uploaded_name'] ?></span>
+            <span class="filename"><?php echo rawurldecode($resource['uploaded_name']) ?></span>
             <span class="info">
-                <span class="name"><span class="label"><?php echo $this->translate('Filename') ?></span><span class="value"><?php echo $resource['uploaded_name'] ?></span></span>
+                <span class="name"><span class="label"><?php echo $this->translate('Filename') ?></span><span class="value"><?php echo rawurldecode($resource['uploaded_name']) ?></span></span>
                 <span class="text-nowrap type"><span class="label"><?php echo $this->translate('File Type') ?></span><span class="value" title="<?php echo $resource['file_type'] ?>"><?php echo $resource['file_type'] ?></span></span>
                 <span class="text-nowrap size"><span class="label"><?php echo $this->translate('File Size') ?></span><span class="value"><?php echo $this->getFileSize($resource['size']) ?></span></span>
                 <span class="text-nowrap date"><span class="label"><?php echo $this->translate('Uploaded at') ?></span><span class="value"><?php echo date('Y-m-d H:iO', strtotime($resource['created_at'])) ?></span></span>

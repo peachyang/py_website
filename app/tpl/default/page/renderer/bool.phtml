@@ -26,8 +26,8 @@ $parent = $this->getVariable('parent');
                     <?php if ((!isset($item['required']) || !$item['required']) && !isset($item['attrs']['multiple'])): ?>
                 <option value=""><?php echo $this->translate($item['empty_string'] ?? 'Please Select') ?></option>
             <?php endif ?>
-            <option value="1"><?php echo $this->translate('Yes') ?></option>
-            <option value="0"><?php echo $this->translate('No') ?></option>
+            <option value="1"<?php if (isset($item['value']) && $item['value'] !== '' && $item['value'] == 1): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Yes') ?></option>
+            <option value="0"<?php if (isset($item['value']) && $item['value'] !== '' && $item['value'] == 0): ?> selected="selected"<?php endif ?>><?php echo $this->translate('No') ?></option>
         </select>
         <?php if (isset($item['comment'])): ?>
             <div class="comment">

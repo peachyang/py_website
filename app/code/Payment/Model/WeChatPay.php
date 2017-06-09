@@ -115,16 +115,19 @@ class WeChatPay extends AbstractMethod
         }
         return false;
     }
-
+    
     public function asyncNotice($data)
     {
+        if (is_scalar($data)) {
+            $backup = libxml_disable_entity_loader(true);
+            $data = simplexml_load_string($data);
+            libxml_disable_entity_loader($backup);
+        }
+        if (is_object($data)) {
+            $data = (array) $data;
+        }
         if ($data['sign'] === $this->getSign($data)) {
-            $config = $this->getContainer()->get('config');
-            $responseText = file_get_contents($config['payment/alipay_direct_pay/gateway'] .
-                    '?service=notify_verify&partner=' .
-                    $config['payment/alipay_direct_pay/partner'] .
-                    '&notify_id=' . $data['notify_id']);
-            if (!preg_match("/true$/i", $responseText)) {
+            if (!$this->check($data['out_trade_no'])) {
                 return false;
             }
             $log = new Model;
@@ -166,7 +169,7 @@ class WeChatPay extends AbstractMethod
                     $order->save();
                 }
             }
-            return 'success';
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
         return false;
     }

@@ -19,6 +19,7 @@ class Country implements SourceInterface
         $language = Bootstrap::getLanguage()['code'];
         $geoip = $this->getContainer()->get('geoip');
         $code = $geoip ? $geoip->get($_SERVER['REMOTE_ADDR'])['country']['iso_code'] : '';
+        $default = false;
         foreach ($locate->getCountry() as $item) {
             if (isset($item['iso2_code']) && $item['iso2_code'] === $code) {
                 $default = $item->getName($language);

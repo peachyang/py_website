@@ -29,7 +29,7 @@ class ReturnController extends ActionController
                 $method = new $log['method'];
                 $response = $method->syncNotice($data);
                 if ($response !== false) {
-                    return strpos($response, '//') === false ? $this->redirect($response) : $response;
+                    return strpos($response, '//') === false ? $response : $this->redirect($response);
                 }
             }
         }

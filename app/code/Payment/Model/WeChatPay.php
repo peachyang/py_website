@@ -148,7 +148,7 @@ class WeChatPay extends AbstractMethod
                 $order->load($log['order_id']);
                 if ($order->getPhase()->getId() < 3) {
                     $order->setData([
-                        'status' => $status[0]['id'],
+                        'status_id' => $status[0]['id'],
                         'base_total_paid' => $order->offsetGet('base_total'),
                         'total_paid' => $order->offsetGet('total')
                     ]);

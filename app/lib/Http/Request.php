@@ -111,7 +111,7 @@ class Request extends Message implements RequestInterface
                     $parsed = json_decode($body, true);
                 } else if ($type === 'application/xml' || $type === 'text/xml') {
                     $backup = libxml_disable_entity_loader(true);
-                    $parsed = simplexml_load_string($body);
+                    $parsed = simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
                     libxml_disable_entity_loader($backup);
                 } else if ($type === 'application/x-www-form-urlencoded') {
                     parse_str($body, $parsed);

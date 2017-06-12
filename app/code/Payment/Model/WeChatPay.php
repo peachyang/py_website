@@ -127,7 +127,7 @@ class WeChatPay extends AbstractMethod
             $data = (array) $data;
         }
         if ($data['sign'] === $this->getSign($data)) {
-            if (!$this->check($data['out_trade_no'])) {
+            if (empty($data['result_code']) || $data['result_code'] !== 'SUCCESS') {
                 return false;
             }
             $log = new Model;

@@ -141,7 +141,7 @@ class WeChatPay extends AbstractMethod
                     ])->limit(1);
             $currency = new Currency;
             $currency->load('CNY', 'code');
-            $total = $currency->rconvert($data['total_fee']);
+            $total = $currency->rconvert($data['total_fee'] / 100);
             $orders = [];
             foreach ($collection as $log) {
                 $order = new Order;

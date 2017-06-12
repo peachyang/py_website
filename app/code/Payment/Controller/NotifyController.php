@@ -17,8 +17,10 @@ class NotifyController extends ActionController
     {
         $result = (array) $xml;
         foreach ($result as &$child) {
-            if ($child instanceof SimpleXMLElement){
+            if ($child instanceof SimpleXMLElement) {
                 $child = $this->xmlToArray($child);
+            } else if (is_array($child) && count($child) === 1) {
+                $child = $child[0];
             }
         }
         return $result;

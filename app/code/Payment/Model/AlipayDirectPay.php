@@ -81,7 +81,7 @@ class AlipayDirectPay extends AbstractMethod
         return false;
     }
 
-    public function asyncNotice($data)
+    public function asyncNotice(array $data)
     {
         if ($data['sign'] === $this->getSign($data)) {
             $config = $this->getContainer()->get('config');

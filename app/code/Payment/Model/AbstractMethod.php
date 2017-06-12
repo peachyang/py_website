@@ -62,7 +62,7 @@ abstract class AbstractMethod
         return '';
     }
 
-    public function asyncNotice($data)
+    public function asyncNotice(array $data)
     {
         return '';
     }

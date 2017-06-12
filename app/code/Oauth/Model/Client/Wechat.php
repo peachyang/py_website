@@ -17,7 +17,9 @@ class Wechat extends AbstractClient
         $state = Rand::getString(8);
         $segment->set('server', static::SERVER_NAME)
                 ->set('state', $state);
-        return 'https://open.weixin.qq.com/connect/qrconnect?appid=' . $config['oauth/wechat/appid'] .
+        return (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessager') === false ?
+                'https://open.weixin.qq.com/connect/qrconnect?appid=' :
+                'https://open.weixin.qq.com/connect/oauth2/authorize?appid=') . $config['oauth/wechat/appid'] .
                 '&redirect_uri=' . rawurlencode($this->getBaseUrl('oauth/response/')) .
                 '&response_type=code&scope=snsapi_userinfo&state=' . $state .
                 '#wechat_redirect';

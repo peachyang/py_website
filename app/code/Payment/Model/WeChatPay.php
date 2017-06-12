@@ -116,16 +116,8 @@ class WeChatPay extends AbstractMethod
         return false;
     }
     
-    public function asyncNotice($data)
+    public function asyncNotice(array $data)
     {
-        if (is_scalar($data)) {
-            $backup = libxml_disable_entity_loader(true);
-            $data = simplexml_load_string($data);
-            libxml_disable_entity_loader($backup);
-        }
-        if (is_object($data)) {
-            $data = (array) $data;
-        }
         if ($data['sign'] === $this->getSign($data)) {
             if (empty($data['result_code']) || $data['result_code'] !== 'SUCCESS') {
                 return false;

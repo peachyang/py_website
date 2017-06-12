@@ -4,6 +4,7 @@ namespace Seahinet\Payment\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
 use Seahinet\Log\Model\Payment;
+use SimpleXMLElement;
 
 class NotifyController extends ActionController
 {
@@ -12,12 +13,23 @@ class NotifyController extends ActionController
         'out_trade_no'
     ];
 
+    protected function xmlToArray(SimpleXMLElement $xml)
+    {
+        $result = (array) $xml;
+        foreach ($xml as &$child) {
+            if ($child instanceof SimpleXMLElement){
+                $child = $this->xmlToArray($child);
+            }
+        }
+        return $result;
+    }
+
     public function indexAction()
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             if (is_object($data)) {
-                $data = (array) $data;
+                $data = $this->xmlToArray($data);
             }
             $tradeId = false;
             foreach ($this->tradeIndex as $index) {

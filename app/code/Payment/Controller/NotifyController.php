@@ -16,7 +16,7 @@ class NotifyController extends ActionController
     protected function xmlToArray(SimpleXMLElement $xml)
     {
         $result = (array) $xml;
-        foreach ($xml as &$child) {
+        foreach ($result as &$child) {
             if ($child instanceof SimpleXMLElement){
                 $child = $this->xmlToArray($child);
             }

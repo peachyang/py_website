@@ -21,7 +21,7 @@ class NotifyController extends ActionController
             }
             $tradeId = false;
             foreach ($this->tradeIndex as $index) {
-                if ($data[$index]) {
+                if (!empty($data[$index])) {
                     $tradeId = $data[$index];
                     break;
                 }

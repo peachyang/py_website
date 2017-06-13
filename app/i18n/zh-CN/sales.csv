@@ -1,4 +1,4 @@
-"%d images allowed at most. The maximum size of each image is %s.","最多允许上传5张图片；请上传小于%s的图片"
+"%d images allowed at most. The maximum size of each image is %s.","最多允许上传%d张图片；请上传小于%s的图片"
 "%d order(s) has been canceled.","%d个订单已取消。"
 "%d order(s) has been holded.","%d个订单已挂起。"
 "%d order(s) has been unholded.","%d个订单已取消挂起。"

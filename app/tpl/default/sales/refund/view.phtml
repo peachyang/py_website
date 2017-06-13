@@ -124,7 +124,7 @@ $currency = $this->getCurrency();
                 </div>
             </div>
         <?php endforeach; ?>
-        <?php if ($status != -1 && $status < 5): ?>
+        <?php if ($status >=0 && $status < 5): ?>
             <form action="<?php echo $this->getCommentUrl() ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf" value="<?php echo $this->getCsrfKey() ?>" />
                 <input type="hidden" name="rma_id" value="<?php echo $this->getQuery('id') ?>" />

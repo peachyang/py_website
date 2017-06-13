@@ -51,10 +51,11 @@ class Customer extends Entity
 
     protected function afterLoad(&$result)
     {
-        if (!empty($result[$this->primaryKey])) {
+        $id = $result[$this->primaryKey] ?? ($result[0][$this->primaryKey] ?? null);
+        if ($id) {
             $tableGateway = $this->getTableGateway('customer_in_group');
             $groups = [];
-            foreach ($tableGateway->select(['customer_id' => $result[$this->primaryKey]])->toArray() as $item) {
+            foreach ($tableGateway->select(['customer_id' => $id])->toArray() as $item) {
                 $groups[] = $item['group_id'];
             }
             $result['group_id'] = $groups;

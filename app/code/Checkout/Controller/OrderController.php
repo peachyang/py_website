@@ -102,7 +102,7 @@ class OrderController extends ActionController
             } else {
                 try {
                     $this->beginTransaction();
-                    $cartInfo = $cart->toArray();
+                    $cartInfo = $cart->collateTotals()->toArray();
                     $isVirtual = $cart->isVirtual();
                     $items = $cart->abandon();
                     if (empty($items)) {
@@ -123,7 +123,7 @@ class OrderController extends ActionController
                         }
                     }
                     $billingAddress = $this->validBillingAddress($data);
-                    $paymentMethod = $this->validPayment(['total' => array_sum($totals)] + $data);
+                    $paymentMethod = $this->validPayment(['total' => $cartInfo['base_total']] + $data);
                     if ($isVirtual) {
                         $cartInfo = [
                             'payment_method' => $data['payment_method'],

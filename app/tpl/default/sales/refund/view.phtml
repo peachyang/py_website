@@ -88,6 +88,8 @@ $currency = $this->getCurrency();
         <div class="step active"><?php echo $this->translate('Applied') ?></div>
         <?php if ($status == -1): ?>
             <div class="step active"><?php echo $this->translate('Refused') ?></div>
+        <?php elseif ($status == -2): ?>
+            <div class="step active"><?php echo $this->translate('Canceled') ?></div>
         <?php else: ?>
             <div class="step<?php if ($status): ?> active<?php endif ?>"><?php echo $this->translate('Approved') ?></div>
             <?php if ($application['service'] > 1): ?>

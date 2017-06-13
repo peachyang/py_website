@@ -14,6 +14,11 @@ class Status implements SourceInterface
                 0 => 'Applied',
                 -1 => 'Refused'
             ];
+        } else if ($service == -2) {
+            return [
+                0 => 'Applied',
+                -2 => 'Canceled'
+            ];
         }
         $status = [
             0 => 'Applied',

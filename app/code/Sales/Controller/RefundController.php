@@ -273,7 +273,7 @@ class RefundController extends ActionController
                     $result['message'][] = ['message' => $this->translate('Invalid application ID'), 'level' => 'danger'];
                 } else {
                     $this->beginTransaction();
-                    $refund->setData('status', -1)->save();
+                    $refund->setData('status', -2)->save();
                     $refund->getOrder()->rollbackStatus();
                     $result['message'][] = ['message' => $this->translate('The application has been complete.'), 'level' => 'success'];
                     $this->commit();

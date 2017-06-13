@@ -55,10 +55,14 @@ class Customer extends Entity
         if ($id) {
             $tableGateway = $this->getTableGateway('customer_in_group');
             $groups = [];
-            foreach ($tableGateway->select(['customer_id' => $id])->toArray() as $item) {
+            foreach ($tableGateway->select(['customer_id' => (int) $id])->toArray() as $item) {
                 $groups[] = $item['group_id'];
             }
-            $result['group_id'] = $groups;
+            if (isset($result[0])) {
+                $result[0]['group_id'] = $groups;
+            } else {
+                $result['group_id'] = $groups;
+            }
         }
         parent::afterLoad($result);
     }

@@ -49,7 +49,7 @@ class Merchant extends AbstractModel
         if ($this->storage['is_default']) {
             $where = new Where;
             $where->equalTo('is_default', 1)
-                    ->equalTo('id', $this->getId());
+                    ->notEqualTo('id', $this->getId());
             $this->update(['is_default' => 0], $where);
         }
         parent::afterSave();

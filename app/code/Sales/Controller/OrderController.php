@@ -13,6 +13,8 @@ use Seahinet\Sales\Model;
 class OrderController extends AuthActionController
 {
 
+    protected $allowedAction = [];
+
     public function listAction()
     {
         return $this->getLayout('sales_order_list');

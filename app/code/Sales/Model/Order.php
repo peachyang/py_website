@@ -357,12 +357,12 @@ class Order extends AbstractModel
 
     public function canConfirm()
     {
-        return $this->getPhase()->offsetGet('code') === 'complete' && empty($this->getStatus()['is_default']);
+        return $this->getPhase()->offsetGet('code') === 'complete' && !empty($this->getStatus()['is_default']);
     }
 
     public function canReview()
     {
-        if ($this->getPhase()->offsetGet('code') !== 'complete' || empty($this->getStatus()['is_default'])) {
+        if ($this->getPhase()->offsetGet('code') !== 'complete' || !empty($this->getStatus()['is_default'])) {
             return false;
         }
         $collection = new Review;

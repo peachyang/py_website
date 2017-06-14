@@ -103,7 +103,9 @@ class OrderController extends AuthActionController
             $result = ['error' => 0, 'message' => []];
             if ($order->getPhase()->offsetGet('code') === 'complete' && empty($this->getStatus()['is_default'])) {
                 try {
-                    $order->setData('status', $order->getPhase()->getDefaultStatus()->getId())->save();
+                    $status = $order->getPhase()->getStatus();
+                    $status->where(['is_default' => 0]);
+                    $order->setData('status', $status[0]->getId())->save();
                     $result['message'][] = ['message' => $this->translate('The order has been confirmed successfully.'), 'level' => 'success'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);

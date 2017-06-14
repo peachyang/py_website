@@ -108,7 +108,7 @@ class OrderController extends AuthActionController
                 try {
                     $status = $order->getPhase()->getStatus();
                     $status->where(['is_default' => 0]);
-                    $order->setData('status', $status[0]->getId())->save();
+                    $order->setData('status_id', $status[0]->getId())->save();
                     $result['message'][] = ['message' => $this->translate('The order has been confirmed successfully.'), 'level' => 'success'];
                 } catch (Error $e) {
                     $this->getContainer()->get('log')->logError($e);

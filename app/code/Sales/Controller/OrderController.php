@@ -103,7 +103,7 @@ class OrderController extends AuthActionController
             $order = new Model\Order;
             $order->load($id);
             $result = ['error' => 0, 'message' => []];
-            if ($order->getPhase()->offsetGet('code') === 'complete' && empty($this->getStatus()['is_default'])) {
+            if ($order->getPhase()->offsetGet('code') === 'complete' && !empty($order->getStatus()['is_default'])) {
                 try {
                     $status = $order->getPhase()->getStatus();
                     $status->where(['is_default' => 0]);

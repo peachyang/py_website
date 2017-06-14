@@ -32,10 +32,10 @@ class Dashboard extends Template
         return $result;
     }
 
-    public function renderCell($item, $template = null)
+    public function renderCell($item)
     {
         $cell = new Template;
-        $cell->setTemplate($template ?: 'admin/dashboard/cell')
+        $cell->setTemplate($item['template'] ?? 'admin/dashboard/cell')
                 ->setVariable('item', $item);
         return $cell;
     }

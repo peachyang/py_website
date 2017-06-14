@@ -2,6 +2,7 @@
 
 namespace Seahinet\Sales\Controller;
 
+use Error;
 use Exception;
 use Seahinet\Catalog\Model\Product\Review;
 use Seahinet\Customer\Controller\AuthActionController;
@@ -109,6 +110,10 @@ class OrderController extends AuthActionController
                     $status->where(['is_default' => 0]);
                     $order->setData('status', $status[0]->getId())->save();
                     $result['message'][] = ['message' => $this->translate('The order has been confirmed successfully.'), 'level' => 'success'];
+                } catch (Error $e) {
+                    $this->getContainer()->get('log')->logError($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please try again later.'), 'level' => 'danger'];
                 } catch (Exception $e) {
                     $this->getContainer()->get('log')->logException($e);
                     $result['error'] = 1;

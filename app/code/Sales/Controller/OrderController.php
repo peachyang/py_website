@@ -95,6 +95,29 @@ class OrderController extends AuthActionController
         return $this->response($result ?? ['error' => 0, 'message' => []], 'sales/order/list/', 'customer');
     }
 
+    public function confirmAction()
+    {
+        if ($id = $this->getRequest()->getQuery('id')) {
+            $order = new Model\Order;
+            $order->load($id);
+            $result = ['error' => 0, 'message' => []];
+            if ($order->getPhase()->offsetGet('code') === 'complete' && empty($this->getStatus()['is_default'])) {
+                try {
+                    $order->setData('status', $order->getPhase()->getDefaultStatus()->getId())->save();
+                    $result['message'][] = ['message' => $this->translate('The order has been confirmed successfully.'), 'level' => 'success'];
+                } catch (Exception $e) {
+                    $this->getContainer()->get('log')->logException($e);
+                    $result['error'] = 1;
+                    $result['message'][] = ['message' => $this->translate('An error detected while saving. Please try again later.'), 'level' => 'danger'];
+                }
+            } else {
+                $result['error'] = 1;
+                $result['message'][] = ['message' => $this->translate('Invalid Order Id'), 'level' => 'danger'];
+            }
+        }
+        return $this->response($result ?? ['error' => 0, 'message' => []], 'sales/order/list/', 'customer');
+    }
+
     public function viewAction($handler = 'sales_order_view')
     {
         if ($id = $this->getRequest()->getQuery('id')) {

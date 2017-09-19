@@ -1,0 +1,6 @@
+.container .article_list{width:470px;float:left;margin-left:20px;text-indent:10px}
+.container .article_list ul li{line-height:30px;height:30px}
+.container .carousel .carousel-inner .carousel-caption p{text-align:center}
+.container .row-fluid .hero-unify small{text-align:right;font-size:12px}
+.container .list-group .list-group-item{height:42px;overflow-y:hidden}
+.container .thumbnails li .thumbnail-style p{height:40px;overflow-y:hidden}

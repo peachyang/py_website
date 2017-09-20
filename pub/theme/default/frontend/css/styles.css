@@ -1,6 +1,8 @@
 html{font-size:32px}
 body{min-width:320px}
 [lang|=zh],[lang|=zh] body{font-family:"Microsoft Yahei",SimHei,STHeiti,sans-serif}
+[lang|=en]{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+[lang|=ko]{font-family:Dotum,'돋움',Helvetica,"Apple SD Gothic Neo",sans-serif}
 label[for]{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 input[type=number]{-webkit-appearance:none;appearance:none;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}

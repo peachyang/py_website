@@ -63,3 +63,4 @@
 #modal-upload .modal-body thead th{background:#e5e5e5;vertical-align:top;padding:6px}
 #modal-upload .modal-footer{text-align:left;background:#e5e5e5}
 #modal-upload .modal-footer .input-box{display:inline-block;margin:0 10px 0 0;vertical-align:top}
+.admin.modal-open .modal{width: 100%;margin-left: 0}

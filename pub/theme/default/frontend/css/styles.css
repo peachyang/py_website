@@ -30,9 +30,7 @@ select[multiple],select[size],textarea{resize:vertical}
 [type=file]::-ms-browse{background:none;border:none}
 [type=file].form-control.preview+.preview{display:none;position:absolute;bottom:100%;left:0;width:100px;max-height:100px}
 [type=file].form-control.preview:hover+.preview{display:block}
-.header{background:#007dc6;box-shadow:0 0 7px #ccc;margin-bottom:7px}
-.header .logo{padding:30px 0 0}
-.header .quick-search{margin:35px 0 0;border:2px solid #fdbb30}
+.header .quick-search{border:2px solid #fdbb30;float: right}
 .header .quick-search .input-group-addon{padding:0;border:none;background:#fff;height:36px;border-radius:0}
 .header .quick-search .input-group-addon .fa{padding:0 .25em 0 .75em;font-size:16px;color:#ccc}
 .header .quick-search .form-control{border:none;font-size:12px;height:3em;box-shadow:none}
@@ -42,7 +40,7 @@ select[multiple],select[size],textarea{resize:vertical}
 .header .welcome p{font-size:12px;line-height:30px;color:#fff;display:inline}
 .header .welcome ul{display:inline;margin-left:4px}
 .header .welcome li+li{margin-left:14px}
-.header .welcome a,.header .links>li>a{font-size:12px;line-height:30px;color:#fff}
+.header .welcome a,.header .links>li>a{font-size:12px;line-height:30px}
 .header .welcome .register a{color:#fdbb30}
 .header .links>li{text-align:left}
 .header .links>li>a{padding:0 12px}
@@ -194,7 +192,7 @@ dl.options dd{float:left;margin-left:4px}
 .rating .fa-star{position:absolute;top:0;left:0;white-space:nowrap;overflow:hidden;max-width:100%;color: #fd9030}
 .rating .fa-star-o:before{content:"\f006\f006\f006\f006\f006"}
 .rating .fa-star:before{content:"\f005\f005\f005\f005\f005"}
-.footer .container{margin-bottom:30px}
+/*.footer .container{margin-bottom:30px}
 .footer .foot-navigation{border-top:1px solid #cfcfcf;border-bottom:1px solid #cfcfcf;font-size:12px}
 .footer .foot-navigation ul{margin-top:15px;margin-bottom:15px}
 .footer .foot-navigation li{margin-right:50px;line-height:30px}
@@ -204,7 +202,7 @@ dl.options dd{float:left;margin-left:4px}
 .footer .foot-info .foot-con li{border-right:1px solid #000000;line-height:14px;margin-right:0px;padding-right:15px;padding-left:15px}
 .footer .foot-info .foot-con{margin-top:6px}
 .footer .foot-info .foot-con:first-child{padding-left:0px}
-.footer .foot-info .foot-con:last-child{border:none}
+.footer .foot-info .foot-con:last-child{border:none}*/
 .page-not-found .main-container .figure{margin:70px 0 79px;border-right:2px #f2f2f2 solid}
 .page-not-found .main-container .notice{margin:70px 0 79px;padding-left:110px}
 .page-not-found .main-container .notice h2{line-height:50px;margin-top:100px}

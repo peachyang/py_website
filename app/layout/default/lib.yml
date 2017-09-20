@@ -48,16 +48,43 @@ frontend:
                             - shortcut icon
                     -
                         method: addLink
-                        params: frontend/css/bootstrap.css
+                        params: frontend/plugins/bootstrap/css/bootstrap.min.css
                     -
                         method: addLink
                         params: frontend/css/font-awesome.css
                     -
+#                     CSS Global Compulsory
                         method: addLink
                         params: frontend/css/styles.css
                     -
                         method: addLink
                         params: [frontend/css/styles-ie.css,stylesheet,lt IE 9]
+                    -
+                        method: addLink
+                        params: frontend/css/style.css
+                    -
+                        method: addLink
+                        params: frontend/css/headers/header1.css
+                    -
+                        method: addLink
+                        params: frontend/plugins/bootstrap/css/bootstrap-responsive.min.css
+                    -
+                        method: addLink
+                        params: frontend/css/style_responsive.css
+                    -
+#                    CSS Implementing Plugins
+                        method: addLink
+                        params: frontend/plugins/font-awesome/css/font-awesome.css
+                    -
+                        method: addLink
+                        params: frontend/plugins/flexslider/flexslider.css
+                    -
+                        method: addLink
+                        params: frontend/plugins/parallax-slider/css/parallax-slider.css
+                    -
+#                    CSS Theme
+                        method: addLink
+                        params: frontend/css/themes/default.css
                     -
                         method: addScript
                         params: frontend/js/jquery.js
@@ -78,7 +105,7 @@ frontend:
                         params: [{src:'frontend/js/modernizr.js',defer:'defer',async:'async'}]
                     -
                         method: addScript
-                        params: frontend/js/bootstrap.js
+                        params: frontend/plugins/bootstrap/js/bootstrap.min.js
                     -    
                         method: addScript
                         params: frontend/js/app.js
@@ -101,16 +128,15 @@ frontend:
                                 template: catalog/navigation/top
                             navigation:
                                 type: Seahinet\Cms\ViewModel\Navigation
+                            navbar:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: catalog/navigation/navbar
                             quick-search:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: catalog/search
-                            minicart:
-                                type: Seahinet\Checkout\ViewModel\Cart
-                                template: checkout/minicart
-                                children:
-                                    total:
-                                        type: Seahinet\Checkout\ViewModel\Cart
-                                        template: checkout/minicart/total
+                            setting: 
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: customer/setting
                             links:
                                 type: Seahinet\Lib\ViewModel\Links
                                 action:
@@ -118,31 +144,31 @@ frontend:
                                         method: setClass
                                         params: text-right
                                     -
+#                                        method: addLink
+#                                        params: 
+#                                            - {link:'/',label:'Home',priority:0}
+                                    -
                                         method: addLink
-                                        params: 
-                                            - {link:'/',label:'Home',priority:0}
+                                        params:
+                                            - {block:'language',label:'LANGUAGES',icon:'globe',priority:10}
                                     -
                                         method: addLink
                                         params:
                                             -
                                                 link: #
-                                                label: Customer Service
-                                                priority: 10
+                                                label: HELP
+                                                priority: 20
                                     -
                                         method: addLink
                                         params:
                                             - 
-                                                link: customer/account/
-                                                label: Personal Center
-                                                priority: 10
-                                    -
-                                        method: addLink
-                                        params:
-                                            - {block:'language',priority:50}
-                                    -
-                                        method: addLink
-                                        params:
-                                            - {block:'currency',priority:60}
+                                                link: customer/account/login/
+                                                label: Log in
+                                                priority: 30
+#                                    -
+#                                        method: addLink
+#                                        params:
+#                                            - {block:'currency',priority:60}
                                 children:
                                     language:
                                         type: Seahinet\Lib\ViewModel\Language
@@ -160,10 +186,15 @@ frontend:
                 children:
                     block:
                         type: Seahinet\Cms\ViewModel\Block
+                        type: page/foot
                         action:
                             -
                                 method: setBlockId
                                 params: footer
+                        children:
+                            foot:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: page/foot
             content:
                 children:
                     breadcrumb:

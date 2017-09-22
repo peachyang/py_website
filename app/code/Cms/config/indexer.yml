@@ -2,3 +2,6 @@
 cms_url:
     title: Cms Url
     provider: \Seahinet\Cms\Indexer\Url
+#cms_search:
+#    title: Catalog Search
+#    provider: \Seahinet\Cms\Indexer\Search

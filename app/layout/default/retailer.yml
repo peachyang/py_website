@@ -1,17 +1,17 @@
 ---
-frontend:
-    root:
-        children:
-            header:
-                children:
-                    block:
-                        children:
-                            links:
-                                action:
-                                    -
-                                        method: addLink
-                                        params: 
-                                            - {link:'retailer/account/',label:'Retailer Center',priority:15}
+#frontend:
+#    root:
+#        children:
+#            header:
+#                children:
+#                    block:
+#                        children:
+#                            links:
+#                                action:
+#                                    -
+#                                        method: addLink
+#                                        params: 
+#                                            - {link:'retailer/account/',label:'Retailer Center',priority:15}
 retailer_account:
     update: frontend
     root:

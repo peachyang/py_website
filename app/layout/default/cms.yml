@@ -7,6 +7,20 @@ cms_page:
                 children:
                     page:
                         type: Seahinet\Cms\ViewModel\Page
+page_view:
+    update: frontend
+    root:
+        children:
+                content:
+                    children:
+                        page:
+                            type: Seahinet\Cms\ViewModel\Page
+                            template: cms/view
+                extra:
+                    children:
+                        log:
+                            type: Seahinet\Log\ViewModel\Visitor
+                        
 cms_page_with_nav:
     update: frontend
     root:

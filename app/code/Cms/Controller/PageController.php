@@ -33,4 +33,31 @@ class PageController extends ActionController
         return $root;
     }
 
+    public function pageAction()
+    {
+        $page = $this->getOption('page');
+        if (!$page) {
+            return $this->notFoundAction();
+        } else {
+            if ($page->getId()) {
+                if ($this->getOption('is_json')) {
+                    return $page->toArray();
+                } else {
+                    $category = $this->getOption('category');
+                    $root = $this->getLayout('page_view');
+                    $root->getChild('head')->setTitle($page->offsetGet('meta_title') ?: $page->offsetGet('title'))
+                            ->setDescription($page->offsetGet('meta_description'))
+                            ->setKeywords($page->offsetGet('meta_keywords'));
+                    $root->getChild('page', true)->setPageModel($page);
+                    $breadcrumb = $root->getChild('breadcrumb', true);
+                    $this->generateCrumbs($breadcrumb, $this->getOption('category_id'));
+                    $breadcrumb->addCrumb([
+                        'label' => $page->offsetGet('name')
+                    ]);
+                    return $root;
+                }
+            }
+        }
+    }
+
 }

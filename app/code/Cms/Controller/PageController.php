@@ -30,6 +30,13 @@ class PageController extends ActionController
             ]);
         }
         $root->getChild('page', true)->setPageModel($page);
+        //var_dump($root);
+        return $root;
+    }
+
+    public function homeAction()
+    {
+        $root = $this->getLayout('page_home');
         return $root;
     }
 

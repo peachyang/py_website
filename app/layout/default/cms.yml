@@ -7,6 +7,17 @@ cms_page:
                 children:
                     page:
                         type: Seahinet\Cms\ViewModel\Page
+page_home:
+    update: frontend
+    root:
+        children:
+                content:
+                    unset: ['breadcrumb','messages']
+                    children:
+                        page: 
+                            type: Seahinet\Lib\ViewModel\Template
+                            template: cms/home
+                        
 page_view:
     update: frontend
     root:

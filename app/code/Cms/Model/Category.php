@@ -39,7 +39,8 @@ class Category extends AbstractModel
         if (isset($this->storage['id'])) {
             $pages = new PageCollection;
             $pages->join('cms_category_page', 'cms_page.id=cms_category_page.page_id', [])
-                    ->where(['cms_category_page.category_id' => $this->storage['id']]);
+                    ->where(['cms_category_page.category_id' => $this->storage['id']])
+                    ->order('id DESC');
             return $pages;
         }
         return NULL;

@@ -95,6 +95,10 @@ class Page extends PEdit
                 'type' => 'text',
                 'label' => 'Meta Description'
             ],
+            'source' => [
+                'type' => 'text',
+                'label' => 'Source'
+            ],
             'thumbnail' => [
                 'type' => 'widget',
                 'label' => 'Thumbnail',

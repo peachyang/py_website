@@ -11,12 +11,15 @@ page_home:
     update: frontend
     root:
         children:
-                content:
-                    unset: ['breadcrumb','messages']
-                    children:
-                        page: 
-                            type: Seahinet\Lib\ViewModel\Template
-                            template: cms/home
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: cms/main
+                        children:
+                            page: 
+                                type: Seahinet\Cms\ViewModel\Home
+                                template: cms/home
                         
 page_view:
     update: frontend

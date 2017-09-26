@@ -1,29 +1,98 @@
+<!--=== Slider ===-->
+<div class="slider-inner">
+    <div class="da-slider" id="da-slider">
+        <div class="da-slide">
+            <h2><i>CLEAN &amp; FRESH</i><br />
+                <i>FULLY RESPONSIVE</i><br />
+                <i>DESIGN</i>
+            </h2>
+
+            <p><i>Lorem ipsum dolor amet</i><br />
+                <i>tempor incididunt ut</i><br />
+                <i>veniam omnis </i></p>
+
+            <div class="da-img"><img alt="" src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/plugins/parallax-slider/img/1.png'); ?>" /></div>
+        </div>
+        <div class="da-slide">
+            <h2><i>RESPONSIVE VIDEO</i><br />
+                <i>SUPPORT AND</i><br />
+                <i>MANY MORE</i></h2>
+
+            <p><i>Lorem ipsum dolor amet</i><br />
+                <i>tempor incididunt ut</i></p>
+
+            <div class="da-img span6">
+                <div class="span6"><iframe allowfullscreen="" frameborder="0" height="320" mozallowfullscreen="" src="http://player.vimeo.com/video/47911018" webkitallowfullscreen="" width="100%"></iframe></div>
+            </div>
+        </div>
+
+        <div class="da-slide">
+            <h2><i>USING BEST WEB</i><br />
+                <i>SOLUTIONS WITH</i><br />
+                <i>HTML5/CSS3</i></h2>
+
+            <p><i>Lorem ipsum dolor amet</i><br />
+                <i>tempor incididunt ut</i><br />
+                <i>veniam omnis </i></p>
+
+            <div class="da-img"><img alt="image01" src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/plugins/parallax-slider/img/html5andcss3.png') ?>" /></div>
+        </div>
+
+        <nav class="da-arrows">&nbsp;</nav>
+    </div>
+    <!--/da-slider-->
+</div>
+<!--/slider-->
+<!--=== End Slider ===-->
+<!--=== Notice Block ===-->
+<div class="row-fluid purchase margin-bottom-30">
+    <div class="container">
+        <div class="span10">
+            <?php
+            $categories = $this->getCategoryPage(8);
+            if ($categories):
+                $categories->limit(1);
+                foreach ($categories as $category):
+                    $url = $category->getUrl();
+                    ?>
+                    <h3><?php echo $category['title'] ?></h3>
+                    <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
+                </div>
+                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
+                <?php
+            endforeach;
+        endif;
+        ?>
+    </div>
+</div>
+<!--/row-fluid-->
+<!-- End Notice Block -->
 <!--big Carousel-->
 <div class="container">
     <div class="span7" style="margin-left:0">
         <div id="myCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <!-- Indicators -->
-                <div class="item active">
-                    <a href="<?php echo $this->getBaseUrl(''); ?>">
-                        <img src="<?php echo $this->getPubUrl('frontend/img/carousel/5.jpg'); ?>" alt="" />
-                    </a>
-                    <div class="carousel-caption">
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas.</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="<?php echo $this->getPubUrl('frontend/img/carousel/4.jpg'); ?>" alt="" />
-                    <div class="carousel-caption">
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas.</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="<?php echo $this->getPubUrl('frontend/img/carousel/3.jpg'); ?>" alt="" />
-                    <div class="carousel-caption">
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas.</p>
-                    </div>
-                </div>
+                <?php
+                $categories = $this->getCategoryPage(10);
+                if ($categories):
+                    $categories->limit(5);
+                    foreach ($categories as $category):
+                        $thumbnail = $category->getThumbnail();
+                        $url = $category->getUrl();
+                        ?>
+                        <div class="item">
+                            <a href="<?php echo $this->getBaseUrl($url . '.html'); ?>">
+                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)         ?>"  alt="<?php echo $category['title'] ?>" />
+                            </a>
+                            <div class="carousel-caption">
+                                <p><?php echo $category['title']; ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    endforeach;
+                endif;
+                ?>
             </div>   
             <div class="carousel-arrow">
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="icon-angle-left"></i></a>
@@ -33,16 +102,21 @@
     </div>
     <div class="span5">
         <ol class="list-group"> 
-            <li class="list-group-item"><a href="./blog_item.php">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li class="hidden-phone"><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li class="hidden-phone"><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li class="hidden-phone"><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li class="hidden-phone"><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
-            <li class="hidden-phone"><a href="#">7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</a></li>
+            <?php
+            $categories = $this->getCategoryPage(10);
+            if ($categories):
+                $categories->limit(5);
+                foreach ($categories as $category):
+                    $thumbnail = $category->getThumbnail();
+                    $url = $category->getUrl();
+                    ?>
+                    <li class="list-group-item">
+                        <a href="<?php echo $this->getBaseUrl($url . '.html'); ?>"><?php echo $category['title']; ?></a>
+                    </li>
+                    <?php
+                endforeach;
+            endif;
+            ?>
         </ol>
     </div>
 </div>
@@ -52,36 +126,30 @@
     <!-- Recent Works -->
     <div class="headline"><h3>新闻「News|뉴스」</h3><a href="./portfolio.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
     <ul class="thumbnails">
-        <li class="span4">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/new/2016071601001263600089741.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="./blog_item.php">reading +</a>					
-                </div>
-                <h4><a class="hover-effect" href="./blog_item.php">WG杂志写真公开 大方优雅尽显成熟</a></h4>
-                <p>7月15日，时尚杂志《InStyle》方面公开了女团Wonder Girls拍摄的部分写真照、采访。...</p>
-            </div>
-        </li>
-        <li class="span4">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/new/2016071601001230500087432.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="./blog_item.php">reading +</a>					
-                </div>
-                <h4><a class="hover-effect" href="#">孙艺珍为新片慷慨解囊 投资10亿制作费</a></h4>
-                <p>近日，电影《德惠翁主》的相关人士向我社Sports朝鲜透露，主演孙艺珍曾为该片投资10亿韩元制作费，展现出了对该片的爱意。</p>
-            </div>
-        </li>
-        <li class="span4">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/new/20160717101059791xhot.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="#">reading +</a>				
-                </div>
-                <h4><a class="hover-effect" href="#">宋慧乔晒日常照 阳光下诠释女神范</a></h4>
-                <p>7月17日，演员宋慧乔通过Instagram公开了一张照片，引来众多男粉丝留言</p>
-            </div>
-        </li>
+        <?php
+        $categories = $this->getCategoryPage(10);
+        if ($categories):
+            $categories->limit(3);
+            foreach ($categories as $category):
+                $thumbnail = $category->getThumbnail();
+                $url = $category->getUrl();
+                ?>
+                <li class="span4">
+                    <div class="thumbnail-style thumbnail-kenburn">
+                        <div class="thumbnail-img">
+                            <div class="overflow-hidden">
+                                <img src="<?php echo $this->getPubUrl('frontend/img/new/2016071601001263600089741.jpg') ?>" alt="" width="100%" />
+                            </div>
+                            <a class="btn-more hover-effect" href="<?php echo $this->getBaseUrl($url . '.html'); ?>">reading +</a>					
+                        </div>
+                        <h4 class="text-center"><a class="hover-effect" href="<?php echo $this->getBaseUrl($url . '.html'); ?>"><?php echo mb_substr($category['title'], 0, 20, 'utf-8'); ?></a></h4>
+                        <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 50, 'utf-8') . '……' ?></p>
+                    </div>
+                </li>
+                <?php
+            endforeach;
+        endif;
+        ?>
     </ul><!--/thumbnails-->
     <!-- //End Recent Works -->
 

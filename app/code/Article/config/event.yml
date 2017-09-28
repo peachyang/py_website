@@ -1,0 +1,30 @@
+---
+product.price.calc:
+    -
+        listener: [\Seahinet\Article\Listeners\Price\Regular, calc]
+        priority: 0
+    -
+        listener: [\Seahinet\Article\Listeners\Price\Special, calc]
+        priority: 10
+    -
+        listener: [\Seahinet\Article\Listeners\Price\Tier, calc]
+        priority: 20
+    -
+        listener: [\Seahinet\Article\Listeners\Price\Group, calc]
+        priority: 30
+cart.add.before:
+    -
+        listener: [\Seahinet\Article\Listeners\Inventory, check]
+        priority: 10
+order.place.after:
+    -
+        listener: [\Seahinet\Article\Listeners\Inventory, decrease]
+        priority: 0
+order.refund.after:
+    -
+        listener: [\Seahinet\Article\Listeners\Inventory, increase]
+        priority: 0
+order.cancel.after:
+    -
+        listener: [\Seahinet\Article\Listeners\Inventory, increase]
+        priority: 0

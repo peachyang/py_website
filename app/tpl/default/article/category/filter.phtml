@@ -1,0 +1,38 @@
+<?php
+$filters = $this->getFilters();
+$current = $this->getCurrentFilters();
+?>
+<dl class="filters clearfix">
+    <?php
+    foreach ($filters as $key => $filter):
+        if (count($filter['values']) <= 1) {
+            continue;
+        }
+        ?>
+        <dt class="col-xs-12 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
+        <dd class="col-xs-12 col-sm-10 col-md-11">
+            <a href="<?php echo $this->getInitFilterUrl($key) ?>" class="init" rel="nofollow">
+                <?php echo $this->translate('All') ?>
+            </a>
+            <div class="values">
+                <ul class="list-inline">
+                    <?php foreach ($filter['values'] as $value => $values): ?>
+                        <li <?php if (isset($current[$key]) && $current[$key] == $value): ?> class="active"<?php endif ?>>
+                            <a href="<?php echo $this->getFilterUrl($key, $value) ?>" rel="nofollow">
+                                <span><?php echo $values['label'] ?></span>
+                                <?php if ($this->showCount()): ?>
+                                    <span class="count"><?php echo $values['count'] ?></span>
+                                <?php endif ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>                    
+                </ul>
+            </div>
+            <div class="cell more">
+                <a href="javascript:void(0);">
+                    <?php echo $this->translate('More') ?>
+                </a>
+            </div>
+        </dd>
+    <?php endforeach ?>
+</dl>

@@ -1,0 +1,48 @@
+<?php
+$products = $this->getProducts();
+
+if (count($products)):
+    ?>
+    <div class="product-link">
+        <?php if ($this->getVariable('title')): ?>
+            <h4 class="title">
+                <span><?php echo $this->translate($this->getVariable('title')) ?></span>
+            </h4>
+        <?php endif ?>
+        <ul class="products-grid clearfix">
+            <?php
+            $class = $this->getVariable('class', 'col-xs-6 col-sm-4 col-md-3 col-lg-2');
+            $width = $this->getVariable('width');
+            foreach ($products as $product):
+                $thumbnail = $product->getThumbnail();
+                ?>
+                <li class="item <?php echo $class ?>">
+                    <a href="<?php echo $product->getUrl() ?>" title="<?php echo $product['name'] ?>" class="product-image">
+                        <?php
+                        if (strpos($thumbnail, '//') !== false):
+                            ?>
+                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php elseif ($width): ?>
+                            <img class="bttrlazyloading"<?php foreach ($width as $key => $value): ?> data-bttrlazyloading-<?php echo $key ?>-src="<?php echo $this->getResourceUrl('image/resized/' . $value . 'x/' . $thumbnail) ?>"<?php endforeach ?> alt="<?php echo $product['name'] ?>" />
+                        <?php else: ?>
+                            <img src="<?php echo $this->getResourceUrl('image/resized/131x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php endif ?>
+                    </a>
+                    <div class="price-box">
+                        <?php echo $this->getPriceBox($product) ?>
+                    </div>
+                    <div class="action">
+                        <a href="<?php
+                        echo $this->getBaseUrl('checkout/cart/add/?product_id=' . $product['id'] .
+                                '&qty=1&csrf=' . $this->getCsrfKey())
+                        ?>" class="add2cart">
+                        </a>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+<?php else:
+    return false;
+?>
+<?php endif; ?>

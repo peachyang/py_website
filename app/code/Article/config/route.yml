@@ -1,0 +1,8 @@
+---
+article:
+    route: Seahinet\Article\Route\Router
+    priority: 40
+article_regex:
+    method: [GET,POST]
+    route: /article/{controller}/[{action}[/]]
+    namespace: Seahinet\Article\Controller

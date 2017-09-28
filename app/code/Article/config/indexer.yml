@@ -1,0 +1,7 @@
+---
+article_search:
+    title: Article Search
+    provider: \Seahinet\Article\Indexer\Search
+article_url:
+    title: Article Url
+    provider: \Seahinet\Article\Indexer\Url

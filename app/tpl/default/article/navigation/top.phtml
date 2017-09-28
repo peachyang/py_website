@@ -1,0 +1,34 @@
+<?php
+$root = $this->getRootCategory();
+?>
+<ul class="dropdown-menu">
+    <?php
+    foreach ($root->getChildrenCategories(1) as $category):
+        $children = $category->getChildrenCategories(1);
+        $count = $children->count();
+        ?>
+        <li<?php if ($count): ?> class="dropdown"<?php endif ?>>
+            <a href="<?php echo $category->getUrl() ?>"<?php if ($count): ?> class="dropdown-toggle"<?php endif ?>><?php echo $category['name'] ?></a>
+            <?php if ($count): ?>
+                <ul class="dropdown-menu clearfix children">
+                    <?php
+                    foreach ($children as $child):
+                        $grandChildren = $child->getChildrenCategories(1);
+                        ?>
+                        <li class="col-sm-6">
+                            <img src="<?php echo $child->getThumbnail() ?>" alt="<?php echo $child['name'] ?>" />
+                            <a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a>
+                            <?php if ($grandChildren->count()): ?>
+                                <ul class="list-inline">
+                                    <?php foreach ($grandChildren as $grandChild): ?>
+                                        <li><a href="<?php echo $grandChild->getUrl() ?>"><?php echo $grandChild['name'] ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

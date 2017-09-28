@@ -1,0 +1,243 @@
+<?php
+$options = $this->getProduct()->getOptions();
+?>
+<div class="clearfix text-nowrap" id="custom-options">
+    <?php foreach ($options as $option): ?>
+        <table class="option table" data-id="<?php echo $option['id'] ?>">
+            <caption>
+                <button type="button" class="btn btn-delete delete-option"><span><?php echo $this->translate('Delete Option') ?></span></button>
+            </caption>
+            <tr>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Label') ?></label>
+                </th>
+                <td>
+                    <input type="text" class="form-control" name="options[label][<?php echo $option['id'] ?>]" value="<?php echo $option['title'] ?>" />
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Input Widget') ?></label>
+                </th>
+                <td>
+                    <select class="form-control" name="options[input][<?php echo $option['id'] ?>]">
+                        <?php foreach ($this->getInputOptions() as $group => $pairs): ?>
+                            <optgroup label="<?php echo $this->translate($group) ?>">
+                                <?php foreach ($pairs as $value => $label): ?>
+                                    <option value="<?php echo $value ?>"<?php if ($value === $option['input']): ?> selected="selected"<?php endif ?>><?php echo $this->translate($label) ?></option>
+                                <?php endforeach ?>
+                            </optgroup>
+                        <?php endforeach ?>
+                    </select>
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Is Required') ?></label>
+                </th>
+                <td>
+                    <select class="form-control" name="options[is_required][<?php echo $option['id'] ?>]">
+                        <option value="0"><?php echo $this->translate('No') ?></option>
+                        <option value="1"<?php if ($option['is_required']): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Yes') ?></option>
+                    </select>
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Sort Order') ?></label>
+                </th>
+                <td>
+                    <input type="tel" class="form-control digits" name="options[sort_order][<?php echo $option['id'] ?>]" value="<?php echo $option['sort_order'] ?>" />
+                </td>
+            </tr>
+            <tr class="non-value"<?php if (in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect'])): ?> style="display:none"<?php endif ?>>
+                <th><label class="control-label"><?php echo $this->translate('SKU') ?></label></th>
+                <td><input type="text" class="form-control" name="options[sku][<?php echo $option['id'] ?>]" value="<?php echo $option['sku'] ?>" /></td>
+                <th><label class="control-label"><?php echo $this->translate('Price') ?></label></th>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                        </span>
+                        <input type="number" class="form-control number" name="options[price][<?php echo $option['id'] ?>]" value="<?php echo $option['price'] ?>" />
+                    </div>
+                </td>
+                <th><label class="control-label"><?php echo $this->translate('Price Type') ?></label></th>
+                <td>
+                    <select name="options[is_fixed][<?php echo $option['id'] ?>]" class="form-control">
+                        <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                        <option value="0"<?php if ($option['is_fixed'] === '0'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Percent') ?></option>
+                    </select>
+                </td>
+                <th></th>
+                <td></td>
+            </tr>
+            <tr class="value"<?php if (!in_array($option['input'], ['select', 'radio', 'checkbox', 'multiselect'])): ?> style="display:none"<?php endif ?>>
+                <td colspan="8">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo $this->translate('Label') ?></th>
+                                <th><?php echo $this->translate('Price') ?></th>
+                                <th><?php echo $this->translate('Price Type') ?></th>
+                                <th><?php echo $this->translate('SKU') ?></th>
+                                <th><?php echo $this->translate('Delete') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody class="sortable">
+                            <?php foreach ($option['value'] as $value): ?>
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="options[value][<?php echo $option['id'] ?>][id][]" value="<?php echo $value['id'] ?>" />
+                                        <input type="text" class="form-control" name="options[value][<?php echo $option['id'] ?>][label][]" value="<?php echo $value['title'] ?>" />
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                                            </span>
+                                            <input type="number" class="form-control number" name="options[value][<?php echo $option['id'] ?>][price][]" value="<?php echo $value['price'] ?>" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select name="options[value][<?php echo $option['id'] ?>][is_fixed][]" class="form-control">
+                                            <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                                            <option value="0"<?php if ($option['is_fixed'] === '0'): ?> selected="selected"<?php endif ?>><?php echo $this->translate('Percent') ?></option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control" name="options[value][<?php echo $option['id'] ?>][sku][]" value="<?php echo $value['sku'] ?>" /></td>
+                                    <td>
+                                        <button type="button" class="btn btn-delete delete-row" title="<?php echo $this->translate('Delete') ?>">
+                                            <span class="fa fa-remove" aria-hidden="true"></span>
+                                            <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <button type="button" class="btn btn-add add-row" data-id="<?php echo $option['id'] ?>"><span><?php echo $this->translate('Add New Row') ?></span></button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    <?php endforeach ?>
+    <button type="button" class="btn btn-add add-option"><span><?php echo $this->translate('Add New Option') ?></span></button>
+    <template id="tmpl-option">
+        <table class="option table" data-id="{$id}">
+            <caption>
+                <button type="button" class="btn btn-delete delete-option"><span><?php echo $this->translate('Delete Option') ?></span></button>
+            </caption>
+            <tr>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Label') ?></label>
+                </th>
+                <td>
+                    <input type="text" class="form-control" name="options[label][{$id}]" />
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Input Widget') ?></label>
+                </th>
+                <td>
+                    <select class="form-control" name="options[input][{$id}]">
+                        <?php foreach ($this->getInputOptions() as $group => $pairs): ?>
+                            <optgroup label="<?php echo $this->translate($group) ?>">
+                                <?php foreach ($pairs as $value => $label): ?>
+                                    <option value="<?php echo $value ?>"><?php echo $this->translate($label) ?></option>
+                                <?php endforeach ?>
+                            </optgroup>
+                        <?php endforeach ?>
+                    </select>
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Is Required') ?></label>
+                </th>
+                <td>
+                    <select class="form-control" name="options[is_required][{$id}]">
+                        <option value="1"><?php echo $this->translate('Yes') ?></option>
+                        <option value="0"><?php echo $this->translate('No') ?></option>
+                    </select>
+                </td>
+                <th>
+                    <label class="control-label"><?php echo $this->translate('Sort Order') ?></label>
+                </th>
+                <td>
+                    <input type="tel" class="form-control digits" name="options[sort_order][{$id}]" />
+                </td>
+            </tr>
+            <tr class="non-value">
+                <th><label class="control-label"><?php echo $this->translate('SKU') ?></label></th>
+                <td><input type="text" class="form-control" name="options[sku][{$id}]" /></td>
+                <th><label class="control-label"><?php echo $this->translate('Price') ?></label></th>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                        </span>
+                        <input type="number" class="form-control number" name="options[price][{$id}]" />
+                    </div>
+                </td>
+                <th><label class="control-label"><?php echo $this->translate('Price Type') ?></label></th>
+                <td>
+                    <select name="options[is_fixed][{$id}]" class="form-control">
+                        <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                        <option value="0"><?php echo $this->translate('Percent') ?></option>
+                    </select>
+                </td>
+                <th></th>
+                <td></td>
+            </tr>
+            <tr class="value" style="display:none">
+                <td colspan="8">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php echo $this->translate('Label') ?></th>
+                                <th><?php echo $this->translate('Price') ?></th>
+                                <th><?php echo $this->translate('Price Type') ?></th>
+                                <th><?php echo $this->translate('SKU') ?></th>
+                                <th><?php echo $this->translate('Delete') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody class="sortable"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <button type="button" class="btn btn-add add-row" data-id="{$id}"><span><?php echo $this->translate('Add New Row') ?></span></button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </template>
+    <template id="tmpl-option-value">
+        <tr>
+            <td>
+                <input type="hidden" name="options[value][{$id}][id][]" />
+                <input type="text" class="form-control" name="options[value][{$id}][label][]" />
+            </td>
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <?php echo $this->getConfig()['i18n/currency/base'] ?>
+                    </span>
+                    <input type="number" class="form-control number" name="options[value][{$id}][price][]" />
+                </div>
+            </td>
+            <td>
+                <select name="options[value][{$id}][is_fixed][]" class="form-control">
+                    <option value="1"><?php echo $this->translate('Fixed') ?></option>
+                    <option value="0"><?php echo $this->translate('Percent') ?></option>
+                </select>
+            </td>
+            <td><input type="text" class="form-control" name="options[value][{$id}][sku][]" /></td>
+            <td>
+                <button type="button" class="btn btn-delete delete-row" title="<?php echo $this->translate('Delete') ?>">
+                    <span class="fa fa-remove" aria-hidden="true"></span>
+                    <span class="sr-only"><?php echo $this->translate('Delete') ?></span>
+                </button>
+            </td>
+        </tr>
+    </template>
+</div>

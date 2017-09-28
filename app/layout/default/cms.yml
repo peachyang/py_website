@@ -14,8 +14,7 @@ page_home:
             content:
                 children:
                     main:
-                        type: Seahinet\Lib\ViewModel\Template
-                        template: cms/main
+                        type: Seahinet\Lib\ViewModel\Wrapper
                         children:
                             page: 
                                 type: Seahinet\Cms\ViewModel\Home

@@ -1,0 +1,33 @@
+<?php
+$products = $this->getProducts();
+?>
+<div class="container">
+    <?php if (count($products)): ?>
+        <ul class="products-list clearfix">
+            <?php
+            foreach ($products as $product):
+                $thumbnail = $product->getThumbnail();
+                ?>
+                <li class="item col-xs-12 col-sm-6 col-md-4">
+                    <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image col-xs-4">
+                        <?php if (strpos($thumbnail, '//') === false): ?>
+                            <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getResourceUrl('image/resized/130x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getResourceUrl('image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getResourceUrl('image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getResourceUrl('image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php else: ?>
+                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
+                        <?php endif ?>
+                    </a>
+                    <h3 class="product-name pull-right col-xs-8">
+                        <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>">
+                            <?php echo $product['name'] ?>
+                        </a>
+                    </h3>
+                    <div class="price-box pull-right col-xs-8">
+                        <?php echo $this->getPriceBox($product) ?>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else: ?>
+        <p class="no-product"><?php echo $this->translate('There are no products matching the selection.') ?></p>
+    <?php endif ?>
+</div>

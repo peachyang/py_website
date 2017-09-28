@@ -1,0 +1,38 @@
+---
+article:
+    icon: tags
+    title: Article Management
+    priority: 15
+    children:
+        -
+            link: article_lists/
+            operation: 'Admin\Article\Product::index'
+            title: Product Management
+            priority: 0
+        -
+            link: article_category/
+            operation: 'Admin\Article\Category::index'
+            title: Category Management
+            priority: 10
+        -
+            link: article_attribute/
+            operation: 'Admin\Article\Attribute::index'
+            title: Attribute Management
+            priority: 20
+        -
+            link: article_attribute_set/
+            operation: 'Admin\Article\Attribute\Set::index'
+            title: Attribute Set Management
+            priority: 25
+        -
+            link: article_review/
+            operation: 'Admin\Article\Product\Review::index'
+            title: Review Management
+            priority: 30
+system:
+    children:
+        -
+            link: config/article/
+            operation: 'Admin\Config::article'
+            title: Article Configuration
+            priority: 45

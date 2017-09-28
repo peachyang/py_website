@@ -1,0 +1,31 @@
+---
+admin_article_category_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_category_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_article_lists_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_list_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_article_attribute_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_attribute_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records? 
+admin_article_attribute_set_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_attribute_set_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_review_list:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?
+admin_article_review_edit:
+    - Are you sure to delete this record?
+    - Are you sure to delete these records?

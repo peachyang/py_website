@@ -1,10 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog;
+namespace Seahinet\Admin\ViewModel\Article;
 
 use Seahinet\Admin\ViewModel\Eav\BeforeEdit as PBeforeEdit;
-use Seahinet\Catalog\Source\Set;
-use Seahinet\Catalog\Source\Type;
+use Seahinet\Article\Source\Set;
 
 class BeforeEdit extends PBeforeEdit
 {
@@ -17,12 +16,6 @@ class BeforeEdit extends PBeforeEdit
                 'label' => 'Attribute Set',
                 'required' => 'required',
                 'options' => (new Set)->getSourceArray()
-            ],
-            'product_type' => [
-                'type' => 'select',
-                'label' => 'Product Type',
-                'required' => 'required',
-                'options' => (new Type)->getSourceArray()
             ]
         ];
     }

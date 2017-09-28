@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Product;
 
-use Seahinet\Catalog\Model\Collection\Category as Collection;
+use Seahinet\Article\Model\Collection\Category as Collection;
 
 class Category extends Tab
 {
@@ -46,7 +46,7 @@ class Category extends Tab
         if (!empty($this->getCategories()[$level])) {
             foreach ($this->getCategories()[$level] as $category) {
                 $child = new static;
-                $child->setTemplate('admin/catalog/product/category/item')
+                $child->setTemplate('admin/article/product/category/item')
                         ->setVariable('category', $category);
                 echo $child->__toString();
             }

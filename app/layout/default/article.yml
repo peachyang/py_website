@@ -1,5 +1,5 @@
 ---
-catalog_category:
+article_category:
     update: frontend
     root:
         children:
@@ -14,7 +14,7 @@ catalog_category:
                         action:
                             -
                                 method: addHandledSegment
-                                params: catalog
+                                params: article
                             -
                                 method: addHandledSegment
                                 params: customer
@@ -22,24 +22,24 @@ catalog_category:
                                 method: addHandledSegment
                                 params: checkout
                     toolbar:
-                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
-                        template: catalog/category/toolbar
+                        type: Seahinet\Article\ViewModel\Category\Toolbar
+                        template: article/category/toolbar
                         children:
                             filter:
-                                type: Seahinet\Catalog\ViewModel\Category\Filter
-                                template: catalog/category/filter
+                                type: Seahinet\Article\ViewModel\Category\Filter
+                                template: article/category/filter
                                 children:
                                     category:
-                                        type: Seahinet\Catalog\ViewModel\Navigation
-                                        template: catalog/navigation/top
+                                        type: Seahinet\Article\ViewModel\Navigation
+                                        template: article/navigation/top
                             sortby:
-                                type: Seahinet\Catalog\ViewModel\Category\SortBy
-                                template: catalog/category/sortby
+                                type: Seahinet\Article\ViewModel\Category\SortBy
+                                template: article/category/sortby
                     list:
-                        type: Seahinet\Catalog\ViewModel\Category\ProductList
+                        type: Seahinet\Article\ViewModel\Category\ProductList
                     toolbar_bottom:
-                        type: Seahinet\Catalog\ViewModel\Category\Toolbar
-                        template: catalog/category/toolbar
+                        type: Seahinet\Article\ViewModel\Category\Toolbar
+                        template: article/category/toolbar
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
@@ -47,7 +47,7 @@ catalog_category:
                                     -
                                         method: showLabel
                                         params: false
-catalog_product:
+article_product:
     update: frontend
     root:
         children:
@@ -74,7 +74,7 @@ catalog_product:
                         action:
                             -
                                 method: addHandledSegment
-                                params: catalog
+                                params: article
                             -
                                 method: addHandledSegment
                                 params: customer
@@ -82,35 +82,35 @@ catalog_product:
                                 method: addHandledSegment
                                 params: checkout
                     product:
-                        type: Seahinet\Catalog\ViewModel\Product\View
-                        template: catalog/product/view
+                        type: Seahinet\Article\ViewModel\Product\View
+                        template: article/product/view
                         children:
                             tier:
-                                type: Seahinet\Catalog\ViewModel\Product\TierPrice
-                                template: catalog/product/tierprices
+                                type: Seahinet\Article\ViewModel\Product\TierPrice
+                                template: article/product/tierprices
                             share:
-                                type: Seahinet\Catalog\ViewModel\Product\Share
-                                template: catalog/product/share
+                                type: Seahinet\Article\ViewModel\Product\Share
+                                template: article/product/share
                             attribute:
-                                type: Seahinet\Catalog\ViewModel\Product\View
-                                template: catalog/product/attribute
+                                type: Seahinet\Article\ViewModel\Product\View
+                                template: article/product/attribute
                             option:
-                                type: Seahinet\Catalog\ViewModel\Product\Option
-                                template: catalog/product/option
+                                type: Seahinet\Article\ViewModel\Product\Option
+                                template: article/product/option
                             media:
                                 type: Seahinet\Lib\ViewModel\Template
-                                template: catalog/product/media
+                                template: article/product/media
                             related:
-                                type: Seahinet\Catalog\ViewModel\Product\Related
-                                template: catalog/product/link
+                                type: Seahinet\Article\ViewModel\Product\Related
+                                template: article/product/link
                             upsells:
-                                type: Seahinet\Catalog\ViewModel\Product\Upsells
-                                template: catalog/product/link
+                                type: Seahinet\Article\ViewModel\Product\Upsells
+                                template: article/product/link
             extra:
                 children:
                     log:
                         type: Seahinet\Log\ViewModel\Visitor
-catalog_review:
+article_review:
     update: frontend
     root:
         template: page/ajax
@@ -119,21 +119,21 @@ catalog_review:
                 unset: ['breadcrumb','messages']
                 children:
                     review:
-                        type: Seahinet\Catalog\ViewModel\Product\Review
-                        template: catalog/product/review/review
+                        type: Seahinet\Article\ViewModel\Product\Review
+                        template: article/product/review/review
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
                     inquiry:
-                        type: Seahinet\Catalog\ViewModel\Product\Review
-                        template: catalog/product/review/inquiry
+                        type: Seahinet\Article\ViewModel\Product\Review
+                        template: article/product/review/inquiry
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
                     form:
-                        type: Seahinet\Catalog\ViewModel\Product\Review
-                        template: catalog/product/review/form
-admin_catalog_category_list:
+                        type: Seahinet\Article\ViewModel\Product\Review
+                        template: article/product/review/form
+admin_article_category_list:
     update: grid
     root:
         children:
@@ -163,14 +163,14 @@ admin_catalog_category_list:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
+                                params: [{link:':ADMIN/article_category/',label:'Article Management'}]
 #                            -
 #                                method: addAdditional
-#                                params: [{link:':ADMIN/catalog_category/edit/',label:'Add New Root Category'}]
+#                                params: [{link:':ADMIN/article_category/edit/',label:'Add New Root Category'}]
                     grid:
-                       type: Seahinet\Admin\ViewModel\Catalog\Grid\Category
-                       template: admin/catalog/category/tree
-admin_catalog_category_edit:
+                       type: Seahinet\Admin\ViewModel\Article\Grid\Category
+                       template: admin/article/category/tree
+admin_article_category_edit:
     update: edit
     root:
         children:
@@ -215,12 +215,12 @@ admin_catalog_category_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_category/',label:'Category Management'}]
+                                params: [{link:':ADMIN/article_category/',label:'Category Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_category/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/article_category/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Category
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Category
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
@@ -240,7 +240,7 @@ admin_catalog_category_edit:
                     upload:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
                         template: resource/upload
-admin_catalog_product_list:
+admin_article_product_list:
     update: grid
     root:
         children:
@@ -255,13 +255,13 @@ admin_catalog_product_list:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                                    params: [{link:':ADMIN/article_product/',label:'Product Management'}]
                                 -
                                     method: addAdditional
-                                    params: [{link:':ADMIN/catalog_product/edit/',label:'Add New Product'}]
+                                    params: [{link:':ADMIN/article_product/edit/',label:'Add New Product'}]
                         grid:
-                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Product
-admin_catalog_product_simple_list:
+                            type: Seahinet\Admin\ViewModel\Article\Grid\Product
+admin_article_product_simple_list:
     update: admin
     root:
         template: page/empty
@@ -269,11 +269,11 @@ admin_catalog_product_simple_list:
             content:
                 children:
                     link:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                         children:
                             pager:
                                 type: Seahinet\Lib\ViewModel\Pager
-admin_catalog_product_beforeedit:
+admin_article_product_beforeedit:
     update: edit
     root:
         children:
@@ -283,14 +283,14 @@ admin_catalog_product_beforeedit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                                params: [{link:':ADMIN/article_product/',label:'Product Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/article_product/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Catalog\BeforeEdit
+                        type: Seahinet\Admin\ViewModel\Article\BeforeEdit
                         template: admin/eav/beforeEdit
-admin_catalog_product_edit:
+admin_article_product_edit:
     update: edit
     root:
         children:
@@ -341,12 +341,12 @@ admin_catalog_product_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Product Management'}]
+                                params: [{link:':ADMIN/article_product/',label:'Product Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/article_product/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Product
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
@@ -404,16 +404,16 @@ admin_catalog_product_edit:
                                             - 170
                                 children:
                                     images:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Tab
-                                        template: admin/catalog/product/images
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Tab
+                                        template: admin/article/product/images
                                     category:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Category
-                                        template: admin/catalog/product/category
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Category
+                                        template: admin/article/product/category
                                     inventory:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Inventory
-                                        template: admin/catalog/product/inventory
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Inventory
+                                        template: admin/article/product/inventory
                                     related_products:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -422,7 +422,7 @@ admin_catalog_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     up_sells:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -431,7 +431,7 @@ admin_catalog_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     cross_sells:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Link
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                                         action:
                                             -
                                                 method: setType
@@ -440,11 +440,11 @@ admin_catalog_product_edit:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
                                     custom_options:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Options
-                                        template: admin/catalog/product/options
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Options
+                                        template: admin/article/product/options
                                     additional:
-                                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Product\Additional
-                                        template: admin/catalog/product/additional
+                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Additional
+                                        template: admin/article/product/additional
             extra:
                 children:
                     insert:
@@ -457,7 +457,7 @@ admin_catalog_product_edit:
                     upload:
                         type: Seahinet\Admin\ViewModel\Resource\Modal
                         template: resource/upload
-admin_catalog_attribute_list:
+admin_article_attribute_list:
     update: grid
     root:
         children:
@@ -465,23 +465,23 @@ admin_catalog_attribute_list:
                 action:
                     -
                         method: setTitle
-                        params: Product Attribute / Catalog Management
+                        params: Product Attribute / Article Management
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                                params: [{link:':ADMIN/article_product/',label:'Article Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute/',label:'Product Attribute'}]
+                                params: [{link:':ADMIN/article_attribute/',label:'Product Attribute'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/catalog_attribute/edit/',label:'Add New Attribute'}]
+                                params: [{link:':ADMIN/article_attribute/edit/',label:'Add New Attribute'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Attribute
-admin_catalog_attribute_edit:
+                        type: Seahinet\Admin\ViewModel\Article\Grid\Attribute
+admin_article_attribute_edit:
     update: edit
     root:
         children:
@@ -496,15 +496,15 @@ admin_catalog_attribute_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                                params: [{link:':ADMIN/article_product/',label:'Article Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute/',label:'Product Attribute'}]
+                                params: [{link:':ADMIN/article_attribute/',label:'Product Attribute'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/article_attribute/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Attribute
                         children:
                             tabs:
                                 type: Seahinet\Admin\ViewModel\Tabs
@@ -519,7 +519,7 @@ admin_catalog_attribute_edit:
                                     label:
                                         type: Seahinet\Admin\ViewModel\Eav\Label
                                         template: admin/eav/label
-admin_catalog_attribute_set_list:
+admin_article_attribute_set_list:
     update: grid
     root:
         children:
@@ -527,23 +527,23 @@ admin_catalog_attribute_set_list:
                 action:
                     -
                         method: setTitle
-                        params: Product Attribute Set / Catalog Management
+                        params: Product Attribute Set / Article Management
             content:
                 children:
                     breadcrumb:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_product/',label:'Catalog Management'}]
+                                params: [{link:':ADMIN/article_product/',label:'Article Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Product Attribute Set'}]
+                                params: [{link:':ADMIN/article_attribute_set/',label:'Product Attribute Set'}]
                             -
                                 method: addAdditional
-                                params: [{link:':ADMIN/catalog_attribute_set/edit/',label:'Add New Attribute Set'}]
+                                params: [{link:':ADMIN/article_attribute_set/edit/',label:'Add New Attribute Set'}]
                     grid:
-                        type: Seahinet\Admin\ViewModel\Catalog\Grid\Attribute\Set
-admin_catalog_attribute_set_edit:
+                        type: Seahinet\Admin\ViewModel\Article\Grid\Attribute\Set
+admin_article_attribute_set_edit:
     update: edit
     root:
         children:
@@ -573,29 +573,29 @@ admin_catalog_attribute_set_edit:
                         action:
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_manage/',label:'Catalog Management'}]
+                                params: [{link:':ADMIN/article_manage/',label:'Article Management'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute_set/',label:'Product Attribute Set'}]
+                                params: [{link:':ADMIN/article_attribute_set/',label:'Product Attribute Set'}]
                             -
                                 method: addCrumb
-                                params: [{link:':ADMIN/catalog_attribute_set/edit/',label:'Edit'}]
+                                params: [{link:':ADMIN/article_attribute_set/edit/',label:'Edit'}]
                     edit:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Set
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Attribute\Set
                         children:
                             apply:
-                                type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Group
+                                type: Seahinet\Admin\ViewModel\Article\Edit\Attribute\Group
                                 template: admin/eav/set
             extra:
                 children:
                     new-group:
-                        type: Seahinet\Admin\ViewModel\Catalog\Edit\Attribute\Group
+                        type: Seahinet\Admin\ViewModel\Article\Edit\Attribute\Group
                         template: admin/eav/group
-admin_catalog_product_edit_1:
-    update: admin_catalog_product_edit
-admin_catalog_product_edit_2:
-    update: admin_catalog_product_edit
-admin_catalog_product_review_list:
+admin_article_product_edit_1:
+    update: admin_article_product_edit
+admin_article_product_edit_2:
+    update: admin_article_product_edit
+admin_article_review_list:
     update: grid
     root:
         children:
@@ -610,13 +610,13 @@ admin_catalog_product_review_list:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                    params: [{link:':ADMIN/article_review/',label:'Review Management'}]
                                 -
                                     method: addAdditional
-                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Add New Review'}]
+                                    params: [{link:':ADMIN/article_review/edit/',label:'Add New Review'}]
                         grid:
-                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Review
-admin_catalog_product_review_edit:
+                            type: Seahinet\Admin\ViewModel\Article\Grid\Review
+admin_article_review_edit:
     update: edit
     root:
         children:
@@ -631,13 +631,13 @@ admin_catalog_product_review_edit:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_review/',label:'Review Management'}]
+                                    params: [{link:':ADMIN/article_review/',label:'Review Management'}]
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_review/edit/',label:'Edit'}]
+                                    params: [{link:':ADMIN/article_review/edit/',label:'Edit'}]
                         edit:
-                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Review                            
-admin_catalog_product_rating_list:
+                            type: Seahinet\Admin\ViewModel\Article\Edit\Review                            
+admin_article_product_rating_list:
     update: grid
     root:
         children:
@@ -652,13 +652,13 @@ admin_catalog_product_rating_list:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                    params: [{link:':ADMIN/article_product_rating/',label:'Rating Management'}]
                                 -
                                     method: addAdditional
-                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Add New Rating'}]
+                                    params: [{link:':ADMIN/article_product_rating/edit/',label:'Add New Rating'}]
                         grid:
-                            type: Seahinet\Admin\ViewModel\Catalog\Grid\Rating
-admin_catalog_product_rating_edit:
+                            type: Seahinet\Admin\ViewModel\Article\Grid\Rating
+admin_article_product_rating_edit:
     update: edit
     root:
         children:
@@ -673,9 +673,9 @@ admin_catalog_product_rating_edit:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_rating/',label:'Rating Management'}]
+                                    params: [{link:':ADMIN/article_product_rating/',label:'Rating Management'}]
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/catalog_product_rating/edit/',label:'Edit'}]
+                                    params: [{link:':ADMIN/article_product_rating/edit/',label:'Edit'}]
                         edit:
-                            type: Seahinet\Admin\ViewModel\Catalog\Edit\Rating
+                            type: Seahinet\Admin\ViewModel\Article\Edit\Rating

@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Attribute;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Attribute;
 
 use Seahinet\Lib\ViewModel\Template;
-use Seahinet\Catalog\Model\Product;
+use Seahinet\Article\Model\Product;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Group as Collection;
@@ -46,7 +46,7 @@ class Group extends Template
     public function getDeleteUrl()
     {
         if (!$this->deleteUrl) {
-            $this->deleteUrl = $this->getAdminUrl('catalog_attribute_group/delete/');
+            $this->deleteUrl = $this->getAdminUrl('article_attribute_group/delete/');
         }
         return $this->deleteUrl;
     }
@@ -54,7 +54,7 @@ class Group extends Template
     public function getSaveUrl()
     {
         if (!$this->saveUrl) {
-            $this->saveUrl = $this->getAdminUrl('catalog_attribute_group/save/');
+            $this->saveUrl = $this->getAdminUrl('article_attribute_group/save/');
         }
         return $this->saveUrl;
     }

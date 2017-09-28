@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Grid;
+namespace Seahinet\Admin\ViewModel\Article\Grid;
 
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
-use Seahinet\Catalog\Model\Collection\Category as Collection;
+use Seahinet\Article\Model\Collection\Category as Collection;
 use Seahinet\Lib\Session\Segment;
 
 class Category extends PGrid
@@ -12,11 +12,11 @@ class Category extends PGrid
     protected $editUrl = '';
     protected $deleteUrl = '';
     protected $action = [
-        'getAppendAction' => 'Admin\\Catalog\\Category::edit',
-        'getEditAction' => 'Admin\\Catalog\\Category::edit',
-        'getDeleteAction' => 'Admin\\Catalog\\Category::delete'
+        'getAppendAction' => 'Admin\\Article\\Category::edit',
+        'getEditAction' => 'Admin\\Article\\Category::edit',
+        'getDeleteAction' => 'Admin\\Article\\Category::delete'
     ];
-    protected $translateDomain = 'catalog';
+    protected $translateDomain = 'article';
     protected $categoryTree = [];
 
     public function __clone()
@@ -27,7 +27,7 @@ class Category extends PGrid
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_category/edit/?id=') . $item['id'] . '&pid=' .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_category/edit/?id=') . $item['id'] . '&pid=' .
                 $item['parent_id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
@@ -35,7 +35,7 @@ class Category extends PGrid
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_category/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_category/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';
@@ -43,7 +43,7 @@ class Category extends PGrid
 
     public function getAppendAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_category/edit/') . '?pid=' . $item['id'] . '" title="' . $this->translate('Append Subcategory') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_category/edit/') . '?pid=' . $item['id'] . '" title="' . $this->translate('Append Subcategory') .
                 '"><span class="fa fa-fw fa-plus" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Append') . '</span></a>';
     }
@@ -57,15 +57,15 @@ class Category extends PGrid
         ]);
     }
 
-    protected function prepareCollection($collection = null)
-    {
-        $collection = new Collection;
-        $user = (new Segment('admin'))->get('user');
-        if ($user->getStore()) {
-            $collection->where(['store_id' => $user->getStore()->getId()]);
-        }
-        return $collection;
-    }
+//    protected function prepareCollection($collection = null)
+//    {
+//        $collection = new Collection;
+//        $user = (new Segment('admin'))->get('user');
+//        if ($user->getStore()) {
+//            $collection->where(['store_id' => $user->getStore()->getId()]);
+//        }
+//        return $collection;
+//    }
 
     protected function prepareCategoryTree()
     {
@@ -102,7 +102,7 @@ class Category extends PGrid
     public function renderCategory($category, $level = 1)
     {
         $child = clone $this;
-        $child->setTemplate('admin/catalog/category/renderer')
+        $child->setTemplate('admin/article/category/renderer')
                 ->setVariable('category', $category)
                 ->setVariable('children', $this->getChildrenCategories($category['id']))
                 ->setVariable('level', $level);

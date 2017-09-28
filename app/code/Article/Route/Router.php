@@ -34,11 +34,11 @@ class Router extends Route
                         ], $request);
         }
         if ($result = $this->getContainer()->get('indexer')->select('article_url', Bootstrap::getLanguage()->getId(), ['path' => rawurldecode($path)])) {
-            if ($result[0]['product_id']) {
+            if ($result[0]['article_id']) {
                 return new RouteMatch([
                     'controller' => 'Seahinet\\Article\\Controller\\ProductController',
                     'action' => 'index',
-                    'product_id' => $result[0]['product_id'],
+                    'article_id' => $result[0]['article_id'],
                     'category_id' => $result[0]['category_id'],
                     'is_json' => $isJson
                         ], $request);

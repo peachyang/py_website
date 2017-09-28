@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Catalog;
+namespace Seahinet\Admin\Controller\Article;
 
 use Exception;
-use Seahinet\Catalog\Model\Product as Model;
+use Seahinet\Article\Model\Product as Model;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Model\Collection\Eav\Attribute;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
@@ -19,13 +19,13 @@ class ProductController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_catalog_product_list');
+        $root = $this->getLayout('admin_article_product_list');
         return $root;
     }
 
     public function listAction()
     {
-        $root = $this->getLayout('admin_catalog_product_simple_list');
+        $root = $this->getLayout('admin_article_product_simple_list');
         return $root;
     }
 
@@ -35,7 +35,7 @@ class ProductController extends AuthActionController
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
-            $root = $this->getLayout('admin_catalog_product_edit_' . $model['product_type_id']);
+            $root = $this->getLayout('admin_article_product_edit');
             $root->getChild('head')->setTitle('Edit Product / Product Management');
         } else {
             $model->setData('attribute_set_id', function() {
@@ -44,7 +44,7 @@ class ProductController extends AuthActionController
                         ->where(['eav_entity_type.code' => Model::ENTITY_TYPE]);
                 return $set->load()[0]['id'];
             });
-            $root = $this->getLayout(!isset($query['attribute_set']) || !isset($query['product_type']) ? 'admin_catalog_product_beforeedit' : 'admin_catalog_product_edit_' . $query['product_type']);
+            $root = $this->getLayout(!isset($query['attribute_set']) ? 'admin_article_product_beforeedit' : 'admin_article_product_edit');
             $root->getChild('head')->setTitle('Add New Product / Product Management');
         }
         $root->getChild('edit', true)->setVariable('model', $model);
@@ -53,7 +53,7 @@ class ProductController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Product', ':ADMIN/catalog_product/');
+        return $this->doDelete('\\Seahinet\\Article\\Model\\Product', ':ADMIN/article_product/');
     }
 
     public function saveAction()
@@ -87,12 +87,12 @@ class ProductController extends AuthActionController
                     'type_id' => $type->getId()
                 ]);
                 $user = (new Segment('admin'))->get('user');
-                if ($user->getStore()) {
-                    if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
-                        return $this->redirectReferer();
-                    }
-                    $model->setData('store_id', $user->getStore()->getId());
-                }
+//                if ($user->getStore()) {
+//                    if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
+//                        return $this->redirectReferer();
+//                    }
+//                    $model->setData('store_id', $user->getStore()->getId());
+//                }
                 if (empty($data['parent_id'])) {
                     $model->setData('parent_id', null);
                 } else if (empty($data['uri_key'])) {
@@ -116,7 +116,7 @@ class ProductController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/catalog_product/');
+        return $this->response($result, ':ADMIN/article_product/');
     }
 
     private function getSearchableAttributes()
@@ -138,13 +138,13 @@ class ProductController extends AuthActionController
         $values = [];
         foreach ($model->getCategories() as $category) {
             if ($category['uri_key']) {
-                $record = $indexer->select('catalog_url', $languageId, ['category_id' => $category->getId(), 'product_id' => null]);
+                $record = $indexer->select('article_url', $languageId, ['category_id' => $category->getId(), 'article_id' => null]);
                 if (count($record)) {
-                    $values[] = ['category_id' => $category->getId(), 'product_id' => $id, 'path' => $record[0]['path'] . '/' . $model['uri_key']];
+                    $values[] = ['category_id' => $category->getId(), 'article_id' => $id, 'path' => $record[0]['path'] . '/' . $model['uri_key']];
                 }
             }
         }
-        $indexer->replace('catalog_url', $languageId, $values, ['product_id' => $id]);
+        $indexer->replace('article_url', $languageId, $values, ['article_id' => $id]);
         $data = ['id' => $id, 'store_id' => $model['store_id'], 'data' => '|'];
         foreach ($this->getSearchableAttributes() as $attr) {
             $value = $model[$attr['code']];
@@ -152,7 +152,7 @@ class ProductController extends AuthActionController
                 $data['data'] .= $value . '|';
             }
         }
-        $indexer->replace('catalog_search', $languageId, [$data], ['id' => $id]);
+        $indexer->replace('article_search', $languageId, [$data], ['id' => $id]);
     }
 
 }

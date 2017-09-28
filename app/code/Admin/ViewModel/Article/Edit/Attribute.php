@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit;
+namespace Seahinet\Admin\ViewModel\Article\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
 use Seahinet\Lib\Source\Eav\Attribute\Input;
@@ -10,14 +10,14 @@ class Attribute extends PEdit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('catalog_attribute/save/');
+        return $this->getAdminUrl('article_attribute/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('catalog_attribute/delete/');
+            return $this->getAdminUrl('article_attribute/delete/');
         }
         return false;
     }

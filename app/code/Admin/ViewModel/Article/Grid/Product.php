@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Grid;
+namespace Seahinet\Admin\ViewModel\Article\Grid;
 
 use Seahinet\Admin\ViewModel\Eav\Grid as PGrid;
-use Seahinet\Catalog\Model\Collection\Product as Collection;
+use Seahinet\Article\Model\Collection\Product as Collection;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Store;
 
@@ -11,24 +11,24 @@ class Product extends PGrid
 {
 
     protected $action = [
-        'getEditAction' => 'Admin\\Catalog\\Product::edit',
-        'getDeleteAction' => 'Admin\\Catalog\\Product::delete'
+        'getEditAction' => 'Admin\\Article\\Product::edit',
+        'getDeleteAction' => 'Admin\\Article\\Product::delete'
     ];
     protected $messAction = [
         'getExportAction' => 'Admin\\Dataflow\\Product::export'
     ];
-    protected $translateDomain = 'catalog';
+    protected $translateDomain = 'article';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_product/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_product/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_product/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_product/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';

@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit;
+namespace Seahinet\Admin\ViewModel\Article\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
 use Seahinet\Lib\Source\Store;
@@ -13,14 +13,14 @@ class Category extends PEdit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('catalog_category/save/');
+        return $this->getAdminUrl('article_category/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('catalog_category/delete/');
+            return $this->getAdminUrl('article_category/delete/');
         }
         return false;
     }
@@ -45,15 +45,6 @@ class Category extends PEdit
                 'type' => 'hidden',
                 'value' => $this->getQuery('pid', '')
             ],
-            'store_id' => ($user->getStore() ? [
-        'type' => 'hidden',
-        'value' => $user->getStore()->getId()
-            ] : [
-        'type' => 'select',
-        'options' => (new Store)->getSourceArray(),
-        'label' => 'Store',
-        'required' => 'required'
-            ]),
             'status' => [
                 'type' => 'select',
                 'label' => 'Status',

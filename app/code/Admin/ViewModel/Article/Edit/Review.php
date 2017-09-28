@@ -1,10 +1,10 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit;
+namespace Seahinet\Admin\ViewModel\Article\Edit;
 
 use Seahinet\Admin\ViewModel\Edit as PEdit;
-use Seahinet\Catalog\Model\Collection\Product\Rating as RatingCollection;
-use Seahinet\Catalog\Source\Product;
+use Seahinet\Article\Model\Collection\Product\Rating as RatingCollection;
+use Seahinet\Article\Source\Product;
 use Seahinet\Customer\Source\Customer;
 use Seahinet\Lib\Source\Language;
 
@@ -13,14 +13,14 @@ class Review extends PEdit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('catalog_product_review/save/');
+        return $this->getAdminUrl('article_review/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('catalog_product_review/delete/');
+            return $this->getAdminUrl('article_review/delete/');
         }
         return FALSE;
     }
@@ -40,7 +40,7 @@ class Review extends PEdit
             'csrf' => [
                 'type' => 'csrf'
             ],
-            'product_id' => [
+            'article_id' => [
                 'type' => 'select',
                 'label' => 'Product',
                 'required' => 'required',
@@ -55,10 +55,6 @@ class Review extends PEdit
                 'type' => 'select',
                 'label' => 'Language',
                 'options' => (new Language)->getSourceArray()
-            ],
-            'order_id' => [
-                'type' => 'text',
-                'label' => 'Order'
             ]
         ];
         $collection = new RatingCollection;

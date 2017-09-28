@@ -1,13 +1,13 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Catalog;
+namespace Seahinet\Admin\Controller\Article;
 
 use Seahinet\Lib\Controller\AuthActionController;
 
 class SitemapController extends AuthActionController
 {
 
-    use \Seahinet\Catalog\Traits\Sitemap;
+    use \Seahinet\Article\Traits\Sitemap;
 
     public function indexAction()
     {

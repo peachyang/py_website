@@ -1,10 +1,10 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Product;
 
-use Seahinet\Admin\ViewModel\Catalog\Grid\Product;
-use Seahinet\Catalog\Model\Collection\Product as Collection;
-use Seahinet\Catalog\Model\Product as Model;
+use Seahinet\Admin\ViewModel\Article\Grid\Product;
+use Seahinet\Article\Model\Collection\Product as Collection;
+use Seahinet\Article\Model\Product as Model;
 use Seahinet\Lib\Session\Segment;
 use Seahinet\Lib\Source\Store;
 
@@ -14,11 +14,11 @@ class Link extends Product
     protected $action = [];
     protected $type = '';
     protected $activeIds = null;
-    protected $bannedFields = ['id', 'linktype', 'attribute_set', 'product_type'];
+    protected $bannedFields = ['id', 'linktype', 'attribute_set'];
 
     public function __construct()
     {
-        $this->setTemplate('admin/catalog/product/link');
+        $this->setTemplate('admin/article/product/link');
     }
 
     public function getType()
@@ -53,23 +53,13 @@ class Link extends Product
         } else {
             $query['asc'] = $attr;
         }
-        return $this->getAdminUrl('catalog_product/list/?linktype=' . $this->getType() . '&' . http_build_query($query));
+        return $this->getAdminUrl('article_product/list/?linktype=' . $this->getType() . '&' . http_build_query($query));
     }
 
     protected function prepareColumns($columns = [])
     {
         $user = (new Segment('admin'))->get('user');
         return \Seahinet\Admin\ViewModel\Eav\Grid::prepareColumns([
-                    'store_id' => ($user->getStore() ? [
-                'type' => 'hidden',
-                'value' => $user->getStore()->getId(),
-                'use4sort' => false,
-                'use4filter' => false
-                    ] : [
-                'type' => 'select',
-                'options' => (new Store)->getSourceArray(),
-                'label' => 'Store'
-                    ]),
                     'name' => [
                         'label' => 'Name',
                         'type' => 'text'

@@ -5,7 +5,7 @@ article:
     priority: 15
     children:
         -
-            link: article_lists/
+            link: article_product/
             operation: 'Admin\Article\Product::index'
             title: Product Management
             priority: 0

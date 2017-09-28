@@ -1,22 +1,22 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Catalog\Product;
+namespace Seahinet\Admin\Controller\Article\Product;
 
 use Seahinet\Lib\Controller\AuthActionController;
-use Seahinet\Catalog\Model\Product\Review as Model;
+use Seahinet\Article\Model\Product\Review as Model;
 
 class ReviewController extends AuthActionController
 {
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_catalog_product_review_list');
+        $root = $this->getLayout('admin_article_review_list');
         return $root;
     }
 
     public function editAction()
     {
-        $root = $this->getLayout('admin_catalog_product_review_edit');
+        $root = $this->getLayout('admin_article_review_edit');
         if ($query = $this->getRequest()->getQuery('id')) {
             $model = new Model;
             $model->load($query);
@@ -30,12 +30,12 @@ class ReviewController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Product\\Review', ':ADMIN/catalog_product_review/');
+        return $this->doDelete('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_review/');
     }
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Catalog\\Model\\Product\\Review', ':ADMIN/catalog_product_review/', ['product_id'], function($model, $data) {
+        return $this->doSave('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_review/', ['product_id'], function($model, $data) {
                     if ($data['customer_id'] === '') {
                         $model['customer_id'] = null;
                     }

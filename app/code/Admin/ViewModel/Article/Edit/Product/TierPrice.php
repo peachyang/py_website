@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Product;
 
 use Seahinet\Customer\Model\Collection\Group;
 use Seahinet\Lib\ViewModel\Template;
@@ -8,7 +8,7 @@ use Seahinet\Lib\ViewModel\Template;
 class TierPrice extends Template
 {
 
-    protected $template = 'admin/catalog/product/price/tier';
+    protected $template = 'admin/article/product/price/tier';
 
     public function getPrice()
     {

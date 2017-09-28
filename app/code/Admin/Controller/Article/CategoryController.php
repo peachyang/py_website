@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\Controller\Catalog;
+namespace Seahinet\Admin\Controller\Article;
 
 use Exception;
-use Seahinet\Catalog\Model\Category as Model;
+use Seahinet\Article\Model\Category as Model;
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\Controller\AuthActionController;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set;
@@ -17,14 +17,14 @@ class CategoryController extends AuthActionController
 
     public function indexAction()
     {
-        $root = $this->getLayout('admin_catalog_category_list');
+        $root = $this->getLayout('admin_article_category_list');
         return $root;
     }
 
     public function editAction()
     {
         $query = $this->getRequest()->getQuery();
-        $root = $this->getLayout('admin_catalog_category_edit');
+        $root = $this->getLayout('admin_article_category_edit');
         $model = new Model;
         if (isset($query['id'])) {
             $model->load($query['id']);
@@ -63,7 +63,7 @@ class CategoryController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Catalog\\Model\\Category', ':ADMIN/catalog_category/');
+        return $this->doDelete('\\Seahinet\\Article\\Model\\Category', ':ADMIN/article_category/');
     }
 
     public function saveAction()
@@ -98,12 +98,12 @@ class CategoryController extends AuthActionController
                     'attribute_set_id' => $setId
                 ]);
                 $user = (new Segment('admin'))->get('user');
-                if ($user->getStore()) {
-                    if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
-                        return $this->redirectReferer();
-                    }
-                    $model->setData('store_id', $user->getStore()->getId());
-                }
+//                if ($user->getStore()) {
+//                    if ($model->getId() && $model->offsetGet('store_id') != $user->getStore()->getId()) {
+//                        return $this->redirectReferer();
+//                    }
+//                    $model->setData('store_id', $user->getStore()->getId());
+//                }
                 if (empty($data['parent_id'])) {
                     $model->setData('parent_id', null);
                 } else if (empty($data['uri_key'])) {
@@ -131,7 +131,7 @@ class CategoryController extends AuthActionController
                 }
             }
         }
-        return $this->response($result, ':ADMIN/catalog_category/');
+        return $this->response($result, ':ADMIN/article_category/');
     }
 
     private function reindex($id, $languageId)
@@ -148,7 +148,7 @@ class CategoryController extends AuthActionController
         foreach ($model->getProducts() as $product) {
             $values[] = ['product_id' => $product['id'], 'category_id' => $id, 'path' => $path . '/' . $product['uri_key']];
         }
-        $this->getContainer()->get('indexer')->replace('catalog_url', $languageId, $values, ['category_id' => $id]);
+        $this->getContainer()->get('indexer')->replace('article_url', $languageId, $values, ['category_id' => $id]);
         foreach ($model->getChildrenCategories() as $child) {
             $this->reindex($child['id'], $languageId);
         }

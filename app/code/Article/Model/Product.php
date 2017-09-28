@@ -45,7 +45,7 @@ class Product extends Entity
         if ($this->getId()) {
             $options = new OptionCollection;
             $options->withLabel()
-                    ->where(['product_id' => $this->getId()] + $constraint)
+                    ->where(['article_id' => $this->getId()] + $constraint)
                     ->order('sort_order ASC');
             return $options;
         }

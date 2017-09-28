@@ -23,7 +23,7 @@ trait Breadcrumb
         if ($productId) {
             $result = $indexer->select('article_url', Bootstrap::getLanguage()->getId(), [
                 'category_id' => $categoryId,
-                'product_id' => $productId
+                'article_id' => $productId
             ]);
             $product = new Product($languageId);
             $product->load($productId);

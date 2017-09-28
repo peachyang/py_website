@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Product;
 
 use Seahinet\Lib\Source\Eav\Attribute\Input;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit;
+namespace Seahinet\Admin\ViewModel\Article\Edit;
 
 use Seahinet\Admin\ViewModel\Eav\Edit as PEdit;
-use Seahinet\Catalog\Source\Set;
+use Seahinet\Article\Source\Set;
 use Seahinet\Lib\Source\Store;
 use Seahinet\Lib\Session\Segment;
 
@@ -14,14 +14,14 @@ class Product extends PEdit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('catalog_product/save/');
+        return $this->getAdminUrl('article_product/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('catalog_product/delete/');
+            return $this->getAdminUrl('article_product/delete/');
         }
         return false;
     }
@@ -41,10 +41,6 @@ class Product extends PEdit
             ],
             'csrf' => [
                 'type' => 'csrf'
-            ],
-            'product_type_id' => [
-                'type' => 'hidden',
-                'value' => $this->getQuery('product_type', $model['product_type_id']),
             ],
             'attribute_set_id' => [
                 'type' => 'select',

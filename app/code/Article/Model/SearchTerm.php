@@ -9,7 +9,7 @@ class SearchTerm extends Term
 
     protected function construct()
     {
-        $this->init('product_search_term', 'term', ['term', 'synonym', 'count', 'popularity', 'store_id', 'category_id', 'status']);
+        $this->init('article_search_term', 'term', ['term', 'synonym', 'count', 'popularity', 'category_id', 'status']);
     }
 
     protected function getCollection()

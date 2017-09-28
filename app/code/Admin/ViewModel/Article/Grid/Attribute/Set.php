@@ -1,30 +1,30 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Grid\Attribute;
+namespace Seahinet\Admin\ViewModel\Article\Grid\Attribute;
 
 use Seahinet\Admin\ViewModel\Grid;
-use Seahinet\Catalog\Model\Product;
+use Seahinet\Article\Model\Product;
 use Seahinet\Lib\Model\Collection\Eav\Attribute\Set as Collection;
 
 class Set extends Grid
 {
 
     protected $action = [
-        'getEditAction' => 'Admin\\Catalog\\Attribute\\Set::edit',
-        'getDeleteAction' => 'Admin\\Catalog\\Attribute\\Set::delete'
+        'getEditAction' => 'Admin\\Article\\Attribute\\Set::edit',
+        'getDeleteAction' => 'Admin\\Article\\Attribute\\Set::delete'
     ];
     protected $translateDomain = 'eav';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_attribute_set/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_attribute_set/edit/?id=') . $item['id'] . '" title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/catalog_attribute_set/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_attribute_set/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';

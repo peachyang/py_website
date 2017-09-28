@@ -1,6 +1,6 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Attribute;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Attribute;
 
 use Seahinet\Admin\ViewModel\Edit;
 
@@ -9,14 +9,14 @@ class Set extends Edit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('catalog_attribute_set/save/');
+        return $this->getAdminUrl('article_attribute_set/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('catalog_attribute_set/delete/');
+            return $this->getAdminUrl('article_attribute_set/delete/');
         }
         return false;
     }

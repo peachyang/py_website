@@ -1,8 +1,8 @@
 <?php
 
-namespace Seahinet\Admin\ViewModel\Catalog\Edit\Product;
+namespace Seahinet\Admin\ViewModel\Article\Edit\Product;
 
-use Seahinet\Catalog\Model\Product;
+use Seahinet\Article\Model\Product;
 use Seahinet\Lib\ViewModel\Template;
 
 class Tab extends Template

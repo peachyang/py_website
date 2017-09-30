@@ -96,8 +96,8 @@ class Product extends Entity
                 'eav_attribute_set.id' => $this->storage['attribute_set_id']
             ])->where->notIn('code', [
                 'images', 'default_image', 'thumbnail', 'uri_key',
-                'description', 'short_description', 'taxable'
-            ])->notLike('code', '%price%')->notLike('code', 'meta%')->notEqualTo('type', 'datetime');
+                'description', 'short_description'
+            ])->notLike('code', 'meta%')->notEqualTo('type', 'datetime');
             $getValue = function ($attribute, $value) {
                 return in_array($attribute['input'], ['select', 'radio', 'checked', 'multiselect']) ? $attribute->getOption($value) : $value;
             };

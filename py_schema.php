@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS `art_category_entity` (
     CONSTRAINT FK_ART_CATEGORY_ENTITY_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+INSERT INTO `art_category_entity` VALUES (NULL,5,NULL,12,0,1,NULL,NULL);
+INSERT INTO `art_category_value_varchar` VALUES (97,1,1,'Default Category',NULL);
+
 CREATE TABLE IF NOT EXISTS `art_category_value_int` (
     `attribute_id` INTEGER UNSIGNED NOT NULL,
     `language_id` INTEGER UNSIGNED NOT NULL,
@@ -93,6 +96,60 @@ CREATE TABLE IF NOT EXISTS `art_category_value_text` (
     CONSTRAINT FK_ART_CATEGORY_VALUE_TEXT_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_ART_CATEGORY_VALUE_TEXT_ENTITY_ID_ARTICLE_ENTITY_ID FOREIGN KEY (`entity_id`) REFERENCES `art_category_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO `eav_entity_type` VALUES (5, 'art_category', 'art_category_entity', 'art_category_value', 0, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_set` VALUES (NULL, 5, 'Default', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 5, 'Article Category Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 5, 'Display Settings', 0, CURRENT_TIMESTAMP, NULL);
+
+INSERT INTO `eav_attribute` VALUES 
+(97,5,'name','varchar','text','',1,'',0,NULL,NULL,0,1,0,0,NULL,NULL),
+(98,5,'description','text','wysiwyg','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(99,5,'uri_key','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(100,5,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(101,5,'meta_description','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(102,5,'meta_keywords','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(103,5,'author','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(104,5,'source','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(105,5,'thumbnail','int','resource','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(106,5,'image','int','resource','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(107,5,'include_in_menu','varchar','select','',1,'1',0,'\\Seahinet\\Lib\\Source\\Yesno',NULL,0,0,0,0,NULL,NULL),
+(108,5,'display_mode','varchar','select','',1,'0',0,'\\Seahinet\\Article\\Source\\DisplayMode',NULL,0,0,0,0,NULL,NULL),
+(109,5,'block','varchar','select','',0,'',0,'\\Seahinet\\Cms\\Source\\Block',NULL,0,0,0,0,NULL,NULL),
+(110,5,'sortable','varchar','multiselect','',1,'',0,'\\Seahinet\\Article\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL),
+(111,5,'default_sortable','varchar','select','',1,'',0,'\\Seahinet\\Article\\Source\\Sortable',NULL,0,0,0,0,NULL,NULL);
+INSERT INTO `eav_entity_attribute` VALUES 
+(12, 20, 97, 0),
+(12, 20, 98, 0),
+(12, 20, 99, 0),
+(12, 20, 100, 0),
+(12, 20, 101, 0),
+(12, 20, 102, 0),
+(12, 20, 103, 0),
+(12, 20, 104, 0),
+(12, 20, 105, 0),
+(12, 20, 106, 0),
+(12, 20, 107, 0),
+(12, 21, 108, 0),
+(12, 21, 109, 0),
+(12, 21, 110, 0),
+(12, 21, 111, 0);
+INSERT INTO `eav_attribute_label` VALUES
+(97, 1, 'Name'),
+(98, 1, 'Description'),
+(99, 1, 'Uri Key'),
+(100, 1, 'Meta Title'),
+(101, 1, 'Meta Description'),
+(102, 1, 'Meta Keywords'),
+(103, 1, 'Autohr'),
+(104, 1, 'Source'),
+(105, 1, 'Thumbnail'),
+(106, 1, 'Image'),
+(107, 1, 'Include in Navigation Menu'),
+(108, 1, 'Display Mode'),
+(109, 1, 'CMS Block'),
+(110, 1, 'Available Product Listing Sort By'),
+(111, 1, 'Default Product Listing Sort By');
 
 
 CREATE TABLE IF NOT EXISTS `article_entity` (
@@ -279,3 +336,55 @@ CREATE TABLE IF NOT EXISTS `article_review` (
     CONSTRAINT FK_ARTICLE_REVIEW_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_ARTICLE_REVIEW_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO `eav_entity_type` VALUES (6, 'article', 'article_entity', 'article_value', 0, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_set` VALUES (NULL, 6, 'Default', CURRENT_TIMESTAMP, NULL);
+INSERT INTO `eav_attribute_group` VALUES (NULL, 6, 'Article Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 6, 'Meta Infomation', 0, CURRENT_TIMESTAMP, NULL),
+(NULL, 6, 'Images', 1, CURRENT_TIMESTAMP, NULL);
+
+INSERT INTO `eav_attribute` VALUES 
+(112,6,'name','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
+(113,6,'uri_key','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(114,6,'description','text','wysiwyg','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(115,6,'short_description','text','wysiwyg','',1,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(116,6,'sku','varchar','text','',1,'',0,NULL,NULL,1,1,0,1,NULL,NULL),
+(117,6,'new_start','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(118,6,'new_end','datetime','date','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(119,6,'meta_title','varchar','text','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(120,6,'meta_description','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(121,6,'meta_keywords','text','textarea','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(122,6,'images','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(123,6,'default_image','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(124,6,'thumbnail','int','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL),
+(125,6,'additional','text','hidden','',0,'',0,NULL,NULL,0,0,0,0,NULL,NULL);
+INSERT INTO `eav_entity_attribute` VALUES 
+(13, 22, 112, 0),
+(13, 22, 113, 0),
+(13, 22, 114, 0),
+(13, 22, 115, 0),
+(13, 22, 116, 0),
+(13, 22, 117, 0),
+(13, 22, 118, 0),
+(13, 23, 119, 0),
+(13, 23, 120, 0),
+(13, 23, 121, 0),
+(13, 24, 122, 0),
+(13, 24, 123, 0),
+(13, 24, 124, 0),
+(13, 24, 125, 0);
+INSERT INTO `eav_attribute_label` VALUES
+(112, 1, 'Name'),
+(113, 1, 'Uri Key'),
+(114, 1, 'Description'),
+(115, 1, 'Short Description'),
+(116, 1, 'SKU'),
+(117, 1, 'Set Product as New from Date'),
+(118, 1, 'Set Product as New to Date'),
+(119, 1, 'Meta Title'),
+(120, 1, 'Meta Description'),
+(121, 1, 'Meta Keywords'),
+(122, 1, 'Images'),
+(123, 1, 'Default Image'),
+(124, 1, 'Thumbnail'),
+(125, 1, 'Additional');

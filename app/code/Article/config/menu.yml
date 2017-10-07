@@ -1,13 +1,13 @@
 ---
 article:
-    icon: tags
+    icon: file
     title: Article Management
     priority: 15
     children:
         -
             link: article_product/
             operation: 'Admin\Article\Product::index'
-            title: Product Management
+            title: Article Management
             priority: 0
         -
             link: article_category/

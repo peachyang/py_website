@@ -16,20 +16,46 @@ class CategoryController extends \Seahinet\Lib\Controller\ActionController
 
     public function indexAction()
     {
-        if ($this->getOption('category_id')) {
-            $category = new Category;
-            $category->load($this->getOption('category_id'));
-            $pages = $this->prepareCollection($category->getPages(), $category);
-            $root = $this->getLayout('cms_category');
-            $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
-                    ->setDescription($category['meta_description'])
-                    ->setKeywords($category['meta_keywords']);
-            $content = $root->getChild('content');
-            $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
-            $content->getChild('toolbar')->setCategory($category)->setCollection($pages);
-            $content->getChild('list')->setCategory($category)->setPages($pages);
-            $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($pages);
-            return $root;
+//        if ($this->getOption('category_id')) {
+//            $category = new Category;
+//            $category->load($this->getOption('category_id'));
+//            $pages = $this->prepareCollection($category->getPages(), $category);
+//            $root = $this->getLayout('cms_category');
+//            $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
+//                    ->setDescription($category['meta_description'])
+//                    ->setKeywords($category['meta_keywords']);
+//            $content = $root->getChild('content');
+//            $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
+//            $content->getChild('toolbar')->setCategory($category)->setCollection($pages);
+//            $content->getChild('list')->setCategory($category)->setPages($pages);
+//            $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($pages);
+//            return $root;
+//        }
+//        return $this->notFoundAction();
+
+        $category = $this->getOption('category');
+        if (!$category) {
+            return $this->notFoundAction();
+        } else {
+            if ($category->getId()) {
+                if ($this->getOption('is_json')) {
+                    return $category->toArray();
+                } else {
+                    $category = new Category;
+                    $category->load($this->getOption('category_id'));
+                    $pages = $this->prepareCollection($category->getPages(), $category);
+                    $root = $this->getLayout('cms_category');
+                    $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
+                            ->setDescription($category['meta_description'])
+                            ->setKeywords($category['meta_keywords']);
+                    $content = $root->getChild('content');
+                    $this->generateCrumbs($content->getChild('breadcrumb'), $this->getOption('category_id'));
+                    $content->getChild('toolbar')->setCategory($category)->setCollection($pages);
+                    $content->getChild('list')->setCategory($category)->setPages($pages);
+                    $content->getChild('toolbar_bottom')->setCategory($category)->setCollection($pages);
+                    return $root;
+                }
+            }
         }
         return $this->notFoundAction();
     }

@@ -3,9 +3,15 @@
 namespace Seahinet\Cms\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
+use Seahinet\Cms\Model\Page;
+use Seahinet\Lib\Session\Segment;
 
 class PageController extends ActionController
 {
+
+    use \Seahinet\Cms\Traits\Breadcrumb,
+        \Seahinet\Lib\Traits\DB,
+        \Seahinet\Lib\Traits\Filter;
 
     public function indexAction()
     {
@@ -58,12 +64,13 @@ class PageController extends ActionController
                     $breadcrumb = $root->getChild('breadcrumb', true);
                     $this->generateCrumbs($breadcrumb, $this->getOption('category_id'));
                     $breadcrumb->addCrumb([
-                        'label' => $page->offsetGet('name')
+                        'label' => $page->offsetGet('title')
                     ]);
                     return $root;
                 }
             }
         }
+        return $this->notFoundAction();
     }
 
 }

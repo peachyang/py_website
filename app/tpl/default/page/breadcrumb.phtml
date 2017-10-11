@@ -1,20 +1,25 @@
+<!--=== Breadcrumbs ===-->
 <?php
 $crumbs = $this->getCrumbs();
 if (count($crumbs)):
     $last = array_pop($crumbs);
     ?>
-    <div class="container">
-        <ol class="breadcrumb">
-            <?php if ($this->showLabel): ?>
-                <li class="label"><span><?php echo $this->translate('Location') ?>: </span></li>
-            <?php endif ?>
-            <?php if ($this->showHome): ?>
-                <li class="home"><a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl() : $this->getBaseUrl() ?>" title="<?php echo $this->translate('Home') ?>"><?php echo $this->translate('Home') ?></a></li>
-            <?php endif ?>
-            <?php foreach ($crumbs as $crumb): ?>
-                <li><a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl($crumb['link']) : $this->getBaseUrl($crumb['link']) ?>" title="<?php echo $this->translate($crumb['label']) ?>"><?php echo $this->translate($crumb['label']) ?></a></li>
-            <?php endforeach ?>
-            <li class="current"><span><?php echo $this->translate($last['label']) ?></span></li>
-        </ol>
-    </div>
+    <div class="breadcrumbs margin-bottom-40">
+        <div class="container">
+            <ul class="pull-lft breadcrumb">
+                <?php if ($this->showLabel): ?>
+                    <li class="label"><span><?php echo $this->translate('Location') ?>: </span></li>
+                <?php endif ?>
+                <?php if ($this->showHome): ?>
+                    <li class="home"><a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl() : $this->getBaseUrl() ?>" title="<?php echo $this->translate('Home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                <?php endif ?>
+                <?php foreach ($crumbs as $crumb): ?>
+                    <li><a href="<?php echo $this->isAdminPage() ? $this->getAdminUrl($crumb['link']) : $this->getBaseUrl($crumb['link']) ?>" title="<?php echo $this->translate($crumb['label']) ?>"><?php echo $this->translate($crumb['label']) ?></a></li>
+                <?php endforeach ?>
+                <li class="active"><span><?php echo $this->translate($last['label']) ?></span></li>
+            </ul>
+        </div><!--/container-->
+    </div><!--/breadcrumbs-->
 <?php endif; ?>
+<!--=== End Breadcrumbs ===-->
+

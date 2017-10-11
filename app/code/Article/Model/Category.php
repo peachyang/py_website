@@ -17,7 +17,7 @@ class Category extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'parent_id', 'sort_order', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'parent_id', 'sort_order', 'status']);
     }
 
     public function getProducts()

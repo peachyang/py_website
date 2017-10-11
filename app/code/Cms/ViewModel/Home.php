@@ -6,6 +6,8 @@ use Seahinet\Cms\Model\Collection\Category as Collection;
 use Seahinet\Cms\Model\Collection\Page as PageCollection;
 use Seahinet\Cms\Model\Category as Model;
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Lib\ViewModel\Wrapper;
+use Seahinet\Lib\Bootstrap;
 
 class Home extends Template
 {
@@ -30,13 +32,29 @@ class Home extends Template
         return $this->getVariable('category');
     }
 
-    public function getTopCategory($category = null)
+    public function getParentCategory()
     {
-        if (is_null($category)) {
-            $category = $this->getCategory();
+        if (!empty($this->storage['parent_id'])) {
+            $navgiation = new static;
+            $navgiation->load($this->storage['parent_id']);
+            return $navgiation;
         }
-        $parent = $category->getParentCategory();
-        return $parent ? $this->getTopCategory($parent) : $category;
+        return NULL;
     }
-    
+
+    public function getChildrenCategories()
+    {
+        if (isset($this->storage['id'])) {
+            $collection = new Collection;
+            $collection->where(['parent_id' => $this->storage['id']]);
+            return $collection;
+        }
+        return NULL;
+    }
+
+    public function getLanguageId()
+    {
+        return Bootstrap::getLanguage()->getId();
+    }
+
 }

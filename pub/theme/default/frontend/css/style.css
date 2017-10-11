@@ -635,7 +635,11 @@ blockquote:hover {
     color:#72c02c;
     text-decoration:none;
 }
-
+.breadcrumb li+li:before{
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\00a0";
+}
 /*Home Page "Options"
 ------------------------------------*/
 /*Accardion*/

@@ -21,6 +21,9 @@ class Page extends Route
             $path = substr($path, 0, -5);
         } else if (substr($path, -4) === '.htm') {
             $path = substr($path, 0, -4);
+        } else if (substr($path, -5) === '.json') {
+            $path = substr($path, 0, -5);
+            $isJson = true;
         } else if ($path === '') {
             $path = 'home';
         } else {
@@ -48,7 +51,7 @@ class Page extends Route
                         'category' => isset($result[0]['category_id']) ? (new Category)->load($result[0]['category_id']) : null,
                         'namespace' => 'Seahinet\\Cms\\Controller',
                         'controller' => 'PageController',
-                        'action' => 'index'
+                        'action' => 'page'
                             ], $request);
                 }
             } else {

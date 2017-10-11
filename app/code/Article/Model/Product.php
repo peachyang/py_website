@@ -29,7 +29,7 @@ class Product extends Entity
 
     protected function construct()
     {
-        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'status']);
+        $this->init('id', ['id', 'type_id', 'attribute_set_id', 'store_id', 'status']);
     }
 
     public function isNew()

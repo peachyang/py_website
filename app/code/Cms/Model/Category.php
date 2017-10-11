@@ -5,6 +5,8 @@ namespace Seahinet\Cms\Model;
 use Seahinet\Cms\Model\Collection\Category as Collection;
 use Seahinet\Cms\Model\Collection\Page as PageCollection;
 use Seahinet\Lib\Model\AbstractModel;
+use Seahinet\Resource\Model\Resource;
+use Zend\Db\Sql\Predicate\In;
 
 class Category extends AbstractModel
 {
@@ -37,13 +39,50 @@ class Category extends AbstractModel
     public function getPages()
     {
         if (isset($this->storage['id'])) {
-            $pages = new PageCollection;
-            $pages->join('cms_category_page', 'cms_page.id=cms_category_page.page_id', [])
-                    ->where(['cms_category_page.category_id' => $this->storage['id']])
-                    ->order('id DESC');
+            $pages = new PageCollection($this->languageId);
+            $tableGateway = $this->getTableGateway('cms_category_page');
+            $result = $tableGateway->select(['category_id' => $this->storage['id']])->toArray();
+            $valueSet = [];
+            array_walk($result, function ($item) use (&$valueSet) {
+                $valueSet[] = $item['page_id'];
+            });
+            if (count($valueSet)) {
+                $pages->where(new In('id', $valueSet));
+                return $pages;
+            }
             return $pages;
         }
-        return NULL;
+        return [];
+    }
+    
+    public function getImage()
+    {
+        if (!empty($this->storage['image'])) {
+            $resource = new Resource;
+            $resource->load($this->storage['image']);
+            return $resource['real_name'];
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
+    }
+
+    public function getThumbnail()
+    {
+        if (!empty($this->storage['thumbnail'])) {
+            $resource = new Resource;
+            $resource->load($this->storage['thumbnail']);
+            return $resource['real_name'];
+        }
+        return $this->getPubUrl('frontend/images/placeholder.png');
+    }
+
+    public function getUrl()
+    {
+        if (!isset($this->storage['path'])) {
+            $constraint = ['product_id' => null, 'category_id' => $this->getId()];
+            $result = $this->getContainer()->get('indexer')->select('cms_url', $this->languageId, $constraint);
+            $this->storage['path'] = isset($result[0]) ? $result[0]['path'] . '.html' : '';
+        }
+        return $this->getBaseUrl($this->storage['path']);
     }
 
     protected function beforeSave()

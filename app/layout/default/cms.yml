@@ -13,13 +13,80 @@ page_home:
         children:
             content:
                 children:
-                    main:
-                        type: Seahinet\Lib\ViewModel\Wrapper
+                    block:
+                        type: Seahinet\Cms\ViewModel\Block
+                        action:
+                            -
+                                method: setBlockId
+                                params: main-container
                         children:
-                            page: 
-                                type: Seahinet\Cms\ViewModel\Home
-                                template: cms/home
-                        
+                            main:
+                                type: Seahinet\Lib\ViewModel\Template
+                                template: cms/homemain
+                                children:
+                                    home: 
+                                        type: Seahinet\Cms\ViewModel\Home
+                                        template: cms/home
+cms_page_with_nav:
+    update: frontend
+    root:
+        children:
+            content:
+                children:
+                    main:
+                        type: Seahinet\Lib\ViewModel\Template
+                        template: cms/main
+                        children:
+                            navigation:
+                                type: Seahinet\Cms\ViewModel\Navigation
+                                template: cms/navigation
+                            page:
+                                type: Seahinet\Cms\ViewModel\Page
+page_category:
+    update: frontend
+    root:
+        children:
+            head:
+                action:
+                    -
+                        method: addScript
+                        params: frontend/js/bttrlazyloading.js
+            content:
+                children:
+                    messages:
+                        action:
+                            -
+                                method: addHandledSegment
+                                params: cms
+                            -
+                                method: addHandledSegment
+                                params: customer
+                    toolbar:
+                        type: Seahinet\Cms\ViewModel\Category\Toolbar
+                        template: cms/category/toolbar
+                        children:
+                            filter:
+                                type: Seahinet\Cms\ViewModel\Category\Filter
+                                template: cms/category/filter
+                                children:
+                                    category:
+                                        type: Seahinet\Cms\ViewModel\Navigation
+                                        template: cms/navigation/top
+                            sortby:
+                                type: Seahinet\Cms\ViewModel\Category\SortBy
+                                template: cms/category/sortby
+                    list:
+                        type: Seahinet\Cms\ViewModel\Category\ProductList
+                    toolbar_bottom:
+                        type: Seahinet\Cms\ViewModel\Category\Toolbar
+                        template: cms/category/toolbar
+                        children:
+                            pager:
+                                type: Seahinet\Lib\ViewModel\Pager
+                                action:
+                                    -
+                                        method: showLabel
+                                        params: false                    
 page_view:
     update: frontend
     root:

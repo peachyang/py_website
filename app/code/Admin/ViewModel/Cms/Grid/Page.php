@@ -45,11 +45,9 @@ class Page extends PGrid
             ],
             'title' => [
                 'label' => 'Title',
-                'class' => 'text-left'
             ],
             'uri_key' => [
                 'label' => 'Uri Key',
-                'class' => 'text-left',
                 'handler' => function ($value) {
                     return rawurldecode($value);
                 }

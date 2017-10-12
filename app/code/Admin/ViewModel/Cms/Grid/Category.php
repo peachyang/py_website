@@ -40,13 +40,11 @@ class Category extends PGrid
             ],
             'name' => [
                 'label' => 'Name',
-                'class' => 'text-left',
                 'use4sort' => false,
                 'use4filter' => false
             ],
             'uri_key' => [
                 'label' => 'Uri Key',
-                'class' => 'text-left',
                 'handler' => function ($value) {
                     return rawurldecode($value);
                 }

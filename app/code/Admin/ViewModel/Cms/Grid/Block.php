@@ -38,7 +38,6 @@ class Block extends PGrid
             ],
             'code' => [
                 'label' => 'Identifier',
-                'class' => 'text-left'
             ],
             'language' => [
                 'label' => 'Language',

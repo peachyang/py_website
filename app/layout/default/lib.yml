@@ -112,6 +112,10 @@ frontend:
                     -
                         method: addScript
                         params: [{src:'frontend/js/selectivizr.js',defer:'defer'},lt IE 9]
+#                   <!-- JS Implementing Plugins -->  
+                    -    
+                        method: addScript
+                        params: frontend/plugins/back-to-top.js
             header:
                 children:
                     block:

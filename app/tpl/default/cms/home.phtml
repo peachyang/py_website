@@ -16,12 +16,8 @@
                 <i>SUPPORT AND</i><br />
                 <i>MANY MORE</i></h2>
             <p><i>Lorem ipsum dolor amet</i><br />
-                <i>tempor incididunt ut</i></p>
-            <div class="da-img span6">
-                <div class="span6">
-                    <iframe allowfullscreen="" frameborder="0" height="320" mozallowfullscreen="" src="http://player.vimeo.com/video/47911018" webkitallowfullscreen="" width="100%"></iframe>
-                </div>
-            </div>
+                <i>tempor incididunt ut</i>
+            </p>
         </div>
         <div class="da-slide">
             <h2><i>USING BEST WEB</i><br />
@@ -30,33 +26,38 @@
             <p><i>Lorem ipsum dolor amet</i><br />
                 <i>tempor incididunt ut</i><br />
                 <i>veniam omnis </i></p>
-            <div class="da-img"><img alt="image01" src="<?php echo $this->getBaseUrl('pub/theme/default/frontend/plugins/parallax-slider/img/html5andcss3.png') ?>" /></div>
+            <div class="da-img"><img alt="image01" src="<?php echo $this->getPubUrl('frontend/plugins/parallax-slider/img/html5andcss3.png') ?>" /></div>
         </div>
-        <nav class="da-arrows">&nbsp;</nav>
+        <nav class="da-arrows">
+            <span class="da-arrows-prev"></span>
+            <span class="da-arrows-next"></span>		
+        </nav>
     </div>
     <!--/da-slider-->
 </div>
 <!--/slider-->
 <!--=== End Slider ===-->
 <!--=== Notice Block ===-->
-<div class="row-fluid purchase margin-bottom-30">
-    <div class="container">
-        <div class="span10">
-            <?php
-            $categories = $this->getCategoryPage(8);
-            if ($categories):
-                $categories->limit(1);
-                foreach ($categories as $category):
-                    $url = $category->getUrl();
-                    ?>
-                    <h3><?php echo $category['title'] ?></h3>
-                    <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
-                </div>
-                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
+<div class="container">
+    <div class="row-fluid purchase margin-bottom-30">
+        <div class="container">
+            <div class="span10">
                 <?php
-            endforeach;
-        endif;
-        ?>
+                $categories = $this->getCategoryPage(8);
+                if ($categories):
+                    $categories->limit(1);
+                    foreach ($categories as $category):
+                        $url = $category->getUrl();
+                        ?>
+                        <h3><?php echo $category['title'] ?></h3>
+                        <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
+                    </div>
+                    <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
+                    <?php
+                endforeach;
+            endif;
+            ?>
+        </div>
     </div>
 </div>
 <!--/row-fluid-->
@@ -68,13 +69,6 @@
             <div class="carousel-inner">
                 <!-- Indicators -->
                 <?php
-//                $parent = $this->getTopCategory(7);
-//                foreach ($parent->getChildrenCategories(1) as $category):
-//                    $children = $category->getPages();
-//                    $count = $children->count();
-//                    foreach ($children as $child):
-//                        $thumbnail = $child->getThumbnail();
-//                        $url = $child->getUrl();
                 $categories = $this->getCategoryPage(10);
                 if ($categories):
                     $categories->limit(5);
@@ -84,7 +78,7 @@
                         ?>
                         <div class="item">
                             <a href="<?php echo $url ? $this->getBaseUrl($url . '.html') : 'javascript:void(0);' ?>">
-                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)  ?>"  alt="<?php echo $category['title'] ?>" />
+                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)        ?>"  alt="<?php echo $category['title'] ?>" />
                             </a>
                             <div class="carousel-caption">
                                 <p><?php echo $category['title']; ?></p>
@@ -92,7 +86,6 @@
                         </div>
                         <?php
                     endforeach;
-                //endforeach;
                 endif;
                 ?>
             </div>   
@@ -188,21 +181,20 @@
             <div class="thumbnail-style thumbnail-kenburn">
                 <div class="thumbnail-img">
                     <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/11.jpg') ?>" alt="" /></div>
-                    <a class="btn-more hover-effect" href="./blog_item.php">reading +</a>					
+                    <a class="btn-more hover-effect" href="<?php echo $this->getBaseUrl(''); ?>./blog_item.php">reading +</a>					
                 </div>
-                <h3><a class="hover-effect" href="#">美食分享</a></h3>
+                <h3><a class="hover-effect" href="#"><?php echo $this->translate('Foods Sharing'); ?></a></h3>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>                
                 <!-- 星星等级 -->
-                <!--
                 <div class="star-vote pull-right">
-                        <ul class="list-inline">
-                                <li><i class="color-green fa fa-star"></i></li>
-                                <li><i class="color-green fa fa-star"></i></li>
-                                <li><i class="color-green fa fa-star"></i></li>
-                                <li><i class="color-green fa fa-star-half-o"></i></li>
-                                <li><i class="color-green fa fa-star-o"></i></li>
-                        </ul>
-                </div>-->
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>
+                    <ul class="list-inline">
+                        <li><i class="color-green fa fa-star"></i></li>
+                        <li><i class="color-green fa fa-star"></i></li>
+                        <li><i class="color-green fa fa-star"></i></li>
+                        <li><i class="color-green fa fa-star-half-o"></i></li>
+                        <li><i class="color-green fa fa-star-o"></i></li>
+                    </ul>
+                </div>
             </div>
         </li>
         <li class="span3">
@@ -327,8 +319,7 @@
                     <span class="glyphicon icon-angle-right"></span>
                 </a>
             </div>
-            <!--
-            <article class="jq22-container">
+            <!--<article class="jq22-container">
                 <div class = "caroursel poster-main" data-setting = '{
                      "width":335,
                      "height":200,
@@ -339,17 +330,16 @@
                      "algin":"middle"
                      }'>
                     <ul class = "poster-list">
-                        <li class = "poster-item"><img src="assets/img/carousel/1.jpg" width = "100%"></li>
-                        <li class = "poster-item"><img src="assets/img/carousel/2.jpg" width = "100%"></li>
-                        <li class = "poster-item"><img src="assets/img/carousel/3.jpg" width = "100%"></li>
-                        <li class = "poster-item"><img src="assets/img/carousel/4.jpg" width = "100%"></li>
-                        <li class = "poster-item"><img src="assets/img/carousel/5.jpg" width = "100%"></li>
+                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/1.jpg') ?>" width = "100%"></li>
+                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/2.jpg') ?>" width = "100%"></li>
+                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/3.jpg') ?>" width = "100%"></li>
+                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/4.jpg') ?>" width = "100%"></li>
+                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/5.jpg') ?>" width = "100%"></li>
                     </ul>
                     <div class = "poster-btn poster-prev-btn"></div>
                     <div class = "poster-btn poster-next-btn"></div>
                 </div>
-            </article>
-            -->
+            </article>-->
         </div><!--/span4-->
     </div><!--/row-fluid-->	
     <!-- //End Information Blokcs -->
@@ -360,104 +350,104 @@
         <ul class="slides">
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/hp_grey.png" alt="微信公众号" /> 
-                    <img src="assets/img/clients/hp.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/hp_grey.png') ?>" alt="<?php echo $this->translate('WeChat Public Signal'); ?>" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/hp.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/igneus_grey.png" alt="微博" /> 
-                    <img src="assets/img/clients/igneus.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/igneus_grey.png') ?>" alt="<?php echo $this->translate('Weibo') ?>" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/igneus.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/vadafone_grey.png" alt="" /> 
-                    <img src="assets/img/clients/vadafone.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/vadafone_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/vadafone.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/walmart_grey.png" alt="" /> 
-                    <img src="assets/img/clients/walmart.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/walmart_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/walmart.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/shell_grey.png" alt="" /> 
-                    <img src="assets/img/clients/shell.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/shell_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/shell.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/natural_grey.png" alt="" /> 
-                    <img src="assets/img/clients/natural.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/natural_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/natural.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/aztec_grey.png" alt="" /> 
-                    <img src="assets/img/clients/aztec.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/aztec_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/aztec.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/gamescast_grey.png" alt="" /> 
-                    <img src="assets/img/clients/gamescast.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/gamescast_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/gamescast.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/cisco_grey.png" alt="" /> 
-                    <img src="assets/img/clients/cisco.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/cisco_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/cisco.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/everyday_grey.png" alt="" /> 
-                    <img src="assets/img/clients/everyday.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/everyday_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/everyday.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/cocacola_grey.png" alt="" /> 
-                    <img src="assets/img/clients/cocacola.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/cocacola_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/cocacola.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/spinworkx_grey.png" alt="" /> 
-                    <img src="assets/img/clients/spinworkx.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/spinworkx_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/spinworkx.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/shell_grey.png" alt="" /> 
-                    <img src="assets/img/clients/shell.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/shell_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/shell.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/natural_grey.png" alt="" /> 
-                    <img src="assets/img/clients/natural.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/natural_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/natural.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/gamescast_grey.png" alt="" /> 
-                    <img src="assets/img/clients/gamescast.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/gamescast_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/gamescast.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/everyday_grey.png" alt="" /> 
-                    <img src="assets/img/clients/everyday.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/everyday_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/everyday.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="assets/img/clients/spinworkx_grey.png" alt="" /> 
-                    <img src="assets/img/clients/spinworkx.png" class="color-img" alt="" />
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/spinworkx_grey.png') ?>" alt="" /> 
+                    <img src="<?php echo $this->getPubUrl('frontend/img/clients/spinworkx.png') ?>" class="color-img" alt="" />
                 </a>
             </li>
         </ul>

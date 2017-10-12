@@ -1,7 +1,5 @@
 var Index = function () {
-
     return {
-
         //Parallax Slider
         initParallaxSlider: function () {
             $(function () {

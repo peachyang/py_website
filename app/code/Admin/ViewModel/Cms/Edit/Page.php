@@ -99,6 +99,11 @@ class Page extends PEdit
                 'type' => 'text',
                 'label' => 'Source'
             ],
+            'author' => [
+                'type' => 'text',
+                'label' => 'Author',
+                'value' => $user['username'] ?? ''
+            ],
             'thumbnail' => [
                 'type' => 'widget',
                 'label' => 'Thumbnail',

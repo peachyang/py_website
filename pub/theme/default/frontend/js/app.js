@@ -385,57 +385,60 @@
                 tables.push(p);
             }
         });
+        $(document).ready(function () {
+            $('#myCarousel .item:first-child').addClass('active');
+        });
         var App = function () {
             function handleIEFixes() {
                 //fix html5 placeholder attribute for ie7 & ie8
-                if (jQuery.browser.msie && jQuery.browser.version.substr(0, 1) < 9) { // ie7&ie8
-                    jQuery('input[placeholder], textarea[placeholder]').each(function () {
-                        var input = jQuery(this);
+                //if ($.browser.msie && $.browser.version.substr(0, 1) < 9) { // ie7&ie8
+                $('input[placeholder], textarea[placeholder]').each(function () {
+                    var input = $(this);
 
-                        jQuery(input).val(input.attr('placeholder'));
+                    $(input).val(input.attr('placeholder'));
 
-                        jQuery(input).focus(function () {
-                            if (input.val() == input.attr('placeholder')) {
-                                input.val('');
-                            }
-                        });
-
-                        jQuery(input).blur(function () {
-                            if (input.val() == '' || input.val() == input.attr('placeholder')) {
-                                input.val(input.attr('placeholder'));
-                            }
-                        });
+                    $(input).focus(function () {
+                        if (input.val() == input.attr('placeholder')) {
+                            input.val('');
+                        }
                     });
-                }
+
+                    $(input).blur(function () {
+                        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                            input.val(input.attr('placeholder'));
+                        }
+                    });
+                });
+                // }
             }
 
             function handleBootstrap() {
-                jQuery('.carousel').carousel({
+                $('.carousel').carousel({
                     interval: 15000,
                     pause: 'hover'
                 });
-                jQuery('.tooltips').tooltip();
-                jQuery('.popovers').popover();
+                $('.tooltips').tooltip();
+                $('.popovers').popover();
             }
 
             function handleMisc() {
-                jQuery('.top').click(function () {
-                    jQuery('html,body').animate({
-                        scrollTop: jQuery('body').offset().top
+                $('.top').click(function () {
+                    $('html,body').animate({
+                        scrollTop: $('body').offset().top
                     }, 'slow');
                 }); //move to top navigator
             }
 
             function handleSearch() {
-                jQuery('.search').click(function () {
-                    if (jQuery('.search-btn').hasClass('icon-search')) {
-                        jQuery('.search-open').fadeIn(500);
-                        jQuery('.search-btn').removeClass('icon-search');
-                        jQuery('.search-btn').addClass('icon-remove');
+                $('.search').click(function () {
+                    if ($('.search-btn').hasClass('icon-search')) {
+                        $('.search-open').fadeIn(500);
+                        $('.search-btn').removeClass('icon-search');
+                        $('.search-btn').addClass('icon-remove');
                     } else {
-                        jQuery('.search-open').fadeOut(500);
-                        jQuery('.search-btn').addClass('icon-search');
-                        jQuery('.search-btn').removeClass('icon-remove');
+                        $('.search-open').fadeOut(500);
+                        $('.search-btn').addClass('icon-search');
+                        $('.search-btn').removeClass('icon-remove');
                     }
                 });
             }
@@ -510,7 +513,7 @@
                 },
 
                 initFancybox: function () {
-                    jQuery(".fancybox-button").fancybox({
+                    $(".fancybox-button").fancybox({
                         groupAttr: 'data-rel',
                         prevEffect: 'none',
                         nextEffect: 'none',
@@ -540,143 +543,200 @@
                         slideMargin: 10
                     });
                 }
-
             };
         }();
+        var Index = function () {
+            return {
+                //Parallax Slider
+                initParallaxSlider: function () {
+                    $(function () {
+                        $('#da-slider').cslider();
+                    });
+                },
+                //Revolution Slider
+                initRevolutionSlider: function () {
+                    var api;
+                    $(document).ready(function () {
+                        api = $('.fullwidthabnner').revolution(
+                                {
+                                    delay: 9000,
+                                    startheight: 500,
+                                    startwidth: 960,
 
-        Caroursel.init($('.caroursel'));
-        jQuery(document).ready(function () {
+                                    hideThumbs: 10,
+
+                                    thumbWidth: 100, // Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
+                                    thumbHeight: 50,
+                                    thumbAmount: 5,
+
+                                    navigationType: "bullet", // bullet, thumb, none
+                                    navigationArrows: "solo", // nexttobullets, solo (old name verticalcentered), none
+
+                                    navigationStyle: "round", // round,square,navbar,round-old,square-old,navbar-old, or any from the list in the docu (choose between 50+ different item), custom
+
+
+                                    navigationHAlign: "center", // Vertical Align top,center,bottom
+                                    navigationVAlign: "bottom", // Horizontal Align left,center,right
+                                    navigationHOffset: 0,
+                                    navigationVOffset: 20,
+
+                                    soloArrowLeftHalign: "left",
+                                    soloArrowLeftValign: "center",
+                                    soloArrowLeftHOffset: 20,
+                                    soloArrowLeftVOffset: 0,
+
+                                    soloArrowRightHalign: "right",
+                                    soloArrowRightValign: "center",
+                                    soloArrowRightHOffset: 20,
+                                    soloArrowRightVOffset: 0,
+
+                                    touchenabled: "on", // Enable Swipe Function : on/off
+                                    onHoverStop: "on", // Stop Banner Timet at Hover on Slide on/off
+
+                                    stopAtSlide: -1,
+                                    stopAfterLoops: -1,
+
+                                    shadow: 1, //0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
+                                    fullWidth: "on" // Turns On or Off the Fullwidth Image Centering in FullWidth Modus
+                                });
+                    });
+                }
+            };
+        }();
+        //Caroursel.init($('.caroursel'));
+        $(document).ready(function () {
             App.init();
             App.initSliders();
             Index.initParallaxSlider();
         });
-        $(document).ready(function () {
-            $('#defaultForm').formValidation({
-                message: 'This value is not valid',
-                icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    username: {
-                        message: 'The username is not valid',
-                        validators: {
-                            notEmpty: {
-                                message: 'The username is required and can\'t be empty'
-                            },
-                            stringLength: {
-                                min: 6,
-                                max: 30,
-                                message: 'The username must be more than 6 and less than 30 characters long'
-                            },
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9_\.]+$/,
-                                message: 'The username can only consist of alphabetical, number, dot and underscore'
-                            }
-                        }
-                    },
-                    country: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The country is required and can\'t be empty'
-                            }
-                        }
-                    },
-                    acceptTerms: {
-                        validators: {
-                            notEmpty: {
-                                message: 'You have to accept the terms and policies'
-                            }
-                        }
-                    },
-                    email: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The email address is required and can\'t be empty'
-                            },
-                            emailAddress: {
-                                message: 'The input is not a valid email address'
-                            }
-                        }
-                    },
-                    website: {
-                        validators: {
-                            uri: {
-                                message: 'The input is not a valid URL'
-                            }
-                        }
-                    },
-                    phoneNumberUS: {
-                        validators: {
-                            phone: {
-                                message: 'The input is not a valid US phone number'
-                            }
-                        }
-                    },
-                    phoneNumberUK: {
-                        validators: {
-                            phone: {
-                                message: 'The input is not a valid UK phone number',
-                                country: 'GB'
-                            }
-                        }
-                    },
-                    color: {
-                        validators: {
-                            color: {
-                                type: ['hex', 'rgb', 'hsl', 'keyword'],
-                                message: 'Must be a valid %s color'
-                            }
-                        }
-                    },
-                    colorAll: {
-                        validators: {
-                            color: {}
-                        }
-                    },
-                    zipCode: {
-                        validators: {
-                            zipCode: {
-                                country: 'US',
-                                message: 'The input is not a valid US zip code'
-                            }
-                        }
-                    },
-                    password: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password is required and can\'t be empty'
-                            }
-                        }
-                    },
-                    confirmPassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The confirm password is required and can\'t be empty'
-                            },
-                            identical: {
-                                field: 'password',
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                    ages: {
-                        validators: {
-                            lessThan: {
-                                value: 100,
-                                inclusive: true,
-                                message: 'The ages has to be less than 100'
-                            },
-                            greaterThan: {
-                                value: 10,
-                                inclusive: false,
-                                message: 'The ages has to be greater than or equals to 10'
-                            }
-                        }
-                    }
-                }
-            });
-        });
+//        $(document).ready(function () {
+//            $('#defaultForm').formValidation({
+//                message: 'This value is not valid',
+//                icon: {
+//                    valid: 'glyphicon glyphicon-ok',
+//                    invalid: 'glyphicon glyphicon-remove',
+//                    validating: 'glyphicon glyphicon-refresh'
+//                },
+//                fields: {
+//                    username: {
+//                        message: 'The username is not valid',
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The username is required and can\'t be empty'
+//                            },
+//                            stringLength: {
+//                                min: 6,
+//                                max: 30,
+//                                message: 'The username must be more than 6 and less than 30 characters long'
+//                            },
+//                            regexp: {
+//                                regexp: /^[a-zA-Z0-9_\.]+$/,
+//                                message: 'The username can only consist of alphabetical, number, dot and underscore'
+//                            }
+//                        }
+//                    },
+//                    country: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The country is required and can\'t be empty'
+//                            }
+//                        }
+//                    },
+//                    acceptTerms: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'You have to accept the terms and policies'
+//                            }
+//                        }
+//                    },
+//                    email: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The email address is required and can\'t be empty'
+//                            },
+//                            emailAddress: {
+//                                message: 'The input is not a valid email address'
+//                            }
+//                        }
+//                    },
+//                    website: {
+//                        validators: {
+//                            uri: {
+//                                message: 'The input is not a valid URL'
+//                            }
+//                        }
+//                    },
+//                    phoneNumberUS: {
+//                        validators: {
+//                            phone: {
+//                                message: 'The input is not a valid US phone number'
+//                            }
+//                        }
+//                    },
+//                    phoneNumberUK: {
+//                        validators: {
+//                            phone: {
+//                                message: 'The input is not a valid UK phone number',
+//                                country: 'GB'
+//                            }
+//                        }
+//                    },
+//                    color: {
+//                        validators: {
+//                            color: {
+//                                type: ['hex', 'rgb', 'hsl', 'keyword'],
+//                                message: 'Must be a valid %s color'
+//                            }
+//                        }
+//                    },
+//                    colorAll: {
+//                        validators: {
+//                            color: {}
+//                        }
+//                    },
+//                    zipCode: {
+//                        validators: {
+//                            zipCode: {
+//                                country: 'US',
+//                                message: 'The input is not a valid US zip code'
+//                            }
+//                        }
+//                    },
+//                    password: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The password is required and can\'t be empty'
+//                            }
+//                        }
+//                    },
+//                    confirmPassword: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The confirm password is required and can\'t be empty'
+//                            },
+//                            identical: {
+//                                field: 'password',
+//                                message: 'The password and its confirm are not the same'
+//                            }
+//                        }
+//                    },
+//                    ages: {
+//                        validators: {
+//                            lessThan: {
+//                                value: 100,
+//                                inclusive: true,
+//                                message: 'The ages has to be less than 100'
+//                            },
+//                            greaterThan: {
+//                                value: 10,
+//                                inclusive: false,
+//                                message: 'The ages has to be greater than or equals to 10'
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//        });
     });
 }));
+

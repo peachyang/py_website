@@ -13,7 +13,7 @@ class Page extends AbstractModel
 
     public function construct()
     {
-        $this->init('cms_page', 'id', ['id', 'store_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'source', 'thumbnail', 'image', 'content']);
+        $this->init('cms_page', 'id', ['id', 'store_id', 'status', 'uri_key', 'title', 'keywords', 'description', 'source', 'author', 'thumbnail', 'image', 'content']);
     }
 
     protected function beforeSave()

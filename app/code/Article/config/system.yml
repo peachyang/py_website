@@ -42,7 +42,7 @@ article:
                     options:
                         1: Yes
                         0: No
-        article:
+        product:
             label: Article
             scope: merchant
             children:

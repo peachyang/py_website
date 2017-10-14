@@ -40,32 +40,32 @@ class Product extends Entity
                 (empty($this->storage['new_end']) || strtotime($this->storage['new_end']) >= $time);
     }
 
-    public function getOptions($constraint = [])
-    {
-        if ($this->getId()) {
-            $options = new OptionCollection;
-            $options->withLabel()
-                    ->where(['article_id' => $this->getId()] + $constraint)
-                    ->order('sort_order ASC');
-            return $options;
-        }
-        return [];
-    }
-
-    public function getOption($id, $value = null)
-    {
-        if ($this->getId()) {
-            $options = $this->getOptions(['id' => $idOrCode]);
-            if ($options->count()) {
-                $option = $options[0];
-                if (!is_null($value)) {
-                    return $option->getValue($value);
-                }
-                return $option;
-            }
-        }
-        return null;
-    }
+//    public function getOptions($constraint = [])
+//    {
+//        if ($this->getId()) {
+//            $options = new OptionCollection;
+//            $options->withLabel()
+//                    ->where(['article_id' => $this->getId()] + $constraint)
+//                    ->order('sort_order ASC');
+//            return $options;
+//        }
+//        return [];
+//    }
+//
+//    public function getOption($id, $value = null)
+//    {
+//        if ($this->getId()) {
+//            $options = $this->getOptions(['id' => $idOrCode]);
+//            if ($options->count()) {
+//                $option = $options[0];
+//                if (!is_null($value)) {
+//                    return $option->getValue($value);
+//                }
+//                return $option;
+//            }
+//        }
+//        return null;
+//    }
 
     public function getCategories()
     {
@@ -131,27 +131,27 @@ class Product extends Entity
         return null;
     }
 
-    public function getInventory($warehouse = null, $sku = null)
-    {
-        if (is_null($sku)) {
-            $sku = $this->storage['sku'];
-        }
-        if (is_null($warehouse)) {
-            $warehouses = new WarehouseCollection;
-            $warehouses->where(['status' => 1]);
-            $result = 0;
-            foreach ($warehouses as $warehouse) {
-                $inventory = $warehouse->getInventory($this->getId(), $sku);
-                if ($inventory) {
-                    $result += $inventory['qty'];
-                }
-            }
-            return $result;
-        } else if (is_numeric($warehouse)) {
-            $warehouse = (new Warehouse)->setId($warehouse);
-        }
-        return $warehouse->getInventory($this->getId(), $sku);
-    }
+//    public function getInventory($warehouse = null, $sku = null)
+//    {
+//        if (is_null($sku)) {
+//            $sku = $this->storage['sku'];
+//        }
+//        if (is_null($warehouse)) {
+//            $warehouses = new WarehouseCollection;
+//            $warehouses->where(['status' => 1]);
+//            $result = 0;
+//            foreach ($warehouses as $warehouse) {
+//                $inventory = $warehouse->getInventory($this->getId(), $sku);
+//                if ($inventory) {
+//                    $result += $inventory['qty'];
+//                }
+//            }
+//            return $result;
+//        } else if (is_numeric($warehouse)) {
+//            $warehouse = (new Warehouse)->setId($warehouse);
+//        }
+//        return $warehouse->getInventory($this->getId(), $sku);
+//    }
 
     public function getLinkedProducts($type)
     {
@@ -233,17 +233,17 @@ class Product extends Entity
         return $this->getPubUrl('frontend/images/placeholder.png');
     }
 
-    public function getFinalPrice($qty = 1, $convert = true)
-    {
-        if (empty($this->storage['prices'])) {
-            $this->storage['prices'] = [];
-            $this->storage['base_prices'] = [];
-            $this->getEventDispatcher()->trigger('product.price.calc', [
-                'product' => $this, 'qty' => $qty
-            ]);
-        }
-        return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
-    }
+//    public function getFinalPrice($qty = 1, $convert = true)
+//    {
+//        if (empty($this->storage['prices'])) {
+//            $this->storage['prices'] = [];
+//            $this->storage['base_prices'] = [];
+//            $this->getEventDispatcher()->trigger('product.price.calc', [
+//                'product' => $this, 'qty' => $qty
+//            ]);
+//        }
+//        return $convert ? min($this->storage['prices']) : min($this->storage['base_prices']);
+//    }
 
     protected function afterLoad(&$result)
     {
@@ -315,29 +315,29 @@ class Product extends Entity
                 }
             }
         }
-        if (!empty($this->storage['inventory'])) {
-            $warehouse = new Warehouse;
-            foreach ($this->storage['inventory'] as $warehouseId => $inventory) {
-                foreach ($inventory['qty'] as $order => $qty) {
-                    if (empty($inventory['sku'][$order]) || $inventory['sku'][$order] !== $this->storage['sku']) {
-                        $warehouse->setInventory([
-                            'warehouse_id' => $warehouseId,
-                            'product_id' => $this->getId(),
-                            'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
-                            'barcode' => $inventory['barcode'][$order - 1] ?? '',
-                            'qty' => empty($inventory['sku'][$order]) && count($inventory['qty']) > 1 ? array_sum($inventory['qty']) - $qty : $qty,
-                            'reserve_qty' => $inventory['reserve_qty'][$order] ?? ($inventory['reserve_qty'][0] ?? null),
-                            'min_qty' => $inventory['min_qty'][$order] ?? ($inventory['min_qty'][0] ?? null),
-                            'max_qty' => $inventory['max_qty'][$order] ?? ($inventory['max_qty'][0] ?? null),
-                            'is_decimal' => $inventory['is_decimal'][$order] ?? ($inventory['is_decimal'][0] ?? null),
-                            'backorders' => $inventory['backorders'][$order] ?? ($inventory['backorders'][0] ?? null),
-                            'increment' => $inventory['increment'][$order] ?? ($inventory['increment'][0] ?? null),
-                            'status' => $inventory['status'][$order] ?? ($inventory['status'][0] ?? null)
-                        ]);
-                    }
-                }
-            }
-        }
+//        if (!empty($this->storage['inventory'])) {
+//            $warehouse = new Warehouse;
+//            foreach ($this->storage['inventory'] as $warehouseId => $inventory) {
+//                foreach ($inventory['qty'] as $order => $qty) {
+//                    if (empty($inventory['sku'][$order]) || $inventory['sku'][$order] !== $this->storage['sku']) {
+//                        $warehouse->setInventory([
+//                            'warehouse_id' => $warehouseId,
+//                            'product_id' => $this->getId(),
+//                            'sku' => empty($inventory['sku'][$order]) ? $this->storage['sku'] : $inventory['sku'][$order],
+//                            'barcode' => $inventory['barcode'][$order - 1] ?? '',
+//                            'qty' => empty($inventory['sku'][$order]) && count($inventory['qty']) > 1 ? array_sum($inventory['qty']) - $qty : $qty,
+//                            'reserve_qty' => $inventory['reserve_qty'][$order] ?? ($inventory['reserve_qty'][0] ?? null),
+//                            'min_qty' => $inventory['min_qty'][$order] ?? ($inventory['min_qty'][0] ?? null),
+//                            'max_qty' => $inventory['max_qty'][$order] ?? ($inventory['max_qty'][0] ?? null),
+//                            'is_decimal' => $inventory['is_decimal'][$order] ?? ($inventory['is_decimal'][0] ?? null),
+//                            'backorders' => $inventory['backorders'][$order] ?? ($inventory['backorders'][0] ?? null),
+//                            'increment' => $inventory['increment'][$order] ?? ($inventory['increment'][0] ?? null),
+//                            'status' => $inventory['status'][$order] ?? ($inventory['status'][0] ?? null)
+//                        ]);
+//                    }
+//                }
+//            }
+//        }
         if (isset($this->storage['article_link'])) {
             $tableGateway = $this->getTableGateway('article_link');
             $tableGateway->delete(['article_id' => $this->getId()]);
@@ -354,27 +354,27 @@ class Product extends Entity
                 }
             }
         }
-        if (isset($this->storage['options'])) {
-            $this->getTableGateway('article_option')->delete(['article_id' => $this->getId()]);
-            if (is_array($this->storage['options'])) {
-                foreach ($this->storage['options']['label'] as $id => $label) {
-                    $option = new OptionModel;
-                    $option->setData([
-                        'id' => null,
-                        'article_id' => $this->getId(),
-                        'label' => $label,
-                        'input' => $this->storage['options']['input'][$id],
-                        'is_required' => $this->storage['options']['is_required'][$id],
-                        'sort_order' => $this->storage['options']['sort_order'][$id],
-                        'price' => (float) $this->storage['options']['price'][$id],
-                        'is_fixed' => $this->storage['options']['is_fixed'][$id],
-                        'sku' => $this->storage['options']['sku'][$id],
-                        'value' => $this->storage['options']['value'][$id] ?? null
-                    ])->save();
-                }
-            }
-            $this->flushList('article_option');
-        }
+//        if (isset($this->storage['options'])) {
+//            $this->getTableGateway('article_option')->delete(['article_id' => $this->getId()]);
+//            if (is_array($this->storage['options'])) {
+//                foreach ($this->storage['options']['label'] as $id => $label) {
+//                    $option = new OptionModel;
+//                    $option->setData([
+//                        'id' => null,
+//                        'article_id' => $this->getId(),
+//                        'label' => $label,
+//                        'input' => $this->storage['options']['input'][$id],
+//                        'is_required' => $this->storage['options']['is_required'][$id],
+//                        'sort_order' => $this->storage['options']['sort_order'][$id],
+//                        'price' => (float) $this->storage['options']['price'][$id],
+//                        'is_fixed' => $this->storage['options']['is_fixed'][$id],
+//                        'sku' => $this->storage['options']['sku'][$id],
+//                        'value' => $this->storage['options']['value'][$id] ?? null
+//                    ])->save();
+//                }
+//            }
+//            $this->flushList('article_option');
+//        }
         parent::afterSave();
     }
 

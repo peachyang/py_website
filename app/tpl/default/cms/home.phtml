@@ -38,26 +38,24 @@
 <!--/slider-->
 <!--=== End Slider ===-->
 <!--=== Notice Block ===-->
-<div class="container">
-    <div class="row-fluid purchase margin-bottom-30">
-        <div class="container">
-            <div class="span10">
+<div class="row-fluid purchase margin-bottom-30">
+    <div class="container">
+        <div class="span10">
+            <?php
+            $categories = $this->getCategoryPage(8);
+            if ($categories):
+                $categories->limit(1);
+                foreach ($categories as $category):
+                    $url = $category->getUrl();
+                    ?>
+                    <h3><?php echo $category['title'] ?></h3>
+                    <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
+                </div>
+                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
                 <?php
-                $categories = $this->getCategoryPage(8);
-                if ($categories):
-                    $categories->limit(1);
-                    foreach ($categories as $category):
-                        $url = $category->getUrl();
-                        ?>
-                        <h3><?php echo $category['title'] ?></h3>
-                        <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
-                    </div>
-                    <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
-                    <?php
-                endforeach;
-            endif;
-            ?>
-        </div>
+            endforeach;
+        endif;
+        ?>
     </div>
 </div>
 <!--/row-fluid-->
@@ -78,7 +76,7 @@
                         ?>
                         <div class="item">
                             <a href="<?php echo $url ? $this->getBaseUrl($url . '.html') : 'javascript:void(0);' ?>">
-                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)        ?>"  alt="<?php echo $category['title'] ?>" />
+                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)         ?>"  alt="<?php echo $category['title'] ?>" />
                             </a>
                             <div class="carousel-caption">
                                 <p><?php echo $category['title']; ?></p>

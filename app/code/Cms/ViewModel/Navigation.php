@@ -4,6 +4,7 @@ namespace Seahinet\Cms\ViewModel;
 
 use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Cms\Model\Category;
 
 class Navigation extends Template
 {

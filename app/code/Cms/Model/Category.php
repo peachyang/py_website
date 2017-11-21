@@ -16,26 +16,6 @@ class Category extends AbstractModel
         $this->init('cms_category', 'id', ['id', 'uri_key', 'show_navigation', 'status', 'parent_id']);
     }
 
-    public function getParentCategory()
-    {
-        if (!empty($this->storage['parent_id'])) {
-            $navgiation = new static;
-            $navgiation->load($this->storage['parent_id']);
-            return $navgiation;
-        }
-        return NULL;
-    }
-
-    public function getChildrenCategories()
-    {
-        if (isset($this->storage['id'])) {
-            $collection = new Collection;
-            $collection->where(['parent_id' => $this->storage['id']]);
-            return $collection;
-        }
-        return NULL;
-    }
-
     public function getPages()
     {
         if (isset($this->storage['id'])) {
@@ -54,7 +34,40 @@ class Category extends AbstractModel
         }
         return [];
     }
-    
+
+    public function getParentCategory()
+    {
+        if (!empty($this->storage['parent_id'])) {
+            $navgiation = new static($this->languageId);
+            $navgiation->load($this->storage['parent_id']);
+            return $navgiation->getId() ? $navgiation : NULL;
+        }
+        return NULL;
+    }
+
+//    public function getChildrenCategories()
+//    {
+//        if (isset($this->storage['id'])) {
+//            $collection = new Collection;
+//            $collection->where(['parent_id' => $this->storage['id']]);
+//            return $collection;
+//        }
+//        return NULL;
+//    }
+
+    public function getChildrenCategories($shownInMenu = null)
+    {
+        if ($this->getId()) {
+            $category = new Collection($this->languageId);
+            $category->where(['parent_id' => $this->getId()]);
+            if (!is_null($shownInMenu)) {
+                $category->where(['include_in_menu' => $shownInMenu]);
+            }
+            return $category;
+        }
+        return [];
+    }
+
     public function getImage()
     {
         if (!empty($this->storage['image'])) {
@@ -78,7 +91,7 @@ class Category extends AbstractModel
     public function getUrl()
     {
         if (!isset($this->storage['path'])) {
-            $constraint = ['product_id' => null, 'category_id' => $this->getId()];
+            $constraint = ['page_id' => null, 'category_id' => $this->getId()];
             $result = $this->getContainer()->get('indexer')->select('cms_url', $this->languageId, $constraint);
             $this->storage['path'] = isset($result[0]) ? $result[0]['path'] . '.html' : '';
         }

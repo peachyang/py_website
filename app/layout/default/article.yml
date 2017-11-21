@@ -366,18 +366,18 @@ admin_article_product_edit:
                                             - category
                                             - Category
                                             - 110
-                                    -
-                                        method: addTab
-                                        params:
-                                            - custom_options
-                                            - Custom Options
-                                            - 120
-                                    -
-                                        method: addTab
-                                        params:
-                                            - inventory
-                                            - Inventory
-                                            - 130
+#                                    -
+#                                        method: addTab
+#                                        params:
+#                                            - custom_options
+#                                            - Custom Options
+#                                            - 120
+#                                    -
+#                                        method: addTab
+#                                        params:
+#                                            - inventory
+#                                            - Inventory
+#                                            - 130
                                     -
                                         method: addTab
                                         params:
@@ -409,9 +409,9 @@ admin_article_product_edit:
                                     category:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Category
                                         template: admin/article/product/category
-                                    inventory:
-                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Inventory
-                                        template: admin/article/product/inventory
+#                                    inventory:
+#                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Inventory
+#                                        template: admin/article/product/inventory
                                     related_products:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                                         action:
@@ -439,9 +439,9 @@ admin_article_product_edit:
                                         children:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
-                                    custom_options:
-                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Options
-                                        template: admin/article/product/options
+#                                    custom_options:
+#                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Options
+#                                        template: admin/article/product/options
                                     additional:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Additional
                                         template: admin/article/product/additional

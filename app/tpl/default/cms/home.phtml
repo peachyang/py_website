@@ -44,7 +44,7 @@
             <?php
             $categories = $this->getCategoryPage(8);
             if ($categories):
-                $categories->limit(1);
+                $categories->limit(1)->order('created_at DESC');
                 foreach ($categories as $category):
                     $url = $category->getUrl();
                     ?>
@@ -69,14 +69,14 @@
                 <?php
                 $categories = $this->getCategoryPage(10);
                 if ($categories):
-                    $categories->limit(5);
+                    $categories->limit(5)->order('created_at DESC');
                     foreach ($categories as $category):
                         $thumbnail = $category->getThumbnail();
                         $url = $category->getUrl();
                         ?>
                         <div class="item">
                             <a href="<?php echo $url ? $this->getBaseUrl($url . '.html') : 'javascript:void(0);' ?>">
-                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail)         ?>"  alt="<?php echo $category['title'] ?>" />
+                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail) ?>"  alt="<?php echo $category['title'] ?>" />
                             </a>
                             <div class="carousel-caption">
                                 <p><?php echo $category['title']; ?></p>
@@ -98,7 +98,7 @@
             <?php
             $categories = $this->getCategoryPage(10);
             if ($categories):
-                $categories->limit(5);
+                $categories->limit(5)->order('created_at DESC');
                 foreach ($categories as $category):
                     $thumbnail = $category->getThumbnail();
                     $url = $category->getUrl();
@@ -122,7 +122,7 @@
         <?php
         $categories = $this->getCategoryPage(10);
         if ($categories):
-            $categories->limit(3);
+            $categories->limit(3)->order('created_at DESC');
             foreach ($categories as $category):
                 $thumbnail = $category->getThumbnail();
                 $url = $category->getUrl();
@@ -152,7 +152,7 @@
         <?php
         $categories = $this->getCategoryPage(3);
         if ($categories):
-            $categories->limit(3);
+            $categories->limit(3)->order('created_at DESC');
             foreach ($categories as $category):
                 $thumbnail = $category->getThumbnail();
                 $url = $category->getUrl();

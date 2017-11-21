@@ -738,5 +738,8 @@
 //            });
 //        });
     });
+    $(document).ready(function () {
+        $('#myCarousel .carousel-inner .item:first-child').addClass('active');
+    });
 }));
 

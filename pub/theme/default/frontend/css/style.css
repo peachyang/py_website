@@ -1222,7 +1222,7 @@ ul.blog-tags a:hover i {
 ul.blog-tags a i {
     color:#777;
 }
-.blog ul.blog-tags {
+.blog ul.blog-tags,.blog ul.blog-twitter {
     border-bottom:solid 1px #eee;
     padding-bottom:4px !important;
 }

@@ -2,19 +2,13 @@
 $medias = $this->getMedia();
 ?>
 <ul class="hidden-xs links list-inline">
-    <li>
-        <button type="submit" formaction="<?php echo $this->getBaseUrl('customer/wishlist/add') ?>">
-            <span class="fa fa-star" aria-hidden="true"></span>
-            <span><?php echo $this->translate('Add to Wishlist'); ?></span>
-        </button>
-    </li>
     <?php if ($medias): ?>
         <li class="dropdown share">
             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-share-alt" aria-hidden="true"></span>
                 <span><?php echo $this->translate('Share'); ?></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="right:0!important;">
                 <?php foreach ($medias as $media): ?>
                     <li>
                         <a href="<?php echo $this->getLink($media) ?>" class="<?php echo $media['label'] ?>" rel="nofollow">
@@ -24,7 +18,7 @@ $medias = $this->getMedia();
                     </li>
                 <?php endforeach ?>
                 <li>
-                    <a href="javascript:void(0);" class="copy" rel="nofollow" onclick="prompt('<?php echo $this->translate('Press COMMAND+C to copy link.') ?>','<?php echo $this->getSharingUrl() ?>');return false;">
+                    <a href="javascript:void(0);" class="copy" rel="nofollow" onclick="prompt('<?php echo $this->translate('Press COMMAND+C to copy link.') ?>', '<?php echo $this->getSharingUrl() ?>');return false;">
                         <span class="fa fa-fw fa-copy"></span>
                         <span><?php echo $this->translate('Copy Link') ?></span>
                     </a>
@@ -32,9 +26,4 @@ $medias = $this->getMedia();
             </ul>
         </li>
     <?php endif ?>
-    <li>
-        <span class="fa fa-info-circle" aria-hidden="true"></span>
-        <span><?php echo $this->translate('Product Code') ?>:</span>
-        <span><?php echo $this->getProduct()->offsetGet('sku') ?></span>
-    </li>
 </ul>

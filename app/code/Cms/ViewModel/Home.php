@@ -3,11 +3,8 @@
 namespace Seahinet\Cms\ViewModel;
 
 use Seahinet\Cms\Model\Collection\Category as Collection;
-use Seahinet\Cms\Model\Collection\Page as PageCollection;
 use Seahinet\Cms\Model\Category as Model;
 use Seahinet\Lib\ViewModel\Template;
-use Seahinet\Lib\ViewModel\Wrapper;
-use Seahinet\Lib\Bootstrap;
 
 class Home extends Template
 {
@@ -42,19 +39,44 @@ class Home extends Template
         return NULL;
     }
 
-    public function getChildrenCategories()
+//    public function getChildrenCategories()
+//    {
+//        if (isset($this->storage['id'])) {
+//            $collection = new Collection;
+//            $collection->where(['parent_id' => $this->storage['id']]);
+//            return $collection;
+//        }
+//    }
+
+    public function getCategoryProduct($category_id)
     {
-        if (isset($this->storage['id'])) {
-            $collection = new Collection;
-            $collection->where(['parent_id' => $this->storage['id']]);
-            return $collection;
+        if (is_null($category_id)) {
+            return null;
         }
-        return NULL;
+        $category = new Category;
+        $category->load($category_id);
+        $products = $category->getProducts();
+        return $products;
     }
 
-    public function getLanguageId()
+    public function getRootCategory()
     {
-        return Bootstrap::getLanguage()->getId();
+        $categories = new Collection;
+        $categories->where(['parent_id' => null]);
+        if (count($categories)) {
+            return $categories[0];
+        }
+        return [];
     }
 
+    public function getChildrenCategories($category_id)
+    {
+        if (is_null($category_id)) {
+            return null;
+        }
+        $category = new Category;
+        $category->load($category_id);
+        $categories = $category->getChildrenCategories();
+        return $categories;
+    }
 }

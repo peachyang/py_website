@@ -47,9 +47,9 @@ trait Breadcrumb
         if ($category['parent_id']) {
             $this->addCrumb($breadcrumb, $category['parent_id'], $indexer);
             $breadcrumb->addCrumb([
-                'link' => $indexer->select('catalog_url', $languageId, [
+                'link' => $indexer->select('article_url', $languageId, [
                     'category_id' => $categoryId,
-                    'product_id' => null
+                    'article_id' => null
                 ])[0]['path'] . '.html',
                 'label' => $category['name']
             ]);

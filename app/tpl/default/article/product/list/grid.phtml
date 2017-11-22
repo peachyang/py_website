@@ -16,9 +16,6 @@ $products = $this->getProducts();
                         <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
                         <?php endif ?>
                     </a>
-                    <div class="price-box">
-                        <?php echo $this->getPriceBox($product) ?>
-                    </div>
                     <h3 class="product-name">
                         <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>">
                             <?php echo $product['name'] ?>

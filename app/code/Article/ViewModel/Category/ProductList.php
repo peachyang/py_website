@@ -3,7 +3,6 @@
 namespace Seahinet\Article\ViewModel\Category;
 
 use Seahinet\Article\Model\Category;
-use Seahinet\Article\ViewModel\Product\Price;
 use Seahinet\Lib\ViewModel\Template;
 
 class ProductList extends Template
@@ -41,20 +40,6 @@ class ProductList extends Template
     {
         $this->products = $products;
         return $this;
-    }
-
-    public function getProductColor()
-    {
-        $color = new Color;
-        $color->setVariable('product', $product);
-        return $color;
-    }
-
-    public function getPriceBox($product)
-    {
-        $box = new Price;
-        $box->setVariable('product', $product);
-        return $box;
     }
 
 }

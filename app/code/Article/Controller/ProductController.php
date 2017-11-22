@@ -28,7 +28,7 @@ class ProductController extends ActionController
                     $root->getChild('head')->setTitle($product->offsetGet('meta_title') ?: $product->offsetGet('name'))
                             ->setDescription($product->offsetGet('meta_description'))
                             ->setKeywords($product->offsetGet('meta_keywords'));
-                    $root->getChild('article', true)->setProduct($product);
+                    $root->getChild('product', true)->setProduct($product);
                     $breadcrumb = $root->getChild('breadcrumb', true);
                     $this->generateCrumbs($breadcrumb, $this->getOption('category_id'));
                     $breadcrumb->addCrumb([

@@ -1,3 +1,8 @@
+<?php
+$root = $this->getRootCategory();
+$selected_category = $this->getQuery('category');
+$key = $this->getRequest()->getQuery('key');
+?>
 <!--=== Slider ===-->
 <div class="slider-inner">
     <div class="da-slider" id="da-slider">
@@ -67,24 +72,44 @@
             <div class="carousel-inner">
                 <!-- Indicators -->
                 <?php
-                $categories = $this->getCategoryPage(10);
-                if ($categories):
-                    $categories->limit(5)->order('created_at DESC');
-                    foreach ($categories as $category):
-                        $thumbnail = $category->getThumbnail();
-                        $url = $category->getUrl();
-                        ?>
-                        <div class="item">
-                            <a href="<?php echo $url ? $this->getBaseUrl($url . '.html') : 'javascript:void(0);' ?>">
-                                <img src="<?php //echo $this->getResourceUrl('image/' . $thumbnail) ?>"  alt="<?php echo $category['title'] ?>" />
-                            </a>
-                            <div class="carousel-caption">
-                                <p><?php echo $category['title']; ?></p>
-                            </div>
-                        </div>
-                        <?php
+                foreach ($root->getChildrenCategories() as $category):
+                    $children = $category->getChildrenCategories();
+                    if (empty($selected_category)) {
+                        $selected_category = $children[0]['id'];
+                    }
+                    foreach ($children as $id => $child):
+                        if ($selected_category != $child['id']) {
+                            continue;
+                        };
+                        $products = $this->getCategoryProduct($children[0]['id']);
+                        if (count($products)):
+                            $products->limit(3);
+                            ?>
+                            <?php
+                            foreach ($products as $item):
+                                $thumbnail = $item->getThumbnail();
+                                ?>
+                                <div class="item <?php
+                                if ($selected_category == $child['id']):
+                                    echo 'active';
+                                endif;
+                                ?>">
+                                    <a href="<?php echo $item->getUrl($child); ?>">
+                                        <?php if (strpos($thumbnail, '//') === false): ?>
+                                            <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/540x/' . $thumbnail) ?>" alt="<?php echo $item['name'] ?>" />
+                                        <?php else: ?>
+                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" width="100%" />
+                                        <?php endif; ?>
+                                    </a>
+                                    <div class="carousel-caption">
+                                        <p class="text-center"><?php echo $item['name'] ?></p>
+                                    </div>
+                                </div>
+                                <?php
+                            endforeach;
+                        endif;
                     endforeach;
-                endif;
+                endforeach;
                 ?>
             </div>   
             <div class="carousel-arrow">

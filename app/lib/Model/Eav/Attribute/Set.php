@@ -2,7 +2,12 @@
 
 namespace Seahinet\Lib\Model\Eav\Attribute;
 
-use Seahinet\Lib\Model\AbstractModel;
+use Exception;
+use Seahinet\Lib\Model\{
+AbstractModel,
+    Language
+};
+use \Zend\Db\Sql\Where;
 
 class Set extends AbstractModel
 {
@@ -10,6 +15,30 @@ class Set extends AbstractModel
     protected function construct()
     {
         $this->init('eav_attribute_set', 'id', ['id', 'type_id', 'name']);
+    }
+
+    public function getLabel($language = false)
+    {
+        if ($this->getId()) {
+            $tableGateway = $this->getTableGateway('eav_attribute_set_label');
+            $select = $tableGateway->getSql()->select();
+            $select->columns(['label', 'language_id'])
+                    ->where(['attribute_set_id' => $this->getId()]);
+            if ($language) {
+                $languageId = is_array($language) || $language instanceof Language ? $language['id'] : $language;
+                $select->where(['language_id' => $languageId]);
+            }
+            $result = $tableGateway->selectWith($select)->toArray();
+            if ($language === false) {
+                $label = [];
+                foreach ($result as $item) {
+                    $label[$item['language_id']] = $item['label'];
+                }
+                return $label;
+            }
+            return count($result) ? $result[0]['label'] : '';
+        }
+        return '';
     }
 
     protected function beforeSave()

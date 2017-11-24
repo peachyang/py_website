@@ -116,6 +116,27 @@ CREATE TABLE IF NOT EXISTS `eav_attribute_group_label` (
     CONSTRAINT FK_EAV_ATTR_GROUP_LABEL_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `eav_attribute_set_option` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `sort_order` INTEGER DEFAULT 0,
+    PRIMARY KEY (`id`),
+    INDEX IDX_EAV_ATTR_SET_ATTR_SET_ID (`attribute_set_id`),
+    CONSTRAINT FK_EAV_ATTR_SET_OPTION_ATTR_SET_ID_EAV_ATTR_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `eav_attribute_set_option_label` (
+    `option_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `label` VARCHAR(255) DEFAULT '',
+    PRIMARY KEY (`option_id`,`language_id`),
+    INDEX IDX_EAV_ATTR_SET_OPTION_LABEL_ATTR_SET_ID (`option_id`),
+    INDEX IDX_EAV_ATTR_SET_OPTION_LABEL_LANGUAGE_ID (`language_id`),
+    CONSTRAINT FK_EAV_ATTR_SET_OPTION_LABEL_OPTION_ID_EAV_ATTR_SET_OPTION_ID FOREIGN KEY (`option_id`) REFERENCES `eav_attribute_set_option`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_EAV_ATTR_SET_OPTION_LABEL_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
 INSERT INTO `eav_entity_type` VALUES (5, 'art_category', 'art_category_entity', 'art_category_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 5, 'Default', CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_group` VALUES (NULL, 5, 'Article Category Infomation', 0, CURRENT_TIMESTAMP, NULL),
@@ -364,6 +385,17 @@ CREATE TABLE IF NOT EXISTS `article_review` (
     CONSTRAINT FK_ARTICLE_REVIEW_CUSTOMER_ID_CUSTOMER_ENTITY_ID FOREIGN KEY (`customer_id`) REFERENCES `customer_entity`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_ARTICLE_REVIEW_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS `eav_attribute_set_language`(
+    `attribute_set_id` INTEGER UNSIGNED NOT NULL,
+    `language_id` INTEGER UNSIGNED NOT NULL,
+    `name` VARCHAR(255) NOT NULL DEFAULT '',
+    PRIMARY KEY (`attribute_set_id`,`language_id`),
+    INDEX IDX_EAV_ATTR_SET_LANGUAGE_LANGUAGE_ID (`language_id`),
+    CONSTRAINT FK_EAV_ATTR_SET_LANGUAGE_ATTR_SET_ID_EAV_ATTRIBUTE_SET_ID FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_EAV_ATTR_SET_LANGUAGE_LANGUAGE_ID_CORE_LANGUAGE_ID FOREIGN KEY (`language_id`) REFERENCES `core_language`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 INSERT INTO `eav_entity_type` VALUES (6, 'article', 'article_entity', 'article_value', 0, CURRENT_TIMESTAMP, NULL);
 INSERT INTO `eav_attribute_set` VALUES (NULL, 6, 'Default', CURRENT_TIMESTAMP, NULL);

@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Article\Edit\Attribute;
 
 use Seahinet\Admin\ViewModel\Edit;
+use Seahinet\Lib\Source\Language;
 
 class Set extends Edit
 {
@@ -28,6 +29,7 @@ class Set extends Edit
 
     protected function prepareElements($columns = [])
     {
+        $languages = (new Language)->getSourceArray();
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -35,11 +37,32 @@ class Set extends Edit
             'csrf' => [
                 'type' => 'csrf'
             ],
-            'name' => [
+            'label' => [
                 'type' => 'text',
-                'label' => 'Name',
+                'label' => 'Label',
                 'required' => 'required'
             ],
+            'language_id[]' => [
+                'type' => 'select',
+                'label' => 'Language',
+                'required' => 'required',
+                'options' => $languages,
+                'attrs' => [
+                    'multiple' => 'multiple'
+                ]
+            ],
+            'name' => [
+                'type' => 'multitext',
+                'label' => 'Name',
+                'required' => 'required',
+                'base' => '#language_id',
+                'options' => $languages
+            ],
+//            'code' => [
+//                'type' => 'text',
+//                'label' => 'Code',
+//                'required' => 'required'
+//            ],
             'apply' => [
                 'type' => 'widget',
                 'label' => 'Attributes',

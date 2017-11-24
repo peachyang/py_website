@@ -13,14 +13,14 @@ class Review extends PEdit
 
     public function getSaveUrl()
     {
-        return $this->getAdminUrl('article_review/save/');
+        return $this->getAdminUrl('article_product_review/save/');
     }
 
     public function getDeleteUrl()
     {
         $model = $this->getVariable('model');
         if ($model && $model->getId()) {
-            return $this->getAdminUrl('article_review/delete/');
+            return $this->getAdminUrl('article_product_review/delete/');
         }
         return FALSE;
     }

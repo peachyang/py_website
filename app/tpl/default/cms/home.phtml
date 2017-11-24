@@ -56,7 +56,7 @@ $key = $this->getRequest()->getQuery('key');
                     <h3><?php echo $category['title'] ?></h3>
                     <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
                 </div>
-                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>"><?php echo $this->translate('Entry notice'); ?></a>
+        <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>" target="_blank"><?php echo $this->translate('Entry notice'); ?></a>
                 <?php
             endforeach;
         endif;

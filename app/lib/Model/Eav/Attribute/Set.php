@@ -2,12 +2,7 @@
 
 namespace Seahinet\Lib\Model\Eav\Attribute;
 
-use Exception;
-use Seahinet\Lib\Model\{
-AbstractModel,
-    Language
-};
-use \Zend\Db\Sql\Where;
+use Seahinet\Lib\Model\AbstractModel;
 
 class Set extends AbstractModel
 {
@@ -65,7 +60,36 @@ class Set extends AbstractModel
             }
         }
         $this->flushList('eav_attribute');
+        if (isset($this->storage['name']) && isset($this->storage['label'])) {
+            $tableGateway = $this->getTableGateway('eav_attribute_set_language');
+            foreach ((array) $this->storage['name'] as $languageId => $name) {
+                $this->upsert(['name' => $name], ['attribute_set_id' => $this->getId(), 'language_id' => $languageId], $tableGateway);
+            }
+        }
         $this->commit();
+    }
+
+    protected function beforeLoad($select)
+    {
+        $select->join('eav_attribute_set_language', 'eav_attribute_set_language.attribute_set_id=eav_attribute_set.id', ['name'], 'left');
+        $select->join('core_language', 'eav_attribute_set_language.language_id=core_language.id', ['language_id' => 'id', 'language' => 'name'], 'left');
+        parent::beforeLoad($select);
+    }
+
+    protected function afterLoad(&$result)
+    {
+        if (isset($result[0])) {
+            $language = [];
+            $name = [];
+            foreach ($result as $item) {
+                $language[$item['language_id']] = $item['language'];
+                $name[$item['language_id']] = $item['name'];
+            }
+            $result[0]['language'] = $language;
+            $result[0]['language_id'] = array_keys($language);
+            $result[0]['name'] = $name;
+        }
+        parent::afterLoad($result);
     }
 
 }

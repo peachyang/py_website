@@ -3,28 +3,34 @@ $products = $this->getProducts();
 ?>
 <div class="container">
     <?php if (count($products)): ?>
-        <ul class="products-list clearfix">
+        <ul class="thumbnails list">
             <?php
             foreach ($products as $product):
                 $thumbnail = $product->getThumbnail();
                 ?>
-                <li class="item col-xs-12 col-sm-6 col-md-4">
-                    <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>" class="product-image col-xs-4">
-                        <?php if (strpos($thumbnail, '//') === false): ?>
-                            <img class="bttrlazyloading" data-bttrlazyloading-lg-src="<?php echo $this->getResourceUrl('image/resized/130x/' . $thumbnail) ?>" data-bttrlazyloading-md-src="<?php echo $this->getResourceUrl('image/resized/108x/' . $thumbnail) ?>" data-bttrlazyloading-sm-src="<?php echo $this->getResourceUrl('image/resized/125x/' . $thumbnail) ?>" data-bttrlazyloading-xs-src="<?php echo $this->getResourceUrl('image/resized/256x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
-                        <?php else: ?>
-                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" />
-                        <?php endif ?>
-                    </a>
-                    <h3 class="product-name pull-right col-xs-8">
-                        <a href="<?php echo $product->getUrl($this->getCategory()) ?>" title="<?php echo $product['name'] ?>">
-                            <?php echo $product['name'] ?>
-                        </a>
-                    </h3>
+                <li class="span9">
+                    <div class="thumbnail-style thumbnail-kenburn">
+                        <div class="thumbnail-img">
+                            <div class="overflow-hidden">
+                                <a href="<?php echo $product->getUrl($this->getCategory()); ?>">
+                                    <?php if (strpos($thumbnail, '//') === false): ?>
+                                        <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/260x/' . $thumbnail) ?>" alt="<?php echo $product['name'] ?>" />
+                                    <?php else: ?>
+                                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $product['name'] ?>" width="100%" />
+                                    <?php endif; ?>
+                                </a>
+                            </div>				
+                        </div>
+                        <h3><a class="hover-effect" href="<?php echo $product->getUrl($this->getCategory()); ?>"><?php echo mb_substr($product['name'], 0, 13, 'utf-8'); ?></a></h3>
+                        <p><?php echo mb_substr(trim(strip_tags($product['short_description'])), 0, 100, 'utf-8') ?></p>
+                        <p class="text-right"><?php echo $product['created_at'] ?></p>
+                    </div>
                 </li>
-            <?php endforeach ?>
-        </ul>
+                <?php
+            endforeach;
+            ?>
+        </ul><!--/thumbnails-->
     <?php else: ?>
-        <p class="no-product"><?php echo $this->translate('There are no products matching the selection.') ?></p>
+        <p class="no-product text-center"><?php echo $this->translate('There are no products matching the selection.') ?></p>
     <?php endif ?>
 </div>

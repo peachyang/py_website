@@ -1,7 +1,5 @@
 <?php
 $root = $this->getRootCategory();
-$selected_category = $this->getQuery('category');
-$key = $this->getRequest()->getQuery('key');
 ?>
 <!--=== Slider ===-->
 <div class="slider-inner">
@@ -56,7 +54,7 @@ $key = $this->getRequest()->getQuery('key');
                     <h3><?php echo $category['title'] ?></h3>
                     <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
                 </div>
-        <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>" target="_blank"><?php echo $this->translate('Entry notice'); ?></a>
+                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>" target="_blank"><?php echo $this->translate('Entry notice'); ?></a>
                 <?php
             endforeach;
         endif;
@@ -73,42 +71,29 @@ $key = $this->getRequest()->getQuery('key');
                 <!-- Indicators -->
                 <?php
                 foreach ($root->getChildrenCategories() as $category):
-                    $children = $category->getChildrenCategories();
-                    if (empty($selected_category)) {
-                        $selected_category = $children[0]['id'];
-                    }
-                    foreach ($children as $id => $child):
-                        if ($selected_category != $child['id']) {
-                            continue;
-                        };
-                        $products = $this->getCategoryProduct($children[0]['id']);
-                        if (count($products)):
-                            $products->limit(3);
+                    $children = $category->getProducts();
+                    if (count($children)):
+                        $children->limit(3)
+                                ->order('created_at DESC');
+                        foreach ($children as $item):
+                            $thumbnail = $item->getThumbnail();
                             ?>
-                            <?php
-                            foreach ($products as $item):
-                                $thumbnail = $item->getThumbnail();
-                                ?>
-                                <div class="item <?php
-                                if ($selected_category == $child['id']):
-                                    echo 'active';
-                                endif;
-                                ?>">
-                                    <a href="<?php echo $item->getUrl($child); ?>">
-                                        <?php if (strpos($thumbnail, '//') === false): ?>
-                                            <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/540x/' . $thumbnail) ?>" alt="<?php echo $item['name'] ?>" />
-                                        <?php else: ?>
-                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" width="100%" />
-                                        <?php endif; ?>
-                                    </a>
-                                    <div class="carousel-caption">
-                                        <p class="text-center"><?php echo $item['name'] ?></p>
-                                    </div>
+                            <div class="item" style="max-height: 348px;overflow: hidden">
+                                <a href="<?php echo $item->getUrl($category); ?>">
+                                    <?php if (strpos($thumbnail, '//') === false): ?>
+                                        <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/540x/' . $thumbnail) ?>" alt="<?php echo $item['name'] ?>" />
+                                    <?php else: ?>
+                                        <img src="<?php echo $thumbnail ?>" alt="<?php echo $item['name'] ?>" width="100%" />
+                                    <?php endif; ?>
+                                </a>
+                                <div class="carousel-caption">
+                                    <p class="text-center"><?php echo $item['name'] ?></p>
                                 </div>
-                                <?php
-                            endforeach;
-                        endif;
-                    endforeach;
+                            </div>
+                            <?php
+                        endforeach;
+                        break;
+                    endif;
                 endforeach;
                 ?>
             </div>   
@@ -121,255 +106,295 @@ $key = $this->getRequest()->getQuery('key');
     <div class="span5">
         <ol class="list-group"> 
             <?php
-            $categories = $this->getCategoryPage(10);
-            if ($categories):
-                $categories->limit(5)->order('created_at DESC');
-                foreach ($categories as $category):
-                    $thumbnail = $category->getThumbnail();
-                    $url = $category->getUrl();
-                    ?>
-                    <li class="list-group-item">
-                        <a href="<?php echo $this->getBaseUrl($url . '.html'); ?>"><?php echo $category['title']; ?></a>
-                    </li>
-                    <?php
-                endforeach;
-            endif;
+            foreach ($root->getChildrenCategories() as $category):
+                $children = $category->getProducts();
+                if (count($children)):
+                    $children->limit(10)
+                            ->order('created_at DESC');
+                    foreach ($children as $id => $child):
+                        $thumbnail = $child->getThumbnail();
+                        ?>
+                        <li class="list-group-item">
+                            <a href="<?php echo $child->getUrl($category); ?>"><?php echo $child['name'] ?></a>
+                        </li>
+                        <?php
+                    endforeach;
+                    break;
+                endif;
+            endforeach;
             ?>
         </ol>
     </div>
 </div>
 <!--big Carousel end-->
 <!--=== Content Part ===-->
-<?php
 
-?>
 <div class="container">	
     <!-- Recent Works -->
-    <div class="headline"><h3>新闻「News|뉴스」</h3><a href="./portfolio.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-    <ul class="thumbnails">
-        <?php
-        $categories = $this->getCategoryPage(10);
-        if ($categories):
-            $categories->limit(3)->order('created_at DESC');
-            foreach ($categories as $category):
-                $thumbnail = $category->getThumbnail();
-                $url = $category->getUrl();
-                ?>
-                <li class="span4">
-                    <div class="thumbnail-style thumbnail-kenburn">
-                        <div class="thumbnail-img">
-                            <div class="overflow-hidden">
-                                <img src="<?php echo $this->getPubUrl('frontend/img/new/2016071601001263600089741.jpg') ?>" alt="" width="100%" />
+    <?php
+    foreach ($root->getChildrenCategories() as $category):
+        if ($category['id'] == 3):
+            ?>
+            <div class="headline"><h3><?php echo $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+            <ul class="thumbnails">
+                <?php
+                $children = $category->getProducts();
+                if (count($children)):
+                    $children->limit(3)
+                            ->order('created_at DESC');
+                    foreach ($children as $id => $child):
+                        $thumbnail = $child->getThumbnail();
+                        ?>
+                        <li class="span4">
+                            <div class="thumbnail-style thumbnail-kenburn">
+                                <div class="thumbnail-img">
+                                    <div class="overflow-hidden">
+                                        <a href="<?php echo $child->getUrl($category); ?>">
+                                            <?php if (strpos($thumbnail, '//') === false): ?>
+                                                <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/540x/' . $thumbnail) ?>" alt="<?php echo $child['name'] ?>" />
+                                            <?php else: ?>
+                                                <img src="<?php echo $thumbnail ?>" alt="<?php echo $child['name'] ?>" width="100%" />
+                                            <?php endif; ?>
+                                        </a>
+                                    </div>
+                                    <a class="btn-more hover-effect" href="<?php echo $child->getUrl($category); ?>">reading +</a>					
+                                </div>
+                                <h4 class="text-center"><a class="hover-effect" href="<?php echo $child->getUrl($category); ?>"><?php echo mb_substr($child['name'], 0, 20, 'utf-8'); ?></a></h4>
+                                <p><?php echo mb_substr(trim(strip_tags($child['short_description'])), 0, 50, 'utf-8') . '……' ?></p>
                             </div>
-                            <a class="btn-more hover-effect" href="<?php echo $this->getBaseUrl($url . '.html'); ?>">reading +</a>					
-                        </div>
-                        <h4 class="text-center"><a class="hover-effect" href="<?php echo $this->getBaseUrl($url . '.html'); ?>"><?php echo mb_substr($category['title'], 0, 20, 'utf-8'); ?></a></h4>
-                        <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 50, 'utf-8') . '……' ?></p>
-                    </div>
-                </li>
-                <?php
-            endforeach;
-        endif;
-        ?>
-    </ul><!--/thumbnails-->
-    <!-- //End Recent Works -->
-
-    <!-- Service Blocks -->
-    <div class="headline"><h3>暖文暖句</h3><a href="./blog_article.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-    <div class="row-fluid">
-        <?php
-        $categories = $this->getCategoryPage(3);
-        if ($categories):
-            $categories->limit(3)->order('created_at DESC');
-            foreach ($categories as $category):
-                $thumbnail = $category->getThumbnail();
-                $url = $category->getUrl();
+                        </li>
+                        <?php
+                    endforeach;
+                endif;
                 ?>
-                <div class="span4">
-                    <div class="service clearfix">
-                        <i class="icon-asterisk"></i>
-                        <div class="desc">
-                            <h4><?php echo mb_substr($category['title'], 0, 28, 'utf-8'); ?></h4>
-                            <span class="badge" style="float:right"><?php echo $category['source'] ?></span>
-                        </div>
-                    </div>	
-                </div>
-                <?php
-            endforeach;
+            </ul><!--/thumbnails-->
+            <!-- //End Recent Works -->
+            <?php
         endif;
-        ?>	    
-    </div><!--/row-fluid-->
-    <!-- //End Service Blokcs -->
-    <!-- Recent Works -->
-    <div class="headline"><h3>吃喝玩乐</h3><a href="portfolio.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-    <ul class="thumbnails">
-        <li class="span3">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/11.jpg') ?>" alt="" /></div>
-                    <a class="btn-more hover-effect" href="<?php echo $this->getBaseUrl(''); ?>./blog_item.php">reading +</a>					
-                </div>
-                <h3><a class="hover-effect" href="#"><?php echo $this->translate('Foods Sharing'); ?></a></h3>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>                
-                <!-- 星星等级 -->
-                <div class="star-vote pull-right">
-                    <ul class="list-inline">
-                        <li><i class="color-green fa fa-star"></i></li>
-                        <li><i class="color-green fa fa-star"></i></li>
-                        <li><i class="color-green fa fa-star"></i></li>
-                        <li><i class="color-green fa fa-star-half-o"></i></li>
-                        <li><i class="color-green fa fa-star-o"></i></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-        <li class="span3">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/12.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="#">reading +</a>					
-                </div>
-                <h3><a class="hover-effect" href="#">购物攻略</a></h3>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>
-            </div>
-        </li>
-        <li class="span3">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/13.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="#">reading +</a>					
-                </div>
-                <h3><a class="hover-effect" href="#">休闲娱乐</a></h3>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>
-            </div>
-        </li>
-        <li class="span3">
-            <div class="thumbnail-style thumbnail-kenburn">
-                <div class="thumbnail-img">
-                    <div class="overflow-hidden"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/15.jpg') ?>" alt="" width="100%" /></div>
-                    <a class="btn-more hover-effect" href="#">reading +</a>					
-                </div>
-                <h3><a class="hover-effect" href="#">景点介绍</a></h3>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>
-            </div>
-        </li>
-    </ul><!--/thumbnails-->
-    <!-- //End Recent Works -->
-
-    <!-- Service Blocks -->
-    <div class="headline"><h3>猿人分享</h3><a href="./blog_article.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-    <div class="row-fluid">
-        <div class="span4">
-            <div class="service clearfix">
-                <i class="icon-pencil"></i>
-                <div class="desc">
-                    <h4><a href="./blog_article_item.php">关于PHP本地开发项目环境的搭建！</a></h4>
-                    <span class="badge" style="float:right">作者：peach</span>
-                </div>
-            </div>	
-        </div>
-        <div class="span4">
-            <div class="service clearfix">
-                <i class="icon-pencil"></i>
-                <div class="desc">
-                    <h4>php中的preg_match_all函数教程！</h4>
-                    <span class="badge" style="float:right">作者：peach</span>
-                </div>
-            </div>	
-        </div>
-        <div class="span4">
-            <div class="service clearfix">
-                <i class="icon-pencil"></i>
-                <div class="desc">
-                    <h4>Bootstrap，一个优秀的网站前端框架！</h4>
-                    <span class="badge" style="float:right">作者：peach</span>
-                </div>
-            </div>	
-        </div>			    
-    </div><!--/row-fluid-->
-    <!-- //End Service Blokcs -->
-
+    endforeach;
+    foreach ($root->getChildrenCategories() as $category):
+        if ($category['id'] == 8):
+            ?>
+            <!-- Service Blocks -->
+            <div class="headline"><h3><?php echo $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+            <div class="row-fluid">
+                <?php
+                $children = $category->getProducts();
+                if (count($children)):
+                    $children->limit(3)
+                            ->order('created_at DESC');
+                    foreach ($children as $id => $child):
+                        $thumbnail = $child->getThumbnail();
+                        ?>
+                        <div class="span4">
+                            <div class="service clearfix">
+                                <i class="icon-asterisk"></i>
+                                <div class="desc">
+                                    <h4><?php echo mb_substr($child['name'], 0, 28, 'utf-8'); ?></h4>
+                                    <span class="badge" style="float:right"><?php echo $child['source'] ?></span>
+                                </div>
+                            </div>	
+                        </div>
+                        <?php
+                    endforeach;
+                endif;
+                ?>
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+            <?php
+        endif;
+    endforeach;
+    foreach ($root->getChildrenCategories() as $category):
+        if ($category['id'] == 12):
+            $children = $category->getChildrenCategories();
+            if (count($children)):
+                ?>
+                <!-- Recent Works -->
+                <div class="headline"><h3><?php echo $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+                <ul class="thumbnails">
+                    <?php
+                    foreach ($children as $child):
+                        $thumbnail = $child->getThumbnail();
+                        ?>
+                        <li class="span3">
+                            <div class="thumbnail-style thumbnail-kenburn">
+                                <div class="thumbnail-img">
+                                    <div class="overflow-hidden">
+                                        <?php if (strpos($thumbnail, '//') === false): ?>
+                                            <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/260x/' . $thumbnail) ?>" alt="<?php echo $child['name'] ?>" />
+                                        <?php else: ?>
+                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $child['name'] ?>" width="100%" />
+                                        <?php endif; ?>
+                                    </div>
+                                    <a class="btn-more hover-effect" href="<?php echo $child->getUrl(); ?>">reading +</a>					
+                                </div>
+                                <h3><a class="hover-effect" href="<?php echo $child->getUrl(); ?>"><?php echo $child['name']; ?></a></h3>
+                                <p><?php echo mb_substr(trim(strip_tags($child['description'])), 0, 100, 'utf-8') . '……' ?>
+                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem.</p>                
+                                <!-- 星星等级 -->
+                                <div class="star-vote pull-right">
+                                    <ul class="list-inline">
+                                        <li><i class="color-green fa fa-star"></i></li>
+                                        <li><i class="color-green fa fa-star"></i></li>
+                                        <li><i class="color-green fa fa-star"></i></li>
+                                        <li><i class="color-green fa fa-star-half-o"></i></li>
+                                        <li><i class="color-green fa fa-star-o"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul><!--/thumbnails-->
+                <!-- //End Recent Works -->
+                <?php
+            endif;
+        endif;
+    endforeach;
+    foreach ($root->getChildrenCategories() as $category):
+        if ($category['id'] == 11):
+            ?>
+            <!-- Service Blocks -->
+            <div class="headline"><h3><?php echo $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+            <div class="row-fluid">
+                <?php
+                $children = $category->getProducts();
+                if (count($children)):
+                    $children->limit(3)
+                            ->order('created_at DESC');
+                    foreach ($children as $id => $child):
+                        $thumbnail = $child->getThumbnail();
+                        ?>
+                        <div class="span4">
+                            <div class="service clearfix">
+                                <i class="icon-pencil"></i>
+                                <div class="desc">
+                                    <h4><a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a></h4>
+                                    <span class="badge" style="float:right"><?php echo $this->translate('Author') ?>：<?php echo $child['author'] ?? ''; ?></span>
+                                </div>
+                            </div>	
+                        </div>
+                        <?php
+                    endforeach;
+                endif;
+                ?>    
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+            <?php
+        endif;
+    endforeach;
+    ?>
     <!-- Information Blokcs -->
     <div class="row-fluid margin-bottom-20">
-        <!-- Who We Are -->
-        <div class="span8">
-            <div class="headline"><h3>街头巷语</h3><a href="./blog_text.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-            <p><img class="pull-left lft-img-margin img-width-200" src="<?php echo $this->getPubUrl('frontend/img/carousel/language.jpg'); ?>" alt="" width="100%" />
-                偶然结识了韩国『친구』，一起玩耍或聚会的时候，大写加粗的尴尬。为了便于沟通，于是开始学习韩语,『대박』！
-            </p>	
-            <ul class="unstyled">
-                <li><i class="icon-ok color-green"></i>저기요 | JeoGiYo | 请问，那个，打扰一下</li>
-                <li><i class="icon-ok color-green"></i>저기요 | JeoGiYo | 请问，那个，打扰一下</li>
-                <li><i class="icon-ok color-green"></i>저기요 | JeoGiYo | 请问，那个，打扰一下</li>
-                <li><i class="icon-ok color-green"></i>저기요 | JeoGiYo | 请问，那个，打扰一下</li>
-            </ul>
-            <br />
-            <blockquote class="hero-unify">
-                <p>学习语言真的是一件有趣的事儿，但是有时候也很让人抓狂，对于发音，真心觉得好难！也因为发音，闹过很多乌龙事件，将钱『돈』发成大便『똥』的音，只是其中的一小件儿！</p>
-                <small>CEO, Peach Yang</small>
-            </blockquote>
-        </div><!--/span8-->        
-
-        <!-- Latest Shots -->
-        <div class="span4">
-            <div class="headline"><h3>最新美图</h3><a href="./page_gallery.php" style="float:right;line-height:54px">more &gt;&gt;</a></div>
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="<?php echo $this->getPubUrl('frontend/img/carousel/5.jpg') ?>" alt="..." width="100%" />
-                        <div class="carousel-caption">
-                            <p>午后阳光，一杯咖啡，一本书！</p>
+        <?php
+        foreach ($root->getChildrenCategories() as $category):
+            if ($category['id'] == 10):
+                ?>
+                <!-- Who We Are -->
+                <div class="span8">
+                    <div class="headline"><h3><?php echo $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+                    <p><img class="pull-left lft-img-margin img-width-200" src="<?php echo $this->getPubUrl('frontend/img/carousel/language.jpg'); ?>" alt="" width="100%" />
+                        偶然结识了韩国『친구』，一起玩耍或聚会的时候，大写加粗的尴尬。为了便于沟通，于是开始学习韩语,『대박』！
+                    </p>	
+                    <ul class="unstyled">
+                        <?php
+                        $children = $category->getProducts();
+                        if (count($children)):
+                            $children->limit(4)
+                                    ->order('created_at DESC');
+                            foreach ($children as $id => $child):
+                                $thumbnail = $child->getThumbnail();
+                                ?>
+                                <li><i class="icon-ok color-green"></i><?php echo $child['name'] ?></li>
+                                <?php
+                            endforeach;
+                        endif;
+                        ?>
+                        <br />
+                        <blockquote class="hero-unify">
+                            <p>学习语言真的是一件有趣的事儿，但是有时候也很让人抓狂，对于发音，真心觉得好难！也因为发音，闹过很多乌龙事件，将钱『돈』发成大便『똥』的音，只是其中的一小件儿！</p>
+                            <small>CEO, Peach Yang</small>
+                        </blockquote>
+                </div><!--/span8-->        
+                <?php
+            endif;
+        endforeach;
+        foreach ($root->getChildrenCategories() as $category):
+            if ($category['id'] == 7):
+                ?>
+                <!-- Latest Shots -->
+                <div class="span4">
+                    <div class="headline"><h3><?php echo $this->translate('Latest') . $category['name'] ?></h3><a href="<?php echo $category->getUrl(); ?>" style="float:right;line-height:54px"><?php echo $this->translate('More'); ?> &gt;&gt;</a></div>
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <?php
+                            $children = $category->getProducts();
+                            if (count($children)):
+                                $children->limit(3)
+                                        ->order('created_at DESC');
+                                foreach ($children as $id => $child):
+                                    $thumbnail = $child->getThumbnail();
+                                    ?>
+                                    <div class="item active">
+                                        <?php if (strpos($thumbnail, '//') === false): ?>
+                                            <img class="bttrlazyloading" src="<?php echo $this->getResourceUrl('image/resized/370x/' . $thumbnail) ?>" alt="<?php echo $child['name'] ?>" />
+                                        <?php else: ?>
+                                            <img src="<?php echo $thumbnail ?>" alt="<?php echo $child['name'] ?>" width="100%" />
+                                        <?php endif; ?>
+                                        <div class="carousel-caption text-center">
+                                            <p><?php echo $child['name'] ?? ''; ?></p>
+                                        </div>
+                                    </div>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
                         </div>
-                    </div>
-                    <div class="item">
-                        <img src="<?php echo $this->getPubUrl('frontend/img/carousel/4.jpg') ?>" alt="..." width="100%" />
-                        <div class="carousel-caption">
-                            <p>午后阳光，一杯咖啡，一本书！</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon icon-angle-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon icon-angle-right"></span>
-                </a>
-            </div>
-            <!--<article class="jq22-container">
-                <div class = "caroursel poster-main" data-setting = '{
-                     "width":335,
-                     "height":200,
-                     "posterWidth":260,
-                     "posterHeight":190,
-                     "scale":0.8,
-                     "dealy":"2000",
-                     "algin":"middle"
-                     }'>
-                    <ul class = "poster-list">
-                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/1.jpg') ?>" width = "100%"></li>
-                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/2.jpg') ?>" width = "100%"></li>
-                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/3.jpg') ?>" width = "100%"></li>
-                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/4.jpg') ?>" width = "100%"></li>
-                        <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/5.jpg') ?>" width = "100%"></li>
-                    </ul>
-                    <div class = "poster-btn poster-prev-btn"></div>
-                    <div class = "poster-btn poster-next-btn"></div>
-                </div>
-            </article>-->
-        </div><!--/span4-->
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                            <span class="glyphicon icon-angle-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                            <span class="glyphicon icon-angle-right"></span>
+                        </a>
+                    </div>
+                    <!--<article class="jq22-container">
+                        <div class = "caroursel poster-main" data-setting = '{
+                             "width":335,
+                             "height":200,
+                             "posterWidth":260,
+                             "posterHeight":190,
+                             "scale":0.8,
+                             "dealy":"2000",
+                             "algin":"middle"
+                             }'>
+                            <ul class = "poster-list">
+                                <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/1.jpg') ?>" width = "100%"></li>
+                                <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/2.jpg') ?>" width = "100%"></li>
+                                <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/3.jpg') ?>" width = "100%"></li>
+                                <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/4.jpg') ?>" width = "100%"></li>
+                                <li class = "poster-item"><img src="<?php echo $this->getPubUrl('frontend/img/carousel/5.jpg') ?>" width = "100%"></li>
+                            </ul>
+                            <div class = "poster-btn poster-prev-btn"></div>
+                            <div class = "poster-btn poster-next-btn"></div>
+                        </div>
+                    </article>-->
+                </div><!--/span4-->
+                <?php
+            endif;
+        endforeach;
+        ?>
     </div><!--/row-fluid-->	
     <!-- //End Information Blokcs -->
-
     <!-- Our Clients -->
     <div id="clients-flexslider" class="flexslider home clients hidden-phone">
         <div class="headline"><h3>our client</h3></div>	

@@ -29,7 +29,6 @@ class Set extends Edit
 
     protected function prepareElements($columns = [])
     {
-        $languages = (new Language)->getSourceArray();
         $columns = [
             'id' => [
                 'type' => 'hidden',
@@ -37,32 +36,11 @@ class Set extends Edit
             'csrf' => [
                 'type' => 'csrf'
             ],
-            'label' => [
+            'name' => [
                 'type' => 'text',
-                'label' => 'Label',
+                'label' => 'Name',
                 'required' => 'required'
             ],
-            'language_id[]' => [
-                'type' => 'select',
-                'label' => 'Language',
-                'required' => 'required',
-                'options' => $languages,
-                'attrs' => [
-                    'multiple' => 'multiple'
-                ]
-            ],
-            'name' => [
-                'type' => 'multitext',
-                'label' => 'Name',
-                'required' => 'required',
-                'base' => '#language_id',
-                'options' => $languages
-            ],
-//            'code' => [
-//                'type' => 'text',
-//                'label' => 'Code',
-//                'required' => 'required'
-//            ],
             'apply' => [
                 'type' => 'widget',
                 'label' => 'Attributes',

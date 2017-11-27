@@ -510,6 +510,7 @@ blockquote:hover {
 .thumbnail-style { 
     padding:5px; 
     border-radius:2px; 
+    overflow: hidden;
 }
 .thumbnail-style:hover { 
     box-shadow:0 0 8px #ddd; 
@@ -518,6 +519,24 @@ blockquote:hover {
     -o-transition:box-shadow 0.2s ease-in-out;
     transition:box-shadow 0.2s ease-in-out;
 }
+.grid .thumbnail-style .thumbnail-img
+{
+    height: 232px;
+    max-height: 232px;
+    text-align: center;
+}
+.list .thumbnail-style .thumbnail-img
+{
+    float: left;
+    margin-right: 15px;
+    max-height: 168px;
+    height: 168px;
+}
+.list .thumbnail-style h3
+{
+    display: inline-block;
+}
+
 .thumbnail-style h3 {
     margin:5px 0 0 0;
 }
@@ -530,6 +549,15 @@ blockquote:hover {
 }
 .thumbnail-style .thumbnail-img {
     position:relative;
+    max-height: 232px;
+    overflow: hidden
+}
+.thumbnail-style .star-vote{
+    display: block;
+    width: auto;
+}
+.thumbnail-style .star-vote li{
+    display: inline-block
 }
 .thumbnail-style a.btn-more {
     right:-10px;
@@ -1894,7 +1922,7 @@ i.style-switcher-btn-option:hover {
 }
 
 /*peach add-------index lis-group*/
-.list-group>li{line-height:1.65}
+.list-group>li{line-height:40px}
 
 .row-fluid .carousel .carousel-indicators{
     top:85%;

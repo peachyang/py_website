@@ -9,8 +9,8 @@ $current = $this->getCurrentFilters();
             continue;
         }
         ?>
-        <dt class="col-xs-12 col-sm-2 col-md-1"><?php echo $filter['label'] ?></dt>
-        <dd class="col-xs-12 col-sm-10 col-md-11">
+        <dt class="span1"><?php echo $filter['label'] ?></dt>
+        <dd class="span11">
             <a href="<?php echo $this->getInitFilterUrl($key) ?>" class="init" rel="nofollow">
                 <?php echo $this->translate('All') ?>
             </a>

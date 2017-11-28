@@ -11,6 +11,11 @@ page_home:
     update: frontend
     root:
         children:
+            head:
+                action:
+                    -
+                        method: setTitle
+                        params: Home
             content:
                 children:
                     block:

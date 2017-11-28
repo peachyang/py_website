@@ -521,8 +521,8 @@ blockquote:hover {
 }
 .grid .thumbnail-style .thumbnail-img
 {
-    height: 232px;
-    max-height: 232px;
+    height: auto;
+    max-height: 180px;
     text-align: center;
 }
 .list .thumbnail-style .thumbnail-img
@@ -530,7 +530,7 @@ blockquote:hover {
     float: left;
     margin-right: 15px;
     max-height: 168px;
-    height: 168px;
+    height: auto;
 }
 .list .thumbnail-style h3
 {

@@ -124,9 +124,7 @@ echo $this->getChild('related')
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                 </div>
             </div><!--/media-->
-
             <hr />
-
             <!-- Leave a Comment -->
             <div class="post-comment">
                 <h3 class="color-green">Leave a Comment</h3>
@@ -140,6 +138,20 @@ echo $this->getChild('related')
                 <p><button type="submit" class="btn-u">Send Message</button></p>
                 </form>
             </div><!--/post-comment-->
+            <div class="related">
+                <?php
+                echo $this->getChild('related')
+                        ->setVariable('product', $product)
+                        ->setVariable('title', 'Featured Products')
+                        ->setLimit(6)
+                        ->setVariable('width', [
+                            'xs' => '362',
+                            'sm' => '228',
+                            'md' => '221',
+                            'lg' => '173',
+                        ])
+                ?>
+            </div>
         </div><!--/span9-->
 
         <!-- Right Sidebar -->

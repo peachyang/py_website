@@ -22,8 +22,8 @@ $products = $this->getProducts();
                             </div>				
                         </div>
                         <h3><a class="hover-effect" href="<?php echo $product->getUrl($this->getCategory()); ?>"><?php echo mb_substr($product['name'], 0, 13, 'utf-8'); ?></a></h3>
-                        <p><?php echo mb_substr(trim(strip_tags($product['short_description'])), 0, 100, 'utf-8') ?></p>
-                        <p class="text-right"><?php echo $product['created_at'] ?></p>
+                        <p><?php echo strlen($product['short_description']) <= 300 ? $product['short_description'] : mb_substr(trim(strip_tags($product['short_description'])), 0, 100, 'utf-8') . '……'; ?></p>
+                        <p class="text-right"><?php echo date('F, j, Y', strtotime($product['created_at'])) ?></p>
                     </div>
                 </li>
                 <?php

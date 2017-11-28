@@ -22,7 +22,7 @@ $products = $this->getProducts();
                             </div>				
                         </div>
                         <h3><a class="hover-effect" href="<?php echo $product->getUrl($this->getCategory()); ?>"><?php echo mb_substr($product['name'], 0, 13, 'utf-8'); ?></a></h3>
-                        <p><?php echo mb_substr(trim(strip_tags($product['description'])), 0, 38, 'utf-8') ?></p>                
+                        <p><?php echo strlen($product['short_description']) <= 114 ? $product['short_description'] : mb_substr(trim(strip_tags($product['short_description'])), 0, 38, 'utf-8') . '……'; ?></p>                
                     </div>
                 </li>
                 <?php

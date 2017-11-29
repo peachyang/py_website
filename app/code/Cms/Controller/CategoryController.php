@@ -44,7 +44,7 @@ class CategoryController extends \Seahinet\Lib\Controller\ActionController
                     $category = new Category;
                     $category->load($this->getOption('category_id'));
                     $pages = $this->prepareCollection($category->getPages(), $category);
-                    $root = $this->getLayout('cms_category');
+                    $root = $this->getLayout('page_category');
                     $root->getChild('head')->setTitle($category['meta_title'] ?: $category['name'])
                             ->setDescription($category['meta_description'])
                             ->setKeywords($category['meta_keywords']);

@@ -1,5 +1,6 @@
 <?php
 $root = $this->getRootCategory();
+$parent = $this->getTopCategory();
 ?>
 <!--=== Slider ===-->
 <div class="slider-inner">
@@ -45,18 +46,20 @@ $root = $this->getRootCategory();
     <div class="container">
         <div class="span10">
             <?php
-            $categories = $this->getCategoryPage(8);
-            if ($categories):
-                $categories->limit(1)->order('created_at DESC');
-                foreach ($categories as $category):
-                    $url = $category->getUrl();
+            if ($parent):
+                $pages = $parent->getPages();
+            if($pages):
+                $pages->limit(1)->order('created_at DESC');
+                foreach ($pages as $page):
+                    $url = $page->getUrl();
                     ?>
-                    <h3><?php echo $category['title'] ?></h3>
-                    <p><?php echo mb_substr(trim(strip_tags($category['content'])), 0, 100, 'utf-8') . '……' ?></p>
+                    <h3><?php echo $page['title'] ?></h3>
+                    <p><?php echo strlen($page['content']) <= 300 ? trim(strip_tags($page['content'])) : mb_substr(trim(strip_tags($page['content'])), 0, 100, 'utf-8') . '……' ?></p>
                 </div>
-                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($url . '.html') ?>" target="_blank"><?php echo $this->translate('Entry notice'); ?></a>
+                <a class="btn-buy hover-effect" href="<?php echo $this->getBaseUrl($page->getUrl() . '.html') ?>" target="_blank"><?php echo $this->translate('Entry notice'); ?></a>
                 <?php
             endforeach;
+        endif;
         endif;
         ?>
     </div>
@@ -270,7 +273,7 @@ $root = $this->getRootCategory();
                             <div class="service clearfix">
                                 <i class="icon-pencil"></i>
                                 <div class="desc">
-                                    <h4><a href="<?php echo $child->getUrl() ?>"><?php echo $child['name'] ?></a></h4>
+                                    <h4><a href="<?php echo $child->getUrl($category) ?>"><?php echo $child['name'] ?></a></h4>
                                     <span class="badge" style="float:right"><?php echo $this->translate('Author') ?>：<?php echo $child['author'] ?? ''; ?></span>
                                 </div>
                             </div>	

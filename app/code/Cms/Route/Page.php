@@ -17,6 +17,7 @@ class Page extends Route
     public function match(Request $request)
     {
         $path = trim($request->getUri()->getPath(), '/');
+        $isJson = false;
         if (substr($path, -5) === '.html') {
             $path = substr($path, 0, -5);
         } else if (substr($path, -4) === '.htm') {
@@ -48,14 +49,14 @@ class Page extends Route
                 } else {
                     return new RouteMatch([
                         'page' => (new Model)->load($result[0]['page_id']),
-                        'category' => isset($result[0]['category_id']) ? (new Category)->load($result[0]['category_id']) : null,
                         'namespace' => 'Seahinet\\Cms\\Controller',
+                        'category' => isset($result[0]['category_id']) ? (new Category)->load($result[0]['category_id']) : null,
                         'controller' => 'PageController',
                         'action' => 'page'
                             ], $request);
                 }
             } else {
-                return false;
+                return FALSE;
             }
         }
         return false;

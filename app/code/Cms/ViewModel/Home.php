@@ -2,37 +2,27 @@
 
 namespace Seahinet\Cms\ViewModel;
 
-use Seahinet\Article\Model\Collection\Category as Collection;
-use Seahinet\Cms\Model\Category as Model;
-use Seahinet\Article\Model\Category;
+use Seahinet\Lib\Bootstrap;
 use Seahinet\Lib\ViewModel\Template;
+use Seahinet\Article\Model\Collection\Category as Collection;
+use Seahinet\Cms\Model\Collection\Category as CmsCollection;
 
 class Home extends Template
 {
 
-    protected $category = null;
-
-    public function getCategoryPage($category_id)
+    public function getTopCategory()
     {
-        if (is_null($category_id)) {
-            return null;
+        $categories = new CmsCollection;
+        $categories->where(['parent_id' => null]);
+        if (count($categories)) {
+            return $categories[0];
         }
-        $category = new Model;
-        $category->load($category_id);
-        $pages = $category->getPages();
-        $query = $this->getRequest()->getQuery();
-        $pages->limit(10);
-        return $pages;
+        return [];
     }
 
-    public function getParentCategory()
+    public function getLanguageId()
     {
-        if (!empty($this->storage['parent_id'])) {
-            $navgiation = new static;
-            $navgiation->load($this->storage['parent_id']);
-            return $navgiation;
-        }
-        return NULL;
+        return Bootstrap::getLanguage()->getId();
     }
 
     public function getRootCategory()
@@ -43,17 +33,6 @@ class Home extends Template
             return $categories[0];
         }
         return [];
-    }
-
-    public function getChildrenCategories($category_id)
-    {
-        if (is_null($category_id)) {
-            return null;
-        }
-        $category = new Category;
-        $category->load($category_id);
-        $categories = $category->getChildrenCategories();
-        return $categories;
     }
 
 }

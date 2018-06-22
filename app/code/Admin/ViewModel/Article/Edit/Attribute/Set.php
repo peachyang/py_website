@@ -3,6 +3,7 @@
 namespace Seahinet\Admin\ViewModel\Article\Edit\Attribute;
 
 use Seahinet\Admin\ViewModel\Edit;
+use Seahinet\Lib\Source\Language;
 
 class Set extends Edit
 {

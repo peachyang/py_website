@@ -3,8 +3,6 @@
 namespace Seahinet\Cms\Controller;
 
 use Seahinet\Lib\Controller\ActionController;
-use Seahinet\Cms\Model\Page;
-use Seahinet\Lib\Session\Segment;
 
 class PageController extends ActionController
 {

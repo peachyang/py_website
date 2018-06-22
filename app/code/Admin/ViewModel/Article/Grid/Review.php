@@ -16,18 +16,18 @@ class Review extends PGrid
         'getEditAction' => 'Admin\\Article\\Product\\Review::edit',
         'getDeleteAction' => 'Admin\\Article\\Product\\Review::delete'
     ];
-    protected $translateDomain = 'article_review';
+    protected $translateDomain = 'article_product_review';
 
     public function getEditAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/article_review/edit/?id=') . $item['id'] . '"title="' . $this->translate('Edit') .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_product_review/edit/?id=') . $item['id'] . '"title="' . $this->translate('Edit') .
                 '"><span class="fa fa-fw fa-file-text-o" aria-hidden="true"></span><span class="sr-only">'
                 . $this->translate('Edit') . '</span></a>';
     }
 
     public function getDeleteAction($item)
     {
-        return '<a href="' . $this->getAdminUrl(':ADMIN/article_review/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
+        return '<a href="' . $this->getAdminUrl(':ADMIN/article_product_review/delete/') . '" data-method="delete" data-params="id=' . $item['id'] .
                 '&csrf=' . $this->getCsrfKey() . '" title="' . $this->translate('Delete') .
                 '"><span class="fa fa-fw fa-remove" aria-hidden="true"></span><span class="sr-only">' .
                 $this->translate('Delete') . '</span></a>';

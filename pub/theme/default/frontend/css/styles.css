@@ -181,12 +181,12 @@ dl.options dd{float:left;margin-left:4px}
 .pageto{color:#a5a5a6}
 .pageto>input{width:30px;height:30px;border:1px solid #e4e2e2;border-radius:1px;text-align:center}
 .pageto>button{height:30px;border:1px solid #e4e2e2;border-radius:1px;background-color:#f7f7f7;;border-radius:1px}
-.view-by{border-bottom:1px solid #fdcb60;background-color:#f5f6f9;margin-bottom:15px;height:41px}
-.view-by a{display:block;font-size:14px;line-height:40px;padding:0 5px}
+.view-by{border-bottom:2px solid #72c02c;margin-bottom:15px;height:41px}
+.view-by .mode li{display: inline-block}
+.view-by a{display:inline-block;font-size:14px;line-height:40px;padding:0 5px}
 .view-by .sort-by{float:left}
 .view-by .sort-by a{padding:0 20px}
-.view-by .sort-by>li+li{border-left:1px solid #cfd0d4}
-.view-by .sort-by>li.active{background-color:#007dc6;color:#fff}
+.view-by .sort-by>li+li{border-left:1px solid #72c02c}
 .view-by .limit,.view-by .mode{float:right}
 .view-by .limit .dropdown-menu{left:auto;right:0;min-width:0}
 .rating{position:relative;width:6em}

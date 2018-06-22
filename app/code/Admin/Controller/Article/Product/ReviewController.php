@@ -30,12 +30,12 @@ class ReviewController extends AuthActionController
 
     public function deleteAction()
     {
-        return $this->doDelete('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_review/');
+        return $this->doDelete('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_product_review/');
     }
 
     public function saveAction()
     {
-        return $this->doSave('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_review/', ['product_id'], function($model, $data) {
+        return $this->doSave('\\Seahinet\\Article\\Model\\Product\\Review', ':ADMIN/article_product_review/', ['article_id'], function($model, $data) {
                     if ($data['customer_id'] === '') {
                         $model['customer_id'] = null;
                     }

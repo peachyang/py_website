@@ -61,7 +61,7 @@ class Search implements Provider
                     ];
                 }
             }
-            $this->engine->update('catalog_search', $data);
+            $this->engine->update('article_search', $data);
         }
         return true;
     }

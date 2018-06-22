@@ -152,7 +152,7 @@ class ProductController extends AuthActionController
                 $data['data'] .= $value . '|';
             }
         }
-        $indexer->replace('article_search', $languageId, [$data], ['id' => $id]);
+        //$indexer->replace('article_search', $languageId, [$data], ['id' => $id]);
     }
 
 }

@@ -18,9 +18,9 @@ article_category:
                             -
                                 method: addHandledSegment
                                 params: customer
-                            -
-                                method: addHandledSegment
-                                params: checkout
+#                            -
+#                                method: addHandledSegment
+#                                params: checkout
                     toolbar:
                         type: Seahinet\Article\ViewModel\Category\Toolbar
                         template: article/category/toolbar
@@ -78,25 +78,25 @@ article_product:
                             -
                                 method: addHandledSegment
                                 params: customer
-                            -
-                                method: addHandledSegment
-                                params: checkout
+#                            -
+#                                method: addHandledSegment
+#                                params: checkout
                     product:
                         type: Seahinet\Article\ViewModel\Product\View
                         template: article/product/view
                         children:
-                            tier:
-                                type: Seahinet\Article\ViewModel\Product\TierPrice
-                                template: article/product/tierprices
+#                            tier:
+#                                type: Seahinet\Article\ViewModel\Product\TierPrice
+#                                template: article/product/tierprices
                             share:
                                 type: Seahinet\Article\ViewModel\Product\Share
                                 template: article/product/share
                             attribute:
                                 type: Seahinet\Article\ViewModel\Product\View
                                 template: article/product/attribute
-                            option:
-                                type: Seahinet\Article\ViewModel\Product\Option
-                                template: article/product/option
+#                            option:
+#                                type: Seahinet\Article\ViewModel\Product\Option
+#                                template: article/product/option
                             media:
                                 type: Seahinet\Lib\ViewModel\Template
                                 template: article/product/media
@@ -255,7 +255,7 @@ admin_article_product_list:
                             action:
                                 -
                                     method: addCrumb
-                                    params: [{link:':ADMIN/article_product/',label:'Product Management'}]
+                                    params: [{link:':ADMIN/article_product/',label:'Article Management'}]
                                 -
                                     method: addAdditional
                                     params: [{link:':ADMIN/article_product/edit/',label:'Add New Product'}]
@@ -366,23 +366,23 @@ admin_article_product_edit:
                                             - category
                                             - Category
                                             - 110
+#                                    -
+#                                        method: addTab
+#                                        params:
+#                                            - custom_options
+#                                            - Custom Options
+#                                            - 120
+#                                    -
+#                                        method: addTab
+#                                        params:
+#                                            - inventory
+#                                            - Inventory
+#                                            - 130
                                     -
                                         method: addTab
                                         params:
-                                            - custom_options
-                                            - Custom Options
-                                            - 120
-                                    -
-                                        method: addTab
-                                        params:
-                                            - inventory
-                                            - Inventory
-                                            - 130
-                                    -
-                                        method: addTab
-                                        params:
-                                            - related_products
-                                            - Related Products
+                                            - related_articles
+                                            - Related Articles
                                             - 140
                                     -
                                         method: addTab
@@ -409,10 +409,10 @@ admin_article_product_edit:
                                     category:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Category
                                         template: admin/article/product/category
-                                    inventory:
-                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Inventory
-                                        template: admin/article/product/inventory
-                                    related_products:
+#                                    inventory:
+#                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Inventory
+#                                        template: admin/article/product/inventory
+                                    related_articles:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Link
                                         action:
                                             -
@@ -439,9 +439,9 @@ admin_article_product_edit:
                                         children:
                                             pager:
                                                 type: Seahinet\Lib\ViewModel\Pager
-                                    custom_options:
-                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Options
-                                        template: admin/article/product/options
+#                                    custom_options:
+#                                        type: Seahinet\Admin\ViewModel\Article\Edit\Product\Options
+#                                        template: admin/article/product/options
                                     additional:
                                         type: Seahinet\Admin\ViewModel\Article\Edit\Product\Additional
                                         template: admin/article/product/additional

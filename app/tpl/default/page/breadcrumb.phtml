@@ -6,7 +6,13 @@ if (count($crumbs)):
     ?>
     <div class="breadcrumbs margin-bottom-40">
         <div class="container">
-            <ul class="pull-lft breadcrumb">
+            <h1 class="color-green pull-left">
+                <?php
+                $str = mb_substr($this->translate($last['label']), 0, 4, 'utf-8');
+                echo strlen($this->translate($last['label'])) <= 12 ? $this->translate($last['label']) : $str . '……';
+                ?>
+            </h1>
+            <ul class="pull-right breadcrumb">
                 <?php if ($this->showLabel): ?>
                     <li class="label"><span><?php echo $this->translate('Location') ?>: </span></li>
                 <?php endif ?>

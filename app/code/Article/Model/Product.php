@@ -4,12 +4,8 @@ namespace Seahinet\Article\Model;
 
 use Seahinet\Article\Model\Collection\{
     Category as Categories,
-    Product as Collection,
-    Product\Option as OptionCollection,
-    Warehouse as WarehouseCollection
+    Product as Collection
 };
-use Seahinet\Article\Model\Product\Option as OptionModel;
-use Seahinet\Article\Model\Warehouse;
 use Seahinet\Lib\Model\Collection\Eav\Attribute as AttributeCollection;
 use Seahinet\Lib\Model\Eav\{
     Entity,

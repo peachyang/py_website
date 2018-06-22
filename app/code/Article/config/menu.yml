@@ -25,7 +25,7 @@ article:
             title: Attribute Set Management
             priority: 25
         -
-            link: article_review/
+            link: article_product_review/
             operation: 'Admin\Article\Product\Review::index'
             title: Review Management
             priority: 30

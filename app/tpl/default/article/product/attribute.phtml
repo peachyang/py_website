@@ -2,12 +2,12 @@
 $attributes = json_decode($this->getProduct()->offsetGet('additional'), true);
 if ($attributes):
     ?>
-    <ul class="product-attributes clearfix">
+    <ul class="unstyled inline blog-tags span12">
         <?php
         foreach ($attributes as $key => $value):
             if ($key !== '' && $value !== ''):
                 ?>
-                <li class="col-xs-12 col-sm-6 col-md-4">
+                <li class="span6">
                     <span class="label"><?php echo $key ?></span>
                     <span class="value" title="<?php echo $value ?>"><?php echo $value ?></span>
                 </li>

@@ -9,10 +9,13 @@
  * cms_page_language
  * core_config
  * eav_attribute
+ * eav_attribute_label
  * eav_attribute_group
+ * eav_attribute_group_label
  * eav_attribute_option
  * eav_attribute_option_label
  * eav_attribute_set
+ * eav_attribute_set_label
  * eav_entity_type
  * email_template
  * email_template_language

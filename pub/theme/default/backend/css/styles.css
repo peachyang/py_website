@@ -172,9 +172,9 @@ label.invalid:after{content:" ";position:absolute;left:50%;top:100%;border:3px s
 .admin-login .copyright{text-align:center;font-size:12px;line-height:100px}
 .admin-login .main-container{position:relative;z-index:2;min-height:114px;height:380px;height:calc(100% - 226px)}
 .admin-login .footer{position:absolute;bottom:0;left:0;width:100%}
-.admin-login .panel-login{width:538px;width:33.625rem;position:absolute;top:0;left:50%;margin:0 0 0 -269px;margin:0 0 0 -16.8125rem;padding:43px 0;border:1px solid #eee;border-radius:8px;background-color:#cacbcb;background-image:url(../images/logo-top.png);background-repeat:no-repeat;background-position:40px 50%}
+.admin-login .panel-login{width:538px;width:33.625rem;position:absolute;top:0;left:50%;margin:0 0 0 -269px;margin:0 0 0 -16.8125rem;padding:43px 0;border:1px solid #eee;border-radius:8px;background-color:#cacbcb;background-image:url(../images/logo1-default.png);background-repeat:no-repeat;background-position:40px 50%}
 .admin-login .panel-login label.invalid{left:54px}
-.svg .admin-login .panel-login{background-image:url(../images/logo-top.svg);background-size:143px 137px}
+.svg .admin-login .panel-login{background-image:url(../images/logo1-default.png);background-size:103px 39px}
 .csscalc .admin-login .panel-login{left:calc(50% - 16.8125rem);top:calc(50% - 168px);margin:0}
 .admin-login .panel-login .panel-body{width:60%;float:right;border:none;border-left:3px solid #dbdcdc;padding:8px 47px 0}
 .admin-login .panel-login .control-label{width:65px;width:4.0625rem}
